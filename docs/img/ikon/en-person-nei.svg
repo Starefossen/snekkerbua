@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" preserveAspectRatio="xMinYMid meet">
+  <title>Ikke løft alene</title>
+  <g fill="none" stroke="#111" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="120" cy="52" r="16"/>
+    <line x1="120" y1="68" x2="120" y2="170"/>
+    <line x1="120" y1="170" x2="101" y2="214"/>
+    <line x1="120" y1="170" x2="139" y2="214"/>
+    <line x1="120" y1="88" x2="99" y2="126"/>
+    <line x1="120" y1="88" x2="141" y2="126"/>
+    <rect x="22" y="128" width="196" height="30" rx="5" fill="#fff"/>
+    <circle cx="120" cy="120" r="110" stroke-width="14.0"/>
+    <line x1="42.22" y1="197.78" x2="197.78" y2="42.22" stroke-width="14.0"/>
+  </g>
+</svg>

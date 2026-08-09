@@ -25,7 +25,12 @@ run = "LOFTBED_FULL=1 python tools/gen_doc_tables.py"
 depends = ["install"]
 
 [tasks.montering]
-description = "Render the per-step isometric images for docs/MONTERING.md (macOS: usdrecord + swift)"
+description = "Draw the line art for docs/MONTERING.md - one per build step plus the cover (needs rsvg-convert for the PNGs)"
+depends = ["build"]
+run = "python tools/render_lineart.py --width 1600"
+
+[tasks.montering-skyggelagt]
+description = "The shaded USD renders of the same steps, for reference (macOS: usdrecord + swift)"
 depends = ["build"]
 run = "python tools/render_steps.py --width 1400"
 

@@ -2,23 +2,29 @@
 
 This project contains Python scripts using the `build123d` library to
 programmatically generate 3D models of bed frames and export them as STEP,
-STL, GLB, USDZ and SVG.
+STL, GLB, USDZ and SVG. The loft bed it builds is called **HANNA**.
 
-* `v1/generate_bed_frame.py` — the original alcove-style bunk bed frame.
-* `generate_loftbed.py` — the freestanding loft bed (v8) with a convertible
-  sofa / table / bed underneath, fitted between two walls 1990 mm apart.
-  Four corner posts carry the 1990 × 800 platform, side rails at 1065 mm with
-  the 34×98 slats lying **flush on top** of them, so the 800 mm mattress lands
-  exactly on the slat ends at both edges. Each end has a single 48×98 end beam
-  under the side rails and is otherwise **fully open above the mattress**. The
-  ladder sits flat against the front rail, in the same plane as the front
-  posts: 320 mm clear between 36×48 uprights, four 48×73 treads on cleat
-  blocks, and a 320 mm climb-through gap in both front guard bands. The front
-  bench rail stops at the sofa ends, so the whole floor between the benches is
-  open. Between the benches an 18 mm panel, stiffened by two 48×73 battens on
-  edge underneath, rests on wood at bench height (bed mode) or table height
-  (table mode). Every part is validated to touch the rest of the assembly and
-  to clash with nothing (see the checks in the build output).
+* `v1/generate_bed_frame.py` — an alcove-style bunk bed frame.
+* `generate_loftbed.py` — HANNA, the loft bed, with a convertible sofa / table
+  / bed underneath. It is built for a niche: fitted between two walls and
+  standing against the back wall, screwed fast to it. There are no guard rails
+  at the back, because the wall is the barrier there. Boards and posts are
+  unified on **36×98**, the single dimension most of the bed is cut from, so
+  the saw takes four settings for the whole main board. Four corner posts
+  carry the mattress platform, with the slats lying **flush on top** of the
+  side rails, so the mattress lands exactly on the slat ends at both edges.
+  Each end has a single 48×98 end beam under the side rails and is otherwise
+  **fully open above the mattress**. The ladder sits flat against the front
+  rail, in the same plane as the front posts: 36×48 uprights, four 48×73
+  treads on cleat blocks, and a climb-through gap in both front guard bands,
+  as wide as the ladder itself. The front bench rail stops at the sofa ends,
+  so the whole floor between the benches is open. Between the benches an 18 mm
+  panel, stiffened by two 48×73 battens on edge underneath, rests on wood at
+  bench height (bed mode) or table height (table mode). Every part is
+  validated to touch the rest of the assembly and to clash with nothing (see
+  the checks in the build output). Widths, depths, heights and every part
+  length live in [docs/generated/nokkelmal.md](docs/generated/nokkelmal.md)
+  and [docs/generated/kappliste.md](docs/generated/kappliste.md).
 
 `parts.tsv` is the tracked regression snapshot: label, colour group and
 bounding box for every part, both panel modes included. It is rewritten by
@@ -31,15 +37,18 @@ generated *model* file is gitignored.
   every joint (J1…J15), the build order and why it has to be that order,
   mattress and cushions, safety, and the load-path appendix. In Norwegian.
 * **[docs/MONTERING.md](docs/MONTERING.md)** — the same build, one picture per
-  step, IKEA style. Same step numbers as the text guide.
+  step, drawn as black-and-white line art with almost no words. Same step
+  numbers as the text guide.
 
 Both are driven by the model. `mise run build` regenerates the tables in
 `docs/generated/` (cut list, buying list, key dimensions, hardware list, the
 step-by-step text and the machine-readable step data) straight from
 `generate_loftbed.py`, and `docs/ASSEMBLY.md` links to them rather than
-restating any dimension. `mise run montering` re-renders the per-step images in
-`docs/img/`; those PNGs **are** committed, because the guide has to be readable
-without a Mac and the USD toolchain.
+restating any dimension. `mise run montering` re-draws the line art in
+`docs/img/` — the cover drawing and one drawing per build step, projected out
+of the model itself by `tools/render_lineart.py`. Those files **are**
+committed, because the guide has to be readable and printable on a machine
+with none of this toolchain installed.
 
 ## Setup & Usage
 
@@ -71,6 +80,15 @@ mise run
 * **Render shaded PNG previews** of both modes (runs `usdz` first):
   ```bash
   mise run render      # -> loftbed_bed_mode.png, loftbed_table_mode.png
+  ```
+* **Draw the assembly manual's line art** (runs `build` first, needs
+  `rsvg-convert` for the PNGs):
+  ```bash
+  mise run montering   # -> docs/img/hanna-hero.*, docs/img/steg-NN.*
+  ```
+* **Shaded reference renders of the same steps** (macOS: `usdrecord` + Swift):
+  ```bash
+  mise run montering-skyggelagt   # -> docs/img/skyggelagt/, not committed
   ```
 * **Preview the model natively on macOS**:
   ```bash
@@ -114,8 +132,18 @@ and the cut list live in the `.step` and `.glb` files.
 `mise run render` uses `usdrecord` (part of the USD tools that ship with
 macOS) plus `tools/make_render_stage.py`, which wraps the `.usdz` in a
 throwaway stage with a 3/4-view camera. The result is `loftbed_bed_mode.png`
-and `loftbed_table_mode.png` in the repo root. The line-drawing views are the
-`.svg` files from `mise run build`.
+and `loftbed_table_mode.png` in the repo root.
+
+## Line drawings
+
+`tools/render_lineart.py` (`mise run montering`) is what draws the assembly
+manual. It projects the solids themselves — no meshes — through OpenCascade's
+hidden-line removal, and writes one SVG per build step in which the parts
+already standing are thin grey and the parts you fit in that step are heavy
+black, plus `docs/img/hanna-hero.svg`, the all-black cover drawing of the
+finished bed. `rsvg-convert` turns each one into the PNG the manual embeds.
+Whole-model hidden-line `.svg` projections of both modes are a separate,
+slower deliverable from `mise run build-full`.
 
 ## Viewing the `.step` File
 

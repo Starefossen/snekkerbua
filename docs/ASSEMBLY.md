@@ -1,8 +1,8 @@
-# Loftseng — byggeveiledning
+# HANNA — loftseng, byggeveiledning
 
-Loftseng med sofa, bord og ekstraseng under. Bygget på mål for en nisje
-mellom to vegger. Sengen står **inntil bakveggen og inntil begge sideveggene**
-og bygges på plass.
+HANNA er en loftseng med sofa, bord og ekstraseng under. Den er bygget på mål
+for en nisje mellom to vegger og står **inntil bakveggen og inntil begge
+sideveggene**. Den bygges på plass.
 
 > **Denne sengen er ikke reversibel.** Den lange baksiden skal stå mot vegg og
 > skal skrus fast i veggen. Det er ikke rekkverk på baksiden — der er veggen
@@ -67,8 +67,8 @@ elforsinket eller varmforsinket.
 **Det går ikke én bolt inn i en stolpe i denne sengen.** Stolpene er tynne på
 tvers av rommet, og på den tykkelsen får en M8 ikke den kantavstanden en bolt
 krever — den ville sprenge stolpen på langs. Hvert eneste ledd inn i en stolpe
-er derfor **forborede treskruer i 6 mm**, det samme mønsteret som stigevangene
-alltid har brukt. For en 6 mm skrue er kravet til kantavstand nøyaktig det en
+er derfor **forborede treskruer i 6 mm** — det samme mønsteret som stigevangene
+bruker. For en 6 mm skrue er kravet til kantavstand nøyaktig det en
 stolpetykkelse gir på midtlinjen.
 
 Det er ikke en nødløsning. **Ingen skrue i rammen bærer vertikal last.** Hver
@@ -221,9 +221,9 @@ tre, og veggfestet sitter i den samme vangen noen centimeter unna.
 
 ### J3 — Stigevange → fremre sidevange
 
-Fire kraftige treskruer gjennom stigevangen og inn i sidevangen. Dette leddet
-var det første i sengen som ble skrudd i stedet for boltet, og etter at stolpene
-ble tynnere er det mønsteret hele rammen bruker — se J1, J2 og J8.
+Fire kraftige treskruer gjennom stigevangen og inn i sidevangen. Leddet er
+skrudd, ikke boltet — samme mønster som resten av rammen bruker, se J1, J2
+og J8.
 
 Stigevangen står med den tynne siden mot rommet, så skruene treffer vangen på
 midtlinjen med akkurat den kantavstanden en 6 mm skrue skal ha.
@@ -347,13 +347,11 @@ platen fast til stigen. De gjør to jobber samtidig:
 
 Dette er grunnen til at platen alltid skal ligge i, i en av de to stillingene.
 
-**J13c — krokplatene bak.** To plater som holder bakkanten nede.
-
-Dette leddet ble tegnet om i denne runden, og grunnen er verdt å kjenne til:
-platene grep opprinnelig ned bak den bakre benkevangen. Etter at baksiden ble
-trukket inn i vangeplanet **er den flaten veggen**, og der er det ingen plass
-igjen. Platene er derfor snudd: de henger ned **foran** den bakre benkevangen og
-haker seg inn **under** den. Ingenting av dem kommer på veggsiden.
+**J13c — krokplatene bak.** To plater som holder bakkanten nede. De henger ned
+**foran** den bakre benkevangen og haker seg inn **under** den. Grunnen til at
+de griper forfra: baksiden av vangen ligger i veggplanet, **den flaten er
+veggen**, og der er det ingen plass til et beslag. Ingenting av krokplatene
+kommer på veggsiden.
 
 I bordstilling henger de samme platene fritt like foran bordbærelekta og virker
 der som stopp framover. Bakkanten holdes ikke nede i bordstilling — det trengs
@@ -509,19 +507,19 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 
 | Ledd | Bæremåte | Spenn / flate | Last | Utn. | Dom |
 |---|---|---|---|---:|---|
-| Køyespile 36×98 | Bøyning | 800 mm | 1 kN på én spile | **0,57** | ✓ σ ≈ 9,5 MPa. Det tykkere bordet ga et par prosent gratis |
+| Køyespile 36×98 | Bøyning | 800 mm | 1 kN på én spile | **0,57** | ✓ σ ≈ 9,5 MPa |
 | Køyespile, **bar bunn** | Bøyning | 800 mm | 2 kN dynamisk på én spile | **1,14** | ✗ Se 7.4 — madrassen fordeler lasten |
 | Spile → sidevange | Trelagring, full vangebredde under hver spile | 48 mm opplegg | 0,7 kN | 0,05 | ✓ |
 | Bakre sidevange, regnet som fritt spenn mellom hjørnestolpene | Bøyning | 1894 mm | 2 kN | **0,73** | ✓ Konservativt — se raden under |
 | Bakre sidevange **som bygget** | Bøyning, men vangen er skrudd til veggen i hver stender den treffer, så den er understøttet flere ganger på veien | ≈ 600 mm mellom veggfestene | 2 kN | ≈ **0,08** | ✓ Dette er grunnen til at veggfestet ikke er valgfritt |
 | Fremre sidevange 48×98 | Bøyning, avstivet av de to stigevangene | 1894 mm | 2 kN | < 0,73 | ✓ |
 | Vange → endebjelke | **Trelagring** | ≈ 5,3 kN | ≤ 1 kN | 0,19 | ✓ Vangen hviler, den henger ikke |
-| Bakre vange → bakre stolpetopp | **Trelagring** på stolpens endeved, 95 × 36 mm | ≈ 7,9 kN | < 1 kN | 0,13 | ✓ Ingen festemidler i lastens vei. Den brede stolpen gjorde dette oppleggget nesten dobbelt så stort |
+| Bakre vange → bakre stolpetopp | **Trelagring** på stolpens endeved, 95 × 36 mm | ≈ 7,9 kN | < 1 kN | 0,13 | ✓ Ingen festemidler i lastens vei. Hele stolpetoppens endeved er opplegg |
 | Endebjelke 48×98 | Bøyning | 836 mm | 2 kN | **0,26** | ✓ |
 | Endebjelke → bærekloss J1-B | **Trelagring** 48 × 36 | 1728 mm² → 4,0 kN | ≤ 1 kN | 0,25 | ✓ |
 | Bærekloss → stolpe | Skruskjær, 2 × 6 mm | 4,0 kN | 1 kN | 0,25 | ✓ |
-| *Uten bæreklossen (forkastet)* | Kun skruer nær bjelkeenden | — | 2 kN | — | ✗ Sprø oppflising av veden. **Derfor er klossen der** |
-| Fremre hjørnestolpe 36×98 | Knekking om svak akse, verste frie lengde 708 mm | N<sub>c,Rd</sub> ≈ **26,4 kN** | ≈ 1 kN | **0,05** | ✓ Den brede stolpen er en klart sterkere søyle enn den gamle firkanten |
+| *Uten bærekloss — ikke en tillatt byggemåte* | Kun skruer nær bjelkeenden | — | 2 kN | — | ✗ Sprø oppflising av veden. **Derfor er klossen der** |
+| Fremre hjørnestolpe 36×98 | Knekking om svak akse, verste frie lengde 708 mm | N<sub>c,Rd</sub> ≈ **26,4 kN** | ≈ 1 kN | **0,05** | ✓ Svak akse er dimensjonerende, og margin er likevel svært god |
 | Bakre hjørnestolpe 36×98 | Knekking, kortere stolpe, avstivet av benkevange og bordbærelekt | ≫ 26 kN | ≈ 1 kN | < 0,05 | ✓ |
 | Stolpe → gulv | Endeved mot gulv | 45 kN i treet | 1 kN | 0,02 | ✓ |
 
@@ -534,8 +532,8 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Stigekloss → stigevange | Skruskjær, 2 × 5 mm | 3,0 kN | 0,5 kN | 0,17 | ✓ |
 | Skrue i trinnenden | Bærer ingen vertikal last | — | ≈ 0 | — | ✓ Riktig utformet |
 | Stigevange → gulv | Ren søyle helt ned til gulvet | — | 1 kN | — | ✓ Ingen festemiddel i klatrelastens vei nedover |
-| Stigevange, knekking **ut av planet** | Fri lengde gulv → fremre sidevange | λ ≈ 103, k<sub>c</sub> ≈ 0,29 → 7,3 kN | 1 kN | **0,14** | ✓ men se vedlegg B, avvik 3. Vangen snudde i denne runden og ble slankere ut av planet |
-| Stigevange → fremre sidevange (J3) | Skruskjær, 4 × 6 mm | 8,0 kN | < 1 kN | 0,13 | ✓ Samme detalj som hele rammen nå bruker |
+| Stigevange, knekking **ut av planet** | Fri lengde gulv → fremre sidevange | λ ≈ 103, k<sub>c</sub> ≈ 0,29 → 7,3 kN | 1 kN | **0,14** | ✓ men se vedlegg B, avvik 2. Vangen står med den tynne siden ut av planet |
+| Stigevange → fremre sidevange (J3) | Skruskjær, 4 × 6 mm | 8,0 kN | < 1 kN | 0,13 | ✓ Samme detalj som hele rammen bruker |
 | Stigens stivhet i eget plan | Rammevirkning: to vanger + fire trinn | — | — | — | ✓ |
 
 ### A.3 Underetasjen
@@ -603,16 +601,9 @@ lange kantene, så den klassiske seng/vegg-klemspalten finnes ikke her.
 den (J14). Sengen kan ikke snus og kan ikke stå fritt i rommet. Vil du gjøre den
 frittstående, må to rekkverksbord og to fulle bakre stolper på plass — se
 butikknotatene, og regn med at hele lastbanen på baksiden må sjekkes på nytt:
-det er den bakre sidevangen som i dag deler lasten med veggskruene.
+det er den bakre sidevangen som deler lasten med veggskruene.
 
-**Avvik 2 — ingen. Dette avviket er borte.**
-Tidligere utkast hadde for kort endeavstand fra vangens ende inn til skruen i
-hjørnestolpen. Da stolpen ble bredere, forsvant problemet av seg selv: avstanden
-er nå godt over minstekravet. Se
-[nøkkelmål](generated/nokkelmal.md#skruerader-i-rammeleddene). Punktet står
-igjen her bare så nummereringen ikke flytter seg.
-
-**Avvik 3 — stigefoten er ikke bundet i dybderetningen.**
+**Avvik 2 — stigefoten er ikke bundet i dybderetningen.**
 Gulvet foran stigen er med vilje helt fritt, og den fremre benkevangen krysser
 det ikke. Prisen er at stigevangene ikke har noe hold i dybderetningen nede ved
 gulvet. *Det som erstatter det:* den løse platen. U-brakettene (J13b) omslutter
@@ -620,7 +611,7 @@ trinnet og klemmer platen til stigen, og platen binder stigen tilbake til den
 bakre bærelinjen. Veggfestet (J14) holder resten av rammen i ro.
 *Betingelse:* platen **skal** alltid ligge i, i en av de to stillingene. Se 7.5.
 
-**Avvik 4 — bar spilebunn tåler ikke dynamisk last.**
+**Avvik 3 — bar spilebunn tåler ikke dynamisk last.**
 Én spile alene under full hoppelast er overbelastet. Med madrass på fordeles
 lasten over flere spiler og utnyttelsen halveres. *Betingelse:* madrassen legges
 på før noen går opp. Se 7.4.

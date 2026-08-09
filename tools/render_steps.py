@@ -1,4 +1,9 @@
-"""Render one isometric image per build step for docs/MONTERING.md.
+"""Shaded isometric reference render of every build step.
+
+docs/MONTERING.md is drawn in line art by tools/render_lineart.py; these
+shaded images are the solid-model view of the same steps, kept for anyone who
+wants to check a joint against something that looks like wood. They are
+written outside docs/img/ so they never collide with the manual's drawings.
 
 Reads docs/generated/byggesteg.json - the step description emitted by
 tools/gen_doc_tables.py during `mise run build` - and, for every step that
@@ -45,7 +50,7 @@ def run(cmd, **kw):
 
 def main(argv):
     width = "1400"
-    out_dir = os.path.join(ROOT, "docs", "img")
+    out_dir = os.path.join(ROOT, "docs", "img", "skyggelagt")
     only = None
     i = 1
     while i < len(argv):

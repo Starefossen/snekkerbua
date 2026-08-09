@@ -32,6 +32,7 @@ Nothing here is hand-maintained: rerun `mise run build` and it is all rebuilt.
 
 import json
 import os
+import re
 import sys
 
 # ---------------------------------------------------------------------------
@@ -275,13 +276,18 @@ JOINTS = [
 JOINT = {j["id"]: j for j in JOINTS}
 
 
-def step_fastener_summary(st):
-    """The fastener line for one step, summed from the joints it completes."""
+def step_fastener_rows(st):
+    """[(handelsnavn, antall), ...] for one step, summed from its joints."""
     total = {}
     for jid, cnt in st["joints"].items():
         for name, per in JOINT[jid]["fast"]:
             total[name] = total.get(name, 0) + per * cnt
-    return [f"{qty}× {name}" for name, qty in sorted(total.items())]
+    return sorted(total.items())
+
+
+def step_fastener_summary(st):
+    """The fastener line for one step, summed from the joints it completes."""
+    return [f"{qty}× {name}" for name, qty in step_fastener_rows(st)]
 
 
 def hardware_total(steps):
@@ -698,22 +704,28 @@ def resolve_steps(G, steps):
     return steps
 
 
-def step_part_summary(G, st, cut_index):
-    """['2x Endebjelke 48x98 x 896', ...] for the labels this step adds."""
+def step_part_rows(G, st, cut_index):
+    """[(antall, navn, dimensjon, lengde), ...] for the labels this step adds.
+
+    `dimensjon` and `lengde` are empty strings for the reference mattress,
+    which is bought rather than cut.
+    """
     counts = {}
     for lbl in st["labels"]:
         key = cut_index.get(lbl)
         if key is None:                       # the reference mattress
-            counts[("Madrass (se nøkkelmål)", "", "")] = \
-                counts.get(("Madrass (se nøkkelmål)", "", ""), 0) + 1
-            continue
+            key = ("Madrass (se nøkkelmål)", "", "")
         counts[key] = counts.get(key, 0) + 1
+    return [(qty, name, section, _fmt(length) if section else "")
+            for (name, section, length), qty in sorted(counts.items())]
+
+
+def step_part_summary(G, st, cut_index):
+    """['2x Endebjelke 48x98 x 896', ...] for the labels this step adds."""
     out = []
-    for (name, section, length), qty in sorted(counts.items()):
-        if section:
-            out.append(f"{qty}× {name} {section} × {_fmt(length)}")
-        else:
-            out.append(f"{qty}× {name}")
+    for qty, name, section, length in step_part_rows(G, st, cut_index):
+        out.append(f"{qty}× {name} {section} × {length}" if section
+                   else f"{qty}× {name}")
     return out
 
 
@@ -1271,59 +1283,180 @@ def emit_byggesteg(G, out_dir, steps, idx):
 
 MONTERING_HEAD = (
     "<!-- GENERERT AV tools/gen_doc_tables.py under `mise run build`.\n"
-    "     IKKE REDIGER FOR HÅND. Bildene lages av `mise run montering`. -->\n\n")
+    "     IKKE REDIGER FOR HÅND. Strektegningene lages av\n"
+    "     `mise run montering` (tools/render_lineart.py). -->\n\n")
+
+# The pictogram page. (do-key, dont-key or None, the one line beside them).
+# The drawings themselves come out of tools/gen_glyphs.py; the pairs use the
+# manual convention of showing the wrong way beside the right one.
+PREP = [
+    ("to-personer", "en-person-nei",
+     "**To personer.** Bakrammen veier mye og skal reises loddrett."),
+    ("underlag", "dra-nei",
+     "**Mykt underlag.** Bygg rammene flatt på papp eller teppe. Ikke dra "
+     "delene over gulvet."),
+    ("sorter", None,
+     "**Sorter delene** etter kapplista, og merk hver del på en flate som "
+     "blir skjult."),
+    ("les", None,
+     "**Les steg 0 først.** All saging og all boring skjer før noe reises."),
+    ("verktoy", None,
+     "**Verktøy:** drill/skrutrekker, vater, tommestokk, vinkelhake."),
+    ("forbor", None,
+     "**Forbor.** I bord, i den tynne bordbærelekta og i all endeved er "
+     "forboring et krav."),
+    ("veggfeste-ja", "fritt-staaende-nei",
+     "**Sengen skal skrus fast i veggen.** Den er ikke beregnet på å stå "
+     "fritt — veggen er sperren på baksiden."),
+]
+
+
+# On a step page the size is what you need; the full trade name is on the
+# hardware page. Nothing is dropped that you cannot look up two pages back.
+def _fast_short(name):
+    for tail in (" forsenket Torx", " varmforsinket"):
+        name = name.replace(tail, "")
+    name = name.replace(", bøyd av flattstål 30×4", "")
+    if name.startswith("Veggfeste"):
+        return "Veggfeste"
+    if name.startswith("Senkhodeskrue"):
+        return "Senkhodeskrue M6×30 + skive + mutter"
+    if name.startswith("Filtknott"):
+        return "Filtknott ⌀40"
+    return name
+
+
+def _img(src, height, alt=""):
+    return f'<img src="{src}" alt="{alt}" height="{height}">'
+
+
+# The glyphs are all drawn to ONE scale, and each carries that scale in the
+# height of its viewBox - a wood screw is 120 units tall, the big angle
+# bracket 386. Rendering every glyph to the same pixel height would throw
+# that away and make a 90 mm bracket look like a 5 mm screw, so the height in
+# the page is taken from the drawing instead. SCREW_UNITS is the reference.
+SCREW_UNITS = 120.0
+
+
+def _glyph_height(path, screw_px, cap=None):
+    with open(path, encoding="utf-8") as fh:
+        head = fh.read(4000)
+    m = re.search(r'viewBox="[-\d.]+\s+[-\d.]+\s+[-\d.]+\s+([\d.]+)"', head)
+    units = float(m.group(1)) if m else SCREW_UNITS
+    h = round(screw_px * units / SCREW_UNITS)
+    return min(h, cap) if cap else max(h, 12)
 
 
 def emit_montering(G, root, steps, idx):
-    """docs/MONTERING.md - the picture guide. Same steps, same numbers."""
-    L = [MONTERING_HEAD, "# Montering\n\n",
-         "Ett bilde per steg. Grått er det som allerede står. Farget er det "
-         "du setter opp nå.\n\n",
-         "Sengen står inntil bakveggen og begge sidevegger. **Bygg bakfra og "
-         "utover.** Rekkefølgen er ikke valgfri.\n\n",
-         "Full tekst til hvert steg: [byggesteg](generated/byggesteg.md). "
-         "Verktøy, beslag, ledd og sikkerhet: [ASSEMBLY.md](ASSEMBLY.md).\n\n",
-         "---\n\n## Delene\n\n"]
+    """docs/MONTERING.md - the pictorial manual. Same steps, same numbers.
 
-    rows = cut_table(G)
+    Page 1 is the cover, page 2 the preparation pictograms, page 3 the
+    hardware inventory, page 4 the part inventory, then one page per step.
+    Everything on those pages is derived: the drawings from the model, the
+    counts from JOINTS and the cut list, the step order from build_steps().
+    """
+    tools_dir = os.path.dirname(os.path.abspath(__file__))
+    if tools_dir not in sys.path:
+        sys.path.insert(0, tools_dir)
+    import gen_glyphs
+
+    img_dir = os.path.join(root, "docs", "img")
+    total_fast = hardware_total(steps)          # also asserts the step counts
+    glyph = gen_glyphs.emit_fastener_glyphs(sorted(total_fast),
+                                            os.path.join(img_dir, "beslag"))
+    pikto = gen_glyphs.emit_pictograms(os.path.join(img_dir, "ikon"))
+
+    def gimg(name, screw_px, cap=None):
+        f = glyph[name]
+        h = _glyph_height(os.path.join(img_dir, "beslag", f), screw_px, cap)
+        return _img("img/beslag/" + f, h, name)
+
+    # ----- page 1: cover ---------------------------------------------------
+    parts_rows = cut_table(G)
+    n_parts = sum(r[3] for r in parts_rows)
+    n_steps = sum(1 for st in steps if st["n"] > 0)
+    L = [MONTERING_HEAD,
+         "# HANNA\n\n",
+         "## Loftseng med sofa, bord og ekstraseng under\n\n",
+         "![HANNA](img/hanna-hero.png)\n\n",
+         "| Bredde | Dybde | Høyde |\n|---:|---:|---:|\n",
+         f"| **{G.WALL_SPAN} mm** | **{G.OVERALL_DEPTH} mm** | "
+         f"**{G.POST_HEIGHT} mm** |\n\n",
+         f"{n_parts} deler · {n_steps} steg · 2 personer · "
+         f"madrass {G.WALL_SPAN} × {G.MATTRESS_W} mm\n\n",
+         "Sengen står inntil bakveggen og inntil begge sidevegger, og skrus "
+         "fast i bakveggen. **Bygg bakfra og utover.**\n\n",
+         "Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). "
+         "Full steg-for-steg-tekst: [byggesteg](generated/byggesteg.md).\n\n"]
+
+    # ----- page 2: before you start ---------------------------------------
+    L.append("---\n\n# Før du begynner\n\n")
+    L.append("**Svart strek** er delen du setter opp nå. "
+             "**Grå strek** er det som allerede står.\n\n")
+    L.append("| Slik | Ikke slik | |\n|:---:|:---:|---|\n")
+    for do, dont, line in PREP:
+        yes = (_img("img/ikon/" + pikto[do], 72, do) + " "
+               + _img("img/ikon/" + pikto["hake"], 26, "ja"))
+        no = ("" if dont is None else
+              _img("img/ikon/" + pikto[dont], 72, dont) + " "
+              + _img("img/ikon/" + pikto["kryss"], 26, "nei"))
+        L.append(f"| {yes} | {no} | {line} |\n")
+    L.append("\n")
+
+    # ----- page 3: hardware -----------------------------------------------
+    L.append("---\n\n# Beslag\n\n")
+    L.append("| | |\n|:---:|---|\n")
+    for name, qty in sorted(total_fast.items(), key=lambda kv: (-kv[1], kv[0])):
+        L.append(f"| {gimg(name, 44)} **{qty}x** | {name} |\n")
+    L.append("\nHvor hver enkelt går, og hva som forbores: "
+             "[beslagliste](generated/beslagliste.md).\n\n")
+
+    # ----- page 4: parts ---------------------------------------------------
+    L.append("---\n\n# Delene\n\n")
     L.append("| Del | Dim. | Lengde | Ant. |\n|---|---|---:|---:|\n")
-    total = 0
-    for no_name, section, length, qty, _sp, _en in rows:
-        total += qty
+    for no_name, section, length, qty, _sp, _en in parts_rows:
         L.append(f"| {no_name} | {section} | {_fmt(length)} | **{qty}** |\n")
-    L.append(f"\n**{total} deler.** Posisjoner: "
+    L.append(f"\n**{n_parts} deler.** Posisjoner: "
              "[kappliste](generated/kappliste.md). Hva du skal kjøpe: "
              "[innkjøpsliste](generated/innkjopsliste.md).\n\n")
 
+    # ----- the step pages --------------------------------------------------
+    order = [j["id"] for j in JOINTS]
     for st in steps:
         L.append("---\n\n")
-        L.append(f"## {st['n']}\n\n### {st['title']}\n\n")
+        L.append(f"# {st['n']}\n\n")
+        L.append(f"## {st['title']}\n\n")
         if st.get("image", True) and st["camera"]:
-            L.append(f"![Steg {st['n']} — {st['title']}]"
-                     f"(img/steg-{st['n']:02d}.png)\n\n")
-        parts = step_part_summary(G, st, idx)
-        for pline in parts:
-            L.append(f"* {pline}\n")
-        if parts:
+            L.append(f"![Steg {st['n']}](img/steg-{st['n']:02d}.png)\n\n")
+
+        rows = step_part_rows(G, st, idx)
+        if rows:
+            L.append("| Ant. | Del | Dim. | Lengde |\n|---:|---|---|---:|\n")
+            for qty, name, section, length in rows:
+                L.append(f"| **{qty}×** | {name} | {section} | {length} |\n")
             L.append("\n")
-        for f in step_fastener_summary(st):
-            L.append(f"🔩 {f}\n\n")
+
+        fast = step_fastener_rows(st)
+        if fast:
+            L.append("| | |\n|:---:|---|\n")
+            for name, qty in fast:
+                L.append(f"| {gimg(name, 30, cap=72)} **{qty}x** | "
+                         f"{_fast_short(name)} |\n")
+            L.append("\n")
+
         if st["joints"]:
-            order = [j["id"] for j in JOINTS]
-            L.append("Ledd: " + ", ".join(
+            L.append("Ledd " + ", ".join(
                 f"**{j}**" for j in sorted(st["joints"], key=order.index))
                 + " → [beslagliste](generated/beslagliste.md)\n\n")
         for c in st["check"][:1]:
             L.append(f"⚠️ {c}\n\n")
-        L.append(f"[Full tekst til steg {st['n']}]"
+        L.append(f"[Steg {st['n']} i ord]"
                  f"(generated/byggesteg.md#steg-{st['n']}"
                  f"--{_anchor(st['title'])})\n\n")
 
     L.append("---\n\n")
-    L.append("Bildene i `docs/img/` er sjekket inn i git. De lages på nytt "
-             "med `mise run montering`, som trenger macOS (usdrecord) og "
-             "Swift — derfor ligger de ferdig i repoet, slik at denne "
-             "veiledningen kan leses og skrives ut uten verktøykjeden.\n")
+    L.append("Tegningene i `docs/img/` er projisert ut av modellen og sjekket "
+             "inn i git. De lages på nytt med `mise run montering`.\n")
     path = os.path.join(root, "docs", "MONTERING.md")
     write(path, "".join(L))
 

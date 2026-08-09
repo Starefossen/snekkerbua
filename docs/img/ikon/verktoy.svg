@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" preserveAspectRatio="xMinYMid meet">
+  <title>Verktøy: drill, vater, målebånd, vinkelhake</title>
+  <g fill="none" stroke="#111" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="14" y="92" width="34" height="12"/>
+    <rect x="46" y="78" width="26" height="40" rx="3"/>
+    <path d="M 72 70 L 150 70 L 160 86 L 160 122 L 126 122 L 120 152 L 126 184 L 74 184 L 80 152 L 74 122 L 72 122 Z"/>
+    <rect x="70" y="180" width="62" height="28" rx="7"/>
+    <path d="M 74 126 L 62 134 L 74 142" stroke-width="7.5"/>
+    <rect x="202" y="96" width="184" height="46" rx="7"/>
+    <rect x="278" y="106" width="46" height="26" rx="9"/>
+    <circle cx="301" cy="119" r="8" stroke-width="7.5"/>
+    <line x1="224" y1="104" x2="224" y2="134" stroke-width="7.5"/>
+    <line x1="364" y1="104" x2="364" y2="134" stroke-width="7.5"/>
+    <rect x="400" y="82" width="86" height="86" rx="16"/>
+    <circle cx="443" cy="125" r="19" stroke-width="7.5"/>
+    <path d="M 486 110 L 546 110 L 546 138 L 486 138"/>
+    <rect x="546" y="102" width="14" height="44" rx="3"/>
+    <line x1="502" y1="110" x2="502" y2="122" stroke-width="7.5"/>
+    <line x1="518" y1="110" x2="518" y2="122" stroke-width="7.5"/>
+    <line x1="534" y1="110" x2="534" y2="122" stroke-width="7.5"/>
+    <rect x="594" y="50" width="36" height="148" rx="4"/>
+    <path d="M 630 146 L 744 146 L 744 174 L 630 174 Z"/>
+    <line x1="664" y1="146" x2="664" y2="158" stroke-width="7.5"/>
+    <line x1="692" y1="146" x2="692" y2="158" stroke-width="7.5"/>
+    <line x1="720" y1="146" x2="720" y2="158" stroke-width="7.5"/>
+  </g>
+</svg>

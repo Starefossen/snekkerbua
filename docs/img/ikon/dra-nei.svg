@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" preserveAspectRatio="xMinYMid meet">
+  <title>Ikke dra delene over gulvet</title>
+  <g fill="none" stroke="#111" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="10" y1="206" x2="230" y2="206"/>
+    <rect x="30" y="154" width="126" height="44" rx="4"/>
+    <line x1="78" y1="118" x2="206" y2="118"/>
+    <path d="M 194.74 124.5 L 206 118 L 194.74 111.5"/>
+    <line x1="18" y1="214" x2="34" y2="200" stroke-width="7.5"/>
+    <line x1="44" y1="214" x2="60" y2="200" stroke-width="7.5"/>
+    <line x1="70" y1="214" x2="86" y2="200" stroke-width="7.5"/>
+    <circle cx="120" cy="120" r="110" stroke-width="14.0"/>
+    <line x1="42.22" y1="197.78" x2="197.78" y2="42.22" stroke-width="14.0"/>
+  </g>
+</svg>

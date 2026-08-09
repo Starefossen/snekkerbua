@@ -622,7 +622,7 @@
   <text x="500" y="2410" class="sml" text-anchor="start">J-nr = sammenføyning, se docs/generated/beslagliste.md</text>
   <text x="1720" y="2234" class="sml" text-anchor="start">Alle mål i mm.</text>
   <text x="1720" y="2278" class="sml" text-anchor="start">Forbor hver eneste treskrue – diameter per ledd står i beslaglista.</text>
-  <text x="1720" y="2322" class="sml" text-anchor="start">Ingen bolter, ingen forsenkte boltehoder, ingen forsenking ⌀22 eller ⌀16.</text>
+  <text x="1720" y="2322" class="sml" text-anchor="start">Ingen bolter og ingen forsenkte boltehoder – bare forborede treskruer.</text>
   <text x="1720" y="2366" class="sml" text-anchor="start">De to bakre hjørnestolpene ligger nøyaktig bak de fremre i denne visningen.</text>
   <text x="-876" y="2506" class="sml" text-anchor="start">Bakre langside står mot vegg (Y = −48): ingen rekkverksbord bak; bakre hjørnestolper (36×98) står I bakre vangeplan og er kappet i Z 1065, så bakre sidevange bærer rett ned på dem. Se end-elevation.svg.</text>
 </svg>

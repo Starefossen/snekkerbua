@@ -350,11 +350,11 @@
 
   <!-- ================================================== resolved note -->
   <rect x="1240" y="2660" width="2120" height="185" class="flagbox"/>
-  <text x="1264" y="2700" class="leg" text-anchor="start">J13c LØST – DEN BAKRE NEDHOLDEREN ER SNUDD</text>
-  <text x="1264" y="2736" class="sml" text-anchor="start">Krokplatene grep opprinnelig ned BAK den bakre benkevangen. Etter at hele baksiden ble trukket inn i vangeplanet er den flaten</text>
-  <text x="1264" y="2768" class="sml" text-anchor="start">VEGGEN, og der er det ingen plass igjen. Platene er derfor snudd: de henger ned FORAN vangen og haker seg inn UNDER den.</text>
-  <text x="1264" y="2800" class="sml" text-anchor="start">Ingenting av dem kommer på veggsiden. I bordstilling henger de samme platene fritt like foran bordbærelekta og virker der som</text>
-  <text x="1264" y="2832" class="sml" text-anchor="start">stopp framover; bakkanten trenger ingen nedholder i bordstilling – et bord belastes nedover.</text>
+  <text x="1264" y="2700" class="leg" text-anchor="start">J13c – DEN BAKRE NEDHOLDEREN GRIPER FORFRA</text>
+  <text x="1264" y="2736" class="sml" text-anchor="start">Krokplatene henger ned FORAN den bakre benkevangen og haker seg inn UNDER den. Bakflaten av vangen ligger i veggplanet, og</text>
+  <text x="1264" y="2768" class="sml" text-anchor="start">den flaten ER VEGGEN: der er det ingen plass til et beslag. Derfor griper platene forfra, og ingenting av dem kommer på veggsiden.</text>
+  <text x="1264" y="2800" class="sml" text-anchor="start">I bordstilling henger de samme platene fritt like foran bordbærelekta og virker der som stopp framover; bakkanten trenger ingen</text>
+  <text x="1264" y="2832" class="sml" text-anchor="start">nedholder i bordstilling – et bord belastes nedover.</text>
 
   <!-- ================================================== legend -->
   <rect x="90" y="2690" width="1120" height="300" class="legbox"/>

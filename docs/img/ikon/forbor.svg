@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" preserveAspectRatio="xMinYMid meet">
+  <title>Forbor før du skrur</title>
+  <g fill="none" stroke="#111" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 24 156 L 176 156 L 216 128 L 64 128 Z"/>
+    <path d="M 24 156 L 24 200 L 176 200 L 176 156"/>
+    <path d="M 176 200 L 216 172 L 216 128"/>
+    <rect x="86" y="12" width="28" height="34" rx="3"/>
+    <path d="M 86 46 L 114 46 L 114 114 L 100 132 L 86 114 Z"/>
+    <path d="M 86 60 L 114 47" stroke-width="7.5"/>
+    <path d="M 86 80 L 114 67" stroke-width="7.5"/>
+    <path d="M 86 100 L 114 87" stroke-width="7.5"/>
+    <line x1="100" y1="138" x2="100" y2="192" stroke-width="7.5" stroke-dasharray="14 12"/>
+    <line x1="160" y1="30" x2="160" y2="78"/>
+    <path d="M 150 66 L 160 82 L 170 66"/>
+  </g>
+</svg>

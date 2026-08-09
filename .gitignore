@@ -18,11 +18,18 @@ bed_frame.bin
 # The generated DOCUMENTATION is tracked on purpose and must not be ignored:
 #   docs/generated/*.md   the tables docs/ASSEMBLY.md links to
 #   docs/MONTERING.md     the pictorial guide
-#   docs/img/steg-*.png   one render per build step
+#   docs/img/steg-*.*     one line drawing per build step
+#   docs/img/hanna-hero.* the cover drawing
+#   docs/img/beslag/      the fastener glyphs
+#   docs/img/ikon/        the preparation pictograms
 # They are rebuilt by `mise run build` and `mise run montering`, but the
 # picture guide has to be readable (and printable) on a machine that has
-# neither the Python toolchain nor the macOS USD tools, so the output is
-# committed rather than regenerated on demand.
+# neither the Python toolchain nor rsvg-convert, so the output is committed
+# rather than regenerated on demand.
+
+# The shaded reference renders of the same steps are NOT tracked - they need
+# the macOS USD tools, and the manual does not use them.
+docs/img/skyggelagt/
 
 __pycache__/
 *.pyc

@@ -713,10 +713,6 @@ BOARD_W = 95         # 21x95 board, width      - D7: the back table ledger ONLY
 # "the board stock" - it is the stock of the bed: 32 of the 67 pieces.
 BOARD36_T = 36       # 36x98 board, thickness  [was 34, U1]
 BOARD36_W = 98       # 36x98 board, width
-# COMPAT: tools/gen_doc_tables.py (owned by the docs round) still reads the v10
-# names. Delete these two lines once that round has renamed its references.
-BOARD34_T = BOARD36_T
-BOARD34_W = BOARD36_W
 
 GUARD_T = BOARD36_T  # guard boards, thickness (Y) - FRONT only after W1
 GUARD_W = BOARD36_W  # guard boards, width (Z)
