@@ -1,0 +1,16 @@
+[tools]
+python = "3.11"
+
+[tasks.install]
+description = "Install Python dependencies"
+run = "pip install -r requirements.txt"
+
+[tasks.build]
+description = "Run the script to generate the 3D models (.step, .stl, .glb)"
+run = "python generate_bed_frame.py"
+depends = ["install"]
+
+[tasks.view]
+description = "Preview the generated 3D model in FreeCAD"
+run = "open -a FreeCAD bed_frame.step"
+depends = ["build"]
