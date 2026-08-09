@@ -574,6 +574,7 @@ run once at the end of the project:
 
 import math
 import os
+import re
 import tempfile
 
 from build123d import (
@@ -1899,7 +1900,893 @@ PANEL_BATTENS = {id(panel_bed): battens_bed, id(panel_table): battens_table}
 
 
 def mode_parts(panel):
+    """The WOOD. Every cut-list part, in one mode. Fasteners are NOT in here.
+
+    This is the list the cut list, parts.tsv, the overlap check and the
+    connectivity check all run over, and it must stay wood-only: a screw
+    overlaps the two members it ties together on purpose, so it would fail the
+    no-overlap assert on sight.
+    """
     return parts + [mattress, panel] + PANEL_BATTENS[id(panel)]
+
+
+# ===========================================================================
+# FESTEMIDLER - THE JOINT TABLE
+# ===========================================================================
+# THE SINGLE SOURCE. Everything anyone knows about a fastener in this bed is
+# in JOINTS below: what it is called in the shop, how many there are, what to
+# pre-drill, WHICH TWO MEMBERS it ties, and WHICH WAY it is driven. The
+# documentation used to hold the trade names and the counts (in
+# tools/gen_doc_tables.py) while the drawings held the directions (in
+# tools/render_lineart.py), and the only thing keeping the two honest was a
+# hand-written sentence in each. Now the direction is a VECTOR the model
+# derives, the prose is a caption printed off it, and both tools import this.
+#
+# Two kinds of field per joint:
+#
+#   the DOCS fields   id / title / n / drill / side  - what the beslagliste
+#                     prints. `side` is prose about ACCESS ("you can reach it
+#                     from inside the bed at any time"), not about direction:
+#                     direction is machine data now.
+#   the MACHINE fields `contacts` - one row per pair of members that meet,
+#                     with the axis they meet across and, for each kind of
+#                     fastener driven there, where it enters and where it
+#                     goes. `fast` (the shopping line) is DERIVED from it.
+#
+# The member names are the keys of _PART: a regular expression per family, so
+# one row serves a joint and its three mirror images.
+# ---------------------------------------------------------------------------
+_PART = {
+    "post":        r"Corner Post (?:Back|Front) (?:Left|Right)",
+    "post_back":   r"Corner Post Back (?:Left|Right)",
+    "post_front":  r"Corner Post Front (?:Left|Right)",
+    "rail":        r"Upper Side Rail (?:Back|Front)",
+    "rail_back":   r"Upper Side Rail Back",
+    "rail_front":  r"Upper Side Rail Front",
+    "bench_rail":  r"Bench Rail (?:Back \(continuous\)"
+                   r"|Front (?:Left|Right) \(segment\))",
+    "bench_back":  r"Bench Rail Back \(continuous\)",
+    "bench_front": r"Bench Rail Front (?:Left|Right) \(segment\)",
+    "bench_blk_b": r"Bench Rail Bearing Block Back (?:Left|Right)",
+    "bench_blk_f": r"Bench Rail Bearing Block Front (?:Left|Right)",
+    "ledger":      r"Table Ledger Back",
+    "beam":        r"End Beam (?:Left|Right)",
+    "beam_blk":    r"End Beam Bearing Block (?:Left|Right) (?:Back|Front)",
+    "stub":        r"Bench Stub Leg (?:Back|Front) (?:Left|Right)",
+    "upright":     r"Ladder Upright (?:Left|Right)",
+    "rung":        r"Ladder Rung_\d+",
+    "rung_blk":    r"Rung Block (?:Left|Right)_\d+",
+    "guard":       r"Guard Rail Front (?:Left|Right)_\d+",
+    "guard_host":  r"(?:Corner Post Front|Ladder Upright) (?:Left|Right)",
+    "bed_slat":    r"Bed Slat_\d+",
+    "bench_slat":  r"Bench Slat (?:Left|Right)_\d+",
+    "panel":       r"Movable Panel \(bed mode\)",
+    "batten":      r"Panel Stiffener Batten (?:Left|Right) \(bed mode\)",
+}
+
+# The Norwegian name of each family, for the captions the emitters print.
+PART_NO = {
+    "post": "hjørnestolpe", "post_back": "bakre hjørnestolpe",
+    "post_front": "fremre hjørnestolpe", "rail": "sidevange",
+    "rail_back": "bakre sidevange", "rail_front": "fremre sidevange",
+    "bench_rail": "benkevange", "bench_back": "bakre benkevange",
+    "bench_front": "fremre benkevange",
+    "bench_blk_b": "bærekloss under bakre benkevange",
+    "bench_blk_f": "bærekloss under fremre benkevange",
+    "ledger": "bordbærelekt", "beam": "endebjelke",
+    "beam_blk": "bærekloss under endebjelke", "stub": "stubbefot",
+    "upright": "stigevange", "rung": "rungetrinn", "rung_blk": "stigekloss",
+    "guard": "rekkverksbord", "guard_host": "hjørnestolpe / stigevange",
+    "bed_slat": "køyespile", "bench_slat": "benkespile",
+    "panel": "løs plate", "batten": "avstivningslekt",
+}
+
+
+def _is_part(kind, label):
+    return re.fullmatch(_PART[kind], label) is not None
+
+
+# ---------------------------------------------------------------------------
+# EC5 GEOMETRY - AND THE RULE THAT SIZES EVERY ROW
+# ---------------------------------------------------------------------------
+# A pre-drilled wood screw wants 3d of clear edge all round and 4d between
+# itself and the next one. Written out for a row of n screws that has to live
+# on one contact face:
+#
+#       (n - 1) * 4d  +  2 * 3d   <=   the face
+#
+# That is the FITS-THE-FACE rule, and it is the single most useful assert in
+# this file, because the count in a joint table is exactly the kind of number
+# that gets written down once and never checked against the wood. Two screws
+# of 6 mm want 60 mm of face. A 36 x 48 bearing block offers 48. So a bearing
+# block takes ONE screw, not two - see the load note at J1-B.
+SCREW_D = 6                       # the frame screw
+MIN_EDGE = 3 * SCREW_D            # 18 mm - the number quoted in the docs
+MIN_SPACING_GRAIN = 5 * SCREW_D   # 30 mm - two screws stacked along the grain
+MIN_SPACING_CROSS = 4 * SCREW_D   # 24 mm - two screws stacked across it
+FIT_TOL = 1e-6
+
+
+def min_edge(d):
+    return 3 * d
+
+
+def min_spacing(d):
+    return 4 * d
+
+
+def max_row(avail, d):
+    """How many d-screws a face `avail` mm across can legally carry in a row."""
+    if avail + FIT_TOL < 2 * min_edge(d):
+        return 0
+    return int((avail - 2 * min_edge(d)) / min_spacing(d) + FIT_TOL) + 1
+
+
+def row_positions(lo, hi, n, d, what):
+    """The centres of `n` screws in one row across the face [lo, hi].
+
+    Spread out rather than bunched: the row opens up until it has 1,5 x 3d of
+    edge at each end, and only then does it stop, so a two-screw row in a 98
+    mm rail lands 44 mm apart and not on the bare 4d minimum. It never opens
+    past that, because the edge is the thing that splits.
+    """
+    avail = hi - lo
+    need = (n - 1) * min_spacing(d) + 2 * min_edge(d)
+    assert avail + FIT_TOL >= need, (
+        f"{what}: {n} skruer a d{d:g} trenger {need:g} mm flate "
+        f"((n-1) x 4d + 2 x 3d), men flaten er {avail:g} mm. "
+        f"Lovlig antall her er {max_row(avail, d)}.")
+    mid = (lo + hi) / 2
+    if n == 1:
+        return [mid]
+    span = max((n - 1) * min_spacing(d), avail - 3 * min_edge(d))
+    step = span / (n - 1)
+    return [mid - span / 2 + i * step for i in range(n)]
+
+
+_SIZE_RE = re.compile(r"(\d+)\s*[x×]\s*(\d+)")
+
+
+def fastener_size(name):
+    """(diameter, length) in mm, read off the trade name."""
+    m = _SIZE_RE.search(name)
+    if not m:
+        return (5.0, 50.0)
+    return (float(m.group(1)), float(m.group(2)))
+
+
+# ---------------------------------------------------------------------------
+# THE BRACKETS
+# ---------------------------------------------------------------------------
+# Three bent-plate parts, each named once here and modelled from these numbers
+# in the geometry block below. `leg` is how far each flange reaches along the
+# member it lies on, `width` how wide the flange is across it, `t` the steel.
+BRACKETS = {
+    "vinkel90": dict(name="Vinkelbeslag 90×90×40×2,5 varmforsinket",
+                     leg=90.0, width=40.0, t=2.5),
+    # 20 mm wide, not the 40 the first cut of this table said: the flange has
+    # to lie inside a 36 mm post face without touching the wall plane behind
+    # it, and under a 21 mm ledger. 40 would stand 2 mm proud of both.
+    "vinkel40": dict(name="Vinkelbeslag 40×40×20", leg=40.0, width=20.0,
+                     t=2.0),
+    "u":        dict(name="U-brakett, bøyd av flattstål 30×4",
+                     leg=60.0, width=30.0, t=4.0),
+    "krok":     dict(name="Krokplate, bøyd av flattstål 30×4",
+                     leg=70.0, width=30.0, t=4.0),
+}
+
+
+def drive(name, per, frm=None, into=None, axis=None, sign=None, row=None,
+          row_sign=None, reach=None, toe=None, bracket=None, exempt=None):
+    """One kind of fastener driven at one contact patch.
+
+    `name`    the trade name, in full - the same string the shopping list uses.
+    `per`     how many of them this ONE joint takes.
+    `frm`     the member the screw is driven THROUGH. It enters on that
+              member's own outer face and travels along the patch normal into
+              the other member. The ordinary case.
+    `into`    + `axis`: a fastener that does NOT cross the patch - a bracket
+              flange screwed sideways into a stub leg, say. It travels along
+              `axis` into the named member. `sign` pins the direction where
+              the "from the room side of the bed" default is wrong.
+    `row`     the axis the screws of this drive are laid out along. Defaults
+              to the longer of the two axes of the contact face, which is
+              right nearly everywhere; J8 is the exception, and says so.
+    `row_sign` for an `into` drive, which way the bracket flange runs out of
+              the corner: +1 / -1 / "outboard" (away from the middle of the
+              bed) / None (into whichever side of the member has more room).
+    `reach`   how far that flange runs, mm. Defaults to the bracket's `leg`.
+    `toe`     this is a SKEW screw. dict(face=axis, face_sign=+-1, deg=,
+              back=): it enters the `frm` member's face at `face`/`face_sign`,
+              `back` mm from the joint, and is tilted `deg` degrees off that
+              face's normal, towards the member it grips.
+    `bracket` the key in BRACKETS this row IS - then it is a plate, not a screw.
+    `exempt`  a Norwegian reason the through-screw fit rule does not decide
+              this one: a toe screw, or a bolt that takes a nut. Anything
+              without a reason has to obey.
+    """
+    return dict(name=name, per=per, frm=frm, into=into, axis=axis, sign=sign,
+                row=row, row_sign=row_sign, reach=reach, toe=toe,
+                bracket=bracket, exempt=exempt)
+
+
+# A toe screw is quoted by the face it enters, how far back from the joint it
+# starts and how far it is tilted off that face's normal. Both of the bed's
+# skew joints are here and nowhere else.
+TOE_BENCH_POST = dict(face=1, face_sign=1, deg=65.0, back=34.0)
+TOE_STUB_RAIL = dict(face=0, face_sign="inboard", deg=60.0, back=35.0)
+
+JOINTS = [
+    dict(id="J1", title="Endebjelke → hjørnestolpe", n=4,
+         drill="⌀6 gjennom bjelken, ⌀4 i stolpen",
+         side="Fra bjelkens utside, inn mot stolpen — helt inne i sengen, "
+              "tilgjengelig hele veien",
+         contacts=[dict(a="post", b="beam", axis=0, drives=[
+             drive("Treskrue 6×90 forsenket Torx", 2, frm="beam", row=2)])]),
+    dict(id="J1-B", title="Bærekloss under endebjelke → hjørnestolpe", n=4,
+         drill="⌀6 gjennom klossen, ⌀4 i stolpen",
+         side="Fra klossens frie ende, inn i stolpen",
+         contacts=[dict(a="beam_blk", b="post", axis=0, drives=[
+             drive("Treskrue 6×90 forsenket Torx", 1, frm="beam_blk")])]),
+    dict(id="J2", title="Fremre sidevange → fremre hjørnestolpe", n=2,
+         drill="⌀6 gjennom stolpen, ⌀4 i vangen",
+         side="Fra stolpens forside, gjennom stolpen inn i vangen",
+         contacts=[dict(a="post_front", b="rail_front", axis=1, drives=[
+             drive("Treskrue 6×80 forsenket Torx", 2, frm="post_front")])]),
+    dict(id="J2-B", title="Bakre sidevange → bakre hjørnestolpe "
+                          "(vangen hviler på stolpetoppen)", n=2,
+         drill="⌀6 gjennom vangen, ⌀4 i stolpens endeved; forsenk hodet godt "
+               "under vangens overkant så køyespilene ligger flatt",
+         side="Rett ned gjennom vangen i stolpetoppen, mens bakrammen ligger "
+              "flatt på gulvet. Ingenting på veggsiden, og ingen kloss: "
+              "vangen står 12 mm proud av den tynnere stolpen, så et rett "
+              "beslag ville uansett ikke ligget an mot begge",
+         contacts=[dict(a="post_back", b="rail_back", axis=2, drives=[
+             drive("Treskrue 6×120 forsenket Torx", 2, frm="rail_back")])]),
+    dict(id="J3", title="Stigevange → fremre sidevange", n=2,
+         drill="⌀6 gjennom stigevangen, ⌀4 i sidevangen",
+         side="Fra stigevangens forside, inn i vangen",
+         contacts=[dict(a="upright", b="rail_front", axis=1, drives=[
+             drive("Treskrue 6×80 forsenket Torx", 3, frm="upright")])]),
+    dict(id="J4", title="Rungetrinn → stigekloss og stigevange "
+                        "(per trinnende)", n=8,
+         drill="⌀6 gjennom stigevangen inn i trinnenden; ⌀3,5 ned gjennom "
+               "trinnet i klossen",
+         side="6×120 fra utsiden av stigevangen; 5×60 ovenfra ned i klossen",
+         contacts=[
+             dict(a="rung", b="upright", axis=0, drives=[
+                 drive("Treskrue 6×120 forsenket Torx", 1, frm="upright")]),
+             dict(a="rung", b="rung_blk", axis=2, drives=[
+                 drive("Treskrue 5×60 forsenket Torx", 1, frm="rung")])]),
+    dict(id="J5", title="Stigekloss → stigevange", n=8,
+         drill="⌀3,5 gjennom klossen, ⌀3 i vangen",
+         side="Fra stigeåpningen, inn i vangens innside",
+         contacts=[dict(a="upright", b="rung_blk", axis=0, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 1, frm="rung_blk")])]),
+    dict(id="J6", title="Køyespile → sidevange (per spileende)", n=28,
+         drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
+         side="Ovenfra, ned i vangen",
+         contacts=[dict(a="bed_slat", b="rail", axis=2, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 1, frm="bed_slat")])]),
+    dict(id="J7", title="Rekkverksbord → hjørnestolpe / stigevange "
+                        "(per omlegg)", n=8,
+         drill="⌀3,5 gjennom bordet, ⌀3 i stolpen",
+         side="Fra sengesiden, inn i stolpens/stigevangens innside",
+         contacts=[dict(a="guard", b="guard_host", axis=1, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 2, frm="guard")])]),
+    dict(id="J8", title="Fremre benkevange → fremre hjørnestolpe", n=2,
+         drill="⌀6 gjennom stolpen, ⌀4 i vangen",
+         side="Fra stolpens forside, gjennom stolpen inn i vangen",
+         # row=2: the face is 95 wide and 73 tall, so the automatic choice
+         # would stack the pair along the RAIL. They belong stacked up the
+         # POST, the same pattern as J2 - that is the direction the joint
+         # takes moment in.
+         contacts=[dict(a="bench_front", b="post_front", axis=1, drives=[
+             drive("Treskrue 6×80 forsenket Torx", 2, frm="post_front",
+                   row=2)])]),
+    dict(id="J8-B", title="Bakre benkevange → bakre hjørnestolpe "
+                          "(endeskjøt)", n=2,
+         drill="⌀6 skrått gjennom vangen, ⌀4 i stolpen — forbor hele veien, "
+               "dette er en skråskrue nær en ende",
+         side="Skrått fra vangens forside inn i stolpen. Vangen ligger fast "
+              "mellom de to stolpene, så skruene er bånd, ikke opplegg",
+         contacts=[dict(a="bench_back", b="post_back", axis=0, drives=[
+             drive("Treskrue 6×90 forsenket Torx", 2, frm="bench_back",
+                   toe=TOE_BENCH_POST,
+                   exempt="skråskrue gjennom vangens forside nær enden")])]),
+    dict(id="J9-B", title="Bærekloss under bakre benkevange → bakre stolpe",
+         n=2,
+         drill="⌀6 gjennom klossen, ⌀4 i stolpen",
+         side="Fra klossens frie ende, inn i stolpen",
+         contacts=[dict(a="bench_blk_b", b="post_back", axis=0, drives=[
+             drive("Treskrue 6×90 forsenket Torx", 1, frm="bench_blk_b")])]),
+    dict(id="J9-F", title="Bærekloss under fremre benkevange → fremre stolpe",
+         n=2,
+         drill="⌀6 gjennom klossen, ⌀4 i stolpen",
+         side="Fra klossens bakside, inn i stolpen. Kortere skrue enn de "
+              "andre klossene — her er det bare 36 mm stolpe bak klossen",
+         contacts=[dict(a="bench_blk_f", b="post_front", axis=1, drives=[
+             drive("Treskrue 6×70 forsenket Torx", 1, frm="bench_blk_f")])]),
+    dict(id="J10", title="Benkevange → stubbefot", n=4,
+         drill="⌀3 i foten og i vangen; skråskruene forbores ⌀3,5",
+         side="Vinkelbeslaget sitter i hjørnet mellom fotens utside og "
+              "vangens underside, med den ene fliken opp i vangen og den "
+              "andre inn i foten; de to 5×70 er skråskruer nedenfra og opp "
+              "i vangen",
+         contacts=[dict(a="bench_rail", b="stub", axis=2, drives=[
+             drive(BRACKETS["vinkel90"]["name"], 1, into="stub", axis=0,
+                   sign="inboard", row=2, row_sign=-1, bracket="vinkel90"),
+             drive("Treskrue 5×40 forsenket Torx", 2, into="stub", axis=0,
+                   sign="inboard", row=2, row_sign=-1, reach=90.0),
+             drive("Treskrue 5×40 forsenket Torx", 2, into="bench_rail",
+                   axis=2, sign=1, row=0, row_sign="outboard", reach=90.0),
+             drive("Treskrue 5×70 forsenket Torx", 1, frm="stub",
+                   toe=TOE_STUB_RAIL,
+                   exempt="skråskrue nedenfra opp i vangen")])]),
+    dict(id="J11", title="Benkespile → benkevange (per spileende)", n=20,
+         drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
+         side="Ovenfra, ned i benkevangen",
+         contacts=[dict(a="bench_slat", b="bench_rail", axis=2, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 1, frm="bench_slat")])]),
+    dict(id="J12", title="Bordbærelekt → bakre hjørnestolpe (endeskjøt)",
+         n=2,
+         drill="⌀3 i stolpen og i lekta — forboring er et krav, lekta er tynn",
+         side="Beslaget på stolpens innerflate, med den vannrette fliken "
+              "UNDER lektas ende, så lekta har noe å hvile på og ikke bare "
+              "henger i skruer",
+         contacts=[dict(a="post_back", b="ledger", axis=0, drives=[
+             drive(BRACKETS["vinkel40"]["name"], 1, into="post_back", axis=0,
+                   row=2, row_sign=-1, bracket="vinkel40"),
+             drive("Treskrue 5×40 forsenket Torx", 1, into="post_back",
+                   axis=0, row=2, row_sign=-1, reach=40.0),
+             drive("Treskrue 5×40 forsenket Torx", 1, into="ledger", axis=2,
+                   sign=1, row=0, reach=40.0)])]),
+    dict(id="J13a", title="Avstivningslekt → løs plate", n=2,
+         drill="⌀3,5 gjennom platen, forsenk og propp",
+         side="Ovenfra, ned i lektas overkant",
+         contacts=[dict(a="panel", b="batten", axis=2, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 6, frm="panel")])]),
+    dict(id="J13b", title="U-brakett → løs plate (omslutter trinnet)", n=2,
+         drill="⌀6,5 gjennom platen, forsenk ⌀13 i oversiden",
+         side="Ovenfra gjennom platen; mutteren under",
+         spread=dict(axis=0, at=[-140.0, 140.0]),
+         contacts=[dict(a="panel", b="rung", axis=2, drives=[
+             drive(BRACKETS["u"]["name"], 1, frm="panel", bracket="u",
+                   row=1, row_sign=-1),
+             drive("Senkhodeskrue M6×30 + skive M6 + låsemutter M6", 2,
+                   frm="panel", row=1, row_sign=-1,
+                   reach=BRACKETS["u"]["leg"],
+                   exempt="gjennomgående bolt i platen, mutter under")])]),
+    dict(id="J13c", title="Krokplate → løs plate (griper om benkevangens "
+                          "forkant)", n=2,
+         drill="⌀6,5 gjennom platen, forsenk ⌀13 i oversiden",
+         side="Ovenfra gjennom platen; kroken henger ned foran vangen og "
+              "vender innover under den. Plasseres i X klar av "
+              "avstivningslektene",
+         spread=dict(axis=0, at=[-140.0, 140.0]),
+         contacts=[dict(a="panel", b="bench_back", axis=2, drives=[
+             drive(BRACKETS["krok"]["name"], 1, frm="panel", bracket="krok",
+                   row=1, row_sign=1),
+             drive("Senkhodeskrue M6×30 + skive M6 + låsemutter M6", 2,
+                   frm="panel", row=1, row_sign=1,
+                   reach=BRACKETS["krok"]["leg"],
+                   exempt="gjennomgående bolt i platen, mutter under")])]),
+    dict(id="J14", title="Veggfeste — gjennom den bakre sidevangen inn i "
+                         "stenderne", n=1,
+         fast=[("Veggfeste etter veggtype (treskrue 8×100 i stender, eller "
+                "plugg + skrue i mur)", 6)],
+         drill="⌀8 gjennom vangen, forsenk for hodet; veggen etter festetype",
+         side="Rett gjennom vangen inn i veggen. Vangen ligger flatt mot "
+              "veggen i hele sin lengde, så festet trenger ingen kloss og "
+              "ingen brakett",
+         contacts=[]),
+    dict(id="J15", title="Filtknott under stolpe og stubbefot", n=8,
+         fast=[("Filtknott / møbeltapp ⌀40", 1)],
+         drill="—",
+         side="Slås i endeveden før reisning",
+         contacts=[]),
+]
+JOINT = {j["id"]: j for j in JOINTS}
+
+# `fast` - the shopping line - is DERIVED from the machine data wherever there
+# is machine data, so the beslagliste cannot say 2 x 6x90 while the model
+# drives one. The two joints with no wood on the other side (the wall fixing
+# and the felt pads) carry theirs by hand; they are the only ones.
+for _j in JOINTS:
+    if not _j["contacts"]:
+        assert "fast" in _j, f"{_j['id']}: no contacts and no fast"
+        continue
+    _fast = {}
+    _order = []
+    for _c in _j["contacts"]:
+        for _dr in _c["drives"]:
+            if _dr["name"] not in _fast:
+                _order.append(_dr["name"])
+            _fast[_dr["name"]] = _fast.get(_dr["name"], 0) + _dr["per"]
+    _j["fast"] = [(nm, _fast[nm]) for nm in _order]
+
+
+# ---------------------------------------------------------------------------
+# WHERE THE JOINTS ARE - READ OFF THE WOOD
+# ---------------------------------------------------------------------------
+# Every part in this bed is an axis-aligned box and carries its own extents,
+# so the places where fasteners are driven are not listed by hand: two boxes
+# that share a face, with area behind it, ARE a joint. The centre of that
+# shared face is the joint and its normal is the axis the two meet across.
+# The JOINTS table above says what is driven at each; nothing says WHERE.
+CONTACT_TOL = 0.51        # two faces this close count as touching, mm
+MIN_CONTACT = 900.0       # ignore contact patches smaller than this, mm2
+
+
+def contacts(new_parts, other_parts=()):
+    """[(point3, axis, sign, area, part_a, part_b), ...], biggest first."""
+    out = []
+    new_parts = list(new_parts)
+    other_parts = list(other_parts)
+    pairs = [(a, b) for i, a in enumerate(new_parts)
+             for b in new_parts[i + 1:]]
+    pairs += [(a, b) for a in new_parts for b in other_parts]
+    for a, b in pairs:
+        ea, eb = a.extents, b.extents
+        for k in range(3):
+            for sign, touch in ((1, abs(ea[k][1] - eb[k][0])),
+                                (-1, abs(ea[k][0] - eb[k][1]))):
+                if touch > CONTACT_TOL:
+                    continue
+                span = []
+                for j in range(3):
+                    if j == k:
+                        continue
+                    lo = max(ea[j][0], eb[j][0])
+                    hi = min(ea[j][1], eb[j][1])
+                    span.append((j, lo, hi))
+                if any(hi - lo <= CONTACT_TOL for _j, lo, hi in span):
+                    continue
+                area = 1.0
+                for _j, lo, hi in span:
+                    area *= hi - lo
+                if area < MIN_CONTACT:
+                    continue
+                p = [0.0, 0.0, 0.0]
+                p[k] = ea[k][1] if sign > 0 else ea[k][0]
+                for j, lo, hi in span:
+                    p[j] = (lo + hi) / 2
+                out.append((tuple(p), k, sign, area, a, b))
+    out.sort(key=lambda c: -c[3])
+    return out
+
+
+def patch_window(contact):
+    """{axis: (lo, hi)} for the two axes the shared face spans."""
+    k = contact[1]
+    pa, pb = contact[4], contact[5]
+    return {j: (max(pa.extents[j][0], pb.extents[j][0]),
+                min(pa.extents[j][1], pb.extents[j][1]))
+            for j in range(3) if j != k}
+
+
+def contact_row(contact):
+    """(joint, contact-row, part matching row['a'], part matching row['b']).
+
+    Four Nones when the patch is nobody's joint - two parts that simply bear
+    on one another. There is no ambiguity to resolve: no two joints in this
+    bed tie the same pair of families across the same axis.
+    """
+    a, b, axis = contact[4], contact[5], contact[1]
+    for j in JOINTS:
+        for crow in j["contacts"]:
+            if crow["axis"] != axis:
+                continue
+            if _is_part(crow["a"], a.label) and _is_part(crow["b"], b.label):
+                return j, crow, a, b
+            if _is_part(crow["a"], b.label) and _is_part(crow["b"], a.label):
+                return j, crow, b, a
+    return None, None, None, None
+
+
+# ---------------------------------------------------------------------------
+# WHICH WAY A SCREW CAN POSSIBLY GO
+# ---------------------------------------------------------------------------
+# A wood screw through a joint has to do three things at once: pass CLEAR
+# through the member it is driven from, END INSIDE the member it grips, and
+# not come out the far side of it. In millimetres:
+#
+#     thickness(entry) < length < thickness(entry) + thickness(receiver)
+#
+# For most joints in this bed only ONE of the two directions satisfies that -
+# a 6x90 cannot be driven through a 98 mm post into a 48 mm beam, because it
+# would not even reach the beam - and then the direction is not a matter of
+# opinion. It is DERIVED, and the table above is only checked against it.
+# Where both directions fit (a 6x80 through 36 mm into 48 mm works either way
+# round) the rule cannot help and the table decides: reviewed, human data.
+# Where NEITHER fits, the screw is not a straight through-screw at all - a toe
+# screw, or a bolt with a nut - and the drive must say so with `exempt`.
+def screw_fits(entry, receiver, axis, length):
+    t_e = entry.extents[axis][1] - entry.extents[axis][0]
+    t_r = receiver.extents[axis][1] - receiver.extents[axis][0]
+    return t_e < length < t_e + t_r
+
+
+def derived_entry(contact, crow, pa, pb, dr):
+    """(entry member or None, status) - the physics, before the table.
+
+    status: 'utledet'      only one direction is possible; use it.
+            'tvetydig'     both are; the table decides.
+            'unntak'       neither, and the drive says why.
+            'umulig'       neither, and the drive does NOT say why - a bug.
+            'gjelder ikke' not a through-screw (a bracket, or driven along an
+                           axis of its own).
+    """
+    if dr["bracket"] or dr["into"] is not None or dr["frm"] is None:
+        return None, "gjelder ikke"
+    if dr["exempt"]:
+        return None, "unntak"
+    axis = contact[1]
+    _d, length = fastener_size(dr["name"])
+    ok = [p for p, q in ((pa, pb), (pb, pa))
+          if screw_fits(p, q, axis, length)]
+    if len(ok) == 1:
+        return ok[0], "utledet"
+    return None, ("tvetydig" if ok else "umulig")
+
+
+def _member(crow, kind, pa, pb):
+    return pa if crow["a"] == kind else pb
+
+
+def _outboard(axis, member):
+    """+1 / -1: the way from the middle of the bed out past `member`."""
+    return _outboard_at(axis, sum(member.extents[axis]) / 2)
+
+
+def _outboard_at(axis, value):
+    return 1.0 if value > BED_CENTRE[axis] else -1.0
+
+
+def _resolve_sign(word, default, axis=None, at=None):
+    """+1 / -1 out of a drive field. `outboard` / `inboard` are resolved
+    against the middle of the bed at the point the joint actually happens, so
+    one row of table serves a joint and its mirror image."""
+    if word is None:
+        return default
+    if word in ("outboard", "inboard"):
+        out = _outboard_at(axis, at)
+        return out if word == "outboard" else -out
+    return float(word)
+
+
+def drive_axis_sign(contact, crow, pa, pb, dr):
+    """(axis, sign, entry member or None, receiving member) for one drive.
+
+    `into` puts the fastener along its own axis, entering the named member on
+    the face that looks back into the room side of the bed unless `sign` says
+    otherwise. `frm` reads the direction off the patch - and is then CHECKED
+    against the fit rule, which is the primary source. The table is only
+    allowed to agree with it, or to decide where it genuinely cannot.
+    """
+    if dr["into"] is not None:
+        axis = dr["axis"]
+        member = _member(crow, dr["into"], pa, pb)
+        sign = _resolve_sign(dr["sign"], _outboard(axis, member),
+                             axis, contact[0][axis])
+        return axis, sign, None, member
+    axis = contact[1]
+    entry = _member(crow, dr["frm"], pa, pb)
+    target = pb if entry is pa else pa
+    guess, status = derived_entry(contact, crow, pa, pb, dr)
+    assert status != "umulig", (
+        f"{crow['jid']}: {dr['name']} passer ikke gjennom {pa.label} eller "
+        f"{pb.label} langs akse {axis} — verken den ene eller den andre "
+        f"veien. Er det en skråskrue eller en gjennomgående bolt, må "
+        f"drive(...) si det med exempt=...")
+    if status == "utledet":
+        assert guess is entry, (
+            f"{crow['jid']}: tabellen skrur {dr['name']} fra {entry.label}, "
+            f"men den eneste retningen skruen faktisk kan gå er fra "
+            f"{guess.label}. Rett `frm` i JOINTS.")
+    sign = contact[2] if entry is contact[4] else -contact[2]
+    return axis, sign, entry, target
+
+
+def flange(contact, dr, row, member, reach):
+    """(lo, hi, sign): the strip a bracket flange - or the row of screws that
+    goes through one - occupies, running out of the joint corner.
+
+    The corner is the contact plane where the flange lies along the joint
+    normal, and the edge of the shared face where it runs across it. Which of
+    the two ways it then runs is `row_sign`; the default is simply the side
+    the member it lies on has more of.
+    """
+    k = contact[1]
+    win = patch_window(contact)
+    lo_m, hi_m = member.extents[row]
+    here = contact[0][row] if row == k else sum(win[row]) / 2
+    default = 1.0 if (hi_m - here) >= (here - lo_m) else -1.0
+    sign = _resolve_sign(dr["row_sign"], default, row, contact[0][row])
+    start = contact[0][k] if row == k else win[row][1 if sign > 0 else 0]
+    lo, hi = sorted((start, start + sign * reach))
+    return lo, hi, sign, start
+
+
+def _unit(axis, sign):
+    v = [0.0, 0.0, 0.0]
+    v[axis] = float(sign)
+    return tuple(v)
+
+
+# ---------------------------------------------------------------------------
+# THE INSTANCES
+# ---------------------------------------------------------------------------
+# One record per fastener in the bed, with an anchor (the centre of the head,
+# ON THE FACE it is driven from), a unit drive vector and the two members it
+# ties. This is what the geometry block below turns into solids and what the
+# drawings hang their marks on. Nothing downstream re-derives a direction.
+def _place_drive(joint, crow, contact, pa, pb, dr, shift):
+    """Every fastener one drive puts at one joint, as placement records."""
+    kk = contact[1]
+    cp = contact[0]
+    win = patch_window(contact)
+    d, length = fastener_size(dr["name"])
+    what = f"{joint['id']} {dr['name']}"
+
+    def at(p):
+        return tuple(a + b for a, b in zip(p, shift))
+
+    # --- a bracket flange, or the screws that go through one ---------------
+    if dr["into"] is not None:
+        axis, sign, _entry, target = drive_axis_sign(contact, crow, pa, pb, dr)
+        face = (target.extents[axis][0] if sign > 0
+                else target.extents[axis][1])
+        row = dr["row"]
+        reach = dr["reach"] or BRACKETS[dr["bracket"]]["leg"]
+        lo, hi, rsign, corner = flange(contact, dr, row, target, reach)
+        cross = [j for j in range(3) if j not in (axis, row)][0]
+        width = (BRACKETS[dr["bracket"]]["width"] if dr["bracket"]
+                 else min_spacing(d))
+        c0, c1 = target.extents[cross]
+        assert c1 - c0 >= width - FIT_TOL, (
+            f"{what}: en {width:g} mm bred flik får ikke plass på en "
+            f"{c1 - c0:g} mm flate av {target.label}")
+        mid = sum(win[cross]) / 2 if cross in win else (c0 + c1) / 2
+        cpos = min(max(mid, c0 + width / 2), c1 - width / 2)
+        p = [0.0, 0.0, 0.0]
+        p[axis] = face
+        p[cross] = cpos
+        if dr["bracket"]:
+            p[row] = corner
+            return [dict(kind="plate", bracket=dr["bracket"], anchor=at(p),
+                         direction=_unit(axis, sign), run=_unit(row, rsign),
+                         reach=reach, width=width,
+                         t=BRACKETS[dr["bracket"]]["t"],
+                         through=None, into=target)]
+        out = []
+        for v in row_positions(lo, hi, dr["per"], d,
+                               f"{what} (beslagflik {reach:g} mm)"):
+            p[row] = v
+            out.append(dict(kind="screw", anchor=at(list(p)),
+                            direction=_unit(axis, sign), length=length, d=d,
+                            through=None, into=target))
+        return out
+
+    axis, sign, entry, target = drive_axis_sign(contact, crow, pa, pb, dr)
+
+    # --- a toe screw -------------------------------------------------------
+    if dr["toe"]:
+        toe = dr["toe"]
+        f_ax = toe["face"]
+        f_sign = _resolve_sign(toe["face_sign"], 1.0, f_ax, cp[f_ax])
+        face = (entry.extents[f_ax][1] if f_sign > 0
+                else entry.extents[f_ax][0])
+        n_in = [0.0, 0.0, 0.0]
+        n_in[f_ax] = -f_sign
+        t_dir = [0.0, 0.0, 0.0]
+        t_dir[axis] = sign
+        th = math.radians(toe["deg"])
+        vec = tuple(n * math.cos(th) + t * math.sin(th)
+                    for n, t in zip(n_in, t_dir))
+        row = (dr["row"] if dr["row"] is not None
+               else [j for j in range(3) if j not in (f_ax, axis)][0])
+        out = []
+        for v in row_positions(win[row][0], win[row][1], dr["per"], d,
+                               f"{what} (skråskrue)"):
+            p = [0.0, 0.0, 0.0]
+            p[f_ax] = face
+            p[axis] = cp[axis] - sign * toe["back"]
+            p[row] = v
+            out.append(dict(kind="screw", anchor=at(p), direction=vec,
+                            length=length, d=d, through=entry, into=target,
+                            toe=True))
+        return out
+
+    # --- the ordinary through screw, and the plates bolted through one -----
+    face = entry.extents[axis][1] if sign < 0 else entry.extents[axis][0]
+    across = sorted(win)
+    row = (dr["row"] if dr["row"] is not None
+           else max(across, key=lambda j: win[j][1] - win[j][0]))
+    cross = [j for j in across if j != row][0]
+    reach = dr["reach"] or (BRACKETS[dr["bracket"]]["leg"] if dr["bracket"]
+                            else None)
+    if reach is not None:
+        lo, hi, rsign, corner = flange(contact, dr, row, entry, reach)
+    else:
+        lo, hi, rsign = win[row][0], win[row][1], 1.0
+        corner = sum(win[row]) / 2
+    p = [0.0, 0.0, 0.0]
+    p[axis] = face
+    p[cross] = sum(win[cross]) / 2
+    if dr["bracket"]:
+        b = BRACKETS[dr["bracket"]]
+        p[row] = corner
+        return [dict(kind="plate", bracket=dr["bracket"], anchor=at(p),
+                     direction=_unit(axis, sign), run=_unit(row, rsign),
+                     reach=reach, width=b["width"], t=b["t"],
+                     through=entry, into=target)]
+    out = []
+    for v in row_positions(lo, hi, dr["per"], d, what):
+        p[row] = v
+        out.append(dict(kind="screw", anchor=at(list(p)),
+                        direction=_unit(axis, sign), length=length, d=d,
+                        through=entry, into=target))
+    return out
+
+
+def joint_instances(all_parts):
+    """[(joint, contact-row, contact, pa, pb), ...] - every joint in the bed."""
+    found = []
+    for c in contacts(all_parts):
+        j, crow, pa, pb = contact_row(c)
+        if j is None:
+            continue
+        found.append((j, crow, c, pa, pb))
+    return found
+
+
+def fastener_specs(all_parts):
+    """Every fastener in the bed as a placement record, plus the count check."""
+    inst = joint_instances(all_parts)
+    per_row = {}
+    for j, crow, _c, _pa, _pb in inst:
+        per_row[(j["id"], id(crow))] = per_row.get((j["id"], id(crow)), 0) + 1
+    specs = []
+    for j in JOINTS:
+        if not j["contacts"]:
+            continue
+        for crow in j["contacts"]:
+            crow["jid"] = j["id"]
+            got = per_row.get((j["id"], id(crow)), 0)
+            assert got and j["n"] % got == 0, (
+                f"{j['id']}: the model has {got} places where "
+                f"{crow['a']} meets {crow['b']} across axis {crow['axis']}, "
+                f"and the table says the bed has {j['n']} of the joint")
+            crow["_repeat"] = j["n"] // got
+    for j, crow, c, pa, pb in inst:
+        rep = crow["_repeat"]
+        spread = j.get("spread")
+        if rep == 1:
+            offsets = [(0.0, 0.0, 0.0)]
+        else:
+            assert spread, (f"{j['id']}: {rep} of them on one contact patch "
+                            f"and no `spread` to put them in")
+            win = patch_window(c)
+            offsets = []
+            for at in spread["at"]:
+                s = [0.0, 0.0, 0.0]
+                s[spread["axis"]] = at
+                offsets.append(tuple(s))
+            assert len(offsets) == rep
+            for s in offsets:
+                a = spread["axis"]
+                mid = sum(win[a]) / 2 + s[a]
+                assert win[a][0] < mid < win[a][1], (
+                    f"{j['id']}: spread {s[a]:+g} puts one of them at "
+                    f"{a}={mid:g}, off the joint")
+        for s in offsets:
+            for dr in crow["drives"]:
+                for f in _place_drive(j, crow, c, pa, pb, dr, s):
+                    f.update(jid=j["id"], name=dr["name"], drive=dr,
+                             joint=j, crow=crow, contact=c, pa=pa, pb=pb)
+                    specs.append(f)
+    return specs
+
+
+# The wall fixing is the one joint with nothing on the other side: it goes
+# through the back rail and into the studs of a wall this model does not have.
+# It is placed off the rail itself, spread along the length the way a builder
+# spreads it across the studs he finds, and marked `wall` - the containment
+# asserts and the mesh export both skip it, because everything past Y = -48 is
+# in the wall.
+def wall_fastener_specs():
+    j = JOINT["J14"]
+    name, count = j["fast"][0]
+    d, length = 8.0, 100.0
+    x0, x1 = back_rail.extents[0]
+    y = back_rail.extents[1][1]
+    z = sum(back_rail.extents[2]) / 2
+    out = []
+    for i in range(count):
+        t = (i + 0.5) / count
+        out.append(dict(kind="screw", anchor=(x0 + (x1 - x0) * t, y, z),
+                        direction=(0.0, -1.0, 0.0), length=length, d=d,
+                        through=back_rail, into=None, wall=True,
+                        jid="J14", name=name, drive=None, joint=j,
+                        crow=None, contact=None))
+    return out
+
+
+# ---------------------------------------------------------------------------
+# BUILD THEM
+# ---------------------------------------------------------------------------
+# Bed mode is the one that gets fastened: the loose panel is the same part in
+# both modes and carries the same steel, and the two joints it makes (J13b to
+# the rung, J13c over the bench rail) are the bed-mode ones the drawings show.
+_WOOD = [p for p in mode_parts(panel_bed) if p is not mattress]
+_bb = [(min(p.extents[j][0] for p in _WOOD),
+        max(p.extents[j][1] for p in _WOOD)) for j in range(3)]
+BED_CENTRE = tuple((a + b) / 2 for a, b in _bb)
+
+FASTENER_SPECS = fastener_specs(_WOOD) + wall_fastener_specs()
+
+# --- the totals, and the check that the shopping list is the same list ------
+HARDWARE_TOTAL = {}
+for _j in JOINTS:
+    for _name, _per in _j["fast"]:
+        HARDWARE_TOTAL[_name] = HARDWARE_TOTAL.get(_name, 0) + _per * _j["n"]
+
+_placed = {}
+for _f in FASTENER_SPECS:
+    _placed[_f["name"]] = _placed.get(_f["name"], 0) + 1
+for _name, _qty in _placed.items():
+    assert HARDWARE_TOTAL[_name] == _qty, (
+        f"{_name}: {_qty} modelled, the joint table sells {HARDWARE_TOTAL[_name]}")
+
+# --- the frame screw rows the key-dimensions page prints --------------------
+def screw_rows():
+    """The J1 / J2 / J8 rows, read back off the instances that were placed.
+
+    These three are the frame joints whose row geometry the reader is asked to
+    measure, so the key-dimensions page prints them. They are not recomputed
+    here: this walks the fasteners that exist and reports where they landed.
+    """
+    rows = {}
+    for jid, member, axis in (("J1", "endebjelke", 2), ("J2", "sidevange", 2),
+                              ("J8", "benkevange", 2)):
+        fs = [f for f in FASTENER_SPECS if f["jid"] == jid]
+        assert fs, jid
+        band = fs[0]["into"].extents[axis]
+        zs = sorted({round(f["anchor"][axis], 3) for f in fs})
+        sec_ = sec(*_SECTION_OF[jid])
+        rows[jid] = dict(z=zs, member=f"{member} {sec_.replace('x', '×')}",
+                         band=[band[0], band[1]],
+                         edge=[zs[0] - band[0], band[1] - zs[-1]],
+                         spacing=(zs[-1] - zs[0]) if len(zs) > 1 else None,
+                         count=len(zs))
+    rows["J1"]["y"] = sorted({round(f["anchor"][1], 3)
+                              for f in FASTENER_SPECS if f["jid"] == "J1"})
+    for jid in ("J2", "J8"):
+        rows[jid]["x"] = sorted({round(f["anchor"][0], 3)
+                                 for f in FASTENER_SPECS
+                                 if f["jid"] == jid})[0]
+    # The rail end distance the lap leaves us with. The screw force is
+    # perpendicular to the rail's grain, so this is an UNLOADED end and the
+    # requirement is 3d; the lap is only POST_W wide, so it is tight.
+    rows["_rail_end_distance"] = rows["J2"]["x"] - THROUGH_X0
+    rows["_rail_end_required"] = MIN_EDGE
+    return rows
+
+
+_SECTION_OF = {"J1": (RAIL_T, RAIL_H), "J2": (RAIL_T, RAIL_H),
+               "J8": (BENCH_RAIL_T, BENCH_RAIL_H)}
+SCREW_ROWS = screw_rows()
+
+print("\n=== FESTEMIDLER ===")
+print(f"OK  {len(FASTENER_SPECS)} festemidler plassert i "
+      f"{len(JOINTS)} ledd, alle lagt ut etter (n-1)x4d + 2x3d")
+for _j in JOINTS:
+    _mine = [f for f in FASTENER_SPECS if f["jid"] == _j["id"]]
+    _what = " + ".join(f"{q}x {n}" for n, q in _j["fast"])
+    print(f"    {_j['id']:<5} n={_j['n']:<3} {len(_mine):>3} stk  {_what}")
+for _name, _qty in sorted(HARDWARE_TOTAL.items(), key=lambda kv: -kv[1]):
+    print(f"    {_qty:>4} x {_name}")
 
 
 def make_compound(panel, xform=IDENTITY):

@@ -31,6 +31,7 @@ Nothing here is hand-maintained: rerun `mise run build` and it is all rebuilt.
 """
 
 import json
+import math
 import os
 import re
 import sys
@@ -43,16 +44,22 @@ import sys
 # each one to the shortest sale length that still holds what it was given.
 SALE_LENGTHS = [2400, 3000, 3600, 4200, 4800]
 KERF = 4                 # saw kerf allowance between two cuts, mm
-# v11/U4 took M8 out of every post joint: a 36 mm post face gives an M8 only
-# 18 mm of edge distance where EC5 wants 3d = 24. Every joint into a corner
-# post is now the 6 mm pre-drilled screw pattern the ladder uprights have used
-# all along, and for a 6 mm screw 3d IS 18 mm - exactly what a 36 mm face
-# offers on its centre line. No bolt enters a post, and nothing anywhere is
-# driven from a face that ends against a wall, so there are no counterbores.
-SCREW_D = 6              # mm - the frame screw
-MIN_EDGE = 3 * SCREW_D            # 18 mm, unloaded edge / unloaded end
-MIN_SPACING_GRAIN = 5 * SCREW_D   # 30 mm, two screws stacked along the grain
-MIN_SPACING_CROSS = 4 * SCREW_D   # 24 mm, two screws stacked across the grain
+
+# The joint table, the trade names, the counts and the EC5 row geometry all
+# live in generate_loftbed.py now - the model places the fasteners, so the
+# model is where they are defined. This file only prints them.
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
+import generate_loftbed as _MODEL          # noqa: E402
+
+JOINTS = _MODEL.JOINTS
+JOINT = _MODEL.JOINT
+PART_NO = _MODEL.PART_NO
+SCREW_D = _MODEL.SCREW_D
+MIN_EDGE = _MODEL.MIN_EDGE
+MIN_SPACING_GRAIN = _MODEL.MIN_SPACING_GRAIN
+MIN_SPACING_CROSS = _MODEL.MIN_SPACING_CROSS
 
 
 def _fmt(v):
@@ -83,197 +90,6 @@ def _axis(ranges):
     if len(uniq) == 1:
         return _rng(*uniq[0])
     return _rng(min(r[0] for r in uniq), max(r[1] for r in uniq)) + " (fordelt)"
-
-
-# ---------------------------------------------------------------------------
-# BOLT ROWS - derived from the frozen member positions, then checked
-# ---------------------------------------------------------------------------
-def screw_rows(G):
-    """Where every M8 goes, computed off the members it passes through.
-
-    Two bolts per joint are stacked symmetrically about the member's own
-    centre line, MIN_SPACING_GRAIN apart - that spacing is what the corner
-    post needs (the bolts are stacked along ITS grain). The edge distance
-    that falls out of it is then checked against the member the bolts pass
-    through crossways.
-    """
-    rows = {}
-
-    def pair(name, z0, z1, member):
-        mid = (z0 + z1) / 2
-        # Spread the two screws apart, but keep a comfortable 1,5 x MIN_EDGE
-        # at each edge rather than sitting on the bare minimum; never closer
-        # together than MIN_SPACING_GRAIN.
-        span = max(MIN_SPACING_GRAIN, (z1 - z0) - 3 * MIN_EDGE)
-        lo, hi = mid - span / 2, mid + span / 2
-        assert lo - z0 >= MIN_EDGE, f"{name}: {lo - z0} mm to the lower edge"
-        assert z1 - hi >= MIN_EDGE, f"{name}: {z1 - hi} mm to the upper edge"
-        assert hi - lo >= MIN_SPACING_GRAIN
-        assert hi - lo >= MIN_SPACING_CROSS
-        rows[name] = dict(z=[lo, hi], member=member, band=[z0, z1],
-                          edge=[lo - z0, z1 - hi], spacing=hi - lo, count=2)
-
-    def single(name, z0, z1, member):
-        mid = (z0 + z1) / 2
-        assert mid - z0 >= MIN_EDGE and z1 - mid >= MIN_EDGE
-        rows[name] = dict(z=[mid], member=member, band=[z0, z1],
-                          edge=[mid - z0, z1 - mid], spacing=None, count=1)
-
-    sec = lambda a, b: G.sec(a, b).replace("x", "×")
-    pair("J1", G.END_BEAM_Z0, G.END_BEAM_Z1, "endebjelke " + sec(G.RAIL_T, G.RAIL_H))
-    pair("J2", G.RAIL_BOTTOM, G.RAIL_TOP, "sidevange " + sec(G.RAIL_T, G.RAIL_H))
-    pair("J8", G.BENCH_RAIL_BOTTOM, G.BENCH_RAIL_TOP,
-         "benkevange " + sec(G.BENCH_RAIL_T, G.BENCH_RAIL_H))
-
-    # The in-plane position of the J2 / J8 bolts: the middle of the corner
-    # post, which is also the middle of the post/rail lap.
-    rows["J2"]["x"] = G.POST_W / 2
-    rows["J8"]["x"] = G.POST_W / 2
-    # ...and of the J1 bolts: the middle of the post depth, at both ends.
-    rows["J1"]["y"] = [G.BACK_POST_Y0 + G.POST_T / 2,
-                       G.FRONT_POST_Y0 + G.POST_T / 2]
-
-    # The rail end distance the lap leaves us with. The bolt force is
-    # perpendicular to the rail's grain, so this is an UNLOADED end and the
-    # requirement is 3d; the lap is only POST_W wide, so it is tight.
-    rail_end = rows["J2"]["x"] - G.THROUGH_X0
-    rows["_rail_end_distance"] = rail_end
-    rows["_rail_end_required"] = MIN_EDGE
-    return rows
-
-
-
-
-# ---------------------------------------------------------------------------
-# LEDD (J-numbers) AND THE HARDWARE THEY EAT - defined ONCE, here
-# ---------------------------------------------------------------------------
-# `n`     how many of this joint the finished bed has.
-# `fast`  [(handelsnavn, antall per ledd), ...]
-# `drill` what to pre-drill for it.
-# `side`  which side you drive it from - the reason the build order is what
-#         it is.
-# The prose that explains each joint lives in docs/ASSEMBLY.md; the numbers
-# live here and nowhere else. The per-step fastener lines in byggesteg.md and
-# MONTERING.md are summed from this table times the step's joint counts, and
-# the totals in innkjopsliste / beslagliste are summed from the same place.
-JOINTS = [
-    dict(id="J1", title="Endebjelke → hjørnestolpe", n=4,
-         fast=[("Treskrue 6×90 forsenket Torx", 2)],
-         drill="⌀6 gjennom bjelken, ⌀4 i stolpen",
-         side="Fra bjelkens utside, inn mot stolpen — helt inne i sengen, "
-              "tilgjengelig hele veien"),
-    dict(id="J1-B", title="Bærekloss under endebjelke → hjørnestolpe", n=4,
-         fast=[("Treskrue 6×90 forsenket Torx", 2)],
-         drill="⌀6 gjennom klossen, ⌀4 i stolpen",
-         side="Fra klossens frie ende, inn i stolpen"),
-    dict(id="J2", title="Fremre sidevange → fremre hjørnestolpe", n=2,
-         fast=[("Treskrue 6×80 forsenket Torx", 2)],
-         drill="⌀6 gjennom stolpen, ⌀4 i vangen",
-         side="Fra stolpens forside, gjennom stolpen inn i vangen"),
-    dict(id="J2-B", title="Bakre sidevange → bakre hjørnestolpe "
-                          "(vangen hviler på stolpetoppen)", n=2,
-         fast=[("Treskrue 6×120 forsenket Torx", 2)],
-         drill="⌀6 gjennom vangen, ⌀4 i stolpens endeved; forsenk hodet godt "
-               "under vangens overkant så køyespilene ligger flatt",
-         side="Rett ned gjennom vangen i stolpetoppen, mens bakrammen ligger "
-              "flatt på gulvet. Ingenting på veggsiden, og ingen kloss: "
-              "vangen står 12 mm proud av den tynnere stolpen, så et rett "
-              "beslag ville uansett ikke ligget an mot begge"),
-    dict(id="J3", title="Stigevange → fremre sidevange", n=2,
-         fast=[("Treskrue 6×80 forsenket Torx", 4)],
-         drill="⌀6 gjennom stigevangen, ⌀4 i sidevangen",
-         side="Fra stigevangens forside, inn i vangen"),
-    dict(id="J4", title="Rungetrinn → stigekloss og stigevange "
-                        "(per trinnende)", n=8,
-         fast=[("Treskrue 6×120 forsenket Torx", 1),
-               ("Treskrue 5×60 forsenket Torx", 1)],
-         drill="⌀6 gjennom stigevangen inn i trinnenden; ⌀3,5 ned gjennom "
-               "trinnet i klossen",
-         side="6×120 fra utsiden av stigevangen; 5×60 ovenfra ned i klossen"),
-    dict(id="J5", title="Stigekloss → stigevange", n=8,
-         fast=[("Treskrue 5×60 forsenket Torx", 2)],
-         drill="⌀3,5 gjennom klossen, ⌀3 i vangen",
-         side="Fra stigeåpningen, inn i vangens innside"),
-    dict(id="J6", title="Køyespile → sidevange (per spileende)", n=28,
-         fast=[("Treskrue 5×60 forsenket Torx", 1)],
-         drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
-         side="Ovenfra, ned i vangen"),
-    dict(id="J7", title="Rekkverksbord → hjørnestolpe / stigevange "
-                        "(per omlegg)", n=8,
-         fast=[("Treskrue 5×60 forsenket Torx", 2)],
-         drill="⌀3,5 gjennom bordet, ⌀3 i stolpen",
-         side="Fra sengesiden, inn i stolpens/stigevangens innside"),
-    dict(id="J8", title="Fremre benkevange → fremre hjørnestolpe", n=2,
-         fast=[("Treskrue 6×80 forsenket Torx", 2)],
-         drill="⌀6 gjennom stolpen, ⌀4 i vangen",
-         side="Fra stolpens forside, gjennom stolpen inn i vangen"),
-    dict(id="J8-B", title="Bakre benkevange → bakre hjørnestolpe "
-                          "(endeskjøt)", n=2,
-         fast=[("Treskrue 6×90 forsenket Torx", 2)],
-         drill="⌀6 skrått gjennom vangen, ⌀4 i stolpen — forbor hele veien, "
-               "dette er en skråskrue nær en ende",
-         side="Skrått fra vangens forside inn i stolpen. Vangen ligger fast "
-              "mellom de to stolpene, så skruene er bånd, ikke opplegg"),
-    dict(id="J9-B", title="Bærekloss under bakre benkevange → bakre stolpe",
-         n=2,
-         fast=[("Treskrue 6×90 forsenket Torx", 2)],
-         drill="⌀6 gjennom klossen, ⌀4 i stolpen",
-         side="Fra klossens frie ende, inn i stolpen"),
-    dict(id="J9-F", title="Bærekloss under fremre benkevange → fremre stolpe",
-         n=2,
-         fast=[("Treskrue 6×70 forsenket Torx", 2)],
-         drill="⌀6 gjennom klossen, ⌀4 i stolpen",
-         side="Fra klossens bakside, inn i stolpen. Kortere skrue enn de "
-              "andre klossene — her er det bare 36 mm stolpe bak klossen"),
-    dict(id="J10", title="Benkevange → stubbefot", n=4,
-         fast=[("Vinkelbeslag 90×90×65×2,5 varmforsinket", 1),
-               ("Treskrue 5×40 forsenket Torx", 4),
-               ("Treskrue 5×70 forsenket Torx", 2)],
-         drill="⌀3 i foten og i vangen; skråskruene forbores ⌀3,5",
-         side="Beslaget på innsiden av foten; de to 5×70 settes som "
-              "skråskruer nedenfra og opp i vangen"),
-    dict(id="J11", title="Benkespile → benkevange (per spileende)", n=20,
-         fast=[("Treskrue 5×60 forsenket Torx", 1)],
-         drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
-         side="Ovenfra, ned i benkevangen"),
-    dict(id="J12", title="Bordbærelekt → bakre hjørnestolpe (endeskjøt)",
-         n=2,
-         fast=[("Vinkelbeslag 40×40×40", 1),
-               ("Treskrue 5×40 forsenket Torx", 4)],
-         drill="⌀3 i stolpen og i lekta — forboring er et krav, lekta er tynn",
-         side="Beslaget på stolpens innerflate, under lektas ende, så lekta "
-              "har noe å hvile på og ikke bare henger i skruer"),
-    dict(id="J13a", title="Avstivningslekt → løs plate", n=2,
-         fast=[("Treskrue 5×60 forsenket Torx", 6)],
-         drill="⌀3,5 gjennom platen, forsenk og propp",
-         side="Ovenfra, ned i lektas overkant"),
-    dict(id="J13b", title="U-brakett → løs plate (omslutter trinnet)", n=2,
-         fast=[("U-brakett, bøyd av flattstål 30×4", 1),
-               ("Senkhodeskrue M6×30 + skive M6 + låsemutter M6", 2)],
-         drill="⌀6,5 gjennom platen, forsenk ⌀13 i oversiden",
-         side="Ovenfra gjennom platen; mutteren under"),
-    dict(id="J13c", title="Krokplate → løs plate (griper om benkevangens "
-                          "forkant)", n=2,
-         fast=[("Krokplate, bøyd av flattstål 30×4", 1),
-               ("Senkhodeskrue M6×30 + skive M6 + låsemutter M6", 2)],
-         drill="⌀6,5 gjennom platen, forsenk ⌀13 i oversiden",
-         side="Ovenfra gjennom platen; kroken henger ned foran vangen og "
-              "vender innover under den. Plasseres i X klar av "
-              "avstivningslektene"),
-    dict(id="J14", title="Veggfeste — gjennom den bakre sidevangen inn i "
-                         "stenderne", n=1,
-         fast=[("Veggfeste etter veggtype (treskrue 8×100 i stender, eller "
-                "plugg + skrue i mur)", 6)],
-         drill="⌀8 gjennom vangen, forsenk for hodet; veggen etter festetype",
-         side="Rett gjennom vangen inn i veggen. Vangen ligger flatt mot "
-              "veggen i hele sin lengde, så festet trenger ingen kloss og "
-              "ingen brakett"),
-    dict(id="J15", title="Filtknott under stolpe og stubbefot", n=8,
-         fast=[("Filtknott / møbeltapp ⌀40", 1)],
-         drill="—",
-         side="Slås i endeveden før reisning"),
-]
-JOINT = {j["id"]: j for j in JOINTS}
 
 
 def step_fastener_rows(st):
@@ -1554,108 +1370,124 @@ BASIS = {
     "gjelder ikke": "fastsatt",
 }
 
-# The drawing's part KINDS in Norwegian. The cut list names a piece by the
-# line it is counted on ("Bærekloss, benkevange (J9-B)"), which is the wrong
-# name here: a joint that meets either corner post should say "hjørnestolpe",
-# not name the one instance the packer happened to pick first.
-KIND_NO = {
-    "post": "hjørnestolpe", "post_back": "bakre hjørnestolpe",
-    "post_front": "fremre hjørnestolpe",
-    "rail": "sidevange", "rail_back": "bakre sidevange",
-    "rail_front": "fremre sidevange",
-    "bench_rail": "benkevange", "bench_back": "bakre benkevange",
-    "bench_front": "fremre benkevange",
-    "bench_blk_b": "bærekloss under bakre benkevange",
-    "bench_blk_f": "bærekloss under fremre benkevange",
-    "ledger": "bordbærelekt", "beam": "endebjelke",
-    "beam_blk": "bærekloss under endebjelke",
-    "stub": "stubbefot", "upright": "stigevange", "rung": "rungetrinn",
-    "rung_blk": "stigekloss", "guard": "rekkverksbord",
-    "guard_host": "hjørnestolpe / stigevange", "bed_slat": "køyespile",
-    "bench_slat": "benkespile", "panel": "løs plate",
-    "batten": "avstivningslekt",
-}
+# The drawing's part KINDS in Norwegian live with the joint table in
+# generate_loftbed.py, because that is where the joint table now is.
+KIND_NO = PART_NO
+
+# The model's own axes, said out loud. X runs along the wall, Y out of it
+# towards the room, Z up.
+AXIS_NO = {(0, 1): "mot høyre vegg", (0, -1): "mot venstre vegg",
+           (1, 1): "utover mot rommet", (1, -1): "innover mot veggen",
+           (2, 1): "rett opp", (2, -1): "rett ned"}
+
+
+def _dir_no(vec):
+    """The drive vector as a phrase. Skew screws get both components."""
+    parts_ = [(j, v) for j, v in enumerate(vec) if abs(v) > 1e-6]
+    parts_.sort(key=lambda jv: -abs(jv[1]))
+    words = [AXIS_NO[(j, 1 if v > 0 else -1)] for j, v in parts_]
+    if len(words) == 1:
+        return words[0]
+    ang = math.degrees(math.atan2(abs(parts_[1][1]), abs(parts_[0][1])))
+    return f"{words[0]}, {ang:.0f}° skrått {words[1]}"
 
 
 def emit_skrueretninger(G, out_dir, idx):
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import render_lineart as RL
+    """One line per kind of fastener per joint, printed off the placed solids.
 
-    parts = list(G.parts) + [G.panel_bed] + list(G.battens_bed)
-    lo = [min(p.extents[j][0] for p in parts) for j in range(3)]
-    hi = [max(p.extents[j][1] for p in parts) for j in range(3)]
-    centre = tuple((a + b) / 2 for a, b in zip(lo, hi))
+    Nothing here is prose that somebody keeps in step with the drawings: the
+    direction is the unit vector the model drove the screw along, and the
+    members are the ones it actually passes through. The old «Drives fra»
+    sentence in the joint table has become this caption.
+    """
+    def dims(part):
+        return _no_section(G, idx[part.label][1])
 
-    # One real contact patch per row of the drawing's joint table, so every
-    # line below is about members that actually touch in the model.
-    seen = {}
-    for c in RL.contacts(parts, []):
-        row, pa, pb = RL.contact_row(c)
-        if row is None or id(row) in seen:
-            continue
-        seen[id(row)] = (c, row, pa, pb)
+    def kind_of(crow, part, pa, pb):
+        return crow["a"] if part is pa else crow["b"]
 
     L = [HEAD, "# Skrueretninger\n\n",
          "Hvilken vei hver skrue drives, og hvorfor akkurat den veien. "
-         "Pilene på stegsidene i [MONTERING.md](../MONTERING.md) peker etter "
-         "denne tabellen: halen på siden du skrur fra, spissen i delen skruen "
-         "tar tak i.\n\n",
+         "Hvert festemiddel i denne sengen er modellert som en kropp med "
+         "egen retningsvektor; tabellen under er skrevet ut av de kroppene, "
+         "ikke av en setning noen holder ved like. Tegningene i "
+         "[MONTERING.md](../MONTERING.md) tegner de samme kroppene.\n\n",
          "**Utledet** betyr at bare én retning er fysisk mulig: skruen må gå "
-         f"klar gjennom delen den drives fra og ende inne i den andre, altså "
+         "klar gjennom delen den drives fra og ende inne i den andre, altså "
          "`tykkelse(fra) < lengde < tykkelse(fra) + tykkelse(inn i)`. "
          "**Fastsatt** betyr at begge retninger ville holdt målene, eller at "
          "skruen ikke er en rett gjennomskrue i det hele tatt (skråskrue, "
-         "gjennomgående bolt) — da er retningen den som står i «Drives fra» i "
-         "[beslaglista](beslagliste.md), og den er satt for hånd.\n\n",
+         "gjennomgående bolt, beslagflik) — da er retningen den som står i "
+         "leddtabellen, og den er satt for hånd og kontrollert mot "
+         "geometrien.\n\n",
          "| Ledd | Festemiddel | Retning | Grunnlag |\n",
          "|---|---|---|---|\n"]
 
-    order = [j["id"] for j in JOINTS]
-    rows = sorted(seen.values(), key=lambda r: order.index(r[1]["jid"]))
+    # One line per KIND of fastener per joint: a joint and its mirror image
+    # at the far end of the bed are one line, with a note that the direction
+    # turns round with it.
+    order = {j["id"]: i for i, j in enumerate(JOINTS)}
+    groups, seq = {}, []
+    for f in G.FASTENER_SPECS:
+        if f["drive"] is None:              # the wall fixing, see the note
+            continue
+        crow = f["crow"]
+        key = (f["jid"], f["name"],
+               crow["a"] if f["through"] is f["pa"] or f["into"] is f["pa"]
+               else crow["b"], f["kind"], id(f["drive"]))
+        if key not in groups:
+            groups[key] = []
+            seq.append(key)
+        groups[key].append(f)
+    seq.sort(key=lambda k: (order[k[0]], k[1]))
+
     n_derived = n_set = 0
-    written = set()
-    for c, row, pa, pb in rows:
-        for dr in row["drives"]:
-            axis, sign, target = RL.drive_axis_sign(c, row, pa, pb, dr, centre)
-            _guess, status = RL.derived_entry(c, row, pa, pb, dr)
-            entry = pb if target is pa else pa
-
-            def kind_of(part):
-                return row["a"] if part is pa else row["b"]
-
-            def dims(part):
-                return _no_section(G, idx[part.label][1])
-
-            e_no, t_no = KIND_NO[kind_of(entry)], KIND_NO[kind_of(target)]
-            if dr["plate"]:
-                what = f"**{dr['name']}** ligger på {t_no} og skrus fast der"
-            elif dr["into"] is not None and axis == 2:
-                way = "rett opp i" if sign > 0 else "rett ned i"
-                what = f"**{dr['name']}** {way} {t_no} ({dims(target)})"
-            elif dr["into"] is not None:
-                what = (f"**{dr['name']}** vannrett inn i {t_no} "
-                        f"({dims(target)}), fra sengesiden")
+    for key in seq:
+        fs = groups[key]
+        f = fs[0]
+        dr = f["drive"]
+        mirrored = len({q["direction"] for q in fs}) > 1
+        crow, c = f["crow"], f["contact"]
+        pa, pb = f["pa"], f["pb"]
+        _guess, status = G.derived_entry(c, crow, pa, pb, dr)
+        way = _dir_no(f["direction"])
+        if f["kind"] == "plate":
+            seat = f["through"] or f["into"]
+            grips = pb if seat is pa else pa
+            host, other = (KIND_NO[kind_of(crow, seat, pa, pb)],
+                           KIND_NO[kind_of(crow, grips, pa, pb)])
+            if f["through"] is not None:
+                what = (f"**{f['name']}** ligger under {host}, bøyer ned "
+                        f"forbi kanten og griper om {other}")
             else:
-                what = (f"**{dr['name']}** gjennom {e_no} ({dims(entry)}) "
-                        f"→ inn i {t_no} ({dims(target)})")
-            basis = BASIS[status]
-            if dr["exempt"]:
-                basis += f" — {dr['exempt']}"
-            key = (row["jid"], what)
-            if key in written:              # the same joint, mirrored
-                continue
-            written.add(key)
-            if status == "utledet":
-                n_derived += 1
-            else:
-                n_set += 1
-            L.append(f"| **{row['jid']}** | {dr['per']}× {dr['name']} | "
-                     f"{what} | {basis} |\n")
+                what = (f"**{f['name']}** ligger på {host} og bøyer om "
+                        f"hjørnet til {other}; skruene i fliken går {way}")
+        elif f["through"] is None:
+            t_no = KIND_NO[kind_of(crow, f["into"], pa, pb)]
+            what = (f"**{f['name']}** gjennom beslagfliken og {way} inn i "
+                    f"{t_no} ({dims(f['into'])})")
+        else:
+            e_no = KIND_NO[kind_of(crow, f["through"], pa, pb)]
+            t_no = KIND_NO[kind_of(crow, f["into"], pa, pb)]
+            what = (f"**{f['name']}** gjennom {e_no} ({dims(f['through'])}) "
+                    f"→ inn i {t_no} ({dims(f['into'])}), {way}")
+        if mirrored:
+            what += " (speilvendt i den andre enden)"
+        basis = BASIS[status]
+        if dr["exempt"]:
+            basis += f" — {dr['exempt']}"
+        if status == "utledet":
+            n_derived += 1
+        else:
+            n_set += 1
+        L.append(f"| **{f['jid']}** | {dr['per']}× {f['name']} | {what} | "
+                 f"{basis} |\n")
 
     L.append(f"\n**{n_derived}** av retningene er utledet av målene alene, "
-             f"**{n_set}** er fastsatt for hånd. De utledede kontrolleres ved "
-             f"hver tegning: stemmer ikke tabellen med målene, stopper "
-             f"`mise run montering`.\n\n")
+             f"**{n_set}** er fastsatt for hånd. Alle sammen kontrolleres ved "
+             f"hver bygging: skruekroppen må ha hodet i plan med flaten den "
+             f"drives fra, spissen inne i delen den tar tak i, og ingenting "
+             f"av seg selv i noen annen del.\n\n")
     L.append("Veggfestet (J14) står ikke her — det går rett gjennom den bakre "
              "sidevangen og inn i veggen, og har ingen andre del å gå inn "
              "i.\n")
@@ -1773,7 +1605,7 @@ def emit(ns):
     os.makedirs(out_dir, exist_ok=True)
 
     print("\n=== DOC FRAGMENTS ===")
-    rows = screw_rows(G)
+    rows = G.SCREW_ROWS
     steps = resolve_steps(G, build_steps(G))
     idx = cut_index(G)
 

@@ -372,8 +372,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         marks.append(dict(
             name=n_wood, per=6, letter=letters.get(n_wood),
             p3=((bx0 + bx1) / 2, pick, top),
-            contact=(((bx0 + bx1) / 2, (by0 + by1) / 2, top), 2, -1, 1e6,
-                     panel, b_part)))
+            parts=(panel, b_part)))
     for b in beslag:
         _ghost(page, RL, view, b["box3"][0], b["box3"][1], top)
         for hy in b["holes"]:
@@ -382,8 +381,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         marks.append(dict(
             name=n_m6, per=2, letter=letters.get(n_m6),
             p3=(b["seat"][0], b["seat"][1], top),
-            contact=((b["seat"][0], b["seat"][1], top), 2, -1, 1e5,
-                     panel, panel)))
+            parts=(panel,)))
 
     dx, dy = view.dir_xy((0, 0, -1))
     nrm = math.hypot(dx, dy) or 1.0
@@ -391,7 +389,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     bx = x0 + (col_w - inset_w) / 2
     box = (bx, y0 + gap, inset_w, inset_h)
     if rows:
-        RL.draw_inset(page, box, [], rows, glyph_dir, letters, names, centre)
+        RL.draw_inset(page, box, [], rows, glyph_dir, letters)
 
     for m in sorted(marks, key=lambda q: (-q["p3"][1], q["p3"][0])):
         p2 = view.xy(m["p3"])
@@ -408,8 +406,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         if letter:
             RL.badge(page, at, letter)
         marks.append(dict(name=b["name"], per=1, letter=letter,
-                          p3=b["seat"],
-                          contact=(b["seat"], 2, -1, 1e4, panel, panel)))
+                          p3=b["seat"], parts=(panel,)))
 
     # --- where it lands ----------------------------------------------------
     thumb_view = RL.View(RL.camera_direction(az, elev), centre)

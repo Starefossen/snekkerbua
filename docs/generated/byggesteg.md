@@ -35,7 +35,7 @@ Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannret
 
 **Deler:** 1× Benkevange, bak (gjennomgående) 48×73 × 1794 · 1× Bordbærelekt, bak 21×95 × 1794 · 2× Bærekloss, benkevange (J9-B) 36×48 × 48 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1065 · 1× Sidevange, øvre 48×98 × 1984
 
-**Festemidler:** 8× Treskrue 5×40 forsenket Torx · 4× Treskrue 6×120 forsenket Torx · 8× Treskrue 6×90 forsenket Torx · 2× Vinkelbeslag 40×40×40
+**Festemidler:** 4× Treskrue 5×40 forsenket Torx · 4× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×90 forsenket Torx · 2× Vinkelbeslag 40×40×20
 
 **Ledd:** J2-B, J8-B, J9-B, J12 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
@@ -81,7 +81,7 @@ Nå bygges de to endene ut fra bakrammen. Endebjelken går fra den bakre stolpen
 
 **Deler:** 2× Bærekloss, benkevange (J9-B) 36×48 × 48 · 4× Bærekloss, endebjelke (J1-B) 36×48 × 48 · 2× Endebjelke 48×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
 
-**Festemidler:** 4× Treskrue 6×70 forsenket Torx · 16× Treskrue 6×90 forsenket Torx
+**Festemidler:** 2× Treskrue 6×70 forsenket Torx · 12× Treskrue 6×90 forsenket Torx
 
 **Ledd:** J1, J1-B, J9-F — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
@@ -127,7 +127,7 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 
 **Deler:** 2× Benkevange, front (bit) 48×73 × 642 · 4× Stubbefot 48×48 × 186
 
-**Festemidler:** 16× Treskrue 5×40 forsenket Torx · 8× Treskrue 5×70 forsenket Torx · 4× Treskrue 6×80 forsenket Torx · 4× Vinkelbeslag 90×90×65×2,5 varmforsinket
+**Festemidler:** 16× Treskrue 5×40 forsenket Torx · 4× Treskrue 5×70 forsenket Torx · 4× Treskrue 6×80 forsenket Torx · 4× Vinkelbeslag 90×90×40×2,5 varmforsinket
 
 **Ledd:** J8, J10 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
@@ -150,7 +150,7 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 
 **Deler:** 4× Rungetrinn 48×73 × 320 · 8× Stigekloss 36×48 × 73 · 2× Stigevange 36×48 × 1700
 
-**Festemidler:** 24× Treskrue 5×60 forsenket Torx · 8× Treskrue 6×120 forsenket Torx · 8× Treskrue 6×80 forsenket Torx
+**Festemidler:** 16× Treskrue 5×60 forsenket Torx · 8× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×80 forsenket Torx
 
 **Ledd:** J3, J4, J5 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 

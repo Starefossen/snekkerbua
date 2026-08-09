@@ -89,13 +89,13 @@ Ingen bolt går inn i en stolpe. Stolpen er 36 mm tykk, og på den tykkelsen har
 
 | Ledd | Skruer | Z | Kantavstand | Avstand mellom | I planet |
 |---|---:|---|---|---:|---|
-| J1 — endebjelke 48×98 | 2 per ledd | **994** og **1038** | 27 / 27 | 44 | Y -30 og 770 (midt i stolpedybden) |
-| J2 — sidevange 48×98 | 2 per ledd | **1092** og **1136** | 27 / 27 | 44 | X 49 fra hver vegg |
-| J8 — benkevange 48×73 | 2 per ledd | **207,5** og **237,5** | 21,5 / 21,5 | 30 | X 49 fra hver vegg |
+| J1 — endebjelke 48×98 | 2 per ledd | **994** og **1038** | 994 / 27 | 44 | Y -30 og 770 (midt i stolpedybden) |
+| J2 — sidevange 48×98 | 2 per ledd | **1092** og **1136** | 27 / 27 | 44 | X 50,5 fra hver vegg |
+| J8 — benkevange 48×73 | 2 per ledd | **210,5** og **234,5** | 24,5 / 24,5 | 24 | X 50,5 fra hver vegg |
 
 Minstekrav for en forboret 6 mm treskrue: kantavstand 18 mm (3d), avstand mellom to skruer langs fiberretningen 30 mm (5d). Alle radene over holder kravet.
 
-Endeavstanden fra vangens ende inn til J2- og J8-skruen er 46 mm, godt over minstekravet 18 mm — den brede stolpen ga denne avstanden gratis.
+Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over minstekravet 18 mm — den brede stolpen ga denne avstanden gratis.
 
 **Ingen forsenkte boltehoder.** Ingen del av rammen festes lenger fra en flate som ender mot vegg, så det finnes ikke et eneste hode som må senkes ned under en monteringsflate. Skruehoder forsenkes som vanlig der de er i veien for hånda.
 
