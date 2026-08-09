@@ -1,17 +1,18 @@
 label	group	x0	x1	y0	y1	z0	z1
 Bed Slat_1	boards	20	118	-48	752	1163	1197
-Bed Slat_10	boards	1409	1507	-48	752	1163	1197
-Bed Slat_11	boards	1563.33	1661.33	-48	752	1163	1197
-Bed Slat_12	boards	1717.67	1815.67	-48	752	1163	1197
-Bed Slat_13	boards	1872	1970	-48	752	1163	1197
-Bed Slat_2	boards	174.333	272.333	-48	752	1163	1197
-Bed Slat_3	boards	328.667	426.667	-48	752	1163	1197
-Bed Slat_4	boards	483	581	-48	752	1163	1197
-Bed Slat_5	boards	637.333	735.333	-48	752	1163	1197
-Bed Slat_6	boards	791.667	889.667	-48	752	1163	1197
-Bed Slat_7	boards	946	1044	-48	752	1163	1197
-Bed Slat_8	boards	1100.33	1198.33	-48	752	1163	1197
-Bed Slat_9	boards	1254.67	1352.67	-48	752	1163	1197
+Bed Slat_10	boards	1302.15	1400.15	-95	752	1163	1197
+Bed Slat_11	boards	1444.62	1542.62	-95	752	1163	1197
+Bed Slat_12	boards	1587.08	1685.08	-95	752	1163	1197
+Bed Slat_13	boards	1729.54	1827.54	-95	752	1163	1197
+Bed Slat_14	boards	1872	1970	-48	752	1163	1197
+Bed Slat_2	boards	162.462	260.462	-95	752	1163	1197
+Bed Slat_3	boards	304.923	402.923	-95	752	1163	1197
+Bed Slat_4	boards	447.385	545.385	-95	752	1163	1197
+Bed Slat_5	boards	589.846	687.846	-95	752	1163	1197
+Bed Slat_6	boards	732.308	830.308	-95	752	1163	1197
+Bed Slat_7	boards	874.769	972.769	-95	752	1163	1197
+Bed Slat_8	boards	1017.23	1115.23	-95	752	1163	1197
+Bed Slat_9	boards	1159.69	1257.69	-95	752	1163	1197
 Bench Rail Back (continuous)	rails	3	1987	-48	0	186	259
 Bench Rail Bearing Block Back Left	boards	0	48	-48	-12	138	186
 Bench Rail Bearing Block Back Right	boards	1942	1990	-48	-12	138	186
@@ -33,8 +34,8 @@ Bench Stub Leg Back Left	posts	597	645	-48	0	0	186
 Bench Stub Leg Back Right	posts	1345	1393	-48	0	0	186
 Bench Stub Leg Front Left	posts	597	645	704	752	0	186
 Bench Stub Leg Front Right	posts	1345	1393	704	752	0	186
-Corner Post Back Left	posts	0	48	-96	-48	0	1337
-Corner Post Back Right	posts	1942	1990	-96	-48	0	1337
+Corner Post Back Left	posts	0	48	-96	-48	0	1197
+Corner Post Back Right	posts	1942	1990	-96	-48	0	1197
 Corner Post Front Left	posts	0	48	752	800	0	1700
 Corner Post Front Right	posts	1942	1990	752	800	0	1700
 End Beam Bearing Block Left Back	boards	48	96	-96	-48	931	967
