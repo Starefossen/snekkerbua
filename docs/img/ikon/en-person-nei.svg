@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" preserveAspectRatio="xMinYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMinYMid meet">
   <title>Ikke løft alene</title>
-  <g fill="none" stroke="#111" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="120" cy="52" r="16"/>
-    <line x1="120" y1="68" x2="120" y2="170"/>
-    <line x1="120" y1="170" x2="101" y2="214"/>
-    <line x1="120" y1="170" x2="139" y2="214"/>
-    <line x1="120" y1="88" x2="99" y2="126"/>
-    <line x1="120" y1="88" x2="141" y2="126"/>
-    <rect x="22" y="128" width="196" height="30" rx="5" fill="#fff"/>
-    <circle cx="120" cy="120" r="110" stroke-width="14.0"/>
-    <line x1="42.22" y1="197.78" x2="197.78" y2="42.22" stroke-width="14.0"/>
+  <g fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="3.5" r="1.7" />
+    <path d="M12 5.2v3.3" />
+    <path d="m8 13 4-4.5 4 4.5" />
+    <path d="m9.5 21.5 2.5-4.5 2.5 4.5" />
+    <rect x="4" y="13" width="16" height="4" rx="1" />
+    <path d="M4 20 20 4" />
   </g>
 </svg>

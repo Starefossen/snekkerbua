@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" preserveAspectRatio="xMinYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMinYMid meet">
   <title>Les veiledningen først</title>
-  <g fill="none" stroke="#111" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M 120 76 C 96 56, 62 50, 30 58 L 30 172 C 62 164, 96 168, 120 190 Z"/>
-    <path d="M 120 76 C 144 56, 178 50, 210 58 L 210 172 C 178 164, 144 168, 120 190 Z"/>
-    <line x1="48" y1="100" x2="102" y2="105" stroke-width="7.5"/>
-    <line x1="138" y1="105" x2="192" y2="100" stroke-width="7.5"/>
-    <line x1="48" y1="124" x2="102" y2="129" stroke-width="7.5"/>
-    <line x1="138" y1="129" x2="192" y2="124" stroke-width="7.5"/>
-    <line x1="48" y1="148" x2="102" y2="153" stroke-width="7.5"/>
-    <line x1="138" y1="153" x2="192" y2="148" stroke-width="7.5"/>
-    <line x1="222" y1="24" x2="176" y2="62"/>
-    <path d="M 176 40 L 172 66 L 198 62"/>
+  <g fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 5v16" />
+    <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
   </g>
 </svg>

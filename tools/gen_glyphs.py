@@ -7,7 +7,8 @@ To familier med tegninger:
 * Beslagglyfer  - én silhuett per festemiddel i docs/generated/beslagliste.md.
   Alle tegnes i samme mm-skala, slik at en 6x120 skrue faktisk er tre ganger
   så lang som en 5x40, og en 6 mm skrue er tykkere enn en 5 mm.
-* Piktogrammer  - "før du starter"-symbolene på side 2.
+* Piktogrammer  - "før du starter"-symbolene på side 2. De settes sammen av
+  ferdige 24x24-ikoner i docs/icons/ (Lucide + egne).
 
 Ingen tredjepartsavhengigheter: SVG-en skrives som tekst. PNG-ene lages med
 rsvg-convert hvis den finnes; hvis ikke hoppes de over med en advarsel.
@@ -47,16 +48,17 @@ BASE_H_MM = 30.0            # minste lerretshøyde -> skruer får lik høyde
 
 # PNG-rastrering
 PNG_PX_PER_UNIT = 0.75      # 3 px per mm for beslagglyfene
-PICTO_PX_PER_UNIT = 1.3333  # 240-lerret -> 320 px
+PICTO_PX_PER_UNIT = 13.333  # 24-rutenettet -> 320 px per ikon
 
 # Isometrisk dybderetning (x, y) per mm dybde. y peker nedover i SVG.
 ISO_DX = 0.52
 ISO_DY = -0.29
 
-# Piktogrammene har eget koordinatsystem.
-PICTO_SIZE = 240
-PICTO_STROKE = 10.0
-PICTO_DETAIL = 7.5
+# Piktogrammene ligger på Lucides rutenett: 24x24 brukerenheter, 2 enheter
+# strek. Ett piktogram trykkes i ca. 19 mm, så streken blir 1,6 mm — tung nok
+# til å bli svart på papir og fin nok til å holde motivet åpent.
+PICTO_SIZE = 24
+PICTO_STROKE = 2.0
 
 _STOPWORDS = {
     "forsenket", "torx", "varmforsinket", "elforsinket", "etter", "av",
@@ -627,267 +629,88 @@ def fastener_svg(name: str) -> str:
 # --------------------------------------------------------------------------
 # Piktogrammer
 # --------------------------------------------------------------------------
+#
+# Piktogrammene tegnes ikke lenger i kode. De ligger som ferdige SVG-filer i
+# docs/icons/, på Lucides spesifikasjon: 24x24 viewBox, fill="none",
+# stroke="currentColor", stroke-width="2", runde hjørner og ender.
+#
+#   docs/icons/lucide/  vendorte Lucide-ikoner (ISC, LICENSE ligger ved siden)
+#   docs/icons/hanna/   ikonene som er tegnet for denne bruksanvisningen
+#
+# Her settes de bare sammen: kroppen hentes ut av kildefila og legges inn i
+# manualens eget lerret med svart strek i stedet for currentColor. Noen
+# nøkler er rutenett av flere ikoner (verktøypanelet).
 
-def _figure(cx: float):
-    """Enkel geometrisk figur som bærer noe foran seg.
+ICON_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                         "docs", "icons")
 
-    Armene går ned og ut fra skuldrene, ikke opp forbi hodet - da holder
-    strekene seg fra hverandre også når glyfen vises i 72 px.
-    """
-    return [
-        circle(cx, 52, 16),
-        line(cx, 68, cx, 170),
-        line(cx, 170, cx - 19, 214),
-        line(cx, 170, cx + 19, 214),
-        line(cx, 88, cx - 21, 126),
-        line(cx, 88, cx + 21, 126),
-    ]
-
-
-def _lift_bar():
-    """Delen som bæres. Hvit fyll og tegnet sist, så den ligger foran kroppene."""
-    return rect(22, 128, 196, 30, rx=5, fill="#fff")
-
-
-def picto_to_personer():
-    e = _figure(64) + _figure(176)
-    e.append(_lift_bar())
-    return e, PICTO_SIZE, PICTO_SIZE
-
-
-def picto_underlag():
-    e = []
-    e.append(line(12, 214, 228, 214))          # gulv
-    # Mykt underlag med skravur.
-    e.append(rect(24, 168, 192, 32, rx=8))
-    for x in range(40, 208, 24):
-        e.append(line(x, 197, x + 14, 171, stroke_width=PICTO_DETAIL))
-    # Delen som legges oppå, lett isometrisk.
-    e.append(poly([(52, 150), (172, 150), (200, 124), (80, 124)], close=True))
-    e.append(poly([(52, 150), (52, 166), (172, 166), (172, 150)]))
-    e.append(poly([(172, 166), (200, 140), (200, 124)]))
-    # Pil ned.
-    e.append(line(120, 34, 120, 96))
-    e.append(poly([(104, 80), (120, 100), (136, 80)]))
-    return e, PICTO_SIZE, PICTO_SIZE
-
-
-def picto_sorter():
-    e = []
-    # Delene lagt utover, sortert etter lengde.
-    for i, ln in enumerate((202, 156, 118)):
-        y = 40 + i * 46
-        e.append(rect(16, y, ln, 30, rx=5))
-    # Hake.
-    e.append(poly([(126, 186), (152, 214), (222, 148)]))
-    return e, PICTO_SIZE, PICTO_SIZE
-
-
-def picto_les():
-    e = []
-    spine = 120
-    e.append(path(
-        f"M {spine} 76 C 96 56, 62 50, 30 58 L 30 172 "
-        f"C 62 164, 96 168, {spine} 190 Z"))
-    e.append(path(
-        f"M {spine} 76 C 144 56, 178 50, 210 58 L 210 172 "
-        f"C 178 164, 144 168, {spine} 190 Z"))
-    for i, y in enumerate((100, 126, 152)):
-        e.append(line(48, y - i * 2, 102, y + 5 - i * 2,
-                      stroke_width=PICTO_DETAIL))
-        e.append(line(138, y + 5 - i * 2, 192, y - i * 2,
-                      stroke_width=PICTO_DETAIL))
-    # Pekepil inn mot boken.
-    e.append(line(222, 24, 176, 62))
-    e.append(poly([(176, 40), (172, 66), (198, 62)]))
-    return e, PICTO_SIZE, PICTO_SIZE
-
-
-def picto_verktoy():
-    det = PICTO_DETAIL
-    e = []
-    # 1) Batteridrill med bor.
-    e.append(rect(14, 92, 34, 12))
-    e.append(rect(46, 78, 26, 40, rx=3))
-    e.append(poly([(72, 70), (150, 70), (160, 86), (160, 122), (126, 122),
-                   (120, 152), (126, 184), (74, 184), (80, 152), (74, 122),
-                   (72, 122)], close=True))
-    e.append(rect(70, 180, 62, 28, rx=7))
-    e.append(poly([(74, 126), (62, 134), (74, 142)], stroke_width=det))
-    # 2) Vater.
-    e.append(rect(202, 96, 184, 46, rx=7))
-    e.append(rect(278, 106, 46, 26, rx=9))
-    e.append(circle(301, 119, 8, stroke_width=det))
-    e.append(line(224, 104, 224, 134, stroke_width=det))
-    e.append(line(364, 104, 364, 134, stroke_width=det))
-    # 3) Målebånd.
-    e.append(rect(400, 82, 86, 86, rx=16))
-    e.append(circle(443, 125, 19, stroke_width=det))
-    e.append(poly([(486, 110), (546, 110), (546, 138), (486, 138)]))
-    e.append(rect(546, 102, 14, 44, rx=3))
-    for x in (502, 518, 534):
-        e.append(line(x, 110, x, 122, stroke_width=det))
-    # 4) Vinkelhake.
-    e.append(rect(594, 50, 36, 148, rx=4))
-    e.append(poly([(630, 146), (744, 146), (744, 174), (630, 174)],
-                  close=True))
-    for x in (664, 692, 720):
-        e.append(line(x, 146, x, 158, stroke_width=det))
-    return e, 760, PICTO_SIZE
-
-
-def picto_forbor():
-    e = []
-    # Bordet, lett isometrisk.
-    e.append(poly([(24, 156), (176, 156), (216, 128), (64, 128)], close=True))
-    e.append(poly([(24, 156), (24, 200), (176, 200), (176, 156)]))
-    e.append(poly([(176, 200), (216, 172), (216, 128)]))
-    # Bor.
-    e.append(rect(86, 12, 28, 34, rx=3))
-    e.append(poly([(86, 46), (114, 46), (114, 114), (100, 132),
-                   (86, 114)], close=True))
-    for i in range(3):
-        y = 60 + i * 20
-        e.append(poly([(86, y), (114, y - 13)], stroke_width=PICTO_DETAIL))
-    # Forboret hull, stiplet.
-    e.append(line(100, 138, 100, 192, stroke_width=PICTO_DETAIL,
-                  stroke_dasharray="14 12"))
-    # Pil ned.
-    e.append(line(160, 30, 160, 78))
-    e.append(poly([(150, 66), (160, 82), (170, 66)]))
-    return e, PICTO_SIZE, PICTO_SIZE
-
-
-# --- ja/nei-merker og parene -------------------------------------------------
-
-NEG_STROKE = 14.0
-MARK_STROKE = 26.0
-
-
-def _neg_mark():
-    """Felles nei-merke: fet ring med skråstrek over hele tegningen."""
-    r = 110.0
-    d = r / math.sqrt(2.0)
-    return [
-        circle(120, 120, r, stroke_width=NEG_STROKE),
-        line(120 - d, 120 + d, 120 + d, 120 - d, stroke_width=NEG_STROKE),
-    ]
-
-
-def _arrow(x1, y1, x2, y2, size=13.0, **kw):
-    ang = math.atan2(y2 - y1, x2 - x1)
-    a1 = ang + math.radians(150)
-    a2 = ang - math.radians(150)
-    return [
-        line(x1, y1, x2, y2, **kw),
-        poly([(x2 + size * math.cos(a1), y2 + size * math.sin(a1)),
-              (x2, y2),
-              (x2 + size * math.cos(a2), y2 + size * math.sin(a2))], **kw),
-    ]
-
-
-def picto_hake():
-    return [poly([(40, 128), (98, 190), (202, 56)],
-                 stroke_width=MARK_STROKE)], PICTO_SIZE, PICTO_SIZE
-
-
-def picto_kryss():
-    return [line(54, 54, 186, 186, stroke_width=MARK_STROKE),
-            line(186, 54, 54, 186, stroke_width=MARK_STROKE)], \
-        PICTO_SIZE, PICTO_SIZE
-
-
-def picto_info():
-    return [
-        circle(120, 120, 98, stroke_width=16),
-        circle(120, 66, 12, fill=INK, stroke_width=8),
-        line(120, 102, 120, 180, stroke_width=24),
-    ], PICTO_SIZE, PICTO_SIZE
-
-
-def picto_en_person_nei():
-    e = _figure(120)
-    e.append(_lift_bar())
-    e += _neg_mark()
-    return e, PICTO_SIZE, PICTO_SIZE
-
-
-def picto_dra_nei():
-    e = []
-    e.append(line(10, 206, 230, 206))
-    e.append(rect(30, 154, 126, 44, rx=4))
-    e += _arrow(78, 118, 206, 118)
-    # Riper i gulvet bak delen.
-    for x in (18, 44, 70):
-        e.append(line(x, 214, x + 16, 200, stroke_width=PICTO_DETAIL))
-    e += _neg_mark()
-    return e, PICTO_SIZE, PICTO_SIZE
-
-
-BED_W = 138
-
-
-def _wall():
-    e = [rect(10, 12, 30, 206, fill="#fff")]
-    for y in range(30, 216, 34):
-        e.append(line(12, y + 18, 38, y - 8, stroke_width=PICTO_DETAIL))
-    return e
-
-
-def _bed(x0: float):
-    """Grov skjematisk loftseng i oppriss: ramme, to stolper og en stige."""
-    return [
-        line(6, 214, 234, 214),                             # gulv
-        line(x0 + 10, 104, x0 + 10, 214),                   # fremre stolpe
-        line(x0 + BED_W - 10, 104, x0 + BED_W - 10, 214),   # bakre stolpe
-        line(x0 + 96, 104, x0 + 96, 214),                   # stigevange
-        line(x0 + 96, 134, x0 + BED_W - 10, 134,
-             stroke_width=PICTO_DETAIL),
-        line(x0 + 96, 162, x0 + BED_W - 10, 162,
-             stroke_width=PICTO_DETAIL),
-        line(x0 + 96, 190, x0 + BED_W - 10, 190,
-             stroke_width=PICTO_DETAIL),
-        rect(x0, 62, BED_W, 42, rx=3, fill="#fff"),         # sengeramme
-    ]
-
-
-def picto_veggfeste_ja():
-    x0 = 40
-    e = _wall() + _bed(x0)
-    for y in (76, 94):
-        e += _arrow(x0 + 52, y, x0 - 12, y, size=13)
-    return e, PICTO_SIZE, PICTO_SIZE
-
-
-def picto_fritt_staaende_nei():
-    e = _wall() + _bed(92)
-    e += _neg_mark()
-    return e, PICTO_SIZE, PICTO_SIZE
-
-
-PICTOGRAMS = {
-    "to-personer": ("To personer til løftet", picto_to_personer),
-    "underlag": ("Mykt underlag under delene", picto_underlag),
-    "sorter": ("Sorter delene før du starter", picto_sorter),
-    "les": ("Les veiledningen først", picto_les),
-    "verktoy": ("Verktøy: drill, vater, målebånd, vinkelhake", picto_verktoy),
-    "forbor": ("Forbor før du skrur", picto_forbor),
-    "hake": ("Slik skal det gjøres", picto_hake),
-    "kryss": ("Slik skal det ikke gjøres", picto_kryss),
-    "info": ("Merk", picto_info),
-    "en-person-nei": ("Ikke løft alene", picto_en_person_nei),
-    "dra-nei": ("Ikke dra delene over gulvet", picto_dra_nei),
-    "veggfeste-ja": ("Sengen skal festes i veggen", picto_veggfeste_ja),
+# nøkkel -> (tittel, kilde). Kilde er enten en enkelt ikonreferanse
+# "<katalog>/<navn>", eller en liste som settes i rutenett.
+PICTOGRAMS: dict[str, tuple[str, object]] = {
+    "to-personer": ("To personer til løftet", "hanna/to-personer"),
+    "en-person-nei": ("Ikke løft alene", "hanna/en-person-nei"),
+    "underlag": ("Mykt underlag under delene", "hanna/underlag"),
+    "dra-nei": ("Ikke dra delene over gulvet", "hanna/dra-nei"),
+    "sorter": ("Sorter delene før du starter", "hanna/sorter"),
+    "les": ("Les veiledningen først", "lucide/book-open"),
+    "verktoy": ("Verktøy: drill, torxbits, fastnøkkel, tommestokk, vater, "
+                "vinkelhake",
+                ["lucide/drill", "hanna/torx-driver", "lucide/wrench",
+                 "hanna/tape-measure", "hanna/spirit-level",
+                 "hanna/try-square"]),
+    "forbor": ("Forbor før du skrur", "hanna/forbor"),
+    "veggfeste-ja": ("Sengen skal festes i veggen", "hanna/veggfeste-ja"),
     "fritt-staaende-nei": ("Sengen skal ikke stå fritt",
-                           picto_fritt_staaende_nei),
+                           "hanna/fritt-staaende-nei"),
+    "hake": ("Slik skal det gjøres", "lucide/check"),
+    "kryss": ("Slik skal det ikke gjøres", "lucide/x"),
+    "info": ("Merk", "lucide/info"),
 }
+
+# Verktøypanelet: tre ikoner i bredden gir 72x48 - samme høyde som de andre
+# piktogrammene, og hvert verktøy trykkes i ca. 9,5 mm.
+GRID_COLS = 3
+
+_SVG_BODY_RE = re.compile(r"<svg\b[^>]*>(.*)</svg>", re.S)
+
+
+def icon_path(ref: str) -> str:
+    return os.path.join(ICON_ROOT, *ref.split("/")) + ".svg"
+
+
+def icon_body(ref: str) -> str:
+    """Kroppen i en 24x24-ikonfil, uten <svg>-kappen og uten tomme linjer."""
+    path = icon_path(ref)
+    with open(path, "r", encoding="utf-8") as fh:
+        text = fh.read()
+    m = _SVG_BODY_RE.search(text)
+    if not m:
+        raise ValueError(f"{path} ser ikke ut som en SVG")
+    vb = re.search(r'viewBox="0 0 (\d+(?:\.\d+)?) (\d+(?:\.\d+)?)"', text)
+    if not vb or (float(vb.group(1)), float(vb.group(2))) != (PICTO_SIZE,
+                                                             PICTO_SIZE):
+        raise ValueError(f"{path} er ikke på {PICTO_SIZE}x{PICTO_SIZE}-rutenettet")
+    return "\n".join(ln.strip() for ln in m.group(1).strip().splitlines()
+                     if ln.strip())
 
 
 def pictogram_svg(key: str) -> str:
-    title, fn = PICTOGRAMS[key]
-    elems, w, h = fn()
-    body = "\n".join("    " + e for e in elems)
-    return svg_document(title, w, h, body, PICTO_STROKE)
+    title, src = PICTOGRAMS[key]
+    if isinstance(src, str):
+        body = "\n".join("    " + ln for ln in icon_body(src).splitlines())
+        return svg_document(title, PICTO_SIZE, PICTO_SIZE, body, PICTO_STROKE)
+
+    cols = min(GRID_COLS, len(src))
+    rows = -(-len(src) // cols)
+    cells = []
+    for i, ref in enumerate(src):
+        dx = (i % cols) * PICTO_SIZE
+        dy = (i // cols) * PICTO_SIZE
+        inner = "\n".join("        " + ln for ln in icon_body(ref).splitlines())
+        cells.append(f'    <g transform="translate({_f(dx)} {_f(dy)})">\n'
+                     f'{inner}\n    </g>')
+    return svg_document(title, cols * PICTO_SIZE, rows * PICTO_SIZE,
+                        "\n".join(cells), PICTO_STROKE)
 
 
 # --------------------------------------------------------------------------

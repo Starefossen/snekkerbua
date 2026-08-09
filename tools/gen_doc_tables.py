@@ -1301,7 +1301,8 @@ PREP = [
     ("les", None,
      "**Les steg 0 først.** All saging og all boring skjer før noe reises."),
     ("verktoy", None,
-     "**Verktøy:** drill/skrutrekker, vater, tommestokk, vinkelhake."),
+     "**Verktøy:** drill med bor, torxbits, fastnøkkel 10 mm, tommestokk, "
+     "vater og vinkelhake."),
     ("forbor", None,
      "**Forbor.** I bord, i den tynne bordbærelekta og i all endeved er "
      "forboring et krav."),

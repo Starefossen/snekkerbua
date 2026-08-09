@@ -410,7 +410,8 @@ def colophon() -> str:
   Strektegningene er projisert ut av den samme modellen med
   <code>mise run montering</code>. Denne PDF-en settes sammen av
   <code>mise run pdf</code>.</p>
-  <p class="placeholder">Ikonattribusjon og lisens kommer her.</p>
+  <p class="credits">Piktogrammer basert på Lucide (ISC-lisens).<br>
+  Øvrige piktogrammer tegnet for denne bruksanvisningen.</p>
   <p class="placeholder">Revisjon: <span class="rev">—</span></p>
 </section>"""
 
@@ -480,7 +481,9 @@ td img { display: block; margin: 0 auto; }
 .toc-foot { margin-top: 6mm; font-size: 9pt; color: var(--muted); }
 
 /* ---------- forberedelse ---------- */
-.prep table td:nth-child(1), .prep table td:nth-child(2) { width: 26mm; text-align: center; }
+/* Kolonne 1 rommer verktoypanelet: tre ikoner i bredden, ca. 29 mm. */
+.prep table td:nth-child(1) { width: 32mm; text-align: center; }
+.prep table td:nth-child(2) { width: 26mm; text-align: center; }
 .prep table td img { display: inline-block; margin: 0 1mm; vertical-align: middle; }
 
 /* ---------- beslag ----------
@@ -547,6 +550,7 @@ td img { display: block; margin: 0 auto; }
 .colophon { padding-top: 60mm; }
 .colophon p { max-width: 130mm; }
 .placeholder { color: var(--muted); font-style: italic; }
+.credits { font-size: 8.5pt; color: var(--muted); }
 """
 
 

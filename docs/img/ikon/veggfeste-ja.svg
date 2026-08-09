@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" preserveAspectRatio="xMinYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMinYMid meet">
   <title>Sengen skal festes i veggen</title>
-  <g fill="none" stroke="#111" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="10" y="12" width="30" height="206" fill="#fff"/>
-    <line x1="12" y1="48" x2="38" y2="22" stroke-width="7.5"/>
-    <line x1="12" y1="82" x2="38" y2="56" stroke-width="7.5"/>
-    <line x1="12" y1="116" x2="38" y2="90" stroke-width="7.5"/>
-    <line x1="12" y1="150" x2="38" y2="124" stroke-width="7.5"/>
-    <line x1="12" y1="184" x2="38" y2="158" stroke-width="7.5"/>
-    <line x1="12" y1="218" x2="38" y2="192" stroke-width="7.5"/>
-    <line x1="6" y1="214" x2="234" y2="214"/>
-    <line x1="50" y1="104" x2="50" y2="214"/>
-    <line x1="168" y1="104" x2="168" y2="214"/>
-    <line x1="136" y1="104" x2="136" y2="214"/>
-    <line x1="136" y1="134" x2="168" y2="134" stroke-width="7.5"/>
-    <line x1="136" y1="162" x2="168" y2="162" stroke-width="7.5"/>
-    <line x1="136" y1="190" x2="168" y2="190" stroke-width="7.5"/>
-    <rect x="40" y="62" width="138" height="42" rx="3" fill="#fff"/>
-    <line x1="92" y1="76" x2="28" y2="76"/>
-    <path d="M 39.26 69.5 L 28 76 L 39.26 82.5"/>
-    <line x1="92" y1="94" x2="28" y2="94"/>
-    <path d="M 39.26 87.5 L 28 94 L 39.26 100.5"/>
+  <g fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 2v19" />
+    <path d="m5 4-3 3" />
+    <path d="m5 10-3 3" />
+    <path d="m5 16-3 3" />
+    <path d="M13 5H6" />
+    <path d="m8 3-2 2 2 2" />
+    <rect x="6" y="9" width="15" height="5" rx="1" />
+    <path d="M9 14v7" />
+    <path d="M19 14v7" />
+    <path d="M2 21h20" />
   </g>
 </svg>
