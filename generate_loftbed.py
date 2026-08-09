@@ -44,7 +44,8 @@ W1  NO BACK GUARD BOARDS. The two 34x98 x 1984 boards at Y -130..-96 are
       * the back side gets its own EN 747 check instead - the mattress-to-
         wall gap, 48 mm, i.e. the post depth (see W1 above);
       * the overall depth drops 964 -> 930 mm and the back face of the
-        assembly becomes the wall plane Y = -96 itself;
+        assembly becomes the wall plane Y = -96 itself (D14 takes it on to
+        896 from the front end);
       * 34x98 goes from 29 pieces to 27 (W4 puts it back to 28).
 W2  SHORT BACK POSTS - CUT FLUSH WITH THE PLATFORM. The two BACK corner posts
     go 1700 -> 1197 mm, i.e. flush with the SLAT TOP, which is the mattress
@@ -92,6 +93,27 @@ W5  THE MATTRESS IS CAPTURED BY THE WALL AND THE FRONT VERTICALS. With the
     mattress, so the mattress can wander 48 mm, and at either extreme the
     single resulting gap is 48 mm - under the 75 mm EN 747 entrapment limit,
     the same number the old fixed mattress-to-wall gap had.
+D14 GUARDS INBOARD - THE LAST 34 mm OF DEPTH. The four front guard boards move
+    from the OUTER faces of the front posts / ladder uprights to their INNER
+    faces: Y 800..834 -> 718..752. Same four pieces, same 832 mm lengths, same
+    two bands, same X - only the Y plane changes, by POST_T + GUARD_T = 82 mm.
+    What it buys and what it costs:
+      * the front face of the assembly stops being a guard board and becomes
+        the post plane Y = 800, so the overall depth goes 930 -> 896 mm - the
+        same 896 as the end beams. The bed is now exactly as deep as its own
+        end frames, and the 34 mm slice at Y 800..834 is asserted EMPTY;
+      * the boards overhang the mattress footprint by 34 mm, Y 752 back to
+        718. That is air, not contact: the lower band starts at Z 1412 and
+        the mattress tops out at 1337, so the nearest board is 75 mm above
+        the sleeping surface - the D6 opening, which EN 747 already sized;
+      * the laps are unchanged as overlaps and changed as faces. Each segment
+        still laps a front corner post (45 x 98) and a ladder upright
+        (36 x 98) over the same X, but on the inner Y face, so the two 5x60
+        per lap are driven FROM INSIDE THE BED. Screw heads now sit on the
+        mattress side of the board rather than the room side;
+      * the climb-through is untouched at 320 mm. The segments still die on
+        the upright inner faces X 835 / 1155 - they butt the same two
+        uprights, from the other side - so the opening is the same opening.
 
 DESIGN INTENT (v8 - "flush mattress + open front floor + slim 320 ladder")
 --------------------------------------------------------------------------
@@ -119,7 +141,8 @@ D12 DEPTH SHRINK - THE MATTRESS IS FLUSH AT BOTH EDGES. The platform was
       * everything in the front plane follows -106: front corner posts
         752..800, ladder uprights 752..800, rung treads 727..800 (the 25 mm
         rest ledge behind the upright plane is preserved exactly), rung
-        blocks, front guards 800..834, front bench rail 704..752, front stub
+        blocks, front guards 800..834 (v9/D14: 718..752, hung on the INNER
+        post faces instead), front bench rail 704..752, front stub
         legs, the front bench-rail bearing blocks;
       * the end beams shorten 1002 -> 896 (they still span the full post-to-
         post depth, Y -96..800);
@@ -128,7 +151,8 @@ D12 DEPTH SHRINK - THE MATTRESS IS FLUSH AT BOTH EDGES. The platform was
         front edge still butting the ladder uprights and resting on the rung.
     Overall depth over the guards drops 1070 -> 964 mm. (v9/W1 deletes the
     back guards, so the back face becomes the wall plane -96 and the overall
-    depth drops again, 964 -> 930 mm.)
+    depth drops again, 964 -> 930 mm; v9/D14 then hangs the front guards
+    inboard, and the front face becomes the post plane 800: 930 -> 896 mm.)
 D13 FRONT FLOOR CLEARED + SLIM 320 LADDER. Two moves that belong together,
     both about the space you actually stand in.
       * The front bench rail no longer runs from the sofa to the ladder. Each
@@ -259,7 +283,8 @@ D6  GUARD RE-BANDING. With the mattress top at 1337 the two guard bands go to
     (v9/W1: the same two bands, but on the FRONT only. The back side's EN 747
     case is the 48 mm mattress-to-wall gap instead.)
 D7  ONE GUARD PROFILE. The front guard segments follow the back boards from
-    21x95 up to 34x98 (v7: Y 906..940; v8/D12: Y 800..834), so every guard
+    21x95 up to 34x98 (v7: Y 906..940; v8/D12: Y 800..834; v9/D14: Y
+    718..752, inboard of the posts), so every guard
     and every slat in the bed is cut from the same board. 21x95 now survives
     only as the back table ledger. (v9/W1: the back boards are gone, so 34x98
     is the front guard profile and nothing else needs to match it.)
@@ -284,7 +309,8 @@ WHAT CHANGED IN v5
       onto the ladder uprights, so the ladder opening continues straight up
       past the guard rails and you climb THROUGH instead of over. (v5: 21x95,
       X 3..785 / 1205..1987, 420 mm opening. v7/D7: 34x98. v8/D13: X 3..835 /
-      1155..1987, 832 mm each, 320 mm opening.)
+      1155..1987, 832 mm each, 320 mm opening. v9/D14: the lap moves to the
+      uprights' INNER faces, Y 718..752 - same overlap, other side.)
   D3  The front table ledger (v4 / C6) is DELETED - it crossed the front of
       both sofa benches at knee height. The panel is instead carried at its
       FRONT edge by a LADDER RUNG (rung 1 in bed mode, rung 2 in table mode)
@@ -795,6 +821,14 @@ RUNG_BLOCK_X = [LADDER_INNER_L,                          # 835 .. 871
 GUARD_BAND_Z0 = [1412, 1585]
 MAX_GUARD_OPENING = 75           # EN 747 entrapment limit, above the mattress
 MIN_GUARD_OVER_MATTRESS = 160    # EN 747 barrier height above the mattress
+# D14: the guards hang inboard of the verticals now, so they overhang the
+# mattress footprint by their own thickness. This is how much air has to be left
+# between the mattress top and the underside of the lowest board for that
+# overhang to be a non-event. It is the same 75 mm as the D6 opening - the band
+# position sets both numbers at once - but it is a MINIMUM here, not a maximum:
+# raise the bands and the clearance grows, lower them and the board starts to
+# come down towards the mattress.
+MIN_GUARD_INBOARD_CLEAR = 75
 
 # W1: the BACK side's EN 747 case. There is no guard board there, so the
 # opening to check is not between two boards, it is the gap between the edge of
@@ -829,15 +863,15 @@ MAX_MATTRESS_GAP = MATTRESS_WANDER         # 48, the gap at either extreme
 # uprights' outer faces. That is only a line contact - the board end face meets
 # the upright side face but the guard plane and the upright plane merely share
 # an edge, so the board would be a long cantilever off one corner post and be
-# fixed to nothing at its inner end. The segments therefore LAP the uprights'
-# front faces and stop flush with the upright INNER faces, which (a) gives a
-# full face-to-face screwed lap at the inner end, (b) leaves a clear opening
-# exactly as wide as the ladder itself.
+# fixed to nothing at its inner end. The segments therefore LAP the uprights
+# (D14: on the INNER Y face) and stop flush with the upright INNER X faces,
+# which (a) gives a full face-to-face screwed lap at the inner end, (b) leaves
+# a clear opening exactly as wide as the ladder itself.
 #
 # D7: the segments go 21x95 -> 34x98, the same board as the back guards and
 # every slat in the bed. The lap face is unchanged - the boards land flat on
-# the front face of the corner posts and of the ladder uprights, they are just
-# 13 mm prouder.
+# the face of the corner posts and of the ladder uprights, they are just
+# 13 mm thicker. (D14 then swaps WHICH face: the inner one.)
 #
 # D13: the uprights moved out to inner faces 835 / 1155, so each segment grows
 # 782 -> 832 mm and the climb-through opening becomes 320 mm. The lap onto the
@@ -846,8 +880,32 @@ MAX_MATTRESS_GAP = MATTRESS_WANDER         # 48, the gap at either extreme
 # centres go 737 -> 787 mm; the 34x98 board was at utilisation ~0.12 at 737 mm
 # so at 787 it is ~0.14 - nothing.
 # D12: the whole band comes forward-plane -106, Y 906..940 -> 800..834.
-FRONT_GUARD_Y0 = FRONT_POST_Y1                 # 800  [was 906]
-FRONT_GUARD_Y1 = FRONT_GUARD_Y0 + GUARD_T      # 834  [was 940]
+#
+# D14 DEPTH RECLAIM. The guard boards move from the OUTER faces of the front
+# posts / ladder uprights to their INNER faces: Y 800..834 -> 718..752, i.e. in
+# by POST_T + GUARD_T = 82 mm. Nothing else moves, so the whole 34 mm the guards
+# used to stand proud of the frame comes off the overall depth (930 -> 896) and
+# the outermost thing on the front face becomes the post plane Y = 800 itself.
+# Consequences, in order:
+#   * the boards now overhang the mattress footprint by GUARD_T = 34 mm, from
+#     Y 752 back to 718. That is NOT a contact: the guard bands start at Z 1412
+#     and the mattress tops out at 1337, so the nearest board is 75 mm ABOVE the
+#     mattress surface with nothing but air in between (the same 75 mm opening
+#     D6 sized to the EN 747 entrapment limit). Sit up in bed and the board is
+#     over your knees, not against them;
+#   * the laps are the same X overlaps onto the same members, just on the other
+#     face - the INNER Y faces of the two ladder uprights (36 mm wide) and of
+#     the two front corner posts. Same 36 x 98 and 45 x 98 screwed faces, same
+#     board, same span. The one build difference: the screws are now driven
+#     FROM INSIDE THE BED, through the board and into the post/upright, instead
+#     of from outside. Two 5x60 per lap as before;
+#   * the climb-through gap is untouched. The segments still die on the upright
+#     inner faces X 835 / 1155, they just butt them from the other side of the
+#     upright, so the opening is still measured between the same two faces:
+#     320 mm.
+FRONT_GUARD_Y1 = FRONT_POST_Y0                 # 752  [was 834, 940]
+FRONT_GUARD_Y0 = FRONT_GUARD_Y1 - GUARD_T      # 718  [was 800, 906]
+FRONT_GUARD_SHIFT = POST_T + GUARD_T           # 82, D14: outer face -> inner
 FRONT_GUARD_SEGMENTS = [(THROUGH_X0, LADDER_INNER_L),      # 3 .. 835
                         (LADDER_INNER_R, THROUGH_X1)]      # 1155 .. 1987
 FRONT_GUARD_SEG_LEN = LADDER_INNER_L - THROUGH_X0          # 832  [was 782]
@@ -1235,6 +1293,10 @@ for i, top in enumerate(RUNG_TOPS):
 #             stopping flush with the upright inner faces, so the 320 mm
 #             climb-through opening runs all the way up.
 # D6: the two bands sit at 1412..1510 and 1585..1683 (see GUARD_BAND_Z0).
+# D14: the lap face is the INNER one now - Y 718..752 against the post/upright
+#      inner plane 752 - so the boards hang inboard, over the mattress footprint
+#      but 75 mm clear above the mattress surface, and nothing is left outside
+#      the post plane Y = 800.
 for i, z0 in enumerate(GUARD_BAND_Z0):
     for j, (sx0, sx1) in enumerate(FRONT_GUARD_SEGMENTS):
         side = "Left" if j == 0 else "Right"
@@ -1387,11 +1449,16 @@ print("\n=== VALIDATION ===")
 # Y = -96 - because W1 deleted the 34 mm guard boards that used to stand proud of
 # it at Y -130. That plane is a mounting face, so the assert below is not just an
 # envelope check: nothing whatsoever may poke out behind it, or the bed will not
-# sit flat against the wall. The front face is unchanged, the front guard boards
-# at 834. Overall depth 1070 (v7) -> 964 (v8/D12) -> 930 (v9/W1).
+# sit flat against the wall.
+#
+# D14: the FRONT face is no longer the guard boards - they went inboard - it is
+# the outer plane of the four front verticals, Y = 800. Overall depth
+# 1070 (v7) -> 964 (v8/D12) -> 930 (v9/W1) -> 896 (v9/D14), which is also
+# exactly the end-beam length: the bed is now as deep as its own end frames and
+# not one millimetre more.
 DEPTH_Y0 = WALL_Y                              # -96, the wall / mounting plane
-DEPTH_Y1 = FRONT_GUARD_Y1                      # 834  [was 940]
-OVERALL_DEPTH = DEPTH_Y1 - DEPTH_Y0            # 930  [was 964, 1070]
+DEPTH_Y1 = FRONT_POST_Y1                       # 800  [was 834, 940]
+OVERALL_DEPTH = DEPTH_Y1 - DEPTH_Y0            # 896  [was 930, 964, 1070]
 for name, comp in (("bed mode", bed_mode), ("table mode", table_mode)):
     bb = comp.bounding_box()
     assert bb.min.X >= -TOL, f"{name}: geometry crosses wall at X=0 ({bb.min.X:.3f})"
@@ -1403,14 +1470,33 @@ for name, comp in (("bed mode", bed_mode), ("table mode", table_mode)):
         f"{name}: the BACK plane is {bb.min.Y:.3f}, must be exactly the wall " \
         f"plane {DEPTH_Y0} - W1 makes it a flat mounting face against the wall"
     assert bb.max.Y <= DEPTH_Y1 + TOL, \
-        f"{name}: something sticks out past the front guards ({bb.max.Y:.3f} > " \
-        f"{DEPTH_Y1})"
+        f"{name}: something sticks out past the front post plane " \
+        f"({bb.max.Y:.3f} > {DEPTH_Y1}) - D14 leaves nothing outside it"
+    assert abs(bb.max.Y - DEPTH_Y1) < TOL, \
+        f"{name}: the FRONT plane is {bb.max.Y:.3f}, must be exactly the front " \
+        f"post/upright plane {DEPTH_Y1} (D14)"
     print(f"OK  {name}: X extent {bb.min.X:.2f} .. {bb.max.X:.2f} "
           f"(limit 0 .. {WALL_SPAN}), top Z {bb.max.Z:.0f} (limit {POST_HEIGHT}), "
           f"Y extent {bb.min.Y:.0f} .. {bb.max.Y:.0f} = {bb.max.Y - bb.min.Y:.0f} "
-          f"mm deep (W1: back face IS the wall plane {DEPTH_Y0}; depth was 1070 "
-          f"in v7, 964 in v8)")
-assert OVERALL_DEPTH == 930 and DEPTH_SHRINK == 106
+          f"mm deep (W1: back face IS the wall plane {DEPTH_Y0}; D14: front face "
+          f"IS the post plane {DEPTH_Y1}; depth was 1070 in v7, 964 in v8, 930 "
+          f"before D14)")
+assert OVERALL_DEPTH == 896 and DEPTH_SHRINK == 106
+
+# D14: the old guard plane must now be EMPTY. Nothing at all may live in
+# Y 800..834 - that 34 mm slice is the depth the reclaim gives back, and if any
+# part still occupies it the reclaim is a bounding-box illusion.
+OLD_GUARD_PLANE = (FRONT_POST_Y1, FRONT_POST_Y1 + GUARD_T)     # 800 .. 834
+in_old_guard_plane = [p for p in parts + [panel_bed, panel_table]
+                      if p.extents[1][1] > OLD_GUARD_PLANE[0] + TOL]
+assert not in_old_guard_plane, \
+    f"D14: {[p.label for p in in_old_guard_plane]} still reach past Y " \
+    f"{OLD_GUARD_PLANE[0]} into the vacated guard plane " \
+    f"{OLD_GUARD_PLANE[0]}..{OLD_GUARD_PLANE[1]}"
+print(f"OK  D14: the old front guard plane Y {OLD_GUARD_PLANE[0]}.."
+      f"{OLD_GUARD_PLANE[1]} is EMPTY - the outermost front element is the "
+      f"post/upright plane {FRONT_POST_Y1}; overall depth {OVERALL_DEPTH} mm "
+      f"(was 930, i.e. {GUARD_T} mm reclaimed)")
 
 # W1: nothing at all behind the wall plane, and the two families of parts that
 # define it must actually reach it - otherwise "flat against the wall" is a
@@ -1669,12 +1755,23 @@ FRONT_PLANES_V7 = {                      # v7 value -> v8 value, all -106
     "front posts": ((858, 906), (FRONT_POST_Y0, FRONT_POST_Y1)),
     "ladder uprights": ((858, 906), (LADDER_Y0, LADDER_Y1)),
     "rung treads": ((833, 906), (RUNG_Y0, RUNG_Y1)),
-    "front guards": ((906, 940), (FRONT_GUARD_Y0, FRONT_GUARD_Y1)),
     "slats / bench slats / panel front": ((858, 858), (SLAT_Y1, PANEL_Y1)),
 }
 for what, ((o0, o1), (n0, n1)) in FRONT_PLANES_V7.items():
     assert (o0 - n0, o1 - n1) == (DEPTH_SHRINK, DEPTH_SHRINK), \
         f"D12: '{what}' moved {o0 - n0}/{o1 - n1}, not {DEPTH_SHRINK}/{DEPTH_SHRINK}"
+# D14: the guards are the ONE front plane that did not simply come in by 106.
+# They came in by 106 with everything else (906..940 -> 800..834) and then
+# jumped the posts, 800..834 -> 718..752, a further POST_T + GUARD_T = 82, which
+# is why they are checked here on their own instead of in the table above.
+assert (FRONT_GUARD_Y0, FRONT_GUARD_Y1) == (718, 752), \
+    f"D14: the front guards are at Y {FRONT_GUARD_Y0}..{FRONT_GUARD_Y1}, " \
+    f"want 718..752 (inner faces of the front posts / ladder uprights)"
+assert FRONT_GUARD_SHIFT == POST_T + GUARD_T == 82 and \
+    (800 - FRONT_GUARD_Y0, 834 - FRONT_GUARD_Y1) == \
+    (FRONT_GUARD_SHIFT, FRONT_GUARD_SHIFT), \
+    f"D14: the guards moved {800 - FRONT_GUARD_Y0}, not {FRONT_GUARD_SHIFT}"
+assert 906 - FRONT_GUARD_Y0 == DEPTH_SHRINK + FRONT_GUARD_SHIFT == 188
 assert (SLAT_Y0, SLAT_Y1) == (-48, 752) and SLAT_LEN == PLATFORM_DEPTH == 800
 assert BENCH_SLAT_LEN == SLAT_LEN and PANEL_LEN == SLAT_LEN
 # W4: the rail-to-rail figures above are the STRUCTURAL platform and are
@@ -1689,9 +1786,11 @@ print(f"OK  D12: back planes unmoved (wall/posts {BACK_POST_Y0}, rail "
       f"{BACK_RAIL_Y0}); every front plane in by exactly "
       f"{DEPTH_SHRINK} mm - rail {FRONT_RAIL_Y0}..{FRONT_RAIL_Y1}, posts/uprights "
       f"{FRONT_POST_Y0}..{FRONT_POST_Y1}, rungs {RUNG_Y0}..{RUNG_Y1} "
-      f"({RUNG_REST_LEDGE} mm rest ledge kept), guards {FRONT_GUARD_Y0}.."
-      f"{FRONT_GUARD_Y1}; platform/slats/bench slats/panel {PLATFORM_DEPTH} mm, "
-      f"end beams {END_BEAM_LEN} mm, overall depth {OVERALL_DEPTH} mm")
+      f"({RUNG_REST_LEDGE} mm rest ledge kept); D14: guards INBOARD at "
+      f"{FRONT_GUARD_Y0}..{FRONT_GUARD_Y1} (was 800..834, in by "
+      f"{FRONT_GUARD_SHIFT}); platform/slats/bench slats/panel "
+      f"{PLATFORM_DEPTH} mm, end beams {END_BEAM_LEN} mm, overall depth "
+      f"{OVERALL_DEPTH} mm")
 
 # Inner clear width between the upper side rails
 clear = FRONT_RAIL_Y0 - BACK_RAIL_Y1
@@ -1822,20 +1921,31 @@ post_x_ranges = [p.extents[0] for p in parts if p.label.startswith("Corner Post 
 up_x_ranges = [p.extents[0] for p in up]
 for g in front_guards:
     (x0, x1), y, z = g.extents
-    # D7: 34x98 board, landing flat on the plane Y = 800 (the front faces of the
-    # corner posts and the ladder uprights). W1: this is the ONLY guard profile
-    # left in the bed.
+    # D7: 34x98 board. D14: landing flat on the plane Y = 752 (the INNER faces
+    # of the corner posts and the ladder uprights) instead of the outer plane
+    # 800, so the board sits between the verticals and the mattress footprint.
+    # W1: this is the ONLY guard profile left in the bed.
     assert y == (FRONT_GUARD_Y0, FRONT_GUARD_Y1)
     assert y[1] - y[0] == GUARD_T and z[1] - z[0] == GUARD_W, \
         f"'{g.label}' is not {sec(GUARD_T, GUARD_W)}"
-    assert y[0] == FRONT_POST_Y1, \
-        f"'{g.label}' does not lie on the post/upright front face plane Y={FRONT_POST_Y1}"
+    assert y[1] == FRONT_POST_Y0, \
+        f"'{g.label}' does not lie on the post/upright INNER face plane " \
+        f"Y={FRONT_POST_Y0} (D14)"
+    assert y[1] <= FRONT_POST_Y1 - POST_T + TOL, \
+        f"'{g.label}' still stands outside the post plane - D14 puts it inboard"
+    # D14: the board hangs GUARD_T past the mattress front edge (752 -> 718).
+    # That has to be clear AIR: the band starts 75 mm above the mattress top.
+    assert z[0] - MATTRESS_Z1 >= MIN_GUARD_INBOARD_CLEAR, \
+        f"'{g.label}' overhangs the mattress by {FRONT_GUARD_Y1 - y[0]} mm and " \
+        f"is only {z[0] - MATTRESS_Z1} mm above it (want " \
+        f">= {MIN_GUARD_INBOARD_CLEAR})"
     assert x1 - x0 == FRONT_GUARD_SEG_LEN, f"'{g.label}' is {x1 - x0} long"
     lap_post = max(min(x1, a1) - max(x0, a0) for a0, a1 in post_x_ranges)
     lap_up = max(min(x1, a1) - max(x0, a0) for a0, a1 in up_x_ranges)
     assert lap_post >= POST_W - THROUGH_X0, f"'{g.label}' barely laps a corner post"
     # D13: the upright is 36 wide now, so the lap is 36 - still the FULL width
-    # of the upright, which is what the detail asks for.
+    # of the upright, which is what the detail asks for. D14: same overlap, on
+    # the upright's INNER Y face - the screws go in from inside the bed.
     assert lap_up >= UPRIGHT_W, \
         f"'{g.label}' does not fully lap a ladder upright ({lap_up})"
     # full FACE contact over the whole lap and the whole board width, not an
@@ -1851,13 +1961,45 @@ for z0 in GUARD_BAND_Z0:
     assert (band[0].extents[0][1], band[1].extents[0][0]) == (LADDER_INNER_L,
                                                               LADDER_INNER_R), \
         "D13: the guard segments must die on the upright inner faces"
-print(f"OK  D2/D7/D13: 4 front guard segments {sec(GUARD_T, GUARD_W)} x "
+    # D14: the boards butt the SAME two uprights, from the other Y face, so the
+    # opening is still the upright-to-upright clear and the inboard move cannot
+    # have narrowed it. Measured against the actual upright parts, not the
+    # constants, so a mistake in either would show.
+    assert (band[0].extents[0][1], band[1].extents[0][0]) == \
+        (up[0].extents[0][1], up[1].extents[0][0]), \
+        "D14: the climb-through is no longer measured between the upright " \
+        "inner faces - the inboard guards must butt the same uprights"
+print(f"OK  D2/D7/D13/D14: 4 front guard segments {sec(GUARD_T, GUARD_W)} x "
       f"{FRONT_GUARD_SEG_LEN} at X {FRONT_GUARD_SEGMENTS[0][0]}.."
       f"{FRONT_GUARD_SEGMENTS[0][1]} / {FRONT_GUARD_SEGMENTS[1][0]}.."
-      f"{FRONT_GUARD_SEGMENTS[1][1]}, Y {FRONT_GUARD_Y0}..{FRONT_GUARD_Y1}, "
+      f"{FRONT_GUARD_SEGMENTS[1][1]}, Y {FRONT_GUARD_Y0}..{FRONT_GUARD_Y1} = "
+      f"the INNER faces of the front posts / uprights (D14, was 800..834), "
       f"{UPRIGHT_W} x {GUARD_W} mm face lap on the uprights and "
-      f"{POST_W - THROUGH_X0} x {GUARD_W} mm on the corner posts, clear "
-      f"climb-through gap {LADDER_CLEAR} mm in both bands")
+      f"{POST_W - THROUGH_X0} x {GUARD_W} mm on the corner posts - screwed from "
+      f"inside the bed - clear climb-through gap {LADDER_CLEAR} mm in both "
+      f"bands, boards {GUARD_T} mm over the mattress footprint but "
+      f"{GUARD_BAND_Z0[0] - MATTRESS_Z1} mm above the mattress top "
+      f"{MATTRESS_Z1}, so no contact")
+
+# D14 COLLISION SWEEP. The 34 mm slice the boards moved INTO - Y 718..752 above
+# the lower band - has to contain the four guard segments and nothing else. This
+# is the other half of the empty-old-plane check: one says nothing was left
+# behind, this one says nothing was already there.
+sweep_y = (FRONT_GUARD_Y0, FRONT_GUARD_Y1)           # 718 .. 752
+sweep_z0 = GUARD_BAND_Z0[0]                          # 1412
+occupants = [p for p in parts + [panel_bed, panel_table]
+             if min(p.extents[1][1], sweep_y[1]) - max(p.extents[1][0], sweep_y[0]) > TOL
+             and p.extents[2][1] > sweep_z0 + TOL]
+assert {p.label for p in occupants} == {g.label for g in front_guards}, \
+    f"D14: Y {sweep_y[0]}..{sweep_y[1]} above Z {sweep_z0} holds " \
+    f"{sorted(p.label for p in occupants)} - only the 4 guard segments may be " \
+    f"in there"
+assert MATTRESS_Z1 < sweep_z0, \
+    f"D14: the mattress tops out at {MATTRESS_Z1}, into the swept band"
+print(f"OK  D14 collision sweep: Y {sweep_y[0]}..{sweep_y[1]} above Z "
+      f"{sweep_z0} holds exactly the {len(occupants)} guard segments and "
+      f"nothing else (mattress tops out at {MATTRESS_Z1}, "
+      f"{sweep_z0 - MATTRESS_Z1} mm below)")
 
 # D6 (W1: FRONT SIDE ONLY): guard re-banding. Every opening measured ABOVE THE
 # MATTRESS SURFACE has to be <= 75 mm (EN 747 entrapment), and the barrier has
@@ -1885,15 +2027,18 @@ guard_over_mattress = GUARD_BAND_Z0[1] + GUARD_W - MATTRESS_Z1
 assert guard_over_mattress >= MIN_GUARD_OVER_MATTRESS, \
     f"barrier only {guard_over_mattress} mm above the mattress"
 # every guard board must be in one of those bands - and, after W1, be a front
-# segment standing on the front posts, which are the ones that reach 1700.
+# segment carried by the front posts, which are the ones that reach 1700.
+# D14: "front" is no longer "outboard". The board hangs on the INNER faces of
+# those posts, so the test is that its outer face IS the post inner plane 752 -
+# far from the back half of the bed either way (the back rail ends at Y 0).
 for g in parts:
     if g.label.startswith("Guard Rail"):
         assert g.extents[2][0] in GUARD_BAND_Z0 and \
             g.extents[2][1] - g.extents[2][0] == GUARD_W, \
             f"'{g.label}' is not in one of the D6 guard bands"
-        assert g.extents[1][0] >= FRONT_POST_Y1 - TOL, \
-            f"W1: '{g.label}' is not on the front plane - the back side has no " \
-            f"guard boards"
+        assert abs(g.extents[1][1] - FRONT_POST_Y0) < TOL, \
+            f"W1/D14: '{g.label}' is not hung on the front verticals' inner " \
+            f"plane Y={FRONT_POST_Y0} - the back side has no guard boards"
 assert max(p.extents[2][1] for p in front_posts) == \
     GUARD_BAND_Z0[1] + GUARD_W + guard_openings[-1][1] == POST_HEIGHT
 print(f"OK  D6/W1 (front side): guard bands Z "
@@ -2066,7 +2211,10 @@ print(f"OK  W3: 4 stub legs {sec(LEG_T, LEG_W)} x {STUB_LEG_H} (was "
 # bed mode and 482 in table mode, and it does bridge the passage at that height
 # by design - what matters is that it never touches the floor level you actually
 # stand and put your feet in, which is checked explicitly afterwards.
-PASSAGE_Y = (BACK_RAIL_Y1, FRONT_GUARD_Y1)           # 0 .. 834, front zone
+# D14 ripple: the front edge of the zone used to be the guard face (834). The
+# guards went inboard, so it is the post plane now - the same 800 mm of front
+# zone the check has always swept, minus the 34 mm that no longer exists.
+PASSAGE_Y = (BACK_RAIL_Y1, FRONT_POST_Y1)            # 0 .. 800, front zone
 PASSAGE_Z = (0, RUNG_TOPS[1])                        # 0 .. 482
 PASSAGE_BANDS = [("left", OPEN_FLOOR_X[0], up[0].extents[0][0]),
                  ("right", up[1].extents[0][1], OPEN_FLOOR_X[1])]
@@ -2663,7 +2811,17 @@ print(f"Note (D12): the depth stack came in {DEPTH_SHRINK} mm on the FRONT side 
       f"platform. Bench slats, the panel and the two END upper slats are all "
       f"{SLAT_LEN} mm long (was 906) and the end beams {END_BEAM_LEN} mm (was "
       f"1002); the other {len(extended_slats)} upper slats are {SLAT_LEN_EXT} "
-      f"(W4). Overall depth {OVERALL_DEPTH} mm (1070 in v7, 964 in v8).")
+      f"(W4). Overall depth {OVERALL_DEPTH} mm (1070 in v7, 964 in v8, 930 "
+      f"before D14).")
+print(f"Note (D14): the four front guard boards hang on the INNER faces of the "
+      f"front posts / ladder uprights (Y {FRONT_GUARD_Y0}..{FRONT_GUARD_Y1}) "
+      f"instead of the outer ones (was 800..834), so nothing stands proud of "
+      f"the post plane Y={FRONT_POST_Y1} and the overall depth drops "
+      f"{GUARD_T} mm, 930 -> {OVERALL_DEPTH}. Same four pieces, same lengths, "
+      f"same laps - but the two 5x60 per lap are driven FROM INSIDE THE BED "
+      f"now. The boards overhang the mattress footprint by {GUARD_T} mm at "
+      f"guard height; the lower band is {GUARD_BAND_Z0[0] - MATTRESS_Z1} mm "
+      f"above the mattress top, so nothing touches it.")
 print(f"Note (W1): *** WALL-SIDE BED - NOT REVERSIBLE. *** The back long side "
       f"stands against the room wall and the frame is bolted to it, so there "
       f"are NO back guard boards: the wall is the barrier. The back face of the "

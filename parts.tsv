@@ -44,10 +44,10 @@ End Beam Bearing Block Right Back	boards	1894	1942	-96	-48	931	967
 End Beam Bearing Block Right Front	boards	1894	1942	752	800	931	967
 End Beam Left	rails	48	96	-96	800	967	1065
 End Beam Right	rails	1894	1942	-96	800	967	1065
-Guard Rail Front Left_1	boards	3	835	800	834	1412	1510
-Guard Rail Front Left_2	boards	3	835	800	834	1585	1683
-Guard Rail Front Right_1	boards	1155	1987	800	834	1412	1510
-Guard Rail Front Right_2	boards	1155	1987	800	834	1585	1683
+Guard Rail Front Left_1	boards	3	835	718	752	1412	1510
+Guard Rail Front Left_2	boards	3	835	718	752	1585	1683
+Guard Rail Front Right_1	boards	1155	1987	718	752	1412	1510
+Guard Rail Front Right_2	boards	1155	1987	718	752	1585	1683
 Ladder Rung_1	boards	835	1155	727	800	211	259
 Ladder Rung_2	boards	835	1155	727	800	434	482
 Ladder Rung_3	boards	835	1155	727	800	672	720
