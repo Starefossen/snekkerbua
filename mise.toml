@@ -29,6 +29,13 @@ description = "Draw the line art for docs/MONTERING.md - one per build step plus
 depends = ["build"]
 run = "python tools/render_lineart.py --width 1600"
 
+[tasks.pdf]
+description = "Sett sammen den trykkeklare PDF-en (docs/hanna.pdf) av MONTERING, ASSEMBLY, tabellene og tegningene - med sideforhandsvisninger i docs/preview/"
+# Bruker de innsjekkede dokumentene som de er, sa den gar uten build123d.
+# Trenger python-markdown (requirements.txt) og en Chrome/Chromium a printe med.
+run = "python tools/build_pdf.py"
+depends = ["install"]
+
 [tasks.montering-skyggelagt]
 description = "The shaded USD renders of the same steps, for reference (macOS: usdrecord + swift)"
 depends = ["build"]

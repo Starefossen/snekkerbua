@@ -31,6 +31,14 @@ bed_frame.bin
 # the macOS USD tools, and the manual does not use them.
 docs/img/skyggelagt/
 
+# The printable manual. `mise run pdf` builds it from the tracked documents in
+# a few seconds, it is several megabytes, and every rebuild replaces the whole
+# binary - so the tooling is tracked and the output is not. The page previews
+# are review material for the same run and are equally disposable.
+docs/hanna.pdf
+docs/preview/
+docs/.hanna-print/
+
 __pycache__/
 *.pyc
 .venv/
