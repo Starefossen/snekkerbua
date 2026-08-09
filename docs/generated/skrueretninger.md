@@ -32,10 +32,10 @@ Hvilken vei hver skrue drives, og hvorfor akkurat den veien. Hvert festemiddel i
 | **J12** | 1× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom beslagfliken og rett opp inn i bordbærelekt (21×95) | fastsatt |
 | **J12** | 1× Vinkelbeslag 40×40×20 | **Vinkelbeslag 40×40×20** ligger på bakre hjørnestolpe og bøyer om hjørnet til bordbærelekt; skruene i fliken går mot venstre vegg (speilvendt i den andre enden) | fastsatt |
 | **J13a** | 6× Treskrue 5×60 forsenket Torx | **Treskrue 5×60 forsenket Torx** gjennom løs plate (18 mm plate, 680 bred) → inn i avstivningslekt (48×73), rett ned | utledet av tykkelsene |
-| **J13b** | 2× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | **Senkhodeskrue M6×30 + skive M6 + låsemutter M6** gjennom løs plate (18 mm plate, 680 bred) → inn i rungetrinn (48×73), rett ned | fastsatt — gjennomgående bolt i platen, mutter under |
+| **J13b** | 2× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | **Senkhodeskrue M6×30 + skive M6 + låsemutter M6** rett ned gjennom løs plate (18 mm plate, 680 bred) og beslagets flik, mutter under — den klemmer beslaget til platen, den går ikke inn i rungetrinn | fastsatt — gjennomgående bolt i platen, mutter under |
 | **J13b** | 1× U-brakett, bøyd av flattstål 30×4 | **U-brakett, bøyd av flattstål 30×4** ligger under løs plate, bøyer ned forbi kanten og griper om rungetrinn | fastsatt |
 | **J13c** | 1× Krokplate, bøyd av flattstål 30×4 | **Krokplate, bøyd av flattstål 30×4** ligger under løs plate, bøyer ned forbi kanten og griper om bakre benkevange | fastsatt |
-| **J13c** | 2× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | **Senkhodeskrue M6×30 + skive M6 + låsemutter M6** gjennom løs plate (18 mm plate, 680 bred) → inn i bakre benkevange (48×73), rett ned | fastsatt — gjennomgående bolt i platen, mutter under |
+| **J13c** | 2× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | **Senkhodeskrue M6×30 + skive M6 + låsemutter M6** rett ned gjennom løs plate (18 mm plate, 680 bred) og beslagets flik, mutter under — den klemmer beslaget til platen, den går ikke inn i bakre benkevange | fastsatt — gjennomgående bolt i platen, mutter under |
 
 **8** av retningene er utledet av målene alene, **19** er fastsatt for hånd. Alle sammen kontrolleres ved hver bygging: skruekroppen må ha hodet i plan med flaten den drives fra, spissen inne i delen den tar tak i, og ingenting av seg selv i noen annen del.
 

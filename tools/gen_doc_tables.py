@@ -1462,6 +1462,13 @@ def emit_skrueretninger(G, out_dir, idx):
             else:
                 what = (f"**{f['name']}** ligger på {host} og bøyer om "
                         f"hjørnet til {other}; skruene i fliken går {way}")
+        elif f.get("nut"):
+            e_no = KIND_NO[kind_of(crow, f["through"], pa, pb)]
+            t_no = KIND_NO[kind_of(crow, f["grips"], pa, pb)]
+            what = (f"**{f['name']}** {way} gjennom {e_no} "
+                    f"({dims(f['through'])}) og beslagets flik, mutter under "
+                    f"— den klemmer beslaget til platen, den går ikke inn i "
+                    f"{t_no}")
         elif f["through"] is None:
             t_no = KIND_NO[kind_of(crow, f["into"], pa, pb)]
             what = (f"**{f['name']}** gjennom beslagfliken og {way} inn i "

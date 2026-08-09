@@ -580,6 +580,8 @@ import tempfile
 from build123d import (
     Box,
     Color,
+    Cone,
+    Cylinder,
     Compound,
     ExportSVG,
     Location,
@@ -587,6 +589,7 @@ from build123d import (
     export_step,
     export_stl,
 )
+from build123d import Vector
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -2070,14 +2073,15 @@ BRACKETS = {
     "vinkel40": dict(name="Vinkelbeslag 40×40×20", leg=40.0, width=20.0,
                      t=2.0),
     "u":        dict(name="U-brakett, bøyd av flattstål 30×4",
-                     leg=60.0, width=30.0, t=4.0),
-    "krok":     dict(name="Krokplate, bøyd av flattstål 30×4",
+                     leg=60.0, width=30.0, t=4.0, hook=73.0),
+    "krok":     dict(hook=44.0, name="Krokplate, bøyd av flattstål 30×4",
                      leg=70.0, width=30.0, t=4.0),
 }
 
 
 def drive(name, per, frm=None, into=None, axis=None, sign=None, row=None,
-          row_sign=None, reach=None, toe=None, bracket=None, exempt=None):
+          row_sign=None, reach=None, toe=None, bracket=None, bears=None,
+          nut=False, exempt=None):
     """One kind of fastener driven at one contact patch.
 
     `name`    the trade name, in full - the same string the shopping list uses.
@@ -2101,13 +2105,21 @@ def drive(name, per, frm=None, into=None, axis=None, sign=None, row=None,
               `back` mm from the joint, and is tilted `deg` degrees off that
               face's normal, towards the member it grips.
     `bracket` the key in BRACKETS this row IS - then it is a plate, not a screw.
+    `bears`   this bracket CARRIES the named member: its second flange has to
+              be the horizontal one, screwed straight UP, and its seat has to
+              be that member's own underside. Written down because "the
+              bracket is on upside down" is the failure this whole detail
+              exists to prevent, and it is invisible in a table of counts.
+    `nut`     a THROUGH bolt: it clamps a bracket to the member it is driven
+              through and ends in free air with a nut on it, so it grips
+              nothing and must be checked for exactly that.
     `exempt`  a Norwegian reason the through-screw fit rule does not decide
               this one: a toe screw, or a bolt that takes a nut. Anything
               without a reason has to obey.
     """
     return dict(name=name, per=per, frm=frm, into=into, axis=axis, sign=sign,
                 row=row, row_sign=row_sign, reach=reach, toe=toe,
-                bracket=bracket, exempt=exempt)
+                bracket=bracket, bears=bears, nut=nut, exempt=exempt)
 
 
 # A toe screw is quoted by the face it enters, how far back from the joint it
@@ -2215,7 +2227,8 @@ JOINTS = [
               "i vangen",
          contacts=[dict(a="bench_rail", b="stub", axis=2, drives=[
              drive(BRACKETS["vinkel90"]["name"], 1, into="stub", axis=0,
-                   sign="inboard", row=2, row_sign=-1, bracket="vinkel90"),
+                   sign="inboard", row=2, row_sign=-1, bracket="vinkel90",
+                   bears="bench_rail"),
              drive("Treskrue 5×40 forsenket Torx", 2, into="stub", axis=0,
                    sign="inboard", row=2, row_sign=-1, reach=90.0),
              drive("Treskrue 5×40 forsenket Torx", 2, into="bench_rail",
@@ -2236,7 +2249,7 @@ JOINTS = [
               "henger i skruer",
          contacts=[dict(a="post_back", b="ledger", axis=0, drives=[
              drive(BRACKETS["vinkel40"]["name"], 1, into="post_back", axis=0,
-                   row=2, row_sign=-1, bracket="vinkel40"),
+                   row=2, row_sign=-1, bracket="vinkel40", bears="ledger"),
              drive("Treskrue 5×40 forsenket Torx", 1, into="post_back",
                    axis=0, row=2, row_sign=-1, reach=40.0),
              drive("Treskrue 5×40 forsenket Torx", 1, into="ledger", axis=2,
@@ -2249,12 +2262,12 @@ JOINTS = [
     dict(id="J13b", title="U-brakett → løs plate (omslutter trinnet)", n=2,
          drill="⌀6,5 gjennom platen, forsenk ⌀13 i oversiden",
          side="Ovenfra gjennom platen; mutteren under",
-         spread=dict(axis=0, at=[-140.0, 140.0]),
+         spread=dict(axis=0, at=[-40.0, 40.0]),
          contacts=[dict(a="panel", b="rung", axis=2, drives=[
              drive(BRACKETS["u"]["name"], 1, frm="panel", bracket="u",
                    row=1, row_sign=-1),
              drive("Senkhodeskrue M6×30 + skive M6 + låsemutter M6", 2,
-                   frm="panel", row=1, row_sign=-1,
+                   frm="panel", row=1, row_sign=-1, nut=True,
                    reach=BRACKETS["u"]["leg"],
                    exempt="gjennomgående bolt i platen, mutter under")])]),
     dict(id="J13c", title="Krokplate → løs plate (griper om benkevangens "
@@ -2263,12 +2276,12 @@ JOINTS = [
          side="Ovenfra gjennom platen; kroken henger ned foran vangen og "
               "vender innover under den. Plasseres i X klar av "
               "avstivningslektene",
-         spread=dict(axis=0, at=[-140.0, 140.0]),
+         spread=dict(axis=0, at=[-40.0, 40.0]),
          contacts=[dict(a="panel", b="bench_back", axis=2, drives=[
              drive(BRACKETS["krok"]["name"], 1, frm="panel", bracket="krok",
                    row=1, row_sign=1),
              drive("Senkhodeskrue M6×30 + skive M6 + låsemutter M6", 2,
-                   frm="panel", row=1, row_sign=1,
+                   frm="panel", row=1, row_sign=1, nut=True,
                    reach=BRACKETS["krok"]["leg"],
                    exempt="gjennomgående bolt i platen, mutter under")])]),
     dict(id="J14", title="Veggfeste — gjennom den bakre sidevangen inn i "
@@ -2557,15 +2570,17 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift):
             return [dict(kind="plate", bracket=dr["bracket"], anchor=at(p),
                          direction=_unit(axis, sign), run=_unit(row, rsign),
                          reach=reach, width=width,
-                         t=BRACKETS[dr["bracket"]]["t"],
-                         through=None, into=target)]
+                         t=BRACKETS[dr["bracket"]]["t"], through=None,
+                         into=target,
+                         bears=(_member(crow, dr["bears"], pa, pb)
+                                if dr["bears"] else None))]
         out = []
         for v in row_positions(lo, hi, dr["per"], d,
                                f"{what} (beslagflik {reach:g} mm)"):
             p[row] = v
             out.append(dict(kind="screw", anchor=at(list(p)),
                             direction=_unit(axis, sign), length=length, d=d,
-                            through=None, into=target))
+                            face=(axis, face), through=None, into=target))
         return out
 
     axis, sign, entry, target = drive_axis_sign(contact, crow, pa, pb, dr)
@@ -2594,8 +2609,8 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift):
             p[axis] = cp[axis] - sign * toe["back"]
             p[row] = v
             out.append(dict(kind="screw", anchor=at(p), direction=vec,
-                            length=length, d=d, through=entry, into=target,
-                            toe=True))
+                            length=length, d=d, face=(f_ax, face),
+                            through=entry, into=target, toe=True))
         return out
 
     # --- the ordinary through screw, and the plates bolted through one -----
@@ -2626,7 +2641,9 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift):
         p[row] = v
         out.append(dict(kind="screw", anchor=at(list(p)),
                         direction=_unit(axis, sign), length=length, d=d,
-                        through=entry, into=target))
+                        face=(axis, face), through=entry,
+                        into=(None if dr["nut"] else target),
+                        grips=target, nut=dr["nut"]))
     return out
 
 
@@ -2789,8 +2806,472 @@ for _name, _qty in sorted(HARDWARE_TOTAL.items(), key=lambda kv: -kv[1]):
     print(f"    {_qty:>4} x {_name}")
 
 
+
+# ===========================================================================
+# THE FASTENERS AS SOLIDS
+# ===========================================================================
+# A drawn arrow cannot be wrong in a way a build catches. A solid can: it has
+# a head that is either flush with the face or is not, a tip that is either
+# inside the member it grips or is not, and a body that is either in its own
+# two members or in somebody else's. Every one of those is a question the
+# assert block below asks of the SHAPE - not of the table that produced it -
+# and the whole reason the fasteners are modelled at all.
+#
+# They stay OUT of the wood logic. `parts`, `mode_parts()`, CUT_LIST,
+# parts.tsv, the overlap check and the connectivity check are wood-only: a
+# screw overlaps the two members it ties on purpose, so it would fail the
+# no-overlap assert on sight. The fasteners ride in their own colour group and
+# are added to the exported compound only.
+#
+#   LOFTBED_FASTENERS=0   build the bed without them (impact baseline)
+# ---------------------------------------------------------------------------
+FASTENERS_ON = os.environ.get("LOFTBED_FASTENERS", "1").lower() \
+    not in ("0", "false", "no", "off")
+
+GROUP_COLORS["fasteners"] = Color(0.42, 0.45, 0.50)   # zinc-plated steel
+GROUP_ORDER.append("fasteners")
+
+# Countersunk wood screw, proportions of a Torx flat-head timber screw. The
+# nominal length of a countersunk screw is measured FROM THE TOP OF THE HEAD,
+# which is what makes the "does it come out the back" question answerable.
+SCREW_HEAD_D = {5: 9.5, 6: 11.8, 8: 15.5}     # head diameter by shank diameter
+SCREW_HEAD_LAND = 0.8            # the cylindrical land at the top of the head
+SCREW_TIP_LEN = 1.6              # the point, as a multiple of d
+# Mesh deflection for the fastener group only - see the export block.
+FASTENER_MESH_TOL = 0.15
+FASTENER_MESH_ANG = 1.0
+
+
+def _rot_to(direction):
+    """The turn that takes local -Z onto `direction`. Any direction: the two
+    toe-screw joints are not axis aligned and must not be special cases."""
+    v = Vector(*direction)
+    v = v / v.length
+    src = Vector(0, 0, -1)
+    dot = max(-1.0, min(1.0, src.dot(v)))
+    if dot > 1 - 1e-12:
+        return Location()
+    if dot < -1 + 1e-12:
+        return Location((0, 0, 0), (1, 0, 0), 180)
+    ax = src.cross(v)
+    return Location((0, 0, 0), (ax.X, ax.Y, ax.Z),
+                    math.degrees(math.acos(dot)))
+
+
+def _tag(solid, spec, label):
+    solid.label = label
+    solid.color = GROUP_COLORS["fasteners"]
+    solid.group = "fasteners"
+    solid.spec = spec
+    bb = solid.bounding_box()
+    solid.extents = ((bb.min.X, bb.max.X), (bb.min.Y, bb.max.Y),
+                     (bb.min.Z, bb.max.Z))
+    return solid
+
+
+def screw(anchor, direction, length, d, spec=None, label="Screw"):
+    """One countersunk wood screw as a solid.
+
+    `anchor`    the centre of the head ON THE ENTRY FACE (model mm, Z-up)
+    `direction` the unit vector the screw travels, i.e. into the wood
+    `length`    the nominal (head-top to tip) length
+
+    The head top sits exactly in the entry face: flush, neither proud nor
+    counterbored. No thread is modelled and none is wanted at drawing scale -
+    the silhouette is what a drawing carries, and the silhouette is what every
+    assert below is about.
+    """
+    dd = int(round(d))
+    r, hr = d / 2, SCREW_HEAD_D.get(dd, 1.9 * d) / 2
+    csk = hr - r                    # 90 deg countersink: rise == run
+    tip = SCREW_TIP_LEN * d
+    shank = length - SCREW_HEAD_LAND - csk - tip
+    assert shank > 0, f"{label}: {length} mm is shorter than its own head"
+
+    z = 0.0
+    solid = Cylinder(hr, SCREW_HEAD_LAND).moved(
+        Location((0, 0, z - SCREW_HEAD_LAND / 2)))
+    z -= SCREW_HEAD_LAND
+    solid += Cone(r, hr, csk).moved(Location((0, 0, z - csk / 2)))
+    z -= csk
+    solid += Cylinder(r, shank).moved(Location((0, 0, z - shank / 2)))
+    z -= shank
+    solid += Cone(0, r, tip).moved(Location((0, 0, z - tip / 2)))
+    return _tag(Location(anchor) * _rot_to(direction) * solid, spec, label)
+
+
+def _slab(lo, hi):
+    """A box from two corner triples, given in any order per axis."""
+    a = [min(p, q) for p, q in zip(lo, hi)]
+    b = [max(p, q) for p, q in zip(lo, hi)]
+    d = [y - x for x, y in zip(a, b)]
+    return Box(*d).moved(Location(tuple(x + s / 2 for x, s in zip(a, d))))
+
+
+def _axis_of(vec):
+    """(axis, sign) of an axis-aligned unit vector."""
+    j = max(range(3), key=lambda i: abs(vec[i]))
+    return j, (1.0 if vec[j] > 0 else -1.0)
+
+
+def angle_bracket(spec, label):
+    """A bent flat bracket: two flanges at 90 degrees meeting at one corner.
+
+    Flange A lies on the face the drive vector enters and runs out of the
+    corner along `run`. Flange B is the OTHER one, and its geometry is not a
+    second row of table - it falls out of the first: a right angle turns
+    `run` into the second flange's screw direction and the drive vector into
+    the direction that flange runs. That is why the orientation assert below
+    can be written at all.
+    """
+    C = spec["anchor"]
+    ax, sa = _axis_of(spec["direction"])
+    rx, sr = _axis_of(spec["run"])
+    cx = [j for j in range(3) if j not in (ax, rx)][0]
+    t, w, reach = spec["t"], spec["width"], spec["reach"]
+    lo = list(C)
+    hi = list(C)
+    lo[cx] = C[cx] - w / 2
+    hi[cx] = C[cx] + w / 2
+    a_lo, a_hi = list(lo), list(hi)
+    a_hi[ax] = C[ax] - sa * t
+    a_hi[rx] = C[rx] + sr * reach
+    b_lo, b_hi = list(lo), list(hi)
+    b_hi[rx] = C[rx] + sr * t
+    b_hi[ax] = C[ax] - sa * reach
+    return _tag(_slab(a_lo, a_hi) + _slab(b_lo, b_hi), spec, label)
+
+
+def hook_bracket(spec, label):
+    """A hook: a flange under a panel, down past an edge, back under a member.
+
+    The two steel parts on the loose panel are the same shape with different
+    numbers - the U at the front wraps a ladder rung, the hook at the back
+    grips the bench rail's front edge - so they are one function. Every
+    dimension except the flange length and the hook depth is read off the
+    members the bracket is between.
+    """
+    C = spec["anchor"]
+    ax, sa = _axis_of(spec["direction"])          # down through the panel
+    rx, sr = _axis_of(spec["run"])                # along the flange
+    cx = [j for j in range(3) if j not in (ax, rx)][0]
+    t, w, reach = spec["t"], spec["width"], spec["reach"]
+    through, into = spec["through"], spec["into"]
+    thick = through.extents[ax][1] - through.extents[ax][0]
+    seat = C[ax] + sa * thick                     # the panel's far face
+    far = into.extents[ax][0] if sa < 0 else into.extents[ax][1]
+    bottom = far + sa * CLEAR_STEEL      # just clear of the member
+    lo = [0.0, 0.0, 0.0]
+    hi = [0.0, 0.0, 0.0]
+    for j in range(3):
+        lo[j] = hi[j] = C[j]
+    lo[cx], hi[cx] = C[cx] - w / 2, C[cx] + w / 2
+
+    flange = (list(lo), list(hi))
+    flange[0][ax], flange[1][ax] = seat, seat + sa * t
+    flange[0][rx], flange[1][rx] = C[rx], C[rx] + sr * reach
+
+    down = (list(lo), list(hi))
+    down[0][ax], down[1][ax] = seat, bottom
+    down[0][rx], down[1][rx] = C[rx], C[rx] + sr * t
+
+    back = (list(lo), list(hi))
+    back[0][ax], back[1][ax] = bottom, bottom - sa * t
+    back[0][rx] = C[rx] + sr * t
+    back[1][rx] = C[rx] - sr * spec["hook"]
+
+    solid = _slab(*flange) + _slab(*down) + _slab(*back)
+    return _tag(solid, spec, label)
+
+
+CLEAR_STEEL = 4.0        # air between a bracket and the wood it hooks round
+
+
+def build_fasteners():
+    out = []
+    seen = {}
+    for f in FASTENER_SPECS:
+        if f.get("wall"):
+            # The wall screw's back half is IN THE WALL, which is not
+            # modelled. It is drawn, but it is not exported: putting 52 mm of
+            # steel behind Y = -48 would make the exported bed 888 mm deep,
+            # and the 836 mm flat mounting plane is the whole point of it.
+            continue
+        n = seen[f["jid"]] = seen.get(f["jid"], 0) + 1
+        label = f"{f['jid']} {f['name'].split(' forsenket')[0]}_{n}"
+        if f["kind"] == "plate":
+            b = BRACKETS[f["bracket"]]
+            f.setdefault("hook", b.get("hook"))
+            solid = (hook_bracket(f, label) if b.get("hook")
+                     else angle_bracket(f, label))
+        else:
+            solid = screw(f["anchor"], f["direction"], f["length"], f["d"],
+                          spec=f, label=label)
+        f["solid"] = solid
+        out.append(solid)
+    return out
+
+
+FASTENERS = build_fasteners() if FASTENERS_ON else []
+
+
+# ---------------------------------------------------------------------------
+# THE ASSERTS - asked of the SHAPES
+# ---------------------------------------------------------------------------
+FASTENER_TOL = 0.15
+# The tightest tip cover in the bed is J9-F: a 6x70 through a 36 mm bearing
+# block leaves 34 mm in a 36 mm post, so 2 mm of wood stands behind the point.
+# That is the number the rule is set by, and it is called out in ASSEMBLY.md.
+FASTENER_MIN_TIP_COVER = 2.0
+FASTENER_VOL_TOL = 2.0           # mm3 - OCC boolean noise on a tangent face
+TOE_HEAD_ALLOWANCE = 0.10        # of a skew screw's volume - see the note below
+
+
+def _boxes_apart(a, b):
+    return any(a0 >= b1 or b0 >= a1 for (a0, a1), (b0, b1) in zip(a, b))
+
+
+def _cut_volume(a, b):
+    """Volume of a & b, 0.0 when they miss."""
+    if _boxes_apart(a.extents, b.extents):
+        return 0.0
+    try:
+        x = a.intersect(b)
+    except Exception:
+        return 0.0
+    if x is None:
+        return 0.0
+    if isinstance(x, (list, tuple)):
+        return sum(abs(getattr(i, "volume", 0.0)) for i in x)
+    return abs(getattr(x, "volume", 0.0))
+
+
+def _ray_exit(point, direction, member):
+    """How far past `point` the ray stays inside `member`, mm (0 if outside)."""
+    t = math.inf
+    for j in range(3):
+        d = direction[j]
+        lo, hi = member.extents[j]
+        if abs(d) < 1e-9:
+            if not (lo - 1e-6 <= point[j] <= hi + 1e-6):
+                return 0.0
+            continue
+        cand = ((hi if d > 0 else lo) - point[j]) / d
+        if cand < 0:
+            return 0.0
+        t = min(t, cand)
+    return 0.0 if t is math.inf else t
+
+
+def _inside(point, member, grow=0.0):
+    return all(lo - grow <= point[j] <= hi + grow
+               for j, (lo, hi) in enumerate(member.extents))
+
+
+if FASTENERS_ON:
+    _others = {}
+    for _mode, _panel in MODES.items():
+        _others[_mode] = [p for p in mode_parts(_panel) if p is not mattress]
+
+    for _f in FASTENER_SPECS:
+        _s = _f.get("solid")
+        if _s is None:
+            continue
+        _own = [p for p in (_f["through"], _f["into"]) if p is not None]
+        _label = _s.label
+
+        if _f["kind"] == "screw":
+            _ax, _sg = _axis_of(_f["direction"])
+            _skew = abs(abs(_f["direction"][_ax]) - 1.0) > 1e-6
+            _fx, _face = _f["face"]
+
+            # 1 - the head is FLUSH with the face it is driven from. Not proud
+            #     (it would foul whatever lands on that face), not sunk (the
+            #     drawing would lie). A skew screw's head is sunk into the
+            #     face at an angle, so what is checked there is the anchor:
+            #     the centre of the head is ON the face, and nothing of the
+            #     screw stands in front of it.
+            if not _skew:
+                _head = _s.extents[_ax][1] if _sg < 0 else _s.extents[_ax][0]
+                assert abs(_head - _f["anchor"][_ax]) < FASTENER_TOL, (
+                    f"{_label}: the head sits "
+                    f"{_head - _f['anchor'][_ax]:+.2f} mm off the entry face "
+                    f"— it must be flush")
+            assert abs(_f["anchor"][_fx] - _face) < FASTENER_TOL, (
+                f"{_label}: the head is at {_f['anchor'][_fx]:g} on axis "
+                f"{'XYZ'[_fx]}, the face it is driven from is at {_face:g}")
+
+            # 2 - the tip is INSIDE the member it grips, with wood behind it.
+            #     A through bolt grips nothing: it ends in free air under the
+            #     panel with a nut on it, and what is checked is that the air
+            #     is really there.
+            _tip = tuple(a + d * _f["length"]
+                         for a, d in zip(_f["anchor"], _f["direction"]))
+            _target = _f["into"]
+            if _target is None:
+                assert _f.get("nut"), f"{_label}: no member and no nut"
+                _thick = (_f["through"].extents[_ax][1]
+                          - _f["through"].extents[_ax][0])
+                assert _f["length"] > _thick, (
+                    f"{_label}: a {_f['length']:g} mm bolt does not reach "
+                    f"through {_thick:g} mm of '{_f['through'].label}'")
+                _own = [_f["through"]]
+            else:
+                assert _inside(_tip, _target, -1e-6), (
+                f"{_label}: the tip lands at "
+                f"{tuple(round(v, 1) for v in _tip)}, outside "
+                    f"'{_target.label}' — the screw does not reach the "
+                    f"member it is supposed to tie, or it has gone straight "
+                    f"through it")
+                _cover = _ray_exit(_tip, _f["direction"], _target)
+                assert _cover >= FASTENER_MIN_TIP_COVER, (
+                    f"{_label}: only {_cover:.1f} mm of '{_target.label}' "
+                    f"left behind the tip, want {FASTENER_MIN_TIP_COVER}")
+
+            # 3 - the physics, on the shape: the head is in the member it is
+            #     driven from and the tip is in the one it grips.
+            if _f["through"] is not None:
+                assert _inside(tuple(a + d * 0.5 for a, d in
+                                     zip(_f["anchor"], _f["direction"])),
+                               _f["through"], 1e-6), (
+                    f"{_label}: the head is not in '{_f['through'].label}'")
+
+        # 4 - nothing of it is outside its own joint, and nothing of it is in
+        #     anybody else's wood, in either mode.
+        # A bracket lies ON the wood and a through bolt ends in air under it,
+        # so neither is contained by anything; a SCREW must be.
+        if _f["kind"] == "screw" and not _f.get("nut"):
+            _v = abs(_s.volume)
+            _in = sum(_cut_volume(_s, p) for p in _own)
+            # A SKEW screw's head cannot be flush: a 90 deg countersink met at
+            # 60-65 deg leaves part of the head standing out of the face, and
+            # that is why both toe joints call for a counterbore in the
+            # beslagliste. The allowance is the head, and only the head.
+            _slack = (TOE_HEAD_ALLOWANCE * _v if _f.get("toe")
+                      else max(FASTENER_VOL_TOL, 0.02 * _v))
+            assert _v - _in < _slack, (
+                f"{_label}: {_v - _in:.0f} mm3 of {_v:.0f} is outside the "
+                f"joint ({' + '.join(p.label for p in _own)}) — it exits a "
+                f"member or points into thin air")
+        for _mode, _pl in _others.items():
+            for _p in _pl:
+                if _p in _own:
+                    continue
+                _hit = _cut_volume(_s, _p)
+                assert _hit < FASTENER_VOL_TOL, (
+                    f"{_mode}: {_label} runs {_hit:.0f} mm3 into "
+                    f"'{_p.label}'")
+
+    # --- the brackets stand the right way round ----------------------------
+    # The bug this kills is the upside-down bracket: a flange screwed to a
+    # face that has no wood behind it. Both flanges of every angle bracket are
+    # checked, and the one that matters most is the horizontal flange of the
+    # 40x40x20 under the table ledger - if that one is on top of the ledger
+    # instead of under it, the ledger hangs on two 5 mm screws in withdrawal
+    # instead of standing on steel.
+    _n_ang = _n_hook = 0
+    for _f in FASTENER_SPECS:
+        if _f["kind"] != "plate":
+            continue
+        _C = _f["anchor"]
+        _ax, _sa = _axis_of(_f["direction"])
+        _rx, _sr = _axis_of(_f["run"])
+        if BRACKETS[_f["bracket"]].get("hook"):
+            # A hook grips the far side of the member: its return leg has to
+            # be past that face, and it has to overlap the member it grips.
+            _into = _f["into"]
+            _far = _into.extents[_ax][0] if _sa < 0 else _into.extents[_ax][1]
+            _end = _C[_rx] - _sr * _f["hook"]
+            _lo, _hi = sorted((_C[_rx], _end))
+            _m0, _m1 = _into.extents[_rx]
+            _grip = min(_hi, _m1) - max(_lo, _m0)
+            assert _grip >= 20.0, (
+                f"{_f['jid']}: the return leg runs {_lo:g}..{_hi:g} on axis "
+                f"{'XYZ'[_rx]} and '{_into.label}' is {_m0:g}..{_m1:g} — "
+                f"{_grip:g} mm of grip, the hook does not get under the "
+                f"member it is supposed to hold")
+            # ...and it passes on the FAR side of it, not through it.
+            assert (_far - _sa * CLEAR_STEEL - _far) * -_sa > 0
+            _n_hook += 1
+            continue
+        # Flange A: its screws go along `direction` into the member the
+        # bracket is anchored on. Flange B: at right angles, screwed along
+        # -run into the OTHER member. Both have to hit wood.
+        _legs = [(tuple(_C[j] + _f["run"][j] * _f["reach"] / 2
+                        for j in range(3)), _f["direction"]),
+                 (tuple(_C[j] - _f["direction"][j] * _f["reach"] / 2
+                        for j in range(3)),
+                  tuple(-c for c in _f["run"]))]
+        if _f.get("bears") is not None:
+            # THE UPSIDE-DOWN BRACKET. Flange B is the one that carries, and
+            # a carrying flange is horizontal, screwed straight UP, and sits
+            # ON THE UNDERSIDE of the member it carries. Turn the bracket
+            # over and its screws still land in wood - they land in the TOP
+            # of the ledger - so "the screws hit something" is not the check.
+            # This is.
+            _up = tuple(-c for c in _f["run"])
+            _borne = _f["bears"]
+            assert _up == (0.0, 0.0, 1.0), (
+                f"{_f['jid']}: the flange that carries '{_borne.label}' is "
+                f"screwed along {_up}, not straight up — the bracket is on "
+                f"its side or upside down")
+            assert abs(_C[2] - _borne.extents[2][0]) < FASTENER_TOL, (
+                f"{_f['jid']}: the carrying flange sits at Z {_C[2]:g} and "
+                f"'{_borne.label}' has its underside at "
+                f"{_borne.extents[2][0]:g} — it is not UNDER the member it "
+                f"is supposed to hold up")
+        for _i, (_at, _dir) in enumerate(_legs):
+            _probe = tuple(a + d * 1.0 for a, d in zip(_at, _dir))
+            _hit = next((p for p in _others["bed_mode"]
+                         if _inside(_probe, p, -1e-6)), None)
+            assert _hit is not None, (
+                f"{_f['jid']}: flange {'AB'[_i]} of {_f['name']} is screwed "
+                f"along {_dir} into thin air at "
+                f"{tuple(round(v, 1) for v in _probe)} — the bracket is on "
+                f"the wrong face, or the wrong way up")
+        _n_ang += 1
+
+    print(f"OK  {len(FASTENERS)} festemidler modellert som kropper: hode i "
+          f"plan med flaten, spiss inne i delen den tar tak i (minst "
+          f"{FASTENER_MIN_TIP_COVER:g} mm dekning), ingenting i noen annen "
+          f"del i noen av de to stillingene")
+    print(f"OK  {_n_ang} vinkelbeslag og {_n_hook} krok-/U-beslag: hver flik "
+          f"har tre bak seg i skrueretningen")
+else:
+    print("(fasteners off - LOFTBED_FASTENERS=0)")
+
+
+# The exploded twins the assembly drawings use: the same solid, backed out
+# along its own axis. Not exported - the line-art renderer asks for them.
+EXPLODE_MM = 110
+
+
+def exploded_fasteners(distance=EXPLODE_MM, only=None):
+    """The same fasteners, backed `distance` out along their own drive axis.
+
+    A drawing transform: nothing in the model moves. `only` is a set of joint
+    ids, because a step explodes the fasteners it is about and no others.
+    """
+    out = []
+    for s in FASTENERS:
+        f = s.spec
+        if only is not None and f["jid"] not in only:
+            continue
+        shift = tuple(-c * distance for c in f["direction"])
+        e = Location(shift) * s
+        _tag(e, f, s.label)
+        e.shift = shift
+        out.append(e)
+    return out
+
+
+def display_parts(panel):
+    """The wood PLUS the fasteners - what gets exported and drawn."""
+    return mode_parts(panel) + FASTENERS
+
+
 def make_compound(panel, xform=IDENTITY):
-    return Compound(children=[p.moved(xform) for p in mode_parts(panel)])
+    return Compound(children=[p.moved(xform) for p in display_parts(panel)])
 
 
 bed_mode = make_compound(panel_bed)
@@ -4537,28 +5018,51 @@ for name, panel in MODES.items():
         export_gltf(comp, glb_path, binary=True)
         exports.append(glb_path)
 
-    # STL has no transform node, so Y-up has to be baked into the vertices.
-    y_up = make_compound(panel, Y_UP)
-    stl_path = os.path.join(OUT_DIR, f"loftbed_{name}.stl")
-    export_stl(y_up, stl_path)
-    exports.append(stl_path)
+    # ORDER MATTERS HERE. OCC caches a triangulation on a shape and only
+    # replaces it when a FINER one is asked for, so the coarse fastener mesh
+    # has to be laid down BEFORE the single-mesh export asks for the default
+    # 0.001 mm - otherwise the tolerance below is silently ignored and every
+    # screw arrives with ~1100 triangles on it. So: per-group first, single
+    # mesh second.
 
     # One STL per colour group (same Y-up orientation), so the .usdz can carry
-    # five separate UsdPreviewSurface materials. These are intermediates and
-    # deliberately live outside the repo.
+    # one UsdPreviewSurface material per group - the fasteners included, which
+    # is what makes the steel read as steel on a phone. These are
+    # intermediates and deliberately live outside the repo.
     manifest = []
     for group in GROUP_ORDER:
-        members = [p.moved(Y_UP) for p in mode_parts(panel) if p.group == group]
+        members = [p.moved(Y_UP) for p in display_parts(panel)
+                   if p.group == group]
         if not members:
             continue
         gpath = os.path.join(GROUP_DIR, f"loftbed_{name}_{group}.stl")
-        export_stl(Compound(children=members), gpath)
+        if group == "fasteners":
+            # A screw and a bent bracket are the only curved / small solids in
+            # this model, and at the default deflection one screw tessellates
+            # to more triangles than the whole bed. They are meshed at drawing
+            # resolution instead: same silhouette, ~15x fewer triangles.
+            export_stl(Compound(children=members), gpath,
+                       tolerance=FASTENER_MESH_TOL,
+                       angular_tolerance=FASTENER_MESH_ANG)
+        else:
+            export_stl(Compound(children=members), gpath)
         rgba = ",".join(f"{c:.4g}" for c in tuple(GROUP_COLORS[group]))
         manifest.append(f"{group}={rgba}={gpath}")
     mpath = os.path.join(GROUP_DIR, f"loftbed_{name}.groups")
     with open(mpath, "w", encoding="utf-8") as fh:
         fh.write("\n".join(manifest) + "\n")
     group_files.append(mpath)
+
+    # STL has no transform node, so Y-up has to be baked into the vertices.
+    # The same coarse deflection is used for the whole compound: every wooden
+    # part is a BOX, and a planar face triangulates to the same two triangles
+    # at any deflection, so the wood comes out byte-identical to the default
+    # export and only the steel gets cheaper.
+    y_up = make_compound(panel, Y_UP)
+    stl_path = os.path.join(OUT_DIR, f"loftbed_{name}.stl")
+    export_stl(y_up, stl_path, tolerance=FASTENER_MESH_TOL,
+               angular_tolerance=FASTENER_MESH_ANG)
+    exports.append(stl_path)
 
     # Hidden-line projections are by far the slowest step in this script, so
     # they are deliverables only (LOFTBED_FULL / `mise run build-full`).
