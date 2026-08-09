@@ -138,8 +138,12 @@ def _draw_solid(page, RL, view, plines, extents, off, width):
     page.polylines(plines, RL.INK, width)
 
 
-def _insertion(page, RL, view, extents, off, ends=2):
-    """Dashed lines from a displaced piece back to where it seats.
+def _insertion(page, RL, view, extents, off, ends=2, steel=False):
+    """Insertion lines from a displaced piece back to where it seats.
+
+    DASHED for a wooden piece, DOTTED for a piece of steel - the same split
+    the step pages use, so a reader who has learnt it on one page has learnt
+    it on all of them.
 
     Drawn from the TOP corners of the piece in its exploded place to the same
     corners in its home place, i.e. along the explosion vector, so the reader
@@ -156,7 +160,9 @@ def _insertion(page, RL, view, extents, off, ends=2):
     for p in tops:
         a = view.xy((p[0] + off[0], p[1] + off[1], p[2] + off[2]))
         b = view.xy(p)
-        page.line(a, b, RL.GREY, RL.W_LEAD, dash="20 16")
+        page.line(a, b, RL.GREY,
+                  RL.W_PHANTOM if steel else RL.W_LEAD,
+                  dash=RL.DASH_INSERT if steel else "20 16")
 
 
 def _ghost(page, RL, view, xs, ys, z):
@@ -334,7 +340,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     for ext in batten_ext:
         _insertion(page, RL, view, ext, DROP_BATTEN, ends=4)
     for b in beslag:
-        _insertion(page, RL, view, b["box3"], b["off"], ends=1)
+        _insertion(page, RL, view, b["box3"], b["off"], ends=1, steel=True)
 
     _draw_solid(page, RL, view, plate_lines, panel.extents, (0, 0, 0),
                 RL.W_NEW)
@@ -391,10 +397,14 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     if rows:
         RL.draw_inset(page, box, [], rows, glyph_dir, letters)
 
+    # Dotted, not an arrow: on this page as on every other, a dotted line is a
+    # fastener going into its hole and an arrow is a wooden part being brought
+    # into place.
     for m in sorted(marks, key=lambda q: (-q["p3"][1], q["p3"][0])):
         p2 = view.xy(m["p3"])
         tail = (p2[0] - dx * arrow_len, p2[1] - dy * arrow_len)
-        page.arrow(tail, p2, RL.INK, RL.W_MARK, arrow_len * RL.HEAD_FRAC)
+        page.line(tail, p2, RL.GREY, RL.W_PHANTOM, dash=RL.DASH_INSERT)
+        page.dot(p2, 6.5, colour=RL.INK)
         RL.mark_label(page, tail, (dx, dy), m["letter"], m["per"], box)
 
     # The beslag themselves carry a badge each, beside the glyph: they ARE
