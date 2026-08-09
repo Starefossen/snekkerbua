@@ -243,7 +243,7 @@
   <polyline points="730,546 1408,472" class="ldr" marker-start="url(#aE)"/>
   <text x="1420" y="480" class="lbl" text-anchor="start">Øvre sidevange 48×98 + køyespiler 36×98 – ligger BAK stigen</text>
   <polyline points="591,546 1408,572" class="ldr" marker-start="url(#aE)"/>
-  <text x="1420" y="580" class="lbl" text-anchor="start">J3: 4 × treskrue 6×80 per stigevange, skrudd fra forsiden</text>
+  <text x="1420" y="580" class="lbl" text-anchor="start">J3: 3 × treskrue 6×80 per stigevange, skrudd fra forsiden</text>
   <text x="1420" y="610" class="sml" text-anchor="start">(Y 788) gjennom den 36 mm tykke vangen og inn i den fremre</text>
   <text x="1420" y="640" class="sml" text-anchor="start">sidevangen. INGEN bolt: 36 mm gir en M8 bare 18 mm kant-</text>
   <text x="1420" y="670" class="sml" text-anchor="start">avstand mot kravet 24. En forboret 6 mm treskrue trenger 18.</text>
@@ -259,7 +259,7 @@
   <polyline points="633,1202 1408,1232" class="ldr" marker-start="url(#aE)"/>
   <text x="1420" y="1240" class="lbl" text-anchor="start">J4 per trinnende: 1 × treskrue 6×120 fra UTSIDEN av vangen</text>
   <text x="1420" y="1270" class="sml" text-anchor="start">inn i trinnenden + 1 × 5×60 ned gjennom trinnet i klossen.</text>
-  <text x="1420" y="1300" class="sml" text-anchor="start">J5: 2 × treskrue 5×60 fra stigeåpningen, gjennom klossen</text>
+  <text x="1420" y="1300" class="sml" text-anchor="start">J5: 1 × treskrue 5×60 fra stigeåpningen, gjennom klossen</text>
   <text x="1420" y="1330" class="sml" text-anchor="start">og inn i vangens innside.</text>
   <polyline points="780,1392 1408,1432" class="ldr" marker-start="url(#aE)"/>
   <text x="1420" y="1440" class="lbl" text-anchor="start">Løs plate 18 mm i sengemodus – hviler på de bakre 37 mm</text>

@@ -75,7 +75,7 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Bordbærelekt, bak | 21×95 | 1794 | **1** |
 | Stigevange | 36×48 | 1700 | **2** |
 | Stigekloss | 36×48 | 73 | **8** |
-| Bærekloss, benkevange (J9-B) | 36×48 | 48 | **4** |
+| Bærekloss, benkevange (J9-B / J9-F) | 36×48 | 48 | **4** |
 | Bærekloss, endebjelke (J1-B) | 36×48 | 48 | **4** |
 | Hjørnestolpe, front | 36×98 | 1700 | **2** |
 | Hjørnestolpe, bak (veggside) | 36×98 | 1065 | **2** |
@@ -124,7 +124,7 @@ Ledd **J15** → [beslagliste](generated/beslagliste.md)
 |---:|---|---|---:|
 | **1×** | Benkevange, bak (gjennomgående) | 48×73 | 1794 |
 | **1×** | Bordbærelekt, bak | 21×95 | 1794 |
-| **2×** | Bærekloss, benkevange (J9-B) | 36×48 | 48 |
+| **2×** | Bærekloss, benkevange (J9-B / J9-F) | 36×48 | 48 |
 | **2×** | Hjørnestolpe, bak (veggside) | 36×98 | 1065 |
 | **1×** | Sidevange, øvre | 48×98 | 1984 |
 
@@ -171,7 +171,7 @@ Ledd **J14** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **2×** | Bærekloss, benkevange (J9-B) | 36×48 | 48 |
+| **2×** | Bærekloss, benkevange (J9-B / J9-F) | 36×48 | 48 |
 | **4×** | Bærekloss, endebjelke (J1-B) | 36×48 | 48 |
 | **2×** | Endebjelke | 48×98 | 836 |
 | **2×** | Hjørnestolpe, front | 36×98 | 1700 |

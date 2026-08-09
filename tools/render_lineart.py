@@ -505,7 +505,7 @@ def choose_marks(marks, gap, inset=None):
     one mark at this scale, and so are the two ends of a joint that the camera
     happens to stack. It never merges across JOINTS, though: on step 3 the two
     6x90 into the end beam and the one into the bearing block under it land in
-    the same corner, and "4x" there would tell the builder to put four screws
+    the same corner, and "3x" there would tell the builder to put three screws
     in one place. Two joints, two marks, 2x and 1x.
     A mark that is crowded out does not disappear:
     its count is handed to the mark that crowded it, and that mark says "4x"

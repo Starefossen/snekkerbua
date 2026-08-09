@@ -37,7 +37,7 @@ Kjøpt 4,80 m, brukt 4,37 m, svinn 9 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 4 × 48 (Bærekloss, benkevange (J9-B)) + 4 × 48 (Bærekloss, endebjelke (J1-B)) + 8 × 73 (Stigekloss) + 2 × 1700 (Stigevange) | 364 |
+| 1 | 4800 | 4 × 48 (Bærekloss, benkevange (J9-B / J9-F)) + 4 × 48 (Bærekloss, endebjelke (J1-B)) + 8 × 73 (Stigekloss) + 2 × 1700 (Stigevange) | 364 |
 
 ### 36×98
 

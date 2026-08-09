@@ -3,7 +3,7 @@
 
 # Kappliste
 
-Alle mål i mm. Alle kutt er 90°. Posisjonen er delens plass i modellen: X langs veggen (0 = venstre vegg, 1990 = høyre vegg), Y i dybden (−96 = bakveggen), Z opp fra gulvet.
+Alle mål i mm. Alle kutt er 90°. Posisjonen er delens plass i modellen: X langs veggen (0 = venstre vegg, 1990 = høyre vegg), Y i dybden (-48 = bakveggen), Z opp fra gulvet.
 
 | Del | Dim. | Lengde | Ant. | X | Y | Z |
 |---|---|---:|---:|---|---|---|
@@ -11,7 +11,7 @@ Alle mål i mm. Alle kutt er 90°. Posisjonen er delens plass i modellen: X lang
 | Bordbærelekt, bak | 21×95 | **1794** | 1 | 98..1892 | -48..-27 | 387..482 |
 | Stigevange | 36×48 | **1700** | 2 | 787..1203 (fordelt) | 752..788 | 0..1700 |
 | Stigekloss | 36×48 | **73** | 8 | 835..1155 (fordelt) | 715..788 | 163..910 (fordelt) |
-| Bærekloss, benkevange (J9-B) | 36×48 | **48** | 4 | 0..1990 (fordelt) | -48..752 (fordelt) | 138..186 (fordelt) |
+| Bærekloss, benkevange (J9-B / J9-F) | 36×48 | **48** | 4 | 0..1990 (fordelt) | -48..752 (fordelt) | 138..186 (fordelt) |
 | Bærekloss, endebjelke (J1-B) | 36×48 | **48** | 4 | 98..1892 (fordelt) | -48..788 (fordelt) | 931..967 |
 | Hjørnestolpe, front | 36×98 | **1700** | 2 | 0..1990 (fordelt) | 752..788 | 0..1700 |
 | Hjørnestolpe, bak (veggside) | 36×98 | **1065** | 2 | 0..1990 (fordelt) | -48..-12 | 0..1065 |

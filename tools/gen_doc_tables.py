@@ -336,7 +336,7 @@ def build_steps(G):
                   "vilje åpent, slik at gulvet foran stigen er helt fritt.",
             do=[
                 "Fest hver vangebit til sin fremre hjørnestolpe etter J8, på "
-                  "bæreklossen J9-B.",
+                  "bæreklossen J9-F — den du satte på i steg 3.",
                 "Sett en stubbefot under den innerste enden av hver "
                   "vangebit. Vangebiten skal slutte akkurat der foten står — "
                   "ingen utstikk forbi foten.",
@@ -590,7 +590,10 @@ NO_NAMES = {
     "Ladder rung (tread)": "Rungetrinn",
     "Ladder rung block": "Stigekloss",
     "Bearing block, end beam (C2)": "Bærekloss, endebjelke (J1-B)",
-    "Bearing block, bench rail (C2)": "Bærekloss, benkevange (J9-B)",
+    # All four are the same piece off the same stick; the back pair is the
+    # J9-B joint (6x90 into the back post) and the front pair J9-F (6x70 -
+    # only 36 mm of post behind it), so the label has to name both.
+    "Bearing block, bench rail (C2)": "Bærekloss, benkevange (J9-B / J9-F)",
     "Bench rail, back (C5)": "Benkevange, bak (gjennomgående)",
     "Bench rail, front segment (D13)": "Benkevange, front (bit)",
     "Bench stub leg (W3)": "Stubbefot",
@@ -772,8 +775,9 @@ def emit_kappliste(G, out_dir):
     rows = cut_table(G)
     L = [HEAD, "# Kappliste\n\n",
          "Alle mål i mm. Alle kutt er 90°. Posisjonen er delens plass i "
-         "modellen: X langs veggen (0 = venstre vegg, 1990 = høyre vegg), "
-         "Y i dybden (−96 = bakveggen), Z opp fra gulvet.\n\n",
+         f"modellen: X langs veggen (0 = venstre vegg, {G.WALL_SPAN} = høyre "
+         f"vegg), Y i dybden ({_fmt(G.WALL_Y)} = bakveggen), Z opp fra "
+         "gulvet.\n\n",
          "| Del | Dim. | Lengde | Ant. | X | Y | Z |\n",
          "|---|---|---:|---:|---|---|---|\n"]
     total = 0

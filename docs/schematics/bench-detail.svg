@@ -112,7 +112,7 @@
   <line x1="1752" y1="980" x2="1734" y2="998" class="ext"/>
   <line x1="1792" y1="980" x2="1774" y2="998" class="ext"/>
 
-  <!-- J8: 2 x 6x80 langs Y ved X 49, Z 207,5 og 237,5 -->
+  <!-- J8: 2 x 6x80 langs Y ved X 50,5, Z 210,5 og 234,5 -->
   <circle cx="493.5" cy="668.75" r="11" class="scrg"/>
   <circle cx="493.5" cy="623.75" r="11" class="scrg"/>
   <!-- J9-F: 2 x 6x70 langs Y, skjult -->
@@ -188,11 +188,11 @@
   <text x="1850" y="770" class="lbl" text-anchor="start">Benkevange, front (bit) 48×73 × 642, X 3–645.</text>
   <text x="1850" y="800" class="sml" text-anchor="start">Ingen utkraging: den indre enden lander midt på stubbefoten.</text>
   <polyline points="500,646 1838,862" class="ldr" marker-start="url(#aE)"/>
-  <text x="1850" y="870" class="lbl" text-anchor="start">J8: 2 × treskrue 6×80 langs Y ved X 49, Z 207,5 og 237,5.</text>
+  <text x="1850" y="870" class="lbl" text-anchor="start">J8: 2 × treskrue 6×80 langs Y ved X 50,5, Z 210,5 og 234,5.</text>
   <text x="1850" y="900" class="sml" text-anchor="start">Drives fra stolpens FORSIDE, gjennom stolpen og inn i vangen.</text>
   <polyline points="1352,830 1838,962" class="ldr" marker-start="url(#aE)"/>
   <text x="1850" y="970" class="lbl" text-anchor="start">Stubbefot 48×48 × 186 – 4 stk. (én i hvert vangeplan).</text>
-  <text x="1850" y="1000" class="sml" text-anchor="start">J10: 1 vinkelbeslag 90×90×65 + 2 skråskruer 5×70 nedenfra.</text>
+  <text x="1850" y="1000" class="sml" text-anchor="start">J10: 1 vinkelbeslag 90×90×40×2,5 + 4 × 5×40 + 1 skråskrue 5×70 nedenfra.</text>
 
   <!-- ============================================================ B -->
   <text x="230" y="1420" class="pt" text-anchor="start">B · SNITT D–D VED X = 621, gjennom stubbeføttene (Y–Z), 1,3:1</text>
@@ -361,14 +361,14 @@
   <text x="2380" y="2238" class="sml" text-anchor="start">De kan derfor ikke tres inn etterpå – bakrammen må bygges flat.</text>
   <text x="2380" y="2302" class="sml" text-anchor="start">Bærekloss J9-B (bak): 48 × 48 × 36, X 98–146, Y −48 … 0,</text>
   <text x="2380" y="2334" class="sml" text-anchor="start">Z 150–186 – overkant nøyaktig i vangens underkant. Skrus på</text>
-  <text x="2380" y="2366" class="sml" text-anchor="start">stolpens X-innerflate med 2 × treskrue 6×90 langs X, fra klossens</text>
+  <text x="2380" y="2366" class="sml" text-anchor="start">stolpens X-innerflate med 1 × treskrue 6×90 langs X, fra klossens</text>
   <text x="2380" y="2398" class="sml" text-anchor="start">frie ende. 48 × 48 = 2304 mm² trelagring under vangeenden.</text>
   <text x="2380" y="2462" class="sml" text-anchor="start">J8-B: 2 × treskrue 6×90 SKRÅTT fra vangens forside inn i stolpen.</text>
   <text x="2380" y="2494" class="sml" text-anchor="start">Forbor hele veien – en skråskrue nær en ende sprekker lett.</text>
   <text x="2380" y="2526" class="sml" text-anchor="start">Skruene er bånd; hele vertikallasten går i klossen.</text>
   <text x="2380" y="2590" class="sml" text-anchor="start">MERK: den FREMRE bæreklossen J9-F er 48 × 36 × 48 ved X 0–48,</text>
   <text x="2380" y="2622" class="sml" text-anchor="start">Y 716–752, Z 138–186, skrudd fra klossens bakside inn i den</text>
-  <text x="2380" y="2654" class="sml" text-anchor="start">fremre stolpen med 2 × 6×70 – kortere skrue, det står bare</text>
+  <text x="2380" y="2654" class="sml" text-anchor="start">fremre stolpen med 1 × 6×70 – kortere skrue, det står bare</text>
   <text x="2380" y="2686" class="sml" text-anchor="start">36 mm stolpe bak den.</text>
 
   <text x="510" y="660" class="jl" text-anchor="start">J8</text>

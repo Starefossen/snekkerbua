@@ -33,7 +33,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 
 Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannrette deler i samme plan. Det laget er monteringsflaten mot veggen. Og det MÅ bygges som én ramme: den bakre benkevangen og bordbærelekta er kappet til å fylle nøyaktig mellom de to stolpene, så de lar seg ikke tre inn etterpå.
 
-**Deler:** 1× Benkevange, bak (gjennomgående) 48×73 × 1794 · 1× Bordbærelekt, bak 21×95 × 1794 · 2× Bærekloss, benkevange (J9-B) 36×48 × 48 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1065 · 1× Sidevange, øvre 48×98 × 1984
+**Deler:** 1× Benkevange, bak (gjennomgående) 48×73 × 1794 · 1× Bordbærelekt, bak 21×95 × 1794 · 2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1065 · 1× Sidevange, øvre 48×98 × 1984
 
 **Festemidler:** 4× Treskrue 5×40 forsenket Torx · 4× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×90 forsenket Torx · 2× Vinkelbeslag 40×40×20
 
@@ -79,7 +79,7 @@ Sengen festes til veggen gjennom den bakre sidevangen. Vangen ligger flatt mot v
 
 Nå bygges de to endene ut fra bakrammen. Endebjelken går fra den bakre stolpen til den fremre og bærer begge sidevanger.
 
-**Deler:** 2× Bærekloss, benkevange (J9-B) 36×48 × 48 · 4× Bærekloss, endebjelke (J1-B) 36×48 × 48 · 2× Endebjelke 48×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
+**Deler:** 2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48 · 4× Bærekloss, endebjelke (J1-B) 36×48 × 48 · 2× Endebjelke 48×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
 
 **Festemidler:** 2× Treskrue 6×70 forsenket Torx · 12× Treskrue 6×90 forsenket Torx
 
@@ -133,7 +133,7 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 
 **Slik gjør du:**
 
-1. Fest hver vangebit til sin fremre hjørnestolpe etter J8, på bæreklossen J9-B.
+1. Fest hver vangebit til sin fremre hjørnestolpe etter J8, på bæreklossen J9-F — den du satte på i steg 3.
 1. Sett en stubbefot under den innerste enden av hver vangebit. Vangebiten skal slutte akkurat der foten står — ingen utstikk forbi foten.
 1. Sett de to bakre stubbeføttene under den bakre benkevangen, rett under de samme punktene.
 1. Fest alle fire føtter etter J10.

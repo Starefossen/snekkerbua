@@ -290,8 +290,9 @@ klossen kan ikke rotere om skruen sin så lenge trinnet står.
 Spilene ligger **oppå** begge vanger, ikke i et spor og ikke på en lekt. Én skrue
 ned i hver vange per spile. Forsenk hodet under flaten — det ligger madrass over.
 
-De to ytterste spilene er kortere enn resten fordi de støter mot de bakre
-stolpene. Legg dem først.
+Alle 14 køyespilene er nøyaktig like lange — 800 mm, samme stykke som
+benkespilen. Den første ligger på X 20 og den siste på X 1970; delingen står i
+[nøkkelmål](generated/nokkelmal.md).
 
 ### J7 — Rekkverksbord → hjørnestolpe og stigevange
 
@@ -648,7 +649,7 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Stigekloss → stigevange, klossens ene skrue regnet alene | 0,33 |
 | Endebjelke | 0,26 |
 | Plate med avstivningslekter | 0,26 |
-| Endebjelke → bærekloss (trelagring), bærekloss J9 → stolpe | 0,25 |
+| Endebjelke → bærekloss (trelagring), bærekloss J9-B/J9-F → stolpe | 0,25 |
 | Stigevange → fremre sidevange (J3) | 0,17 |
 | Stigevange, knekking ut av planet | 0,14 |
 | Alle andre ledd | ≤ 0,13 |

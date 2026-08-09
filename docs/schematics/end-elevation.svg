@@ -181,7 +181,7 @@
   <circle cx="716" cy="89" r="9" class="scr"/>
   <line x1="716" y1="39" x2="784" y2="39" class="scrl"/>
   <circle cx="716" cy="39" r="9" class="scr"/>
-  <!-- J8: 2 x 6x80 fra fremre stolpes forside inn i benkevangen, Z 207,5 og 237,5 -->
+  <!-- J8: 2 x 6x80 fra fremre stolpes forside inn i benkevangen, Z 210,5 og 234,5 -->
   <line x1="788" y1="1492.5" x2="700" y2="1492.5" class="scrl"/>
   <circle cx="788" cy="1492.5" r="9" class="scr"/>
   <line x1="788" y1="1462.5" x2="700" y2="1462.5" class="scrl"/>
@@ -197,7 +197,7 @@
   <circle cx="716" cy="1548" r="9" class="scr"/>
   <line x1="716" y1="1528" x2="774" y2="1528" class="scrl"/>
   <circle cx="716" cy="1528" r="9" class="scr"/>
-  <!-- J12: vinkelbeslag 40x40x40 under lektas ende, på stolpens innerflate -->
+  <!-- J12: vinkelbeslag 40x40x20 under lektas ende, på stolpens innerflate -->
   <polyline points="-48,1353 -48,1313 -8,1313" class="stll"/>
   <circle cx="-38" cy="1338" r="11" class="scrg"/>
   <circle cx="-18" cy="1313" r="9" class="scr"/>
@@ -350,8 +350,8 @@
   <text x="-1036" y="1956" class="sml" text-anchor="start">kantavstand mot kravet 24 (3d); en forboret 6 mm treskrue trenger 18.</text>
   <text x="-1036" y="1994" class="sml" text-anchor="start">Ingen forsenkte boltehoder finnes i denne sengen.</text>
   <text x="-1036" y="2042" class="sml" text-anchor="start">J1  endebjelke → stolpe:  Z 994 og 1038  (Y −30 / 770)</text>
-  <text x="-1036" y="2078" class="sml" text-anchor="start">J2  fremre sidevange → stolpe:  Z 1092 og 1136  (X 49 fra veggen)</text>
-  <text x="-1036" y="2114" class="sml" text-anchor="start">J8  fremre benkevange → stolpe:  Z 207,5 og 237,5  (X 49 fra veggen)</text>
+  <text x="-1036" y="2078" class="sml" text-anchor="start">J2  fremre sidevange → stolpe:  Z 1092 og 1136  (X 50,5 fra veggen)</text>
+  <text x="-1036" y="2114" class="sml" text-anchor="start">J8  fremre benkevange → stolpe:  Z 210,5 og 234,5  (X 50,5 fra veggen)</text>
 
   <!-- ============ HENVISNINGER HØYRE ============ -->
   <polyline points="752,60 862,50" class="ldr" marker-start="url(#aE)"/>
@@ -401,7 +401,7 @@
 
   <polyline points="-27,1265 400,1330 862,1348" class="ldr" marker-start="url(#aE)"/>
   <text x="880" y="1348" class="lbl" text-anchor="start">Bordbærelekt, bak 21×95 × 1794 (X 98–1892), ok Z 482</text>
-  <text x="880" y="1390" class="sml" text-anchor="start">J12: vinkelbeslag 40×40×40 under hver ende, på stolpens innerflate</text>
+  <text x="880" y="1390" class="sml" text-anchor="start">J12: vinkelbeslag 40×40×20 under hver ende, på stolpens innerflate</text>
 
   <polyline points="400,1422 700,1430 862,1428" class="ldr" marker-start="url(#aE)"/>
   <text x="880" y="1424" class="lbl" text-anchor="start">Benkespile 36×98 × 800, X 98–645, s/s 112,25, ok Z 295 · J11</text>

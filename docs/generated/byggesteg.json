@@ -83,7 +83,7 @@
       "parts": [
         "1× Benkevange, bak (gjennomgående) 48×73 × 1794",
         "1× Bordbærelekt, bak 21×95 × 1794",
-        "2× Bærekloss, benkevange (J9-B) 36×48 × 48",
+        "2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48",
         "2× Hjørnestolpe, bak (veggside) 36×98 × 1065",
         "1× Sidevange, øvre 48×98 × 1984"
       ]
@@ -179,7 +179,7 @@
         "J9-F": 2
       },
       "parts": [
-        "2× Bærekloss, benkevange (J9-B) 36×48 × 48",
+        "2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48",
         "4× Bærekloss, endebjelke (J1-B) 36×48 × 48",
         "2× Endebjelke 48×98 × 836",
         "2× Hjørnestolpe, front 36×98 × 1700"
@@ -247,7 +247,7 @@
       ],
       "intro": "Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gulvet foran stigen er helt fritt.",
       "do": [
-        "Fest hver vangebit til sin fremre hjørnestolpe etter J8, på bæreklossen J9-B.",
+        "Fest hver vangebit til sin fremre hjørnestolpe etter J8, på bæreklossen J9-F — den du satte på i steg 3.",
         "Sett en stubbefot under den innerste enden av hver vangebit. Vangebiten skal slutte akkurat der foten står — ingen utstikk forbi foten.",
         "Sett de to bakre stubbeføttene under den bakre benkevangen, rett under de samme punktene.",
         "Fest alle fire føtter etter J10."

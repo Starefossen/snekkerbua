@@ -560,7 +560,7 @@
 
   <!-- == blokk mellom stigen og høyre benk == -->
   <polyline points="1203,700 1280,784" class="ldr" marker-start="url(#aE)"/>
-  <text x="1290" y="790" class="sml" text-anchor="start">Stigevange – skrus til øvre sidevange (J3: 4× 6×80)</text>
+  <text x="1290" y="790" class="sml" text-anchor="start">Stigevange – skrus til øvre sidevange (J3: 3× 6×80)</text>
   <polyline points="1155,766 1280,838" class="ldr" marker-start="url(#aE)"/>
   <text x="1290" y="844" class="sml" text-anchor="start">Rungetrinn 48×73 × 320, ok 259 / 482 / 720 / 958</text>
   <polyline points="1137,814 1280,892" class="ldr" marker-start="url(#aE)"/>

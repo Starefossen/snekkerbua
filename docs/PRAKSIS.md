@@ -184,7 +184,7 @@ papiret skal se kort ut, men den skal fortsatt se ut som en skrue.
 * **`2×` betyr at ett merke står for to festemidler.** To skruer 30 mm fra
   hverandre er ett merke på en side av denne størrelsen.
 * **Sammenslåing går aldri på tvers av ledd.** På steg 3 møtes endebjelkens to
-  6×90 og bæreklossens ene i det samme hjørnet, og «4×» der ville sendt
+  6×90 og bæreklossens ene i det samme hjørnet, og «3×» der ville sendt
   byggeren til feil hull. To ledd, to merker.
 * **Ingenting forsvinner.** Et merke som blir trengt bort gir antallet sitt til
   merket som trengte det bort, og `check_coverage` sammenligner totalen med
@@ -230,9 +230,9 @@ mise run usdz               .usdz for Quick Look (macOS)
 mise run render-validate    de fem designvalideringsbildene
 ```
 
-**Ingenting i `docs/generated/` skal redigeres for hånd.** Alle filene der
-starter med en kommentar som sier det. Skal et tall endres, endres det i
-modellen.
+**Ingenting i `docs/generated/` skal redigeres for hånd.** Alle Markdown-filene
+der starter med en kommentar som sier det (`byggesteg.json` kan ikke bære en,
+JSON har ingen kommentarer). Skal et tall endres, endres det i modellen.
 
 **Alt er sjekket inn** — også `.png`-ene, `.svg`-ene og `parts.tsv` — slik at
 en diff viser hva en endring i modellen faktisk gjorde med tegningene. Det er

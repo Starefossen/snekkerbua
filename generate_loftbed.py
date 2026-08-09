@@ -834,7 +834,7 @@ FRONT_RAIL_Y1 = FRONT_RAIL_Y0 + RAIL_T   # 752  [was 858]
 WALL_Y = BACK_RAIL_Y0                    # -48, the mounting face against the
                                          # wall = the back rail's outer face (W7)
 SLAT_Z0 = RAIL_TOP                       # 1163, slats bear on top of the rails
-SLAT_Z1 = SLAT_Z0 + BED_SLAT_T           # 1197
+SLAT_Z1 = SLAT_Z0 + BED_SLAT_T           # 1199
 SLAT_Y0 = BACK_RAIL_Y0                   # -48, outer face of the back rail
 SLAT_Y1 = FRONT_RAIL_Y1                  # 752, outer face of the front rail
 SLAT_LEN = SLAT_Y1 - SLAT_Y0             # 800  (the bench slat, same piece)
@@ -848,10 +848,10 @@ MAX_SLAT_GAP = 60
 # 48 mm back into the slot behind the back rail, and v10/W6 removes the slot by
 # bringing the wall forward to Y -48. The mattress is back to a zero-play fit -
 # it is DRAWN where it can only be. See MATTRESS_WANDER (0) and the W5 block.
-MATTRESS_Z0 = SLAT_Z1                    # 1197
+MATTRESS_Z0 = SLAT_Z1                    # 1199
 MATTRESS_Y0 = SLAT_Y0                    # -48  [was 29]
 MATTRESS_Y1 = MATTRESS_Y0 + MATTRESS_W   # 752  [was 829] == SLAT_Y1
-MATTRESS_Z1 = MATTRESS_Z0 + MATTRESS_H   # 1337
+MATTRESS_Z1 = MATTRESS_Z0 + MATTRESS_H   # 1339
 
 # ---------------------------------------------------------------------------
 # SHARED LOWER DATUM  (hoisted - the ladder needs it before it is "its" section)
@@ -1351,7 +1351,7 @@ BETWEEN_POSTS_LEN = BETWEEN_POSTS_X1 - BETWEEN_POSTS_X0     # 1794  [was 1894]
 # bed-mode panel does NOT follow it - the panel is an 18 mm sheet on a rail top
 # that has not moved - so the difference is the cushion recess (D10).
 # U1 ripple: on the 36 mm board the bench top is 295 and the recess 18 mm.
-BENCH_TOP = BENCH_RAIL_TOP + BENCH_SLAT_T      # 293, bench slat top / seat height
+BENCH_TOP = BENCH_RAIL_TOP + BENCH_SLAT_T      # 295, bench slat top / seat height
 BENCH_LEN = 645                                # slatted zone / stub leg reference
 BENCH_X = [0, WALL_SPAN - BENCH_LEN]           # 0..645 and 1345..1990
 BENCH_SLAT_Y0 = BACK_RAIL_Y0                   # -48, on the wall plane like every
@@ -1540,8 +1540,8 @@ PANEL_TOP_TABLE = PANEL_UNDER_TABLE + PANEL_T  # 500
 BATTEN_W = BENCH_RAIL_T                        # 48, batten width (X)
 BATTEN_H = BENCH_RAIL_H                        # 73, batten depth (Z), on edge
 BATTEN_Y0 = BACK_RAIL_Y1                       # 0, clear of the back rail/ledger
-BATTEN_Y1 = RUNG_Y0                            # 727, clear of the rung ledge
-BATTEN_LEN = BATTEN_Y1 - BATTEN_Y0             # 727
+BATTEN_Y1 = RUNG_Y0                            # 715, clear of the rung ledge
+BATTEN_LEN = BATTEN_Y1 - BATTEN_Y0             # 715
 BATTEN_CLEAR_X = 11                            # inset from the rung-block line
 BATTEN_X = [RUNG_BLOCK_X[0] + RUNG_BLOCK_T + BATTEN_CLEAR_X,   # 882 .. 930
             RUNG_BLOCK_X[1] - BATTEN_CLEAR_X - BATTEN_W]       # 1060 .. 1108
@@ -1657,7 +1657,7 @@ slat_end_gap = min(SLAT_X_START, WALL_SPAN - SLAT_X_END)
 assert slat_gap <= MAX_SLAT_GAP, f"slat gap {slat_gap:.1f} > {MAX_SLAT_GAP}"
 assert slat_end_gap <= MAX_SLAT_GAP, f"slat end gap {slat_end_gap} > {MAX_SLAT_GAP}"
 
-BACK_POST_X = [(x, x + POST_W) for x in CORNER_POST_X]   # (0, 48), (1942, 1990)
+BACK_POST_X = [(x, x + POST_W) for x in CORNER_POST_X]   # (0, 98), (1892, 1990)
 BACK_POST_EXTENTS = [((px0, px1), (BACK_POST_Y0, BACK_POST_Y1),
                       (0, BACK_POST_HEIGHT)) for px0, px1 in BACK_POST_X]
 
@@ -1677,7 +1677,7 @@ mattress = block(0, MATTRESS_Y0, MATTRESS_Z0, WALL_SPAN, MATTRESS_W, MATTRESS_H,
 # POSTS  (four corner posts - D1 deleted the two intermediate back posts)
 # W6: the back pair stands IN the back rail plane (Y -48..0) and stops at 1065,
 # the rail underside, so the rail bears on it; the front pair is 1700 (guard
-# bands). Same 48x48 section, two different cut lengths, two cut-list lines.
+# bands). Same 36x98 section, two different cut lengths, two cut-list lines.
 # ---------------------------------------------------------------------------
 for i, x0 in enumerate(CORNER_POST_X):
     side = "Left" if i == 0 else "Right"
@@ -2223,8 +2223,8 @@ JOINTS = [
          drill="⌀3 i foten og i vangen; skråskruene forbores ⌀3,5",
          side="Vinkelbeslaget sitter i hjørnet mellom fotens utside og "
               "vangens underside, med den ene fliken opp i vangen og den "
-              "andre inn i foten; de to 5×70 er skråskruer nedenfra og opp "
-              "i vangen",
+              "andre inn i foten; den ene 5×70 er en skråskrue nedenfra og "
+              "opp i vangen",
          contacts=[dict(a="bench_rail", b="stub", axis=2, drives=[
              drive(BRACKETS["vinkel90"]["name"], 1, into="stub", axis=0,
                    sign="inboard", row=2, row_sign=-1, bracket="vinkel90",
