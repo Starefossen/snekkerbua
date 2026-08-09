@@ -12,8 +12,17 @@ loftbed_*.svg
 bed_frame.step
 bed_frame.bin
 
-# The one generated file that IS tracked is parts.tsv - the regression
+# The one generated MODEL file that IS tracked is parts.tsv - the regression
 # snapshot of every part's bounding box. Do not ignore it.
+#
+# The generated DOCUMENTATION is tracked on purpose and must not be ignored:
+#   docs/generated/*.md   the tables docs/ASSEMBLY.md links to
+#   docs/MONTERING.md     the pictorial guide
+#   docs/img/steg-*.png   one render per build step
+# They are rebuilt by `mise run build` and `mise run montering`, but the
+# picture guide has to be readable (and printable) on a machine that has
+# neither the Python toolchain nor the macOS USD tools, so the output is
+# committed rather than regenerated on demand.
 
 __pycache__/
 *.pyc

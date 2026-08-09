@@ -23,7 +23,23 @@ STL, GLB, USDZ and SVG.
 `parts.tsv` is the tracked regression snapshot: label, colour group and
 bounding box for every part, both panel modes included. It is rewritten by
 `mise run build`, so a diff on it is the diff on the model. Every other
-generated file is gitignored.
+generated *model* file is gitignored.
+
+## Building it — read this first
+
+* **[docs/ASSEMBLY.md](docs/ASSEMBLY.md)** — the build guide. Tools, hardware,
+  every joint (J1…J15), the build order and why it has to be that order,
+  mattress and cushions, safety, and the load-path appendix. In Norwegian.
+* **[docs/MONTERING.md](docs/MONTERING.md)** — the same build, one picture per
+  step, IKEA style. Same step numbers as the text guide.
+
+Both are driven by the model. `mise run build` regenerates the tables in
+`docs/generated/` (cut list, buying list, key dimensions, hardware list, the
+step-by-step text and the machine-readable step data) straight from
+`generate_loftbed.py`, and `docs/ASSEMBLY.md` links to them rather than
+restating any dimension. `mise run montering` re-renders the per-step images in
+`docs/img/`; those PNGs **are** committed, because the guide has to be readable
+without a Mac and the USD toolchain.
 
 ## Setup & Usage
 

@@ -11,14 +11,34 @@ run = "python v1/generate_bed_frame.py"
 depends = ["install"]
 
 [tasks.build]
-description = "Generate the loft bed model, both modes - validation set only (.step + .stl for the .usdz chain)"
-run = "python generate_loftbed.py"
+description = "Generate the loft bed model, both modes, and the documentation fragments in docs/generated/"
+# tools/gen_doc_tables.py imports generate_loftbed.py, so the model is built,
+# validated and exported exactly once - and then every number the docs quote
+# is emitted off it. Running `python generate_loftbed.py` on its own still
+# works and just skips the documentation.
+run = "python tools/gen_doc_tables.py"
 depends = ["install"]
 
 [tasks.build-full]
 description = "Same as build plus the slow deliverables (.glb and the hidden-line .svg projections) - run once at the end"
-run = "LOFTBED_FULL=1 python generate_loftbed.py"
+run = "LOFTBED_FULL=1 python tools/gen_doc_tables.py"
 depends = ["install"]
+
+[tasks.montering]
+description = "Render the per-step isometric images for docs/MONTERING.md (macOS: usdrecord + swift)"
+depends = ["build"]
+run = "python tools/render_steps.py --width 1400"
+
+[tasks.schematics]
+description = "Render docs/schematics/*.svg to PNG for proofreading"
+run = """
+set -e
+mkdir -p /tmp/loftbed_schematics
+for f in docs/schematics/*.svg; do
+  rsvg-convert -w 1600 "$f" -o "/tmp/loftbed_schematics/$(basename "${f%.svg}").png"
+done
+ls -l /tmp/loftbed_schematics
+"""
 
 [tasks.usdz]
 description = "Convert the generated meshes to .usdz (Xcode / Quick Look), one material per colour group"
