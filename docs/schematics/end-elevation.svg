@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-900 -200 2440 2400" width="1340">
+  <title>Loftseng - kortside, oppriss (end elevation)</title>
+  <defs>
+    <marker id="aE" markerWidth="14" markerHeight="10" refX="11" refY="4" orient="auto">
+      <path d="M0,0 L11,4 L0,8 z" fill="#000"/>
+    </marker>
+    <marker id="aS" markerWidth="14" markerHeight="10" refX="0" refY="4" orient="auto">
+      <path d="M11,0 L0,4 L11,8 z" fill="#000"/>
+    </marker>
+    <pattern id="wh2" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#000" stroke-width="1.6"/>
+    </pattern>
+    <pattern id="grain" width="10" height="10" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="5" r="1.1" fill="#000"/>
+    </pattern>
+  </defs>
+  <style>
+    .p   { fill:#fff; stroke:#000; stroke-width:2.6; }
+    .p2  { fill:#fff; stroke:#000; stroke-width:1.8; }
+    .pc  { fill:url(#grain); stroke:#000; stroke-width:2.6; }
+    .hid { fill:none; stroke:#000; stroke-width:1.2; stroke-dasharray:10 7; }
+    .gho { fill:none; stroke:#000; stroke-width:1.2; stroke-dasharray:3 5; }
+    .dim { fill:none; stroke:#000; stroke-width:1.1; }
+    .ext { fill:none; stroke:#000; stroke-width:0.8; }
+    .bolt{ fill:none; stroke:#000; stroke-width:1.8; }
+    text { font-family:Helvetica,Arial,sans-serif; font-size:26px; fill:#000; }
+    .ttl { font-size:42px; font-weight:bold; }
+    .sub { font-size:25px; }
+    .lbl { font-size:23px; }
+    .sml { font-size:20px; }
+    .dm  { font-size:24px; }
+  </style>
+
+  <text class="ttl" x="405" y="-130" text-anchor="middle">KORTSIDE - OPPRISS (venstre ende, X 0..121)</text>
+  <text class="sub" x="405" y="-90" text-anchor="middle">Snitt sett mot +X. Y til hoyre, Z opp. Alle mal i mm.</text>
+
+  <!-- floor -->
+  <line x1="-260" y1="1700" x2="1120" y2="1700" stroke="#000" stroke-width="3.4"/>
+  <rect x="-260" y="1700" width="1380" height="26" fill="url(#wh2)" stroke="none"/>
+  <text class="lbl" x="1130" y="1712">GULV Z 0</text>
+
+  <!-- ===== mattress + slats ===== -->
+  <rect class="gho" x="5" y="426" width="800" height="140"/>
+  <text class="sml" x="405" y="500" text-anchor="middle">MADRASS 800 bred, maks 140 tykk</text>
+  <rect class="p2" x="2" y="566" width="806" height="21"/>
+  <text class="sml" x="405" y="558" text-anchor="middle">SPILE 21x95 x 806 (13 stk.)</text>
+
+  <!-- ===== slat cleats 36x48 ===== -->
+  <rect class="pc" x="0" y="587" width="36" height="48"/>
+  <rect class="pc" x="774" y="587" width="36" height="48"/>
+
+  <!-- ===== side rails 48x123 (cross-section) ===== -->
+  <rect class="pc" x="-48" y="512" width="48" height="123"/>
+  <rect class="pc" x="810" y="512" width="48" height="123"/>
+  <text class="sml" x="-140" y="444" text-anchor="end">SIDEVANGE BAK</text>
+  <text class="sml" x="-140" y="470" text-anchor="end">48x123 (snitt)</text>
+  <line class="ext" x1="858" y1="560" x2="948" y2="500"/>
+  <text class="sml" x="956" y="470">SIDEVANGE FRONT</text>
+  <text class="sml" x="956" y="444">48x123 (snitt)</text>
+
+  <!-- ===== END BEAM 48x123 ===== -->
+  <rect class="p" x="-96" y="635" width="1002" height="123"/>
+  <text class="lbl" x="150" y="708">ENDEBJELKE 48x123 x 1002</text>
+
+  <!-- ===== bearing blocks J1-B ===== -->
+  <rect class="pc" x="-96" y="758" width="48" height="36"/>
+  <rect class="pc" x="858" y="758" width="48" height="36"/>
+  <line class="ext" x1="-72" y1="794" x2="-200" y2="884"/>
+  <text class="sml" x="-352" y="892" text-anchor="end">BAEREKLOSS J1-B 36x48, L=48</text>
+  <text class="sml" x="-352" y="918" text-anchor="end">2x treskrue 5x80 i stolpen</text>
+
+  <!-- ===== corner posts 48x73 ===== -->
+  <rect class="p" x="-96" y="0" width="48" height="1700"/>
+  <rect class="p" x="858" y="0" width="48" height="1700"/>
+  <text class="lbl" x="-72" y="1350" text-anchor="middle" transform="rotate(-90 -72 1350)">BAKRE STOLPE 48x73</text>
+  <text class="lbl" x="882" y="900" text-anchor="middle" transform="rotate(-90 882 900)">FREMRE STOLPE 48x73</text>
+
+  <!-- ===== guard rails (cross-section 21 x 95) ===== -->
+  <rect class="pc" x="-117" y="55" width="21" height="95"/>
+  <rect class="pc" x="-117" y="275" width="21" height="95"/>
+  <rect class="pc" x="906" y="55" width="21" height="95"/>
+  <rect class="pc" x="906" y="275" width="21" height="95"/>
+  <text class="sml" x="-140" y="110" text-anchor="end">REKKVERK 21x95</text>
+  <text class="sml" x="-140" y="330" text-anchor="end">REKKVERK 21x95</text>
+  <text class="sml" x="950" y="110">REKKVERK 21x95</text>
+  <text class="sml" x="950" y="330">REKKVERK 21x95</text>
+
+  <!-- ===== bench ===== -->
+  <rect class="pc" x="-48" y="1441" width="48" height="73"/>
+  <rect class="pc" x="810" y="1441" width="48" height="73"/>
+  <rect class="pc" x="-48" y="1514" width="36" height="48"/>
+  <rect class="pc" x="822" y="1514" width="36" height="48"/>
+  <rect class="p2" x="-48" y="1407" width="906" height="34"/>
+  <text class="sml" x="405" y="1398" text-anchor="middle">BENKESPILE 34x98 x 906 (topp Z 293)</text>
+  <line class="ext" x1="858" y1="1538" x2="960" y2="1600"/>
+  <text class="sml" x="968" y="1594">baerekloss J9-B 36x48</text>
+  <text class="sml" x="968" y="1616">bak Y -48..-12, front Y 822..858</text>
+  <line class="ext" x1="-24" y1="1514" x2="-160" y2="1580"/>
+  <text class="sml" x="-172" y="1588" text-anchor="end">BENKEVANGE 48x73</text>
+  <text class="sml" x="-172" y="1614" text-anchor="end">Z 186..259 (snitt)</text>
+
+  <!-- ===== table ledgers ===== -->
+  <rect class="pc" x="-48" y="1234" width="21" height="95"/>
+  <rect class="pc" x="837" y="1234" width="21" height="95"/>
+  <line class="ext" x1="-38" y1="1281" x2="-150" y2="1281"/>
+  <text class="sml" x="-162" y="1272" text-anchor="end">BORDBAERELEKT</text>
+  <text class="sml" x="-162" y="1298" text-anchor="end">21x95 x 1984, Z 371..466</text>
+  <line class="ext" x1="858" y1="1281" x2="960" y2="1281"/>
+  <text class="sml" x="972" y="1272">FREMRE bordbaerelekt</text>
+  <text class="sml" x="972" y="1298">21x95 x 1984, Y 837..858</text>
+
+  <!-- ===== panel, both modes ===== -->
+  <rect class="p2" x="30" y="1407" width="828" height="18"/>
+  <text class="sml" x="420" y="1470" text-anchor="middle">PLATE 18 x 828 - SENGEMODUS (topp Z 293, flukt med benkespilene)</text>
+  <rect class="gho" x="30" y="1200" width="828" height="18"/>
+  <text class="sml" x="420" y="1188" text-anchor="middle">PLATE 18 x 828 - BORDMODUS (topp Z 500)</text>
+
+  <!-- ===== BOLTS ===== -->
+  <!-- J1: axis X, seen end-on: circle+cross at (Y -72 / 882, Z 977 / 1030) -->
+  <g class="bolt">
+    <circle cx="-72" cy="723" r="10"/><line x1="-94" y1="723" x2="-50" y2="723"/><line x1="-72" y1="701" x2="-72" y2="745"/>
+    <circle cx="-72" cy="670" r="10"/><line x1="-94" y1="670" x2="-50" y2="670"/><line x1="-72" y1="648" x2="-72" y2="692"/>
+    <circle cx="882" cy="723" r="10"/><line x1="860" y1="723" x2="904" y2="723"/><line x1="882" y1="701" x2="882" y2="745"/>
+    <circle cx="882" cy="670" r="10"/><line x1="860" y1="670" x2="904" y2="670"/><line x1="882" y1="648" x2="882" y2="692"/>
+  </g>
+  <!-- J2: axis Y, seen as a line through post+rail -->
+  <g>
+    <line class="hid" x1="-96" y1="600" x2="36" y2="600"/>
+    <line class="hid" x1="-96" y1="545" x2="0"  y2="545"/>
+    <line class="hid" x1="906" y1="600" x2="774" y2="600"/>
+    <line class="hid" x1="906" y1="545" x2="810" y2="545"/>
+  </g>
+  <g class="bolt">
+    <circle cx="-24" cy="600" r="9"/><line x1="-44" y1="600" x2="-4" y2="600"/>
+    <circle cx="-24" cy="545" r="9"/><line x1="-44" y1="545" x2="-4" y2="545"/>
+    <circle cx="834" cy="600" r="9"/><line x1="814" y1="600" x2="854" y2="600"/>
+    <circle cx="834" cy="545" r="9"/><line x1="814" y1="545" x2="854" y2="545"/>
+  </g>
+
+  <!-- ===== CALLOUTS ===== -->
+  <line class="ext" x1="0" y1="635" x2="200" y2="866"/>
+  <text class="lbl" x="206" y="876">VANGEN HVILER PAA ENDEBJELKEN</text>
+  <text class="sml" x="206" y="904">48 x 48 anleggsflate = 5,3 kN (designlast 1,0 kN)</text>
+  <line class="ext" x1="-72" y1="697" x2="-200" y2="990"/>
+  <text class="lbl" x="-352" y="998" text-anchor="end">J1: 2x M8x130 laaseskrue DIN 603</text>
+  <text class="sml" x="-352" y="1024" text-anchor="end">hull 8,5 gjennom 121 mm (stolpe 73 + bjelke 48)</text>
+  <text class="sml" x="-352" y="1050" text-anchor="end">forsenk 16 x 10 mm i stolpens veggside X = 0</text>
+  <text class="sml" x="-352" y="1076" text-anchor="end">skive + laasemutter M8 pa innsiden</text>
+  <line class="ext" x1="906" y1="572" x2="1000" y2="620"/>
+  <text class="lbl" x="1008" y="600">J2: 2x M8x120</text>
+  <text class="sml" x="1008" y="626">Z 1100 og 1155</text>
+  <text class="sml" x="1008" y="652">hull 8,5 x 96 mm</text>
+
+  <!-- ===== Z LEADERS (left) ===== -->
+  <g class="ext">
+    <line x1="-330" y1="0"    x2="-125" y2="0"/>
+    <line x1="-330" y1="512"  x2="-125" y2="512"/>
+    <line x1="-330" y1="635"  x2="-125" y2="635"/>
+    <line x1="-330" y1="758"  x2="-125" y2="758"/>
+    <line x1="-330" y1="794"  x2="-125" y2="794"/>
+    <line x1="-330" y1="1407" x2="-125" y2="1407"/>
+    <line x1="-330" y1="1700" x2="-125" y2="1700"/>
+  </g>
+  <g class="dm" text-anchor="end">
+    <text x="-340" y="8">Z 1700</text>
+    <text x="-340" y="520">Z 1188</text>
+    <text x="-340" y="643">Z 1065</text>
+    <text x="-340" y="766">Z 942</text>
+    <text x="-340" y="802">Z 906</text>
+    <text x="-340" y="1415">Z 293  benketopp</text>
+    <text x="-340" y="1692">Z 0</text>
+  </g>
+
+  <!-- ===== END BEAM BOLT Z CHAIN (on the beam) ===== -->
+  <g class="ext">
+    <line x1="430" y1="635"  x2="580" y2="635"/>
+    <line x1="430" y1="670"  x2="580" y2="670"/>
+    <line x1="430" y1="723"  x2="580" y2="723"/>
+    <line x1="430" y1="758"  x2="580" y2="758"/>
+  </g>
+  <g class="dim">
+    <line x1="520" y1="758" x2="520" y2="723" marker-start="url(#aS)" marker-end="url(#aE)"/>
+    <line x1="520" y1="723" x2="520" y2="670" marker-start="url(#aS)" marker-end="url(#aE)"/>
+    <line x1="520" y1="670" x2="520" y2="635" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  </g>
+  <g class="dm">
+    <text x="592" y="750">35   (Z 977)</text>
+    <text x="592" y="704">53</text>
+    <text x="592" y="662">35   (Z 1030)</text>
+  </g>
+
+  <!-- ===== BOLT Y EDGE DISTANCES ===== -->
+  <g class="ext">
+    <line x1="-96" y1="758" x2="-96" y2="840"/>
+    <line x1="-72" y1="723" x2="-72" y2="840"/>
+    <line x1="-48" y1="758" x2="-48" y2="840"/>
+  </g>
+  <g class="dim">
+    <line x1="-96" y1="826" x2="-72" y2="826" marker-end="url(#aE)"/>
+    <line x1="-72" y1="826" x2="-48" y2="826" marker-start="url(#aS)"/>
+  </g>
+  <text class="dm" x="-20" y="834">24 / 24  (boltsenter Y -72)</text>
+
+  <!-- ===== Y DIMENSION CHAIN (bottom) ===== -->
+  <g class="ext">
+    <line x1="-117" y1="1730" x2="-117" y2="1960"/>
+    <line x1="-96"  y1="1730" x2="-96"  y2="1880"/>
+    <line x1="-48"  y1="1730" x2="-48"  y2="1880"/>
+    <line x1="0"    y1="1730" x2="0"    y2="1880"/>
+    <line x1="810"  y1="1730" x2="810"  y2="1880"/>
+    <line x1="858"  y1="1730" x2="858"  y2="1880"/>
+    <line x1="906"  y1="1730" x2="906"  y2="1880"/>
+    <line x1="927"  y1="1730" x2="927"  y2="1960"/>
+  </g>
+  <g class="dim">
+    <line x1="-96" y1="1850" x2="-48" y2="1850" marker-end="url(#aE)"/>
+    <line x1="-48" y1="1850" x2="0"   y2="1850" marker-start="url(#aS)"/>
+    <line x1="0"   y1="1850" x2="810" y2="1850" marker-start="url(#aS)" marker-end="url(#aE)"/>
+    <line x1="810" y1="1850" x2="858" y2="1850" marker-end="url(#aE)"/>
+    <line x1="858" y1="1850" x2="906" y2="1850" marker-start="url(#aS)"/>
+    <line x1="-117" y1="1940" x2="927" y2="1940" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  </g>
+  <g class="dm" text-anchor="middle">
+    <text x="-72" y="1830">48</text>
+    <text x="-24" y="1900">48</text>
+    <text x="405" y="1830">810   (fri bredde mellom vangene)</text>
+    <text x="834" y="1900">48</text>
+    <text x="882" y="1830">48</text>
+    <text x="405" y="1990">1044   (rekkverk bak til rekkverk front; stolpe til stolpe = 1002)</text>
+  </g>
+
+  <!-- ===== NOTE BOX ===== -->
+  <g transform="translate(-880,2060)">
+    <rect x="0" y="0" width="1900" height="120" fill="none" stroke="#000" stroke-width="1.6"/>
+    <text class="sml" x="16" y="34">LASTVEI: madrass - spile - spilelekt (skruskjaer) - sidevange (boyning) - ENDEBJELKE (trelagring 48x48) - baerekloss J1-B - stolpe - gulv.</text>
+    <text class="sml" x="16" y="66">Boltene J1 og J2 baerer INGEN vertikal last: de holder delene sammen sidelengs. Uten baerekloss J1-B ville hele lasten gaa i boltskjaer med</text>
+    <text class="sml" x="16" y="98">bare 24 mm endeavstand i endebjelken (kravet er 4d = 32 mm) - se C2 i ASSEMBLY.md.</text>
+  </g>
+</svg>

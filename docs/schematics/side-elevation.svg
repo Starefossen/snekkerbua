@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-620 -190 3070 2460" width="1600">
+  <title>Loftseng - langside, oppriss (side elevation)</title>
+  <defs>
+    <marker id="aE" markerWidth="14" markerHeight="10" refX="11" refY="4" orient="auto">
+      <path d="M0,0 L11,4 L0,8 z" fill="#000"/>
+    </marker>
+    <marker id="aS" markerWidth="14" markerHeight="10" refX="0" refY="4" orient="auto">
+      <path d="M11,0 L0,4 L11,8 z" fill="#000"/>
+    </marker>
+    <pattern id="wallhatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#000" stroke-width="1.6"/>
+    </pattern>
+  </defs>
+  <style>
+    svg { background:#fff; }
+    .p   { fill:#fff; stroke:#000; stroke-width:2.6; }
+    .p2  { fill:#fff; stroke:#000; stroke-width:1.8; }
+    .hid { fill:none; stroke:#000; stroke-width:1.2; stroke-dasharray:10 7; }
+    .gho { fill:none; stroke:#000; stroke-width:1.2; stroke-dasharray:3 5; }
+    .dim { fill:none; stroke:#000; stroke-width:1.1; }
+    .ext { fill:none; stroke:#000; stroke-width:0.8; }
+    .bolt{ fill:none; stroke:#000; stroke-width:1.8; }
+    text { font-family:Helvetica,Arial,sans-serif; font-size:26px; fill:#000; }
+    .ttl { font-size:44px; font-weight:bold; }
+    .sub { font-size:26px; }
+    .lbl { font-size:23px; }
+    .sml { font-size:20px; }
+    .dm  { font-size:24px; }
+  </style>
+
+  <text class="ttl" x="995" y="-120" text-anchor="middle">LANGSIDE - OPPRISS (front)</text>
+  <text class="sub" x="995" y="-78" text-anchor="middle">Loftseng, sett fra rommet mot Y-. Alle mal i mm. Z 0 = gulv.</text>
+
+  <!-- ================= WALLS AND FLOOR ================= -->
+  <rect x="-34" y="-30" width="34" height="1760" fill="url(#wallhatch)" stroke="#000" stroke-width="2.6"/>
+  <rect x="1990" y="-30" width="34" height="1760" fill="url(#wallhatch)" stroke="#000" stroke-width="2.6"/>
+  <text class="lbl" x="-44" y="-46" text-anchor="middle">VEGG X 0</text>
+  <text class="lbl" x="2024" y="-46" text-anchor="middle">VEGG X 1990</text>
+  <line x1="-60" y1="1700" x2="2190" y2="1700" stroke="#000" stroke-width="3.4"/>
+  <rect x="-60" y="1700" width="2120" height="26" fill="url(#wallhatch)" stroke="none"/>
+  <text class="lbl" x="2070" y="1768">GULV Z 0</text>
+
+  <!-- ================= MATTRESS + SLATS (behind rail) ================= -->
+  <rect class="gho" x="3" y="426" width="1984" height="140"/>
+  <text class="sml" x="120" y="470">MADRASS 2000 x 800, maks 140 tykk</text>
+  <line class="hid" x1="3" y1="566" x2="1987" y2="566"/>
+  <line class="hid" x1="3" y1="587" x2="1987" y2="587"/>
+  <line class="ext" x1="1290" y1="682" x2="1240" y2="590"/>
+  <text class="sml" x="1296" y="690">13 spiler 21x95 bak vangen, Z 1113-1134,</text>
+  <text class="sml" x="1296" y="712">X 20..1980 (deling 155,4)</text>
+
+  <!-- ================= GUARD RAILS 21x95 ================= -->
+  <rect class="p" x="3" y="55" width="1984" height="95"/>
+  <rect class="p" x="3" y="275" width="1984" height="95"/>
+  <text class="lbl" x="120" y="112">REKKVERK 21x95 - Z 1550..1645</text>
+  <text class="lbl" x="120" y="332">REKKVERK 21x95 - Z 1330..1425</text>
+
+  <!-- ================= SIDE RAIL 48x123 ================= -->
+  <rect class="p" x="3" y="512" width="1984" height="123"/>
+  <text class="lbl" x="120" y="583">SIDEVANGE FRONT 48x123 x 1984</text>
+
+  <!-- ================= END BEAM ends (visible at Y 906) ================= -->
+  <rect class="p" x="73" y="635" width="48" height="123"/>
+  <rect class="p" x="1869" y="635" width="48" height="123"/>
+  <rect class="p2" x="73" y="758" width="48" height="36"/>
+  <rect class="p2" x="1869" y="758" width="48" height="36"/>
+  <text class="sml" x="132" y="676">ENDEBJELKE 48x123</text>
+  <text class="sml" x="132" y="704">Z 942..1065</text>
+  <text class="sml" x="132" y="790">baerekloss J1-B 36x48</text>
+
+  <!-- ================= CORNER POSTS 48x73 ================= -->
+  <rect class="p" x="0" y="0" width="73" height="1700"/>
+  <rect class="p" x="1917" y="0" width="73" height="1700"/>
+  <text class="lbl" x="36" y="1000" text-anchor="middle" transform="rotate(-90 36 1000)">HJORNESTOLPE 48x73 x 1700</text>
+  <text class="lbl" x="1953" y="1000" text-anchor="middle" transform="rotate(-90 1953 1000)">HJORNESTOLPE 48x73 x 1700</text>
+
+  <!-- ================= LADDER UPRIGHTS 48x73 ================= -->
+  <rect class="p" x="712" y="0" width="73" height="1700"/>
+  <rect class="p" x="1205" y="0" width="73" height="1700"/>
+  <text class="lbl" x="748" y="1010" text-anchor="middle" transform="rotate(-90 748 1010)">STIGEVANGE 48x73 x 1700</text>
+  <text class="lbl" x="1241" y="1010" text-anchor="middle" transform="rotate(-90 1241 1010)">STIGEVANGE 48x73 x 1700</text>
+  <text class="sml" x="1330" y="1000">BAKRE STOLPE 48x73 x 1700 staar</text>
+  <text class="sml" x="1330" y="1022">rett bak stigevangen (samme X),</text>
+  <text class="sml" x="1330" y="1044">i planet Y -96..-48. Boltene J3b</text>
+  <text class="sml" x="1330" y="1066">sitter i samme Z som J3.</text>
+
+  <!-- ================= RUNGS + CLEAT BLOCKS ================= -->
+  <!-- T=1120 -->
+  <rect class="p" x="785" y="580" width="420" height="48"/>
+  <rect class="p2" x="785" y="628" width="36" height="48"/>
+  <rect class="p2" x="1169" y="628" width="36" height="48"/>
+  <!-- T=840 -->
+  <rect class="p" x="785" y="860" width="420" height="48"/>
+  <rect class="p2" x="785" y="908" width="36" height="48"/>
+  <rect class="p2" x="1169" y="908" width="36" height="48"/>
+  <!-- T=560 -->
+  <rect class="p" x="785" y="1140" width="420" height="48"/>
+  <rect class="p2" x="785" y="1188" width="36" height="48"/>
+  <rect class="p2" x="1169" y="1188" width="36" height="48"/>
+  <text class="sml" x="995" y="612" text-anchor="middle">RUNG 48x73 x 420</text>
+  <text class="sml" x="995" y="892" text-anchor="middle">RUNG 48x73 x 420</text>
+  <text class="sml" x="995" y="1172" text-anchor="middle">RUNG 48x73 x 420</text>
+  <line class="ext" x1="1205" y1="580" x2="1310" y2="580"/>
+  <text class="lbl" x="1318" y="588">Z 1120 (trinn 4)</text>
+  <line class="ext" x1="1205" y1="860" x2="1310" y2="860"/>
+  <text class="lbl" x="1318" y="868">Z 840 (trinn 3)</text>
+  <line class="ext" x1="1205" y1="1140" x2="1310" y2="1140"/>
+  <text class="lbl" x="1318" y="1148">Z 560 (trinn 2)</text>
+
+  <!-- ================= BENCH (as built) ================= -->
+  <!-- continuous bench rail 48x73 x 1984, Z 186..259 -->
+  <rect class="p" x="3" y="1441" width="1984" height="73"/>
+  <text class="sml" x="330" y="1487">BENKEVANGE 48x73 x 1984 - Z 186..259 (gjennomgaende)</text>
+  <!-- bearing blocks J9-B under the rail ends, Z 138..186 -->
+  <rect class="p2" x="0" y="1514" width="73" height="48"/>
+  <rect class="p2" x="1917" y="1514" width="73" height="48"/>
+  <line class="ext" x1="73" y1="1538" x2="240" y2="1682"/>
+  <text class="sml" x="246" y="1690">baerekloss J9-B 36x48, Z 138..186</text>
+  <!-- stub legs -->
+  <rect class="p" x="572" y="1514" width="73" height="186"/>
+  <rect class="p" x="1345" y="1514" width="73" height="186"/>
+  <text class="sml" x="608" y="1610" text-anchor="middle" transform="rotate(-90 608 1610)">STUBBEFOT</text>
+  <text class="sml" x="1381" y="1610" text-anchor="middle" transform="rotate(-90 1381 1610)">STUBBEFOT</text>
+  <!-- bench slats seen end-on, Z 259..280 -->
+  <rect class="p2" x="0"      y="1407" width="98" height="34"/>
+  <rect class="p2" x="137.5"  y="1407" width="98" height="34"/>
+  <rect class="p2" x="275"    y="1407" width="98" height="34"/>
+  <rect class="p2" x="412.5"  y="1407" width="98" height="34"/>
+  <rect class="p2" x="550"    y="1407" width="98" height="34"/>
+  <rect class="p2" x="1342"   y="1407" width="98" height="34"/>
+  <rect class="p2" x="1479.5" y="1407" width="98" height="34"/>
+  <rect class="p2" x="1617"   y="1407" width="98" height="34"/>
+  <rect class="p2" x="1754.5" y="1407" width="98" height="34"/>
+  <rect class="p2" x="1892"   y="1407" width="98" height="34"/>
+  <text class="sml" x="120" y="1394">5 benkespiler 34x98, topp Z 293, deling 137,5</text>
+  <text class="sml" x="1450" y="1394">5 benkespiler 34x98, topp Z 293</text>
+
+  <!-- ================= MOVABLE PANEL ================= -->
+  <rect class="p2" x="655" y="1407" width="680" height="18"/>
+  <line class="ext" x1="700" y1="1416" x2="500" y2="1362"/>
+  <text class="sml" x="120" y="1358">PLATE 18 x 680 x 828 - SENGEMODUS, topp Z 293 (flukt med benkespilene)</text>
+  <rect class="gho" x="655" y="1200" width="680" height="18"/>
+  <line class="ext" x1="1335" y1="1209" x2="1430" y2="1170"/>
+  <text class="sml" x="1436" y="1166">PLATE 18 x 680 x 828 - BORDMODUS, topp Z 500</text>
+  <!-- table support ledgers seen edge-on: Z 371..466, front and back -->
+  <line class="hid" x1="3" y1="1234" x2="1987" y2="1234"/>
+  <line class="hid" x1="3" y1="1329" x2="1987" y2="1329"/>
+  <text class="sml" x="1436" y="1300">BORDBAERELEKT 21x95 x 1984, Z 371..466</text>
+  <text class="sml" x="1436" y="1322">(bak Y -48..-27 og front Y 837..858)</text>
+
+  <!-- rung 1 drawn last: it lies in front of the bench rail (Y 858..931 vs 810..858) -->
+  <rect class="p" x="785" y="1420" width="420" height="48"/>
+  <rect class="p2" x="785" y="1468" width="36" height="48"/>
+  <rect class="p2" x="1169" y="1468" width="36" height="48"/>
+  <text class="sml" x="995" y="1450" text-anchor="middle">RUNG 1, topp Z 280</text>
+
+  <!-- J10b angle brackets: ladder upright to continuous bench rail (in front of the rung) -->
+  <path class="bolt" d="M 785 1478 L 862 1478 M 785 1478 L 785 1510" stroke-width="4"/>
+  <path class="bolt" d="M 1205 1478 L 1128 1478 M 1205 1478 L 1205 1510" stroke-width="4"/>
+  <line class="ext" x1="1128" y1="1490" x2="1160" y2="1690"/>
+  <text class="sml" x="1166" y="1698">J10b: vinkelbeslag 90x90</text>
+
+  <!-- ================= BOLT MARKS ================= -->
+  <!-- J2 rail-to-post : X 36 / 1954 , Z 1100 & 1155 -->
+  <g class="bolt">
+    <circle cx="36" cy="600" r="9"/><line x1="16" y1="600" x2="56" y2="600"/><line x1="36" y1="580" x2="36" y2="620"/>
+    <circle cx="36" cy="545" r="9"/><line x1="16" y1="545" x2="56" y2="545"/><line x1="36" y1="525" x2="36" y2="565"/>
+    <circle cx="1954" cy="600" r="9"/><line x1="1934" y1="600" x2="1974" y2="600"/><line x1="1954" y1="580" x2="1954" y2="620"/>
+    <circle cx="1954" cy="545" r="9"/><line x1="1934" y1="545" x2="1974" y2="545"/><line x1="1954" y1="525" x2="1954" y2="565"/>
+  </g>
+  <!-- J3 upright-to-rail : X 748 / 1242 -->
+  <g class="bolt">
+    <circle cx="748" cy="600" r="9"/><line x1="728" y1="600" x2="768" y2="600"/><line x1="748" y1="580" x2="748" y2="620"/>
+    <circle cx="748" cy="545" r="9"/><line x1="728" y1="545" x2="768" y2="545"/><line x1="748" y1="525" x2="748" y2="565"/>
+    <circle cx="1242" cy="600" r="9"/><line x1="1222" y1="600" x2="1262" y2="600"/><line x1="1242" y1="580" x2="1242" y2="620"/>
+    <circle cx="1242" cy="545" r="9"/><line x1="1222" y1="545" x2="1262" y2="545"/><line x1="1242" y1="525" x2="1242" y2="565"/>
+  </g>
+  <!-- J9 bench-rail-to-post : X 36 / 1954 , Z 222 -->
+  <g class="bolt">
+    <circle cx="36" cy="1478" r="9"/><line x1="16" y1="1478" x2="56" y2="1478"/><line x1="36" y1="1458" x2="36" y2="1498"/>
+    <circle cx="1954" cy="1478" r="9"/><line x1="1934" y1="1478" x2="1974" y2="1478"/><line x1="1954" y1="1458" x2="1954" y2="1498"/>
+  </g>
+  <!-- J1 end-beam bolts, axis X, seen as hidden lines Z 977 / 1030 -->
+  <g>
+    <line class="hid" x1="0" y1="723" x2="121" y2="723"/>
+    <line class="hid" x1="0" y1="670" x2="121" y2="670"/>
+    <line class="hid" x1="1869" y1="723" x2="1990" y2="723"/>
+    <line class="hid" x1="1869" y1="670" x2="1990" y2="670"/>
+  </g>
+  <!-- callouts -->
+  <line class="ext" x1="66" y1="572" x2="410" y2="752"/>
+  <text class="lbl" x="416" y="760">J2: 2x M8x120, Z 1100 / 1155, X 36</text>
+  <line class="ext" x1="778" y1="572" x2="880" y2="740"/>
+  <text class="lbl" x="886" y="748">J3: 2x M8x120, Z 1100 / 1155, X 748</text>
+  <line class="ext" x1="66" y1="1478" x2="140" y2="1562"/>
+  <text class="lbl" x="120" y="1584">J9: 1x M8x120 (Z 222) + baerekloss</text>
+  <line class="ext" x1="121" y1="697" x2="330" y2="880"/>
+  <text class="lbl" x="336" y="888">J1: 4x M8x130 (akse X)</text>
+
+  <!-- ================= Z LEADER LABELS (left) ================= -->
+  <g class="ext">
+    <line x1="-20" y1="0"    x2="-250" y2="0"/>
+    <line x1="-20" y1="55"   x2="-250" y2="55"/>
+    <line x1="-20" y1="150"  x2="-250" y2="150"/>
+    <line x1="-20" y1="275"  x2="-250" y2="275"/>
+    <line x1="-20" y1="370"  x2="-250" y2="370"/>
+    <line x1="-20" y1="512"  x2="-250" y2="512"/>
+    <line x1="-20" y1="635"  x2="-250" y2="635"/>
+    <line x1="-20" y1="758"  x2="-250" y2="758"/>
+    <line x1="-20" y1="1407" x2="-250" y2="1407"/>
+    <line x1="-20" y1="1514" x2="-250" y2="1514"/>
+  </g>
+  <g class="dm" text-anchor="end">
+    <text x="-258" y="8">Z 1700  stolpetopp</text>
+    <text x="-258" y="63">Z 1645</text>
+    <text x="-258" y="158">Z 1550</text>
+    <text x="-258" y="283">Z 1425</text>
+    <text x="-258" y="378">Z 1330</text>
+    <text x="-258" y="520">Z 1188  vangetopp</text>
+    <text x="-258" y="643">Z 1065  vange u.k.</text>
+    <text x="-258" y="766">Z 942  endebj. u.k.</text>
+    <text x="-258" y="1415">Z 293  benketopp</text>
+    <text x="-258" y="1522">Z 186  benkevange u.k.</text>
+  </g>
+
+  <!-- ================= ENTRAPMENT GAP DIMS ================= -->
+  <g class="dim">
+    <line x1="1620" y1="512" x2="1620" y2="370" marker-start="url(#aS)" marker-end="url(#aE)"/>
+    <line class="ext" x1="1560" y1="512" x2="1660" y2="512"/>
+    <line class="ext" x1="1560" y1="370" x2="1660" y2="370"/>
+    <line x1="1620" y1="275" x2="1620" y2="150" marker-start="url(#aS)" marker-end="url(#aE)"/>
+    <line class="ext" x1="1560" y1="275" x2="1660" y2="275"/>
+    <line class="ext" x1="1560" y1="150" x2="1660" y2="150"/>
+  </g>
+  <text class="dm" x="1636" y="448">142  (C7: klemfare)</text>
+  <text class="dm" x="1636" y="220">125  (C7: klemfare)</text>
+
+  <!-- ================= X DIMENSION CHAIN (bottom) ================= -->
+  <g class="ext">
+    <line x1="0"    y1="1710" x2="0"    y2="1830"/>
+    <line x1="73"   y1="1520" x2="73"   y2="1830"/>
+    <line x1="712"  y1="1710" x2="712"  y2="1830"/>
+    <line x1="785"  y1="1710" x2="785"  y2="1830"/>
+    <line x1="1205" y1="1710" x2="1205" y2="1830"/>
+    <line x1="1278" y1="1710" x2="1278" y2="1830"/>
+    <line x1="1917" y1="1520" x2="1917" y2="1830"/>
+    <line x1="1990" y1="1710" x2="1990" y2="1830"/>
+    <line x1="0"    y1="1830" x2="0"    y2="1930"/>
+    <line x1="1990" y1="1830" x2="1990" y2="1930"/>
+  </g>
+  <g class="dim">
+    <line x1="0"    y1="1800" x2="73"   y2="1800" marker-end="url(#aE)"/>
+    <line x1="73"   y1="1800" x2="712"  y2="1800" marker-start="url(#aS)" marker-end="url(#aE)"/>
+    <line x1="712"  y1="1800" x2="785"  y2="1800"/>
+    <line x1="785"  y1="1800" x2="1205" y2="1800" marker-start="url(#aS)" marker-end="url(#aE)"/>
+    <line x1="1205" y1="1800" x2="1278" y2="1800"/>
+    <line x1="1278" y1="1800" x2="1917" y2="1800" marker-start="url(#aS)" marker-end="url(#aE)"/>
+    <line x1="1917" y1="1800" x2="1990" y2="1800" marker-start="url(#aS)"/>
+    <line x1="0"    y1="1900" x2="1990" y2="1900" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  </g>
+  <g class="dm" text-anchor="middle">
+    <text x="36"   y="1790">73</text>
+    <text x="392"  y="1790">639</text>
+    <text x="748"  y="1790">73</text>
+    <text x="995"  y="1790">420</text>
+    <text x="1241" y="1790">73</text>
+    <text x="1597" y="1790">639</text>
+    <text x="1953" y="1790">73</text>
+    <text x="995"  y="1890">1990  (vegg til vegg - liggende deler kappes 1984, se C9)</text>
+  </g>
+
+  <!-- ================= BENCH X CHAIN ================= -->
+  <g class="ext">
+    <line x1="572"  y1="1514" x2="572"  y2="1660"/>
+    <line x1="645"  y1="1514" x2="645"  y2="1660"/>
+    <line x1="1345" y1="1514" x2="1345" y2="1660"/>
+    <line x1="1418" y1="1514" x2="1418" y2="1660"/>
+  </g>
+  <g class="dim">
+    <line x1="73"   y1="1640" x2="572"  y2="1640" marker-start="url(#aS)" marker-end="url(#aE)"/>
+    <line x1="645"  y1="1640" x2="1345" y2="1640" marker-start="url(#aS)" marker-end="url(#aE)"/>
+    <line x1="1418" y1="1640" x2="1917" y2="1640" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  </g>
+  <g class="dm" text-anchor="middle">
+    <text x="322"  y="1632">499</text>
+    <text x="995"  y="1632">700  (fritt spenn benkevange)</text>
+    <text x="1667" y="1632">499</text>
+  </g>
+
+  <!-- ================= OVERALL HEIGHT ================= -->
+  <g class="dim">
+    <line x1="2160" y1="0" x2="2160" y2="1700" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  </g>
+  <line class="ext" x1="1990" y1="0" x2="2180" y2="0"/>
+  <text class="dm" x="2148" y="850" text-anchor="middle" transform="rotate(-90 2148 850)">1700  total hoyde stolpe</text>
+
+  <!-- ================= LEGEND ================= -->
+  <g transform="translate(-600,2030)">
+    <rect x="0" y="0" width="900" height="240" fill="none" stroke="#000" stroke-width="1.6"/>
+    <text class="lbl" x="16" y="34">TEGNFORKLARING</text>
+    <g class="bolt"><circle cx="40" cy="70" r="9"/><line x1="20" y1="70" x2="60" y2="70"/><line x1="40" y1="50" x2="40" y2="90"/></g>
+    <text class="sml" x="78" y="78">M8 gjennomgaende bolt, hull 8,5 mm</text>
+    <line class="hid" x1="20" y1="112" x2="60" y2="112"/>
+    <text class="sml" x="78" y="120">skjult kant / bolt bak tegneplanet</text>
+    <line class="gho" x1="20" y1="154" x2="60" y2="154"/>
+    <text class="sml" x="78" y="162">alternativ posisjon eller anbefalt endring (C-nr.)</text>
+    <text class="sml" x="16" y="204">Boltposisjoner er gitt som (X, Z) i mm fra gulv/venstre vegg.</text>
+  </g>
+</svg>

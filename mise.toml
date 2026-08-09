@@ -5,12 +5,95 @@ python = "3.11"
 description = "Install Python dependencies"
 run = "pip install -r requirements.txt"
 
-[tasks.build]
-description = "Run the script to generate the 3D models (.step, .stl, .glb)"
-run = "python generate_bed_frame.py"
+[tasks.build-alcove]
+description = "Generate the alcove bed frame model (.step, .svg)"
+run = "python v1/generate_bed_frame.py"
 depends = ["install"]
+
+[tasks.build]
+description = "Generate the loft bed model, both modes - validation set only (.step + .stl for the .usdz chain)"
+run = "python generate_loftbed.py"
+depends = ["install"]
+
+[tasks.build-full]
+description = "Same as build plus the slow deliverables (.glb and the hidden-line .svg projections) - run once at the end"
+run = "LOFTBED_FULL=1 python generate_loftbed.py"
+depends = ["install"]
+
+[tasks.usdz]
+description = "Convert the generated meshes to .usdz (Xcode / Quick Look), one material per colour group"
+depends = ["build"]
+run = """
+set -e
+out="$PWD"
+groups="${LOFTBED_GROUP_DIR:-${TMPDIR:-/tmp}/loftbed_groups}"
+work="$(mktemp -d)"
+trap 'rm -rf "$work"' EXIT
+for mode in bed_mode table_mode; do
+  # One line per colour group: <name>=<r,g,b,a>=<per-group .stl>, written by
+  # generate_loftbed.py into a scratch dir (never the repo).
+  swift tools/mesh_to_usda.swift "$work/loftbed_$mode.usda" $(cat "$groups/loftbed_$mode.groups")
+  usdcat -o "$work/loftbed_$mode.usdc" "$work/loftbed_$mode.usda"
+  rm -f "$out/loftbed_$mode.usdz"
+  (cd "$work" && usdzip "$out/loftbed_$mode.usdz" "loftbed_$mode.usdc")
+  usdchecker "$out/loftbed_$mode.usdz" --arkit
+done
+ls -l "$out"/loftbed_*.usdz
+"""
+
+[tasks.render]
+description = "Shaded 3/4-view PNG previews of both modes via usdrecord"
+depends = ["usdz"]
+run = """
+set -e
+out="$PWD"
+work="$(mktemp -d)"
+trap 'rm -rf "$work"' EXIT
+for mode in bed_mode table_mode; do
+  python tools/make_render_stage.py "$out/loftbed_$mode.usdz" "$work/render_$mode.usda"
+  usdrecord --camera Cam --imageWidth 1600 --complexity high \\
+            --colorCorrectionMode sRGB \\
+            "$work/render_$mode.usda" "$out/loftbed_$mode.png"
+done
+ls -l "$out"/loftbed_*.png
+"""
+
+[tasks.render-validate]
+description = "The five design-validation renders (2 iso + back iso + front/end elevation), 1800 px"
+depends = ["usdz"]
+run = """
+set -e
+out="$PWD"
+work="$(mktemp -d)"
+trap 'rm -rf "$work"' EXIT
+# name mode azimuth elevation distance
+# Azimuth is measured from +Z towards +X. After the Z-up -> Y-up export the
+# FRONT of the bed (the ladder side, bed Y 800+ after v8/D12) faces -Z, so az 180 looks the
+# ladder straight in the face, az 0 is the back-wall side and az 90 is the
+# X = 1990 end. Verified by rendering both: at az 180 the front guard rails
+# show the climb-through gap with the ladder in it (v8/D13: 320 mm), at az 0
+# the two back boards run unbroken wall to wall.
+for view in \\
+  "bed_iso_front bed_mode 150 24 4.5" \\
+  "bed_iso_back bed_mode 30 24 4.5" \\
+  "table_iso_front table_mode 150 24 4.5" \\
+  "front_elev bed_mode 180 2 4.4" \\
+  "end_elev bed_mode 90 2 3.4" ; do
+  set -- $view
+  python tools/make_render_stage.py "$out/loftbed_$2.usdz" "$work/$1.usda" "$3" "$4" "$5"
+  usdrecord --camera Cam --imageWidth 1800 --complexity high \\
+            --colorCorrectionMode sRGB \\
+            "$work/$1.usda" "$out/loftbed_validate_$1.png"
+done
+ls -l "$out"/loftbed_validate_*.png
+"""
 
 [tasks.view]
 description = "Preview the generated 3D model in FreeCAD"
-run = "open -a FreeCAD bed_frame.step"
+run = "open -a FreeCAD loftbed_bed_mode.step"
 depends = ["build"]
+
+[tasks.view-usdz]
+description = "Open the .usdz model in Quick Look"
+run = "open loftbed_bed_mode.usdz"
+depends = ["usdz"]
