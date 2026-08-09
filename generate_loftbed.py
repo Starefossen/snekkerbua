@@ -8,31 +8,84 @@ COORDINATE SYSTEM (all units mm)
   X  along the length of the bed. The two walls are the planes X = 0 and
      X = WALL_SPAN (1990). HARD LIMIT: no geometry may cross those planes.
   Y  depth. Y = 0 is the inner face of the back rail, positive Y points
-     towards the front (room side). Negative Y is "behind" the back rail -
-     the back posts and the end-beam ends, down to Y = -96, which is THE
-     WALL PLANE (see W1).
+     towards the front (room side). Negative Y is the back rail's own 48 mm
+     of thickness and nothing else: its OUTER face, Y = -48, is THE WALL
+     PLANE (see W1/W6). v10 tucked the back corner posts INTO that band, so
+     -48 is one flat face that the whole back of the bed presents to the
+     wall, and no part of this bed is behind it.
 
 *** W1 - THIS BED IS WALL-SIDE-SPECIFIC. IT IS NOT REVERSIBLE. ***
 --------------------------------------------------------------------------
 The long BACK side of the bed stands against the room wall and the frame is
 bolted to it (S2). The wall itself is therefore the barrier on that side,
-which is what lets v9 delete the two back guard boards and cut the two back
-corner posts down to platform height. Consequences you cannot ignore:
-  * the plane Y = -96 (the outer faces of the back corner posts and the ends
-    of the two end beams) is a FLAT MOUNTING FACE and must sit flat against
-    the wall. Nothing is allowed to stand proud of it;
-  * after W4 the slat platform runs right up to that face (12 of the 14 slats
-    stop 1 mm short of it), so the WALL is what stops the mattress on the back
-    side - W5. The mattress can slide 48 mm between the wall and the front
-    verticals, and whichever end of that travel it is at, the one gap it
-    leaves is 48 mm - under the 75 mm EN 747 entrapment limit (checked below);
+which is what lets v9 delete the two back guard boards and v10 tuck the two
+back corner posts into the back rail plane. Consequences you cannot ignore:
+  * the plane Y = -48 is a FLAT MOUNTING FACE and must sit flat against the
+    wall. After v10/W6 it is made by the back side rail, the two back corner
+    posts, the two end beams and their back bearing blocks, the back bench
+    rail, the back table ledger and the rear ends of all 24 slats - every one
+    of them coplanar. Nothing is allowed to stand proud of it;
+  * the FIXING is the back rail itself. It lies flat against the wall over
+    its full 1984 x 98 mm face, so the bed is screwed to the studs straight
+    through the rail. Those screws also mid-support the rail, which is why
+    its 1894 mm clear span is not the governing case it looks like on paper
+    (no geometry - it is a wall, not a part);
+  * the slat platform runs right up to that face (v10/W8: all 14 slats,
+    uniformly 800 mm), so the WALL is what stops the mattress on the back
+    side - W5. After v10 the mattress is PINNED: 800 mm of mattress in an
+    800 mm clear between the wall and the front verticals, zero wander and
+    therefore zero gap at either edge (EN 747 limit 75 mm);
   * the bed CANNOT be turned round or stood free in a room. Mirroring it for
     a wall on the other hand means mirroring the model in Y, not swapping
     parts;
-  * if a freestanding variant is ever wanted, the two back guard boards
-    (34x98 x 1984 at Y -130..-96, Z 1412..1510 and 1585..1683) and the full
-    1700 mm back posts are a drop-in retrofit - the mounting face, the guard
-    bands and the post section are all unchanged. Flagged for the docs round.
+  * a freestanding variant is a bigger retrofit than it was in v9: as well as
+    putting the two back guard boards (34x98 x 1984, bands Z 1412..1510 and
+    1585..1683) back, the two back posts have to come back OUT of the rail
+    plane into their own layer behind it and go back to full height (1700),
+    which costs the 48 mm of depth v10 just won. Flagged for the docs round.
+
+DESIGN INTENT (v10 - "the back posts tuck under the bunk")
+--------------------------------------------------------------------------
+W6  THE BACK POSTS MOVE INTO THE BACK RAIL PLANE AND STOP UNDER THE RAIL.
+    The two back corner posts used to be a separate 48 mm layer BEHIND the
+    back rail (Y -96..-48), running past it to the platform top (1197). They
+    now stand IN the rail's own plane, Y -48..0, at the same X (0..48 and
+    1942..1990), and they stop at Z 1065 - the rail UNDERSIDE. What it does:
+      * the back rail BEARS DIRECTLY ON THE POST TOPS. Rail underside = post
+        top, so the platform reaction at each wall corner goes rail -> post
+        -> floor as end-grain bearing with no fastener in the load path. The
+        bolts and brackets there become pure ties, which is exactly what C2
+        did for every other joint in this bed. Before, the rail hung off the
+        SIDE of the post and that corner reaction lived in fasteners;
+      * the 48 mm layer behind the rail disappears, and 48 mm of room depth
+        with it: 896 -> 848 (W7);
+      * the posts go 1197 -> 1065 mm. The W2 argument - nothing of a back
+        post above the mattress underside, whatever the mattress turns out to
+        be - survives with a whole rail height to spare.
+W7  THE WALL PLANE IS Y = -48 AND THE OVERALL DEPTH IS 848. Everything on the
+    back side ends in the back rail's outer face, and that face is the wall.
+    Overall depth -48 .. 800 = 848 mm (was 896, 930, 964, 1070).
+W8  ONE SLAT LENGTH AGAIN. v9/W4 stretched twelve of the fourteen upper slats
+    to 847 mm so the platform could reach past the back posts to the wall.
+    With the posts inside the rail plane there is no slot left to cover: all
+    14 upper slats revert to the uniform 34x98 x 800, Y -48..752, at the same
+    pitch and the same 44.5 mm gap. The design is back to ONE flat-board
+    length - 24 identical 800 mm pieces (14 upper slats + 10 bench slats).
+W9  THE BACK MEMBERS RUN POST TO POST, NOT WALL TO WALL. The back bench rail
+    and the back table ledger ran the full 1984 mm at X 3..1987 in the very
+    Y band the posts have moved into, so they would collide at both corners.
+    Both are cut to 1894 mm, X 48..1942, butting the posts' X-inner faces and
+    screwed to them - an end FIXING they never had before (they used to be
+    dropped onto a bearing block and nothing else). Their mid supports are
+    unchanged: two stub legs under the bench rail, the wall behind the ledger.
+    The two back bench-rail bearing blocks turn with them - they now stand on
+    the post's X-inner face at X 48..96 / 1894..1942, Y -48..0, top flush at
+    Z 186, so the rail end has 48 x 48 mm of wood under it instead of 45 x 36.
+    RIPPLE: the outermost bench slat at each end shared X with its corner post
+    (0..98 against 0..48) and would now share the Y band too, so the five
+    bench slats per bench are re-pitched to start at the post inner face -
+    X 48..645 instead of 0..648, pitch 137.5 -> 124.75, gap 39.5 -> 26.75 mm.
+    Same five 34x98 x 800 pieces per bench, just closer together.
 
 DESIGN INTENT (v9 - "wall-side reduction")
 --------------------------------------------------------------------------
@@ -42,11 +95,14 @@ W1  NO BACK GUARD BOARDS. The two 34x98 x 1984 boards at Y -130..-96 are
       * the guard-opening arithmetic of D6 is now a FRONT-SIDE check only,
         over exactly the same two bands (1412..1510, 1585..1683);
       * the back side gets its own EN 747 check instead - the mattress-to-
-        wall gap, 48 mm, i.e. the post depth (see W1 above);
+        wall gap, 48 mm, i.e. the post depth (v10/W6 takes that layer out of
+        the bed altogether: the clear is exactly the mattress, gap 0);
       * the overall depth drops 964 -> 930 mm and the back face of the
         assembly becomes the wall plane Y = -96 itself (D14 takes it on to
-        896 from the front end);
-      * 34x98 goes from 29 pieces to 27 (W4 puts it back to 28).
+        896 from the front end; v10/W6+W7 move the wall plane itself to -48
+        and the depth to 848);
+      * 34x98 goes from 29 pieces to 27 (W4 puts it back to 28; v10/W8 keeps
+        28 and makes all 24 slats one length again).
 W2  SHORT BACK POSTS - CUT FLUSH WITH THE PLATFORM. The two BACK corner posts
     go 1700 -> 1197 mm, i.e. flush with the SLAT TOP, which is the mattress
     underside. Everything they carry lives below that line - the bench-rail
@@ -67,7 +123,12 @@ W2  SHORT BACK POSTS - CUT FLUSH WITH THE PLATFORM. The two BACK corner posts
         over by the WALL itself (W5), which the platform now reaches (W4);
       * the front corner posts and the two ladder uprights stay 1700 (they
         carry the front guard bands). The end elevation is asymmetric by
-        design.
+        design;
+      * v10/W6 takes the same argument one storey further down. The post now
+        stops at the rail UNDERSIDE, 1065, and CARRIES the rail on its top
+        instead of standing beside it, so the last thing on a back post is
+        the rail, not a slat, and the clearance to the mattress underside is
+        a whole rail height (132 mm) rather than zero.
 W3  SQUARE STUB LEGS. The four bench stub legs go 48x73 -> 48x48, the same
     section as the corner posts. The leg is an end bearing under a 642 mm
     (front) / 1984 mm (back) rail, not a column: at 48x48 the leg-on-rail
@@ -85,6 +146,9 @@ W4  THE PLATFORM RUNS TO THE WALL. The slat field goes 13 -> 14 slats and the
     platform top, so those two butt against the posts exactly as before.
     Every slat still bears the full 48 mm on both side rails; the 14th slat
     takes the inter-slat gap from 60.5 to 44.5 mm.
+    (SUPERSEDED BY v10/W8. The slot W4 was covering was the back posts' own
+    48 mm layer, and W6 deleted that layer. All 14 slats are 800 mm again;
+    the 14-slat field and its 44.5 mm gap are what W4 leaves behind.)
 W5  THE MATTRESS IS CAPTURED BY THE WALL AND THE FRONT VERTICALS. With the
     back posts gone from above the platform the mattress is no longer held
     between two lines of posts. It is held between the ROOM WALL at Y = -96
@@ -93,6 +157,10 @@ W5  THE MATTRESS IS CAPTURED BY THE WALL AND THE FRONT VERTICALS. With the
     mattress, so the mattress can wander 48 mm, and at either extreme the
     single resulting gap is 48 mm - under the 75 mm EN 747 entrapment limit,
     the same number the old fixed mattress-to-wall gap had.
+    (v10/W6+W7: the wall moves forward to Y -48, so the same two stops are
+    now 800 mm apart under an 800 mm mattress. The mattress is PINNED - zero
+    wander, zero gap at either edge - which is the v8/D12 fit restored, but
+    with the wall doing the job the deleted back post used to do.)
 D14 GUARDS INBOARD - THE LAST 34 mm OF DEPTH. The four front guard boards move
     from the OUTER faces of the front posts / ladder uprights to their INNER
     faces: Y 800..834 -> 718..752. Same four pieces, same 832 mm lengths, same
@@ -101,7 +169,9 @@ D14 GUARDS INBOARD - THE LAST 34 mm OF DEPTH. The four front guard boards move
       * the front face of the assembly stops being a guard board and becomes
         the post plane Y = 800, so the overall depth goes 930 -> 896 mm - the
         same 896 as the end beams. The bed is now exactly as deep as its own
-        end frames, and the 34 mm slice at Y 800..834 is asserted EMPTY;
+        end frames, and the 34 mm slice at Y 800..834 is asserted EMPTY.
+        (v10/W6 takes the other end in by 48 the same way: 848, and the end
+        beams follow to 848, so the identity still holds);
       * the boards overhang the mattress footprint by 34 mm, Y 752 back to
         718. That is air, not contact: the lower band starts at Z 1412 and
         the mattress tops out at 1337, so the nearest board is 75 mm above
@@ -122,22 +192,27 @@ D12 DEPTH SHRINK - THE MATTRESS IS FLUSH AT BOTH EDGES. The platform was
     on show - 29 mm at the back, 77 mm at the front. The whole depth stack
     is pulled in by 106 mm ON THE FRONT SIDE ONLY; the back plane (back rail
     Y -48..0, back posts Y -96..-48, back guards Y -130..-96 - deleted in
-    v9/W1 - back ledger, back bench rail) does not move at all. What that
-    gives:
+    v9/W1 - back ledger, back bench rail) does not move at all. (v10/W6 is
+    the first round that DOES move it: the back posts come forward 48 into
+    the rail plane and the wall plane with them, -96 -> -48. The back rail,
+    ledger and bench rail planes are still exactly where D12 left them.)
+    What that gives:
       * upper slats and bench slats become 800 mm long, Y -48..752 - still
         one and the same piece, still 34x98, still lying on top of the rails
-        (v9/W4 keeps that for the two END upper slats and the ten bench
-        slats; the twelve middle upper slats go on to 847);
+        (v9/W4 stretched twelve of the upper ones to 847; v10/W8 puts them
+        all back to 800, so this line is literally true again);
       * the front side rail moves 810..858 -> 704..752, so the clear width
         between the upper rails is 704 = 800 - 2 x 48: the mattress spans
         OVER both rails and its two edges land exactly on the slat ends;
       * the reference mattress is Y -48..752, i.e. EXACTLY the rail-to-rail
         slat footprint. Sideways play was 0 by construction, which was the
         point - there was no bare slat strip left to fall into and no gap
-        along either edge. (v9/W4+W5 revisit this: the platform now runs on
-        past the back rail to the wall, so the mattress has 48 mm of travel
-        on slat instead of 0 mm on a 48 mm slot. Same edge case, better
-        answer.);
+        along either edge. (v9/W4+W5 revisited this: the platform ran on past
+        the back rail to the wall, so the mattress had 48 mm of travel on
+        slat instead of 0 mm on a 48 mm slot. v10/W6 removes the slot AND the
+        travel by moving the wall itself to the back rail face - the zero-play
+        fit is back, and this time both stops are structure the mattress can
+        actually be pushed against.);
       * everything in the front plane follows -106: front corner posts
         752..800, ladder uprights 752..800, rung treads 727..800 (the 25 mm
         rest ledge behind the upright plane is preserved exactly), rung
@@ -145,14 +220,16 @@ D12 DEPTH SHRINK - THE MATTRESS IS FLUSH AT BOTH EDGES. The platform was
         post faces instead), front bench rail 704..752, front stub
         legs, the front bench-rail bearing blocks;
       * the end beams shorten 1002 -> 896 (they still span the full post-to-
-        post depth, Y -96..800);
+        post depth, Y -96..800; v10/W6: 848, Y -48..800);
       * the movable panel becomes 680 x 800, Y -48..752 - rear edge still
         flush with the bench slats and on the back bench rail / back ledger,
         front edge still butting the ladder uprights and resting on the rung.
     Overall depth over the guards drops 1070 -> 964 mm. (v9/W1 deletes the
     back guards, so the back face becomes the wall plane -96 and the overall
     depth drops again, 964 -> 930 mm; v9/D14 then hangs the front guards
-    inboard, and the front face becomes the post plane 800: 930 -> 896 mm.)
+    inboard, and the front face becomes the post plane 800: 930 -> 896 mm;
+    v10/W6+W7 tucks the back posts into the back rail plane and the wall face
+    becomes the rail face -48: 896 -> 848 mm.)
 D13 FRONT FLOOR CLEARED + SLIM 320 LADDER. Two moves that belong together,
     both about the space you actually stand in.
       * The front bench rail no longer runs from the sofa to the ladder. Each
@@ -303,8 +380,9 @@ WHAT CHANGED IN v5
       The back guard boards are upgraded from 21x95 to 34x98 to carry the
       resulting full 1894 mm span between the corner posts on their own.
       (v9/W1 deletes those boards outright - the wall is the barrier - and
-      v9/W2 cuts the two back posts to 1197. Still six verticals, but two of
-      them are short now.)
+      v9/W2 cuts the two back posts to 1197; v10/W6 moves them into the back
+      rail plane and stops them at 1065, under the rail. Still six verticals,
+      but two of them are short now.)
   D2  The front guard boards are SEGMENTED. Each band is two boards lapped
       onto the ladder uprights, so the ladder opening continues straight up
       past the guard rails and you climb THROUGH instead of over. (v5: 21x95,
@@ -325,10 +403,11 @@ WHAT CHANGED IN v5
 Upper level: a 1984 x 800 sleeping platform at 1065 mm underside height (the
 slats bridge both rails flush on top, D5; D12 shrank the depth 906 -> 800 so
 the 800 mm mattress is flush at both edges), carried by four corner posts -
-two 1700 mm ones at the front and, after v9/W2, two 1197 mm ones at the back
-that stop flush with the platform surface. v9/W4 runs the middle 12 of the 14
-slats on to the wall plane (847 mm instead of 800), so the platform reaches the
-wall and the wall is what stops the mattress on that side (v9/W5). The
+two 1700 mm ones at the front and, after v10/W6, two 1065 mm ones at the back
+that stand IN the back rail plane and carry the back rail on their tops. The
+platform reaches the wall because the wall IS the back rail face now, so the
+wall is what stops the mattress on that side (v9/W5, v10/W7) and all 14 slats
+are the same 800 mm piece again (v10/W8). The
 two ends are OPEN above the mattress -
 there are no end boards at guard-rail height, because they cut into the
 sleeping area. Instead each end has a single 48x98 END BEAM bolted to the
@@ -345,7 +424,8 @@ the inner faces of the uprights.
 
 Lower level: a convertible sofa / table / bed. The 48x73 bench rails sit at
 Z 186..259, carried by the corner posts (via 36x48 J9-B bearing blocks, C2)
-and by four 48x48 stub legs (v9/W3). The BACK rail runs the whole 1984 mm (C5); the FRONT
+and by four 48x48 stub legs (v9/W3). The BACK rail is one continuous 1894 mm
+member butting the two back posts, X 48..1942 (C5, v10/W9); the FRONT
 one is two 642 mm segments that stop at the sofa ends on their stub legs,
 leaving the whole front floor between the benches open (D11/D13). The two
 benches are the slatted zones at each end: 34x98 slats (C3) laid on the
@@ -459,10 +539,12 @@ BOARD_W = 95         # 21x95 board, width      - D7: the back table ledger ONLY
 # bench slats and the 4 front guard segments. One profile, one pile of timber,
 # one setup on the saw.
 # W1 ripple: the 2 back guard boards are gone, so the pile is 27 pieces, not 29.
-# W4 ripple: a 14th upper slat takes it to 28, and the slats stop being ONE
-# length - 12 of them are 847 (they run to the wall) and 2 are still 800. With
-# the 10 bench slats that is 12 identical 800s and 12 identical 847s: two saw
-# stops, not one, but still only two.
+# W4 ripple: a 14th upper slat takes it to 28, and (in v9 only) the slats stopped
+# being ONE length - 12 of them ran on to 847 to reach past the back posts.
+# W8 ripple: v10 puts the posts inside the back rail plane, so there is nothing
+# left to reach past. All 14 upper slats are 800 again, the pile is still 28
+# pieces, and the flat-board stock is back to ONE length: 24 identical 800 mm
+# slats (14 upper + 10 bench) plus the 4 guard segments at 832.
 BOARD34_T = 34       # 34x98 board, thickness
 BOARD34_W = 98       # 34x98 board, width
 
@@ -557,44 +639,36 @@ FRONT_RAIL_Y1 = FRONT_RAIL_Y0 + RAIL_T   # 752  [was 858]
 # deflection by 0.883^3 = 0.69: sigma ~10.6 MPa, utilisation ~0.64, deflection
 # ~3.0 mm (L/262). The depth shrink is a strict improvement here.
 #
-# W4: THE MIDDLE SLATS RUN TO THE WALL. The slats used to stop at the back rail
-# face, Y -48, which left a 48 mm slot - exactly the depth of a back corner post
-# - open between the platform and the wall over the whole 1990 mm length. That
-# slot is the reason the mattress had to be pinned at Y -48 by the posts in the
-# first place: let it move back and it would drop a corner into the slot. Run
-# the platform to the wall instead and the slot is gone, the mattress can sit
-# anywhere it likes, and the wall becomes its back stop (W5).
-#   * a middle slat is 847 long, Y -95..752, i.e. 1 mm shy of the wall plane
-#     -96 - a fitting clearance, not a gap you can lose anything into, and it
-#     keeps the wall face made of the six parts that are meant to bolt to it;
-#   * the FIRST and LAST slats cannot do this. They share X with the back
-#     corner posts, which run Y -96..-48 up to the platform top, so they stay
-#     800 long and butt against the post exactly as every slat used to;
-#   * the field goes 13 -> 14 slats so the inter-slat gap comes down with the
-#     extra bearing the longer slats want at the wall end: 60.5 -> 44.5 mm.
-# The structural span is unchanged - a slat still spans rail to rail, Y -48..752
-# - so the D5 utilisation note above still holds; the 47 mm behind the back rail
-# is an overhang carrying nothing but its own mattress strip.
-WALL_Y = BACK_RAIL_Y0 - POST_T           # -96, the mounting face against the
-                                         # wall (hoisted: W4 dimensions off it)
-SLAT_WALL_CLEAR = 1                      # W4: fitting clearance to the wall
+# W4 (v9) / W8 (v10): THE PLATFORM AND THE WALL. v9 had a 48 mm slot between the
+# slat ends at Y -48 and the wall at Y -96 - the thickness of the back posts'
+# own layer - and covered it by stretching twelve of the fourteen slats to 847,
+# leaving the two end slats at 800 because they shared X with a post.
+# W6 deletes the layer instead of covering it: the back posts move INTO the back
+# rail plane, the wall plane comes forward to the back rail face Y = -48, and the
+# slat ends are ON it. So:
+#   * every upper slat is 34x98 x 800, Y -48..752 - the same piece as a bench
+#     slat again, no two-length split, no fitting clearance to keep;
+#   * no slat can foul a back post: the posts stop at the rail underside 1065
+#     and the slats start at the rail top 1163, 98 mm clear. Asserted anyway;
+#   * the 14-slat field survives from W4 (the 13-slat one had 60.5 mm gaps);
+#     at this pitch the gap is 44.5 mm.
+WALL_Y = BACK_RAIL_Y0                    # -48, the mounting face against the
+                                         # wall = the back rail's outer face (W7)
 SLAT_Z0 = RAIL_TOP                       # 1163, slats bear on top of the rails
 SLAT_Z1 = SLAT_Z0 + BED_SLAT_T           # 1197
 SLAT_Y0 = BACK_RAIL_Y0                   # -48, outer face of the back rail
 SLAT_Y1 = FRONT_RAIL_Y1                  # 752, outer face of the front rail
-SLAT_Y0_EXT = WALL_Y + SLAT_WALL_CLEAR   # -95, W4: the extended slats' rear end
 SLAT_LEN = SLAT_Y1 - SLAT_Y0             # 800  (the bench slat, same piece)
-SLAT_LEN_EXT = SLAT_Y1 - SLAT_Y0_EXT     # 847  (W4: the middle 12)
 SLAT_COUNT = 14                          # [was 13, W4]
 SLAT_X_START = 20                        # first slat left edge
 SLAT_X_END = 1970                        # last slat right edge
 MAX_SLAT_GAP = 60
 
 # The reference mattress sits proud on the flush platform. D12 put it EXACTLY on
-# the 800 mm rail-to-rail slat footprint, Y -48..752, and that is still where it
-# is DRAWN - but after W4 the platform under it is 847 deep at the wall end, so
-# where the mattress actually ends up is a matter of which way it got pushed.
-# See MATTRESS_WANDER below and the W5 block in the validation section.
+# the 800 mm rail-to-rail slat footprint, Y -48..752; v9/W4+W5 let it wander
+# 48 mm back into the slot behind the back rail, and v10/W6 removes the slot by
+# bringing the wall forward to Y -48. The mattress is back to a zero-play fit -
+# it is DRAWN where it can only be. See MATTRESS_WANDER (0) and the W5 block.
 MATTRESS_Z0 = SLAT_Z1                    # 1197
 MATTRESS_Y0 = SLAT_Y0                    # -48  [was 29]
 MATTRESS_Y1 = MATTRESS_Y0 + MATTRESS_W   # 752  [was 829] == SLAT_Y1
@@ -615,59 +689,76 @@ BENCH_RAIL_BOTTOM = BENCH_RAIL_TOP - BENCH_RAIL_H   # 186
 # ---------------------------------------------------------------------------
 # POSTS  (D1: SIX verticals in total - four corner posts, two ladder uprights)
 # ---------------------------------------------------------------------------
-# W2: THE TWO FAMILIES NO LONGER SHARE A HEIGHT. A post is 1700 only if it has
-# to carry a guard band; after W1 deleted the back guards, only the front ones
-# and the ladder uprights do. The BACK posts are cut to the PLATFORM TOP,
-# SLAT_Z1 = 1197 - the slat surface, i.e. the mattress underside. That is the
-# last thing they are structurally needed for: the two end slats butt against
-# them there.
+# W2 (v9): THE TWO FAMILIES NO LONGER SHARE A HEIGHT. A post is 1700 only if it
+# has to carry a guard band; after W1 deleted the back guards, only the front
+# ones and the ladder uprights do. v9 cut the BACK posts to the PLATFORM TOP,
+# SLAT_Z1 = 1197 - the slat surface - so that nothing of them could ever stand
+# proud of the mattress, whatever thickness of mattress turned up. (The cut
+# before that was 1337, the mattress TOP, which made the stop exactly as tall as
+# the MODELLED mattress: a 120 or 130 mm one - they are all sold as "140" -
+# would have left a bare 48x48 stick beside a sleeper's head.)
 #
-# The earlier W2 cut was 1337, the mattress TOP, so the post could double as the
-# sideways mattress stop over the mattress's whole Z band. The trouble with that
-# is the number 140: it is the MODELLED mattress height, and mattresses sold as
-# 140 come out anywhere from 120 to 145. Cut the post at the mattress top and a
-# thinner mattress leaves a bare 48x48 stick standing proud of the bed surface,
-# right beside a sleeper's head. Cut it at the platform and there is nothing
-# above the mattress underside no matter what mattress goes on - and the
-# mattress's back stop becomes the wall itself, which W4 made reachable.
-#
-# Everything the back posts touch is at or below 1197 - the tallest items are
-# the two 800 mm end slats at 1163..1197, then the BACK SIDE RAIL at 1065..1163,
-# and the highest fastener is the M8 tie into the end beam at 967..1065. That is
-# asserted explicitly further down (W2 check).
+# W6 (v10): THE BACK POSTS TUCK INTO THE RAIL PLANE AND UNDER THE RAIL. The post
+# was a 48 mm layer of its own BEHIND the back rail, Y -96..-48, standing beside
+# the rail and past it. It now stands IN the rail's plane, Y -48..0, and stops at
+# the rail UNDERSIDE, RAIL_BOTTOM = 1065. Two things come out of that:
+#   * LOAD PATH. The back rail BEARS on the post top, 48 x 48 of end grain under
+#     it (45 x 48 of that covered by the rail, which is set in 3 mm at each wall
+#     by C9). The corner reaction goes rail -> post -> floor with no fastener in
+#     it; the M8 tie and the corner brackets hold the joint together and carry
+#     nothing, which is the C2 principle applied to the one joint that did not
+#     have it. Before, the rail passed the post on the inside and that reaction
+#     had to be taken in bolt shear;
+#   * DEPTH. The 48 mm layer is gone, so the wall plane is the back rail face
+#     Y = -48 and the bed is 848 deep instead of 896 (W7).
+# The W2 conclusion survives untouched and with room to spare: the post now tops
+# out 132 mm BELOW the mattress underside, so there is nothing of it above the
+# platform for any mattress at all. The tallest thing on a back post is the back
+# side rail sitting on it (1065..1163); the highest fastener is still the M8 tie
+# into the end beam (967..1065). Asserted further down (W2/W6 check).
 POST_HEIGHT = 1700                       # front posts + ladder uprights
-BACK_POST_HEIGHT = SLAT_Z1               # 1197, flush with the platform (W2)
-                                         # [was MATTRESS_Z1 = 1337]
-BACK_POST_Y0 = BACK_RAIL_Y0 - POST_T     # -96 .. -48 (outer face of back rail)
-BACK_POST_Y1 = BACK_RAIL_Y0              # -48
+BACK_POST_HEIGHT = RAIL_BOTTOM           # 1065, the rail underside (W6)
+                                         # [was SLAT_Z1 = 1197, MATTRESS_Z1 1337]
+BACK_POST_Y0 = BACK_RAIL_Y0              # -48 .. 0, IN the back rail plane (W6)
+BACK_POST_Y1 = BACK_RAIL_Y1              # 0        [was -96 .. -48]
 FRONT_POST_Y0 = FRONT_RAIL_Y1            # 752 .. 800 (outer face of front rail)
 FRONT_POST_Y1 = FRONT_POST_Y0 + POST_T   # 800
 CORNER_POST_X = [0, WALL_SPAN - POST_W]  # 0..48 and 1942..1990 (walls untouched)
 
-# W1/S2: the wall plane. The back posts' outer faces and the two end-beam ends
-# lie in it, it is the flat face the frame is bolted to, it is the BARRIER on
-# the back long side - which is why there are no back guard boards - and after
-# W5 it is the mattress's back stop. Declared up in the UPPER BED block because
-# the W4 slat length is measured off it; this is the identity that ties the two
-# statements of it together.
-assert WALL_Y == BACK_POST_Y0 == -96     # -96, the mounting face
+# W1/S2/W7: the wall plane. It is the back rail's outer face, and after W6 the
+# back posts, the end-beam back ends, the back bench rail, the back ledger and
+# every slat end lie in it too. It is the flat face the frame is bolted to - the
+# fixing is screws through the back rail into the studs - it is the BARRIER on
+# the back long side, which is why there are no back guard boards, and it is the
+# mattress's back stop (W5). Declared up in the UPPER BED block; this is the
+# identity that ties the two statements of it together.
+assert WALL_Y == BACK_POST_Y0 == BACK_RAIL_Y0 == -48     # the mounting face
 
-# W5: WHAT CAPTURES THE MATTRESS SIDEWAYS. With the back posts cut at the
-# platform (W2) there is no longer a vertical at the back to pin the mattress
-# against. There does not need to be one: W4 ran the platform to the wall, so
-# the mattress slides on slats the whole way and fetches up against the wall
-# itself. The front stop is unchanged - the two front corner posts and the two
-# ladder uprights, all four standing at Y 752 and running on to 1700.
-#   clear between the stops   752 - (-96) = 848
+# W6: THE BACK RAIL BEARS ON THE POST TOPS. Post top == rail underside is the
+# whole point of the round, so it is stated here as an identity and checked
+# against the real parts in the validation section.
+BACK_RAIL_ON_POST_Z = RAIL_BOTTOM        # 1065, post top == rail underside
+# The rail is set in 3 mm at each wall (C9), so of the post's 48 x 48 top face
+# the rail covers 45 x 48 = 2160 mm2. Against f_c90,d ~ 1.53 MPa with k_c90 =
+# 1.5 that is ~5.0 kN of bearing under a corner reaction of well under 1 kN -
+# the same order as every other C2 bearing in the bed (the J9-B block offers
+# 45 x 36 = 1620 mm2 and is fine).
+BACK_RAIL_POST_BEARING = (POST_W - THROUGH_X0) * POST_T  # 2160 mm2
+
+# W5: WHAT CAPTURES THE MATTRESS SIDEWAYS. v9 left this to the WALL at Y -96 and
+# the four front verticals at Y 752 - a 848 mm clear under an 800 mm mattress, so
+# 48 mm of wander and one 48 mm gap at whichever end. W6 brings the wall forward
+# to Y -48 and the clear becomes the mattress:
+#   clear between the stops   752 - (-48) = 800
 #   mattress                              = 800
-#   so the mattress can wander            =  48 mm
-# and because it is ONE mattress in ONE clear, the wander is also the worst gap:
-# push it to the wall and there is 48 mm at the front, push it forward (where it
-# is DRAWN, Y -48..752) and there is 48 mm at the wall. Either way one 48 mm gap,
-# never two, and 48 is under the 75 mm EN 747 entrapment limit.
-MATTRESS_STOP_Y0 = WALL_Y                # -96, the room wall (W5)
+#   so the mattress can wander            =   0 mm
+# i.e. the mattress is PINNED between the wall and the front verticals, with no
+# gap at either long edge - the zero-play fit D12 had, restored, and with slat
+# under every millimetre of it. The EN 747 entrapment case on the back side is
+# therefore 0 mm against a 75 mm limit.
+MATTRESS_STOP_Y0 = WALL_Y                # -48, the room wall (W5/W7)
 MATTRESS_STOP_Y1 = FRONT_POST_Y0         # 752, front posts + ladder uprights
-MATTRESS_WANDER = (MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0) - MATTRESS_W    # 48
+MATTRESS_WANDER = (MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0) - MATTRESS_W    # 0
 
 # ---------------------------------------------------------------------------
 # END BEAMS (48x98, rail stock)
@@ -681,10 +772,16 @@ MATTRESS_WANDER = (MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0) - MATTRESS_W    # 48
 # reactions. 48x123 -> 48x98 raises the bending utilisation by (123/98)^2 =
 # 1.575 from ~0.24 to ~0.38 and roughly doubles the (tiny) deflection.
 # Comfortable margin. D12 shortens the span 1002 -> 896 (-106), which takes
-# the utilisation back down by roughly (896/1002)^2 = 0.80 to ~0.30.
-END_BEAM_Y0 = BACK_POST_Y0                     # -96
+# the utilisation back down by roughly (896/1002)^2 = 0.80 to ~0.30. W6 takes
+# another 48 off the BACK end, 896 -> 848, i.e. (848/1002)^2 = 0.72 -> ~0.27.
+#
+# W6: the beam's back end stops at the wall plane, which is the back rail face
+# now. The beam still runs the full post-to-post depth - the posts just both sit
+# inside it, the back one at Y -48..0 and the front one at Y 752..800 - and it is
+# still bolted to their X-inner faces (the X = 48 and X = 1942 planes).
+END_BEAM_Y0 = BACK_POST_Y0                     # -48  [was -96, W6]
 END_BEAM_Y1 = FRONT_POST_Y1                    # 800  [was 906]
-END_BEAM_LEN = END_BEAM_Y1 - END_BEAM_Y0       # 896  [was 1002]
+END_BEAM_LEN = END_BEAM_Y1 - END_BEAM_Y0       # 848  [was 896, 1002]
 END_BEAM_Z1 = RAIL_BOTTOM                      # 1065, flush with rail underside
 END_BEAM_Z0 = END_BEAM_Z1 - RAIL_H             # 967
 # D4 ripple: the posts are 48 wide now, so the beams slide out to the new post
@@ -696,6 +793,15 @@ END_BEAM_X = [POST_W, WALL_SPAN - POST_W - RAIL_T]   # 48..96 and 1894..1942
 # 48 mm in Y (the full post depth), 36 mm in Z, top flush with the beam underside.
 # The end beam then BEARS on wood (48x48 = 2304 mm2, 5.3 kN) instead of hanging in
 # bolt shear with only 24 mm end distance.
+#
+# W6: THE BACK BLOCK TRAVELS WITH ITS POST AND NOTHING ELSE CHANGES. It is
+# defined off BACK_POST_Y0, so moving the post from Y -96..-48 to Y -48..0 moves
+# the block with it: same X (48..96 / 1894..1942, right under the beam), same Z
+# (931..967, flush under the beam), same face against the post's X-inner plane
+# (48 in Y x 36 in Z = 1728 mm2 of screwed contact), same 48 x 48 = 2304 mm2 of
+# bearing under the beam. The beam's back end is now at Y -48..0, i.e. exactly
+# over the block, so the beam still has wood under BOTH ends. The FRONT block is
+# untouched at Y 752..800.
 BEAM_BLOCK_DX = RAIL_T                         # 48 (X), matches the beam
 BEAM_BLOCK_DY = POST_T                         # 48 (Y), matches the post depth
 BEAM_BLOCK_DZ = BLOCK_T                        # 36 (Z)
@@ -833,19 +939,17 @@ MIN_GUARD_INBOARD_CLEAR = 75
 # W1: the BACK side's EN 747 case. There is no guard board there, so the
 # opening to check is not between two boards, it is the gap between the edge of
 # the mattress and the wall the bed is bolted to - the classic bed/wall
-# entrapment gap. The mattress edge is DRAWN at Y -48 and the wall plane is at
-# Y -96, so as drawn the gap is 48 mm, against the same 75 mm limit.
+# entrapment gap. v9 had the mattress edge at Y -48 and the wall at Y -96, i.e.
+# a 48 mm gap as drawn, and after W4/W5 a 48 mm WANDER that could put those
+# 48 mm at either edge.
 #
-# W4/W5 ripple: this is no longer a fixed dimension. The platform runs to the
-# wall now, so the mattress is not pinned at -48 - it can be anywhere in the
-# 48 mm of MATTRESS_WANDER between the wall and the front verticals. The
-# drawn position is the worst case FOR THIS GAP (all 48 mm of it here) and
-# simultaneously the best case for the front one (0 mm); push the mattress the
-# other way and the two swap. The number to check is therefore the wander
-# itself: whatever the mattress does, the single gap it leaves is at most
-# MATTRESS_WANDER, and that is what has to stay under 75.
-WALL_MATTRESS_GAP = MATTRESS_Y0 - WALL_Y   # 48, the gap as DRAWN
-MAX_MATTRESS_GAP = MATTRESS_WANDER         # 48, the gap at either extreme
+# W6/W7 close it. The wall plane is the back rail face Y = -48 and the mattress
+# edge is drawn on it, so the clear between the two stops is exactly the
+# mattress and the gap is 0 at BOTH edges - there is nothing left to wander.
+# Both numbers below are therefore 0 and both are checked against the same 75 mm
+# limit, which is now a formality rather than a margin.
+WALL_MATTRESS_GAP = MATTRESS_Y0 - WALL_Y   # 0, the gap as DRAWN
+MAX_MATTRESS_GAP = MATTRESS_WANDER         # 0, the mattress is pinned
 
 # W1 / RETROFIT NOTE (for the docs round). The deleted back boards were
 # 34x98 x 1984 at Y -130..-96 (i.e. GUARD_T off the outer post faces), in the
@@ -919,9 +1023,17 @@ FRONT_GUARD_SEG_LEN = LADDER_INNER_L - THROUGH_X0          # 832  [was 782]
 # give the ladder uprights a low fixing point. Max span 700 mm (utilisation
 # 0.14).
 #
-# D11: the BACK rail is still the continuous 1984 mm member. The FRONT one is
+# D11: the BACK rail is still the continuous member. The FRONT one is
 # cut, so the ladder bay is open right down to the floor - there is no longer a
 # beam across your shins when you stand at the foot of the ladder.
+#
+# W9 (v10): the back rail is 1894 mm, X 48..1942, not 1984 mm at X 3..1987. The
+# back corner posts moved into its Y band (-48..0) and would collide with it at
+# both corners, so it butts their X-inner faces instead and is SCREWED to them -
+# an end fixing it never had. Its mid supports (the two stub legs) are unchanged,
+# and it still runs unbroken behind the panel's whole X range. The through-
+# running-member rule C9 is unaffected: 1894 goes into a 1990 opening even more
+# easily than 1984 did.
 #
 # D13: the cut goes all the way back to the SOFA ENDS. v7 stopped the segments
 # at the ladder uprights (X 3..785 / 1205..1987, 782 mm) with a face lap onto
@@ -941,6 +1053,13 @@ FRONT_GUARD_SEG_LEN = LADDER_INNER_L - THROUGH_X0          # 832  [was 782]
 # BENCH_RAIL_TOP / BENCH_RAIL_BOTTOM are declared up in SHARED LOWER DATUM -
 # the ladder section needs the top for RUNG_TOPS[0].
 BENCH_RAIL_Y = [BACK_RAIL_Y0, FRONT_RAIL_Y0]        # -48..0 and 704..752
+# W9: the back bench rail and the back table ledger run POST TO POST, X 48..1942,
+# butting the two back corner posts and screwed to their X-inner faces. The two
+# side rails still run wall to wall at X 3..1987 (C9) - they pass OVER the posts,
+# so nothing is in their way.
+BETWEEN_POSTS_X0 = POST_W                           # 48, back post inner face
+BETWEEN_POSTS_X1 = WALL_SPAN - POST_W               # 1942
+BETWEEN_POSTS_LEN = BETWEEN_POSTS_X1 - BETWEEN_POSTS_X0     # 1894
 
 # C3: bench slats 21x95 -> 34x98 (21x95 was at utilisation 1.96 with a point load
 # on one slat). Consequence: the bench top rises 280 -> 293, and the bed-mode
@@ -948,11 +1067,24 @@ BENCH_RAIL_Y = [BACK_RAIL_Y0, FRONT_RAIL_Y0]        # -48..0 and 704..752
 BENCH_TOP = BENCH_RAIL_TOP + BENCH_SLAT_T      # 293, bench slat top / seat height
 BENCH_LEN = 645                                # slatted zone / stub leg reference
 BENCH_X = [0, WALL_SPAN - BENCH_LEN]           # 0..645 and 1345..1990
-BENCH_SLAT_Y0 = BACK_POST_Y1                   # -48
+BENCH_SLAT_Y0 = BACK_RAIL_Y0                   # -48, on the wall plane like every
+                                               # other slat  [was BACK_POST_Y1]
 BENCH_SLAT_Y1 = FRONT_RAIL_Y1                  # 752  [was 858]
 BENCH_SLAT_LEN = BENCH_SLAT_Y1 - BENCH_SLAT_Y0 # 800  [was 906]
 BENCH_SLAT_COUNT = 5
-BENCH_SLAT_PITCH = 137.5                       # doc J11: 39.5 mm gap between slats
+# W9 RIPPLE - THE BENCH SLATS ARE RE-PITCHED. A bench slat is Y -48..752, i.e. it
+# covers the back rail plane, and the outermost one of each bench used to start
+# at the wall, X 0..98 - straight through the corner post's new Y band. The field
+# therefore starts at the post INNER face and the five slats are re-pitched to
+# still finish on the bench end:
+#   was  X 0..648,  pitch 137.5, gap 39.5 (doc J11)
+#   now  X 48..645, pitch 124.75, gap 26.75
+# Same five 34x98 x 800 pieces per bench, closer together - which is a strict
+# improvement for a seat - and the outer end now butts the post instead of the
+# wall, so the bench is tied to the frame at that end.
+BENCH_SLAT_X_START = POST_W                    # 48, clear of the back post (W9)
+BENCH_SLAT_PITCH = (BENCH_LEN - BENCH_SLAT_X_START - BENCH_SLAT_W) / \
+    (BENCH_SLAT_COUNT - 1)                     # 124.75  [was 137.5]
 STUB_LEG_H = BENCH_RAIL_BOTTOM                 # 186, floor to bench rail underside
 # W3: the legs are 48x48 now, so the same "inner face on the bench end" rule
 # puts them at 597..645 / 1345..1393 (was 572..645 / 1345..1418).
@@ -977,19 +1109,39 @@ OPEN_FLOOR_X = (BENCH_LEN, WALL_SPAN - BENCH_LEN)                  # 645 .. 1345
 MIN_PASSAGE = 140                # clear walk-around beside the ladder
 
 # C2 / joint J9-B: a 36x48 offcut under each end of each bench rail, screwed to
-# the inner face of the corner post with 3x 5x70. Its X length follows the post
-# width (48 after D4), 36 mm in Y, 48 mm in Z, top flush with the rail underside
-# at Z 186. Wood bearing over the rail footprint X 3..48 is 45 x 36 = 1620 mm2
-# -> ~3.7 kN at f_c90,d with k_c90 = 1.5; the single M8 bolt stays a pure tie.
-RAIL_BLOCK_DX = POST_W                         # 48 (X), cut length off 36x48
-RAIL_BLOCK_DY = BLOCK_T                        # 36 (Y)
-RAIL_BLOCK_DZ = BLOCK_H                        # 48 (Z)
-RAIL_BLOCK_Z1 = BENCH_RAIL_BOTTOM              # 186
-RAIL_BLOCK_Z0 = RAIL_BLOCK_Z1 - RAIL_BLOCK_DZ  # 138
+# a corner post with 3x 5x70, top flush with the rail underside at Z 186, so the
+# rail end BEARS on wood and the single M8 bolt stays a pure tie.
+#
+# W9: THE TWO PLANES NEED DIFFERENT BLOCKS NOW, because the rail ends are in
+# different places.
+#   FRONT (unchanged) - the rail segment runs on past the post to X 3, so the
+#     block goes UNDER it inside the post footprint: 48 in X (the post width),
+#     36 in Y off the post's INNER Y face, 48 in Z. Bearing over the rail
+#     footprint X 3..48 is 45 x 36 = 1620 mm2 -> ~3.7 kN.
+#   BACK (W9) - the rail now STOPS at the post's X-inner face, so there is no
+#     rail over the post footprint to put a block under. The block turns 90 deg
+#     and stands ON that face instead, exactly like the J1-B block under the end
+#     beam: 48 in X (cut length, out from the post face), 48 in Y (the full rail
+#     depth), 36 in Z. The rail end then bears 48 x 48 = 2304 mm2 (~5.3 kN) and
+#     the block is screwed to the post over 48 x 36 = 1728 mm2. Both numbers are
+#     better than the front block's, which is the one that was already fine.
 # NOTE (deviation): the doc gives the front block as 24 mm deep - it also calls
 # it "36 mm i Y". 36 mm off the post face is what is drawn here.
-RAIL_BLOCK_Y0 = [BACK_POST_Y1,                          # -48 .. -12
-                 FRONT_RAIL_Y1 - RAIL_BLOCK_DY]         # 716 .. 752  [was 822..858]
+RAIL_BLOCK_Z1 = BENCH_RAIL_BOTTOM              # 186, flush under the rail
+RAIL_BLOCK_FRONT_DX = POST_W                   # 48 (X), cut length off 36x48
+RAIL_BLOCK_FRONT_DY = BLOCK_T                  # 36 (Y), off the post face
+RAIL_BLOCK_FRONT_DZ = BLOCK_H                  # 48 (Z)
+RAIL_BLOCK_FRONT_Z0 = RAIL_BLOCK_Z1 - RAIL_BLOCK_FRONT_DZ      # 138
+RAIL_BLOCK_FRONT_Y0 = FRONT_RAIL_Y1 - RAIL_BLOCK_FRONT_DY      # 716 .. 752
+RAIL_BLOCK_FRONT_X = CORNER_POST_X             # 0..48 and 1942..1990
+RAIL_BLOCK_BACK_DX = BENCH_RAIL_T              # 48 (X), cut length off 36x48
+RAIL_BLOCK_BACK_DY = BENCH_RAIL_T              # 48 (Y), the full rail depth
+RAIL_BLOCK_BACK_DZ = BLOCK_T                   # 36 (Z), stock thickness
+RAIL_BLOCK_BACK_Z0 = RAIL_BLOCK_Z1 - RAIL_BLOCK_BACK_DZ        # 150
+RAIL_BLOCK_BACK_Y0 = BACK_RAIL_Y0              # -48 .. 0, the rail's own plane
+RAIL_BLOCK_BACK_X = [BETWEEN_POSTS_X0,                          # 48 .. 96
+                     BETWEEN_POSTS_X1 - RAIL_BLOCK_BACK_DX]     # 1894 .. 1942
+RAIL_BLOCK_LEN = RAIL_BLOCK_FRONT_DX           # 48, one cut length for all four
 
 PANEL_X0 = 655                                 # 10 mm play against each bench
 PANEL_X1 = 1335
@@ -1102,11 +1254,13 @@ WALK_ZONE_Z = (0, BENCH_RAIL_BOTTOM)           # 0 .. 186
 # bench slats would leave the cushions standing proud of it instead.
 PANEL_BENCH_DIP = BENCH_TOP - PANEL_TOP_BED    # 16
 
-# BACK TABLE LEDGER (21x95), permanently mounted in both modes, screwed to the
-# inner faces of the two back corner posts (Y -48..-27).
+# BACK TABLE LEDGER (21x95), permanently mounted in both modes.
 # NOTE (deviation, back ledger): the original spec placed it at Y 0..21, but
 # nothing exists in that plane at this height, so the board would float.
-# It now spans the full 1894 mm between corner posts. It only picks up the
+# W9: it is 1894 mm at X 48..1942 - it butts the two back corner posts, which now
+# stand in its own Y band, and it is SCREWED TO THEIR X-INNER FACES (21 x 95 =
+# 1995 mm2 of end fixing per end). Before, it ran wall to wall at X 3..1987 and
+# was merely fixed to the posts' inner Y faces. It only picks up the
 # panel's rear edge (a 680 mm wide load band at midspan): at a 0.55 kN table
 # load, half of it on the rear bearing, M = 89 kNmm against W = 21*95^2/6 =
 # 31 587 mm3, so sigma ~ 2.8 MPa -> utilisation ~0.17, deflection ~2 mm. The
@@ -1117,7 +1271,7 @@ PANEL_BENCH_DIP = BENCH_TOP - PANEL_TOP_BED    # 16
 # 21 mm width is the depth of the rear bearing.
 LEDGER_BACK_Z1 = PANEL_UNDER_TABLE             # 482
 LEDGER_BACK_Z0 = LEDGER_BACK_Z1 - BOARD_W      # 387
-LEDGER_BACK_Y0 = BACK_POST_Y1                  # -48 .. -27, on the back posts
+LEDGER_BACK_Y0 = BACK_RAIL_Y0                  # -48 .. -27, on the wall plane
 
 # ---------------------------------------------------------------------------
 # HELPERS
@@ -1186,13 +1340,13 @@ parts += [back_rail, front_rail]
 # Slats across Y, evenly spaced along X inside 20..1970. One 5x60 screw per
 # end, down through the slat into the rail below it.
 #
-# W4: the field is 14 slats now and they come in two lengths. Which length a
-# slat gets is NOT a hand-kept list - it falls out of the geometry: a slat whose
-# X range touches a back corner post has to stop at the post face (Y -48, 800
-# long), everything else runs on to 1 mm short of the wall (Y -95, 847 long).
-# At the current pitch that picks out exactly the first and the last slat; if
-# the pitch ever changes so that slat 2 or 13 lands on a post as well, this
-# picks them up automatically and the counts asserted below will say so.
+# W8: ONE LENGTH. v9/W4 split the field into two lengths so that the twelve
+# slats that were clear of the back posts could run on past the back rail to the
+# wall. W6 put the posts inside the rail plane and brought the wall to the rail
+# face, so there is nothing to run on to and nothing to dodge: all 14 slats are
+# the same 34x98 x 800, Y -48..752, and the wall-side end of every one of them is
+# ON the mounting plane. The posts are 98 mm below the slats' underside, so they
+# cannot be fouled at any pitch - asserted anyway in the validation block.
 slat_pitch = (SLAT_X_END - SLAT_X_START - BED_SLAT_W) / (SLAT_COUNT - 1)
 slat_gap = slat_pitch - BED_SLAT_W
 slat_end_gap = min(SLAT_X_START, WALL_SPAN - SLAT_X_END)
@@ -1200,26 +1354,16 @@ assert slat_gap <= MAX_SLAT_GAP, f"slat gap {slat_gap:.1f} > {MAX_SLAT_GAP}"
 assert slat_end_gap <= MAX_SLAT_GAP, f"slat end gap {slat_end_gap} > {MAX_SLAT_GAP}"
 
 BACK_POST_X = [(x, x + POST_W) for x in CORNER_POST_X]   # (0, 48), (1942, 1990)
+BACK_POST_EXTENTS = [((px0, px1), (BACK_POST_Y0, BACK_POST_Y1),
+                      (0, BACK_POST_HEIGHT)) for px0, px1 in BACK_POST_X]
 
 bed_slats = []
-short_slats = []
-extended_slats = []
 for i in range(SLAT_COUNT):
     x0 = SLAT_X_START + i * slat_pitch
-    x1 = x0 + BED_SLAT_W
-    on_post = any(min(x1, px1) - max(x0, px0) > 0 for px0, px1 in BACK_POST_X)
-    if on_post:
-        y0, length = SLAT_Y0, SLAT_LEN
-        cut = ("Upper bed slat, short (D5/W4)",
-               sec(BED_SLAT_T, BED_SLAT_W), SLAT_LEN)
-    else:
-        y0, length = SLAT_Y0_EXT, SLAT_LEN_EXT
-        cut = ("Upper bed slat, to the wall (W4)",
-               sec(BED_SLAT_T, BED_SLAT_W), SLAT_LEN_EXT)
-    s = block(x0, y0, SLAT_Z0, BED_SLAT_W, length, BED_SLAT_T,
-              f"Bed Slat_{i + 1}", "boards", cut)
+    s = block(x0, SLAT_Y0, SLAT_Z0, BED_SLAT_W, SLAT_LEN, BED_SLAT_T,
+              f"Bed Slat_{i + 1}", "boards",
+              ("Upper bed slat (D5)", sec(BED_SLAT_T, BED_SLAT_W), SLAT_LEN))
     bed_slats.append(s)
-    (short_slats if on_post else extended_slats).append(s)
 parts += bed_slats
 
 mattress = block(0, MATTRESS_Y0, MATTRESS_Z0, WALL_SPAN, MATTRESS_W, MATTRESS_H,
@@ -1227,8 +1371,9 @@ mattress = block(0, MATTRESS_Y0, MATTRESS_Z0, WALL_SPAN, MATTRESS_W, MATTRESS_H,
 
 # ---------------------------------------------------------------------------
 # POSTS  (four corner posts - D1 deleted the two intermediate back posts)
-# W2: the back pair is 1197 (platform top), the front pair 1700 (guard bands).
-# Same 48x48 section, two different cut lengths, two cut-list lines.
+# W6: the back pair stands IN the back rail plane (Y -48..0) and stops at 1065,
+# the rail underside, so the rail bears on it; the front pair is 1700 (guard
+# bands). Same 48x48 section, two different cut lengths, two cut-list lines.
 # ---------------------------------------------------------------------------
 for i, x0 in enumerate(CORNER_POST_X):
     side = "Left" if i == 0 else "Right"
@@ -1313,17 +1458,22 @@ for i, z0 in enumerate(GUARD_BAND_Z0):
 # by a corner post (via the J9-B bearing block) and in between by two stub legs.
 # They give the loose panel an edge to rest on in bed mode and give the ladder
 # uprights a low fixing point.
-# D11/D13: the BACK rail is the continuous 1984 mm member; the FRONT one is two
+# D11/D13: the BACK rail is the continuous member; the FRONT one is two
 # 642 mm segments that stop at the sofa ends on their stub legs, so the whole
 # front floor between the benches is open.
+# W9: the back rail is 1894 mm at X 48..1942 - it butts the two back corner posts
+# (which now stand in its Y band) and is screwed to their X-inner faces. Its
+# bearing block turns with it: it stands ON that same post face, at X 48..96 /
+# 1894..1942 and Y -48..0, instead of sitting under the rail inside the post
+# footprint the way the FRONT block still does.
 for i, ry0 in enumerate(BENCH_RAIL_Y):
     name = "Back" if i == 0 else "Front"
     if i == 0:
-        parts.append(block(THROUGH_X0, ry0, BENCH_RAIL_BOTTOM, THROUGH_LEN,
-                           BENCH_RAIL_T, BENCH_RAIL_H,
+        parts.append(block(BETWEEN_POSTS_X0, ry0, BENCH_RAIL_BOTTOM,
+                           BETWEEN_POSTS_LEN, BENCH_RAIL_T, BENCH_RAIL_H,
                            "Bench Rail Back (continuous)", "rails",
                            ("Bench rail, back (C5)",
-                            sec(BENCH_RAIL_T, BENCH_RAIL_H), THROUGH_LEN)))
+                            sec(BENCH_RAIL_T, BENCH_RAIL_H), BETWEEN_POSTS_LEN)))
     else:
         for j, (sx0, sx1) in enumerate(FRONT_BENCH_RAIL_SEGMENTS):
             side = "Left" if j == 0 else "Right"
@@ -1332,14 +1482,23 @@ for i, ry0 in enumerate(BENCH_RAIL_Y):
                                f"Bench Rail Front {side} (segment)", "rails",
                                ("Bench rail, front segment (D13)",
                                 sec(BENCH_RAIL_T, BENCH_RAIL_H), sx1 - sx0)))
-    # C2 / J9-B: bearing block under each rail end, on the corner post face.
-    for j, px0 in enumerate(CORNER_POST_X):
+    # C2 / J9-B: bearing block under each rail end. FRONT - under the rail inside
+    # the post footprint; BACK (W9) - on the post's X-inner face, beyond it.
+    if i == 0:
+        block_x, by0, bz0 = RAIL_BLOCK_BACK_X, RAIL_BLOCK_BACK_Y0, RAIL_BLOCK_BACK_Z0
+        bdx, bdy, bdz = (RAIL_BLOCK_BACK_DX, RAIL_BLOCK_BACK_DY,
+                         RAIL_BLOCK_BACK_DZ)
+    else:
+        block_x, by0, bz0 = (RAIL_BLOCK_FRONT_X, RAIL_BLOCK_FRONT_Y0,
+                             RAIL_BLOCK_FRONT_Z0)
+        bdx, bdy, bdz = (RAIL_BLOCK_FRONT_DX, RAIL_BLOCK_FRONT_DY,
+                         RAIL_BLOCK_FRONT_DZ)
+    for j, bx0 in enumerate(block_x):
         side = "Left" if j == 0 else "Right"
-        parts.append(block(px0, RAIL_BLOCK_Y0[i], RAIL_BLOCK_Z0,
-                           RAIL_BLOCK_DX, RAIL_BLOCK_DY, RAIL_BLOCK_DZ,
+        parts.append(block(bx0, by0, bz0, bdx, bdy, bdz,
                            f"Bench Rail Bearing Block {name} {side}", "boards",
                            ("Bearing block, bench rail (C2)",
-                            sec(BLOCK_T, BLOCK_H), RAIL_BLOCK_DX)))
+                            sec(BLOCK_T, BLOCK_H), RAIL_BLOCK_LEN)))
     # Stub legs at the inner end of each bench (the outer ends sit on the posts).
     for j, lx0 in enumerate(STUB_LEG_X):
         side = "Left" if j == 0 else "Right"
@@ -1348,14 +1507,19 @@ for i, ry0 in enumerate(BENCH_RAIL_Y):
                            ("Bench stub leg (W3)", sec(LEG_T, LEG_W),
                             STUB_LEG_H)))
 
-# C3: 34x98 bench slats on top of the continuous rails, five per bench.
+# C3: 34x98 bench slats on top of the bench rails, five per bench.
 # The doc's J11 table lists the right-hand bench at X 1345..1993, which runs 3 mm
 # past the wall; the positions here are the exact mirror of the left bench.
+# W9: the field starts at the back post's inner face (X 48 / 1942) instead of at
+# the wall, because a bench slat runs Y -48..752 and would otherwise cut straight
+# through the relocated post. Five slats at 124.75 pitch land the last one on the
+# bench end exactly, X 547..645 (mirror 1345..1443).
 for i in range(len(BENCH_X)):
     side = "Left" if i == 0 else "Right"
     for j in range(BENCH_SLAT_COUNT):
         off = j * BENCH_SLAT_PITCH
-        x0 = off if i == 0 else WALL_SPAN - BENCH_SLAT_W - off
+        x0 = (BENCH_SLAT_X_START + off if i == 0 else
+              WALL_SPAN - BENCH_SLAT_X_START - BENCH_SLAT_W - off)
         parts.append(block(x0, BENCH_SLAT_Y0, BENCH_RAIL_TOP,
                            BENCH_SLAT_W, BENCH_SLAT_LEN, BENCH_SLAT_T,
                            f"Bench Slat {side}_{j + 1}", "boards",
@@ -1365,9 +1529,13 @@ for i in range(len(BENCH_X)):
 # D3: only the BACK table ledger survives. The front one used to cross the
 # whole front of both sofa benches at shin height, right where you sit down,
 # and it is replaced by resting the panel's front edge on a ladder rung (D10).
-support_rail = block(THROUGH_X0, LEDGER_BACK_Y0, LEDGER_BACK_Z0, THROUGH_LEN,
-                     BOARD_T, BOARD_W, "Table Ledger Back", "boards",
-                     ("Table ledger, back", sec(BOARD_T, BOARD_W), THROUGH_LEN))
+# W9: post to post, X 48..1942, butting and screwed to the back posts' X-inner
+# faces - they stand in its Y band now.
+support_rail = block(BETWEEN_POSTS_X0, LEDGER_BACK_Y0, LEDGER_BACK_Z0,
+                     BETWEEN_POSTS_LEN, BOARD_T, BOARD_W,
+                     "Table Ledger Back", "boards",
+                     ("Table ledger, back", sec(BOARD_T, BOARD_W),
+                      BETWEEN_POSTS_LEN))
 parts.append(support_rail)
 
 # ---------------------------------------------------------------------------
@@ -1444,21 +1612,23 @@ table_mode = make_compound(panel_table)
 TOL = 0.1
 print("\n=== VALIDATION ===")
 
-# D12/W1: the depth envelope. The BACK face is now THE WALL PLANE itself - the
-# outer faces of the back corner posts and the ends of the two end beams, all at
-# Y = -96 - because W1 deleted the 34 mm guard boards that used to stand proud of
-# it at Y -130. That plane is a mounting face, so the assert below is not just an
-# envelope check: nothing whatsoever may poke out behind it, or the bed will not
-# sit flat against the wall.
+# D12/W1/W7: the depth envelope. The BACK face is THE WALL PLANE itself - after
+# W6 that is the back rail's outer face Y = -48, shared by the two back corner
+# posts, the two end beams and their back bearing blocks, the back bench rail and
+# its blocks, the back table ledger and the rear end of every slat. That plane is
+# a mounting face, so the assert below is not just an envelope check: nothing
+# whatsoever may poke out behind it, or the bed will not sit flat against the
+# wall. (The two BACK stub legs are in that plane too - they always were, they
+# stand under the back bench rail.)
 #
 # D14: the FRONT face is no longer the guard boards - they went inboard - it is
 # the outer plane of the four front verticals, Y = 800. Overall depth
-# 1070 (v7) -> 964 (v8/D12) -> 930 (v9/W1) -> 896 (v9/D14), which is also
-# exactly the end-beam length: the bed is now as deep as its own end frames and
-# not one millimetre more.
-DEPTH_Y0 = WALL_Y                              # -96, the wall / mounting plane
+# 1070 (v7) -> 964 (v8/D12) -> 930 (v9/W1) -> 896 (v9/D14) -> 848 (v10/W6), which
+# is also exactly the end-beam length: the bed is as deep as its own end frames
+# and not one millimetre more.
+DEPTH_Y0 = WALL_Y                              # -48, the wall / mounting plane
 DEPTH_Y1 = FRONT_POST_Y1                       # 800  [was 834, 940]
-OVERALL_DEPTH = DEPTH_Y1 - DEPTH_Y0            # 896  [was 930, 964, 1070]
+OVERALL_DEPTH = DEPTH_Y1 - DEPTH_Y0            # 848  [was 896, 930, 964, 1070]
 for name, comp in (("bed mode", bed_mode), ("table mode", table_mode)):
     bb = comp.bounding_box()
     assert bb.min.X >= -TOL, f"{name}: geometry crosses wall at X=0 ({bb.min.X:.3f})"
@@ -1478,10 +1648,15 @@ for name, comp in (("bed mode", bed_mode), ("table mode", table_mode)):
     print(f"OK  {name}: X extent {bb.min.X:.2f} .. {bb.max.X:.2f} "
           f"(limit 0 .. {WALL_SPAN}), top Z {bb.max.Z:.0f} (limit {POST_HEIGHT}), "
           f"Y extent {bb.min.Y:.0f} .. {bb.max.Y:.0f} = {bb.max.Y - bb.min.Y:.0f} "
-          f"mm deep (W1: back face IS the wall plane {DEPTH_Y0}; D14: front face "
-          f"IS the post plane {DEPTH_Y1}; depth was 1070 in v7, 964 in v8, 930 "
-          f"before D14)")
-assert OVERALL_DEPTH == 896 and DEPTH_SHRINK == 106
+          f"mm deep (W1/W7: back face IS the wall plane {DEPTH_Y0}; D14: front "
+          f"face IS the post plane {DEPTH_Y1}; depth was 1070 in v7, 964 in v8, "
+          f"930 before D14, 896 before W6)")
+assert OVERALL_DEPTH == 848 and DEPTH_SHRINK == 106
+assert OVERALL_DEPTH == 896 - POST_T, \
+    f"W6/W7: tucking the back posts into the rail plane should take exactly " \
+    f"POST_T = {POST_T} mm off the 896 the bed was, not {896 - OVERALL_DEPTH}"
+assert OVERALL_DEPTH == END_BEAM_LEN == 848, \
+    "W7: the bed must still be exactly as deep as its own end beams"
 
 # D14: the old guard plane must now be EMPTY. Nothing at all may live in
 # Y 800..834 - that 34 mm slice is the depth the reclaim gives back, and if any
@@ -1495,31 +1670,64 @@ assert not in_old_guard_plane, \
     f"{OLD_GUARD_PLANE[0]}..{OLD_GUARD_PLANE[1]}"
 print(f"OK  D14: the old front guard plane Y {OLD_GUARD_PLANE[0]}.."
       f"{OLD_GUARD_PLANE[1]} is EMPTY - the outermost front element is the "
-      f"post/upright plane {FRONT_POST_Y1}; overall depth {OVERALL_DEPTH} mm "
-      f"(was 930, i.e. {GUARD_T} mm reclaimed)")
+      f"post/upright plane {FRONT_POST_Y1}; D14 took the depth 930 -> 896 by "
+      f"reclaiming those {GUARD_T} mm, W6 took it on to {OVERALL_DEPTH}")
 
-# W1: nothing at all behind the wall plane, and the two families of parts that
-# define it must actually reach it - otherwise "flat against the wall" is a
-# statement about a bounding box rather than about a face you can bolt.
+# W1/W7: nothing at all behind the wall plane, and every family of parts that is
+# supposed to define it must actually reach it - otherwise "flat against the
+# wall" is a statement about a bounding box rather than about a face you can
+# bolt. After W6 the wall plane is the back rail's outer face Y = -48, and it is
+# a much bigger face than it was: the rail itself, the two back posts tucked into
+# its plane, the end beams and their back blocks, the back bench rail with its
+# blocks and its two stub legs, the back table ledger, and the rear end of all
+# 24 slats.
+bench_slat_parts = [p for p in parts if p.label.startswith("Bench Slat")]
+WALL_FACE = (
+    {"Upper Side Rail Back", "Bench Rail Back (continuous)", "Table Ledger Back"}
+    | {f"Corner Post Back {s}" for s in ("Left", "Right")}
+    | {f"End Beam {s}" for s in ("Left", "Right")}
+    | {f"End Beam Bearing Block {s} Back" for s in ("Left", "Right")}
+    | {f"Bench Rail Bearing Block Back {s}" for s in ("Left", "Right")}
+    | {f"Bench Stub Leg Back {s}" for s in ("Left", "Right")}
+    | {s.label for s in bed_slats}
+    | {s.label for s in bench_slat_parts}
+)
 on_wall = [p for p in parts if abs(p.extents[1][0] - WALL_Y) < TOL]
-assert {p.label for p in on_wall} == {
-    "Corner Post Back Left", "Corner Post Back Right",
-    "End Beam Left", "End Beam Right",
-    "End Beam Bearing Block Left Back", "End Beam Bearing Block Right Back",
-}, f"W1: the wall face is made of {sorted(p.label for p in on_wall)}"
-for p in parts:
+assert {p.label for p in on_wall} == WALL_FACE, \
+    f"W1/W7: the wall face is made of {sorted(p.label for p in on_wall)}, " \
+    f"expected {sorted(WALL_FACE)}"
+for p in parts + [panel_bed, panel_table]:
     assert p.extents[1][0] >= WALL_Y - TOL, \
         f"W1: '{p.label}' stands proud of the wall plane {WALL_Y}"
 assert not any(p.label.startswith("Guard Rail Back") for p in parts), \
     "W1: the back guard boards are supposed to be deleted - the wall is the " \
     "barrier on that side"
-print(f"OK  W1: WALL-SIDE BED - no back guard boards; the back face is the flat "
-      f"mounting plane Y={WALL_Y} made by {len(on_wall)} parts (2 back posts, "
-      f"2 end beams, 2 end-beam bearing blocks), nothing behind it")
+# W6: the parts that used to make the wall face at -96 are the ones that moved,
+# and the plane they used to occupy has to be gone, not merely vacated by the
+# bounding box. Y -96..-48 is now OUTSIDE the bed entirely.
+assert WALL_Y == BACK_RAIL_Y0 == -48 and BACK_POST_Y0 == WALL_Y, \
+    f"W6: the wall plane is {WALL_Y}, want the back rail face {BACK_RAIL_Y0}"
+print(f"OK  W1/W6/W7: WALL-SIDE BED - no back guard boards; the back face is the "
+      f"flat mounting plane Y={WALL_Y} (was -96), the BACK RAIL FACE, made by "
+      f"{len(on_wall)} coplanar parts - back side rail + 2 back posts tucked "
+      f"into its plane + 2 end beams + 2 end-beam blocks + back bench rail + 2 "
+      f"of its blocks + back ledger + all {len(bed_slats) + len(bench_slat_parts)} "
+      f"slat ends - and nothing behind it. The fixing is screws through the back "
+      f"rail into the studs, which also mid-support it")
 
-# C9: nothing horizontal may be longer than 1984, and every through-running
-# member must sit at X 3..1987. A 1990 mm piece cannot be swung into a 1990 mm
+# C9: nothing horizontal may be longer than 1984, and every long member must sit
+# in one of the two legal X bands. A 1990 mm piece cannot be swung into a 1990 mm
 # opening, so the envelope assert above is necessary but not sufficient.
+#
+# W9 ripple: there are TWO bands now, not one. The two side rails still run WALL
+# TO WALL at X 3..1987 (they pass over the posts, so nothing is in their way);
+# the back bench rail and the back table ledger run POST TO POST at X 48..1942,
+# because the back posts have moved into their Y band and they butt them. Both
+# bands satisfy C9 - 1894 goes into a 1990 mm opening even more easily than 1984.
+C9_BANDS = {
+    "wall to wall": (THROUGH_X0, THROUGH_X1),          # 3 .. 1987
+    "post to post": (BETWEEN_POSTS_X0, BETWEEN_POSTS_X1),   # 48 .. 1942
+}
 long_members = []
 for p in parts + [panel_bed, panel_table]:
     (x0, x1), _, _ = p.extents
@@ -1528,8 +1736,11 @@ for p in parts + [panel_bed, panel_table]:
         f"'{p.label}' is {dx:.1f} mm long in X - cannot be manoeuvred into the " \
         f"{WALL_SPAN} mm opening (max {THROUGH_LEN})"
     if dx > POST_HEIGHT / 2:                      # a through-running member
-        assert abs(x0 - THROUGH_X0) < TOL and abs(x1 - THROUGH_X1) < TOL, \
-            f"'{p.label}' spans {x0}..{x1}, expected {THROUGH_X0}..{THROUGH_X1}"
+        band = [b for b, (bx0, bx1) in C9_BANDS.items()
+                if abs(x0 - bx0) < TOL and abs(x1 - bx1) < TOL]
+        assert len(band) == 1, \
+            f"'{p.label}' spans {x0}..{x1}, expected one of " \
+            f"{sorted(C9_BANDS.values())}"
         long_members.append(p.label)
 # D11 ripple: the front bench rail has LEFT this list - it is two 642 mm
 # segments now, in the same class as the D2 front guard segments.
@@ -1544,28 +1755,47 @@ C9_THROUGH_MEMBERS = {
 assert set(long_members) == C9_THROUGH_MEMBERS, \
     f"C9: through-running members are {sorted(long_members)}, expected " \
     f"{sorted(C9_THROUGH_MEMBERS)}"
+# W9: which of the two bands each of them is in, named explicitly.
+C9_BAND_OF = {
+    "Upper Side Rail Back": "wall to wall",
+    "Upper Side Rail Front": "wall to wall",
+    "Bench Rail Back (continuous)": "post to post",
+    "Table Ledger Back": "post to post",
+}
+for p in parts:
+    if p.label in C9_BAND_OF:
+        want = C9_BANDS[C9_BAND_OF[p.label]]
+        assert p.extents[0] == want, \
+            f"W9: '{p.label}' spans X {p.extents[0]}, want {want} " \
+            f"({C9_BAND_OF[p.label]})"
 assert not any("Guard Rail" in m for m in long_members), \
     "W1: no guard board runs wall to wall any more - the back pair is gone and " \
     "the front pair was always segmented"
 assert not any("Bench Rail Front" in m for m in long_members), \
     "D11: the front bench rail must not be a through-running member any more"
 assert "Bench Rail Back (continuous)" in long_members, \
-    "C5: the back bench rail must still run wall to wall"
-print(f"OK  no horizontal member exceeds {THROUGH_LEN} mm; all "
-      f"{len(long_members)} through members centred at "
-      f"X {THROUGH_X0}..{THROUGH_X1} (C9): "
-      + ", ".join(sorted(long_members)))
+    "C5: the back bench rail must still be one continuous member"
+print(f"OK  C9/W9: no horizontal member exceeds {THROUGH_LEN} mm; all "
+      f"{len(long_members)} long members sit in one of the two legal bands - "
+      f"wall to wall X {THROUGH_X0}..{THROUGH_X1} ({THROUGH_LEN} mm): "
+      + ", ".join(sorted(m for m in long_members
+                         if C9_BAND_OF[m] == "wall to wall"))
+      + f"; post to post X {BETWEEN_POSTS_X0}..{BETWEEN_POSTS_X1} "
+        f"({BETWEEN_POSTS_LEN} mm): "
+      + ", ".join(sorted(m for m in long_members
+                         if C9_BAND_OF[m] == "post to post")))
 
 # D1: exactly SIX verticals - 4 corner posts + 2 ladder uprights - each one
 # standing on the floor and running at least to the platform, which is what
 # makes it a vertical of the FRAME rather than a stub leg (the tallest stub leg
 # is 186).
-# W2 ripple: "floor to top" is no longer one height. The back pair stops at
-# BACK_POST_HEIGHT = 1197 (the platform top) and the other four go on to 1700,
-# so the membership test is the PLATFORM, not the literal 1700 - and, since the
-# second W2 cut, not the mattress band either: the back posts do not enter it.
+# W2/W6 ripple: "floor to top" is no longer one height. The back pair stops at
+# BACK_POST_HEIGHT = 1065 (the rail underside, which they carry) and the other
+# four go on to 1700, so the membership test is the RAIL UNDERSIDE - the height
+# at which a vertical is holding the platform up - not the literal 1700 and not
+# the platform surface either, which the back pair no longer reaches.
 VERTICAL_HEIGHTS = {
-    "Corner Post Back": BACK_POST_HEIGHT,        # 1197, W2
+    "Corner Post Back": BACK_POST_HEIGHT,        # 1065, W6
     "Corner Post Front": POST_HEIGHT,            # 1700
     "Ladder Upright": POST_HEIGHT,               # 1700
 }
@@ -1579,7 +1809,7 @@ def vertical_family(p):
 
 
 verticals = [p for p in parts
-             if p.extents[2][0] == 0 and p.extents[2][1] >= SLAT_Z1 - TOL]
+             if p.extents[2][0] == 0 and p.extents[2][1] >= RAIL_BOTTOM - TOL]
 corner_posts = [p for p in verticals if p.label.startswith("Corner Post")]
 back_posts = [p for p in verticals if p.label.startswith("Corner Post Back")]
 front_posts = [p for p in verticals if p.label.startswith("Corner Post Front")]
@@ -1591,8 +1821,8 @@ assert len(corner_posts) == 4 and len(uprights) == 2
 assert len(back_posts) == 2 and len(front_posts) == 2
 assert not any(p.label.startswith("Back Post Mid") for p in parts), \
     "D1: the intermediate back posts are supposed to be gone"
-# D13/W2: the three families share neither section nor length any more -
-# 2 x front corner post 48x48 x 1700, 2 x back corner post 48x48 x 1197,
+# D13/W2/W6: the three families share neither section nor length any more -
+# 2 x front corner post 48x48 x 1700, 2 x back corner post 48x48 x 1065,
 # 2 x ladder upright 36x48 x 1700 (36 in X, 48 in Y so the bolting face is
 # unchanged).
 for p in verticals:
@@ -1609,27 +1839,56 @@ for p in verticals:
 for u in uprights:
     assert u.extents[1] == (LADDER_Y0, LADDER_Y1), \
         f"'{u.label}' is not in the front rail plane for bolting"
-print(f"OK  D1/W2: exactly 6 frame verticals - 2 front corner posts "
+for p in back_posts:
+    assert p.extents[1] == (BACK_RAIL_Y0, BACK_RAIL_Y1), \
+        f"W6: '{p.label}' is at Y {p.extents[1]}, want the back rail plane " \
+        f"{(BACK_RAIL_Y0, BACK_RAIL_Y1)}"
+print(f"OK  D1/W2/W6: exactly 6 frame verticals - 2 front corner posts "
       f"{sec(POST_T, POST_W)} x {POST_HEIGHT}, 2 back corner posts "
-      f"{sec(POST_T, POST_W)} x {BACK_POST_HEIGHT} (W2: flush with the "
-      f"platform), 2 ladder uprights {sec(UPRIGHT_W, UPRIGHT_T)} x {POST_HEIGHT} "
+      f"{sec(POST_T, POST_W)} x {BACK_POST_HEIGHT} (W6: in the back rail plane "
+      f"Y {BACK_RAIL_Y0}..{BACK_RAIL_Y1}, stopping under the rail), 2 ladder "
+      f"uprights {sec(UPRIGHT_W, UPRIGHT_T)} x {POST_HEIGHT} "
       f"({UPRIGHT_W} along X / {UPRIGHT_T} along Y, the {UPRIGHT_T} face on the "
       f"front rail plane Y={LADDER_Y0}); no intermediate back posts")
 
-# W2: THE BACK POSTS ARE CUT AT THE PLATFORM AND THAT IS EXACTLY RIGHT. Three
-# things have to hold. (a) The post top must BE the platform surface - not a
-# millimetre over (it would stand proud under the mattress and telegraph through
-# it) and not a millimetre under (the two end slats would have nothing to butt
-# against). (b) Every part that touches a back post has to sit at or below that
-# line: a joint hanging in mid air above the cut is the failure mode here.
-# (c) Nothing of the post may be left above the platform at all - that is the
-# whole point of taking it down from 1337, so that a thinner-than-modelled
-# mattress cannot expose a stub of post beside the sleeper.
-assert BACK_POST_HEIGHT == SLAT_Z1, \
-    f"W2: the back posts stop at {BACK_POST_HEIGHT}, want the platform top " \
-    f"{SLAT_Z1} (the slat surface = the mattress underside)"
-assert BACK_POST_HEIGHT < MATTRESS_Z1, \
-    "W2: the back posts must not reach into the mattress band any more"
+# W2/W6: THE BACK POSTS STOP UNDER THE RAIL AND CARRY IT. Four things have to
+# hold. (a) The post top must BE the rail underside - a millimetre over and the
+# rail does not sit down on the end grain, a millimetre under and the whole
+# bearing story is a gap. (b) The bearing has to be real: a shared horizontal
+# face over the post's full 48 mm depth, not an edge kiss. (c) The only part on a
+# back post that goes ABOVE the post top may be that rail - anything else up
+# there would be a joint hanging in mid air. (d) Nothing at all on the wall side
+# stands above the PLATFORM: that is the W2 conclusion, and it is now true with a
+# whole rail height to spare instead of exactly 0 mm.
+assert BACK_POST_HEIGHT == RAIL_BOTTOM == BACK_RAIL_ON_POST_Z, \
+    f"W6: the back posts stop at {BACK_POST_HEIGHT}, want the rail underside " \
+    f"{RAIL_BOTTOM} so the rail bears on them"
+assert BACK_POST_HEIGHT < SLAT_Z1 < MATTRESS_Z1, \
+    "W2/W6: the back posts must stay clear of the platform and the mattress band"
+assert SLAT_Z1 - BACK_POST_HEIGHT == RAIL_H + BED_SLAT_T == 132, \
+    f"W6: the post top is {SLAT_Z1 - BACK_POST_HEIGHT} mm under the mattress " \
+    f"underside, expected one rail + one slat = {RAIL_H + BED_SLAT_T}"
+# (b) the rail actually BEARS on both post tops, over the full post depth in Y.
+# The rail is set in 3 mm at each wall by C9, so it covers 45 of the post's 48 mm
+# in X - the same 45 mm the J9-B block has always been sized on.
+for bp in back_posts:
+    (px0, px1), (py0, py1), (_, ptop) = bp.extents
+    (rx0, rx1), (ry0, ry1), (rz0, _) = back_rail.extents
+    assert abs(rz0 - ptop) < TOL, \
+        f"W6: '{bp.label}' tops out at {ptop} but the back rail starts at " \
+        f"{rz0} - the rail must sit ON the post"
+    bx = min(px1, rx1) - max(px0, rx0)
+    by = min(py1, ry1) - max(py0, ry0)
+    assert abs(by - POST_T) < TOL, \
+        f"W6: the rail covers only {by} mm of '{bp.label}' in Y, want the full " \
+        f"post depth {POST_T}"
+    assert abs(bx - (POST_W - THROUGH_X0)) < TOL, \
+        f"W6: the rail covers {bx} mm of '{bp.label}' in X, want " \
+        f"{POST_W - THROUGH_X0} (the {THROUGH_X0} mm C9 wall clearance is the " \
+        f"only bit missing)"
+    assert abs(bx * by - BACK_RAIL_POST_BEARING) < TOL, \
+        f"W6: bearing on '{bp.label}' is {bx * by} mm2, want " \
+        f"{BACK_RAIL_POST_BEARING}"
 back_post_ids = {id(p) for p in back_posts}
 back_post_neighbours = []
 for p in parts:
@@ -1642,65 +1901,78 @@ for p in parts:
         # third; a shared face is enough, an edge or corner kiss is not.
         if sorted(inter)[-2] > TOL and min(inter) >= -TOL:
             back_post_neighbours.append(p)
-            assert p.extents[2][1] <= BACK_POST_HEIGHT + TOL, \
-                f"W2: '{p.label}' reaches Z {p.extents[2][1]} on a back post " \
-                f"that now stops at {BACK_POST_HEIGHT}"
+            # (c) the ONLY thing allowed above the post top is the rail it
+            # carries. Everything else has to be at or below the cut.
+            assert (p.extents[2][1] <= BACK_POST_HEIGHT + TOL
+                    or p is back_rail), \
+                f"W2/W6: '{p.label}' reaches Z {p.extents[2][1]} on a back " \
+                f"post that stops at {BACK_POST_HEIGHT}, and it is not the " \
+                f"back side rail bearing on it"
             break
 assert back_post_neighbours, "W2: the back posts touch nothing at all"
-# 13: per post, the end beam + its bearing block, the bench-rail bearing block,
-# the back bench rail, the back table ledger, the back side rail and the end
-# slat - x2, minus the three through-running members counted once.
-assert len(back_post_neighbours) == 13, \
-    f"W2: the back posts touch {len(back_post_neighbours)} parts, expected 13: " \
-    f"{sorted(p.label for p in back_post_neighbours)}"
+# 11: per post, the end beam + its back bearing block, the bench-rail bearing
+# block, the back bench rail, the back table ledger, the back side rail and the
+# outermost bench slat - x2, minus the three continuous members counted once.
+# (Was 13 in v9, when the end slats butted the posts; after W6 the upper slats
+# are 98 mm above the post tops and touch nothing there, and the bench slats
+# butt the post's X-inner face instead of clearing it in Y.)
+assert len(back_post_neighbours) == 11, \
+    f"W2/W6: the back posts touch {len(back_post_neighbours)} parts, expected " \
+    f"11: {sorted(p.label for p in back_post_neighbours)}"
 highest = max(back_post_neighbours, key=lambda p: p.extents[2][1])
-assert highest.extents[2][1] == SLAT_Z1 == BACK_POST_HEIGHT, \
-    f"W2: the highest WOOD on a back post is '{highest.label}' at " \
-    f"{highest.extents[2][1]}, expected the slat platform surface {SLAT_Z1}"
-assert highest.label.startswith("Bed Slat_"), \
-    f"W2: the part that lands on the post top should be an end slat, not " \
-    f"'{highest.label}'"
-# The rail bearing zone (1065..1163) and the M8 ties into the end beam
-# (967..1065) are the highest structural joints, both a long way under the cut.
-assert END_BEAM_Z1 <= BACK_POST_HEIGHT - TOL, "W2: the end-beam bolts are above the cut"
-assert RAIL_TOP <= BACK_POST_HEIGHT - TOL, "W2: the rail bearing zone is above the cut"
-# (c) NOTHING above the platform on the wall side. This is the assert that
-# replaces the old "the post is exactly one mattress thick above the slats" one:
-# there is no post above the slats at all now, so a 120 or a 130 mm mattress
-# exposes nothing. Checked over the whole back plane, not just the posts.
-above_platform_at_wall = [p for p in parts
-                          if p.extents[1][0] < BACK_RAIL_Y0 - TOL
-                          and p.extents[2][1] > SLAT_Z1 + TOL]
+assert highest is back_rail and highest.extents[2][1] == RAIL_TOP, \
+    f"W6: the highest WOOD on a back post is '{highest.label}' at " \
+    f"{highest.extents[2][1]}, expected the back side rail top {RAIL_TOP}"
+# The M8 ties into the end beam (967..1065) are the highest fastener and they
+# stop exactly at the cut, where the beam top is flush with the rail underside.
+assert END_BEAM_Z1 == BACK_POST_HEIGHT, \
+    "W6: the end beam top and the post top are both the rail underside"
+# (d) NOTHING above the platform on the wall side. There is no post above the
+# slats at all now - the tallest thing in the back rail plane is the rail, 34 mm
+# BELOW the platform surface - so a 120 or a 130 mm mattress exposes nothing.
+# Swept over everything that reaches into the back rail plane, not just the posts.
+wall_side = [p for p in parts if p.extents[1][0] < BACK_RAIL_Y1 - TOL]
+above_platform_at_wall = [p for p in wall_side if p.extents[2][1] > SLAT_Z1 + TOL]
 assert not above_platform_at_wall, \
-    "W2: nothing may stand above the platform behind the back rail face - " \
+    "W2: nothing may stand above the platform in the back rail plane - " \
     f"found {[p.label for p in above_platform_at_wall]}"
-assert BACK_POST_HEIGHT - SLAT_Z1 == 0, \
-    f"W2: {BACK_POST_HEIGHT - SLAT_Z1} mm of post is still standing above the " \
-    f"platform; the cut is supposed to be flush with it"
-print(f"OK  W2: back posts cut {POST_HEIGHT} -> {BACK_POST_HEIGHT} = the "
-      f"platform top {SLAT_Z1} (was {MATTRESS_Z1}, the mattress top); the "
-      f"{len(back_post_neighbours)} parts they touch all top out at or below "
-      f"{highest.extents[2][1]} ('{highest.label}'); end-beam bolt line "
-      f"{END_BEAM_Z0}..{END_BEAM_Z1}, rail bearing {RAIL_BOTTOM}..{RAIL_TOP}, "
-      f"slat platform {SLAT_Z0}..{SLAT_Z1} - and then nothing: 0 mm of post "
-      f"above the mattress underside, whatever the mattress turns out to be "
-      f"(modelled {MATTRESS_H})")
+assert max(p.extents[2][1] for p in wall_side) == SLAT_Z1, \
+    "W2: the wall side should top out exactly at the platform surface (the slats)"
+assert BACK_POST_HEIGHT < SLAT_Z1, \
+    f"W6: {BACK_POST_HEIGHT - SLAT_Z1} mm of post above the platform"
+print(f"OK  W2/W6: back posts {POST_HEIGHT} -> {BACK_POST_HEIGHT} = the RAIL "
+      f"UNDERSIDE (was 1197, the platform top; 1337 before that), standing in "
+      f"the rail's own plane Y {BACK_RAIL_Y0}..{BACK_RAIL_Y1}. The back side "
+      f"rail BEARS on both post tops - {POST_W - THROUGH_X0} x {POST_T} = "
+      f"{BACK_RAIL_POST_BEARING} mm2 of end grain, ~5.0 kN, so the corner "
+      f"reaction never enters a fastener; the bolts and brackets are pure ties. "
+      f"The {len(back_post_neighbours)} parts a back post touches all top out at "
+      f"or below the cut except that rail; end-beam top {END_BEAM_Z1} = the cut, "
+      f"rail {RAIL_BOTTOM}..{RAIL_TOP}, slat platform {SLAT_Z0}..{SLAT_Z1} - and "
+      f"the wall side stops there: {SLAT_Z1 - BACK_POST_HEIGHT} mm of clear air "
+      f"between the post top and the mattress underside, whatever the mattress "
+      f"turns out to be (modelled {MATTRESS_H})")
 
-# W1/W2: the envelope is ASYMMETRIC now, and the two sides have to be checked
+# W1/W2/W6: the envelope is ASYMMETRIC now, and the two sides have to be checked
 # separately - a single bb.max.Z would hide the whole point of this round.
 back_side = [p for p in parts if p.extents[1][1] <= BACK_RAIL_Y1 + TOL]
 front_side = [p for p in parts if p.extents[1][0] >= FRONT_RAIL_Y0 - TOL]
 back_top = max(p.extents[2][1] for p in back_side)
+wall_side_top = max(p.extents[2][1] for p in wall_side)
 front_top = max(p.extents[2][1] for p in front_side)
-assert back_top == BACK_POST_HEIGHT, \
-    f"W2: the back side tops out at {back_top}, want {BACK_POST_HEIGHT}"
+assert back_top == RAIL_TOP, \
+    f"W6: the back plane (Y <= {BACK_RAIL_Y1}) tops out at {back_top}, want the " \
+    f"back side rail top {RAIL_TOP}"
+assert wall_side_top == SLAT_Z1, \
+    f"W2: the wall side tops out at {wall_side_top}, want the platform {SLAT_Z1}"
 assert front_top == POST_HEIGHT, \
     f"W2: the front side tops out at {front_top}, want {POST_HEIGHT}"
-assert front_top - back_top == POST_HEIGHT - BACK_POST_HEIGHT == 503  # [was 363]
-print(f"OK  W1/W2: asymmetric envelope - back side (Y <= {BACK_RAIL_Y1}) tops "
-      f"out at {back_top} = the platform surface, front side "
-      f"(Y >= {FRONT_RAIL_Y0}) at {front_top} = the guard tops; "
-      f"{front_top - back_top} mm apart (was 363)")
+assert front_top - wall_side_top == POST_HEIGHT - SLAT_Z1 == 503  # [was 363]
+print(f"OK  W1/W2/W6: asymmetric envelope - the back rail plane "
+      f"(Y <= {BACK_RAIL_Y1}) tops out at {back_top} = the back side rail, "
+      f"anything reaching into it at {wall_side_top} = the platform surface, "
+      f"the front side (Y >= {FRONT_RAIL_Y0}) at {front_top} = the guard tops; "
+      f"{front_top - wall_side_top} mm apart (was 363 in v8)")
 
 # D4: the post section is the slim one, but the wall faces and the ladder
 # opening are exactly where they always were.
@@ -1734,21 +2006,71 @@ assert (BENCH_RAIL_BOTTOM, BENCH_RAIL_TOP) == (186, 259)
 assert BENCH_TOP == 293 and PANEL_TOP_BED == 277 and PANEL_UNDER_BED == 259
 assert PANEL_TOP_TABLE == 500 and PANEL_UNDER_TABLE == 482
 assert RUNG_TOPS == [259, 482, 720, 958] and POST_HEIGHT == 1700
-assert BACK_POST_HEIGHT == 1197, "W2: the back posts must stop at the platform top"
+assert BACK_POST_HEIGHT == 1065, "W6: the back posts must stop at the rail underside"
 assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (387, 482)
 assert STUB_LEG_H == 186, "W3: the stub legs keep their height"
 print("OK  invariant heights held: rail underside 1065, rail top 1163, no "
       "cleats, slats 1163..1197 (flush on the rails), mattress 1197..1337, "
       "bench 186/259/293, ledger 387..482, rungs 259/482/720/958, panel "
-      "259..277 (bed) / 482..500 (table), total 1700 at the front / 1197 at "
-      "the wall side (W2: the platform surface, was 1337)")
+      "259..277 (bed) / 482..500 (table), total 1700 at the front / 1065 at "
+      "the wall side (W6: the rail underside, was 1197, 1337)")
 
-# D12: the depth planes. The back half is the FIXED datum and must be exactly
-# where v7 left it; every front plane is exactly 106 mm in from where it was.
-assert (BACK_POST_Y0, BACK_POST_Y1) == (-96, -48), "D12: the back post plane moved"
-assert WALL_Y == BACK_POST_Y0 == -96, "W1: the wall plane is the back post face"
-assert (BACK_RAIL_Y0, BACK_RAIL_Y1) == (-48, 0), "D12: the back rail plane moved"
-assert LEDGER_BACK_Y0 == -48, "D12: the back ledger plane moved"
+# D12/W6: the depth planes, with their provenance.
+#
+# D12 pulled every FRONT plane in by 106 mm and left the back half alone; that
+# half of the table is below and is byte-for-byte what D12 asserted. W6 is the
+# first round to move anything at the BACK, and it moves exactly one layer: the
+# back posts (and with them the wall plane, the end-beam back end and the
+# end-beam back bearing blocks) come forward by POST_T = 48 mm into the back
+# rail's own plane. Everything else at the back - the rail, the ledger, the bench
+# rail, every slat and the panel's rear edge - is still exactly where D12 left
+# it. The moved parts get explicit new-position asserts, the way D14 gave them to
+# the guards, so a slip in either direction is named rather than inferred.
+BACK_TUCK = POST_T                       # 48, W6: how far the back layer came in
+BACK_PLANES_V9 = {                       # v9 value -> v10 value, all +48
+    "wall / mounting plane": ((-96, -96), (WALL_Y, WALL_Y)),
+    "back corner posts": ((-96, -48), (BACK_POST_Y0, BACK_POST_Y1)),
+    "end beam back end": ((-96, -96), (END_BEAM_Y0, END_BEAM_Y0)),
+    "end-beam back blocks": ((-96, -48), (BACK_POST_Y0, BACK_POST_Y0 + POST_T)),
+}
+for what, ((o0, o1), (n0, n1)) in BACK_PLANES_V9.items():
+    assert (n0 - o0, n1 - o1) == (BACK_TUCK, BACK_TUCK), \
+        f"W6: '{what}' moved {n0 - o0}/{n1 - o1}, not {BACK_TUCK}/{BACK_TUCK}"
+BACK_PLANES_FIXED = {                    # unmoved since D12
+    "back side rail": ((-48, 0), (BACK_RAIL_Y0, BACK_RAIL_Y1)),
+    "back bench rail": ((-48, 0), (BENCH_RAIL_Y[0], BENCH_RAIL_Y[0] + BENCH_RAIL_T)),
+    "back table ledger": ((-48, -27), (LEDGER_BACK_Y0, LEDGER_BACK_Y0 + BOARD_T)),
+    "slats / bench slats / panel rear": ((-48, -48), (SLAT_Y0, PANEL_Y0)),
+}
+for what, (old, new) in BACK_PLANES_FIXED.items():
+    assert old == new, f"D12: '{what}' was supposed to stay at {old}, it is {new}"
+# The explicit new positions of everything W6 moved.
+assert (BACK_POST_Y0, BACK_POST_Y1) == (-48, 0), \
+    f"W6: the back posts are at Y {BACK_POST_Y0}..{BACK_POST_Y1}, want -48..0 " \
+    f"(the back rail's own plane)"
+assert (BACK_POST_Y0, BACK_POST_Y1) == (BACK_RAIL_Y0, BACK_RAIL_Y1), \
+    "W6: the back posts must share the back rail's plane exactly"
+assert BACK_POST_HEIGHT == 1065 and BACK_POST_HEIGHT == RAIL_BOTTOM, \
+    f"W6: the back posts run 0..{BACK_POST_HEIGHT}, want 0..1065"
+assert WALL_Y == -48 and WALL_Y == BACK_RAIL_Y0, \
+    f"W7: the wall plane is {WALL_Y}, want the back rail face -48"
+assert (END_BEAM_Y0, END_BEAM_Y1, END_BEAM_LEN) == (-48, 800, 848), \
+    f"W6: the end beams are Y {END_BEAM_Y0}..{END_BEAM_Y1} ({END_BEAM_LEN}), " \
+    f"want -48..800 (848)"
+assert OVERALL_DEPTH == 848, f"W7: overall depth {OVERALL_DEPTH}, want 848"
+# and the plane the tuck vacated has to be genuinely outside the bed now.
+VACATED_BACK_LAYER = (-96, -48)
+still_behind = [p for p in parts + [panel_bed, panel_table, mattress]
+                if p.extents[1][0] < VACATED_BACK_LAYER[1] - TOL]
+assert not still_behind, \
+    f"W6: {[p.label for p in still_behind]} are still in the vacated layer " \
+    f"Y {VACATED_BACK_LAYER[0]}..{VACATED_BACK_LAYER[1]}"
+print(f"OK  W6: the back layer Y {VACATED_BACK_LAYER[0]}.."
+      f"{VACATED_BACK_LAYER[1]} is EMPTY - the {len(BACK_PLANES_V9)} things that "
+      f"lived in it (" + ", ".join(sorted(BACK_PLANES_V9)) + f") all came "
+      f"forward {BACK_TUCK} mm into the back rail plane; the "
+      f"{len(BACK_PLANES_FIXED)} other back planes are exactly where D12 left "
+      f"them")
 FRONT_PLANES_V7 = {                      # v7 value -> v8 value, all -106
     "front side rail": ((810, 858), (FRONT_RAIL_Y0, FRONT_RAIL_Y1)),
     "front bench rail": ((810, 858), (BENCH_RAIL_Y[1], BENCH_RAIL_Y[1] + BENCH_RAIL_T)),
@@ -1774,16 +2096,17 @@ assert FRONT_GUARD_SHIFT == POST_T + GUARD_T == 82 and \
 assert 906 - FRONT_GUARD_Y0 == DEPTH_SHRINK + FRONT_GUARD_SHIFT == 188
 assert (SLAT_Y0, SLAT_Y1) == (-48, 752) and SLAT_LEN == PLATFORM_DEPTH == 800
 assert BENCH_SLAT_LEN == SLAT_LEN and PANEL_LEN == SLAT_LEN
-# W4: the rail-to-rail figures above are the STRUCTURAL platform and are
-# untouched. What changed is where the slat ENDS, at the wall end only.
-assert (SLAT_Y0_EXT, SLAT_LEN_EXT) == (-95, 847), \
-    f"W4: the extended slats are Y {SLAT_Y0_EXT}, {SLAT_LEN_EXT} long"
-assert SLAT_LEN_EXT - SLAT_LEN == BACK_RAIL_Y0 - SLAT_Y0_EXT == 47
-assert END_BEAM_LEN == 896 and (END_BEAM_Y0, END_BEAM_Y1) == (-96, 800)
+# W8: ONE length. There is no extended slat any more and no constant left over
+# from the split - the name must be gone, not merely unused.
+assert "SLAT_LEN_EXT" not in globals() and "SLAT_Y0_EXT" not in globals(), \
+    "W8: the W4 two-length slat split is supposed to be gone"
+assert SLAT_Y0 == WALL_Y, \
+    f"W8: the slats start at Y {SLAT_Y0}, want the wall plane {WALL_Y}"
 assert RUNG_REST_LEDGE == 25, \
     f"D12: the rung rest ledge is {RUNG_REST_LEDGE} mm, must stay 25"
-print(f"OK  D12: back planes unmoved (wall/posts {BACK_POST_Y0}, rail "
-      f"{BACK_RAIL_Y0}); every front plane in by exactly "
+print(f"OK  D12/W6: back planes - the post layer in by {BACK_TUCK} (wall/posts "
+      f"{BACK_POST_Y0}..{BACK_POST_Y1}), rail "
+      f"{BACK_RAIL_Y0}..{BACK_RAIL_Y1} unmoved; every front plane in by exactly "
       f"{DEPTH_SHRINK} mm - rail {FRONT_RAIL_Y0}..{FRONT_RAIL_Y1}, posts/uprights "
       f"{FRONT_POST_Y0}..{FRONT_POST_Y1}, rungs {RUNG_Y0}..{RUNG_Y1} "
       f"({RUNG_REST_LEDGE} mm rest ledge kept); D14: guards INBOARD at "
@@ -1829,87 +2152,149 @@ print(f"OK  end beams {sec(RAIL_T, RAIL_H)} x {END_BEAM_LEN} at Z "
 beam_blocks = [p for p in parts if "End Beam Bearing Block" in p.label]
 rail_blocks = [p for p in parts if "Bench Rail Bearing Block" in p.label]
 assert len(beam_blocks) == 4 and len(rail_blocks) == 4, "missing C2 bearing blocks"
+# J1-B / W6: the back blocks travelled with their post from Y -96..-48 to
+# -48..0 and nothing else about them changed. Each one must still be (a) flush
+# under the beam, (b) inside the beam's Y range so the beam has wood on it, (c)
+# hard against the X-inner face of the post it is screwed to, and (d) under an
+# END of the beam, not somewhere in the middle - the whole point of J1-B is that
+# the beam bears near both ends.
+end_beams = [p for p in parts if p.label.startswith("End Beam ")
+             and "Block" not in p.label]
+beam_of = {b.extents[0][0]: b for b in end_beams}
+beam_block_report = []
 for b in beam_blocks:
-    assert abs(b.extents[2][1] - END_BEAM_Z0) < TOL, "J1-B block top not at the beam underside"
+    (bx0, bx1), (by0, by1), (bz0, bz1) = b.extents
+    assert abs(bz1 - END_BEAM_Z0) < TOL, "J1-B block top not at the beam underside"
+    beam = beam_of[bx0]
+    assert (bx0, bx1) == beam.extents[0], \
+        f"J1-B: '{b.label}' is not directly under its beam in X"
+    assert beam.extents[1][0] - TOL <= by0 and by1 <= beam.extents[1][1] + TOL, \
+        f"J1-B: '{b.label}' is not under the beam in Y"
+    # against a post face, and at one END of the beam
+    at_back = by0 == BACK_POST_Y0
+    post_y = (BACK_POST_Y0, BACK_POST_Y1) if at_back else (FRONT_POST_Y0,
+                                                           FRONT_POST_Y1)
+    assert (by0, by1) == post_y, \
+        f"J1-B: '{b.label}' at Y {by0}..{by1} is not on the post band {post_y}"
+    end_dist = (by0 - beam.extents[1][0]) if at_back else (beam.extents[1][1] - by1)
+    assert abs(end_dist) < TOL, \
+        f"J1-B: '{b.label}' sits {end_dist} mm in from the beam end"
+    beam_block_report.append((b.label, (by1 - by0) * (bx1 - bx0)))
+assert {round(a) for _, a in beam_block_report} == {BEAM_BLOCK_DX * BEAM_BLOCK_DY}, \
+    f"J1-B: bearing areas are {sorted(beam_block_report)}"
 rail_x_spans = [p.extents[0] for p in parts
                 if "Bench Rail" in p.label and "Block" not in p.label]
+rail_pieces_by_plane = {p.extents[1][0]: p for p in parts
+                        if "Bench Rail" in p.label and "Block" not in p.label
+                        and p.label.startswith("Bench Rail Back")}
 rail_bearings = []
+rail_block_areas = []
 for b in rail_blocks:
-    assert abs(b.extents[2][1] - BENCH_RAIL_BOTTOM) < TOL, \
+    (bx0, bx1), (by0, by1), (bz0, bz1) = b.extents
+    assert abs(bz1 - BENCH_RAIL_BOTTOM) < TOL, \
         "J9-B block top not at the bench rail underside"
     # D13 ripple: the front rail is two SHORT segments now, so this can no
     # longer be checked against the through span - it has to be checked against
     # the actual rail piece that lands on this block.
-    bear = max(min(rx1, b.extents[0][1]) - max(rx0, b.extents[0][0])
-               for rx0, rx1 in rail_x_spans)
+    bear = max(min(rx1, bx1) - max(rx0, bx0) for rx0, rx1 in rail_x_spans)
     assert bear >= MIN_LEG_BEARING, \
         f"bench rail only bears {bear:.0f} mm on '{b.label}'"
     rail_bearings.append(bear)
-print(f"OK  C2: 4 J1-B blocks under the end beams (top Z={END_BEAM_Z0}) and "
-      f"4 J9-B blocks under the bench rails (top Z={BENCH_RAIL_BOTTOM}, "
-      f"{min(rail_bearings):.0f}..{max(rail_bearings):.0f} mm bearing in X "
-      f"against the real rail piece)")
+    # W9: the BACK blocks are the reoriented ones - 48 in X out from the post's
+    # X-inner face, 48 in Y (the whole rail depth), 36 in Z - and the rail end
+    # lands square on the whole 48 x 48. The FRONT ones are unchanged: 48 in X
+    # inside the post footprint, 36 in Y off the post's inner Y face, so the rail
+    # covers 45 x 36 of them.
+    if "Back" in b.label:
+        assert (bx1 - bx0, by1 - by0, bz1 - bz0) == \
+            (RAIL_BLOCK_BACK_DX, RAIL_BLOCK_BACK_DY, RAIL_BLOCK_BACK_DZ), \
+            f"W9: '{b.label}' is {bx1 - bx0}x{by1 - by0}x{bz1 - bz0}"
+        assert (by0, by1) == (BACK_RAIL_Y0, BACK_RAIL_Y1), \
+            f"W9: '{b.label}' is not in the back rail plane"
+        assert bx0 in (BETWEEN_POSTS_X0, BETWEEN_POSTS_X1 - RAIL_BLOCK_BACK_DX), \
+            f"W9: '{b.label}' does not stand on a back post's X-inner face"
+        rail = rail_pieces_by_plane[BACK_RAIL_Y0]
+        area = (min(rail.extents[0][1], bx1) - max(rail.extents[0][0], bx0)) * \
+               (min(rail.extents[1][1], by1) - max(rail.extents[1][0], by0))
+        assert abs(area - RAIL_BLOCK_BACK_DX * RAIL_BLOCK_BACK_DY) < TOL, \
+            f"W9: the back bench rail bears {area} mm2 on '{b.label}', want " \
+            f"{RAIL_BLOCK_BACK_DX * RAIL_BLOCK_BACK_DY}"
+        rail_block_areas.append(area)
+    else:
+        assert (bx1 - bx0, by1 - by0, bz1 - bz0) == \
+            (RAIL_BLOCK_FRONT_DX, RAIL_BLOCK_FRONT_DY, RAIL_BLOCK_FRONT_DZ), \
+            f"C2: '{b.label}' is {bx1 - bx0}x{by1 - by0}x{bz1 - bz0}"
+        assert bx0 in CORNER_POST_X, \
+            f"C2: '{b.label}' is not inside a corner post's footprint"
+print(f"OK  C2/W6/W9: 4 J1-B blocks under the END BEAMS at both ends of each "
+      f"beam (top Z={END_BEAM_Z0}, {BEAM_BLOCK_DX} x {BEAM_BLOCK_DY} = "
+      f"{BEAM_BLOCK_DX * BEAM_BLOCK_DY} mm2 each; the BACK pair travelled with "
+      f"its post to Y {BACK_POST_Y0}..{BACK_POST_Y1} and is unchanged in every "
+      f"other respect) and 4 J9-B blocks under the bench rails (top "
+      f"Z={BENCH_RAIL_BOTTOM}, {min(rail_bearings):.0f}..{max(rail_bearings):.0f}"
+      f" mm bearing in X against the real rail piece; the BACK pair turned onto "
+      f"the post's X-inner face, {int(rail_block_areas[0])} mm2 of bearing "
+      f"instead of 1620)")
 
-# W1/W4/W5: THE BACK BARRIER IS THE WALL. There are no back guard boards, so
+# W1/W5/W7: THE BACK BARRIER IS THE WALL. There are no back guard boards, so
 # what has to be checked on that side is the mattress/wall entrapment gap.
 #
-# This used to be a fixed number - the mattress was pinned at Y -48 between two
-# lines of posts, so the gap WAS the post depth, permanently. It is not fixed
-# any more, and the reason is a strict improvement: W4 ran the platform to the
-# wall, so there is no 48 mm slot behind the slats to keep the mattress out of,
-# and W2 took the back posts down off the mattress band, so there is nothing to
-# pin it with. The mattress is now free in a 848 mm clear between the WALL at
-# Y -96 and the front verticals at Y 752 (W5).
-#
-# What that costs and what it buys:
-#   * the mattress can wander 848 - 800 = 48 mm;
-#   * it is one mattress in one clear, so it leaves ONE gap, never two: at the
-#     wall end when it is pushed forward (the drawn position), at the front
-#     verticals when it is pushed back;
-#   * that gap is at most the wander, 48 mm - the same number the old fixed
-#     mattress-to-wall gap had, and under the same 75 mm EN 747 limit;
-#   * and underneath the mattress there is slat everywhere it can go, which is
-#     what the old arrangement could not say.
+# The history in one paragraph. v8/D12 pinned the mattress between two lines of
+# posts at Y -48 and 752 - zero play, zero gap, but a 48 mm slot behind the back
+# rail that it had to be kept out of. v9/W2+W4+W5 took the back posts off the
+# mattress band and ran the platform over the slot, which cost 48 mm of wander
+# and therefore a 48 mm gap at one edge. v10/W6 deletes the slot at its source by
+# moving the posts INTO the rail plane, so the wall comes forward to Y -48:
+#   clear between the stops   752 - (-48) = 800 = the mattress
+#   wander                                =   0
+#   worst single gap                      =   0
+# The mattress is pinned again, this time between a wall and four verticals
+# rather than between two lines of posts, and every millimetre under it is slat.
 back_guards = [p for p in parts if p.label.startswith("Guard Rail Back")]
 assert not back_guards, \
     "W1: back guard boards found - they are supposed to be deleted, the wall " \
     "is the barrier on that side"
-assert (MATTRESS_STOP_Y0, MATTRESS_STOP_Y1) == (WALL_Y, FRONT_POST_Y0) == (-96, 752), \
+assert (MATTRESS_STOP_Y0, MATTRESS_STOP_Y1) == (WALL_Y, FRONT_POST_Y0) == (-48, 752), \
     "W5: the mattress stops are the wall and the front vertical plane"
 assert MATTRESS_WANDER == \
-    (MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0) - MATTRESS_W == POST_T == 48, \
-    f"W5: the mattress can wander {MATTRESS_WANDER} mm, expected 48"
+    (MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0) - MATTRESS_W == 0, \
+    f"W5/W7: the mattress can wander {MATTRESS_WANDER} mm, expected 0 - the " \
+    f"clear between the stops is supposed to BE the mattress"
+assert MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0 == MATTRESS_W == 800, \
+    "W7: the wall-to-front-vertical clear must be exactly the mattress width"
 assert MAX_MATTRESS_GAP == MATTRESS_WANDER <= MAX_GUARD_OPENING, \
     f"EN 747 entrapment: the mattress can leave a {MAX_MATTRESS_GAP} mm gap, " \
     f"over the {MAX_GUARD_OPENING} mm limit"
-# The two extremes, spelled out, and the invariant that ties them: whichever way
-# the mattress is pushed, the gap it opens at one end is the gap it closes at
-# the other, and the two always add up to the wander.
-gap_pushed_back = MATTRESS_STOP_Y1 - (MATTRESS_STOP_Y0 + MATTRESS_W)     # 48, front
-gap_pushed_fwd = (MATTRESS_STOP_Y1 - MATTRESS_W) - MATTRESS_STOP_Y0      # 48, wall
-assert gap_pushed_back == gap_pushed_fwd == MATTRESS_WANDER
-assert WALL_MATTRESS_GAP == MATTRESS_Y0 - WALL_Y == MATTRESS_WANDER, \
-    f"W5: as DRAWN the mattress is hard against the front verticals, so its " \
-    f"whole wander {MATTRESS_WANDER} should show at the wall, not " \
-    f"{WALL_MATTRESS_GAP}"
+# There is only one position now, so both "extremes" are the drawn one and both
+# gaps are 0. Kept as an explicit pair because it is the statement that the
+# mattress is PINNED, not merely that it happens to be drawn tight.
+gap_at_wall = MATTRESS_Y0 - MATTRESS_STOP_Y0                             # 0
+gap_at_front = MATTRESS_STOP_Y1 - MATTRESS_Y1                            # 0
+assert gap_at_wall == gap_at_front == MATTRESS_WANDER == 0, \
+    f"W5: the mattress leaves {gap_at_wall} at the wall and {gap_at_front} at " \
+    f"the front verticals; both must be 0"
+assert WALL_MATTRESS_GAP == MATTRESS_Y0 - WALL_Y == 0, \
+    f"W5: the mattress rear edge must BE the wall plane, not {WALL_MATTRESS_GAP}" \
+    f" mm off it"
 assert MATTRESS_Y1 == MATTRESS_STOP_Y1 == FRONT_POST_Y0, \
-    "W5: the drawn mattress should be up against the front stop"
-# And the platform has to actually be under the mattress everywhere it can go -
-# that is the W4 half of the argument, and without it the wander is a hole.
-assert SLAT_Y0_EXT - WALL_Y == SLAT_WALL_CLEAR <= 1, \
-    f"W5: the platform stops {SLAT_Y0_EXT - WALL_Y} mm short of the wall, so " \
-    f"the mattress cannot be allowed back there"
-print(f"OK  W1/W5: no back guard - the WALL is the barrier on the back long "
-      f"side and the frame is bolted to it (S2). EN 747 case on that side is "
-      f"the mattress gap, and after W4 it is a WANDER, not a fixed dimension: "
-      f"{MATTRESS_W} mm of mattress in the {MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0} "
-      f"mm clear between the wall Y={MATTRESS_STOP_Y0} and the front verticals "
-      f"Y={MATTRESS_STOP_Y1} = {MATTRESS_WANDER} mm of travel, so one gap of at "
-      f"most {MAX_MATTRESS_GAP} mm at whichever end (limit {MAX_GUARD_OPENING}); "
-      f"drawn at Y {MATTRESS_Y0}..{MATTRESS_Y1}, i.e. all {WALL_MATTRESS_GAP} mm "
-      f"of it at the wall. NOTE: the bed is wall-side-specific and not "
-      f"reversible - see W1 at the top of this file for the retrofit route back "
-      f"to a freestanding version")
+    "W5: the mattress front edge must be on the front stop"
+# And the platform has to be under the mattress over the whole of it - trivially
+# true now that the two are the same 800 mm band, but it is the assert that would
+# catch the platform being pulled off the wall again.
+assert SLAT_Y0 == WALL_Y == MATTRESS_Y0 and SLAT_Y1 == MATTRESS_Y1, \
+    f"W5: the platform is Y {SLAT_Y0}..{SLAT_Y1} under a mattress at " \
+    f"{MATTRESS_Y0}..{MATTRESS_Y1}"
+print(f"OK  W1/W5/W7: no back guard - the WALL is the barrier on the back long "
+      f"side and the frame is screwed to it through the back rail (S2). The "
+      f"EN 747 case on that side is the mattress gap, and after W6 there is not "
+      f"one: {MATTRESS_W} mm of mattress in a "
+      f"{MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0} mm clear between the wall "
+      f"Y={MATTRESS_STOP_Y0} and the front verticals Y={MATTRESS_STOP_Y1} = "
+      f"{MATTRESS_WANDER} mm of travel, so 0 mm at the wall and 0 mm at the "
+      f"front (limit {MAX_GUARD_OPENING}); drawn at Y {MATTRESS_Y0}.."
+      f"{MATTRESS_Y1}, which is the only place it fits. NOTE: the bed is "
+      f"wall-side-specific and not reversible - see W1 at the top of this file "
+      f"for the retrofit route back to a freestanding version")
 
 # D2: four front guard segments, leaving exactly the ladder opening, each one
 # lapped onto a corner post at one end and a ladder upright at the other.
@@ -2063,14 +2448,29 @@ for r in bench_rails:
     assert r.extents[2] == (BENCH_RAIL_BOTTOM, BENCH_RAIL_TOP), \
         f"'{r.label}' is not at Z {BENCH_RAIL_BOTTOM}..{BENCH_RAIL_TOP}"
     assert r.extents[1][1] - r.extents[1][0] == BENCH_RAIL_T
-assert back_bench_rails[0].extents[0] == (THROUGH_X0, THROUGH_X1), \
-    "C5: the back bench rail must still run the full 1984 mm"
+assert back_bench_rails[0].extents[0] == (BETWEEN_POSTS_X0, BETWEEN_POSTS_X1), \
+    f"C5/W9: the back bench rail must run post to post, X {BETWEEN_POSTS_X0}.." \
+    f"{BETWEEN_POSTS_X1} ({BETWEEN_POSTS_LEN} mm)"
 assert back_bench_rails[0].extents[1] == (BACK_RAIL_Y0, BACK_RAIL_Y1)
+# W9: it butts both back posts, so its ends are FIXED as well as borne - a face
+# per end against the post's X-inner plane, 48 (Y) x 73 (Z) = 3504 mm2 of screwed
+# contact. Measured against the real posts.
+for bp in back_posts:
+    (px0, px1), _, _ = bp.extents
+    (rx0, rx1), _, _ = back_bench_rails[0].extents
+    assert px1 == rx0 or px0 == rx1, \
+        f"W9: the back bench rail (X {rx0}..{rx1}) does not butt " \
+        f"'{bp.label}' (X {px0}..{px1})"
+assert support_rail.extents[0] == (BETWEEN_POSTS_X0, BETWEEN_POSTS_X1), \
+    f"W9: the back table ledger must run post to post too, it is at X " \
+    f"{support_rail.extents[0]}"
 assert BENCH_TOP == BENCH_RAIL_TOP + BENCH_SLAT_T == 293
 assert PANEL_BENCH_DIP == 16 and PANEL_TOP_BED == BENCH_TOP - PANEL_BENCH_DIP, \
     "D10: the bed-mode panel should sit 16 mm below the bench tops"
-print(f"OK  C5: back bench rail {sec(BENCH_RAIL_T, BENCH_RAIL_H)} x "
-      f"{THROUGH_LEN} at Z {BENCH_RAIL_BOTTOM}..{BENCH_RAIL_TOP}, on 2 posts + "
+print(f"OK  C5/W9: back bench rail {sec(BENCH_RAIL_T, BENCH_RAIL_H)} x "
+      f"{BETWEEN_POSTS_LEN} (was {THROUGH_LEN}) at X {BETWEEN_POSTS_X0}.."
+      f"{BETWEEN_POSTS_X1}, Z {BENCH_RAIL_BOTTOM}..{BENCH_RAIL_TOP} - butting "
+      f"and screwed to both back posts, borne on their J9-B blocks, propped by "
       f"2 stub legs")
 print(f"OK  C3: bench slats {sec(BENCH_SLAT_T, BENCH_SLAT_W)}, bench top Z="
       f"{BENCH_TOP}, bed-mode panel {PANEL_UNDER_BED}..{PANEL_TOP_BED} "
@@ -2312,9 +2712,11 @@ assert BENCH_RAIL_TOP == PANEL_UNDER_BED == RUNG_TOPS[0], \
     "D10: the bench rail tops, rung 1 and the bed-mode panel underside must coincide"
 assert "HOOK_STEP" not in globals(), "D10: the hook step is supposed to be gone"
 assert PANEL_X0 >= LADDER_INNER_L - 200 and PANEL_X1 <= LADDER_INNER_R + 200
-print(f"OK  D9: front table ledger deleted; back ledger {sec(BOARD_T, BOARD_W)} x "
-      f"{THROUGH_LEN} at Z {LEDGER_BACK_Z0}..{LEDGER_BACK_Z1}, top level with "
-      f"rung 2")
+print(f"OK  D9/W9: front table ledger deleted; back ledger "
+      f"{sec(BOARD_T, BOARD_W)} x {BETWEEN_POSTS_LEN} (was {THROUGH_LEN}) at X "
+      f"{BETWEEN_POSTS_X0}..{BETWEEN_POSTS_X1}, Z {LEDGER_BACK_Z0}.."
+      f"{LEDGER_BACK_Z1}, top level with rung 2, ends screwed to the back posts' "
+      f"X-inner faces")
 
 # D10: THE PANEL RESTS ON WOOD. No hooks, no exclusions: in each mode the panel
 # must have real BEARING AREA - a shared horizontal face, not an edge kiss - on
@@ -2474,14 +2876,16 @@ rail_y = [(BACK_RAIL_Y0, BACK_RAIL_Y1), (FRONT_RAIL_Y0, FRONT_RAIL_Y1)]
 for s in bed_slats:
     (sx0, sx1), (sy0, sy1), (sz0, sz1) = s.extents
     assert (sz0, sz1) == (RAIL_TOP, SLAT_Z1), f"'{s.label}' is not on the rail tops"
-    # D5, unchanged by W4: EVERY slat, long or short, still covers the full
-    # 48 mm of BOTH rails. The extension is an overhang past the back rail, it
-    # does not move the bearing.
+    # D5: EVERY slat covers the full 48 mm of BOTH rails, and after W8 they are
+    # all the same 800 mm piece doing it the same way - no overhang anywhere.
     for ry0, ry1 in rail_y:
         bear = min(sy1, ry1) - max(sy0, ry0)
         assert bear >= RAIL_T - TOL, \
             f"'{s.label}' only bears {bear:.1f} mm on the rail at Y {ry0}..{ry1}"
-    assert sy1 == SLAT_Y1, f"'{s.label}' does not end at the front rail face"
+    assert (sy0, sy1) == (SLAT_Y0, SLAT_Y1), \
+        f"W8: '{s.label}' is Y {sy0}..{sy1}, want every slat at " \
+        f"{SLAT_Y0}..{SLAT_Y1}"
+    assert sy1 - sy0 == SLAT_LEN, f"W8: '{s.label}' is {sy1 - sy0} long"
     assert 0 <= sx0 and sx1 <= WALL_SPAN
 slat_xs = sorted(s.extents[0] for s in bed_slats)
 slat_gaps = [slat_xs[i + 1][0] - slat_xs[i][1] for i in range(len(slat_xs) - 1)]
@@ -2489,100 +2893,81 @@ slat_gaps += [slat_xs[0][0] - 0, WALL_SPAN - slat_xs[-1][1]]
 assert max(slat_gaps) <= MAX_SLAT_GAP + TOL, \
     f"largest slat gap is {max(slat_gaps):.1f} > {MAX_SLAT_GAP}"
 
-# W4: TWO LENGTHS, AND WHICH SLAT GETS WHICH IS DECIDED BY THE POSTS.
-assert len(short_slats) == 2 and len(extended_slats) == 12, \
-    f"W4: {len(short_slats)} short / {len(extended_slats)} extended slats, " \
-    f"expected 2 / 12 - the pitch has put a middle slat onto a back post"
-assert short_slats == [bed_slats[0], bed_slats[-1]], \
-    "W4: the short slats should be the first and the last, nothing in between"
-for s in short_slats:
-    assert s.extents[1] == (SLAT_Y0, SLAT_Y1), \
-        f"'{s.label}' is a post slat and must stop at the back rail face"
-    laps = [min(s.extents[0][1], px1) - max(s.extents[0][0], px0)
-            for px0, px1 in BACK_POST_X]
-    assert max(laps) > 0, f"W4: '{s.label}' is short but clears both back posts"
-for s in extended_slats:
-    (sx0, sx1), (sy0, sy1), _ = s.extents
-    assert (sy0, sy1 - sy0) == (SLAT_Y0_EXT, SLAT_LEN_EXT), \
-        f"'{s.label}' is Y {sy0}..{sy1}, want {SLAT_Y0_EXT}..{SLAT_Y1}"
-    # (a) it must not run into a back post - the post is solid Y -96..-48 all
-    # the way to the platform top, so any X overlap at all is a clash.
-    for px0, px1 in BACK_POST_X:
-        assert min(sx1, px1) - max(sx0, px0) <= 0, \
-            f"W4: extended '{s.label}' (X {sx0:.1f}..{sx1:.1f}) runs into the " \
-            f"back post at X {px0}..{px1}"
-    # (b) it must actually get to the wall - within 5 mm of it, and never past.
-    to_wall = sy0 - WALL_Y
-    assert 0 < to_wall <= 5, \
-        f"W4: '{s.label}' stops {to_wall} mm off the wall plane {WALL_Y}"
-print(f"OK  D5/W4: {SLAT_COUNT} upper slats {sec(BED_SLAT_T, BED_SLAT_W)} flush "
-      f"on top of both rails, Z {SLAT_Z0}..{SLAT_Z1}, pitch {slat_pitch:.1f}, "
-      f"gaps {min(slat_gaps):.0f}..{max(slat_gaps):.1f} mm (limit "
-      f"{MAX_SLAT_GAP}); {len(extended_slats)} x {SLAT_LEN_EXT} running to the "
-      f"wall (Y {SLAT_Y0_EXT}..{SLAT_Y1}, {SLAT_Y0_EXT - WALL_Y} mm clear of "
-      f"Y={WALL_Y}) and {len(short_slats)} x {SLAT_LEN} butting the back corner "
-      f"posts (Y {SLAT_Y0}..{SLAT_Y1}); {RAIL_T} mm full bearing on each rail "
-      f"for all {SLAT_COUNT}; mattress {MATTRESS_Z0}..{MATTRESS_Z1} drawn at Y "
-      f"{MATTRESS_Y0}..{MATTRESS_Y1}; rail {RAIL_BOTTOM}..{RAIL_TOP}")
+# W8: ONE LENGTH, AND THE SLATS CANNOT FOUL THE RELOCATED POSTS.
+# The posts moved into the slats' own Y band (-48..0) but stopped 98 mm below
+# them, at the rail underside, so the clearance is in Z and it is by
+# construction. Checked anyway, as a volume overlap against the real post
+# extents: this is the assert that would fire if anyone ever raised the back
+# posts again without thinking about the platform.
+assert len({(round(s.extents[1][0]), round(s.extents[1][1])) for s in bed_slats}) == 1, \
+    "W8: the upper slats are supposed to be one length in one plane again"
+assert SLAT_Z0 - BACK_POST_HEIGHT == RAIL_H, \
+    f"W8: the slats start {SLAT_Z0 - BACK_POST_HEIGHT} mm above the back post " \
+    f"tops, expected the rail height {RAIL_H}"
+for s in bed_slats:
+    for pe in BACK_POST_EXTENTS:
+        inter = [min(a1, b1) - max(a0, b0)
+                 for (a0, a1), (b0, b1) in zip(s.extents, pe)]
+        assert min(inter) <= 0, \
+            f"W8: '{s.label}' overlaps the back post at X {pe[0]} by {inter}"
+print(f"OK  D5/W8: {SLAT_COUNT} upper slats {sec(BED_SLAT_T, BED_SLAT_W)} x "
+      f"{SLAT_LEN} - ONE length again (v9/W4 had 12 x 847 + 2 x 800) - flush on "
+      f"top of both rails, Z {SLAT_Z0}..{SLAT_Z1}, Y {SLAT_Y0}..{SLAT_Y1} with "
+      f"the wall-side end ON the mounting plane {WALL_Y}, pitch "
+      f"{slat_pitch:.1f}, gaps {min(slat_gaps):.0f}..{max(slat_gaps):.1f} mm "
+      f"(limit {MAX_SLAT_GAP}); {RAIL_T} mm full bearing on each rail for all "
+      f"{SLAT_COUNT}; every one of them clear of the back posts, which stop "
+      f"{SLAT_Z0 - BACK_POST_HEIGHT} mm below them; mattress "
+      f"{MATTRESS_Z0}..{MATTRESS_Z1} at Y {MATTRESS_Y0}..{MATTRESS_Y1}; rail "
+      f"{RAIL_BOTTOM}..{RAIL_TOP}")
 
-# The mattress must land entirely on the slat platform - and after W4 that has
-# to hold not just where the mattress is DRAWN but ANYWHERE IN ITS TRAVEL. The
-# platform is Y -95..752 under twelve of the fourteen slats, so the mattress
-# runs out of platform only when it runs out of room.
+# The mattress must land entirely on the slat platform. After W6+W8 that is an
+# identity rather than a check with slack in it: the platform and the mattress
+# are the same 800 mm band, and the mattress cannot move.
 assert SLAT_Y0 <= MATTRESS_Y0 and MATTRESS_Y1 <= SLAT_Y1, \
     "the mattress overhangs the slat platform in Y"
-assert SLAT_Y0_EXT - MATTRESS_STOP_Y0 <= SLAT_WALL_CLEAR, \
-    f"W4/W5: pushed to the wall the mattress would overhang the platform by " \
-    f"{SLAT_Y0_EXT - MATTRESS_STOP_Y0} mm"
-assert MATTRESS_STOP_Y1 <= SLAT_Y1, \
-    "W5: the front stop is past the front end of the slats"
+assert (SLAT_Y0, SLAT_Y1) == (MATTRESS_STOP_Y0, MATTRESS_STOP_Y1), \
+    f"W5/W8: the platform Y {SLAT_Y0}..{SLAT_Y1} must be exactly the mattress " \
+    f"clear {MATTRESS_STOP_Y0}..{MATTRESS_STOP_Y1}"
 
-# D12/W4: THE MATTRESS IS FLUSH AT THE RAILS. D12's statement was that the
+# D12/W8: THE MATTRESS IS FLUSH AT THE RAILS. D12's statement was that the
 # 800 mm mattress is exactly the rail-to-rail platform, both long edges landing
-# on the slat ends with no bare slat strip on either side. The rail-to-rail half
-# of that is untouched and is what the structure is sized on. What W4 changed is
-# only what happens BEHIND the back rail: there is now 47 mm of slat there, on
-# purpose, and the mattress does not have to cover it - the whole point is that
-# it is free to slide onto it.
+# on the slat ends with no bare slat strip on either side. v9/W4 put 47 mm of
+# bare slat behind the back rail on purpose; W6 removes the reason for it, so
+# the D12 statement is literally true again in both directions.
 assert MATTRESS_W == SLAT_LEN == PLATFORM_DEPTH, \
     "D12: the mattress width and the rail-to-rail platform depth must match"
 assert MATTRESS_Y1 == SLAT_Y1, \
     f"D12: mattress front edge {MATTRESS_Y1} is not flush with the slat ends {SLAT_Y1}"
-assert MATTRESS_Y0 == SLAT_Y0 == BACK_RAIL_Y0, \
-    f"D12: mattress rear edge {MATTRESS_Y0} is not on the back rail face {SLAT_Y0}"
-overhang = SLAT_Y0 - SLAT_Y0_EXT                          # 47, W4
-assert overhang == SLAT_LEN_EXT - SLAT_LEN == 47
-print(f"OK  D12/W4: the {MATTRESS_W} mm mattress is exactly the "
+assert MATTRESS_Y0 == SLAT_Y0 == BACK_RAIL_Y0 == WALL_Y, \
+    f"D12/W7: mattress rear edge {MATTRESS_Y0} is not on the wall plane {WALL_Y}"
+print(f"OK  D12/W8: the {MATTRESS_W} mm mattress is exactly the "
       f"{PLATFORM_DEPTH} mm RAIL-TO-RAIL platform (Y {SLAT_Y0}..{SLAT_Y1}) and "
-      f"is drawn on it - 0 mm of bare slat at the front. Behind the back rail "
-      f"the twelve extended slats carry on another {overhang} mm to Y "
-      f"{SLAT_Y0_EXT}: that strip is deliberate (W4), it is what lets the "
-      f"mattress travel back to the wall")
+      f"sits on it - 0 mm of bare slat at either edge, and no strip behind the "
+      f"back rail any more (v9/W4 had 47 mm there to let the mattress travel; "
+      f"there is nowhere to travel to now)")
 
-# W5: WHAT LOCATES THE MATTRESS SIDEWAYS, AFTER THE SECOND W2 CUT.
+# W5: WHAT LOCATES THE MATTRESS SIDEWAYS, AFTER W6.
 #
-# History, because this has now moved twice. v7's sunken tray located the
+# History, because this has now moved three times. v7's sunken tray located the
 # mattress with the rail tops (they overlapped its bottom 29 mm). D5's flush top
 # could not, and the guard boards cannot either - they start 75 mm ABOVE the
 # mattress surface - so the job passed to the six verticals, and D12 made that a
-# zero-play fit between two lines of posts at Y -48 and Y 752. W2's second cut
-# takes the back pair out of the mattress band entirely, so the back line of
-# that pair is gone.
-#
-# It is replaced by the wall, and the replacement is better than what it
-# replaces, because the thing that made the old fit necessary was the 48 mm slot
-# behind the slats. Close the slot (W4) and the mattress does not need to be
-# pinned at all: it can sit anywhere across 48 mm and it is on slat the whole
-# way, with the wall at one end of the travel and four verticals at the other.
+# zero-play fit between two lines of posts at Y -48 and Y 752. v9/W2 cut the back
+# pair out of the mattress band, which left the WALL as the back stop 48 mm
+# further away and gave the mattress 48 mm of travel. v10/W6 brings the wall
+# forward to Y -48 - exactly where the back line of posts used to be - so the fit
+# is zero-play again, made by a wall on one side and four verticals on the other.
 # What has to be true:
 #   (a) the front stop is real - four verticals in the plane Y 752, each one
 #       covering the mattress band 1197..1337 in full;
-#   (b) NO vertical is left in that band on the back side - if one were, it
-#       would be the thing the mattress hits instead of the wall, and W2 would
-#       not have achieved anything;
-#   (c) the travel is 48 mm and the worst single gap is therefore 48 mm, under
-#       the 75 mm EN 747 limit (checked in the W1/W5 block above too, from the
-#       constants; here it is checked against the parts that actually exist).
+#   (b) NO vertical is left in that band on the back side. The back posts stop
+#       132 mm below the mattress underside, so the back stop is the wall and
+#       nothing else - which is what makes the fit independent of the mattress's
+#       actual thickness;
+#   (c) the travel is 0 and the worst single gap is therefore 0, under the 75 mm
+#       EN 747 limit (checked in the W1/W5 block above too, from the constants;
+#       here it is checked against the parts that actually exist).
 stops_front = [p for p in verticals
                if p.extents[1][0] == MATTRESS_STOP_Y1
                and p.extents[2][0] <= MATTRESS_Z0
@@ -2594,24 +2979,25 @@ assert {p.label.rsplit(" ", 1)[0] for p in stops_front} == \
     {"Corner Post Front", "Ladder Upright"}, \
     f"W5: the front stops are {sorted(p.label for p in stops_front)}"
 in_band_at_back = [p for p in parts
-                   if p.extents[1][0] < BACK_RAIL_Y0 - TOL
+                   if p.extents[1][0] < BACK_RAIL_Y1 - TOL
                    and p.extents[2][1] > MATTRESS_Z0 + TOL]
 assert not in_band_at_back, \
     f"W5: {[p.label for p in in_band_at_back]} still stands in the mattress " \
-    f"band behind the back rail - the wall is supposed to be the only stop there"
+    f"band in the back rail plane - the wall is supposed to be the only stop there"
 mattress_play = (MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0) - MATTRESS_W
-assert mattress_play == MATTRESS_WANDER == 48, \
+assert mattress_play == MATTRESS_WANDER == 0, \
     f"W5: the mattress can move {mattress_play} mm, expected {MATTRESS_WANDER}"
 assert mattress_play <= MAX_GUARD_OPENING, \
     f"EN 747: {mattress_play} mm of mattress travel means a {mattress_play} mm " \
     f"gap at one end, over the {MAX_GUARD_OPENING} mm limit"
-print(f"OK  W2/W4/W5: the mattress is captured between the room WALL at Y "
-      f"{MATTRESS_STOP_Y0} (reachable because the platform goes there, W4) and "
-      f"{len(stops_front)} front verticals at Y {MATTRESS_STOP_Y1} running on "
-      f"to {POST_HEIGHT}; no vertical is left in the mattress band on the wall "
-      f"side. Travel {mattress_play} mm, so one gap of at most {mattress_play} "
-      f"mm at whichever end it is pushed to (EN 747 limit "
-      f"{MAX_GUARD_OPENING}), and slat under the mattress everywhere in between")
+print(f"OK  W2/W5/W6: the mattress is PINNED between the room WALL at Y "
+      f"{MATTRESS_STOP_Y0} - the back rail face, which the platform now runs to "
+      f"by construction - and {len(stops_front)} front verticals at Y "
+      f"{MATTRESS_STOP_Y1} running on to {POST_HEIGHT}; nothing is left in the "
+      f"mattress band on the wall side (the back posts stop "
+      f"{MATTRESS_Z0 - BACK_POST_HEIGHT} mm below it). Travel {mattress_play} "
+      f"mm, so 0 mm of gap at either long edge (EN 747 limit "
+      f"{MAX_GUARD_OPENING}), and slat under every millimetre of it")
 mattress_vol = ((0, WALL_SPAN), (MATTRESS_Y0, MATTRESS_Y1), (MATTRESS_Z0, MATTRESS_Z1))
 
 
@@ -2804,54 +3190,78 @@ print(f"Note (D10/M4): the panel rests straight on wood in both modes and is "
       f"the back bench rail / back table ledger. No bolts or screws are drawn.")
 print(f"Note (D11/D13): the front bench rail is two {FRONT_BENCH_RAIL_SEG_LEN} mm "
       f"segments that stop at the sofa ends on their stub legs; only the back "
-      f"one is a through-running {THROUGH_LEN} mm member. The ladder uprights "
-      f"no longer lap it - flagged for the docs-round load check.")
+      f"one is a continuous member, and after W9 it is {BETWEEN_POSTS_LEN} mm, "
+      f"post to post. The ladder uprights no longer lap it - flagged for the "
+      f"docs-round load check.")
 print(f"Note (D12): the depth stack came in {DEPTH_SHRINK} mm on the FRONT side "
       f"only, so the {MATTRESS_W} mm mattress is exactly the rail-to-rail "
-      f"platform. Bench slats, the panel and the two END upper slats are all "
+      f"platform. All {SLAT_COUNT} upper slats, all "
+      f"{BENCH_SLAT_COUNT * len(BENCH_X)} bench slats and the panel are "
       f"{SLAT_LEN} mm long (was 906) and the end beams {END_BEAM_LEN} mm (was "
-      f"1002); the other {len(extended_slats)} upper slats are {SLAT_LEN_EXT} "
-      f"(W4). Overall depth {OVERALL_DEPTH} mm (1070 in v7, 964 in v8, 930 "
-      f"before D14).")
+      f"1002, then 896). Overall depth {OVERALL_DEPTH} mm (1070 in v7, 964 in "
+      f"v8, 930 before D14, 896 before W6).")
 print(f"Note (D14): the four front guard boards hang on the INNER faces of the "
       f"front posts / ladder uprights (Y {FRONT_GUARD_Y0}..{FRONT_GUARD_Y1}) "
       f"instead of the outer ones (was 800..834), so nothing stands proud of "
-      f"the post plane Y={FRONT_POST_Y1} and the overall depth drops "
-      f"{GUARD_T} mm, 930 -> {OVERALL_DEPTH}. Same four pieces, same lengths, "
+      f"the post plane Y={FRONT_POST_Y1} and the overall depth dropped "
+      f"{GUARD_T} mm, 930 -> 896 (W6 then took it to {OVERALL_DEPTH}). Same "
+      f"four pieces, same lengths, "
       f"same laps - but the two 5x60 per lap are driven FROM INSIDE THE BED "
       f"now. The boards overhang the mattress footprint by {GUARD_T} mm at "
       f"guard height; the lower band is {GUARD_BAND_Z0[0] - MATTRESS_Z1} mm "
       f"above the mattress top, so nothing touches it.")
 print(f"Note (W1): *** WALL-SIDE BED - NOT REVERSIBLE. *** The back long side "
-      f"stands against the room wall and the frame is bolted to it, so there "
-      f"are NO back guard boards: the wall is the barrier. The back face of the "
-      f"assembly is the flat mounting plane Y={WALL_Y} (2 back posts, 2 end "
-      f"beams, 2 bearing blocks) and the mattress gap is at most "
-      f"{MAX_MATTRESS_GAP} mm wherever the mattress is pushed (W5), under the "
+      f"stands against the room wall and the frame is screwed to it through the "
+      f"back rail, so there are NO back guard boards: the wall is the barrier. "
+      f"The back face of the assembly is the flat mounting plane Y={WALL_Y} - "
+      f"the back rail, the 2 back posts tucked into its plane, the 2 end beams "
+      f"and their blocks, the back bench rail and its blocks, the ledger and all "
+      f"{SLAT_COUNT + BENCH_SLAT_COUNT * len(BENCH_X)} slat ends, all coplanar - "
+      f"and the mattress gap is {MAX_MATTRESS_GAP} mm (W5), against the "
       f"{MAX_GUARD_OPENING} mm EN 747 entrapment limit. The two deleted boards were "
-      f"{sec(GUARD_T, GUARD_W)} x {THROUGH_LEN}; together with two full-height "
-      f"({POST_HEIGHT}) back posts they are a drop-in retrofit if a "
-      f"freestanding version is ever wanted - flagged for the docs round.")
-print(f"Note (W2): the two BACK corner posts are cut to {BACK_POST_HEIGHT} mm "
-      f"(was 1337), flush with the PLATFORM TOP - i.e. with the mattress "
-      f"underside, so nothing of them is left standing above the bed surface "
-      f"however thin the mattress turns out to be. The two FRONT ones and the "
-      f"two ladder uprights stay {POST_HEIGHT}. Same {sec(POST_T, POST_W)} "
-      f"section, two cut lengths. The last thing a back post carries is the "
-      f"800 mm end slat that butts against it at {SLAT_Z0}..{SLAT_Z1}.")
-print(f"Note (W4): the upper slat field is {SLAT_COUNT} slats (was 13) in two "
-      f"lengths: {len(short_slats)} x {SLAT_LEN} at the ends, where the back "
-      f"corner posts are in the way, and {len(extended_slats)} x "
-      f"{SLAT_LEN_EXT} in between, running back to Y {SLAT_Y0_EXT} - "
-      f"{SLAT_WALL_CLEAR} mm off the wall. That closes the {POST_T} mm slot "
-      f"that used to be open between the platform and the wall; the extra slat "
-      f"takes the gap between slats from 60.5 to {slat_gap:.1f} mm.")
-print(f"Note (W5): the mattress is no longer pinned. It sits in the "
-      f"{MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0} mm between the wall "
-      f"(Y {MATTRESS_STOP_Y0}) and the front verticals (Y {MATTRESS_STOP_Y1}), "
-      f"so it can wander {MATTRESS_WANDER} mm and leaves one gap of at most "
-      f"{MAX_MATTRESS_GAP} mm at whichever end - under the EN 747 "
-      f"{MAX_GUARD_OPENING} mm limit, with slat underneath it the whole way.")
+      f"{sec(GUARD_T, GUARD_W)} x {THROUGH_LEN}; putting them and two full-height "
+      f"({POST_HEIGHT}) back posts back is the retrofit if a freestanding "
+      f"version is ever wanted, but after W6 it also means moving the posts back "
+      f"out into a layer of their own - flagged for the docs round.")
+print(f"Note (W6): the two BACK corner posts stand IN the back rail plane "
+      f"(Y {BACK_POST_Y0}..{BACK_POST_Y1}, was -96..-48) and are cut to "
+      f"{BACK_POST_HEIGHT} mm (was 1197, 1337) - the RAIL UNDERSIDE. The back "
+      f"side rail bears straight down on the post tops, "
+      f"{POST_W - THROUGH_X0} x {POST_T} = {BACK_RAIL_POST_BEARING} mm2 of end "
+      f"grain per corner, so the corner reaction goes rail -> post -> floor with "
+      f"no fastener in the load path; the bolts and corner brackets are pure "
+      f"ties. The two FRONT posts and the two ladder uprights stay "
+      f"{POST_HEIGHT}. Same {sec(POST_T, POST_W)} section, two cut lengths. "
+      f"Nothing of a back post is within {SLAT_Z1 - BACK_POST_HEIGHT} mm of the "
+      f"mattress underside.")
+print(f"Note (W7): the wall plane is the back rail's outer face, Y={WALL_Y} (was "
+      f"-96), so the overall depth is {OVERALL_DEPTH} mm - {896 - OVERALL_DEPTH} "
+      f"less than v9 and exactly the end-beam length {END_BEAM_LEN}.")
+print(f"Note (W8): the upper slat field is {SLAT_COUNT} slats (was 13 in v8, 14 "
+      f"in two lengths in v9) and they are ONE length again: {SLAT_COUNT} x "
+      f"{SLAT_LEN} at Y {SLAT_Y0}..{SLAT_Y1}, the same piece as a bench slat. "
+      f"There is no slot behind the platform to cover any more - W6 deleted the "
+      f"layer it was in - so the 847 mm extended slat is gone. Gap between "
+      f"slats {slat_gap:.1f} mm.")
+print(f"Note (W9): the back bench rail and the back table ledger run POST TO "
+      f"POST, {BETWEEN_POSTS_LEN} mm at X {BETWEEN_POSTS_X0}.."
+      f"{BETWEEN_POSTS_X1} (was {THROUGH_LEN} at {THROUGH_X0}..{THROUGH_X1}) - "
+      f"the back posts moved into their Y band, so they butt them and are "
+      f"screwed to their X-inner faces, an end fixing neither had before. The "
+      f"two back bench-rail bearing blocks turn with them onto that same face "
+      f"(X {RAIL_BLOCK_BACK_X[0]}..{RAIL_BLOCK_BACK_X[0] + RAIL_BLOCK_BACK_DX} / "
+      f"{RAIL_BLOCK_BACK_X[1]}..{RAIL_BLOCK_BACK_X[1] + RAIL_BLOCK_BACK_DX}), "
+      f"giving {RAIL_BLOCK_BACK_DX * RAIL_BLOCK_BACK_DY} mm2 of bearing instead "
+      f"of 1620. The bench slats are re-pitched to start at the post inner face: "
+      f"X {BENCH_SLAT_X_START}..{BENCH_LEN}, pitch {BENCH_SLAT_PITCH:g} (was "
+      f"137.5), gap {BENCH_SLAT_PITCH - BENCH_SLAT_W:g} mm (was 39.5) - same "
+      f"five pieces per bench.")
+print(f"Note (W5): the mattress is PINNED again. The clear between the wall "
+      f"(Y {MATTRESS_STOP_Y0}) and the front verticals (Y {MATTRESS_STOP_Y1}) "
+      f"is {MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0} mm, i.e. exactly the mattress, "
+      f"so it can wander {MATTRESS_WANDER} mm and leaves {MAX_MATTRESS_GAP} mm "
+      f"of gap at either long edge - the EN 747 {MAX_GUARD_OPENING} mm limit is "
+      f"not in play at all - with slat underneath it the whole way.")
 print(f"Note (W3): the four bench stub legs are {sec(LEG_T, LEG_W)} x "
       f"{STUB_LEG_H} (was 48x73), the corner-post section. Their inner faces "
       f"are unmoved on the bench ends X {BENCH_LEN} / {WALL_SPAN - BENCH_LEN}, "
@@ -2863,17 +3273,18 @@ print(f"Note (D13): the ladder is {LADDER_CLEAR} mm clear (was 420) on "
       f"{RUNG_LEN} mm and the front guard segments {FRONT_GUARD_SEG_LEN} mm. "
       f"The 36x48x{RUNG_BLOCK_LEN} rung blocks are unchanged - their 36 mm is "
       f"stock thickness, not upright width.")
-print(f"Note (D5/D7/W1/W4): 34x98 is the common board stock - {SLAT_COUNT} "
+print(f"Note (D5/D7/W1/W8): 34x98 is the common board stock - {SLAT_COUNT} "
       f"upper bed slats + {BENCH_SLAT_COUNT * len(BENCH_X)} bench slats + "
       f"{len(FRONT_GUARD_SEGMENTS) * len(GUARD_BAND_Z0)} front guard segments "
       f"= {by_section[sec(BOARD34_T, BOARD34_W)]} pieces (W1 took the 2 back "
-      f"guards out, W4 added a 14th upper slat: 29 -> 27 -> 28). W4 also ends "
-      f"the one-length rule, but only just: cut "
-      f"{len(short_slats) + BENCH_SLAT_COUNT * len(BENCH_X)} identical "
-      f"{SLAT_LEN} mm pieces in one go ({len(short_slats)} end slats + "
-      f"{BENCH_SLAT_COUNT * len(BENCH_X)} bench slats, still the same piece) "
-      f"and {len(extended_slats)} identical {SLAT_LEN_EXT} mm ones in another. "
-      f"Two saw stops, not one - and not {SLAT_COUNT} different lengths.")
+      f"guards out, W4 added a 14th upper slat: 29 -> 27 -> 28). W8 restores the "
+      f"ONE-LENGTH rule W4 had to break: cut "
+      f"{SLAT_COUNT + BENCH_SLAT_COUNT * len(BENCH_X)} identical {SLAT_LEN} mm "
+      f"pieces in a single setup ({SLAT_COUNT} upper slats + "
+      f"{BENCH_SLAT_COUNT * len(BENCH_X)} bench slats - one and the same piece) "
+      f"and the only other 34x98 cut in the bed is the "
+      f"{len(FRONT_GUARD_SEGMENTS) * len(GUARD_BAND_Z0)} guard segments at "
+      f"{FRONT_GUARD_SEG_LEN}. Two saw stops for the whole board pile.")
 print("Note (D7): 21x95 now appears exactly once in the whole bed - the back "
       "table ledger. Nothing else uses it.")
 print("Note (D5): the slat cleats are gone; the upper slats are screwed "
