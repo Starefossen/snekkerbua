@@ -39,18 +39,14 @@ list of 2-D polylines, the rest of the page can be composed in the SAME
 coordinate system. plane_xy() projects any 3-D point of the model into it, and
 that is what anchors every annotation to real geometry:
 
-  * fastening points are the CONTACT PATCHES between the parts - two boxes
-    that meet on a face, computed from the parts' own extents. WHICH WAY the
-    arrow at one of them points is NOT read off the geometry: the contact
-    normal is a property of the joint, not of the screwdriver, and for a good
-    half of the joints in this bed the two disagree. It is DATA. Every row of
-    JOINT_CONTACTS names, per fastener kind, the member the screw ENTERS FROM
-    (`frm`), or - where the screw does not cross the patch at all, as with the
-    bracket screws that go sideways into a stub leg - the member it is driven
-    INTO and along which axis (`into` + `axis`). The arrow's tail sits on the
-    entry side and its head points into the receiving member, along the screw.
-    Each row is the same fact docs/generated/beslagliste.md prints in its
-    "Drives fra" column, which is JOINTS[...]["side"] in tools/gen_doc_tables.py.
+  * the fasteners are DRAWN, not pointed at. generate_loftbed.py models every
+    screw, bolt and bracket in the bed as a solid with an anchor on the face
+    it is driven from and a unit drive vector, and this file projects those
+    records: on most pages backed out along their own axis with a dotted
+    insertion line into the hole, on the pages that drive twenty-eight of the
+    same screw drawn where they end up with the buried part dashed. There is
+    no second copy of the joint table here and no direction derived here -
+    the picture and docs/generated/skrueretninger.md are the same numbers.
   * the corner inset carries the step's fasteners at large scale with their
     counts, and one SECTION per joint family in the step: the two members at
     their true cross-section sizes and true relative positions, hatched the way
@@ -59,9 +55,12 @@ that is what anchors every annotation to real geometry:
     inside the receiving member.
   * a marker is allowed to stand for more than one screw (two screws 30 mm
     apart are one mark on a page this size), and then it carries the count:
-    "2x" beside the badge. Nothing is thinned away - a mark that is dropped
-    for crowding hands its count to the mark that crowded it, and the page is
-    checked at build time to show every fastener the step's table lists.
+    "2x" beside the badge. It never merges across JOINTS, though, because
+    "4x" in a corner that takes two screws in one joint and two in another
+    would send the builder to the wrong holes. Nothing is thinned away - a
+    mark dropped for crowding hands its count to the mark that crowded it,
+    and the page is checked at build time to show every fastener the step's
+    table lists.
   * leader lines run from the inset to the fastening points; a step with only
     one or two of them gets a circular magnifier of the real line work there
     instead.
@@ -121,11 +120,15 @@ W_HATCH = 1.5          # the 45 deg hatching on a cut face
 GREY = "#9a9a9a"
 INK = "#111111"
 
-# The marker arrow, as a fraction of the page's longer side. IKEA's arrows are
-# long: the eye has to catch the DIRECTION from across the page, and a stub
-# reads as a dot. This is about three times what the first version used.
-ARROW_FRAC = 0.078
+# Arrows are for WOOD now - the before/after thumbnails, the dimension marks
+# on the mattress panel, the screwdriver stub in a section, and the exploded
+# panel page. A fastener is drawn as itself; see DRAWING A FASTENER below.
 HEAD_FRAC = 0.22       # arrowhead length, as a fraction of the arrow
+# Above this many marks on one page the exploded style stops helping - the
+# slat fields drive one screw per slat end and there are twenty-eight of them,
+# and twenty-eight screws hanging in the air over a bed is a hedge, not an
+# instruction. Those pages get the in-situ phantom instead.
+EXPLODE_MAX = 18
 
 FONT = "Helvetica, Arial, sans-serif"
 PAD = 70               # white margin around the bed, model mm
@@ -320,6 +323,171 @@ def mark_parts(mark):
                         f.get("into")) if p is not None]
 
 
+# ---------------------------------------------------------------------------
+# DRAWING A FASTENER
+# ---------------------------------------------------------------------------
+# The arrows are gone. What used to be a stroke pointing at a joint is now the
+# fastener itself, at its own length, along its own axis, in the place the
+# model put it - and the two conventions Agrawala's assembly-instruction work
+# settles on are what tell the two states apart:
+#
+#   IN SITU   the fastener where it ends up. The head is solid, because that
+#             is the part you can see; everything buried in wood is DASHED.
+#             A phantom line is how a drawing says "this is really there and
+#             you cannot see it", and it is the only honest way to show a
+#             screw that is entirely inside two pieces of timber.
+#   EKSPLODERT the fastener backed straight out along its own axis, solid,
+#             with a DOTTED insertion line running from it through the hole
+#             it goes into. Dotted for fasteners; arrows are reserved for
+#             WOOD parts being brought together, which is Agrawala's rule and
+#             the reason the two never get confused on one page.
+#
+# One licence is taken, and it is the same one every hardware drawing takes:
+# the DIAMETER is exaggerated. A 6 mm screw on a 2 m page is thinner than the
+# line the bed itself is drawn with, so it is fattened until head, shank and
+# point read as three different things. The LENGTH is true - it is the number
+# the reader has to get right.
+W_SCREW = 4.2
+W_PHANTOM = 3.0
+DASH_PHANTOM = "15 11"
+DASH_INSERT = "4 13"           # dotted: fasteners only
+SCREW_FATTEN = 2.2
+# No fastener is drawn shorter than this fraction of its true length. Straight
+# foreshortening is information - a screw driven into the page SHOULD look
+# short - but past a point it stops being a screw and becomes a dot, and the
+# reader loses the one number the drawing has to get right.
+FORESHORTEN_FLOOR = 0.72
+EXPLODE_FRAC = 0.10            # of the page's short side
+STACK_STEP = 0.6               # coaxial screws, as a fraction of the head
+
+
+def _unit2(a, b):
+    dx, dy = b[0] - a[0], b[1] - a[1]
+    n = math.hypot(dx, dy)
+    return (dx / n, dy / n, n) if n > 1e-9 else (0.0, 0.0, 0.0)
+
+
+def screw_shape(view, anchor, direction, length, d, fatten=SCREW_FATTEN):
+    """(outline, head-end, tip-end, unit) for one screw, on the page.
+
+    `outline` is the silhouette in page coordinates: head, countersink,
+    shank, point. `None` when the screw points straight at the reader and has
+    no length on the page at all - the caller draws a ringed dot instead.
+    """
+    tip3 = tuple(a + c * length for a, c in zip(anchor, direction))
+    p0, p1 = view.xy(anchor), view.xy(tip3)
+    ux, uy, L = _unit2(p0, p1)
+    if L < length * FORESHORTEN_FLOOR * 0.5:
+        return None, p0, p1, (0.0, 0.0)
+    L = max(L, length * FORESHORTEN_FLOOR)
+    w = d * fatten
+    hw, head_l, tip_l = w * 0.95, w * 0.30, w * 0.85
+
+    def P(t, q):
+        return (p0[0] + ux * t - uy * q, p0[1] + uy * t + ux * q)
+
+    prof = [(0, hw), (head_l, w / 2), (L - tip_l, w / 2), (L, 0),
+            (L - tip_l, -w / 2), (head_l, -w / 2), (0, -hw)]
+    return [P(t, q) for t, q in prof], p0, p1, (ux, uy)
+
+
+def plate_quads(spec):
+    """The two flanges of a bracket as 3-D quads, off the model's own record.
+
+    A hook has three; the middle one is the leg that goes down past the edge.
+    Every corner here is computed the same way generate_loftbed.py computes
+    the solid, so the drawing cannot show a bracket the model does not have.
+    """
+    C = spec["anchor"]
+    n = spec["direction"]
+    r = spec["run"]
+    w = spec["width"]
+    reach = spec["reach"]
+    cx = [j for j in range(3)
+          if abs(n[j]) < 0.5 and abs(r[j]) < 0.5][0]
+
+    def quad(o, along, dist):
+        out = []
+        for s_along, s_cross in ((0, -1), (dist, -1), (dist, 1), (0, 1)):
+            p = list(o)
+            for j in range(3):
+                p[j] += along[j] * s_along
+            p[cx] += s_cross * w / 2
+            out.append(tuple(p))
+        return out
+
+    faces = [quad(C, r, reach), quad(C, tuple(-c for c in n), reach)]
+    if spec.get("hook"):
+        ax = max(range(3), key=lambda j: abs(n[j]))
+        into = spec["into"]
+        far = into.extents[ax][0] if n[ax] < 0 else into.extents[ax][1]
+        drop = list(C)
+        drop[ax] = far + n[ax] * 4.0
+        faces = [quad(C, r, reach),
+                 quad(C, n, abs(drop[ax] - C[ax])),
+                 quad(tuple(drop), tuple(-c for c in r), spec["hook"])]
+    return faces
+
+
+def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0):
+    """One fastener on the page. Returns the point its insertion line ends at.
+
+    `stack` pushes coaxial fasteners apart sideways: two screws driven into
+    the same joint from the same face land on the same page point when the
+    camera looks along their axis, and an exploded pile of them is one screw
+    as far as the reader can tell.
+    """
+    f = m["spec"]
+    anchor = tuple(a + s for a, s in zip(f["anchor"], shift))
+    solid = style == "eksplodert"
+    if f["kind"] == "plate":
+        polys = []
+        for q in plate_quads(dict(f, anchor=anchor)):
+            polys.append([view.xy(p) for p in q] + [view.xy(q[0])])
+        if solid:
+            for pl in polys:
+                page.poly(pl, fill=INK, stroke=INK, width=W_RULE * 0.6)
+        else:
+            for pl in polys:
+                page.poly(pl, fill="#ffffff", stroke=INK, width=W_RULE)
+        seat = view.xy(anchor)
+        run_end = view.xy(tuple(a + r * f["reach"]
+                                for a, r in zip(anchor, f["run"])))
+        return run_end, seat
+
+    outline, p0, p1, u = screw_shape(view, anchor, f["direction"],
+                                     f["length"], f["d"])
+    if stack:
+        off = f["d"] * SCREW_FATTEN * STACK_STEP * stack
+        nx, ny = (-u[1], u[0]) if u != (0.0, 0.0) else (1.0, 0.0)
+        p0 = (p0[0] + nx * off, p0[1] + ny * off)
+        p1 = (p1[0] + nx * off, p1[1] + ny * off)
+        if outline:
+            outline = [(x + nx * off, y + ny * off) for x, y in outline]
+    if outline is None:
+        _ = None
+        # Straight at the reader: the drawing convention for an axis with no
+        # length on the page is a ringed dot, and it is the same mark whether
+        # the screw is in or out.
+        page.circle(p0, 14, width=W_SCREW)
+        page.dot(p0, 5)
+        return p0, p0
+    if solid:
+        page.poly(outline, fill="#ffffff", stroke=INK, width=W_SCREW)
+    else:
+        # In situ: the head is the only part anybody can see, so it is the
+        # only part drawn solid. The rest is a phantom line.
+        # The head is the only part anybody can see, so it is the only part
+        # drawn solid. The rest is a phantom line - same ink, dashed, a shade
+        # lighter in weight, which is the drawing convention for "this is
+        # really there and it is inside the wood".
+        page.polylines([outline[1:len(outline) - 1] + [outline[1]]],
+                       INK, W_SCREW * 0.62, dash=DASH_PHANTOM)
+        page.poly(outline[:2] + outline[-2:], fill=INK, stroke=INK,
+                  width=W_SCREW * 0.8)
+    return p0, p1
+
+
 def _apart(a, b, gap):
     return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 > gap * gap
 
@@ -335,7 +503,11 @@ def choose_marks(marks, gap, inset=None):
 
     Two fasteners of the same kind driven at the same joint 30 mm apart are
     one mark at this scale, and so are the two ends of a joint that the camera
-    happens to stack. A mark that is crowded out therefore does not disappear:
+    happens to stack. It never merges across JOINTS, though: on step 3 the two
+    6x90 into the end beam and the one into the bearing block under it land in
+    the same corner, and "4x" there would tell the builder to put four screws
+    in one place. Two joints, two marks, 2x and 1x.
+    A mark that is crowded out does not disappear:
     its count is handed to the mark that crowded it, and that mark says "4x"
     instead of "2x". The same happens to a mark that lands under the inset
     panel, which is opaque and would hide the very line work the arrow is
@@ -355,6 +527,7 @@ def choose_marks(marks, gap, inset=None):
         # badges there say nothing the number does not say better.
         same = [q for q in kept
                 if q["letter"] == m["letter"] and q["name"] == m["name"]
+                and q["jid"] == m["jid"]
                 and not _apart(q["p2"], m["p2"], gap)]
         if same:
             same[0]["per"] += m["per"]
@@ -362,7 +535,8 @@ def choose_marks(marks, gap, inset=None):
             continue
         kept.append(dict(m, absorbed=[]))
     for m in deferred:
-        same = [q for q in kept if q["name"] == m["name"]]
+        same = [q for q in kept
+                if q["name"] == m["name"] and q["jid"] == m["jid"]]
         if same:
             same.sort(key=lambda q: (q["p2"][0] - m["p2"][0]) ** 2
                       + (q["p2"][1] - m["p2"][1]) ** 2)
@@ -1048,12 +1222,16 @@ def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset):
     zf = ledger.extents[2][0]
     y0, y1 = post.extents[1]
     ym = (y0 + y1) / 2
-    leg = 40.0
+    leg = next((q["spec"]["reach"] for q in cands_m
+                if q["spec"]["kind"] == "plate"), 40.0)
 
     # Centred on the CORNER itself - post face meets ledger underside - so the
     # circle holds a piece of both members and not just the steel.
     src = view.xy((xf, ym, zf))
-    src_r = max(page.w, page.h) * 0.072
+    # Tight on the STEEL: a circle scaled to the page would put a 40 mm
+    # bracket at a tenth of its diameter and the magnifier would magnify
+    # nothing. Three flange lengths across is what makes the bend readable.
+    src_r = leg * 3.0
     dst_r = page.w * 0.145
     edge = dst_r + 105                    # room for the caption under it
     # Away from the inset panel, in the emptiest of the two low corners.
@@ -1087,7 +1265,7 @@ def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset):
     # they read as timber, with the real projected edges drawn back on top.
     ly0, ly1 = ledger.extents[1]
     lz1 = ledger.extents[2][1]
-    reach = leg * 4.2
+    reach = leg * 2.4
     faces = [
         [(xf, y0, zf - reach * 0.5), (xf, y1, zf - reach * 0.5),
          (xf, y1, zf + reach), (xf, y0, zf + reach)],          # stolpens innerflate
@@ -1105,28 +1283,45 @@ def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset):
     page.polylines(remap(clip_to_circle(new_only, src, src_r),
                          src, src_r, dst_c, dst_r), INK, W_NEW * k * 0.8)
 
-    standing = [(xf, y0, zf), (xf, y1, zf), (xf, y1, zf + leg),
-                (xf, y0, zf + leg)]
-    lying = [(xf, y0, zf), (xf, y1, zf), (xf + e * leg, y1, zf),
-             (xf + e * leg, y0, zf)]
-    for quad in (lying, standing):
+    # THE BRACKET ITSELF, off the model's own record - the same corners
+    # generate_loftbed.py built the solid from. Nothing here is a second
+    # drawing of a bracket somebody once measured: if the model turns it over,
+    # this turns over with it.
+    plate = next((q["spec"] for q in cands_m
+                  if q["spec"]["kind"] == "plate"
+                  and q["spec"]["pa"] is pa and q["spec"]["pb"] is pb), None)
+    if plate is None:
+        plate = next(q["spec"] for q in cands_m if q["spec"]["kind"] == "plate")
+    for quad in plate_quads(plate):
         page.poly([P(q) for q in quad], fill="#9a9a9a", stroke=INK,
                   width=W_RULE * 0.9)
-    r = 3.2 * k
-    for z in (zf + leg * 0.34, zf + leg * 0.72):
-        page.dot(P((xf, ym, z)), r)
-    for x in (xf + e * leg * 0.34, xf + e * leg * 0.72):
-        page.dot(P((x, ym, zf)), r)
-    # ...and which way they are driven: into the post, and up into the ledger.
-    a_len = dst_r * 0.42
-    for tip, dxy in ((P((xf, ym, zf + leg * 0.53)),
-                      view.dir_xy((-e, 0, 0))),
-                     (P((xf + e * leg * 0.53, ym, zf)),
-                      view.dir_xy((0, 0, 1)))):
-        n = math.hypot(*dxy) or 1.0
-        u = (dxy[0] / n, dxy[1] / n)
-        page.arrow((tip[0] - u[0] * a_len, tip[1] - u[1] * a_len), tip,
-                   INK, W_MARK * 0.8, a_len * 0.30)
+    # ...and the screws through it, at their own length and their own angle.
+    for q in cands_m:
+        g = q["spec"]
+        if g["kind"] != "screw":
+            continue
+        head3 = g["anchor"]
+        tip3 = tuple(c + d * g["length"]
+                     for c, d in zip(head3, g["direction"]))
+        h2, t2 = P(head3), P(tip3)
+        ux, uy, ln = _unit2(h2, t2)
+        if ln < 1e-6:
+            page.dot(h2, 4.0 * k)
+            continue
+        w2 = g["d"] * k * 0.5
+        hd = w2 * 1.9
+        page.poly([(h2[0] - uy * hd, h2[1] + ux * hd),
+                   (h2[0] + ux * hd * 0.5 - uy * w2,
+                    h2[1] + uy * hd * 0.5 + ux * w2),
+                   (t2[0] - uy * w2 * 0.15, t2[1] + ux * w2 * 0.15),
+                   (t2[0] + uy * w2 * 0.15, t2[1] - ux * w2 * 0.15),
+                   (h2[0] + ux * hd * 0.5 + uy * w2,
+                    h2[1] + uy * hd * 0.5 - ux * w2),
+                   (h2[0] + uy * hd, h2[1] - ux * hd)],
+                  fill="#ffffff", stroke=INK, width=W_RULE * 0.8)
+        a_len = dst_r * 0.22
+        page.arrow((h2[0] - ux * a_len, h2[1] - uy * a_len), h2,
+                   INK, W_MARK * 0.55, a_len * 0.36)
     page.clip_end()
     # The caption goes wherever there is paper: under the circle, over it, or
     # - if the circle sits in a corner - just inside its lower edge.
@@ -1136,8 +1331,8 @@ def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset):
         ty = dst_c[1] + dst_r + 24
     else:
         ty = dst_c[1] - dst_r + 34
-    page.text((dst_c[0], ty), "VINKELBESLAG 40×40×40", 44,
-              anchor="middle", weight="bold")
+    page.text((dst_c[0], ty), plate["name"].split(" varmforsinket")[0].upper(),
+              44, anchor="middle", weight="bold")
 
 
 def info_panel(page, box, G):
@@ -1321,29 +1516,44 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     if not is_mattress:
         check_coverage(st, keep, fasteners, families)
 
-    # A marker at every fastening point: an arrow along the DRIVING direction
-    # the joint table gives, head in the member the screw grips.
-    arrow_len = min(page.w, page.h) * ARROW_FRAC * 1.15
+    # THE FASTENERS THEMSELVES. Two styles, and which one a page gets is
+    # decided by how many marks survive the merge: a step that drives eight
+    # screws is clearer with all eight pulled out of their holes, and a step
+    # that drives twenty-eight - the slat fields - would be a forest. Those
+    # get the in-situ phantom instead, which says the same thing quietly.
+    style = "eksplodert" if len(keep) <= EXPLODE_MAX else "in situ"
+    pull = min(page.w, page.h) * EXPLODE_FRAC
+    stacks = {}
     for m in sorted(keep, key=lambda q: (-q["p2"][1], q["p2"][0])):
-        p2 = m["p2"]
-        dx, dy = view.dir_xy(m["dir3"])
-        nrm = math.hypot(dx, dy)
-        if nrm < 1e-6:
-            # Straight at the reader: a ringed dot, the drawing convention
-            # for an axis that has no length on the page.
-            page.circle(p2, 15, width=W_MARK)
-            page.dot(p2, 5)
-            mark_label(page, (p2[0], p2[1] + 24), (0.0, -1.0), m["letter"],
-                       m["per"], box)
-            continue
-        # Foreshortened, like everything else in the projection: a screw
-        # driven half into the page gets a shorter arrow than one driven
-        # across it, so the length itself says which way the joint faces.
-        length = arrow_len * (0.62 + 0.38 * min(nrm, 1.0))
-        dx, dy = dx / nrm, dy / nrm
-        tail = (p2[0] - dx * length, p2[1] - dy * length)
-        page.arrow(tail, p2, INK, W_MARK, length * HEAD_FRAC)
-        mark_label(page, tail, (dx, dy), m["letter"], m["per"], box)
+        f = m["spec"]
+        key = (round(m["p2"][0] / 6.0), round(m["p2"][1] / 6.0),
+               tuple(round(c, 3) for c in f["direction"]))
+        stack = stacks.get(key, 0)
+        stacks[key] = stack + 1
+        if style == "eksplodert":
+            # Backed out along its own axis in MODEL space, so the pulled
+            # fastener stays on the line it travels no matter where the
+            # camera stands. The 3-D distance that lands `pull` page units
+            # clear is worked out off the projection itself.
+            dx, dy = view.dir_xy(f["direction"])
+            nrm = math.hypot(dx, dy)
+            back = pull / nrm if nrm > 0.12 else pull * 8
+            shift = tuple(-c * back for c in f["direction"])
+            hole = view.xy(f["anchor"])
+            head, tip = draw_fastener(page, view, m, style, shift, stack)
+            # Dotted, not dashed and not an arrow: this line is a fastener's
+            # travel, and the page keeps that convention to itself.
+            page.line(tip, hole, GREY, W_PHANTOM, dash=DASH_INSERT)
+            page.dot(hole, 6.0, colour=INK)
+            # The caption goes behind the HEAD, i.e. further from the hole -
+            # the one direction that cannot land on the fastener itself.
+            label_at, label_dir = head, (
+                (dx / nrm, dy / nrm) if nrm > 1e-6 else (0.0, -1.0))
+        else:
+            draw_fastener(page, view, m, style, stack=stack)
+            label_at = m["p2"]
+            label_dir = (0.0, -1.0)
+        mark_label(page, label_at, label_dir, m["letter"], m["per"], box)
 
     # Leaders from the inset to the joints, or one magnifier when there is
     # only a location or two to point at.

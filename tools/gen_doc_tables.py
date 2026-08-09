@@ -1244,15 +1244,27 @@ def emit_montering(G, root, steps, idx):
     # The drawings say four things with marks rather than words, and none of
     # them are obvious the first time you meet them. They are explained once,
     # here, and never repeated on a step page.
-    L.append("**Pila viser veien skruen går inn:** halen står på siden du "
-             "skrur fra, spissen i delen skruen skal ta tak i. Står det "
-             "**2×** ved pila, står det merket for to skruer på samme sted — "
-             "tegningen viser aldri færre festemidler enn steget bruker. "
-             "**Bokstaven i ringen** (Ⓐ, Ⓑ …) sier hvilken av stegets typer "
-             "det er, og går igjen i tabellen under bildet. **Ruta i hjørnet** "
-             "viser leddet i snitt, med delene i riktig innbyrdes størrelse, "
-             "skravur på snittflatene og skruen i full lengde — hodet på "
-             "skrusiden, spissen inne i mottakerdelen.\n\n")
+    L.append("**Festemidlene er tegnet, ikke antydet.** Hver skrue, bolt og "
+             "hvert beslag på stegsidene er den samme kroppen som står i "
+             "modellen, i sin egen lengde og langs sin egen akse — så en "
+             "skrue som peker feil vei eller er for lang stopper byggingen "
+             "av manualen, ikke først byggingen av sengen.\n\n")
+    L.append("**Trukket ut av hullet:** på de fleste stegene er festemidlene "
+             "tegnet et stykke ut langs sin egen akse, med en **prikket "
+             "linje** ned i hullet de skal i og en **prikk** der hullet er. "
+             "Den prikkede linjen betyr festemiddel og ingenting annet; "
+             "**piler** brukes bare om tredeler som skal føres sammen. På de "
+             "stegene som setter tjue-tretti like skruer — spilene — er de "
+             "tegnet **der de havner** i stedet: hodet fylt, og den delen "
+             "som ligger begravd i treet **stiplet**.\n\n")
+    L.append("Står det **2×** ved et festemiddel, står det merket for to på "
+             "samme sted — tegningen viser aldri færre festemidler enn "
+             "steget bruker, og den slår aldri sammen på tvers av to ulike "
+             "ledd. **Bokstaven i ringen** (Ⓐ, Ⓑ …) sier hvilken av stegets "
+             "typer det er, og går igjen i tabellen under bildet. **Ruta i "
+             "hjørnet** viser leddet i snitt, med delene i riktig innbyrdes "
+             "størrelse, skravur på snittflatene og festemidlene i full "
+             "lengde — hodet på skrusiden, spissen inne i mottakerdelen.\n\n")
     L.append("| Slik | Ikke slik | |\n|:---:|:---:|---|\n")
     for do, dont, line in PREP:
         yes = (_img("img/ikon/" + pikto[do], 72, do) + " "
