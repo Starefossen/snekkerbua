@@ -10,7 +10,9 @@
 <path d="M755.16,411.64 L741.45,403.39" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M755.16,411.64 L741.45,419.89" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M359.02,530.7 L1106.7,530.7" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round"/>
-<svg x="361.02" y="563.7" width="165.6" height="108" viewBox="0 0 184 120" preserveAspectRatio="xMidYMid meet">
+<circle cx="386.02" cy="617.7" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="386.02" y="627.7" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">A</text>
+<svg x="427.02" y="563.7" width="165.6" height="108" viewBox="0 0 184 120" preserveAspectRatio="xMidYMid meet">
   <title>Treskrue 5×40 forsenket Torx</title>
   <g fill="none" stroke="#111" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
     <g transform="scale(4) translate(3 15)" stroke-width="1.38">
@@ -20,7 +22,9 @@
   </g>
 </svg>
 <text x="1104.7" y="647.7" font-family="Helvetica, Arial, sans-serif" font-size="93" font-weight="bold" text-anchor="end" fill="#111111">16x</text>
-<svg x="361.02" y="713.7" width="273.6" height="108" viewBox="0 0 304 120" preserveAspectRatio="xMidYMid meet">
+<circle cx="386.02" cy="767.7" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="386.02" y="777.7" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">B</text>
+<svg x="427.02" y="713.7" width="273.6" height="108" viewBox="0 0 304 120" preserveAspectRatio="xMidYMid meet">
   <title>Treskrue 5×70 forsenket Torx</title>
   <g fill="none" stroke="#111" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
     <g transform="scale(4) translate(3 15)" stroke-width="1.38">
@@ -30,7 +34,9 @@
   </g>
 </svg>
 <text x="1104.7" y="797.7" font-family="Helvetica, Arial, sans-serif" font-size="93" font-weight="bold" text-anchor="end" fill="#111111">8x</text>
-<svg x="361.02" y="863.7" width="309.6" height="108" viewBox="0 0 344 120" preserveAspectRatio="xMidYMid meet">
+<circle cx="386.02" cy="917.7" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="386.02" y="927.7" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">C</text>
+<svg x="427.02" y="863.7" width="309.6" height="108" viewBox="0 0 344 120" preserveAspectRatio="xMidYMid meet">
   <title>Treskrue 6×80 forsenket Torx</title>
   <g fill="none" stroke="#111" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
     <g transform="scale(4) translate(3 15)" stroke-width="1.38">
@@ -40,7 +46,9 @@
   </g>
 </svg>
 <text x="1104.7" y="947.7" font-family="Helvetica, Arial, sans-serif" font-size="93" font-weight="bold" text-anchor="end" fill="#111111">4x</text>
-<svg x="361.02" y="998.7" width="133.14" height="138" viewBox="0 0 471.2 488.4" preserveAspectRatio="xMidYMid meet">
+<circle cx="386.02" cy="1067.7" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="386.02" y="1077.7" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">D</text>
+<svg x="427.02" y="998.7" width="133.14" height="138" viewBox="0 0 471.2 488.4" preserveAspectRatio="xMidYMid meet">
   <title>Vinkelbeslag 90×90×65×2,5 varmforsinket</title>
   <g fill="none" stroke="#111" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
     <g transform="scale(4) translate(49.8 93)" stroke-width="1.38">
@@ -61,26 +69,40 @@
   </g>
 </svg>
 <text x="1104.7" y="1097.7" font-family="Helvetica, Arial, sans-serif" font-size="93" font-weight="bold" text-anchor="end" fill="#111111">4x</text>
-<path d="M955.62,509.69 L1008.96,541.29" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
-<path d="M1008.96,541.29 L1001.37,527.2" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
-<path d="M1008.96,541.29 L992.96,541.39" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M-680.3,832.72 L-626.96,864.32" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M-626.96,864.32 L-634.55,850.24" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M-626.96,864.32 L-642.96,864.43" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
-<path d="M502.89,604.04 L502.89,666.04" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
-<path d="M502.89,666.04 L511.14,652.33" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
-<path d="M502.89,666.04 L494.65,652.33" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
+<circle cx="-720.1" cy="809.15" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="-720.1" y="819.15" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">C</text>
 <path d="M-144.89,731.95 L-144.89,793.95" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M-144.89,793.95 L-136.65,780.24" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M-144.89,793.95 L-153.14,780.24" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
+<circle cx="-202.89" cy="694.95" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="-202.89" y="704.95" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">A</text>
+<circle cx="-144.89" cy="694.95" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="-144.89" y="704.95" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">B</text>
+<circle cx="-86.89" cy="694.95" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="-86.89" y="704.95" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">D</text>
 <path d="M126.89,505.3 L126.89,443.3" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M126.89,443.3 L118.65,457.01" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M126.89,443.3 L135.14,457.01" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
+<circle cx="68.89" cy="542.3" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="68.89" y="552.3" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">A</text>
+<circle cx="126.89" cy="542.3" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="126.89" y="552.3" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">B</text>
+<circle cx="184.89" cy="542.3" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="184.89" y="552.3" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">D</text>
 <path d="M-520.89,633.21 L-520.89,571.21" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M-520.89,571.21 L-529.14,584.92" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
 <path d="M-520.89,571.21 L-512.65,584.92" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
-<path d="M502.89,666.04 L502.89,666.04" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="16 14"/>
-<path d="M1008.96,541.29 L1008.96,541.29" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="16 14"/>
+<circle cx="-578.89" cy="670.21" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="-578.89" y="680.21" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">A</text>
+<circle cx="-520.89" cy="670.21" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="-520.89" y="680.21" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">B</text>
+<circle cx="-462.89" cy="670.21" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="-462.89" y="680.21" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">D</text>
 <path d="M345.02,544.71 L126.89,443.3" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="16 14"/>
 <path d="M345.02,755.47 L-144.89,793.95" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="16 14"/>
+<path d="M345.02,677.44 L-520.89,571.21" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="16 14"/>
+<path d="M345.02,764.75 L-626.96,864.32" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="16 14"/>
 </svg>

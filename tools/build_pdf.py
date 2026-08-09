@@ -198,7 +198,10 @@ def build_manual(marks: PageMarks) -> tuple[list[str], list[tuple[str, str]]]:
         elif head == "# Beslag":
             key = "beslag"
             toc.append((key, "Beslag"))
-            pages.append(simple_page(section, marks, key, css="beslag", scale=0.78))
+            # Den smale notasjonsforklaringen over tabellen koster ca. 20 mm,
+            # og 14 rader beslag fyller allerede siden. Glyfene tas derfor ned
+            # fra 0,78 til 0,70 - hele oversikten skal sta pa EN side.
+            pages.append(simple_page(section, marks, key, css="beslag", scale=0.70))
         elif head == "# Delene":
             key = "delene"
             toc.append((key, "Delene"))

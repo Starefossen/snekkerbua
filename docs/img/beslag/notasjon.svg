@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 910 258" preserveAspectRatio="xMinYMid meet">
+  <title>Slik leser du beslaglista</title>
+  <g fill="none" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(70 118) scale(9)" stroke-width="0.89">
+      <path d="M 0 -4.88 L 2.83 -1.8 L 19.98 -1.8 L 19.98 -1.8 L 22.86 -2.5 L 25.73 -1.8 L 28.61 -2.5 L 31.48 -1.8 L 34.36 -2.5 L 37.23 -1.8 L 40.11 -2.5 L 42.98 -1.8 L 45.86 -2.5 L 48.73 -1.8 L 51.61 -2.47 L 54.48 -1.17 L 57.36 -0.78 L 60 0 L 60 0 L 60 0 L 57.36 0.78 L 54.48 1.17 L 51.61 2.47 L 48.73 1.8 L 45.86 2.5 L 42.98 1.8 L 40.11 2.5 L 37.23 1.8 L 34.36 2.5 L 31.48 1.8 L 28.61 2.5 L 25.73 1.8 L 22.86 2.5 L 19.98 1.8 L 19.98 1.8 L 2.83 1.8 L 0 4.88 Z"/>
+      <path d="M 4.49 0 L 4.26 0.37 L 3.8 0.6 L 3.5 0.78 L 3.49 1.13 L 3.53 1.64 L 3.32 2.03 L 2.88 2.02 L 2.45 1.73 L 2.15 1.56 L 1.85 1.73 L 1.42 2.02 L 0.98 2.03 L 0.77 1.64 L 0.81 1.13 L 0.8 0.78 L 0.5 0.6 L 0.04 0.37 L -0.19 0 L 0.04 -0.37 L 0.5 -0.6 L 0.8 -0.78 L 0.81 -1.13 L 0.77 -1.64 L 0.98 -2.03 L 1.42 -2.02 L 1.85 -1.73 L 2.15 -1.56 L 2.45 -1.73 L 2.88 -2.02 L 3.32 -2.03 L 3.53 -1.64 L 3.49 -1.13 L 3.5 -0.78 L 3.8 -0.6 L 4.26 -0.37 Z" stroke-width="0.56"/>
+    </g>
+    <line x1="70" y1="169.88" x2="70" y2="206" stroke-width="2.4"/>
+    <line x1="610" y1="169.88" x2="610" y2="206" stroke-width="2.4"/>
+    <line x1="70" y1="192" x2="610" y2="192" stroke-width="2.4"/>
+    <path d="M 79.13 185.87 L 70 192 L 79.13 198.13" stroke-width="2.4"/>
+    <path d="M 600.87 198.13 L 610 192 L 600.87 185.87" stroke-width="2.4"/>
+    <text x="340" y="240" font-family="Helvetica, Arial, sans-serif" font-size="41" font-weight="normal" text-anchor="middle" fill="#111" stroke="none">60 = lengde (mm)</text>
+    <line x1="443.8" y1="95.5" x2="473.8" y2="95.5" stroke-width="2.4"/>
+    <line x1="443.8" y1="140.5" x2="473.8" y2="140.5" stroke-width="2.4"/>
+    <path d="M 374 56 L 458.8 56 L 458.8 95.5" stroke-width="2.4"/>
+    <path d="M 453.22 87.2 L 458.8 95.5 L 464.38 87.2" stroke-width="2.4"/>
+    <line x1="458.8" y1="186.5" x2="458.8" y2="140.5" stroke-width="2.4"/>
+    <path d="M 464.38 148.8 L 458.8 140.5 L 453.22 148.8" stroke-width="2.4"/>
+    <text x="366" y="68" font-family="Helvetica, Arial, sans-serif" font-size="41" font-weight="normal" text-anchor="end" fill="#111" stroke="none">5 = tykkelse (mm)</text>
+    <text x="684" y="142" font-family="Helvetica, Arial, sans-serif" font-size="66" font-weight="bold" text-anchor="start" fill="#111" stroke="none">100x</text>
+    <line x1="722" y1="64" x2="722" y2="88" stroke-width="2.4"/>
+    <path d="M 716.98 84.53 L 722 92 L 727.02 84.53" stroke-width="2.4"/>
+    <text x="722" y="50" font-family="Helvetica, Arial, sans-serif" font-size="34" font-weight="normal" text-anchor="middle" fill="#111" stroke="none">antall</text>
+  </g>
+</svg>

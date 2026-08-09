@@ -304,6 +304,154 @@ def wall_fix_contacts(new_parts, count):
     return out
 
 
+# ---------------------------------------------------------------------------
+# WHICH FASTENER GOES IN WHICH CONTACT PATCH
+# ---------------------------------------------------------------------------
+# contacts() finds the patches; the JOINTS table in tools/gen_doc_tables.py
+# says what is driven through each joint. The bridge between the two is the
+# pair of PART NAMES that meet, plus the axis they meet across - which is
+# enough, because no two joints in this bed join the same pair of parts across
+# the same axis. J4 is the reason the axis is needed at all: the same joint
+# drives a 6x120 sideways through the ladder upright into the rung end AND a
+# 5x60 straight down through the rung into the block under it, and the reader
+# has to be told which is which.
+#
+# A patch that matches nothing here carries no fastener - two parts that
+# simply bear on one another. On a step that badges its arrows those are left
+# undrawn, because a lettered page has no way to say "this one is not a screw".
+_PART = {
+    "post":        r"Corner Post (?:Back|Front) (?:Left|Right)",
+    "post_back":   r"Corner Post Back (?:Left|Right)",
+    "post_front":  r"Corner Post Front (?:Left|Right)",
+    "rail_back":   r"Upper Side Rail Back",
+    "rail_front":  r"Upper Side Rail Front",
+    "bench_back":  r"Bench Rail Back \(continuous\)",
+    "bench_front": r"Bench Rail Front (?:Left|Right) \(segment\)",
+    "bench_blk_b": r"Bench Rail Bearing Block Back (?:Left|Right)",
+    "bench_blk_f": r"Bench Rail Bearing Block Front (?:Left|Right)",
+    "ledger":      r"Table Ledger Back",
+    "beam":        r"End Beam (?:Left|Right)",
+    "beam_blk":    r"End Beam Bearing Block (?:Left|Right) (?:Back|Front)",
+    "stub":        r"Bench Stub Leg (?:Back|Front) (?:Left|Right)",
+    "upright":     r"Ladder Upright (?:Left|Right)",
+    "rung":        r"Ladder Rung_\d+",
+    "rung_blk":    r"Rung Block (?:Left|Right)_\d+",
+    "panel":       r"Movable Panel \(bed mode\)",
+    "batten":      r"Panel Stiffener Batten (?:Left|Right) \(bed mode\)",
+}
+
+# (joint, part a, part b, contact axis, the trade names driven there). The
+# names are prefixes of the ones in JOINTS - enough to pick the row out of the
+# step's own fastener list, which is where the count and the letter come from.
+JOINT_CONTACTS = [
+    ("J1",    "post",        "beam",       0, ["Treskrue 6×90"]),
+    ("J1-B",  "beam_blk",    "post",       0, ["Treskrue 6×90"]),
+    ("J2",    "post_front",  "rail_front", 1, ["Treskrue 6×80"]),
+    ("J2-B",  "post_back",   "rail_back",  2, ["Treskrue 6×120"]),
+    ("J3",    "upright",     "rail_front", 1, ["Treskrue 6×80"]),
+    ("J4",    "rung",        "rung_blk",   2, ["Treskrue 5×60"]),
+    ("J4",    "rung",        "upright",    0, ["Treskrue 6×120"]),
+    ("J5",    "upright",     "rung_blk",   0, ["Treskrue 5×60"]),
+    ("J8",    "bench_front", "post_front", 1, ["Treskrue 6×80"]),
+    ("J8-B",  "bench_back",  "post_back",  0, ["Treskrue 6×90"]),
+    ("J9-B",  "bench_blk_b", "post_back",  0, ["Treskrue 6×90"]),
+    ("J9-F",  "bench_blk_f", "post_front", 1, ["Treskrue 6×70"]),
+    ("J10",   "bench_front", "stub",       2, ["Vinkelbeslag 90",
+                                               "Treskrue 5×40",
+                                               "Treskrue 5×70"]),
+    ("J10",   "stub",        "bench_back", 2, ["Vinkelbeslag 90",
+                                               "Treskrue 5×40",
+                                               "Treskrue 5×70"]),
+    ("J12",   "post_back",   "ledger",     0, ["Vinkelbeslag 40",
+                                               "Treskrue 5×40"]),
+    ("J13a",  "panel",       "batten",     2, ["Treskrue 5×60"]),
+    ("J13b",  "panel",       "rung",       2, ["U-brakett", "Senkhodeskrue"]),
+    ("J13c",  "panel",       "bench_back", 2, ["Krokplate", "Senkhodeskrue"]),
+]
+
+
+def _is_part(kind, label):
+    return re.fullmatch(_PART[kind], label) is not None
+
+
+def contact_fasteners(contact):
+    """The trade-name prefixes driven at this patch, or () if none are."""
+    a, b, axis = contact[4].label, contact[5].label, contact[1]
+    for _jid, pa, pb, ax, names in JOINT_CONTACTS:
+        if ax != axis:
+            continue
+        if ((_is_part(pa, a) and _is_part(pb, b))
+                or (_is_part(pa, b) and _is_part(pb, a))):
+            return tuple(names)
+    return ()
+
+
+def contact_badges(contact, letters):
+    """The badge letters this patch should carry, in table order."""
+    out = set()
+    for want in contact_fasteners(contact):
+        for name, letter in letters.items():
+            if name.startswith(want):
+                out.add(letter)
+    return tuple(sorted(out))
+
+
+def _apart(a, b, gap):
+    return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 > gap * gap
+
+
+def _in_rect(p, rect, grow=0.0):
+    x, y, w, h = rect
+    return (x - grow <= p[0] <= x + w + grow
+            and y - grow <= p[1] <= y + h + grow)
+
+
+def choose_markers(pts, letters, inset=None):
+    """Which fastening points get an arrow. -> [(xy, contact, badges), ...]
+
+    Without letters this is the old rule and nothing else: walk the patches
+    biggest first and keep the ones that do not crowd a marker already placed.
+
+    With letters there is one more duty. A step that drives three kinds of
+    screw has to SHOW all three, and the odd one out is regularly the one that
+    loses the crowding test - the 6x120 into the ladder rung ends sits 36 mm
+    from the 5x60 that goes down into the block below it, so the plain rule
+    would drop every last one of them and leave badge B with nowhere to point.
+    So after the ordinary pass, any letter with fewer than two markers is given
+    them, at a tighter spacing. The letters keep the arrows apart where the
+    geometry cannot.
+    """
+    tagged = [(p2, c, contact_badges(c, letters)) for p2, c in pts]
+    if letters:
+        tagged = [t for t in tagged if t[2]]
+    if inset is not None:
+        # A point under the inset panel has nothing to point at: the panel is
+        # opaque and covers the very line work the arrow is about.
+        tagged = [t for t in tagged if not _in_rect(t[0], inset, 8.0)]
+
+    keep = []
+    for item in tagged:
+        if all(_apart(item[0], q[0], 52.0) for q in keep):
+            keep.append(item)
+        if len(keep) >= 34:
+            break
+    if not letters:
+        return keep
+
+    for letter in sorted({l for _p, _c, tags in tagged for l in tags}):
+        seen = sum(1 for _p, _c, tags in keep if letter in tags)
+        for item in tagged:
+            if seen >= 2:
+                break
+            if letter not in item[2] or item in keep:
+                continue
+            if seen and not all(_apart(item[0], q[0], 20.0) for q in keep):
+                continue
+            keep.append(item)
+            seen += 1
+    return keep
+
+
 def thin_out(points, limit, min_gap):
     """Keep markers legible: drop points that crowd one already kept."""
     kept = []
@@ -325,6 +473,9 @@ class Page:
     def __init__(self, x0, y0, x1, y1):
         self.x0, self.y0, self.x1, self.y1 = x0, y0, x1, y1
         self.body = []
+        # Where the badge letters have already landed, so the next row can
+        # step out of their way instead of on top of them.
+        self.badge_spots = []
 
     @property
     def w(self):
@@ -575,6 +726,65 @@ def joint_section(page, box, contact, view):
                    (ox + fn + sign * reach, oy), INK, W_MARK, 16)
 
 
+BADGE_R = 25.0         # the circled letters, model mm
+
+
+def badge(page, centre, letter):
+    """One circled sans letter - the same mark the step table carries."""
+    page.circle(centre, BADGE_R, fill="#ffffff", stroke=INK, width=W_RULE)
+    page.text((centre[0], centre[1] - BADGE_R * 0.40), letter,
+              BADGE_R * 1.20, anchor="middle", weight="bold")
+    page.badge_spots.append(centre)
+
+
+def badge_row(page, tail, direction, letters, inset=None):
+    """The letters for one fastening point, parked at the arrow's tail.
+
+    Always laid out left to right on the page, whichever way the arrow points,
+    so a joint that takes a bracket and two screws reads "A B D" exactly as the
+    inset lists them.
+
+    The natural place is straight back along the tail, far enough that the
+    row's own width can never reach the arrowhead. Three things can spoil it:
+    the page edge, the inset panel, and another row. Two joints of different
+    kinds can sit within a badge of each other - the 6x120 into a ladder rung
+    end is 25 mm from the 5x60 driven down into the block below it - and two
+    touching circles would read as one two-letter group. So a handful of
+    positions are tried (further back, or out to either side of the tail) and
+    the cleanest one wins.
+    """
+    n = len(letters)
+    pitch = 2 * BADGE_R + 8
+    half = (n * pitch - 8) / 2
+    dx, dy = direction
+    base = half * abs(dx) + BADGE_R * abs(dy) + 12
+    aside = half * abs(dy) + BADGE_R * abs(dx) + 12
+
+    def row_at(cx, cy):
+        return [(cx + (i - (n - 1) / 2) * pitch, cy) for i in range(n)]
+
+    tries = [row_at(tail[0] - dx * (base + k * pitch),
+                    tail[1] - dy * (base + k * pitch)) for k in range(4)]
+    tries += [row_at(tail[0] - dy * s * aside, tail[1] + dx * s * aside)
+              for s in (1, -1)]
+
+    def cost(row):
+        out = 0
+        for c in row:
+            if not (page.x0 + BADGE_R + 8 <= c[0] <= page.x1 - BADGE_R - 8
+                    and page.y0 + BADGE_R + 8 <= c[1] <= page.y1 - BADGE_R - 8):
+                out += 6
+            if inset is not None and _in_rect(c, inset, BADGE_R * 0.7):
+                out += 3
+            out += sum(1 for q in page.badge_spots
+                       if not _apart(c, q, 2 * BADGE_R + 6))
+        return out
+
+    row = min(((cost(r), k, r) for k, r in enumerate(tries)))[2]
+    for centre, ch in zip(row, letters):
+        badge(page, centre, ch)
+
+
 def draw_inset(page, box, view, step_fasteners, glyph_dir, contact):
     """The corner panel: the joint in section, then glyph + count per row."""
     x, y, w, h = box
@@ -592,18 +802,22 @@ def draw_inset(page, box, view, step_fasteners, glyph_dir, contact):
         page.line((x + 14, y + h - detail_h - 14),
                   (x + w - 14, y + h - detail_h - 14), GREY, W_LEAD)
     top = y + h - detail_h - 26 if detail_h > row_h * 0.9 else y + h - 12
-    for name, qty, svg in rows:
+    for name, qty, svg, letter in rows:
+        left = x + 16
+        if letter:
+            badge(page, (left + BADGE_R, top - row_h / 2), letter)
+            left += 2 * BADGE_R + 16
         gw, gh = glyph_dims(os.path.join(glyph_dir, svg))
         # Every glyph is drawn to one scale and carries it in its viewBox
         # height, so a long screw stays longer than a short one here too.
         eh = min(row_h * 0.72 * gh / 120.0, row_h * 0.92)
         ew = eh * gw / gh
-        avail = w - 30 - row_h * 1.5
+        avail = x + w - 14 - row_h * 1.5 - left
         if ew > avail:
             eh *= avail / ew
             ew = avail
         page.embed_svg(os.path.join(glyph_dir, svg),
-                       x + 16, top - row_h / 2 - eh / 2, ew, eh)
+                       left, top - row_h / 2 - eh / 2, ew, eh)
         page.text((x + w - 16, top - row_h / 2 - row_h * 0.20),
                   f"{qty}x", row_h * 0.62, anchor="end", weight="bold")
         top -= row_h
@@ -764,19 +978,16 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         # One marker per wall fixing, not per joint: the count that matters
         # to the builder is how many screws go into the wall.
         cts = wall_fix_contacts(
-            new, max((int(q) for _n, q, _s in fasteners), default=2))
+            new, max((q for _n, q, _s, _l in fasteners), default=2))
     elif is_mattress:
         cts = []
     else:
         cts = contacts(new, prior)
+    # A step that drives only one kind of fastener needs no letters: the glyph
+    # in its table is already the whole answer.
+    letters = {name: letter for name, _q, _s, letter in fasteners if letter}
     pts = [(view.xy(c[0]), c) for c in cts]
-    keep = []
-    for p2, c in pts:
-        if all((p2[0] - q[0][0]) ** 2 + (p2[1] - q[0][1]) ** 2 > 52.0 ** 2
-               for q in keep):
-            keep.append((p2, c))
-        if len(keep) >= 34:
-            break
+    keep = choose_markers(pts, letters)
 
     if is_mattress:
         # The information panel carries a section as well as three lines of
@@ -790,6 +1001,12 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                                                  + (1.6 if has_section else 0.3)))
     bx, by = emptiest_corner(combined.get("prior", []) + new_only,
                              page, inset_w, inset_h)
+    # Now that the panel has a place, pick the markers again without the ones
+    # it would have swallowed. The first pass only had to be good enough to
+    # size the panel, which is the number of fastener rows plus a section or
+    # not - and that survives the second.
+    box = (bx, by, inset_w, inset_h)
+    keep = choose_markers(pts, letters, inset=box) or keep
 
     if is_mattress:
         info_panel(page, (bx, by, inset_w, inset_h), G)
@@ -799,7 +1016,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
 
     # A marker at every fastening point: a short arrow along the contact
     # normal, i.e. the direction the screw travels, ending on the joint.
-    for p2, c in keep:
+    for p2, c, tags in keep:
         # contacts() always lists the NEW part first, and `sign` is the way
         # from it into the part it lands on - which is the way the screw goes.
         axis = [0.0, 0.0, 0.0]
@@ -809,9 +1026,14 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         if nrm < 1e-6:
             page.circle(p2, 13, width=W_MARK)
             page.dot(p2, 4)
+            if tags:
+                badge_row(page, (p2[0], p2[1] + 20), (0.0, -1.0), tags, box)
             continue
         dx, dy = dx / nrm, dy / nrm
-        page.arrow((p2[0] - dx * 62, p2[1] - dy * 62), p2, INK, W_MARK, 16)
+        tail = (p2[0] - dx * 62, p2[1] - dy * 62)
+        page.arrow(tail, p2, INK, W_MARK, 16)
+        if tags:
+            badge_row(page, tail, (dx, dy), tags, box)
 
     # Leaders from the inset to the joints, or one magnifier when there is
     # only a location or two to point at.
@@ -839,7 +1061,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
             # at the nearest few and the markers carry the rest.
             near = sorted(keep, key=lambda kp: (kp[0][0] - anchor[0]) ** 2
                           + (kp[0][1] - anchor[1]) ** 2)[:4]
-            for p2, _c in near:
+            for p2, _c, _tags in near:
                 page.line(_edge_of_box(anchor, p2, bx, by, inset_w, inset_h),
                           p2, GREY, W_LEAD, dash="16 14")
 
@@ -873,18 +1095,29 @@ def to_png(svg_path, png_path, width):
 # DRIVER
 # ---------------------------------------------------------------------------
 def step_fastener_glyphs(st, glyph_dir):
-    """[(handelsnavn, antall, svg-filnavn), ...] for one step."""
+    """[(handelsnavn, antall, svg-filnavn, merkebokstav), ...] for one step.
+
+    Commonest first, ties broken by name - the order the inset draws them in,
+    which is also the order the letters run in. tools/gen_doc_tables.py's
+    step_badges() derives the same letters from the same rows for the page, so
+    the drawing and the table cannot drift apart.
+    """
     sys.path.insert(0, os.path.join(ROOT, "tools"))
     import gen_glyphs
-    out = []
+    rows = []
     for line in st["fasteners"]:
         # "8× Treskrue 5×40 forsenket Torx" - only the count is followed by a
         # space, so the first "× " is the one that separates it.
         qty, name = line.split("× ", 1)
+        rows.append((name, int(qty.strip())))
+    rows.sort(key=lambda r: (-r[1], r[0]))
+    letters = gen_glyphs.BADGE_ALPHABET if len(rows) > 1 else [None] * len(rows)
+
+    out = []
+    for (name, qty), letter in zip(rows, letters):
         svg = gen_glyphs.slug(name) + ".svg"
         if os.path.exists(os.path.join(glyph_dir, svg)):
-            out.append((name, qty.strip(), svg))
-    out.sort(key=lambda r: -int(r[1]))
+            out.append((name, qty, svg, letter))
     return out
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMinYMid meet">
   <title>To personer til løftet</title>
-  <g fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="none" stroke="#111" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="6" cy="3.5" r="1.7" />
     <path d="M6 5.2v3.3" />
     <path d="m2 13 4-4.5 4 4.5" />

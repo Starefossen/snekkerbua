@@ -285,6 +285,30 @@ def step_fastener_rows(st):
     return sorted(total.items())
 
 
+# The letters a step's fastener kinds are badged with. tools/gen_glyphs.py
+# draws them and holds the same alphabet.
+BADGE_ALPHABET = "ABCDEFGH"
+
+
+def step_badges(st):
+    """{handelsnavn: 'A'} for a step that drives more than one kind of fastener.
+
+    A step with one kind needs no letters - the glyph in its table IS the
+    answer, and a badge on every arrow would be noise. A step with several
+    does: the letter is what ties an arrow in the drawing to a row in the
+    table, so the reader can see which of the three screws goes where.
+
+    The order is the order the inset and the table use: the commonest first,
+    ties broken by name. tools/render_lineart.py derives the same letters from
+    the same rows, so the drawing and the page can never disagree.
+    """
+    rows = step_fastener_rows(st)
+    if len(rows) < 2:
+        return {}
+    order = sorted(rows, key=lambda r: (-r[1], r[0]))
+    return {name: BADGE_ALPHABET[i] for i, (name, _q) in enumerate(order)}
+
+
 def step_fastener_summary(st):
     """The fastener line for one step, summed from the joints it completes."""
     return [f"{qty}× {name}" for name, qty in step_fastener_rows(st)]
@@ -1365,7 +1389,11 @@ def emit_montering(G, root, steps, idx):
     total_fast = hardware_total(steps)          # also asserts the step counts
     glyph = gen_glyphs.emit_fastener_glyphs(sorted(total_fast),
                                             os.path.join(img_dir, "beslag"))
+    legend = gen_glyphs.emit_notation_legend(os.path.join(img_dir, "beslag"))
     pikto = gen_glyphs.emit_pictograms(os.path.join(img_dir, "ikon"))
+    # As many letters as the busiest step needs, and no more.
+    widest = max((len(step_badges(st)) for st in steps), default=0)
+    merke = gen_glyphs.emit_badges(os.path.join(img_dir, "ikon"), widest)
 
     def gimg(name, screw_px, cap=None):
         f = glyph[name]
@@ -1405,7 +1433,12 @@ def emit_montering(G, root, steps, idx):
     L.append("\n")
 
     # ----- page 3: hardware -----------------------------------------------
+    # The legend first: nothing on this page says what the two numbers in
+    # "5×60" are, or what the "100x" counts. One measured exemplar does.
     L.append("---\n\n# Beslag\n\n")
+    L.append(_img("img/beslag/" + legend, 104,
+                  "5 = tykkelse i mm, 60 = lengde i mm, 100x = antall")
+             + "\n\n")
     L.append("| | |\n|:---:|---|\n")
     for name, qty in sorted(total_fast.items(), key=lambda kv: (-kv[1], kv[0])):
         L.append(f"| {gimg(name, 44)} **{qty}x** | {name} |\n")
@@ -1417,9 +1450,11 @@ def emit_montering(G, root, steps, idx):
     L.append("| Del | Dim. | Lengde | Ant. |\n|---|---|---:|---:|\n")
     for no_name, section, length, qty, _sp, _en in parts_rows:
         L.append(f"| {no_name} | {section} | {_fmt(length)} | **{qty}** |\n")
-    L.append(f"\n**{n_parts} deler.** Posisjoner: "
-             "[kappliste](generated/kappliste.md). Hva du skal kjøpe: "
-             "[innkjøpsliste](generated/innkjopsliste.md).\n\n")
+    L.append(f"\n**{n_parts} deler.** **Ant.** er antallet — det samme tallet "
+             "som står som `4×` på stegsidene. **Dim.** og **Lengde** er i "
+             "millimeter.\n\n")
+    L.append("Posisjoner: [kappliste](generated/kappliste.md). Hva du skal "
+             "kjøpe: [innkjøpsliste](generated/innkjopsliste.md).\n\n")
 
     # ----- the step pages --------------------------------------------------
     order = [j["id"] for j in JOINTS]
@@ -1438,7 +1473,19 @@ def emit_montering(G, root, steps, idx):
             L.append("\n")
 
         fast = step_fastener_rows(st)
-        if fast:
+        badges = step_badges(st)
+        if fast and badges:
+            # More than one kind in this step: the letter column is the key to
+            # the same letters on the drawing's fastening arrows. Listed in
+            # letter order, which is the order the drawing's inset lists them
+            # in too - commonest first.
+            L.append("| | | |\n|:---:|:---:|---|\n")
+            for name, qty in sorted(fast, key=lambda r: badges[r[0]]):
+                L.append(f"| {_img('img/ikon/' + merke[badges[name]], 20, badges[name])}"
+                         f" | {gimg(name, 30, cap=72)} **{qty}x** | "
+                         f"{_fast_short(name)} |\n")
+            L.append("\nBokstavene viser hvor på tegningen hver type går.\n\n")
+        elif fast:
             L.append("| | |\n|:---:|---|\n")
             for name, qty in fast:
                 L.append(f"| {gimg(name, 30, cap=72)} **{qty}x** | "

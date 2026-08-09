@@ -54,11 +54,18 @@ PICTO_PX_PER_UNIT = 13.333  # 24-rutenettet -> 320 px per ikon
 ISO_DX = 0.52
 ISO_DY = -0.29
 
-# Piktogrammene ligger på Lucides rutenett: 24x24 brukerenheter, 2 enheter
-# strek. Ett piktogram trykkes i ca. 19 mm, så streken blir 1,6 mm — tung nok
-# til å bli svart på papir og fin nok til å holde motivet åpent.
+# Piktogrammene ligger på Lucides rutenett: 24x24 brukerenheter. Lucide tegner
+# for skjerm og setter streken til 2 enheter — 8,3 % av ikonhøyden. Trykt i
+# 19 mm blir det 1,6 mm, og da klumper motivet seg: to-personer og veggfeste-ja
+# gikk nesten igjen i seg selv. 1,25 enheter er ca. 1,0 mm på siden — i slekt
+# med den svarte streken i steg­tegningene ved siden av, og fortsatt 0,5 mm om
+# et ikon settes så lite som 10 mm.
+#
+# Streken settes HER, på gruppen ikonkroppen legges i, og ikke i ikonfilene:
+# de vendorte Lucide-filene skal ligge som de kom, og hele settet — Lucide og
+# hanna — skal ha nøyaktig samme vekt.
 PICTO_SIZE = 24
-PICTO_STROKE = 2.0
+PICTO_STROKE = 1.25
 
 _STOPWORDS = {
     "forsenket", "torx", "varmforsinket", "elforsinket", "etter", "av",
@@ -627,6 +634,146 @@ def fastener_svg(name: str) -> str:
 
 
 # --------------------------------------------------------------------------
+# Notasjonsforklaring og merkebokstaver
+# --------------------------------------------------------------------------
+#
+# Beslagsiden skriver "5×60" og "100x" uten å si hva tallene er. Forklaringen
+# under er ett eneste eksemplar tegnet stort, med målsetting på de tre
+# størrelsene: lengden langs skaftet, tykkelsen tvers over gjengene, og
+# antallet. Den står som et smalt bånd over beslagtabellen.
+#
+# Merkebokstavene (Ⓐ, Ⓑ, ...) settes på stegsidene der ett steg bruker mer
+# enn én type festemiddel: samme bokstav på pila i tegningen som i tabellen.
+
+FONT_STACK = "Helvetica, Arial, sans-serif"
+
+LEGEND_SCALE = 9.0          # brukerenheter per millimeter i forklaringen
+LEGEND_TEXT = 41.0          # tekststørrelse, brukerenheter
+LEGEND_HAIR = 2.4           # målelinjer - tynnere enn motivet
+LEGEND_STROKE = 8.0         # skruens hovedkontur, brukerenheter
+LEGEND_DETAIL = 5.0         # skruens innvendige detalj
+
+BADGE_ALPHABET = "ABCDEFGH"
+
+
+def _text(x, y, s, size, anchor="start", weight="normal") -> str:
+    return (f'<text x="{_f(x)}" y="{_f(y)}" font-family="{FONT_STACK}" '
+            f'font-size="{_f(size)}" font-weight="{weight}" '
+            f'text-anchor="{anchor}" fill="{INK}" stroke="none">'
+            f'{_esc(s)}</text>')
+
+
+def _arrow_head(tip, direction, size=11.0, w=LEGEND_HAIR) -> str:
+    """Åpen pilspiss med spissen i `tip`, pekende `direction`."""
+    ux, uy = direction
+    n = math.hypot(ux, uy) or 1.0
+    ux, uy = ux / n, uy / n
+    legs = []
+    for turn in (2.55, -2.55):
+        bx = math.cos(turn) * ux - math.sin(turn) * uy
+        by = math.sin(turn) * ux + math.cos(turn) * uy
+        legs.append((tip[0] + bx * size, tip[1] + by * size))
+    return poly([legs[0], tip, legs[1]], stroke_width=_f(w))
+
+
+def _dim_line(a, b, size=11.0, w=LEGEND_HAIR) -> list[str]:
+    """Målelinje mellom to punkter, med pilspiss i begge ender."""
+    dx, dy = b[0] - a[0], b[1] - a[1]
+    return [line(a[0], a[1], b[0], b[1], stroke_width=_f(w)),
+            _arrow_head(a, (-dx, -dy), size, w),
+            _arrow_head(b, (dx, dy), size, w)]
+
+
+def notation_legend_svg(d: float = 5.0, length: float = 60.0,
+                        count: int = 100) -> str:
+    """Ett eksemplar med målsetting: lengde, tykkelse og antall.
+
+    Skruen tegnes av den samme koden som beslagglyfene, bare i større målestokk
+    og med litt finere strek, slik at den er den samme silhuetten leseren
+    finner igjen i tabellen under.
+    """
+    global STROKE_MM, DETAIL_MM
+    S = LEGEND_SCALE
+    keep = (STROKE_MM, DETAIL_MM)
+    STROKE_MM, DETAIL_MM = LEGEND_STROKE / S, LEGEND_DETAIL / S
+    try:
+        screw, (_x0, _y0, _x1, _y1) = glyph_wood_screw(d, length)
+        stroke_mm = STROKE_MM
+    finally:
+        STROKE_MM, DETAIL_MM = keep
+
+    ox, axis = 70.0, 118.0                      # hodets ytterflate, skruaksen
+    tip_x = ox + length * S
+    head_r = _head_dia(d) / 2.0 * S
+    thread_r = d / 2.0 * S
+    dim_x = ox + length * 0.72 * S              # midt i gjengene
+
+    body = [f'    <g transform="translate({_f(ox)} {_f(axis)}) '
+            f'scale({_f(S)})" stroke-width="{_f(stroke_mm)}">']
+    body += ["      " + e for e in screw]
+    body.append("    </g>")
+
+    # LENGDE: målelinje under hele skruen, med hjelpelinjer i begge ender.
+    y_dim = 192.0
+    for x in (ox, tip_x):
+        body.append("    " + line(x, axis + head_r + 8, x, y_dim + 14,
+                                  stroke_width=_f(LEGEND_HAIR)))
+    body += ["    " + e for e in _dim_line((ox, y_dim), (tip_x, y_dim))]
+    body.append("    " + _text((ox + tip_x) / 2, 240,
+                               f"{_fmt_dim(length)} = lengde (mm)",
+                               LEGEND_TEXT, "middle"))
+
+    # TYKKELSE: gjengediameteren er bare 5 mm, så pilene settes UTENFOR målet
+    # og peker innover - ellers ville de to spissene gå i hverandre. Den øvre
+    # pilas hale er samtidig henvisningen til teksten.
+    hair = _f(LEGEND_HAIR)
+    for y in (axis - thread_r, axis + thread_r):
+        body.append("    " + line(dim_x - 15, y, dim_x + 15, y,
+                                  stroke_width=hair))
+    body.append("    " + poly([(374, 56), (dim_x, 56),
+                               (dim_x, axis - thread_r)], stroke_width=hair))
+    body.append("    " + _arrow_head((dim_x, axis - thread_r), (0, 1), 10.0))
+    body.append("    " + line(dim_x, axis + thread_r + 46, dim_x,
+                              axis + thread_r, stroke_width=hair))
+    body.append("    " + _arrow_head((dim_x, axis + thread_r), (0, -1), 10.0))
+    body.append("    " + _text(366, 68, f"{_fmt_dim(d)} = tykkelse (mm)",
+                               LEGEND_TEXT, "end"))
+
+    # ANTALL: tallet slik det står i tabellen, med sin egen henvisning.
+    cnt_x = tip_x + 74
+    body.append("    " + _text(cnt_x, axis + 24, f"{count}x", 66.0,
+                               "start", "bold"))
+    body.append("    " + line(cnt_x + 38, 64, cnt_x + 38, 88,
+                              stroke_width=_f(LEGEND_HAIR)))
+    body.append("    " + _arrow_head((cnt_x + 38, 92), (0, 1), 9.0))
+    body.append("    " + _text(cnt_x + 38, 50, "antall", 34.0, "middle"))
+
+    return svg_document("Slik leser du beslaglista", 910.0, 258.0,
+                        "\n".join(body), LEGEND_HAIR)
+
+
+def _fmt_dim(v: float) -> str:
+    return f"{v:g}".replace(".", ",")
+
+
+BADGE_STROKE = 1.6          # ringen, på 24-rutenettet
+
+
+def badge_svg(letter: str) -> str:
+    """Én ringet bokstav, på det samme 24x24-rutenettet som piktogrammene.
+
+    Egen strekvekt, ikke piktogrammenes: merket settes bare 5 mm høyt i
+    stegtabellen, og ringen må holde seg svart der.
+    """
+    c, r = PICTO_SIZE / 2.0, 10.4
+    body = ("    " + circle(c, c, r) + "\n"
+            + "    " + _text(c, c + r * 0.40, letter, r * 1.20, "middle",
+                             "bold"))
+    return svg_document(f"Merke {letter}", PICTO_SIZE, PICTO_SIZE, body,
+                        BADGE_STROKE)
+
+
+# --------------------------------------------------------------------------
 # Piktogrammer
 # --------------------------------------------------------------------------
 #
@@ -785,6 +932,31 @@ def emit_fastener_glyphs(names: list[str], out_dir: str) -> dict[str, str]:
     return result
 
 
+def emit_notation_legend(out_dir: str) -> str:
+    """Skriver notasjonsforklaringen til beslagsiden. -> filnavn."""
+    os.makedirs(out_dir, exist_ok=True)
+    fname = "notasjon.svg"
+    target = os.path.join(out_dir, fname)
+    with open(target, "w", encoding="utf-8") as fh:
+        fh.write(notation_legend_svg())
+    write_png(target, PNG_PX_PER_UNIT)
+    return fname
+
+
+def emit_badges(out_dir: str, n: int) -> dict[str, str]:
+    """Skriver de `n` første merkebokstavene. -> {bokstav: filnavn}."""
+    os.makedirs(out_dir, exist_ok=True)
+    result: dict[str, str] = {}
+    for letter in BADGE_ALPHABET[:n]:
+        fname = f"merke-{letter.lower()}.svg"
+        target = os.path.join(out_dir, fname)
+        with open(target, "w", encoding="utf-8") as fh:
+            fh.write(badge_svg(letter))
+        write_png(target, PICTO_PX_PER_UNIT)
+        result[letter] = fname
+    return result
+
+
 def emit_pictograms(out_dir: str) -> dict[str, str]:
     """Skriver "før du starter"-piktogrammene. -> {nøkkel: filnavn}."""
     os.makedirs(out_dir, exist_ok=True)
@@ -863,9 +1035,13 @@ def main(argv: list[str] | None = None) -> int:
 
     names = read_fastener_names(args.beslagliste)
     fast = emit_fastener_glyphs(names, args.beslag_dir)
+    legend = emit_notation_legend(args.beslag_dir)
     icons = emit_pictograms(args.ikon_dir)
+    badges = emit_badges(args.ikon_dir, 4)
 
     print(f"{len(fast)} beslagglyfer -> {args.beslag_dir}")
+    print(f"  {legend:<28} notasjonsforklaring")
+    print(f"  {len(badges)} merkebokstaver -> {args.ikon_dir}")
     for name, fname in fast.items():
         print(f"  {fname:<28} {name}")
     print(f"{len(icons)} piktogrammer -> {args.ikon_dir}")
