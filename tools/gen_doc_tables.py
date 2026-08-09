@@ -348,7 +348,10 @@ def build_steps(G):
         dict(
             n=0,
             title="Kapping, forboring og forsenking",
-            image=False,
+            # There IS a drawing for step 0, it is just not a view of the bed:
+            # tools/render_cutpage.py lays every purchase length out as a bar
+            # with its cuts marked. So `image` is true and `camera` is None.
+            image=True,
             parts=[],
             highlight=[],
             camera=None,
@@ -1422,6 +1425,18 @@ def emit_montering(G, root, steps, idx):
     L.append("---\n\n# Før du begynner\n\n")
     L.append("**Svart strek** er delen du setter opp nå. "
              "**Grå strek** er det som allerede står.\n\n")
+    # The drawings say four things with marks rather than words, and none of
+    # them are obvious the first time you meet them. They are explained once,
+    # here, and never repeated on a step page.
+    L.append("**Pila viser veien skruen går inn:** halen står på siden du "
+             "skrur fra, spissen i delen skruen skal ta tak i. Står det "
+             "**2×** ved pila, står det merket for to skruer på samme sted — "
+             "tegningen viser aldri færre festemidler enn steget bruker. "
+             "**Bokstaven i ringen** (Ⓐ, Ⓑ …) sier hvilken av stegets typer "
+             "det er, og går igjen i tabellen under bildet. **Ruta i hjørnet** "
+             "viser leddet i snitt, med delene i riktig innbyrdes størrelse, "
+             "skravur på snittflatene og skruen i full lengde — hodet på "
+             "skrusiden, spissen inne i mottakerdelen.\n\n")
     L.append("| Slik | Ikke slik | |\n|:---:|:---:|---|\n")
     for do, dont, line in PREP:
         yes = (_img("img/ikon/" + pikto[do], 72, do) + " "
@@ -1443,7 +1458,9 @@ def emit_montering(G, root, steps, idx):
     for name, qty in sorted(total_fast.items(), key=lambda kv: (-kv[1], kv[0])):
         L.append(f"| {gimg(name, 44)} **{qty}x** | {name} |\n")
     L.append("\nHvor hver enkelt går, og hva som forbores: "
-             "[beslagliste](generated/beslagliste.md).\n\n")
+             "[beslagliste](generated/beslagliste.md). Hvilken vei hver "
+             "enkelt drives, og hvorfor: "
+             "[skrueretninger](generated/skrueretninger.md).\n\n")
 
     # ----- page 4: parts ---------------------------------------------------
     L.append("---\n\n# Delene\n\n")
@@ -1462,7 +1479,7 @@ def emit_montering(G, root, steps, idx):
         L.append("---\n\n")
         L.append(f"# {st['n']}\n\n")
         L.append(f"## {st['title']}\n\n")
-        if st.get("image", True) and st["camera"]:
+        if st.get("image", True):
             L.append(f"![Steg {st['n']}](img/steg-{st['n']:02d}.png)\n\n")
 
         rows = step_part_rows(G, st, idx)
@@ -1517,6 +1534,132 @@ def _anchor(title):
         elif ch in " -":
             out.append("-")
     return "".join(out)
+
+
+# ---------------------------------------------------------------------------
+# WHICH WAY EVERY SCREW GOES - the sheet a human reviews
+# ---------------------------------------------------------------------------
+# The direction a screw is driven is what the arrows in docs/MONTERING.md
+# assert on every page, and it is the one thing in this documentation that
+# cannot be read off the model: the geometry says two boxes meet, not which
+# side the drill was on. So it is derived where it CAN be derived - a screw
+# has to pass through the member it is driven from and stop inside the one it
+# grips, and for most of these joints only one direction does that - and it is
+# reviewed where it cannot. This page is that review: one line per screw, with
+# the basis stated, so a builder can check the drawings against the joint.
+BASIS = {
+    "utledet": "utledet av tykkelsene",
+    "tvetydig": "fastsatt — begge veier holder målene",
+    "unntak": "fastsatt",
+    "gjelder ikke": "fastsatt",
+}
+
+# The drawing's part KINDS in Norwegian. The cut list names a piece by the
+# line it is counted on ("Bærekloss, benkevange (J9-B)"), which is the wrong
+# name here: a joint that meets either corner post should say "hjørnestolpe",
+# not name the one instance the packer happened to pick first.
+KIND_NO = {
+    "post": "hjørnestolpe", "post_back": "bakre hjørnestolpe",
+    "post_front": "fremre hjørnestolpe",
+    "rail": "sidevange", "rail_back": "bakre sidevange",
+    "rail_front": "fremre sidevange",
+    "bench_rail": "benkevange", "bench_back": "bakre benkevange",
+    "bench_front": "fremre benkevange",
+    "bench_blk_b": "bærekloss under bakre benkevange",
+    "bench_blk_f": "bærekloss under fremre benkevange",
+    "ledger": "bordbærelekt", "beam": "endebjelke",
+    "beam_blk": "bærekloss under endebjelke",
+    "stub": "stubbefot", "upright": "stigevange", "rung": "rungetrinn",
+    "rung_blk": "stigekloss", "guard": "rekkverksbord",
+    "guard_host": "hjørnestolpe / stigevange", "bed_slat": "køyespile",
+    "bench_slat": "benkespile", "panel": "løs plate",
+    "batten": "avstivningslekt",
+}
+
+
+def emit_skrueretninger(G, out_dir, idx):
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import render_lineart as RL
+
+    parts = list(G.parts) + [G.panel_bed] + list(G.battens_bed)
+    lo = [min(p.extents[j][0] for p in parts) for j in range(3)]
+    hi = [max(p.extents[j][1] for p in parts) for j in range(3)]
+    centre = tuple((a + b) / 2 for a, b in zip(lo, hi))
+
+    # One real contact patch per row of the drawing's joint table, so every
+    # line below is about members that actually touch in the model.
+    seen = {}
+    for c in RL.contacts(parts, []):
+        row, pa, pb = RL.contact_row(c)
+        if row is None or id(row) in seen:
+            continue
+        seen[id(row)] = (c, row, pa, pb)
+
+    L = [HEAD, "# Skrueretninger\n\n",
+         "Hvilken vei hver skrue drives, og hvorfor akkurat den veien. "
+         "Pilene på stegsidene i [MONTERING.md](../MONTERING.md) peker etter "
+         "denne tabellen: halen på siden du skrur fra, spissen i delen skruen "
+         "tar tak i.\n\n",
+         "**Utledet** betyr at bare én retning er fysisk mulig: skruen må gå "
+         f"klar gjennom delen den drives fra og ende inne i den andre, altså "
+         "`tykkelse(fra) < lengde < tykkelse(fra) + tykkelse(inn i)`. "
+         "**Fastsatt** betyr at begge retninger ville holdt målene, eller at "
+         "skruen ikke er en rett gjennomskrue i det hele tatt (skråskrue, "
+         "gjennomgående bolt) — da er retningen den som står i «Drives fra» i "
+         "[beslaglista](beslagliste.md), og den er satt for hånd.\n\n",
+         "| Ledd | Festemiddel | Retning | Grunnlag |\n",
+         "|---|---|---|---|\n"]
+
+    order = [j["id"] for j in JOINTS]
+    rows = sorted(seen.values(), key=lambda r: order.index(r[1]["jid"]))
+    n_derived = n_set = 0
+    written = set()
+    for c, row, pa, pb in rows:
+        for dr in row["drives"]:
+            axis, sign, target = RL.drive_axis_sign(c, row, pa, pb, dr, centre)
+            _guess, status = RL.derived_entry(c, row, pa, pb, dr)
+            entry = pb if target is pa else pa
+
+            def kind_of(part):
+                return row["a"] if part is pa else row["b"]
+
+            def dims(part):
+                return _no_section(G, idx[part.label][1])
+
+            e_no, t_no = KIND_NO[kind_of(entry)], KIND_NO[kind_of(target)]
+            if dr["plate"]:
+                what = f"**{dr['name']}** ligger på {t_no} og skrus fast der"
+            elif dr["into"] is not None and axis == 2:
+                way = "rett opp i" if sign > 0 else "rett ned i"
+                what = f"**{dr['name']}** {way} {t_no} ({dims(target)})"
+            elif dr["into"] is not None:
+                what = (f"**{dr['name']}** vannrett inn i {t_no} "
+                        f"({dims(target)}), fra sengesiden")
+            else:
+                what = (f"**{dr['name']}** gjennom {e_no} ({dims(entry)}) "
+                        f"→ inn i {t_no} ({dims(target)})")
+            basis = BASIS[status]
+            if dr["exempt"]:
+                basis += f" — {dr['exempt']}"
+            key = (row["jid"], what)
+            if key in written:              # the same joint, mirrored
+                continue
+            written.add(key)
+            if status == "utledet":
+                n_derived += 1
+            else:
+                n_set += 1
+            L.append(f"| **{row['jid']}** | {dr['per']}× {dr['name']} | "
+                     f"{what} | {basis} |\n")
+
+    L.append(f"\n**{n_derived}** av retningene er utledet av målene alene, "
+             f"**{n_set}** er fastsatt for hånd. De utledede kontrolleres ved "
+             f"hver tegning: stemmer ikke tabellen med målene, stopper "
+             f"`mise run montering`.\n\n")
+    L.append("Veggfestet (J14) står ikke her — det går rett gjennom den bakre "
+             "sidevangen og inn i veggen, og har ingen andre del å gå inn "
+             "i.\n")
+    write(os.path.join(out_dir, "skrueretninger.md"), "".join(L))
 
 
 def emit_beslagliste(out_dir, steps):
@@ -1639,6 +1782,7 @@ def emit(ns):
     emit_nokkelmal(G, out_dir, rows)
     emit_byggesteg(G, out_dir, steps, idx)
     emit_beslagliste(out_dir, steps)
+    emit_skrueretninger(G, out_dir, idx)
     emit_montering(G, G.OUT_DIR, steps, idx)
     emit_json(G, out_dir, steps, idx, rows)
     emit_step_meshes(G, steps, G.GROUP_DIR)

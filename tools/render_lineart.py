@@ -40,12 +40,28 @@ coordinate system. plane_xy() projects any 3-D point of the model into it, and
 that is what anchors every annotation to real geometry:
 
   * fastening points are the CONTACT PATCHES between the parts - two boxes
-    that meet on a face, computed from the parts' own extents. The marker
-    arrow at each one points along the contact normal, i.e. the way the screw
-    goes in.
+    that meet on a face, computed from the parts' own extents. WHICH WAY the
+    arrow at one of them points is NOT read off the geometry: the contact
+    normal is a property of the joint, not of the screwdriver, and for a good
+    half of the joints in this bed the two disagree. It is DATA. Every row of
+    JOINT_CONTACTS names, per fastener kind, the member the screw ENTERS FROM
+    (`frm`), or - where the screw does not cross the patch at all, as with the
+    bracket screws that go sideways into a stub leg - the member it is driven
+    INTO and along which axis (`into` + `axis`). The arrow's tail sits on the
+    entry side and its head points into the receiving member, along the screw.
+    Each row is the same fact docs/generated/beslagliste.md prints in its
+    "Drives fra" column, which is JOINTS[...]["side"] in tools/gen_doc_tables.py.
   * the corner inset carries the step's fasteners at large scale with their
-    counts, and a section through the step's biggest joint drawn from the two
-    members' real dimensions.
+    counts, and one SECTION per joint family in the step: the two members at
+    their true cross-section sizes and true relative positions, hatched the way
+    a cut piece of timber is hatched, with every fastener of that joint drawn
+    at its true length crossing the interface - head on the entry side, tip
+    inside the receiving member.
+  * a marker is allowed to stand for more than one screw (two screws 30 mm
+    apart are one mark on a page this size), and then it carries the count:
+    "2x" beside the badge. Nothing is thinned away - a mark that is dropped
+    for crowding hands its count to the mark that crowded it, and the page is
+    checked at build time to show every fastener the step's table lists.
   * leader lines run from the inset to the fastening points; a step with only
     one or two of them gets a circular magnifier of the real line work there
     instead.
@@ -55,6 +71,16 @@ that is what anchors every annotation to real geometry:
   * the mattress step gets an information panel whose numbers (platform top,
     mattress thickness, guard-band underside, and the opening between them)
     are read off the model.
+
+TWO PAGES ARE NOT PROJECTIONS OF THE BED
+----------------------------------------
+Steg 0 is the morning on the trestles - there is nothing standing to draw - and
+steg 10 is a 680 mm sub-assembly that disappears inside a 2 m frame. They get
+their own modules, called from render_all() with the same arguments as any
+other step so the driver does not have to know they are special:
+
+    tools/render_cutpage.py   every board bought, to scale, with its cuts
+    tools/render_panel.py     the loose panel, exploded, on its own
 
 Every drawing is written twice: an SVG (the real thing, and what to print) and
 a PNG made from it with rsvg-convert, because that is what docs/MONTERING.md
@@ -90,9 +116,16 @@ W_NEW = 7.0            # the parts this step is about
 W_HERO = 5.6           # the cover drawing
 W_RULE = 2.6           # inset borders, section outlines
 W_LEAD = 2.4           # leader lines
-W_MARK = 3.4           # fastening-point markers
+W_MARK = 5.2           # fastening-point markers - the page's loudest line
+W_HATCH = 1.5          # the 45 deg hatching on a cut face
 GREY = "#9a9a9a"
 INK = "#111111"
+
+# The marker arrow, as a fraction of the page's longer side. IKEA's arrows are
+# long: the eye has to catch the DIRECTION from across the page, and a stub
+# reads as a dot. This is about three times what the first version used.
+ARROW_FRAC = 0.078
+HEAD_FRAC = 0.22       # arrowhead length, as a fraction of the arrow
 
 FONT = "Helvetica, Arial, sans-serif"
 PAD = 70               # white margin around the bed, model mm
@@ -323,8 +356,11 @@ _PART = {
     "post":        r"Corner Post (?:Back|Front) (?:Left|Right)",
     "post_back":   r"Corner Post Back (?:Left|Right)",
     "post_front":  r"Corner Post Front (?:Left|Right)",
+    "rail":        r"Upper Side Rail (?:Back|Front)",
     "rail_back":   r"Upper Side Rail Back",
     "rail_front":  r"Upper Side Rail Front",
+    "bench_rail":  r"Bench Rail (?:Back \(continuous\)"
+                   r"|Front (?:Left|Right) \(segment\))",
     "bench_back":  r"Bench Rail Back \(continuous\)",
     "bench_front": r"Bench Rail Front (?:Left|Right) \(segment\)",
     "bench_blk_b": r"Bench Rail Bearing Block Back (?:Left|Right)",
@@ -336,37 +372,139 @@ _PART = {
     "upright":     r"Ladder Upright (?:Left|Right)",
     "rung":        r"Ladder Rung_\d+",
     "rung_blk":    r"Rung Block (?:Left|Right)_\d+",
+    "guard":       r"Guard Rail Front (?:Left|Right)_\d+",
+    "guard_host":  r"(?:Corner Post Front|Ladder Upright) (?:Left|Right)",
+    "bed_slat":    r"Bed Slat_\d+",
+    "bench_slat":  r"Bench Slat (?:Left|Right)_\d+",
     "panel":       r"Movable Panel \(bed mode\)",
     "batten":      r"Panel Stiffener Batten (?:Left|Right) \(bed mode\)",
 }
 
-# (joint, part a, part b, contact axis, the trade names driven there). The
-# names are prefixes of the ones in JOINTS - enough to pick the row out of the
-# step's own fastener list, which is where the count and the letter come from.
+
+def drive(name, per, frm=None, into=None, axis=None, sign=None, depth=0.0,
+          off=None, plate=None, exempt=None):
+    """One kind of fastener driven at one contact patch.
+
+    `name`  a prefix of the trade name in JOINTS - enough to find the row in
+            the step's own fastener list, which is where the count and the
+            badge letter come from.
+    `per`   how many of them this ONE patch takes.
+    `frm`   the member the screw enters from. The arrow then runs along the
+            patch normal, out of that member and into the other one. This is
+            the ordinary case and covers every joint where the screw does
+            what the joint does.
+    `into`  + `axis`: for a fastener that does NOT cross the patch - the
+            bracket screws that go sideways into a stub leg, say. The arrow
+            runs along `axis` into the named member, entering it on the face
+            that looks back towards the middle of the bed, which is the side
+            a screwdriver can reach. Give `sign` as well where that rule is
+            not the right one (a screw driven UP into a ledger from the
+            bracket flange underneath it).
+    `depth` mm from the contact patch INTO the member this one grips, along
+            the patch normal. Relative on purpose: the same row serves a joint
+            and its mirror image at the far end of the bed, and an absolute
+            offset would put the mark inside the wrong member on one of them.
+    `off`   {axis: mm} - the same thing across the patch, where there is no
+            mirror to worry about (Z is Z at both ends of the bed).
+    `plate` steel thickness, mm: this "fastener" is a bracket, and the section
+            draws it as a plate lying on the face it is screwed to.
+    `exempt` a Norwegian reason why the fit rule below does NOT decide this
+            one: a toe screw driven at an angle, or a bolt that goes right
+            through and takes a nut. Anything without a reason has to obey.
+    """
+    return dict(name=name, per=per, frm=frm, into=into, axis=axis, sign=sign,
+                depth=depth, off=off or {}, plate=plate, exempt=exempt)
+
+
+# The joints, as the drawing needs them: which two parts meet, across which
+# axis, and what is driven there - each with the direction it is driven in.
+# Every `frm` / `into` here is the "Drives fra" column of the beslagliste,
+# which is JOINTS[...]["side"] in tools/gen_doc_tables.py, restated as
+# geometry. If those two ever disagree the drawing is wrong, so this table is
+# the one to check against docs/ASSEMBLY.md.
 JOINT_CONTACTS = [
-    ("J1",    "post",        "beam",       0, ["Treskrue 6×90"]),
-    ("J1-B",  "beam_blk",    "post",       0, ["Treskrue 6×90"]),
-    ("J2",    "post_front",  "rail_front", 1, ["Treskrue 6×80"]),
-    ("J2-B",  "post_back",   "rail_back",  2, ["Treskrue 6×120"]),
-    ("J3",    "upright",     "rail_front", 1, ["Treskrue 6×80"]),
-    ("J4",    "rung",        "rung_blk",   2, ["Treskrue 5×60"]),
-    ("J4",    "rung",        "upright",    0, ["Treskrue 6×120"]),
-    ("J5",    "upright",     "rung_blk",   0, ["Treskrue 5×60"]),
-    ("J8",    "bench_front", "post_front", 1, ["Treskrue 6×80"]),
-    ("J8-B",  "bench_back",  "post_back",  0, ["Treskrue 6×90"]),
-    ("J9-B",  "bench_blk_b", "post_back",  0, ["Treskrue 6×90"]),
-    ("J9-F",  "bench_blk_f", "post_front", 1, ["Treskrue 6×70"]),
-    ("J10",   "bench_front", "stub",       2, ["Vinkelbeslag 90",
-                                               "Treskrue 5×40",
-                                               "Treskrue 5×70"]),
-    ("J10",   "stub",        "bench_back", 2, ["Vinkelbeslag 90",
-                                               "Treskrue 5×40",
-                                               "Treskrue 5×70"]),
-    ("J12",   "post_back",   "ledger",     0, ["Vinkelbeslag 40",
-                                               "Treskrue 5×40"]),
-    ("J13a",  "panel",       "batten",     2, ["Treskrue 5×60"]),
-    ("J13b",  "panel",       "rung",       2, ["U-brakett", "Senkhodeskrue"]),
-    ("J13c",  "panel",       "bench_back", 2, ["Krokplate", "Senkhodeskrue"]),
+    # Endebjelke -> stolpe: "fra bjelkens utside, inn mot stolpen".
+    dict(jid="J1", a="post", b="beam", axis=0,
+         drives=[drive("Treskrue 6×90", 2, frm="beam")]),
+    # Bæreklossen skrus fra sin frie ende inn i stolpen.
+    dict(jid="J1-B", a="beam_blk", b="post", axis=0,
+         drives=[drive("Treskrue 6×90", 2, frm="beam_blk")]),
+    # "Fra stolpens forside, gjennom stolpen inn i vangen."
+    dict(jid="J2", a="post_front", b="rail_front", axis=1,
+         drives=[drive("Treskrue 6×80", 2, frm="post_front")]),
+    # "Rett ned gjennom vangen i stolpetoppen" - vangen ligger PÅ stolpen.
+    dict(jid="J2-B", a="post_back", b="rail_back", axis=2,
+         drives=[drive("Treskrue 6×120", 2, frm="rail_back")]),
+    # "Fra stigevangens forside, inn i vangen."
+    dict(jid="J3", a="upright", b="rail_front", axis=1,
+         drives=[drive("Treskrue 6×80", 4, frm="upright")]),
+    # J4 er to skruer i samme ledd, og de går hver sin vei.
+    dict(jid="J4", a="rung", b="rung_blk", axis=2,
+         drives=[drive("Treskrue 5×60", 1, frm="rung")]),
+    dict(jid="J4", a="rung", b="upright", axis=0,
+         drives=[drive("Treskrue 6×120", 1, frm="upright")]),
+    # "Fra stigeåpningen, inn i vangens innside" - gjennom klossen.
+    dict(jid="J5", a="upright", b="rung_blk", axis=0,
+         drives=[drive("Treskrue 5×60", 2, frm="rung_blk")]),
+    # Køyespile og benkespile: ovenfra, ned i vangen.
+    dict(jid="J6", a="bed_slat", b="rail", axis=2,
+         drives=[drive("Treskrue 5×60", 1, frm="bed_slat")]),
+    # Rekkverksbordet ligger på innsiden: "fra sengesiden, inn i stolpen".
+    dict(jid="J7", a="guard", b="guard_host", axis=1,
+         drives=[drive("Treskrue 5×60", 2, frm="guard")]),
+    dict(jid="J8", a="bench_front", b="post_front", axis=1,
+         drives=[drive("Treskrue 6×80", 2, frm="post_front")]),
+    # "Skrått fra vangens forside inn i stolpen."
+    dict(jid="J8-B", a="bench_back", b="post_back", axis=0,
+         drives=[drive("Treskrue 6×90", 2, frm="bench_back",
+                       exempt="skråskrue gjennom vangens forside nær enden")]),
+    dict(jid="J9-B", a="bench_blk_b", b="post_back", axis=0,
+         drives=[drive("Treskrue 6×90", 2, frm="bench_blk_b")]),
+    # "Fra klossens bakside, inn i stolpen" - kortere skrue, 36 mm stolpe bak.
+    dict(jid="J9-F", a="bench_blk_f", b="post_front", axis=1,
+         drives=[drive("Treskrue 6×70", 2, frm="bench_blk_f")]),
+    # Benkevange -> stubbefot. Beslaget ligger flatt mot de to sammenfallende
+    # innerflatene og skrus vannrett inn i BEGGE; de to 5x70 er skråskruer
+    # nedenfra og opp i vangen. Ingen av beslagskruene krysser opplegget, så
+    # de er `into`, ikke `frm`.
+    dict(jid="J10", a="bench_front", b="stub", axis=2,
+         drives=[drive("Vinkelbeslag 90", 1, into="stub", axis=1, depth=20,
+                       plate=2.5),
+                 drive("Treskrue 5×40", 2, into="stub", axis=1, depth=62),
+                 drive("Treskrue 5×40", 2, into="bench_front", axis=1,
+                       depth=36),
+                 drive("Treskrue 5×70", 2, frm="stub",
+                       exempt="skråskrue nedenfra opp i vangen")]),
+    dict(jid="J10", a="stub", b="bench_back", axis=2,
+         drives=[drive("Vinkelbeslag 90", 1, into="stub", axis=1, depth=20,
+                       plate=2.5),
+                 drive("Treskrue 5×40", 2, into="stub", axis=1, depth=62),
+                 drive("Treskrue 5×40", 2, into="bench_back", axis=1,
+                       depth=36),
+                 drive("Treskrue 5×70", 2, frm="stub",
+                       exempt="skråskrue nedenfra opp i vangen")]),
+    # Benkespile -> benkevange: ovenfra, ned i vangen.
+    dict(jid="J11", a="bench_slat", b="bench_rail", axis=2,
+         drives=[drive("Treskrue 5×60", 1, frm="bench_slat")]),
+    # Bordbærelekta hviler på et beslag på stolpens innerflate: to skruer
+    # vannrett inn i stolpen, to opp i lekta.
+    dict(jid="J12", a="post_back", b="ledger", axis=0,
+         drives=[drive("Vinkelbeslag 40", 1, into="post_back", axis=0,
+                       off={2: -34}, plate=2.0),
+                 drive("Treskrue 5×40", 2, into="post_back", axis=0,
+                       off={2: -18}),
+                 drive("Treskrue 5×40", 2, into="ledger", axis=2, sign=1,
+                       depth=26)]),
+    dict(jid="J13a", a="panel", b="batten", axis=2,
+         drives=[drive("Treskrue 5×60", 6, frm="panel")]),
+    dict(jid="J13b", a="panel", b="rung", axis=2,
+         drives=[drive("U-brakett", 1, frm="panel", plate=4.0),
+                 drive("Senkhodeskrue", 2, frm="panel",
+                       exempt="gjennomgående bolt i platen, mutter under")]),
+    dict(jid="J13c", a="panel", b="bench_back", axis=2,
+         drives=[drive("Krokplate", 1, frm="panel", plate=4.0),
+                 drive("Senkhodeskrue", 2, frm="panel",
+                       exempt="gjennomgående bolt i platen, mutter under")]),
 ]
 
 
@@ -374,26 +512,154 @@ def _is_part(kind, label):
     return re.fullmatch(_PART[kind], label) is not None
 
 
-def contact_fasteners(contact):
-    """The trade-name prefixes driven at this patch, or () if none are."""
-    a, b, axis = contact[4].label, contact[5].label, contact[1]
-    for _jid, pa, pb, ax, names in JOINT_CONTACTS:
-        if ax != axis:
+# ---------------------------------------------------------------------------
+# WHICH WAY A SCREW CAN POSSIBLY GO
+# ---------------------------------------------------------------------------
+# A wood screw through a joint has to do three things at once: pass CLEAR
+# through the member it is driven from, END INSIDE the member it grips, and
+# not come out the far side of it. In millimetres:
+#
+#     thickness(entry) < length < thickness(entry) + thickness(receiver)
+#
+# For most joints in this bed only ONE of the two directions can satisfy that
+# - a 6x90 cannot be driven through a 98 mm post into a 48 mm beam, because it
+# would not even reach the beam - and then the direction is not a matter of
+# opinion at all. It is derived, and the table below is only checked against
+# it. Where both directions fit (a 6x80 through 36 mm into 48 mm works either
+# way round) the rule cannot help and the direction is what the joint's own
+# `side` column in tools/gen_doc_tables.py says: reviewed, human data.
+# Where NEITHER fits, the screw is not a straight through-screw at all - a toe
+# screw, or a bolt with a nut - and the drive must say so with `exempt`.
+def screw_fits(entry, receiver, axis, length):
+    t_e = entry.extents[axis][1] - entry.extents[axis][0]
+    t_r = receiver.extents[axis][1] - receiver.extents[axis][0]
+    return t_e < length < t_e + t_r
+
+
+def derived_entry(contact, row, pa, pb, dr):
+    """(entry member or None, status) - the physics, before the table.
+
+    status: 'utledet'      only one direction is possible; use it.
+            'tvetydig'     both are; the table decides.
+            'unntak'       neither, and the drive says why.
+            'umulig'       neither, and the drive does NOT say why - a bug.
+            'gjelder ikke' not a through-screw (a bracket, or driven along an
+                           axis of its own).
+    """
+    if dr["plate"] or dr["into"] is not None or dr["frm"] is None:
+        return None, "gjelder ikke"
+    if dr["exempt"]:
+        return None, "unntak"
+    axis = contact[1]
+    _d, length = fastener_size(dr["name"])
+    ok = [p for p, q in ((pa, pb), (pb, pa))
+          if screw_fits(p, q, axis, length)]
+    if len(ok) == 1:
+        return ok[0], "utledet"
+    return None, ("tvetydig" if ok else "umulig")
+
+
+def contact_row(contact):
+    """(row, part matching row['a'], part matching row['b']) or three Nones."""
+    a, b, axis = contact[4], contact[5], contact[1]
+    for row in JOINT_CONTACTS:
+        if row["axis"] != axis:
             continue
-        if ((_is_part(pa, a) and _is_part(pb, b))
-                or (_is_part(pa, b) and _is_part(pb, a))):
-            return tuple(names)
-    return ()
+        if _is_part(row["a"], a.label) and _is_part(row["b"], b.label):
+            return row, a, b
+        if _is_part(row["a"], b.label) and _is_part(row["b"], a.label):
+            return row, b, a
+    return None, None, None
 
 
-def contact_badges(contact, letters):
-    """The badge letters this patch should carry, in table order."""
-    out = set()
-    for want in contact_fasteners(contact):
-        for name, letter in letters.items():
-            if name.startswith(want):
-                out.add(letter)
-    return tuple(sorted(out))
+def _letter_of(prefix, letters):
+    for name, letter in letters.items():
+        if name.startswith(prefix):
+            return letter
+    return None
+
+
+def _full_name(prefix, names):
+    for name in names:
+        if name.startswith(prefix):
+            return name
+    return None
+
+
+def drive_axis_sign(contact, row, pa, pb, dr, centre):
+    """Which way this fastener travels, in the model's own axes.
+
+    -> (axis, sign, receiving part). `frm` reads the direction off the patch;
+    `into` puts it along its own axis, entering the named member from the face
+    that looks back into the room side of the bed.
+    """
+    if dr["into"] is not None:
+        axis = dr["axis"]
+        member = pa if row["a"] == dr["into"] else pb
+        if dr["sign"] is not None:
+            return axis, float(dr["sign"]), member
+        mid = sum(member.extents[axis]) / 2
+        return axis, (1.0 if mid > centre[axis] else -1.0), member
+    axis = contact[1]
+    entry = pa if row["a"] == dr["frm"] else pb
+    # THE HARD CHECK. The fit rule is the primary source; the table is only
+    # allowed to agree with it, or to decide where it genuinely cannot.
+    guess, status = derived_entry(contact, row, pa, pb, dr)
+    assert status != "umulig", (
+        f"{row['jid']}: {dr['name']} passer ikke gjennom "
+        f"{pa.label} eller {pb.label} langs akse {axis} — verken den ene "
+        f"eller den andre veien. Er det en skråskrue eller en gjennomgående "
+        f"bolt, må drive(...) si det med exempt=...")
+    if status == "utledet":
+        assert guess is entry, (
+            f"{row['jid']}: tabellen skrur {dr['name']} fra "
+            f"{entry.label}, men den eneste retningen skruen faktisk kan gå "
+            f"er fra {guess.label}. Rett `frm` i JOINT_CONTACTS.")
+        entry = guess
+    sign = contact[2] if entry is contact[4] else -contact[2]
+    return axis, sign, (pb if entry is pa else pa)
+
+
+def into_patch_side(contact, member):
+    """+1 or -1: the way from the contact patch into `member`."""
+    k = contact[1]
+    mid = sum(member.extents[k]) / 2
+    return 1.0 if mid > contact[0][k] else -1.0
+
+
+def marks_for(contact, letters, names, centre, view):
+    """Every fastener driven at one patch, as marker records."""
+    row, pa, pb = contact_row(contact)
+    if row is None:
+        return []
+    out = []
+    for dr in row["drives"]:
+        axis, sign, target = drive_axis_sign(contact, row, pa, pb, dr, centre)
+        p3 = list(contact[0])
+        p3[contact[1]] += dr["depth"] * into_patch_side(contact, target)
+        for k, v in dr["off"].items():
+            p3[k] += v
+        if axis != contact[1]:
+            # The head belongs on the face the screw actually goes through,
+            # not on the bearing surface the patch happens to be.
+            p3[axis] = (target.extents[axis][0] if sign > 0
+                        else target.extents[axis][1])
+        # ...and then a little PAST it, into the member the screw grips. An
+        # arrow that stops dead on the joint line reads as pointing AT the
+        # seam - and where the screw runs along a rail, as at J8-B, the shaft
+        # lies on the rail's own edges and only the head says anything at all.
+        # Landing the head inside the receiving member is what makes "into the
+        # post" unmistakable at page size.
+        t_target = target.extents[axis][1] - target.extents[axis][0]
+        p3[axis] += sign * min(0.30 * t_target, 26.0)
+        full = _full_name(dr["name"], names)
+        if full is None:
+            continue
+        out.append(dict(p3=tuple(p3), p2=view.xy(tuple(p3)), axis=axis,
+                        sign=sign, per=dr["per"], jid=row["jid"], name=full,
+                        letter=_letter_of(dr["name"], letters),
+                        area=contact[3], contact=contact, row=row, drive=dr))
+    return out
 
 
 def _apart(a, b, gap):
@@ -406,61 +672,82 @@ def _in_rect(p, rect, grow=0.0):
             and y - grow <= p[1] <= y + h + grow)
 
 
-def choose_markers(pts, letters, inset=None):
-    """Which fastening points get an arrow. -> [(xy, contact, badges), ...]
+def choose_marks(marks, gap, inset=None):
+    """Thin the marks to what a page can hold WITHOUT losing a single screw.
 
-    Without letters this is the old rule and nothing else: walk the patches
-    biggest first and keep the ones that do not crowd a marker already placed.
-
-    With letters there is one more duty. A step that drives three kinds of
-    screw has to SHOW all three, and the odd one out is regularly the one that
-    loses the crowding test - the 6x120 into the ladder rung ends sits 36 mm
-    from the 5x60 that goes down into the block below it, so the plain rule
-    would drop every last one of them and leave badge B with nowhere to point.
-    So after the ordinary pass, any letter with fewer than two markers is given
-    them, at a tighter spacing. The letters keep the arrows apart where the
-    geometry cannot.
+    Two fasteners of the same kind driven at the same joint 30 mm apart are
+    one mark at this scale, and so are the two ends of a joint that the camera
+    happens to stack. A mark that is crowded out therefore does not disappear:
+    its count is handed to the mark that crowded it, and that mark says "4x"
+    instead of "2x". The same happens to a mark that lands under the inset
+    panel, which is opaque and would hide the very line work the arrow is
+    about. render_step() then checks the totals against the step's own
+    fastener table, so nothing can go missing silently.
     """
-    tagged = [(p2, c, contact_badges(c, letters)) for p2, c in pts]
-    if letters:
-        tagged = [t for t in tagged if t[2]]
-    if inset is not None:
-        # A point under the inset panel has nothing to point at: the panel is
-        # opaque and covers the very line work the arrow is about.
-        tagged = [t for t in tagged if not _in_rect(t[0], inset, 8.0)]
-
-    keep = []
-    for item in tagged:
-        if all(_apart(item[0], q[0], 52.0) for q in keep):
-            keep.append(item)
-        if len(keep) >= 34:
-            break
-    if not letters:
-        return keep
-
-    for letter in sorted({l for _p, _c, tags in tagged for l in tags}):
-        seen = sum(1 for _p, _c, tags in keep if letter in tags)
-        for item in tagged:
-            if seen >= 2:
-                break
-            if letter not in item[2] or item in keep:
-                continue
-            if seen and not all(_apart(item[0], q[0], 20.0) for q in keep):
-                continue
-            keep.append(item)
-            seen += 1
-    return keep
-
-
-def thin_out(points, limit, min_gap):
-    """Keep markers legible: drop points that crowd one already kept."""
     kept = []
-    for p in points:
-        if all((p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2 > min_gap ** 2
-               for q in kept):
-            kept.append(p)
-        if len(kept) >= limit:
+    deferred = []
+    for m in sorted(marks, key=lambda q: (-q["area"], q["p2"])):
+        if inset is not None and _in_rect(m["p2"], inset, 10.0):
+            deferred.append(m)
+            continue
+        # Same fastener, same spot on the page: one mark, and it counts them
+        # both. This crosses joint numbers on purpose - at the end of a ladder
+        # rung the 5x60 driven down into the block and the two driven through
+        # the block into the stile are three screws in one corner, and three
+        # badges there say nothing the number does not say better.
+        same = [q for q in kept
+                if q["letter"] == m["letter"] and q["name"] == m["name"]
+                and not _apart(q["p2"], m["p2"], gap)]
+        if same:
+            same[0]["per"] += m["per"]
+            same[0]["absorbed"].append(m)
+            continue
+        kept.append(dict(m, absorbed=[]))
+    for m in deferred:
+        same = [q for q in kept if q["name"] == m["name"]]
+        if same:
+            same.sort(key=lambda q: (q["p2"][0] - m["p2"][0]) ** 2
+                      + (q["p2"][1] - m["p2"][1]) ** 2)
+            same[0]["per"] += m["per"]
+            same[0]["absorbed"].append(m)
+        else:
+            kept.append(dict(m, absorbed=[]))
+    return kept
+
+
+def mark_families(mark, families):
+    return {families.get(p.label)
+            for p in (mark["contact"][4], mark["contact"][5])} - {None}
+
+
+def restore_orphans(kept, families, want):
+    """Give back any mark whose merge cost a part its only showing.
+
+    Merging is a legibility trick and it is allowed to lose a joint NUMBER -
+    three 5x60 in one ladder corner are one arrow - but it is never allowed to
+    lose a PART. The bench-rail bearing block sits 54 mm under the rail end it
+    carries, close enough on the page to be swallowed by the rail's own mark,
+    and then the drawing is back to listing a block it never shows anyone
+    fastening. So: whatever the merge covered up, hand it back its own arrow.
+    """
+    for _ in range(len(want) + 1):
+        covered = set()
+        for m in kept:
+            covered |= mark_families(m, families)
+        missing = want - covered
+        if not missing:
+            return kept
+        for host in kept:
+            hit = next((a for a in host["absorbed"]
+                        if mark_families(a, families) & missing), None)
+            if hit is None:
+                continue
+            host["absorbed"].remove(hit)
+            host["per"] -= hit["per"]
+            kept.append(dict(hit, absorbed=[]))
             break
+        else:
+            return kept
     return kept
 
 
@@ -488,7 +775,7 @@ class Page:
     def _p(self, pt):
         return f"{_f(pt[0])},{_f(-pt[1])}"
 
-    def polylines(self, plines, colour, width, opacity=None):
+    def polylines(self, plines, colour, width, opacity=None, dash=None):
         if not plines:
             return
         d = " ".join("M" + " L".join(self._p(p) for p in pl)
@@ -496,6 +783,8 @@ class Page:
         if not d:
             return
         extra = f' opacity="{opacity}"' if opacity else ""
+        if dash:
+            extra += f' stroke-dasharray="{dash}"'
         self.body.append(
             f'<path d="{d}" fill="none" stroke="{colour}" '
             f'stroke-width="{_f(width)}" stroke-linecap="round" '
@@ -514,6 +803,42 @@ class Page:
             f'<rect x="{_f(x)}" y="{_f(-(y + h))}" width="{_f(w)}" '
             f'height="{_f(h)}" rx="{_f(rx)}" fill="{fill}" '
             f'stroke="{stroke}" stroke-width="{_f(width)}"/>')
+
+    def poly(self, pts, fill="#ffffff", stroke=INK, width=W_RULE):
+        d = "M" + " L".join(self._p(p) for p in pts) + " Z"
+        self.body.append(
+            f'<path d="{d}" fill="{fill}" stroke="{stroke}" '
+            f'stroke-width="{_f(width)}" stroke-linejoin="round"/>')
+
+    def clip_begin(self, centre, r):
+        """Everything until clip_end() is cut to a circle - the magnifiers."""
+        self._clips = getattr(self, "_clips", 0) + 1
+        cid = f"mag{self._clips}"
+        self.body.append(
+            f'<defs><clipPath id="{cid}"><circle cx="{_f(centre[0])}" '
+            f'cy="{_f(-centre[1])}" r="{_f(r)}"/></clipPath></defs>'
+            f'<g clip-path="url(#{cid})">')
+
+    def clip_end(self):
+        self.body.append("</g>")
+
+    def hatch(self, x, y, w, h, step, colour=INK, width=W_HATCH):
+        """45 deg lines inside a rectangle - the drawing convention for a
+        piece of timber that has been cut through."""
+        segs = []
+        c = math.floor((x - (y + h)) / step) * step
+        while c <= (x + w) - y:
+            t0 = max(y, x - c)
+            t1 = min(y + h, x + w - c)
+            if t1 > t0:
+                segs.append(((c + t0, t0), (c + t1, t1)))
+            c += step
+        if not segs:
+            return
+        d = " ".join(f"M{self._p(a)} L{self._p(b)}" for a, b in segs)
+        self.body.append(
+            f'<path d="{d}" fill="none" stroke="{colour}" '
+            f'stroke-width="{_f(width)}"/>')
 
     def circle(self, c, r, fill="none", stroke=INK, width=W_RULE):
         self.body.append(
@@ -652,174 +977,330 @@ def comp(parts):
 # ---------------------------------------------------------------------------
 # THE INSET
 # ---------------------------------------------------------------------------
-def joint_section(page, box, contact, view):
-    """A section through the step's biggest joint, from the real members.
+_SIZE_RE = re.compile(r"(\d+)\s*[x×]\s*(\d+)")
 
-    The screw runs along the contact normal, so the section is taken in the
-    plane that holds that normal and the shorter of the two axes across it.
-    Both members are boxes, so both sections are rectangles and every number
-    in the little drawing is one the cut list already carries.
+
+def fastener_size(name):
+    """(diameter, length) in mm, read off the trade name."""
+    m = _SIZE_RE.search(name)
+    if not m:
+        return (5.0, 50.0)
+    return (float(m.group(1)), float(m.group(2)))
+
+
+def bracket_size(name):
+    """How far a bracket reaches along the members it ties, mm."""
+    m = _SIZE_RE.search(name)
+    return float(m.group(1)) if m else 40.0
+
+
+def _long_axis(part):
+    sizes = [part.extents[j][1] - part.extents[j][0] for j in range(3)]
+    return sizes.index(max(sizes))
+
+
+def joint_section(page, box, contact, row, letters, names, centre,
+                  letter_label=""):
+    """ONE joint, cut through and drawn honestly.
+
+    Both members keep their real cross-section: an axis is only trimmed where
+    it is the member's own LENGTH, because a 1794 mm rail drawn whole beside a
+    36 mm post would leave the joint a line. The cut faces are hatched the way
+    a sawn piece of timber is hatched, and every fastener the joint takes is
+    drawn at its true length, entering on the side it is driven from with its
+    point buried in the member it grips. A bracket is the black plate lying on
+    the face it is screwed to.
     """
     x, y, w, h = box
-    cp, k, sign, _area, a, b = contact
+    cp, k, _sign, _area, pa0, pb0 = contact
+    pa = pa0 if _is_part(row["a"], pa0.label) else pb0
+    pb = pb0 if pa is pa0 else pa0
+
+    # The second axis of the cut. A fastener that travels across the patch
+    # decides it. Failing that, cut along Z whenever one of the two members
+    # RUNS THROUGH the joint vertically - a post, a ladder stile - because
+    # then the section is an elevation and the reader can see at a glance
+    # which member is the continuous one: it carries on above and below while
+    # the other stops. Only where neither is a standing member does the cut
+    # fall back to the narrower axis, which keeps the detail compact.
     across = [j for j in range(3) if j != k]
-    # The narrower of the two remaining axes keeps the detail compact.
-    u = min(across, key=lambda j: min(a.extents[j][1] - a.extents[j][0],
-                                      b.extents[j][1] - b.extents[j][0]))
-
-    def rectangle(part):
-        return ((part.extents[k][0], part.extents[k][1]),
-                (part.extents[u][0], part.extents[u][1]))
-
-    ra, rb = rectangle(a), rectangle(b)
-    # Keep the window on the joint itself. Two members can run a long way
-    # past each other across the contact - a 1794 mm rail meeting a 98 mm
-    # post - and drawing their full length would shrink the detail to a line.
-    face = ra[0][1] if sign > 0 else ra[0][0]
-    reach = max(min(ra[0][1] - ra[0][0], rb[0][1] - rb[0][0]) * 1.8, 40.0)
-    n0, n1 = face - reach, face + reach
-    mid_u = cp[u]
-    half = max(min(ra[1][1] - ra[1][0], rb[1][1] - rb[1][0]), 1.0) * 1.6
-    u0, u1 = mid_u - half, mid_u + half
-    ra = ((max(ra[0][0], n0), min(ra[0][1], n1)),
-          (max(ra[1][0], u0), min(ra[1][1], u1)))
-    rb = ((max(rb[0][0], n0), min(rb[0][1], n1)),
-          (max(rb[1][0], u0), min(rb[1][1], u1)))
-    n0 = min(ra[0][0], rb[0][0])
-    n1 = max(ra[0][1], rb[0][1])
-    u0 = min(ra[1][0], rb[1][0])
-    u1 = max(ra[1][1], rb[1][1])
-    # A joint that stacks (the normal is Z) is drawn stacked, so the screw
-    # goes down the page the way it goes down into the timber; a joint made
-    # sideways is drawn sideways.
-    stacked = (k == 2)
-    if stacked:
-        span_x, span_y = (u1 - u0), (n1 - n0)
+    want = [dr["axis"] for dr in row["drives"]
+            if dr["axis"] is not None and dr["axis"] in across]
+    if want:
+        u = max(set(want), key=want.count)
+    elif 2 in across and 2 in (_long_axis(pa), _long_axis(pb)):
+        u = 2
     else:
-        span_x, span_y = (n1 - n0), (u1 - u0)
-    scale = min(w * 0.80 / max(span_x, 1e-6), h * 0.72 / max(span_y, 1e-6))
-    ox = x + w / 2
-    oy = y + h * 0.54
+        u = min(across,
+                key=lambda j: min(pa.extents[j][1] - pa.extents[j][0],
+                                  pb.extents[j][1] - pb.extents[j][0]))
 
-    def place(rn, ru):
-        """(n-range, u-range) -> the rectangle's page position."""
-        if stacked:
-            return (ox + (ru[0] - (u0 + u1) / 2) * scale,
-                    oy + (rn[0] - (n0 + n1) / 2) * scale,
-                    (ru[1] - ru[0]) * scale, (rn[1] - rn[0]) * scale)
-        return (ox + (rn[0] - (n0 + n1) / 2) * scale,
-                oy + (ru[0] - (u0 + u1) / 2) * scale,
-                (rn[1] - rn[0]) * scale, (ru[1] - ru[0]) * scale)
+    # Where every fastener starts and ends, along its own axis.
+    screws = []
+    for dr in row["drives"]:
+        axis, sign, target = drive_axis_sign(contact, row, pa, pb, dr, centre)
+        if axis not in (k, u):
+            continue
+        d_, length_ = fastener_size(dr["name"])
+        if dr["into"] is not None:
+            head = (target.extents[axis][0] if sign > 0
+                    else target.extents[axis][1])
+        else:
+            # How deep into the member it is driven from the head sits. A
+            # screw driven through a member takes the member's whole
+            # thickness (a 6x120 down through a 98 mm rail starts on the
+            # rail's top face); a screw driven near the END of a long member
+            # - the toe screw at J8-B - starts a bit back from the joint.
+            entry = pa if row["a"] == dr["frm"] else pb
+            thick = entry.extents[axis][1] - entry.extents[axis][0]
+            back = thick if thick < 0.85 * length_ else 0.55 * length_
+            head = cp[axis] - sign * back
+        # Where along the OTHER section axis this fastener sits. Across the
+        # patch that is a plain offset; along the patch normal it is a depth
+        # into the member being gripped, so the mirrored joint at the far end
+        # of the bed comes out right too.
+        other = k if axis == u else u
+        at = cp[other] + (dr["depth"] * into_patch_side(contact, target)
+                          if other == k else dr["off"].get(other, 0.0))
+        if dr["plate"]:
+            screws.append(dict(kind="plate", axis=axis, sign=sign, head=head,
+                               at=at, t=dr["plate"],
+                               reach=bracket_size(dr["name"]), other=other))
+            continue
+        screws.append(dict(kind="screw", axis=axis, sign=sign, head=head,
+                           at=at, d=d_, length=length_, other=other))
 
-    for r in (ra, rb):
-        px, py, pw, ph = place(r[0], r[1])
-        page.rect(px, py, pw, ph, fill="none", width=W_RULE)
-    # The fastener crosses the shared face, driven the way the arrow points.
-    face = (ra[0][1] if sign > 0 else ra[0][0])
-    fn = (face - (n0 + n1) / 2) * scale
-    reach = min((n1 - n0) * scale * 0.34, (h if stacked else w) * 0.30)
-    if stacked:
-        page.arrow((ox, oy + fn - sign * reach * 1.6),
-                   (ox, oy + fn + sign * reach), INK, W_MARK, 16)
-    else:
-        page.arrow((ox + fn - sign * reach * 1.6, oy),
-                   (ox + fn + sign * reach, oy), INK, W_MARK, 16)
+    # The window: whole cross-sections, trimmed lengths, and room for the
+    # fasteners that stick out of them.
+    win = {}
+    for j in (k, u):
+        lo, hi = None, None
+        for part in (pa, pb):
+            if _long_axis(part) == j:
+                continue
+            a0, a1 = part.extents[j]
+            lo = a0 if lo is None else min(lo, a0)
+            hi = a1 if hi is None else max(hi, a1)
+        for s in screws:
+            if s["axis"] != j:
+                continue
+            tip = s["head"] + s["sign"] * (s["t"] if s["kind"] == "plate"
+                                           else s["length"])
+            back = s["head"] - s["sign"] * (0 if s["kind"] == "plate" else 8)
+            lo = min(lo, tip, back) if lo is not None else min(tip, back)
+            hi = max(hi, tip, back) if hi is not None else max(tip, back)
+        if lo is None:                     # both members run along this axis
+            lo, hi = cp[j] - 60, cp[j] + 60
+        # Where a member is being cut short because this is its LENGTH, the
+        # window is opened wider, so the continuous member visibly carries on
+        # past the one that stops.
+        runs_through = any(_long_axis(part) == j for part in (pa, pb))
+        pad = (max((hi - lo) * 0.34, 30.0) if runs_through
+               else max((hi - lo) * 0.16, 14.0))
+        win[j] = (lo - pad, hi + pad)
+
+    def rect_of(part):
+        out = {}
+        for j in (k, u):
+            a0, a1 = part.extents[j]
+            out[j] = (max(a0, win[j][0]), min(a1, win[j][1]))
+        return out
+
+    # Z always goes up the page; the joint axis takes the other direction.
+    v_ax = k if k == 2 else u
+    h_ax = u if k == 2 else k
+    span_x = win[h_ax][1] - win[h_ax][0]
+    span_y = win[v_ax][1] - win[v_ax][0]
+    scale = min(w * 0.92 / max(span_x, 1e-6), h * 0.80 / max(span_y, 1e-6))
+    cx = x + w / 2
+    cy = y + h * 0.44
+
+    def px(v):
+        return cx + (v - (win[h_ax][0] + win[h_ax][1]) / 2) * scale
+
+    def py(v):
+        return cy + (v - (win[v_ax][0] + win[v_ax][1]) / 2) * scale
+
+    for part in (pa, pb):
+        r = rect_of(part)
+        if r[k][1] <= r[k][0] or r[u][1] <= r[u][0]:
+            continue
+        x0, y0 = px(r[h_ax][0]), py(r[v_ax][0])
+        pw = (r[h_ax][1] - r[h_ax][0]) * scale
+        ph = (r[v_ax][1] - r[v_ax][0]) * scale
+        page.rect(x0, y0, pw, ph, fill="#ffffff", width=W_RULE)
+        page.hatch(x0, y0, pw, ph, max(min(pw, ph) / 4.2, 9.0))
+
+    for s in screws:
+        along = (1.0, 0.0) if s["axis"] == h_ax else (0.0, 1.0)
+        side = (0.0, 1.0) if s["axis"] == h_ax else (1.0, 0.0)
+        o = (px(s["head"]), py(s["at"])) if s["axis"] == h_ax else \
+            (px(s["at"]), py(s["head"]))
+        sgn = s["sign"]
+
+        def P(t, q, o=o, along=along, side=side, sgn=sgn):
+            return (o[0] + along[0] * sgn * t + side[0] * q,
+                    o[1] + along[1] * sgn * t + side[1] * q)
+
+        if s["kind"] == "plate":
+            t = s["t"] * scale
+            reach = min(s["reach"] * scale, max(w, h) * 0.42)
+            page.poly([P(0, -reach), P(0, reach), P(-t, reach), P(-t, -reach)],
+                      fill=INK, stroke=INK, width=W_RULE * 0.6)
+            continue
+        L = s["length"] * scale
+        d = max(s["d"] * scale, 5.0)
+        head_d, head_l, tip_l = d * 1.9, d * 0.55, d * 1.7
+        prof = [(0, head_d / 2), (head_l, d / 2), (L - tip_l, d / 2),
+                (L, 0), (L - tip_l, -d / 2), (head_l, -d / 2),
+                (0, -head_d / 2)]
+        page.poly([P(t, q) for t, q in prof], fill="#ffffff", stroke=INK,
+                  width=W_RULE * 0.8)
+        # A short arrow behind the head: the way the screwdriver goes.
+        page.arrow(P(-L * 0.42, 0), P(-head_d * 0.55, 0), INK, W_MARK * 0.7,
+                   head_d * 0.7)
+
+    for i, ch in enumerate(letter_label):
+        badge(page, (x + BADGE_R * 0.9 + i * BADGE_R * 1.7,
+                     y + h - BADGE_R * 0.9), ch, BADGE_R * 0.82)
 
 
 BADGE_R = 25.0         # the circled letters, model mm
 
 
-def badge(page, centre, letter):
+def badge(page, centre, letter, r=BADGE_R):
     """One circled sans letter - the same mark the step table carries."""
-    page.circle(centre, BADGE_R, fill="#ffffff", stroke=INK, width=W_RULE)
-    page.text((centre[0], centre[1] - BADGE_R * 0.40), letter,
-              BADGE_R * 1.20, anchor="middle", weight="bold")
+    page.circle(centre, r, fill="#ffffff", stroke=INK, width=W_RULE)
+    page.text((centre[0], centre[1] - r * 0.40), letter,
+              r * 1.20, anchor="middle", weight="bold")
     page.badge_spots.append(centre)
 
 
-def badge_row(page, tail, direction, letters, inset=None):
-    """The letters for one fastening point, parked at the arrow's tail.
+def mark_label(page, tail, direction, letter, count, inset=None):
+    """One arrow's caption, parked behind its tail.
 
-    Always laid out left to right on the page, whichever way the arrow points,
-    so a joint that takes a bracket and two screws reads "A B D" exactly as the
-    inset lists them.
+    A mark carries at most one letter now - each kind of fastener points at
+    its own spot - and beside it the number of screws that mark stands for.
+    "2x" is there because a marker is not always one screw: two 5x60 driven
+    30 mm apart into the same rekkverksbord end are one arrow at this scale,
+    and the page has to say so.
 
-    The natural place is straight back along the tail, far enough that the
-    row's own width can never reach the arrowhead. Three things can spoil it:
-    the page edge, the inset panel, and another row. Two joints of different
-    kinds can sit within a badge of each other - the 6x120 into a ladder rung
-    end is 25 mm from the 5x60 driven down into the block below it - and two
-    touching circles would read as one two-letter group. So a handful of
-    positions are tried (further back, or out to either side of the tail) and
-    the cleanest one wins.
+    The natural place is straight back along the tail. Three things can spoil
+    it: the page edge, the inset panel, and another caption - so a handful of
+    positions are tried and the cleanest one wins.
     """
-    n = len(letters)
-    pitch = 2 * BADGE_R + 8
-    half = (n * pitch - 8) / 2
     dx, dy = direction
-    base = half * abs(dx) + BADGE_R * abs(dy) + 12
-    aside = half * abs(dy) + BADGE_R * abs(dx) + 12
+    txt = f"{count}x" if count > 1 else ""
+    w_txt = 0.0 if not txt else BADGE_R * (1.10 * len(txt))
+    if letter:
+        span = 2 * BADGE_R + (w_txt + 6 if txt else 0)
+    else:
+        span = w_txt
+    base = span / 2 * abs(dx) + BADGE_R * abs(dy) + 14
+    aside = span / 2 * abs(dy) + BADGE_R * abs(dx) + 14
 
-    def row_at(cx, cy):
-        return [(cx + (i - (n - 1) / 2) * pitch, cy) for i in range(n)]
+    def spots(cx, cy):
+        """Badge centre and text anchor for a caption centred on (cx, cy)."""
+        left = cx - span / 2
+        if letter:
+            return (left + BADGE_R, cy), (left + 2 * BADGE_R + 6, cy)
+        return None, (left, cy)
 
-    tries = [row_at(tail[0] - dx * (base + k * pitch),
-                    tail[1] - dy * (base + k * pitch)) for k in range(4)]
-    tries += [row_at(tail[0] - dy * s * aside, tail[1] + dx * s * aside)
-              for s in (1, -1)]
+    tries = [(tail[0] - dx * (base + k * BADGE_R * 1.7),
+              tail[1] - dy * (base + k * BADGE_R * 1.7)) for k in range(5)]
+    for s in (1, -1):
+        for k in range(3):
+            tries.append((tail[0] - dy * s * (aside + k * BADGE_R * 1.6)
+                          - dx * k * BADGE_R * 0.8,
+                          tail[1] + dx * s * (aside + k * BADGE_R * 1.6)
+                          - dy * k * BADGE_R * 0.8))
 
-    def cost(row):
+    def cost(c):
         out = 0
-        for c in row:
-            if not (page.x0 + BADGE_R + 8 <= c[0] <= page.x1 - BADGE_R - 8
-                    and page.y0 + BADGE_R + 8 <= c[1] <= page.y1 - BADGE_R - 8):
-                out += 6
-            if inset is not None and _in_rect(c, inset, BADGE_R * 0.7):
-                out += 3
+        for probe in (c, (c[0] - span / 2, c[1]), (c[0] + span / 2, c[1])):
+            if not (page.x0 + BADGE_R + 8 <= probe[0] <= page.x1 - BADGE_R - 8
+                    and page.y0 + BADGE_R + 8 <= probe[1]
+                    <= page.y1 - BADGE_R - 8):
+                out += 10
+            if inset is not None and _in_rect(probe, inset, BADGE_R * 0.7):
+                out += 14
             out += sum(1 for q in page.badge_spots
-                       if not _apart(c, q, 2 * BADGE_R + 6))
+                       if not _apart(probe, q, 2 * BADGE_R + 4))
         return out
 
-    row = min(((cost(r), k, r) for k, r in enumerate(tries)))[2]
-    for centre, ch in zip(row, letters):
-        badge(page, centre, ch)
+    centre = min(((cost(c), k, c) for k, c in enumerate(tries)))[2]
+    b_at, t_at = spots(*centre)
+    if b_at is not None:
+        badge(page, b_at, letter)
+    if txt:
+        page.text((t_at[0], t_at[1] - BADGE_R * 0.42), txt, BADGE_R * 1.25,
+                  weight="bold")
+        page.badge_spots.append((t_at[0] + w_txt / 2, t_at[1]))
 
 
-def draw_inset(page, box, view, step_fasteners, glyph_dir, contact):
-    """The corner panel: the joint in section, then glyph + count per row."""
+# The inset panel is the same shape on every page: the same fraction of the
+# page's width, the same fastener-row height, the same glyph scale. A step
+# with one fastener therefore gets a SHORTER panel, never a smaller one - the
+# rows do not stretch to fill it and the glyphs do not shrink to fit it.
+INSET_W_FRAC = 0.345          # of the page width
+INSET_ROW_FRAC = 0.185        # row height, of the panel width
+INSET_CELL_FRAC = 0.62        # section-cell height, of the cell width
+INSET_PAD = 16.0              # model mm, inside the panel border
+
+
+def inset_layout(page, n_sections, n_rows):
+    """(w, h, cols, cell_w, cell_h, row_h) - worked out before it is drawn,
+    because the panel has to be placed before the markers are chosen."""
+    w = page.w * INSET_W_FRAC
+    row_h = w * INSET_ROW_FRAC
+    cols = 1 if n_sections <= 1 else 2
+    rows_of_cells = -(-n_sections // cols) if n_sections else 0
+    cell_w = (w - 2 * INSET_PAD) / cols
+    cell_h = cell_w * INSET_CELL_FRAC
+    h = (2 * INSET_PAD + rows_of_cells * cell_h
+         + (10 if n_sections else 0) + n_rows * row_h)
+    return w, h, cols, cell_w, cell_h, row_h
+
+
+def draw_inset(page, box, sections, step_fasteners, glyph_dir, letters, names,
+               centre):
+    """The corner panel: one section per joint in the step, then the
+    fasteners at large scale with their counts."""
     x, y, w, h = box
-    page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=W_RULE)
     rows = step_fasteners[:4]
-    row_h = min(h * 0.30, 150.0)
-    detail_h = h - row_h * len(rows) - 26
-    # A wall fixing has no second member to section, so it gets the fastener
-    # rows alone.
-    if contact is not None and contact[4] is contact[5]:
-        contact = None
-    if contact is not None and detail_h > row_h * 0.9:
-        joint_section(page, (x + 14, y + h - detail_h - 8, w - 28,
-                             detail_h), contact, view)
-        page.line((x + 14, y + h - detail_h - 14),
-                  (x + w - 14, y + h - detail_h - 14), GREY, W_LEAD)
-    top = y + h - detail_h - 26 if detail_h > row_h * 0.9 else y + h - 12
+    _w, _h, cols, cell_w, cell_h, row_h = inset_layout(page, len(sections),
+                                                       len(rows))
+    page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=W_RULE)
+
+    top = y + h - INSET_PAD
+    for i, (contact, row, label) in enumerate(sections):
+        cx = x + INSET_PAD + (i % cols) * cell_w
+        cy = top - (i // cols + 1) * cell_h
+        joint_section(page, (cx, cy, cell_w, cell_h), contact, row, letters,
+                      names, centre, label)
+    if sections:
+        top -= (-(-len(sections) // cols)) * cell_h + 10
+        page.line((x + INSET_PAD, top + 4), (x + w - INSET_PAD, top + 4),
+                  GREY, W_LEAD)
+
     for name, qty, svg, letter in rows:
-        left = x + 16
+        left = x + INSET_PAD
         if letter:
             badge(page, (left + BADGE_R, top - row_h / 2), letter)
-            left += 2 * BADGE_R + 16
+            left += 2 * BADGE_R + 14
         gw, gh = glyph_dims(os.path.join(glyph_dir, svg))
         # Every glyph is drawn to one scale and carries it in its viewBox
         # height, so a long screw stays longer than a short one here too.
-        eh = min(row_h * 0.72 * gh / 120.0, row_h * 0.92)
+        eh = min(row_h * 0.70 * gh / 120.0, row_h * 0.90)
         ew = eh * gw / gh
-        avail = x + w - 14 - row_h * 1.5 - left
+        avail = x + w - INSET_PAD - row_h * 1.6 - left
         if ew > avail:
             eh *= avail / ew
             ew = avail
         page.embed_svg(os.path.join(glyph_dir, svg),
                        left, top - row_h / 2 - eh / 2, ew, eh)
-        page.text((x + w - 16, top - row_h / 2 - row_h * 0.20),
-                  f"{qty}x", row_h * 0.62, anchor="end", weight="bold")
+        page.text((x + w - INSET_PAD, top - row_h / 2 - row_h * 0.20),
+                  f"{qty}x", row_h * 0.60, anchor="end", weight="bold")
         top -= row_h
 
 
@@ -837,20 +1318,23 @@ def _edge_of_box(centre, target, bx, by, bw, bh):
     return (centre[0] + dx * t, centre[1] + dy * t)
 
 
-def emptiest_corner(plines, page, box_w, box_h, avoid_top_left=True):
-    """Put the inset where the drawing is not."""
-    best, best_ink = None, None
+def emptiest_corner(plines, page, box_w, box_h, marks=(),
+                    avoid_top_left=False):
+    """Put the inset where the drawing is not - and, above all, where the
+    fastening points are not: a joint the panel covers loses its own arrow and
+    has to hand its count to a joint somewhere else on the page."""
+    best, best_cost = None, None
     corners = [("tr", page.x1 - box_w - 20, page.y1 - box_h - 20),
                ("br", page.x1 - box_w - 20, page.y0 + 20),
                ("bl", page.x0 + 20, page.y0 + 20)]
     if not avoid_top_left:
         corners.append(("tl", page.x0 + 20, page.y1 - box_h - 20))
     for _name, bx, by in corners:
-        ink = sum(1 for pl in plines for p in pl
-                  if bx - 30 <= p[0] <= bx + box_w + 30
-                  and by - 30 <= p[1] <= by + box_h + 30)
-        if best_ink is None or ink < best_ink:
-            best, best_ink = (bx, by), ink
+        box = (bx, by, box_w, box_h)
+        cost = sum(1 for pl in plines for p in pl if _in_rect(p, box, 30))
+        cost += 60 * sum(1 for m in marks if _in_rect(m["p2"], box, 40))
+        if best_cost is None or cost < best_cost:
+            best, best_cost = (bx, by), cost
     return best
 
 
@@ -888,6 +1372,141 @@ def thumbnails(page, view, G, before_parts, box):
         page.polylines(moved, INK, W_NEW * 0.55)
     page.arrow((x + cell + 8, y + h / 2), (x + cell + 52, y + h / 2),
                INK, W_MARK, 20)
+
+
+def magnifier(page, src, dst_c, dst_r, src_r, new_only, prior_lines):
+    """The real line work around one point, blown up in a circle."""
+    page.circle(src, src_r, width=W_LEAD)
+    page.line(src, dst_c, GREY, W_LEAD, dash="18 14")
+    page.circle(dst_c, dst_r, fill="#ffffff", width=W_RULE)
+    page.polylines(remap(clip_to_circle(prior_lines, src, src_r),
+                         src, src_r, dst_c, dst_r),
+                   GREY, W_PRIOR * dst_r / src_r)
+    page.polylines(remap(clip_to_circle(new_only, src, src_r),
+                         src, src_r, dst_c, dst_r),
+                   INK, W_NEW * dst_r / src_r)
+
+
+def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset):
+    """WHERE the 40x40x40 sits, and which way its four screws go.
+
+    The bracket is the one piece of hardware in the bed that an overview
+    drawing cannot place: it is 40 mm of steel behind a 1794 mm ledger, and at
+    page scale it is a smudge. So it gets a magnifier - the real line work of
+    the joint, blown up, with the bracket drawn on top in its true position:
+    the standing leg flat on the post's inner face, the lying leg under the
+    ledger's end, two screws into each.
+    """
+    # Either end of the ledger does; take the one whose locator circle is not
+    # half off the paper - the corner posts sit on the page's own edge.
+    room = max(page.w, page.h) * 0.072 + 10
+    cands_m = [m for m in keep if m["jid"] == "J12"]
+    inside = [m for m in cands_m
+              if page.x0 + room <= m["p2"][0] <= page.x1 - room
+              and page.y0 + room <= m["p2"][1] <= page.y1 - room]
+    mark = (inside or cands_m or [None])[0]
+    if mark is None:
+        return
+    c = mark["contact"]
+    post = c[4] if _is_part("post_back", c[4].label) else c[5]
+    ledger = c[5] if post is c[4] else c[4]
+    # The mark's own arrow overshoots into the post, so the sign is the way
+    # the screw travels; the bracket lies the other way, out under the ledger.
+    e = 1.0 if ledger.extents[0][0] > post.extents[0][0] else -1.0
+    xf = post.extents[0][1] if e > 0 else post.extents[0][0]
+    zf = ledger.extents[2][0]
+    y0, y1 = post.extents[1]
+    ym = (y0 + y1) / 2
+    leg = 40.0
+
+    # Centred on the CORNER itself - post face meets ledger underside - so the
+    # circle holds a piece of both members and not just the steel.
+    src = view.xy((xf, ym, zf))
+    src_r = max(page.w, page.h) * 0.072
+    dst_r = page.w * 0.145
+    edge = dst_r + 105                    # room for the caption under it
+    # Away from the inset panel, in the emptiest of the two low corners.
+    ix, iy, iw, ih = inset
+    cands = [(page.x0 + edge, page.y0 + edge),
+             (page.x1 - edge, page.y0 + edge),
+             (page.x0 + edge, page.y1 - edge),
+             (page.x1 - edge, page.y1 - edge)]
+    def ink(c2):
+        if _in_rect(c2, (ix - dst_r, iy - dst_r, iw + 2 * dst_r,
+                         ih + 2 * dst_r)):
+            return 10 ** 6
+        return sum(1 for pl in new_only + prior_lines for p in pl
+                   if math.hypot(p[0] - c2[0], p[1] - c2[1]) < dst_r * 1.15)
+    dst_c = min(cands, key=ink)
+
+    # The locator on the drawing itself, heavy enough to be found, and the
+    # dashed leader out to the blown-up circle.
+    page.circle(src, src_r, width=W_MARK * 0.7)
+    page.line(src, dst_c, GREY, W_LEAD, dash="18 14")
+    page.circle(dst_c, dst_r, fill="#ffffff", width=W_RULE)
+    page.clip_begin(dst_c, dst_r)
+    k = dst_r / src_r
+
+    def P(p3):
+        p = view.xy(p3)
+        return (dst_c[0] + (p[0] - src[0]) * k, dst_c[1] + (p[1] - src[1]) * k)
+
+    # The two members, as the faces the bracket is actually screwed to: the
+    # post's inner face, and the ledger's underside and front. Filled light so
+    # they read as timber, with the real projected edges drawn back on top.
+    ly0, ly1 = ledger.extents[1]
+    lz1 = ledger.extents[2][1]
+    reach = leg * 4.2
+    faces = [
+        [(xf, y0, zf - reach * 0.5), (xf, y1, zf - reach * 0.5),
+         (xf, y1, zf + reach), (xf, y0, zf + reach)],          # stolpens innerflate
+        [(xf, ly0, zf), (xf, ly1, zf), (xf + e * reach, ly1, zf),
+         (xf + e * reach, ly0, zf)],                            # lektas underside
+        [(xf, ly1, zf), (xf + e * reach, ly1, zf),
+         (xf + e * reach, ly1, lz1), (xf, ly1, lz1)],           # lektas forside
+    ]
+    for quad in faces:
+        page.poly([P(q) for q in quad], fill="#efefef", stroke=GREY,
+                  width=W_RULE * 0.8)
+    page.polylines(remap(clip_to_circle(prior_lines, src, src_r),
+                         src, src_r, dst_c, dst_r),
+                   GREY, W_PRIOR * k)
+    page.polylines(remap(clip_to_circle(new_only, src, src_r),
+                         src, src_r, dst_c, dst_r), INK, W_NEW * k * 0.8)
+
+    standing = [(xf, y0, zf), (xf, y1, zf), (xf, y1, zf + leg),
+                (xf, y0, zf + leg)]
+    lying = [(xf, y0, zf), (xf, y1, zf), (xf + e * leg, y1, zf),
+             (xf + e * leg, y0, zf)]
+    for quad in (lying, standing):
+        page.poly([P(q) for q in quad], fill="#9a9a9a", stroke=INK,
+                  width=W_RULE * 0.9)
+    r = 3.2 * k
+    for z in (zf + leg * 0.34, zf + leg * 0.72):
+        page.dot(P((xf, ym, z)), r)
+    for x in (xf + e * leg * 0.34, xf + e * leg * 0.72):
+        page.dot(P((x, ym, zf)), r)
+    # ...and which way they are driven: into the post, and up into the ledger.
+    a_len = dst_r * 0.42
+    for tip, dxy in ((P((xf, ym, zf + leg * 0.53)),
+                      view.dir_xy((-e, 0, 0))),
+                     (P((xf + e * leg * 0.53, ym, zf)),
+                      view.dir_xy((0, 0, 1)))):
+        n = math.hypot(*dxy) or 1.0
+        u = (dxy[0] / n, dxy[1] / n)
+        page.arrow((tip[0] - u[0] * a_len, tip[1] - u[1] * a_len), tip,
+                   INK, W_MARK * 0.8, a_len * 0.30)
+    page.clip_end()
+    # The caption goes wherever there is paper: under the circle, over it, or
+    # - if the circle sits in a corner - just inside its lower edge.
+    if dst_c[1] - dst_r - 66 >= page.y0 + 12:
+        ty = dst_c[1] - dst_r - 62
+    elif dst_c[1] + dst_r + 62 <= page.y1 - 12:
+        ty = dst_c[1] + dst_r + 24
+    else:
+        ty = dst_c[1] - dst_r + 34
+    page.text((dst_c[0], ty), "VINKELBESLAG 40×40×40", 44,
+              anchor="middle", weight="bold")
 
 
 def info_panel(page, box, G):
@@ -939,10 +1558,71 @@ def info_panel(page, box, G):
               f"{int(round(gap))}", 38, weight="bold")
 
 
-def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
-                fasteners):
-    from build123d import Compound
+def step_sections(marks):
+    """One section per joint family in the step, biggest joint first.
 
+    A step with three families - the ladder has three - gets three little
+    sections, each labelled with the badge letters of what is driven in it.
+    """
+    best = {}
+    for m in marks:
+        c = m["contact"]
+        if c[4] is c[5] or m["row"] is None:   # a wall fixing: nothing to cut
+            continue
+        # One section per KIND of joint, not per instance: the two ends of a
+        # bench rail are the same joint mirrored and want one drawing, but
+        # J4's two rows - a 5x60 down into the block and a 6x120 sideways
+        # into the rung end - are two different things and want two.
+        row = m["row"]
+        key = (m["jid"], tuple((d["name"], d["axis"], d["frm"] is not None)
+                               for d in row["drives"]))
+        cur = best.get(key)
+        if cur is None or m["area"] > cur[0]:
+            best[key] = (m["area"], c, row)
+    out = []
+    for _key, (area, c, row) in sorted(best.items(), key=lambda kv: -kv[1][0]):
+        letters = []
+        for d in row["drives"]:
+            ch = next((m["letter"] for m in marks
+                       if m["row"] is row and m["drive"] is d), None)
+            if ch and ch not in letters:
+                letters.append(ch)
+        out.append((c, row, "".join(sorted(letters))))
+    return out[:4]
+
+
+def check_coverage(st, kept, fasteners, families):
+    """The hard check: everything the step's tables list is on the drawing.
+
+    Two ways a page can lie, and both are build failures. It can show fewer
+    screws than the step drives - the Baerekloss that was listed in the parts
+    table and never once shown being fastened - and it can show fewer of a
+    kind than the fastener table counts. So: every part family in the step's
+    own parts table must carry at least one marker, and the marker counts must
+    add up to the table's counts, kind for kind.
+    """
+    shown = {}
+    for m in kept:
+        shown[m["name"]] = shown.get(m["name"], 0) + m["per"]
+    for name, qty, _svg, _letter in fasteners:
+        got = shown.get(name, 0)
+        assert got == qty, (
+            f"steg {st['n']}: tegningen viser {got} x '{name}', "
+            f"tabellen sier {qty}. Festepunktene og beslaglista er ikke "
+            f"enige - se JOINT_CONTACTS i tools/render_lineart.py.")
+    covered = set()
+    for m in kept:
+        for part in (m["contact"][4], m["contact"][5]):
+            covered.add(families.get(part.label))
+    want = {families[l] for l in st["labels"] if l in families}
+    missing = sorted(f for f in want - covered if f)
+    assert not missing, (
+        f"steg {st['n']}: {missing} står i deletabellen, men ingen "
+        f"festing av dem er tegnet. Legg leddet inn i JOINT_CONTACTS.")
+
+
+def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
+                fasteners, families, centre):
     n = st["n"]
     prior = [uni[l] for l in placed if l not in st["highlight"]]
     new = [uni[l] for l in st["highlight"]]
@@ -963,107 +1643,124 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     x0, y0, x1, y1 = page_box
     page = Page(x0, y0, x1, y1)
     page.polylines(combined.get("prior", []), GREY, W_PRIOR)
-    page.polylines(new_only, INK, W_NEW)
+    # The new part is drawn whole - but the stretch of it that something
+    # already standing hides is drawn DASHED, because that is the only thing
+    # on the page that says which side of the frame it goes on. The front side
+    # rail passes BEHIND the front posts, and a solid line across the post
+    # says the opposite.
+    page.polylines(new_only, INK, W_NEW * 0.45, dash="26 20")
+    page.polylines(combined.get("new", []), INK, W_NEW)
 
-    # The step number, small, top left.
-    page.text((x0 + 34, y1 - 76), str(n), 96, weight="bold")
+    # No step number in the drawing: the page header already carries it, and
+    # two of them is one too many.
 
-    # Where the fasteners go, in the drawing's own frame.
+    # Where the fasteners go, in the drawing's own frame. A step that drives
+    # only one kind needs no letters: the glyph in its table is already the
+    # whole answer.
     is_mattress = any(p.label.startswith("Mattress") for p in new)
-    if "J14" in st["joints"]:
+    letters = {name: letter for name, _q, _s, letter in fasteners if letter}
+    names = [name for name, _q, _s, _l in fasteners]
+
+    if is_mattress:
+        marks = []
+    elif "J14" in st["joints"]:
         # The wall fixings do not join two parts of the bed, so there is no
         # contact patch to find: they go through the back rail into the wall
         # behind it. Spread them along that rail's own back face, pointing the
-        # way they are driven. The count is the one the joint table carries.
-        # One marker per wall fixing, not per joint: the count that matters
-        # to the builder is how many screws go into the wall.
-        cts = wall_fix_contacts(
-            new, max((q for _n, q, _s, _l in fasteners), default=2))
-    elif is_mattress:
-        cts = []
+        # way they are driven - one marker per wall fixing, not per joint,
+        # because what matters to the builder is how many go into the wall.
+        wall = names[0] if names else ""
+        marks = [dict(p3=c[0], p2=view.xy(c[0]), axis=1, sign=-1.0, per=1,
+                      jid="J14", name=wall, letter=letters.get(wall),
+                      area=c[3], contact=c, row=None, drive=None)
+                 for c in wall_fix_contacts(
+                     new, max((q for _n, q, _s, _l in fasteners), default=2))]
     else:
-        cts = contacts(new, prior)
-    # A step that drives only one kind of fastener needs no letters: the glyph
-    # in its table is already the whole answer.
-    letters = {name: letter for name, _q, _s, letter in fasteners if letter}
-    pts = [(view.xy(c[0]), c) for c in cts]
-    keep = choose_markers(pts, letters)
+        marks = [m for c in contacts(new, prior)
+                 for m in marks_for(c, letters, names, centre, view)]
 
+    sections = step_sections(marks)
     if is_mattress:
         # The information panel carries a section as well as three lines of
         # text, so it needs more room than a fastener list does.
         inset_w, inset_h = page.w * 0.32, page.h * 0.36
     else:
-        primary = keep[0][1] if keep else None
-        has_section = primary is not None and primary[4] is not primary[5]
-        inset_w = page.w * 0.34
-        inset_h = min(page.h * 0.40, 30 + 150 * (len(fasteners[:4])
-                                                 + (1.6 if has_section else 0.3)))
+        inset_w, inset_h = inset_layout(page, len(sections),
+                                        len(fasteners[:4]))[:2]
     bx, by = emptiest_corner(combined.get("prior", []) + new_only,
-                             page, inset_w, inset_h)
-    # Now that the panel has a place, pick the markers again without the ones
-    # it would have swallowed. The first pass only had to be good enough to
-    # size the panel, which is the number of fastener rows plus a section or
-    # not - and that survives the second.
+                             page, inset_w, inset_h, marks)
     box = (bx, by, inset_w, inset_h)
-    keep = choose_markers(pts, letters, inset=box) or keep
+    # Both of these are measured on the SHORT side of the page, so a step
+    # that gets a tall page of its own - the ladder - does not get arrows and
+    # spacings scaled off a height it never uses across.
+    gap = min(page.w, page.h) * 0.034
+    keep = choose_marks(marks, gap, inset=box)
+    keep = restore_orphans(keep, families,
+                           {families[l] for l in st["labels"]
+                            if l in families})
 
     if is_mattress:
         info_panel(page, (bx, by, inset_w, inset_h), G)
     elif fasteners:
-        draw_inset(page, (bx, by, inset_w, inset_h), view, fasteners,
-                   glyph_dir, keep[0][1] if keep else None)
+        draw_inset(page, box, sections, fasteners, glyph_dir, letters, names,
+                   centre)
+    if not is_mattress:
+        check_coverage(st, keep, fasteners, families)
 
-    # A marker at every fastening point: a short arrow along the contact
-    # normal, i.e. the direction the screw travels, ending on the joint.
-    for p2, c, tags in keep:
-        # contacts() always lists the NEW part first, and `sign` is the way
-        # from it into the part it lands on - which is the way the screw goes.
+    # A marker at every fastening point: an arrow along the DRIVING direction
+    # the joint table gives, head in the member the screw grips.
+    arrow_len = min(page.w, page.h) * ARROW_FRAC * 1.15
+    for m in sorted(keep, key=lambda q: (-q["p2"][1], q["p2"][0])):
+        p2 = m["p2"]
         axis = [0.0, 0.0, 0.0]
-        axis[c[1]] = c[2]
+        axis[m["axis"]] = m["sign"]
         dx, dy = view.dir_xy(axis)
         nrm = math.hypot(dx, dy)
         if nrm < 1e-6:
-            page.circle(p2, 13, width=W_MARK)
-            page.dot(p2, 4)
-            if tags:
-                badge_row(page, (p2[0], p2[1] + 20), (0.0, -1.0), tags, box)
+            # Straight at the reader: a ringed dot, the drawing convention
+            # for an axis that has no length on the page.
+            page.circle(p2, 15, width=W_MARK)
+            page.dot(p2, 5)
+            mark_label(page, (p2[0], p2[1] + 24), (0.0, -1.0), m["letter"],
+                       m["per"], box)
             continue
+        # Foreshortened, like everything else in the projection: a screw
+        # driven half into the page gets a shorter arrow than one driven
+        # across it, so the length itself says which way the joint faces.
+        length = arrow_len * (0.62 + 0.38 * min(nrm, 1.0))
         dx, dy = dx / nrm, dy / nrm
-        tail = (p2[0] - dx * 62, p2[1] - dy * 62)
-        page.arrow(tail, p2, INK, W_MARK, 16)
-        if tags:
-            badge_row(page, tail, (dx, dy), tags, box)
+        tail = (p2[0] - dx * length, p2[1] - dy * length)
+        page.arrow(tail, p2, INK, W_MARK, length * HEAD_FRAC)
+        mark_label(page, tail, (dx, dy), m["letter"], m["per"], box)
 
     # Leaders from the inset to the joints, or one magnifier when there is
     # only a location or two to point at.
     if keep and not is_mattress and fasteners:
         anchor = (bx + inset_w / 2, by + inset_h / 2)
-        if len(keep) <= 2:
-            src = keep[0][0]
+        if len({(round(m["p2"][0]), round(m["p2"][1])) for m in keep}) <= 2:
+            src = keep[0]["p2"]
             src_r = max(page.w, page.h) * 0.055
             dst_r = inset_w * 0.30
             dst_c = (bx + inset_w / 2, by + inset_h + dst_r + 60)
             if dst_c[1] + dst_r > y1 - 20:
                 dst_c = (bx + inset_w / 2, by - dst_r - 60)
-            page.circle(src, src_r, width=W_LEAD)
-            clipped = clip_to_circle(new_only, src, src_r)
-            clipped_grey = clip_to_circle(combined.get("prior", []), src,
-                                          src_r)
-            page.circle(dst_c, dst_r, fill="#ffffff", width=W_RULE)
-            page.polylines(remap(clipped_grey, src, src_r, dst_c, dst_r),
-                           GREY, W_PRIOR * dst_r / src_r)
-            page.polylines(remap(clipped, src, src_r, dst_c, dst_r),
-                           INK, W_NEW * dst_r / src_r)
-            page.line(src, dst_c, GREY, W_LEAD, dash="18 14")
+            magnifier(page, src, dst_c, dst_r, src_r, new_only,
+                      combined.get("prior", []))
         else:
             # One leader per joint would bury the drawing, so the inset points
             # at the nearest few and the markers carry the rest.
-            near = sorted(keep, key=lambda kp: (kp[0][0] - anchor[0]) ** 2
-                          + (kp[0][1] - anchor[1]) ** 2)[:4]
-            for p2, _c, _tags in near:
-                page.line(_edge_of_box(anchor, p2, bx, by, inset_w, inset_h),
-                          p2, GREY, W_LEAD, dash="16 14")
+            near = sorted(keep, key=lambda kp: (kp["p2"][0] - anchor[0]) ** 2
+                          + (kp["p2"][1] - anchor[1]) ** 2)[:4]
+            for m in near:
+                page.line(_edge_of_box(anchor, m["p2"], bx, by, inset_w,
+                                       inset_h),
+                          m["p2"], GREY, W_LEAD, dash="16 14")
+
+    # A bracket nobody can place from the overview gets a magnifier of its
+    # own: the 40x40x40 under the table ledger, drawn where it sits.
+    if any(m["jid"] == "J12" for m in keep):
+        ledger_bracket_detail(page, view, keep, new_only,
+                              combined.get("prior", []), box)
 
     # Before / after: the frame is built flat and then stood up.
     if st.get("thumbnails"):
@@ -1121,9 +1818,46 @@ def step_fastener_glyphs(st, glyph_dir):
     return out
 
 
+def crop_to_subject(view, page_box, new_parts):
+    """A tighter page for a step whose subject is a narrow thing in a wide bed.
+
+    Every page is cut from the FINISHED bed, so nothing jumps between drawings
+    - and that is right for the eleven steps that build across the whole 1990
+    mm of it. The ladder is not one of them: it is 416 mm wide and 1700 tall,
+    and on a bed-wide page it comes out as a sliver with four badges fighting
+    for the 320 mm between its stiles. So a step whose new parts fill less
+    than a third of the page gets a page of its own, cut round them - the
+    scale goes up, the badges stay the size they are, and the grey frame
+    behind simply falls outside the viewBox.
+    """
+    if not new_parts:
+        return page_box
+    x0, y0, x1, y1 = page_box
+    bx0, by0, bx1, by1 = bounds(project(view, [("s", comp(new_parts))])["s"])
+    if (bx1 - bx0) > (x1 - x0) * 0.34:
+        return page_box
+    mx = (bx1 - bx0) * 1.05                # room for arrows and badges
+    my = (by1 - by0) * 0.06
+    return (bx0 - mx, by0 - my, bx1 + mx, by1 + my)
+
+
+def part_families(G):
+    """label -> the cut-list line it is counted on, i.e. the row of the step's
+    own parts table. Straight out of tools/gen_doc_tables.py, so the drawing
+    and the table cannot disagree about what a part IS."""
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    import gen_doc_tables
+    return {label: name
+            for label, (name, _sec, _len) in
+            gen_doc_tables.part_cut_keys(G).items()}
+
+
 def render_all(G, data, out_dir, width, only):
     uni = universe(G)
-    look_at = full_bed(G).bounding_box().center()
+    box = full_bed(G).bounding_box()
+    look_at = box.center()
+    centre = (look_at.X, look_at.Y, look_at.Z)
+    families = part_families(G)
     glyph_dir = os.path.join(ROOT, "docs", "img", "beslag")
 
     # One page rectangle per camera, taken from the FINISHED bed, so nothing
@@ -1147,18 +1881,37 @@ def render_all(G, data, out_dir, width, only):
     made, placed = [], []
     for st in data["steps"]:
         n = st["n"]
-        if not st["image"] or not st["camera"]:
+        if not st["image"]:
+            placed += st["labels"]
+            continue
+        if n == 0:
+            # The cutting page is not a view of the bed at all.
+            if only is None or n == only:
+                import render_cutpage
+                made.append(render_cutpage.render(G, out_dir, width,
+                                                  glyph_dir))
             placed += st["labels"]
             continue
         key = tuple(st["camera"][:2])
         if only is None or n == only:
             st = dict(st)
+            box = crop_to_subject(views[key], pages[key],
+                                  [uni[l] for l in st["highlight"]])
             if n == 2:
                 # The one step that changes the workpiece's orientation.
                 st["thumbnails"] = [uni[l] for l in placed]
-            png = render_step(G, views[key], st, uni, placed, out_dir, width,
-                              pages[key], glyph_dir,
-                              step_fastener_glyphs(st, glyph_dir))
+            if n == 10:
+                import render_panel
+                png = render_panel.render(G, views[key], st, uni, placed,
+                                          out_dir, width, pages[key],
+                                          glyph_dir,
+                                          step_fastener_glyphs(st, glyph_dir),
+                                          families, centre)
+            else:
+                png = render_step(G, views[key], st, uni, placed, out_dir,
+                                  width, box, glyph_dir,
+                                  step_fastener_glyphs(st, glyph_dir),
+                                  families, centre)
             if png:
                 made.append(png)
         placed += st["labels"]

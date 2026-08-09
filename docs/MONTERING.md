@@ -24,6 +24,8 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 
 **Svart strek** er delen du setter opp nå. **Grå strek** er det som allerede står.
 
+**Pila viser veien skruen går inn:** halen står på siden du skrur fra, spissen i delen skruen skal ta tak i. Står det **2×** ved pila, står det merket for to skruer på samme sted — tegningen viser aldri færre festemidler enn steget bruker. **Bokstaven i ringen** (Ⓐ, Ⓑ …) sier hvilken av stegets typer det er, og går igjen i tabellen under bildet. **Ruta i hjørnet** viser leddet i snitt, med delene i riktig innbyrdes størrelse, skravur på snittflatene og skruen i full lengde — hodet på skrusiden, spissen inne i mottakerdelen.
+
 | Slik | Ikke slik | |
 |:---:|:---:|---|
 | <img src="img/ikon/to-personer.svg" alt="to-personer" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/en-person-nei.svg" alt="en-person-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **To personer.** Bakrammen veier mye og skal reises loddrett. |
@@ -57,7 +59,7 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 | <img src="img/beslag/u-brakett-30x4.svg" alt="U-brakett, bøyd av flattstål 30×4" height="98"> **2x** | U-brakett, bøyd av flattstål 30×4 |
 | <img src="img/beslag/vinkelbeslag-40x40x40.svg" alt="Vinkelbeslag 40×40×40" height="84"> **2x** | Vinkelbeslag 40×40×40 |
 
-Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.md).
+Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.md). Hvilken vei hver enkelt drives, og hvorfor: [skrueretninger](generated/skrueretninger.md).
 
 ---
 
@@ -93,6 +95,8 @@ Posisjoner: [kappliste](generated/kappliste.md). Hva du skal kjøpe: [innkjøpsl
 # 0
 
 ## Kapping, forboring og forsenking
+
+![Steg 0](img/steg-00.png)
 
 | | |
 |:---:|---|

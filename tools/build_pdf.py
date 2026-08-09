@@ -29,6 +29,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import unquote, urlparse
 
 try:
     import markdown
@@ -68,6 +69,7 @@ ANCHORS = {
     "innkjopsliste": "doc-innkjopsliste",
     "nokkelmal": "doc-nokkelmal",
     "beslagliste": "doc-beslagliste",
+    "skrueretninger": "doc-skrueretninger",
     "byggesteg": "doc-byggesteg",
     "byggerekkefolge": "sch-byggerekkefolge",
     "side-elevation": "sch-side-elevation",
@@ -290,6 +292,24 @@ def strip_first_heading(section: str) -> str:
     return section.split("\n", 1)[1] if "\n" in section else ""
 
 
+def _png_shape(src: str) -> tuple[int, int] | None:
+    """(bredde, hoyde) fra PNG-headeren, eller None.
+
+    `src` er allerede gjort om til en file://-URL av fix_images().
+    """
+    path = Path(unquote(urlparse(src).path)) if src.startswith("file:") \
+        else DOCS / src
+    try:
+        with open(path, "rb") as fh:
+            head = fh.read(24)
+    except OSError:
+        return None
+    if head[:8] != b"\x89PNG\r\n\x1a\n":
+        return None
+    return (int.from_bytes(head[16:20], "big"),
+            int.from_bytes(head[20:24], "big"))
+
+
 def step_page(num: str, title: str, rest: str, marks: PageMarks, key: str) -> str:
     figure = ""
     tables: list[str] = []
@@ -306,7 +326,18 @@ def step_page(num: str, title: str, rest: str, marks: PageMarks, key: str) -> st
 
     fig_html = f'<figure class="step-figure">{figure}</figure>' if figure else ""
     tab_html = f'<div class="step-tables">{"".join(tables)}</div>' if tables else ""
-    return f"""<section class="page step" id="{key}">
+    # Stegtegningene er liggende - unntatt kappesiden, som er 14 bord stablet
+    # oppa hverandre og star pa hoykant. Med den liggende hoydegrensen ville
+    # den krympet til en tredjedels sidebredde, sa formatet leses av bildet
+    # selv i stedet for a antas.
+    shape = _png_shape(re.search(r'src="([^"]+)"', figure).group(1)) if figure \
+        else None
+    kind = " tall" if shape and shape[1] > shape[0] else ""
+    # Kappesiden er ikke et bilde av sengen, men en kappeplan over 14 bord i
+    # full lengde. Den vil ha bredden, og far derfor en liggende A4 for seg.
+    if num == "0":
+        kind += " cut"
+    return f"""<section class="page step{kind}" id="{key}">
   {marks.mark(key)}
   <header class="step-head">
     <span class="step-num">{html.escape(num)}</span>
@@ -327,6 +358,7 @@ REF_DOCS = [
     ("innkjopsliste", "Innkjøpsliste"),
     ("nokkelmal", "Nøkkelmål"),
     ("beslagliste", "Beslagliste"),
+    ("skrueretninger", "Skrueretninger"),
     ("byggesteg", "Byggesteg i ord"),
 ]
 
@@ -508,6 +540,23 @@ td img { display: block; margin: 0 auto; }
 .step-head h1 { font-size: 16pt; margin: 0; }
 .step-figure { text-align: center; margin: 0 0 4mm; }
 .step-figure img { max-height: 122mm; width: auto; max-width: 100%; }
+/* En stegtegning som staar paa hoykant - stigen, kappeplanen - faar all
+   hoyden som blir til overs naar tittel, tabell og notat har sitt. */
+.step.tall .step-figure img { max-height: 172mm; }
+.step.tall .step-tables { column-count: 1; }
+/* Kappesiden er 14 bord i full lengde og vil ha bredden: liggende A4. */
+@page cutplan { size: A4 landscape; margin: 13mm 14mm; }
+.step.cut { page: cutplan; }
+.step.cut .step-figure img { width: 100%; max-height: 142mm;
+                             object-fit: contain; }
+/* Alt annet paa kappesiden holdes nede, sa tegningen far bredden. */
+.step.cut .step-head { margin-bottom: 2mm; padding-bottom: 1.5mm; }
+.step.cut .step-num { font-size: 26pt; }
+.step.cut .step-head h1 { font-size: 13pt; }
+.step.cut .step-figure { margin-bottom: 2mm; }
+.step.cut .step-tables { column-count: 2; }
+.step.cut .step-tables table { font-size: 8pt; margin-bottom: 1.5mm; }
+.step.cut .step-notes { font-size: 8.5pt; padding-top: 1.5mm; }
 .step-tables { column-count: 2; column-gap: 8mm; }
 .step-tables table { break-inside: avoid; margin-bottom: 3mm; font-size: 8.5pt; }
 .step-tables table td:first-child { white-space: nowrap; }
