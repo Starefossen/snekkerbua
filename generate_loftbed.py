@@ -238,8 +238,9 @@ EXPORTS
 -------
 Default (`mise run build`) - the fast validation loop only:
   .step  Z-up, mm, per-part names and colours (CAD truth).
-  .stl   Y-up, baked into the vertex data, so the bed stands upright in
-         Quick Look / Preview / Xcode without any extra rotation.
+  .stl   Y-up with the ladder side facing +Z, baked into the vertex data, so
+         the bed stands upright AND faces the viewer in Quick Look / Preview /
+         Xcode without any extra rotation (see Y_UP in the ASSEMBLY section).
   per-colour-group .stl files in a scratch directory, consumed by
   tools/mesh_to_usda.swift to build a multi-material .usdz.
 
@@ -1100,8 +1101,18 @@ for i, bx0 in enumerate(BATTEN_X):
 # ASSEMBLY
 # ---------------------------------------------------------------------------
 IDENTITY = Location((0, 0, 0))
-# Z-up (CAD) -> Y-up (Quick Look / glTF / USD): a -90 deg turn about X.
-Y_UP = Location((0, 0, 0), (1, 0, 0), -90)
+# Z-up (CAD) -> Y-up (Quick Look / glTF / USD): a -90 deg turn about X, which
+# maps (x, y, z) -> (x, z, -y).  On its own that leaves the bed's front (the
+# ladder side, bed +Y) pointing at USD -Z, i.e. away from the default viewer,
+# so Quick Look / Xcode open the model showing its back.  A further 180 deg
+# about the vertical (Y-up) axis turns the ladder side towards +Z:
+#
+#     (x, y, z) -> (-x, z, y)
+#
+# This is the ONE place the mesh orientation is set; it feeds the single-mesh
+# .stl, the per-colour-group .stl files and therefore the .usdz.  Do not repeat
+# the turn in tools/mesh_to_usda.swift or it would cancel out again.
+Y_UP = Location((0, 0, 0), (0, 1, 0), 180) * Location((0, 0, 0), (1, 0, 0), -90)
 
 MODES = {"bed_mode": panel_bed, "table_mode": panel_table}
 # M4: the panel sub-assembly - the panel plus the battens screwed under it.

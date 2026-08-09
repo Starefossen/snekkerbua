@@ -67,18 +67,21 @@ out="$PWD"
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 # name mode azimuth elevation distance
-# Azimuth is measured from +Z towards +X. After the Z-up -> Y-up export the
-# FRONT of the bed (the ladder side, bed Y 800+ after v8/D12) faces -Z, so az 180 looks the
-# ladder straight in the face, az 0 is the back-wall side and az 90 is the
-# X = 1990 end. Verified by rendering both: at az 180 the front guard rails
-# show the climb-through gap with the ladder in it (v8/D13: 320 mm), at az 0
-# the two back boards run unbroken wall to wall.
+# Azimuth is measured from +Z towards +X. The export bakes a Z-up -> Y-up turn
+# plus 180 deg about the vertical axis, so the FRONT of the bed (the ladder
+# side, bed Y 800+ after v8/D12) faces +Z - the direction a default viewer
+# looks from. az 0 therefore looks the ladder straight in the face, az 180 is
+# the back-wall side and az 270 is the X = 1990 end. At az 0 the front guard
+# rails show the climb-through gap with the ladder in it (v8/D13: 320 mm), at
+# az 180 the two back boards run unbroken wall to wall.
+# (These are the pre-flip azimuths 150/30/150/180/90 plus 180 deg; the flip is
+# a rotation, not a mirror, so the framing is byte-for-byte the same.)
 for view in \\
-  "bed_iso_front bed_mode 150 24 4.5" \\
-  "bed_iso_back bed_mode 30 24 4.5" \\
-  "table_iso_front table_mode 150 24 4.5" \\
-  "front_elev bed_mode 180 2 4.4" \\
-  "end_elev bed_mode 90 2 3.4" ; do
+  "bed_iso_front bed_mode 330 24 4.5" \\
+  "bed_iso_back bed_mode 210 24 4.5" \\
+  "table_iso_front table_mode 330 24 4.5" \\
+  "front_elev bed_mode 0 2 4.4" \\
+  "end_elev bed_mode 270 2 3.4" ; do
   set -- $view
   python tools/make_render_stage.py "$out/loftbed_$2.usdz" "$work/$1.usda" "$3" "$4" "$5"
   usdrecord --camera Cam --imageWidth 1800 --complexity high \\

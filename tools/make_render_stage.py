@@ -11,9 +11,15 @@ Usage:
                                       [azimuth] [elevation] [distance]
 
 Angles in degrees. Azimuth is measured from +Z towards +X; the bed's front
-face looks towards -Z after the Z-up -> Y-up rotation, so an azimuth near 180
-looks the bed in the face and 150 gives a 3/4 view of the front and one open
-end. Everything is in metres, Y-up, which is what the .usdz uses.
+face (the ladder side) looks towards +Z, so an azimuth of 0 looks the bed in
+the face and 330 gives a 3/4 view of the front and one open end. Everything is
+in metres, Y-up, which is what the .usdz uses.
+
+(Before the export flip that turned the ladder side towards +Z the same frames
+were shot from azimuth a - 180: 180 for the front elevation, 150 for the front
+3/4.  The flip is a proper 180 deg rotation about the vertical axis, not a
+mirror, so handedness is unchanged and every azimuth simply gains 180 deg
+while the elevation and distance stay put.)
 
 No lights are authored: usdrecord's Storm/Metal delegate lights the frame with
 its own camera headlight and ignores lights in the stage (verified - adding a
@@ -26,7 +32,7 @@ import math
 import os
 import sys
 
-DEFAULT_AZIMUTH = 150.0
+DEFAULT_AZIMUTH = 330.0
 DEFAULT_ELEVATION = 26.0
 DEFAULT_DISTANCE = 3.7
 TARGET = (0.0, 0.80, 0.0)          # roughly the middle of the loft bed
