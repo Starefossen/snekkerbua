@@ -7,18 +7,29 @@
 <circle cx="-1080.7" cy="-847.04" r="22" fill="none" stroke="#111111" stroke-width="2.6"/>
 <text x="-1080.7" y="-837.04" font-family="Helvetica, Arial, sans-serif" font-size="46" font-weight="bold" text-anchor="middle" fill="#111111">i</text>
 <text x="-1042.7" y="-835.04" font-family="Helvetica, Arial, sans-serif" font-size="44" font-weight="bold" text-anchor="start" fill="#111111">MADRASS</text>
-<text x="-1098.7" y="-775.04" font-family="Helvetica, Arial, sans-serif" font-size="40" font-weight="normal" text-anchor="start" fill="#111111">1990 x 800 mm</text>
-<text x="-1098.7" y="-721.04" font-family="Helvetica, Arial, sans-serif" font-size="44" font-weight="bold" text-anchor="start" fill="#111111">TYKKELSE MIN 140 mm</text>
+<text x="-1098.7" y="-775.04" font-family="Helvetica, Arial, sans-serif" font-size="40" font-weight="normal" text-anchor="start" fill="#111111">STANDARD 80 x 200 cm</text>
+<text x="-1098.7" y="-721.04" font-family="Helvetica, Arial, sans-serif" font-size="44" font-weight="bold" text-anchor="start" fill="#111111">TYKKELSE 140-326 mm</text>
 <path d="M-1094.7,-154.64 L-416.65,-154.64" fill="none" stroke="#111111" stroke-width="2.6" stroke-linecap="round"/>
-<rect x="-1094.7" y="-392.77" width="528.88" height="238.14" rx="0" fill="none" stroke="#111111" stroke-width="2.6"/>
-<rect x="-1094.7" y="-687.04" width="528.88" height="166.7" rx="0" fill="none" stroke="#111111" stroke-width="2.6"/>
-<text x="-1076.7" y="-592.69" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="normal" text-anchor="start" fill="#111111">REKKVERK</text>
-<text x="-1076.7" y="-262.7" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="normal" text-anchor="start" fill="#111111">MADRASS</text>
-<path d="M-498.02,-396.77 L-498.02,-520.35" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
-<path d="M-498.02,-520.35 L-504.2,-510.06" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
-<path d="M-498.02,-520.35 L-491.83,-510.06" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
-<path d="M-498.02,-516.35 L-498.02,-392.77" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
-<path d="M-498.02,-392.77 L-491.83,-403.06" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
-<path d="M-498.02,-392.77 L-504.2,-403.06" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
-<text x="-482.02" y="-444.56" font-family="Helvetica, Arial, sans-serif" font-size="38" font-weight="bold" text-anchor="start" fill="#111111">75</text>
+<rect x="-1094.7" y="-305.7" width="298.34" height="151.06" rx="0" fill="none" stroke="#111111" stroke-width="2.6"/>
+<rect x="-1094.7" y="-492.37" width="298.34" height="105.74" rx="0" fill="none" stroke="#111111" stroke-width="2.6"/>
+<rect x="-1094.7" y="-679.04" width="298.34" height="105.74" rx="0" fill="none" stroke="#111111" stroke-width="2.6"/>
+<text x="-1080.7" y="-429.5" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="normal" text-anchor="start" fill="#111111">REKKVERK</text>
+<text x="-1080.7" y="-616.17" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="normal" text-anchor="start" fill="#111111">REKKVERK 2</text>
+<text x="-1080.7" y="-220.17" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="normal" text-anchor="start" fill="#111111">MADRASS</text>
+<path d="M-748.89,-309.7 L-748.89,-386.63" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-748.89,-386.63 L-755.08,-376.34" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-748.89,-386.63 L-742.71,-376.34" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-748.89,-382.63 L-748.89,-305.7" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-748.89,-305.7 L-742.71,-315.98" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-748.89,-305.7 L-755.08,-315.98" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<text x="-736.89" y="-335.16" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="start" fill="#111111">75</text>
+<text x="-736.89" y="-302.16" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="normal" text-anchor="start" fill="#111111">maks 75</text>
+<path d="M-565.82,-309.7 L-565.82,-679.04" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-565.82,-679.04 L-572.01,-668.76" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-565.82,-679.04 L-559.63,-668.76" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-565.82,-675.04 L-565.82,-305.7" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-565.82,-305.7 L-559.63,-315.98" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-565.82,-305.7 L-572.01,-315.98" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<text x="-553.82" y="-481.37" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="start" fill="#111111">346</text>
+<text x="-553.82" y="-448.37" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="normal" text-anchor="start" fill="#111111">min 160</text>
 </svg>

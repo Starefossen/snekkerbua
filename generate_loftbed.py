@@ -4133,6 +4133,42 @@ for z0 in GUARD_BAND_Z0:
         (up[0].extents[0][1], up[1].extents[0][0]), \
         "D14: the climb-through is no longer measured between the upright " \
         "inner faces - the inboard guards must butt the same uprights"
+# ---------------------------------------------------------------------------
+# THE MATTRESS IS A RANGE, NOT A NUMBER
+# ---------------------------------------------------------------------------
+# The bed is dimensioned around a STANDARD 80 x 200 cm mattress - that is the
+# thing a reader goes and buys - and the model draws one particular one of
+# those, 140 mm thick. But thickness is the one dimension the shop does not
+# fix, and BOTH ends of it are a safety limit here, pulling opposite ways:
+#
+#   too THIN   the mattress top drops away from the lower guard band and the
+#              gap under it opens past the EN 747 entrapment limit.
+#   too THICK  the mattress top rises towards the top of the guard and the
+#              barrier standing above the sleeper falls under EN 747's
+#              minimum.
+#
+# Both bounds are read off the same two fixed heights - the slat top the
+# mattress lies on, and the guard - so both are derived, and the panel on the
+# last page of the manual prints the pair with an arrow on each constraint.
+GUARD_TOP = GUARD_BAND_Z0[-1] + GUARD_W
+MATTRESS_H_MIN = GUARD_BAND_Z0[0] - SLAT_Z1 - MAX_GUARD_OPENING
+MATTRESS_H_MAX = GUARD_TOP - SLAT_Z1 - MIN_GUARD_OVER_MATTRESS
+assert MATTRESS_H_MIN <= MATTRESS_H <= MATTRESS_H_MAX, \
+    f"the modelled {MATTRESS_H} mm mattress is outside its own legal band " \
+    f"{MATTRESS_H_MIN}..{MATTRESS_H_MAX} mm"
+# ...and the two bounds have to be checked at the bound, not at the modelled
+# thickness: it is the EXTREMES that either pass or do not.
+assert GUARD_BAND_Z0[0] - (SLAT_Z1 + MATTRESS_H_MIN) <= MAX_GUARD_OPENING
+assert GUARD_TOP - (SLAT_Z1 + MATTRESS_H_MAX) >= MIN_GUARD_OVER_MATTRESS
+assert MATTRESS_H_MAX > MATTRESS_H_MIN, \
+    "no mattress thickness satisfies both guard rules"
+print(f"OK  EN 747 madrasstykkelse: {MATTRESS_H_MIN}..{MATTRESS_H_MAX} mm on "
+      f"a slat top of {SLAT_Z1}. Thinner than {MATTRESS_H_MIN} and the gap "
+      f"under the lower band goes past {MAX_GUARD_OPENING} mm; thicker than "
+      f"{MATTRESS_H_MAX} and the barrier over the mattress falls under "
+      f"{MIN_GUARD_OVER_MATTRESS} mm. Modelled: {MATTRESS_H} mm (gap "
+      f"{GUARD_BAND_Z0[0] - MATTRESS_Z1}, barrier {GUARD_TOP - MATTRESS_Z1})")
+
 print(f"OK  D2/D7/D13/D14: 4 front guard segments {sec(GUARD_T, GUARD_W)} x "
       f"{FRONT_GUARD_SEG_LEN} at X {FRONT_GUARD_SEGMENTS[0][0]}.."
       f"{FRONT_GUARD_SEGMENTS[0][1]} / {FRONT_GUARD_SEGMENTS[1][0]}.."

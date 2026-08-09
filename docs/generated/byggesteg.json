@@ -560,11 +560,11 @@
         26,
         3.4
       ],
-      "intro": "Sengen er ferdig. Det som gjenstår er det som avgjør om den er trygg.",
+      "intro": "Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er tykkelsen, og den har både en nedre og en øvre grense.",
       "do": [
-        "Legg madrassen på plass. Den skal presses de siste millimeterne inn mellom veggene, og den skal fylle hele dybden fra veggen til de fremre stolpene.",
+        "Legg madrassen på plass. En 80 × 200 presses de siste millimeterne inn mellom veggene, og den skal fylle hele dybden fra veggen til de fremre stolpene.",
         "Legg de tre putene i underetasjen på plass.",
-        "Skriv MINSTE tillatte madrasstykkelse med tusj på innsiden av en fremre stolpe. Det er en nedre grense, ikke en øvre — se sikkerhetsavsnittet i ASSEMBLY.md."
+        "Skriv BEGGE grensene for madrasstykkelse med tusj på innsiden av en fremre stolpe — se nøkkelmålene. For tynn madrass åpner spalten under nederste rekkverksbord, for tykk senker rekkverket over den som ligger der."
       ],
       "check": [
         "Ettertrekk alle festemidler som kan ettertrekkes.",

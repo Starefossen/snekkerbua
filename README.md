@@ -39,6 +39,11 @@ generated *model* file is gitignored.
 * **[docs/MONTERING.md](docs/MONTERING.md)** — the same build, one picture per
   step, drawn as black-and-white line art with almost no words. Same step
   numbers as the text guide.
+* **[docs/PRAKSIS.md](docs/PRAKSIS.md)** — for whoever changes the model or
+  the drawings, not for whoever builds the bed: the single-source rule, what
+  makes an assert worth writing here, how the fasteners are modelled and where
+  the boundary between steel and timber runs, the drawing conventions, and how
+  to regenerate everything. Deliberately not in the printed manual.
 
 Both are driven by the model. `mise run build` regenerates the tables in
 `docs/generated/` (cut list, buying list, key dimensions, hardware list, the

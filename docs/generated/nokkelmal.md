@@ -37,7 +37,7 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **1065** | endebjelkens overkant = sidevangens underkant (fri høyde under sengen) |
 | **1163** | sidevangens overkant |
 | **1199** | spilebunn / madrassens underside / bakre stolpetopp |
-| **1339** | madrassens overside (ved 140 mm madrass) |
+| **1339** | madrassens overside (ved 140 mm madrass; lovlig band 140–326) |
 | **1414** | rekkverk, nedre bånd underkant |
 | **1512** | rekkverk, nedre bånd overkant |
 | **1587** | rekkverk, øvre bånd underkant |
@@ -103,8 +103,8 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 
 | | Mål |
 |---|---|
-| Madrass, overkøye | 1990 × 800 mm (en 200 × 80 presses de siste 10 mm inn mellom veggene) |
-| Madrasstykkelse, minimum | 140 mm — tynnere madrass gjør åpningen opp til nedre rekkverksbånd større enn 75 mm |
+| Madrass, overkøye | **standard 80 × 200 cm.** Sengen er dimensjonert rundt den; liggeflaten er 1990 × 800 mm, så madrassen presses de siste 10 mm inn mellom veggene og fyller bredden nøyaktig |
+| Madrasstykkelse | **140–326 mm.** Tynnere enn 140 og åpningen opp til nedre rekkverksbånd blir større enn 75 mm; tykkere enn 326 og rekkverket står mindre enn 160 mm over madrassen. Modellen tegner 140 mm |
 | Madrassens sideveis vandring | ingen — madrassen fyller hele bredden mellom veggen og de fremre stolpene |
 | Puter i underetasjen, dybde | 800 mm |
 | Pute over venstre benk | 645 mm bred |

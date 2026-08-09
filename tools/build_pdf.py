@@ -546,8 +546,11 @@ td img { display: block; margin: 0 auto; }
 .step.tall .step-tables { column-count: 1; }
 /* Kappesiden er 14 bord i full lengde og vil ha bredden: liggende A4. */
 @page cutplan { size: A4 landscape; margin: 13mm 14mm; }
-.step.cut { page: cutplan; }
-.step.cut .step-figure img { width: 100%; max-height: 142mm;
+/* ...and it must NOT split. At 142mm the drawing pushed the joint line, the
+   warning and the "in words" link onto a second landscape sheet with nothing
+   else on it - a whole page of footnote. The figure gives up 18mm instead. */
+.step.cut { page: cutplan; break-inside: avoid; }
+.step.cut .step-figure img { width: 100%; max-height: 124mm;
                              object-fit: contain; }
 /* Alt annet paa kappesiden holdes nede, sa tegningen far bredden. */
 .step.cut .step-head { margin-bottom: 2mm; padding-bottom: 1.5mm; }

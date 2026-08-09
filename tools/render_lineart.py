@@ -1338,26 +1338,32 @@ def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset):
 def info_panel(page, box, G):
     """The mattress panel. Every number is read off the model.
 
-    IKEA writes a maximum here because a thick mattress lifts the sleeper
-    towards the top of the guard. This bed is the other way round: the guard
-    bands sit at fixed heights and the opening above the mattress is only
-    inside EN 747 while the mattress is at least as thick as the model
-    assumes. A THINNER mattress opens the gap. So it is a minimum, in bold.
+    IKEA writes a maximum here. This bed needs BOTH bounds, and they pull
+    opposite ways off the same two fixed heights - the slat top the mattress
+    lies on, and the guard above it:
+
+        too THIN  and the gap under the lower guard band opens past the
+                  EN 747 entrapment limit. The arrow is UNDER the mattress.
+        too THICK and the barrier standing above the sleeper falls under the
+                  EN 747 minimum. The arrow is ABOVE it.
+
+    So the panel draws the mattress at its modelled thickness with a
+    constraint arrow on each side, and prints the range rather than a number.
     """
     x, y, w, h = box
     page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=W_RULE)
     page.circle((x + 40, y + h - 40), 22, width=W_RULE)
     page.text((x + 40, y + h - 50), "i", 46, anchor="middle", weight="bold")
     page.text((x + 78, y + h - 52), "MADRASS", 44, weight="bold")
-    page.text((x + 22, y + h - 112),
-              f"{G.WALL_SPAN} x {G.MATTRESS_W} mm", 40)
+    page.text((x + 22, y + h - 112), "STANDARD 80 x 200 cm", 40)
     page.text((x + 22, y + h - 166),
-              f"TYKKELSE MIN {G.MATTRESS_H} mm", 44, weight="bold")
+              f"TYKKELSE {G.MATTRESS_H_MIN}-{G.MATTRESS_H_MAX} mm", 44,
+              weight="bold")
 
-    # Section: slat top, mattress, the opening, the lower guard band.
-    top = y + h - 200
+    # Section: slat top, mattress, the opening, both guard bands, post top.
+    top = y + h - 208
     bot = y + 30
-    z0, z1 = G.SLAT_Z1, G.GUARD_BAND_Z0[0] + G.GUARD_W
+    z0, z1 = G.SLAT_Z1, G.GUARD_TOP
     k = (top - bot) / (z1 - z0)
     sx, sw = x + 26, w - 52
 
@@ -1365,23 +1371,33 @@ def info_panel(page, box, G):
         return bot + (z - z0) * k
 
     page.line((sx, zy(G.SLAT_Z1)), (sx + sw, zy(G.SLAT_Z1)), INK, W_RULE)
-    page.rect(sx, zy(G.MATTRESS_Z0), sw * 0.78,
+    page.rect(sx, zy(G.MATTRESS_Z0), sw * 0.44,
               (G.MATTRESS_Z1 - G.MATTRESS_Z0) * k, fill="none", width=W_RULE)
-    page.rect(sx, zy(G.GUARD_BAND_Z0[0]), sw * 0.78, G.GUARD_W * k,
-              fill="none", width=W_RULE)
-    page.text((sx + 18, zy(G.GUARD_BAND_Z0[0]) + G.GUARD_W * k / 2 - 11),
-              "REKKVERK", 30)
-    page.text((sx + 18, zy(G.MATTRESS_Z0)
-               + (G.MATTRESS_Z1 - G.MATTRESS_Z0) * k / 2 - 11),
-              "MADRASS", 30)
+    for zb in G.GUARD_BAND_Z0:
+        page.rect(sx, zy(zb), sw * 0.44, G.GUARD_W * k, fill="none",
+                  width=W_RULE)
+    for i, zb in enumerate(G.GUARD_BAND_Z0):
+        page.text((sx + 14, zy(zb) + G.GUARD_W * k / 2 - 10),
+                  "REKKVERK" if i == 0 else "REKKVERK 2", 26)
+    page.text((sx + 14, zy(G.MATTRESS_Z0)
+               + (G.MATTRESS_Z1 - G.MATTRESS_Z0) * k / 2 - 10),
+              "MADRASS", 26)
+
+    def between(ax, za, zb, txt, limit):
+        ya, yb = zy(za), zy(zb)
+        page.arrow((ax, ya + 4), (ax, yb), INK, W_LEAD, 12)
+        page.arrow((ax, yb - 4), (ax, ya), INK, W_LEAD, 12)
+        page.text((ax + 12, (ya + yb) / 2 - 11), txt, 32, weight="bold")
+        page.text((ax + 12, (ya + yb) / 2 - 44), limit, 24)
+
+    # MIN side: the gap under the lower band. MAX side: the barrier above the
+    # mattress, measured to the top of the guard.
     gap = G.GUARD_BAND_Z0[0] - G.MATTRESS_Z1
-    ax = sx + sw * 0.88
-    page.arrow((ax, zy(G.MATTRESS_Z1) + 4), (ax, zy(G.GUARD_BAND_Z0[0])),
-               INK, W_LEAD, 12)
-    page.arrow((ax, zy(G.GUARD_BAND_Z0[0]) - 4), (ax, zy(G.MATTRESS_Z1)),
-               INK, W_LEAD, 12)
-    page.text((ax + 16, (zy(G.MATTRESS_Z1) + zy(G.GUARD_BAND_Z0[0])) / 2 - 12),
-              f"{int(round(gap))}", 38, weight="bold")
+    barrier = G.GUARD_TOP - G.MATTRESS_Z1
+    between(sx + sw * 0.51, G.MATTRESS_Z1, G.GUARD_BAND_Z0[0],
+            f"{int(round(gap))}", f"maks {G.MAX_GUARD_OPENING}")
+    between(sx + sw * 0.78, G.MATTRESS_Z1, G.GUARD_TOP,
+            f"{int(round(barrier))}", f"min {G.MIN_GUARD_OVER_MATTRESS}")
 
 
 def step_sections(marks):

@@ -257,15 +257,15 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke,
 
 ## Steg 11 — Madrass og sluttsjekk
 
-Sengen er ferdig. Det som gjenstår er det som avgjør om den er trygg.
+Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er tykkelsen, og den har både en nedre og en øvre grense.
 
 **Deler:** 1× Madrass (se nøkkelmål)
 
 **Slik gjør du:**
 
-1. Legg madrassen på plass. Den skal presses de siste millimeterne inn mellom veggene, og den skal fylle hele dybden fra veggen til de fremre stolpene.
+1. Legg madrassen på plass. En 80 × 200 presses de siste millimeterne inn mellom veggene, og den skal fylle hele dybden fra veggen til de fremre stolpene.
 1. Legg de tre putene i underetasjen på plass.
-1. Skriv MINSTE tillatte madrasstykkelse med tusj på innsiden av en fremre stolpe. Det er en nedre grense, ikke en øvre — se sikkerhetsavsnittet i ASSEMBLY.md.
+1. Skriv BEGGE grensene for madrasstykkelse med tusj på innsiden av en fremre stolpe — se nøkkelmålene. For tynn madrass åpner spalten under nederste rekkverksbord, for tykk senker rekkverket over den som ligger der.
 
 **Sjekk før du går videre:**
 

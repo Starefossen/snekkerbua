@@ -486,16 +486,19 @@ def build_steps(G):
             title="Madrass og sluttsjekk",
             parts=["Mattress *"],
             camera=(330, 26, 3.4),
-            intro="Sengen er ferdig. Det som gjenstår er det som avgjør om "
-                  "den er trygg.",
+            intro="Sengen er dimensjonert rundt en STANDARD madrass på "
+                  "80 × 200 cm — den er ikke spesialmål og skal ikke "
+                  "spesialbestilles. Det eneste målet du må velge selv er "
+                  "tykkelsen, og den har både en nedre og en øvre grense.",
             do=[
-                "Legg madrassen på plass. Den skal presses de siste "
+                "Legg madrassen på plass. En 80 × 200 presses de siste "
                   "millimeterne inn mellom veggene, og den skal fylle hele "
                   "dybden fra veggen til de fremre stolpene.",
                 "Legg de tre putene i underetasjen på plass.",
-                "Skriv MINSTE tillatte madrasstykkelse med tusj på innsiden "
-                  "av en fremre stolpe. Det er en nedre grense, ikke en øvre "
-                  "— se sikkerhetsavsnittet i ASSEMBLY.md.",
+                "Skriv BEGGE grensene for madrasstykkelse med tusj på "
+                  "innsiden av en fremre stolpe — se nøkkelmålene. For tynn "
+                  "madrass åpner spalten under nederste rekkverksbord, for "
+                  "tykk senker rekkverket over den som ligger der.",
             ],
             check=[
                 "Ettertrekk alle festemidler som kan ettertrekkes.",
@@ -911,7 +914,8 @@ def emit_nokkelmal(G, out_dir, rows):
         (G.RAIL_TOP, "sidevangens overkant"),
         (G.SLAT_Z1, "spilebunn / madrassens underside / bakre stolpetopp"),
         (G.MATTRESS_Z1, "madrassens overside (ved "
-                        f"{G.MATTRESS_H} mm madrass)"),
+                        f"{G.MATTRESS_H} mm madrass; lovlig band "
+                        f"{G.MATTRESS_H_MIN}–{G.MATTRESS_H_MAX})"),
         (G.GUARD_BAND_Z0[0], "rekkverk, nedre bånd underkant"),
         (G.GUARD_BAND_Z0[0] + G.GUARD_W, "rekkverk, nedre bånd overkant"),
         (G.GUARD_BAND_Z0[1], "rekkverk, øvre bånd underkant"),
@@ -1039,12 +1043,17 @@ def emit_nokkelmal(G, out_dir, rows):
              "Skruehoder forsenkes som vanlig der de er i veien for hånda.\n\n")
 
     L.append("## Madrass og puter\n\n| | Mål |\n|---|---|\n")
-    L.append(f"| Madrass, overkøye | {G.WALL_SPAN} × {G.MATTRESS_W} mm "
-             f"(en 200 × 80 presses de siste "
-             f"{2000 - G.WALL_SPAN} mm inn mellom veggene) |\n")
-    L.append(f"| Madrasstykkelse, minimum | {G.MATTRESS_H} mm — tynnere "
-             f"madrass gjør åpningen opp til nedre rekkverksbånd større enn "
-             f"{G.MAX_GUARD_OPENING} mm |\n")
+    L.append(f"| Madrass, overkøye | **standard 80 × 200 cm.** Sengen er "
+             f"dimensjonert rundt den; liggeflaten er {G.WALL_SPAN} × "
+             f"{G.MATTRESS_W} mm, så madrassen presses de siste "
+             f"{2000 - G.WALL_SPAN} mm inn mellom veggene og fyller bredden "
+             f"nøyaktig |\n")
+    L.append(f"| Madrasstykkelse | **{G.MATTRESS_H_MIN}–{G.MATTRESS_H_MAX} "
+             f"mm.** Tynnere enn {G.MATTRESS_H_MIN} og åpningen opp til nedre "
+             f"rekkverksbånd blir større enn {G.MAX_GUARD_OPENING} mm; "
+             f"tykkere enn {G.MATTRESS_H_MAX} og rekkverket står mindre enn "
+             f"{G.MIN_GUARD_OVER_MATTRESS} mm over madrassen. Modellen "
+             f"tegner {G.MATTRESS_H} mm |\n")
     wander = getattr(G, "MATTRESS_WANDER", 0)
     if wander:
         L.append(f"| Madrassens sideveis vandring | {wander} mm mellom "
@@ -1231,7 +1240,7 @@ def emit_montering(G, root, steps, idx):
          f"| **{G.WALL_SPAN} mm** | **{G.OVERALL_DEPTH} mm** | "
          f"**{G.POST_HEIGHT} mm** |\n\n",
          f"{n_parts} deler · {n_steps} steg · 2 personer · "
-         f"madrass {G.WALL_SPAN} × {G.MATTRESS_W} mm\n\n",
+         f"passer standard madrass 80 × 200 cm\n\n",
          "Sengen står inntil bakveggen og inntil begge sidevegger, og skrus "
          "fast i bakveggen. **Bygg bakfra og utover.**\n\n",
          "Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). "

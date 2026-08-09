@@ -444,14 +444,24 @@ Mål på madrass og puter: [nøkkelmål](generated/nokkelmal.md#madrass-og-puter
 
 ### Overkøyen
 
-En helt vanlig 200 × 80. Rommet er noen millimeter smalere enn 200 cm, så
-madrassen presses de siste millimeterne inn mellom veggene. Det er meningen —
-da ligger den i ro.
+**Sengen er dimensjonert rundt en standard madrass på 80 × 200 cm.** Det er
+ikke et spesialmål, og madrassen skal ikke bestilles etter sengen — det er
+sengen som er bygd etter madrassen. Rommet er noen millimeter smalere enn
+200 cm, så madrassen presses de siste millimeterne inn mellom veggene. Det er
+meningen: da ligger den i ro.
 
-**Tykkelsen har en nedre grense, ikke en øvre.** Rekkverksbåndene er lagt etter
-madrassens overflate. Blir madrassen tynnere enn minstemålet, blir åpningen
-mellom madrassen og det nederste rekkverksbordet større enn tillatt. Skriv
-minstetykkelsen med tusj på innsiden av en fremre stolpe.
+**Tykkelsen har BEGGE grenser, og de trekker hver sin vei.** Rekkverksbåndene
+sitter i faste høyder, og madrassens overflate er det de måles fra:
+
+* **For tynn** madrass senker liggeflaten, og spalten mellom madrassen og det
+  nederste rekkverksbordet blir større enn EN 747 tillater.
+* **For tykk** madrass hever liggeflaten, og rekkverket står ikke lenger høyt
+  nok over den som ligger der.
+
+Begge tallene regnes ut av modellen av de to faste høydene — spilebunnen og
+rekkverket — og står i [nøkkelmålene](generated/nokkelmal.md#madrass-og-puter).
+Skriv dem BEGGE med tusj på innsiden av en fremre stolpe. Panelet på siste side
+i monteringsanvisningen tegner de to grensene med en pil hver.
 
 ### Underetasjen — tre puter
 
@@ -512,7 +522,9 @@ tatt.
 **7.2 Rekkverket foran har en klatreåpning.** Man klatrer gjennom, ikke over
 toppbordet. Åpningen er like bred som stigen og ligger rett over den.
 
-**7.3 Madrassen skal ikke være tynnere enn minstemålet.** Se avsnitt 5.
+**7.3 Madrasstykkelsen skal ligge innenfor BEGGE grensene.** For tynn åpner
+spalten under nederste rekkverksbord; for tykk senker rekkverket over den som
+ligger der. Se avsnitt 5 og nøkkelmålene.
 
 **7.4 Ikke hopp på bar spilebunn.** Med madrass fordeles lasten over flere
 spiler og alt er greit. Uten madrass, med full dynamisk last rett på én spile,
