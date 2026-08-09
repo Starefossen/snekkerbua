@@ -29,12 +29,12 @@ Bench Slat Right_2	boards	1754.5	1852.5	-48	752	259	293
 Bench Slat Right_3	boards	1617	1715	-48	752	259	293
 Bench Slat Right_4	boards	1479.5	1577.5	-48	752	259	293
 Bench Slat Right_5	boards	1342	1440	-48	752	259	293
-Bench Stub Leg Back Left	posts	572	645	-48	0	0	186
-Bench Stub Leg Back Right	posts	1345	1418	-48	0	0	186
-Bench Stub Leg Front Left	posts	572	645	704	752	0	186
-Bench Stub Leg Front Right	posts	1345	1418	704	752	0	186
-Corner Post Back Left	posts	0	48	-96	-48	0	1700
-Corner Post Back Right	posts	1942	1990	-96	-48	0	1700
+Bench Stub Leg Back Left	posts	597	645	-48	0	0	186
+Bench Stub Leg Back Right	posts	1345	1393	-48	0	0	186
+Bench Stub Leg Front Left	posts	597	645	704	752	0	186
+Bench Stub Leg Front Right	posts	1345	1393	704	752	0	186
+Corner Post Back Left	posts	0	48	-96	-48	0	1337
+Corner Post Back Right	posts	1942	1990	-96	-48	0	1337
 Corner Post Front Left	posts	0	48	752	800	0	1700
 Corner Post Front Right	posts	1942	1990	752	800	0	1700
 End Beam Bearing Block Left Back	boards	48	96	-96	-48	931	967
@@ -43,8 +43,6 @@ End Beam Bearing Block Right Back	boards	1894	1942	-96	-48	931	967
 End Beam Bearing Block Right Front	boards	1894	1942	752	800	931	967
 End Beam Left	rails	48	96	-96	800	967	1065
 End Beam Right	rails	1894	1942	-96	800	967	1065
-Guard Rail Back_1	boards	3	1987	-130	-96	1412	1510
-Guard Rail Back_2	boards	3	1987	-130	-96	1585	1683
 Guard Rail Front Left_1	boards	3	835	800	834	1412	1510
 Guard Rail Front Left_2	boards	3	835	800	834	1585	1683
 Guard Rail Front Right_1	boards	1155	1987	800	834	1412	1510
