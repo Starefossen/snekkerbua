@@ -397,13 +397,14 @@ AXIS_ON_PAGE = FORESHORTEN_FLOOR * 0.5
 # their shared axis - are separated by QUEUEING them, each one a body further
 # back along that same axis. Both of them stay on the line.
 #
-# A BRACKET has no drive axis. It lies flat against two faces, and "backing it
-# out" along anything drives it into the timber it sits on. So it gets the one
-# move a screw is denied: a short DIAGONAL float on the PAPER, out in x and y,
-# close enough to its seat that the dotted leash back is unmistakable. Its own
-# screws then explode along their axes from where the BRACKET ended up, and
-# two screws entering from each side reads straight off the main drawing -
-# which is why those brackets no longer need a magnifier to be understood.
+# A BRACKET has no drive axis of its own, but it is not free either: it comes
+# off BACKWARDS ALONG THE SCREWS THAT HOLD IT, and that direction is a fact
+# about the joint rather than about the paper. See R1 under WHICH WAY A
+# BRACKET COMES OFF: the float is the negated resultant of its own screws'
+# drive vectors, and the only thing left free is how FAR out. Its own screws
+# then explode along their axes from where the BRACKET ended up, and two
+# screws entering from each side reads straight off the main drawing - which
+# is why those brackets no longer need a magnifier to be understood.
 #
 # Both are fractions of the page's short side, so a cropped page gets the same
 # picture at its own scale.
@@ -418,70 +419,131 @@ def _unit2(a, b):
     return (dx / n, dy / n, n) if n > 1e-9 else (0.0, 0.0, 0.0)
 
 
-def _seg_dist(p, a, b):
-    vx, vy = b[0] - a[0], b[1] - a[1]
-    ll = vx * vx + vy * vy
-    if ll < 1e-12:
-        return math.hypot(p[0] - a[0], p[1] - a[1])
-    t = ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / ll
-    t = 0.0 if t < 0.0 else (1.0 if t > 1.0 else t)
-    return math.hypot(p[0] - (a[0] + vx * t), p[1] - (a[1] + vy * t))
+# ---------------------------------------------------------------------------
+# R1 - WHICH WAY A BRACKET COMES OFF
+# ---------------------------------------------------------------------------
+# A screw explodes along its own drive axis; that direction is given and this
+# file never chooses it. A BRACKET has no drive axis of its own, and the way
+# it used to be floated - try all four diagonals, keep the one with the most
+# white paper under it - was a guess about the PAPER dressed up as a drawing
+# convention. It got J12 exactly backwards: the angle bracket under the table
+# ledger floated up and to the left, which is INTO the ledger it is screwed to
+# the underside of.
+#
+# The direction is not a matter of taste, and the model already knows it. A
+# bracket is held by its screws, so the only way it comes off is BACKWARDS
+# ALONG THEM: negate the resultant of the drive vectors of every fastener
+# that passes through it, project that, and float it that way. J12's two
+# screws go (-1,0,0) into the post and (0,0,+1) up into the ledger, so the
+# bracket leaves at (+1,0,-1)/root 2 - out from the post and DOWN, away from
+# everything it touches. That is disassembly, and it is what an exploded view
+# is a picture of.
+def plate_screws(G, plate):
+    """Every fastener that passes THROUGH one bracket, straight off the model.
 
-
-def ink_clearance(p, plines, cap):
-    """How much white paper is round `p`, given up on once `cap` is reached.
-
-    The bed is drawn as line work, so "is there room here" is the distance to
-    the nearest SEGMENT - not to the nearest projected vertex. A 1794 mm rail
-    is two points and a hundred model millimetres of clearance from either end
-    of it says nothing about the edge running between them.
+    Taken from the model rather than from the page's surviving marks on
+    purpose: a bracket comes off the way it is held, and that is true whether
+    or not this page happens to have merged two of its screws into one badge
+    or cropped the far end of the bed away.
     """
-    best = cap
-    for pl in plines:
-        for a, b in zip(pl, pl[1:]):
-            if (min(a[0], b[0]) - p[0] > best or p[0] - max(a[0], b[0]) > best
-                    or min(a[1], b[1]) - p[1] > best
-                    or p[1] - max(a[1], b[1]) > best):
-                continue
-            d = _seg_dist(p, a, b)
-            if d < best:
-                best = d
-    return best
+    return [f for f in G.FASTENER_SPECS
+            if f["kind"] != "plate" and f["jid"] == plate["jid"]
+            and screw_on_plate(plate, f)]
 
 
-def clear_diagonal(plines, seat, step, span):
-    """Which way to float an exploded BRACKET off its seat.
+def disassembly_dir(view, plate, screws):
+    """The unit direction a bracket floats in, in the drawing's own frame.
 
-    All four diagonals are tried, the path the bracket would take is sampled
-    along each of them, and the one with the most white paper under it wins.
-    Diagonal on purpose: a bracket floated straight out along x or y reads as
-    a part sliding along the timber it is bolted to, and out along x AND y at
-    once is the one direction no member of this bed runs in.
+    Three sources, in order, and the second and third are only ever reached by
+    a camera that has flattened the first:
 
-    Screws never come here. A screw that steps sideways off its own axis has
-    stopped saying where it goes.
+      1. minus the resultant of the screws' drive vectors - the disassembly
+         direction proper;
+      2. failing that (no screws, or drives that cancel exactly), out along
+         the bracket's own normal, i.e. off the face it lies against;
+      3. failing even that - the direction points straight at the reader and
+         has no length on the page - straight down the page, which is the one
+         direction that cannot be mistaken for a member of this bed.
     """
-    best, best_v = None, (step, step)
-    for sx in (1.0, -1.0):
-        for sy in (1.0, -1.0):
-            room = min(
-                ink_clearance((seat[0] + step * sx * t,
-                               seat[1] + step * sy * t), plines, span)
-                for t in (0.6, 1.0, 1.4))
-            if best is None or room > best + 1e-9:
-                best, best_v = room, (step * sx, step * sy)
-    return best_v
+    v = tuple(-sum(f["direction"][j] for f in screws) for j in range(3))
+    if math.hypot(*v) < 1e-9:
+        v = tuple(-c for c in plate["direction"])
+    for cand in (v, tuple(-c for c in plate["direction"])):
+        dx, dy = view.dir_xy(cand)
+        n = math.hypot(dx, dy)
+        if n > 1e-6:
+            return (dx / n, dy / n)
+    return (0.0, -1.0)
 
 
-def clear_back(dark, hole, u, body, base, step, want, tries=4):
+def plate_page_points(view, plate, off=(0.0, 0.0)):
+    """The bracket's drawn corners on the page - what the ink actually is."""
+    return [(view.xy(p)[0] + off[0], view.xy(p)[1] + off[1])
+            for q in plate_quads(plate) for p in q]
+
+
+def _centroid(pts):
+    return (sum(p[0] for p in pts) / len(pts),
+            sum(p[1] for p in pts) / len(pts))
+
+
+def float_plate(occ, view, plate, screws, hop):
+    """Where an exploded bracket goes: R1 for the direction, the field for how
+    far. The DIRECTION is given - the caller does not get a vote and neither
+    does the paper - so the only thing left to choose is the distance, and
+    that is a single run of layout.place() over candidates strung out along
+    that one line. A bracket that finds no room simply goes further out; it
+    never leans, for the same reason a screw never does.
+    """
+    ux, uy = disassembly_dir(view, plate, screws)
+    pts = plate_page_points(view, plate)
+    xs = [p[0] for p in pts]
+    ys = [p[1] for p in pts]
+    home = _centroid(pts)
+    foot = (max(xs) - min(xs), max(ys) - min(ys))
+    cands = [(home[0] + ux * hop * k, home[1] + uy * hop * k)
+             for k in (1.0, 1.4, 1.9, 2.5)]
+    at = layout.place(cands, foot, occ, tether=home, pull=1.0 / (hop * 6.0))
+    return (at[0] - home[0], at[1] - home[1])
+
+
+def assert_float_direction(page, view, plate, want, jid):
+    """The float is checked against the rule, measured off the INK.
+
+    The drawn bracket's centroid is taken out of the page's own record of what
+    it emitted - not out of the offset that was computed - and compared with
+    the centroid the same bracket would have had sitting on its seat. A
+    drawing that floats a bracket into the timber it hangs under does not get
+    written.
+    """
+    drawn = [r for r in page.record
+             if r["kind"] == "plate" and r["owner"] == id(plate)]
+    assert len(drawn) == 1, (
+        f"{jid}: beslaget ble tegnet {len(drawn)} ganger - regelen kan bare "
+        f"sjekkes mot ett blekkspor")
+    home = _centroid(plate_page_points(view, plate))
+    moved = _centroid(drawn[0]["points"])
+    step = (moved[0] - home[0], moved[1] - home[1])
+    assert math.hypot(*step) > 1e-6, (
+        f"{jid}: beslaget er tegnet oppa setet sitt - en eksplodert del som "
+        f"ikke har flyttet seg forteller ingenting om hvordan den tas av")
+    dev = _angle_between(step, want)
+    assert dev is not None and dev < AXIS_TOL_DEG, (
+        f"{jid}: beslaget flyter {dev:.2f} grader av demonteringsretningen "
+        f"(minus resultanten av skruene som holder det) - se "
+        f"disassembly_dir()")
+
+
+def clear_back(occ, hole, u, body, base, step, want, tries=4):
     """How far back along its own axis an exploded screw has to sit.
 
-    The one degree of freedom a screw is allowed. Its body is sampled at each
-    candidate distance and the SHORTEST hop that finds white paper for the
-    whole of it wins; if none does, the roomiest one does. Only the black line
-    work counts - a screw is welcome to lie across the ghosted frame that is
-    already standing, and on a page where everything is new there is nothing
-    to be precious about anyway.
+    The one degree of freedom a screw is allowed - the same freedom, and the
+    same only freedom, that float_plate() leaves a bracket. Its body is
+    sampled at each candidate distance in the occupancy field and the SHORTEST
+    hop that finds white paper for the whole of it wins; if none does, the
+    roomiest one does. Only the BLACK line work counts - a screw is welcome to
+    lie across the ghosted frame that is already standing, and on a page where
+    everything is new there is nothing to be precious about anyway.
 
     What it never does is lean. A screw that cannot find room on its axis
     comes further out along it, and if there is still no room it stays where
@@ -491,9 +553,9 @@ def clear_back(dark, hole, u, body, base, step, want, tries=4):
     best, best_d = None, base
     for k in range(tries):
         d = base + k * step
-        room = min(ink_clearance((hole[0] - u[0] * (d - body * t),
+        room = min(occ.clearance((hole[0] - u[0] * (d - body * t),
                                   hole[1] - u[1] * (d - body * t)),
-                                 dark, want)
+                                 want, tags=("dark",))
                    for t in (0.0, 0.35, 0.7, 1.0))
         if room >= want - 1e-9:
             return d
@@ -635,6 +697,12 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
         else:
             for pl in polys:
                 page.poly(pl, fill="#ffffff", stroke=INK, width=T.W_RULE)
+        page.record.append(dict(kind="plate", owner=id(f), jid=f["jid"],
+                                name=f["name"],
+                                # without each ring's repeated closing point,
+                                # so the recorded centroid is the polygon's
+                                # and not a corner counted twice
+                                points=[q for pl in polys for q in pl[:-1]]))
         seat = view.xy(anchor)
         run_end = view.xy(tuple(a + r * f["reach"]
                                 for a, r in zip(anchor, f["run"])))
@@ -675,6 +743,8 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
     # so their midpoint is the head centre, and prof[3] is the point.
     body = (((outline[0][0] + outline[-1][0]) / 2,
              (outline[0][1] + outline[-1][1]) / 2), outline[3])
+    page.record.append(dict(kind="screw", owner=id(f), jid=f["jid"],
+                            name=f["name"], points=list(outline), axis=body))
     return p0, p1, body
 
 
@@ -842,6 +912,14 @@ class Page:
         # Where the badge letters have already landed, so the next row can
         # step out of their way instead of on top of them.
         self.badge_spots = []
+        # WHAT ACTUALLY WENT ON THE PAPER. Every drawn body, badge and label
+        # registers itself here with its geometry and its owner, and the
+        # asserts read THIS rather than the numbers that went in. It is the
+        # same discipline assert_on_axis() has always kept - it takes the axis
+        # out of the polygon that was emitted, not out of the intention - and
+        # it is the only kind of check that cannot be satisfied by meaning
+        # well. A rule the drawing breaks silently is not a rule.
+        self.record = []
 
     @property
     def w(self):
@@ -1837,12 +1915,16 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     style = "eksplodert" if len(keep) <= EXPLODE_MAX else "in situ"
     short = min(page.w, page.h)
     hover = short * EXPLODE_FRAC
-    float_d = short * EXPLODE_PLATE_FRAC * 0.7071      # per axis: x and y
-    ink = combined.get("prior", []) + new_only
-    # What is drawn in BLACK. A screw is allowed to lie over the ghosted frame
-    # that is already standing - that is what ghosting is for - but not over
-    # the piece this step is about.
-    dark = new_only + combined.get("new", [])
+    float_d = short * EXPLODE_PLATE_FRAC
+    # THE OCCUPANCY FIELD: everything already on the paper, in one place, so
+    # every rule that has to ask "is there room here" asks the same object.
+    # The two layers are not the same thing to a fastener - it is welcome to
+    # lie across the ghosted frame that is already standing, that is what
+    # ghosting is for, but not across the piece this step is about.
+    occ = layout.Occupancy()
+    occ.add_lines(combined.get("prior", []), weight=0.15, tag="grey")
+    occ.add_lines(new_only + combined.get("new", []), weight=1.0, tag="dark")
+    occ.add_box(box, weight=40.0)
     stacks = {}
     # Where the drawn fasteners actually ended up, so a caption - or a
     # magnifier placed later - cannot white one of them out.
@@ -1855,8 +1937,8 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     if style == "eksplodert":
         for m in keep:
             if m["spec"]["kind"] == "plate":
-                floats[id(m["spec"])] = clear_diagonal(
-                    ink, view.xy(m["spec"]["anchor"]), float_d, float_d * 2.0)
+                floats[id(m["spec"])] = float_plate(
+                    occ, view, m["spec"], plate_screws(G, m["spec"]), float_d)
     plates = [m["spec"] for m in keep if m["spec"]["kind"] == "plate"]
 
     def rides_on(f):
@@ -1904,7 +1986,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                     # seat it has left. Coaxial screws then queue up BEHIND one
                     # another on the shared axis - never beside it - so every
                     # one of them still points at the hole it belongs to.
-                    out = clear_back(dark, (hole[0] + poff[0],
+                    out = clear_back(occ, (hole[0] + poff[0],
                                             hole[1] + poff[1]),
                                      (ux, uy), blen, blen + hover,
                                      hover, f["d"] * SCREW_FATTEN * 0.75)
@@ -1935,7 +2017,11 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
             if _apart(start, entry, 1.0):
                 page.line(start, entry, GREY, T.W_PHANTOM, dash=DASH_INSERT)
             page.dot(entry, T.ENTRY_R, colour=INK)
-            if f["kind"] != "plate":
+            if f["kind"] == "plate":
+                assert_float_direction(
+                    page, view, f,
+                    disassembly_dir(view, f, plate_screws(G, f)), m["jid"])
+            else:
                 assert_on_axis(view, f, body, tip, entry, poff, m["jid"])
             # The caption goes behind the HEAD, i.e. further from the hole -
             # the one direction that cannot land on the fastener itself.
