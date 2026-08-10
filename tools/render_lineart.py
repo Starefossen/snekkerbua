@@ -513,6 +513,38 @@ MERGE_ACROSS_JOINTS = False
 QUEUE_MAX = 4
 
 
+def thread_cues(code):
+    """Does THIS fastener's silhouette carry its thread? R8.
+
+    ONE TEXTURE PER SILHOUETTE. A drawn screw is a body about ten millimetres
+    wide on a page a metre and a half across, and there is room in it for one
+    pattern. The thread is the default, because the thread is most of what
+    makes a shape read as a SCREW rather than as a dart; where a page has
+    bought the fill code, the code is a second pattern of the same order of
+    size and the two together are neither - the reader gets grey.
+
+    So the code takes the body from the thread, and only where the code is
+    actually a PATTERN. `open` is the absence of one, and it is deliberately
+    handed to the letter the page has most of (gen_glyphs.FILL_CODES), so the
+    commonest screw on a coded page - sixteen of the twenty on step 5 - keeps
+    its thread and looks like the same object it is on every other page.
+    Nothing competes with it there, so nothing is bought by taking it away.
+    """
+    return code in (None, "open")
+
+
+def drawn_head_r(d):
+    """Half the widest part of a drawn fastener: its countersunk head.
+
+    The capsule every distance rule measures against is as wide as the widest
+    thing on the silhouette, and on a countersunk screw that is the head. One
+    definition, off the same ratio gen_glyphs draws the head with, so a change
+    to the shape cannot leave the geometry that reasons about it behind.
+    """
+    import gen_glyphs
+    return d * SCREW_FATTEN * gen_glyphs.HEAD_DIA_RATIO / 2.0
+
+
 def _seg_seg_dist(a0, a1, b0, b1):
     """Distance between two segments on the page, 0 where they cross."""
     def cross(o, p, q):
@@ -547,7 +579,7 @@ def body_capsule(view, f, shift=(0.0, 0.0, 0.0), page_off=(0.0, 0.0)):
                 for a, d in zip(anchor, f["direction"]))
     p0 = (view.xy(anchor)[0] + ox, view.xy(anchor)[1] + oy)
     p1 = (view.xy(tip)[0] + ox, view.xy(tip)[1] + oy)
-    r = f["d"] * SCREW_FATTEN * 0.95
+    r = drawn_head_r(f["d"])
     if math.hypot(p1[0] - p0[0], p1[1] - p0[1]) < f["length"] * AXIS_ON_PAGE:
         # Head on: the page draws a ringed dot, so that is the body.
         return (p0, p0, T.RING_R)
@@ -754,14 +786,16 @@ def screw_on_plate(plate, f):
             or (-tol <= a_n <= reach + tol and abs(a_run) <= tol))
 
 
-def screw_shape(view, anchor, direction, length, d, fatten=SCREW_FATTEN):
-    """(outline, head-end, tip-end, unit) for one screw, on the page.
+def screw_shape(view, anchor, direction, length, d, fatten=SCREW_FATTEN,
+                name=None, px_per_unit=None, threads=True):
+    """(outline, head-end, tip-end, unit, drawn length) for one screw.
 
     `outline` is the silhouette in page coordinates: head, countersink,
-    shank, point - laid out along the PROJECTED DRIVE AXIS and nowhere else.
-    There is no upright screw glyph in this function and there must never be
-    one: a 6x90 driven at 65 deg into a corner is drawn at 65 deg, because
-    the angle is the instruction. The only licence taken is the diameter.
+    shank, thread, point - laid out along the PROJECTED DRIVE AXIS and
+    nowhere else. There is no upright screw glyph in this function and there
+    must never be one: a 6x90 driven at 65 deg into a corner is drawn at
+    65 deg, because the angle is the instruction. The only licence taken is
+    the diameter.
 
     `None` when the screw points straight at the reader and has no length on
     the page at all - the caller draws a ringed dot instead, which is the
@@ -771,28 +805,50 @@ def screw_shape(view, anchor, direction, length, d, fatten=SCREW_FATTEN):
     p0, p1 = view.xy(anchor), view.xy(tip3)
     ux, uy, L = _unit2(p0, p1)
     if L < length * AXIS_ON_PAGE:
-        return None, p0, p1, (0.0, 0.0)
+        return None, p0, p1, (0.0, 0.0), 0.0
     L = max(L, length * FORESHORTEN_FLOOR)
-    return (screw_outline(p0, (ux, uy), L, d, fatten), p0, p1, (ux, uy))
+    return (screw_outline(p0, (ux, uy), L, d, fatten, name, px_per_unit,
+                          threads), p0, p1, (ux, uy), L)
 
 
-def screw_outline(p0, u, L, d, fatten=None):
-    """The silhouette itself: head, countersink, shank, point.
+def screw_outline(p0, u, L, d, fatten=None, name=None, px_per_unit=None,
+                  threads=True):
+    """The silhouette itself, and it is not this file's drawing any more.
 
-    Split out of screw_shape() so that everything which draws a fastener draws
-    the SAME seven points - the step page, and the fill-code contrast proof
-    that has to show the reader exactly what the step page will show them.
+    ONE SCREW LANGUAGE. The shape comes from gen_glyphs.screw_profile() - the
+    same description the catalogue glyph in the inset panel and in the step's
+    own fastener table is drawn from - mapped onto the projected drive axis.
+    What used to be here was a seven-point capsule with a flange at one end
+    and a spike at the other, and at page size it read as an ARROW: the page
+    said "dart" where the panel beside it said "screw", and the reader has
+    only the shape to recognise the part by.
+
+    The one licence is still the diameter: `d * fatten` is what the profile is
+    built at, and it is the NOMINAL diameter, so the head comes out
+    gen_glyphs.HEAD_DIA_RATIO times that exactly as it does in the glyph.
+
+    `px_per_unit` is how many device pixels one millimetre of this page
+    becomes, and it decides one thing only: whether the thread is drawn at
+    all. See gen_glyphs.thread_pitch() - a tooth finer than a few pixels is
+    not a thread, it is a furry edge, and the profile then falls back on its
+    own envelope. Same head, same core, same point; no wave.
     """
+    import gen_glyphs
     fatten = SCREW_FATTEN if fatten is None else fatten
-    ux, uy = u
     w = d * fatten
-    hw, head_l, tip_l = w * 0.95, w * 0.30, w * 0.85
+    frac, pointed = gen_glyphs.screw_style(name) if name else (0.70, True)
+    pitch = 0.0
+    if threads and px_per_unit:
+        # The TRUE diameter, not the fattened one: the licence this drawing
+        # takes is width, and a thread's pitch is a length along the axis.
+        # See gen_glyphs.thread_pitch().
+        pitch = gen_glyphs.thread_pitch(d, L * frac, px_per_unit)
+    prof, _bb = gen_glyphs.screw_profile(w, L, frac, pointed, pitch)
+    ux, uy = u
 
     def P(t, q):
         return (p0[0] + ux * t - uy * q, p0[1] + uy * t + ux * q)
 
-    prof = [(0, hw), (head_l, w / 2), (L - tip_l, w / 2), (L, 0),
-            (L - tip_l, -w / 2), (head_l, -w / 2), (0, -hw)]
     return [P(t, q) for t, q in prof]
 
 
@@ -876,6 +932,7 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
                 page.poly(pl, fill="#ffffff", stroke=INK, width=T.W_RULE)
         page.record.append(dict(kind="plate", owner=id(f), jid=f["jid"],
                                 name=f["name"], mark=mark_owner(m),
+                                letter=m.get("letter"),
                                 cap=body_capsule(view, f, shift, page_off),
                                 # without each ring's repeated closing point,
                                 # so the recorded centroid is the polygon's
@@ -887,8 +944,10 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
         return ((run_end[0] + ox, run_end[1] + oy),
                 (seat[0] + ox, seat[1] + oy), None)
 
-    outline, p0, p1, u = screw_shape(view, anchor, f["direction"],
-                                     f["length"], f["d"])
+    outline, p0, p1, u, L_drawn = screw_shape(
+        view, anchor, f["direction"], f["length"], f["d"],
+        name=f["name"], px_per_unit=page.px_per_unit,
+        threads=thread_cues(m.get("code")))
     off = f["d"] * SCREW_FATTEN * STACK_STEP * stack if stack else 0.0
     nx, ny = (-u[1], u[0]) if u != (0.0, 0.0) else (1.0, 0.0)
     ox, oy = ox + nx * off, oy + ny * off
@@ -915,6 +974,7 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
         # it, and R5 has to be able to measure against it.
         page.record.append(dict(kind="screw", owner=id(f), jid=f["jid"],
                                 name=f["name"], mark=mark_owner(m),
+                                letter=m.get("letter"),
                                 points=[p0], axis=None,
                                 cap=(p0, p0, T.RING_R)))
         return p0, p0, None
@@ -936,12 +996,16 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
                        INK, T.W_SCREW * 0.62, dash=DASH_PHANTOM)
         page.poly(outline[:2] + outline[-2:], fill=INK, stroke=INK,
                   width=T.W_SCREW * 0.8)
-    # Straight off the polygon: the two head corners are prof[0] and prof[-1],
-    # so their midpoint is the head centre, and prof[3] is the point.
-    body = (((outline[0][0] + outline[-1][0]) / 2,
-             (outline[0][1] + outline[-1][1]) / 2), outline[3])
+    # Straight off the polygon: the profile's first and last points are the
+    # two corners of the head face, so their midpoint is the head centre and
+    # the point is that far along the drawn axis. Not an index into the
+    # outline any more - the thread makes it a different length on every page.
+    head_c = ((outline[0][0] + outline[-1][0]) / 2,
+              (outline[0][1] + outline[-1][1]) / 2)
+    body = (head_c, (head_c[0] + u[0] * L_drawn, head_c[1] + u[1] * L_drawn))
     page.record.append(dict(kind="screw", owner=id(f), jid=f["jid"],
                             name=f["name"], mark=mark_owner(m),
+                            letter=m.get("letter"),
                             points=list(outline), axis=body,
                             cap=body_capsule(view, f, shift, page_off)))
     return p0, p1, body
@@ -1565,20 +1629,27 @@ def joint_section(page, box, specs, codes, letter_label=""):
                      y + h - T.BADGE_R * 0.9), ch, T.BADGE_R * 0.82)
 
 
-def badge(page, centre, letter, r=None, owner=None, body=None, leader=None):
+def badge(page, centre, letter, r=None, owner=None, body=None, leader=None,
+          family=None, family_owners=None):
     """One circled sans letter - the same mark the step table carries.
 
-    `body` is the capsule of the element the badge NAMES, and `leader` the
-    line drawn to it where the badge could not sit on it. Both go into the
-    record because that is what assert_badges_anchored() re-measures: a badge
-    is only a label if the reader can see WHAT it labels.
+    `body` is the capsule of the element the badge is DRAWN FROM and `leader`
+    the line to it where the badge could not sit on it. `family` is every
+    capsule the badge stands for under R7, and `family_owners` their marks.
+    All four go into the record because that is what assert_badges_anchored()
+    and assert_badges_cover() re-measure: a badge is only a label if the
+    reader can see WHAT it labels, and only complete if nothing it stands for
+    is left without one.
     """
     r = T.BADGE_R if r is None else r
     page.circle(centre, r, fill="#ffffff", stroke=INK, width=T.W_RULE)
     page.text((centre[0], centre[1] - r * 0.40), letter,
               r * 1.20, anchor="middle", weight="bold")
     page.record.append(dict(kind="badge", owner=owner, letter=letter,
-                            at=centre, r=r, body=body, leader=leader))
+                            at=centre, r=r, body=body, leader=leader,
+                            family=list(family) if family else None,
+                            family_owners=list(family_owners)
+                            if family_owners else None))
 
 
 # R5 - A MARK BELONGS TO ITS OWN ELEMENT
@@ -1617,8 +1688,15 @@ def cap_point(p, cap):
     return (a[0] + vx * t, a[1] + vy * t)
 
 
-def mark_label(page, tail, direction, letter, occ=None, owner=None, body=None):
+def mark_label(page, tail, direction, letter, occ=None, owner=None, body=None,
+               family=None):
     """One fastener's badge - ON its screw, or on a leader to it.
+
+    `family` is every caption this badge now stands for: its own cluster's
+    fasteners of its own type (R7). The badge is still tethered to ONE of
+    them - the one it was drawn from - but MINE, in the ownership rule, is the
+    whole family, so a badge sitting on the second 6x90 of a corner is not
+    counted as having strayed onto somebody else's screw.
 
     R6 - CONTACT OR LEADER. A badge that floats near a cluster is not a label,
     it is a riddle: the reader has to guess which of the four fasteners in the
@@ -1669,16 +1747,23 @@ def mark_label(page, tail, direction, letter, occ=None, owner=None, body=None):
     # the placer has to be able to see that touching its own screw is worth
     # more than any amount of white paper, and that landing nearer somebody
     # else's is worth nothing at all.
+    kin = list(family) if family else [dict(owner=owner, body=body)]
+    kin_owners = {q["owner"] for q in kin}
+    kin_bodies = [q["body"] for q in kin if q["body"] is not None]
     foreign = [q["cap"] for q in page.record
                if q["kind"] in ("screw", "plate") and q.get("cap")
-               and q.get("mark") is not None and q.get("mark") != owner]
+               and q.get("mark") is not None and q.get("mark") not in
+               kin_owners]
 
     def price(c):
-        if body is None:
+        if not kin_bodies:
             return 0.0
         out = 0.0
-        d_own = cap_dist(c, body)
-        if d_own > r:
+        d_own = min(cap_dist(c, q) for q in kin_bodies)
+        # Contact is asked of the body this badge is DRAWN from: a letter
+        # standing on the far member of its own family, with its own screw
+        # bare, is a letter the eye has to hunt for.
+        if body is not None and cap_dist(c, body) > r:
             out += CAP_NOCONTACT
         if foreign and min(cap_dist(c, q) for q in foreign) < d_own:
             out += CAP_FOREIGN
@@ -1691,24 +1776,28 @@ def mark_label(page, tail, direction, letter, occ=None, owner=None, body=None):
         # Having stepped out of the way it steps no further than it had to: a
         # badge that has wandered is one the reader has to guess at.
         pull=1.0 / (r * 8.0),
-        owner=owner, tags=CAP_TAGS,
+        owner=owner, family=kin_owners, tags=CAP_TAGS,
         bounds=(page.x0, page.y0, page.x1, page.y1),
         edge=r + 8, edge_penalty=CAP_EDGE, extra=price)
 
     leader = None
-    if body is not None and cap_dist(centre, body) > r:
-        # Out of reach of its own body: it gets a line instead. Drawn from the
-        # badge's rim, not its centre, so the circle stays a clean disc, and
-        # to the point on the body's own axis nearest it.
-        far = cap_point(centre, body)
+    if kin_bodies and min(cap_dist(centre, q) for q in kin_bodies) > r:
+        # Out of reach of every body it stands for: it gets a line instead.
+        # Drawn from the badge's rim, not its centre, so the circle stays a
+        # clean disc, and to the point on the nearest family axis.
+        near_body = min(kin_bodies, key=lambda q: cap_dist(centre, q))
+        far = cap_point(centre, near_body)
         ux, uy, n = _unit2(centre, far)
         near = (centre[0] + ux * r, centre[1] + uy * r) if n > 0 else centre
         page.line(near, far, INK, T.W_LEAD)
         leader = (near, far)
-    badge(page, centre, letter, owner=owner, body=body, leader=leader)
+        body = near_body
+    badge(page, centre, letter, owner=owner, body=body, leader=leader,
+          family=kin_bodies, family_owners=sorted(kin_owners))
     occ.add_point(centre, radius=r, weight=CAP_BADGE, owner=owner, tag="badge")
     page.record.append(dict(kind="label", owner=owner, letter=letter,
-                            at=centre, tether=tail))
+                            at=centre, tether=tail,
+                            family_owners=sorted(kin_owners)))
     return centre
 
 
@@ -1755,7 +1844,10 @@ def assert_badges_anchored(page):
             continue
         mine, r = b["body"], b["r"]
         if b["leader"] is None:
-            gap = cap_dist(b["at"], mine)
+            # Touching ANY of the bodies it stands for is contact: they are
+            # the same fastener in the same cluster, and the badge names all
+            # of them (R7).
+            gap = min(cap_dist(b["at"], q) for q in (b.get("family") or [mine]))
             assert gap <= r + 1e-6, (
                 f"merket {b['letter']} står {gap:.0f} mm fra kroppen sitt "
                 f"eget feste tegner, uten lederlinje - et merke skal enten "
@@ -1769,16 +1861,45 @@ def assert_badges_anchored(page):
                                   near[1] - b["at"][1]) - r) < 1e-6, (
                 f"merket {b['letter']} sin lederlinje starter ikke i "
                 f"merkets egen rand (R6)")
-        d_own = cap_dist(b["at"], mine)
+        # R5, widened from one body to the FAMILY the badge stands for (R7):
+        # nearer to some member of its own type's cluster than to anything
+        # outside it. A badge that has landed nearer a foreign screw than to
+        # every screw it names is not a crowded label, it is a wrong one.
+        kin = b.get("family") or [mine]
+        kin_owners = set(b.get("family_owners") or [b["owner"]])
+        d_own = min(cap_dist(b["at"], q) for q in kin)
         for other in bodies:
-            if other["mark"] == b["owner"]:
+            if other["mark"] in kin_owners:
                 continue
             d_foreign = cap_dist(b["at"], other["cap"])
             assert d_foreign >= d_own - 1e-6, (
                 f"merket {b['letter']} ligger {d_foreign:.0f} mm fra "
-                f"{other['jid']} {other['name']} og {d_own:.0f} mm fra sitt "
-                f"eget feste - et merke skal aldri lande nærmere en fremmed "
-                f"kropp enn sin egen (R5)")
+                f"{other['jid']} {other['name']} og {d_own:.0f} mm fra det "
+                f"nærmeste festet det står for - et merke skal aldri lande "
+                f"nærmere en fremmed kropp enn sin egen familie (R5)")
+
+
+def assert_badges_cover(page):
+    """R7, measured off the ink: nothing on the page is left unnamed.
+
+    One badge per type per cluster is only a saving if the badge that stays
+    covers the ones that went. So every drawn fastener that carries a letter
+    is asked for its letter's badge among the badges that stand for IT - not
+    for one somewhere on the page, for one whose own family it is in. A screw
+    that answers no is a screw the reader cannot find a table row for, and
+    that is the failure this whole rule has to be paid for with.
+    """
+    fams = [(b["letter"], set(b["family_owners"])) for b in page.record
+            if b["kind"] == "badge" and b.get("family_owners")]
+    for r in page.record:
+        if r["kind"] not in ("screw", "plate") or r.get("mark") is None:
+            continue
+        if not r.get("letter"):
+            continue
+        assert any(r["letter"] == lt and r["mark"] in own for lt, own in fams), (
+            f"{r['jid']} {r['name']} er tegnet uten at merket "
+            f"{r['letter']} står for det - ingen bokstav innenfor klyngen "
+            f"sin, og da finner ikke leseren raden i tabellen (R7)")
 
 
 def assert_marks_own_element(page, occ):
@@ -1793,8 +1914,11 @@ def assert_marks_own_element(page, occ):
     for r in page.record:
         if r["kind"] != "label" or r["owner"] is None:
             continue
-        mine, _who = occ.nearest(r["at"], owner=r["owner"], foreign=False)
-        theirs, who = occ.nearest(r["at"], owner=r["owner"], foreign=True)
+        fam = r.get("family_owners") or [r["owner"]]
+        mine, _who = occ.nearest(r["at"], owner=r["owner"], foreign=False,
+                                 family=fam)
+        theirs, who = occ.nearest(r["at"], owner=r["owner"], foreign=True,
+                                  family=fam)
         if mine is None or theirs is None:
             continue
         assert mine <= theirs + 1e-6, (
@@ -1805,68 +1929,93 @@ def assert_marks_own_element(page, occ):
 
 
 # ---------------------------------------------------------------------------
-# R7 - ONE BADGE PER RUN
+# R7 - ONE BADGE PER TYPE PER CLUSTER
 # ---------------------------------------------------------------------------
 # A ladder stile takes eight identical 5x60 in a column, and the page used to
 # put eight identical letters down beside them. Eight badges is not eight
 # pieces of information: it is one, repeated until it becomes wallpaper, and
 # the wallpaper is what crowds the badge that DOES say something new.
 #
-# So a RUN - two or more fasteners of the same kind, in the same joint, whose
-# drawn bodies are near neighbours - carries one badge. The conditions are
-# strict, because the whole value of the badge is that it is unambiguous:
+# The first version of this rule merged a RUN - same letter, same joint,
+# bodies in an unbroken chain with nothing foreign among them - and it was too
+# timid to help where help was needed. On step 5 the stub-leg corner came out
+# with eleven letters over two joints (A A A D on the upper rail, A A A D B C
+# on the lower), because the two joints are two joints and because the D
+# bracket sat inside every run and broke it. Eleven letters for FOUR kinds of
+# fastener, in a corner the reader is looking at as one piece of work.
 #
-#   * same letter and same joint. Merging across joints is the mistake
-#     PRAKSIS section 4 has a paragraph about, and it stays out.
-#   * the bodies form a CHAIN, each within RUN_GAP of the next. A run is a
-#     thing the eye follows; two screws at opposite ends of a rail are not one.
-#   * nothing FOREIGN inside the run. If another kind of fastener sits among
-#     them, the one surviving badge would be the nearest label to somebody
-#     else's screw, and R5 exists to stop exactly that.
+# So the unit is no longer the run, it is the PLACE. A cluster is what the
+# reader takes in with one look: every drawn body within CLUSTER_R of a seed,
+# whatever joint it belongs to and whatever type it is. Inside one cluster,
+# each TYPE carries exactly one badge - the first in the page's own drawing
+# order, so the choice is as reproducible as everything else here - and that
+# badge stands for its whole family. The inset panel is still the full key:
+# every type on the page has a row there with its count, and nothing about
+# what the reader is told has been dropped, only how many times.
 #
-# The badge that survives is the first in the page's own drawing order, so the
-# choice is as reproducible as everything else here, and it is still subject
-# to R6: it has to touch its own body or carry a leader to it.
-RUN_GAP_BADGES = 2.6           # neighbour distance, in badge radii
+# Two things keep it honest, and both are asserts that measure the ink:
+#
+#   * COVERAGE (assert_badges_cover). Every drawn fastener that has a letter
+#     must have that letter's badge inside its own cluster. A screw with no
+#     badge within a look of it is a screw the table cannot be found for.
+#   * OWNERSHIP (R5, in assert_badges_anchored). The badge must be nearer to
+#     SOME member of its own family than to any foreign body. It is the same
+#     rule as before with MINE widened from one body to the family - which is
+#     exactly what the badge now names.
+#
+# The cluster is a BALL and not a chain on purpose. Chaining is transitive,
+# and on a page like the slat field one chain would swallow the whole bed and
+# leave a single letter in a corner standing for twenty-eight screws a metre
+# away. A seed and a radius cannot do that: a badge is never further from the
+# body it stands for than the radius the rule is written with.
+CLUSTER_R_BADGES = 16.0        # cluster radius, in badge radii
 
 
-def thin_runs(captions):
-    """One badge per contiguous same-type run. R7."""
-    gap = T.BADGE_R * RUN_GAP_BADGES
-    groups = []
-    for c in captions:
-        if c["body"] is None or not c["letter"]:
-            groups.append([c])
-            continue
-        joined = [g for g in groups
-                  if g[0]["body"] is not None
-                  and g[0]["letter"] == c["letter"] and g[0]["jid"] == c["jid"]
-                  and any(_seg_seg_dist(q["body"][0], q["body"][1],
-                                        c["body"][0], c["body"][1]) <= gap
-                          for q in g)]
-        if not joined:
-            groups.append([c])
-            continue
-        first = joined[0]
-        first.append(c)
-        for g in joined[1:]:
-            first += g
-            groups.remove(g)
-    drop = set()
-    for g in groups:
-        if len(g) < 2:
-            continue
-        foreign = [c for c in captions
-                   if c["body"] is not None
-                   and (c["letter"] != g[0]["letter"]
-                        or c["jid"] != g[0]["jid"])]
-        clear = all(
-            _seg_seg_dist(f["body"][0], f["body"][1], q["body"][0],
-                          q["body"][1]) > gap
-            for q in g for f in foreign)
-        if clear:
-            drop |= {id(c) for c in g[1:]}
-    return [c for c in captions if id(c) not in drop]
+def caption_clusters(captions, radius):
+    """The PLACES a page's drawn bodies are at, in drawing order.
+
+    Greedy from the first unassigned caption: it seeds a cluster and takes in
+    every other unassigned body whose own capsule is within `radius` of it.
+    Deterministic, because the order it walks is the order the page drew in,
+    and bounded, because the seed never moves.
+    """
+    left = [c for c in captions]
+    out = []
+    while left:
+        seed = left.pop(0)
+        group = [seed]
+        if seed["body"] is not None:
+            rest = []
+            for c in left:
+                if (c["body"] is not None
+                        and _seg_seg_dist(seed["body"][0], seed["body"][1],
+                                          c["body"][0], c["body"][1])
+                        <= radius):
+                    group.append(c)
+                else:
+                    rest.append(c)
+            left = rest
+        out.append(group)
+    return out
+
+
+def thin_clusters(captions):
+    """One badge per fastener TYPE per cluster, each carrying its family. R7."""
+    radius = T.BADGE_R * CLUSTER_R_BADGES
+    keep = []
+    for group in caption_clusters(captions, radius):
+        families = {}
+        for c in group:
+            if c["body"] is None or not c["letter"]:
+                # Nothing to stand for anybody else with: a bracket drawn
+                # without a capsule, or a page with no letters at all.
+                keep.append(dict(c, family=[c]))
+                continue
+            families.setdefault(c["letter"], []).append(c)
+        for _letter, fam in families.items():
+            keep.append(dict(fam[0], family=fam))
+    order = {id(c): i for i, c in enumerate(captions)}
+    return sorted(keep, key=lambda c: order[id(c["family"][0])])
 
 
 # The inset panel is the same shape on every page: the same fraction of the
@@ -2348,6 +2497,12 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         marks = [m for m in marks if m["p2"][0] <= half["cut"]]
     x0, y0, x1, y1 = page_box
     page = Page(x0, y0, x1, y1)
+    # THE RASTER, KNOWN BEFORE ANYTHING IS DRAWN. write() works this out at
+    # the end for the fill code's sake, but the thread on a screw has to be
+    # decided while the screw is being drawn, and it is the same question:
+    # how many pixels is one millimetre of this page going to be. So the page
+    # is told once, here, and both rules read the one number.
+    page.px_per_unit = width / page.w
     page.polylines(combined.get("prior", []), GREY, T.W_PRIOR)
     # The new part is drawn whole - but the stretch of it that something
     # already standing hides is drawn DASHED, because that is the only thing
@@ -2566,12 +2721,13 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # itself neatly on top of the ninth screw - which had not been drawn yet,
     # so nothing objected. A caption that sits on a fastener it does not name
     # is worse than no caption: it is a wrong one.
-    for c in thin_runs(captions):
+    for c in thin_clusters(captions):
         mark_label(page, c["at"], c["dir"], c["letter"], occ, c["owner"],
-                   c["body"])
+                   c["body"], family=c["family"])
     if style == "eksplodert":
         assert_bodies_apart(page)
     assert_badges_anchored(page)
+    assert_badges_cover(page)
     assert_marks_own_element(page, occ)
 
     # R3 - NO LEADERS FROM THE INSET.
@@ -2745,6 +2901,10 @@ def fill_contrast_strip(out_dir, px_per_mm, worst=None):
     w = lab + col * len(patterns) + 20.0
     h = 42.0 + row_h * len(rows) + 16.0
     page = Page(0.0, 0.0, w, h)
+    # The proof has to be drawn at the raster it is proving, because the
+    # thread on a silhouette is chosen by that raster exactly as the fill's
+    # period is (gen_glyphs.thread_pitch).
+    page.px_per_unit = px_per_mm
     top = h - 16.0
     page.text((10.0, top), "FYLLKODE - KONTRASTPROVE", 13.0, weight="bold")
     page.text((10.0, top - 15.0),
@@ -2779,14 +2939,20 @@ def fill_contrast_strip(out_dir, px_per_mm, worst=None):
             # rows, or the half-scale stress row would quietly make every row
             # above it finer and the proof would stop proving the manual.
             paint = page.fill_paint(code)
+            # R8: the code takes the body from the thread, and only where the
+            # code is a pattern. The proof shows exactly that, or it is
+            # proving a drawing the manual does not make.
+            thr = thread_cues(code)
             if kind == "screw":
-                pts = screw_outline((x, cy), (1.0, 0.0), arg * k, d * k)
+                pts = screw_outline((x, cy), (1.0, 0.0), arg * k, d * k,
+                                    px_per_unit=px_per_mm, threads=thr)
                 page.poly(pts, fill=paint, stroke=INK, width=T.W_SCREW * k)
             elif kind == "situ":
                 # Buried in wood: the outline is a phantom line and only the
                 # head is solid, so the fill has the whole body to live in but
                 # no continuous edge round it.
-                pts = screw_outline((x, cy), (1.0, 0.0), arg * k, d * k)
+                pts = screw_outline((x, cy), (1.0, 0.0), arg * k, d * k,
+                                    px_per_unit=px_per_mm, threads=thr)
                 page.poly(pts, fill=paint, stroke="none", width=0)
                 page.polylines([pts[1:len(pts) - 1] + [pts[1]]], INK,
                                T.W_SCREW * 0.62 * k, dash=DASH_PHANTOM)
@@ -2879,6 +3045,7 @@ def form_contrast_strip(out_dir, px_per_mm):
     h = (44.0 + 4 * (head_h * 0.55 + 8.0) + len(steps) * 2 * (head_h * 0.8)
          + n_rows * row_h + len(steps) * 2 * 6.0 + 30.0)
     page = Page(0.0, 0.0, w, h)
+    page.px_per_unit = px_per_mm
     top = h - 16.0
     page.text((10.0, top), "FORMKONTRAST - BAERER SILHUETTEN KODEN?", 13.0,
               weight="bold")
@@ -2898,14 +3065,16 @@ def form_contrast_strip(out_dir, px_per_mm):
         page.line((10.0, top), (w - 10.0, top), GREY, T.W_LEAD * 0.5)
         top -= 8.0
 
-    def scene_row(label, d, L, tag, code=None):
+    def scene_row(label, d, L, tag, code=None, name=None):
         """One screw at the size a step page draws it."""
         nonlocal top
         cy = top - row_h / 2
         page.text((lab - 12.0, cy - 3.5), label, 9.0, anchor="end")
         paint = page.fill_paint(code) if code else "#ffffff"
-        page.poly(screw_outline((lab, cy), (1.0, 0.0), L, d), fill=paint,
-                  stroke=INK, width=T.W_SCREW)
+        page.poly(screw_outline((lab, cy), (1.0, 0.0), L, d, name=name,
+                                px_per_unit=px_per_mm,
+                                threads=thread_cues(code)),
+                  fill=paint, stroke=INK, width=T.W_SCREW)
         page.text((lab + L + 10.0, cy - 3.5), tag, 9.0)
         top -= row_h
 
@@ -2913,7 +3082,7 @@ def form_contrast_strip(out_dir, px_per_mm):
     heading("1  ALLE TYPER, BAR SILHUETT - SCENESKALA (stegsiden)")
     for name in order:
         d, L = every[name]
-        scene_row(_short(name), d, L, f"{d:g}x{L:g}")
+        scene_row(_short(name), d, L, f"{d:g}x{L:g}", name=name)
     rule()
     heading(f"1b ALLE TYPER, BAR SILHUETT - TABELLSKALA "
             f"({gen_glyphs.GLYPH_MIN_PX:.0f} px, tabellen under bildet)")
@@ -2955,7 +3124,8 @@ def form_contrast_strip(out_dir, px_per_mm):
                 d, L = dims
                 scene_row(f"{letter}  {_short(name)}  {qty}x", d * k, L * k,
                           f"{d:g}x{L:g}",
-                          gen_glyphs.fill_code(letter) if coded else None)
+                          gen_glyphs.fill_code(letter) if coded else None,
+                          name=name)
             top -= 6.0
         rule()
 
