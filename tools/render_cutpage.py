@@ -396,8 +396,8 @@ def _pictogram(page, x, y, h, draw, lines):
 
 
 def _hatch_swatch(page, RL, x, y, w, h):
-    page.rect(x, y, w, h, fill="#ffffff", stroke=RL.GREY, width=RL.W_RULE)
-    page.hatch(x, y, w, h, HATCH_STEP, RL.GREY, RL.W_RULE * 0.65)
+    page.rect(x, y, w, h, fill="#ffffff", stroke=RL.GREY, width=RL.T.W_RULE)
+    page.hatch(x, y, w, h, HATCH_STEP, RL.GREY, RL.T.W_RULE * 0.65)
 
 
 # ---------------------------------------------------------------------------
@@ -497,11 +497,11 @@ def render(G, out_dir, width, glyph_dir):
     def _strip(x, y, h, w, segs, mm0, sc, marks, label_size=None):
         """One run of bar: outline, cut marks, and a length on every piece."""
         page.rect(x, y, w, h, fill="none", stroke=RL.INK,
-                  width=RL.W_NEW * 0.42)
+                  width=RL.T.W_NEW * 0.42)
         for m, boundary in marks:
             mx = x + (m - mm0) * sc
             page.line((mx, y - TICK), (mx, y + h + TICK), RL.INK,
-                      RL.W_MARK * (0.34 if boundary else 0.24))
+                      RL.T.W_MARK * (0.34 if boundary else 0.24))
         for s in segs:
             # A run that is going to be spelled out in a zoom strip below is
             # left blank up here - there is no room for a number on it.
@@ -522,7 +522,7 @@ def render(G, out_dir, width, glyph_dir):
         # over a run of eight blocks is never lost to a caption spanning it.
         for m, boundary in marks:
             mx = x + (m - mm0) * sc
-            wgt = RL.W_MARK * (0.34 if boundary else 0.24)
+            wgt = RL.T.W_MARK * (0.34 if boundary else 0.24)
             page.line((mx, y - TICK), (mx, y), RL.INK, wgt)
             page.line((mx, y + h), (mx, y + h + TICK), RL.INK, wgt)
 
@@ -530,7 +530,7 @@ def render(G, out_dir, width, glyph_dir):
         top -= GROUP_GAP
         page.line((MARGIN, top + GROUP_GAP * 0.45),
                   (PAGE_W - MARGIN, top + GROUP_GAP * 0.45), RL.GREY,
-                  RL.W_LEAD * 0.5)
+                  RL.T.W_LEAD * 0.5)
         first = True
 
         for board, pl in zip(e["boards"], rows):
@@ -557,14 +557,14 @@ def render(G, out_dir, width, glyph_dir):
             if rest["mm"] > 0.5:
                 rw = w - rest["at"]
                 page.hatch(bar_x + rest["at"], y, rw, BAR_H, HATCH_STEP,
-                           RL.GREY, RL.W_RULE * 0.5)
+                           RL.GREY, RL.T.W_RULE * 0.5)
                 if _tw(_mm(rest["mm"]), S_REST, "bold") + PAD <= rw:
                     _label(page, (bar_x + rest["at"] + rw / 2,
                                   y + BAR_H / 2 - S_REST * 0.36),
                            _mm(rest["mm"]), S_REST, weight="bold",
                            colour=RL.GREY)
                 page.rect(bar_x + rest["at"], y, rw, BAR_H, fill="none",
-                          stroke=RL.GREY, width=RL.W_RULE * 0.7)
+                          stroke=RL.GREY, width=RL.T.W_RULE * 0.7)
 
             # The region a zoom strip expands, tinted under the bar.
             if zoom:
@@ -593,7 +593,7 @@ def render(G, out_dir, width, glyph_dir):
                 for it in out:
                     page.line((it["at"], y - TICK - 2.0),
                               (it["x"], base + S_NAME * 1.1), RL.GREY,
-                              RL.W_LEAD * 0.5)
+                              RL.T.W_LEAD * 0.5)
                     _label(page, (it["x"], base), it["s"], S_NAME)
                 top -= LBL_H
 
@@ -607,9 +607,9 @@ def render(G, out_dir, width, glyph_dir):
                            (bar_x, zy + ZOOM_H)], fill=TINT, stroke="none",
                           width=0)
                 page.line((a0, y), (bar_x, zy + ZOOM_H), RL.GREY,
-                          RL.W_LEAD * 0.6)
+                          RL.T.W_LEAD * 0.6)
                 page.line((a1, y), (bar_x + bar_w, zy + ZOOM_H), RL.GREY,
-                          RL.W_LEAD * 0.6)
+                          RL.T.W_LEAD * 0.6)
                 zsegs = zoom["segs"]
                 zmarks = [(m, b) for m, b in marks
                           if zoom["mm0"] - 0.5 <= m <= zoom["mm1"] + 0.5]
@@ -635,7 +635,7 @@ def render(G, out_dir, width, glyph_dir):
         top -= GROUP_GAP
         page.line((MARGIN, top + GROUP_GAP * 0.45),
                   (PAGE_W - MARGIN, top + GROUP_GAP * 0.45), RL.GREY,
-                  RL.W_LEAD * 0.5)
+                  RL.T.W_LEAD * 0.5)
         # The one line on the page with no bar under it: the plywood heading is
         # wider than the profile column, so it simply runs on into the bar
         # column and the plate line starts after it.
@@ -659,7 +659,7 @@ def render(G, out_dir, width, glyph_dir):
     n_pieces = sum(sum(len(b["pieces"]) for b in e["boards"]) for e in timber)
     n_pieces += sum(len(e["pieces"]) for e in sheets)
     page.line((MARGIN, top - 8.0), (PAGE_W - MARGIN, top - 8.0), RL.INK,
-              RL.W_RULE * 0.7)
+              RL.T.W_RULE * 0.7)
     page.text((MARGIN, top - 8.0 - S_FOOT * 1.10),
               f"{n_boards} bord + {len(sheets)} plate — "
               f"{n_pieces} deler å kappe", S_FOOT, weight="bold")
@@ -679,5 +679,10 @@ def render(G, out_dir, width, glyph_dir):
 
 if __name__ == "__main__":
     import generate_loftbed as _G
+    import render_lineart as _RL
+    # The pen is the SUBJECT's, so it has to be set before anything is drawn -
+    # render_lineart.render_all() does it for the whole run, and this page has
+    # to do it for itself when it is asked for on its own.
+    _RL.use_model(_G)
     render(_G, os.path.join(ROOT, "docs", "img"), 1600,
            os.path.join(ROOT, "docs", "img", "beslag"))

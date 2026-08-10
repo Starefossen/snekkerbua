@@ -102,21 +102,40 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
+if os.path.join(ROOT, "tools") not in sys.path:
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+
+import layout                                              # noqa: E402
 
 STEP_JSON = os.path.join(ROOT, "docs", "generated", "byggesteg.json")
 
 # ---------------------------------------------------------------------------
 # PEN
 # ---------------------------------------------------------------------------
-# All widths are in model millimetres, which is what the SVG user unit is, so
-# they scale with the drawing and not with the output resolution.
-W_PRIOR = 2.2          # parts already standing
-W_NEW = 7.0            # the parts this step is about
-W_HERO = 5.6           # the cover drawing
-W_RULE = 2.6           # inset borders, section outlines
-W_LEAD = 2.4           # leader lines
-W_MARK = 5.2           # fastening-point markers - the page's loudest line
-W_HATCH = 1.5          # the 45 deg hatching on a cut face
+# All sizes are in model millimetres, which is what the SVG user unit is, so
+# they scale with the drawing and not with the output resolution - and they
+# are not typed in one at a time any more. `T` is the theme from
+# tools/layout.py: every width, radius, margin and point size on a page is a
+# multiple of ONE pen, and the pen is the SUBJECT's own bounding-box diagonal
+# over 400. Draw a bed twice the size and the whole page follows it.
+#
+# It is deliberately empty until use_model() hands it the subject, so a size
+# read before the model is known fails loudly instead of quietly.
+T = layout.THEME
+
+
+def use_model(G):
+    """Fix the pen from the subject: the finished bed's own diagonal.
+
+    Called by every entry point into this file - render_all(), render_hero()
+    and tools/render_cutpage.py's own __main__ - because the pen is a property
+    of the thing being drawn, not of whoever asked for a drawing.
+    """
+    if T.pen is None:
+        T.set_subject(layout.subject_diag(full_bed(G)))
+    return T
+
+
 GREY = "#9a9a9a"
 INK = "#111111"
 
@@ -130,7 +149,6 @@ INK = "#111111"
 EXPLODE_MAX = 18
 
 FONT = "Helvetica, Arial, sans-serif"
-PAD = 70               # white margin around the bed, model mm
 
 
 def _f(v):
@@ -345,8 +363,6 @@ def mark_parts(mark):
 # line the bed itself is drawn with, so it is fattened until head, shank and
 # point read as three different things. The LENGTH is true - it is the number
 # the reader has to get right.
-W_SCREW = 4.2
-W_PHANTOM = 3.0
 DASH_PHANTOM = "15 11"
 DASH_INSERT = "4 13"           # dotted: fasteners only
 SCREW_FATTEN = 2.2
@@ -615,10 +631,10 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
             polys.append([(x + ox, y + oy) for x, y in pl + [pl[0]]])
         if solid:
             for pl in polys:
-                page.poly(pl, fill=INK, stroke=INK, width=W_RULE * 0.6)
+                page.poly(pl, fill=INK, stroke=INK, width=T.W_RULE * 0.6)
         else:
             for pl in polys:
-                page.poly(pl, fill="#ffffff", stroke=INK, width=W_RULE)
+                page.poly(pl, fill="#ffffff", stroke=INK, width=T.W_RULE)
         seat = view.xy(anchor)
         run_end = view.xy(tuple(a + r * f["reach"]
                                 for a, r in zip(anchor, f["run"])))
@@ -639,11 +655,11 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
         # Straight at the reader: the drawing convention for an axis with no
         # length on the page is a ringed dot, and it is the same mark whether
         # the screw is in or out.
-        page.circle(p0, 14, width=W_SCREW)
-        page.dot(p0, 5)
+        page.circle(p0, T.RING_R, width=T.W_SCREW)
+        page.dot(p0, T.RING_DOT_R)
         return p0, p0, None
     if solid:
-        page.poly(outline, fill="#ffffff", stroke=INK, width=W_SCREW)
+        page.poly(outline, fill="#ffffff", stroke=INK, width=T.W_SCREW)
     else:
         # In situ: the head is the only part anybody can see, so it is the
         # only part drawn solid. The rest is a phantom line.
@@ -652,9 +668,9 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
         # lighter in weight, which is the drawing convention for "this is
         # really there and it is inside the wood".
         page.polylines([outline[1:len(outline) - 1] + [outline[1]]],
-                       INK, W_SCREW * 0.62, dash=DASH_PHANTOM)
+                       INK, T.W_SCREW * 0.62, dash=DASH_PHANTOM)
         page.poly(outline[:2] + outline[-2:], fill=INK, stroke=INK,
-                  width=W_SCREW * 0.8)
+                  width=T.W_SCREW * 0.8)
     # Straight off the polygon: the two head corners are prof[0] and prof[-1],
     # so their midpoint is the head centre, and prof[3] is the point.
     body = (((outline[0][0] + outline[-1][0]) / 2,
@@ -853,21 +869,24 @@ class Page:
             f'stroke-width="{_f(width)}" stroke-linecap="round" '
             f'stroke-linejoin="round"{extra}/>')
 
-    def line(self, a, b, colour=INK, width=W_LEAD, dash=None):
+    def line(self, a, b, colour=INK, width=None, dash=None):
+        width = T.W_LEAD if width is None else width
         da = f' stroke-dasharray="{dash}"' if dash else ""
         self.body.append(
             f'<path d="M{self._p(a)} L{self._p(b)}" fill="none" '
             f'stroke="{colour}" stroke-width="{_f(width)}" '
             f'stroke-linecap="round"{da}/>')
 
-    def rect(self, x, y, w, h, fill="#ffffff", stroke=INK, width=W_RULE,
+    def rect(self, x, y, w, h, fill="#ffffff", stroke=INK, width=None,
              rx=0):
+        width = T.W_RULE if width is None else width
         self.body.append(
             f'<rect x="{_f(x)}" y="{_f(-(y + h))}" width="{_f(w)}" '
             f'height="{_f(h)}" rx="{_f(rx)}" fill="{fill}" '
             f'stroke="{stroke}" stroke-width="{_f(width)}"/>')
 
-    def poly(self, pts, fill="#ffffff", stroke=INK, width=W_RULE):
+    def poly(self, pts, fill="#ffffff", stroke=INK, width=None):
+        width = T.W_RULE if width is None else width
         d = "M" + " L".join(self._p(p) for p in pts) + " Z"
         self.body.append(
             f'<path d="{d}" fill="{fill}" stroke="{stroke}" '
@@ -885,9 +904,10 @@ class Page:
     def clip_end(self):
         self.body.append("</g>")
 
-    def hatch(self, x, y, w, h, step, colour=INK, width=W_HATCH):
+    def hatch(self, x, y, w, h, step, colour=INK, width=None):
         """45 deg lines inside a rectangle - the drawing convention for a
         piece of timber that has been cut through."""
+        width = T.W_HATCH if width is None else width
         segs = []
         c = math.floor((x - (y + h)) / step) * step
         while c <= (x + w) - y:
@@ -903,7 +923,8 @@ class Page:
             f'<path d="{d}" fill="none" stroke="{colour}" '
             f'stroke-width="{_f(width)}"/>')
 
-    def circle(self, c, r, fill="none", stroke=INK, width=W_RULE):
+    def circle(self, c, r, fill="none", stroke=INK, width=None):
+        width = T.W_RULE if width is None else width
         self.body.append(
             f'<circle cx="{_f(c[0])}" cy="{_f(-c[1])}" r="{_f(r)}" '
             f'fill="{fill}" stroke="{stroke}" stroke-width="{_f(width)}"/>')
@@ -920,8 +941,10 @@ class Page:
             f'font-size="{_f(size)}" font-weight="{weight}" '
             f'text-anchor="{anchor}" fill="{colour}">{s}</text>')
 
-    def arrow(self, tail, head, colour=INK, width=W_MARK, head_len=26):
+    def arrow(self, tail, head, colour=INK, width=None, head_len=None):
         """A plain open arrowhead - no markers, so it survives any renderer."""
+        width = T.W_MARK if width is None else width
+        head_len = T.BADGE_R * 1.05 if head_len is None else head_len
         dx, dy = head[0] - tail[0], head[1] - tail[1]
         n = math.hypot(dx, dy) or 1.0
         ux, uy = dx / n, dy / n
@@ -1156,8 +1179,8 @@ def joint_section(page, box, specs, letters, letter_label=""):
         x0, y0 = px(r[h_ax][0]), py(r[v_ax][0])
         pw = (r[h_ax][1] - r[h_ax][0]) * scale
         ph = (r[v_ax][1] - r[v_ax][0]) * scale
-        page.rect(x0, y0, pw, ph, fill="#ffffff", width=W_RULE)
-        page.hatch(x0, y0, pw, ph, max(min(pw, ph) / 4.2, 9.0))
+        page.rect(x0, y0, pw, ph, fill="#ffffff", width=T.W_RULE)
+        page.hatch(x0, y0, pw, ph, max(min(pw, ph) / 4.2, T.HATCH_MIN))
 
     for sdr in draw:
         o = pt(sdr["a"])
@@ -1174,7 +1197,7 @@ def joint_section(page, box, specs, letters, letter_label=""):
                 nx, ny = -uy / n * t, ux / n * t
                 page.poly([o, al, (al[0] - nx, al[1] - ny),
                            (o[0] - nx, o[1] - ny)],
-                          fill=INK, stroke=INK, width=W_RULE * 0.6)
+                          fill=INK, stroke=INK, width=T.W_RULE * 0.6)
             continue
         # The screw itself, drawn along its own vector.
         vx, vy = sdr["v"]
@@ -1183,7 +1206,7 @@ def joint_section(page, box, specs, letters, letter_label=""):
         n = math.hypot(ux, uy) or 1.0
         ux, uy = ux / n, uy / n
         L = sdr["length"] * scale
-        d = max(sdr["d"] * scale, 5.0)
+        d = max(sdr["d"] * scale, T.SEC_SCREW_MIN)
         head_d, head_l, tip_l = d * 1.9, d * 0.55, d * 1.7
 
         def P(t_, q, o=o, ux=ux, uy=uy):
@@ -1193,22 +1216,20 @@ def joint_section(page, box, specs, letters, letter_label=""):
                 (L, 0), (L - tip_l, -d / 2), (head_l, -d / 2),
                 (0, -head_d / 2)]
         page.poly([P(t_, q) for t_, q in prof], fill="#ffffff", stroke=INK,
-                  width=W_RULE * 0.8)
+                  width=T.W_RULE * 0.8)
         # A short arrow behind the head: the way the screwdriver goes.
-        page.arrow(P(-L * 0.42, 0), P(-head_d * 0.55, 0), INK, W_MARK * 0.7,
+        page.arrow(P(-L * 0.42, 0), P(-head_d * 0.55, 0), INK, T.W_MARK * 0.7,
                    head_d * 0.7)
 
     for i, ch in enumerate(letter_label):
-        badge(page, (x + BADGE_R * 0.9 + i * BADGE_R * 1.7,
-                     y + h - BADGE_R * 0.9), ch, BADGE_R * 0.82)
+        badge(page, (x + T.BADGE_R * 0.9 + i * T.BADGE_R * 1.7,
+                     y + h - T.BADGE_R * 0.9), ch, T.BADGE_R * 0.82)
 
 
-BADGE_R = 25.0         # the circled letters, model mm
-
-
-def badge(page, centre, letter, r=BADGE_R):
+def badge(page, centre, letter, r=None):
     """One circled sans letter - the same mark the step table carries."""
-    page.circle(centre, r, fill="#ffffff", stroke=INK, width=W_RULE)
+    r = T.BADGE_R if r is None else r
+    page.circle(centre, r, fill="#ffffff", stroke=INK, width=T.W_RULE)
     page.text((centre[0], centre[1] - r * 0.40), letter,
               r * 1.20, anchor="middle", weight="bold")
     page.badge_spots.append(centre)
@@ -1232,46 +1253,46 @@ def mark_label(page, tail, direction, letter, count, inset=None, avoid=()):
     """
     dx, dy = direction
     txt = f"{count}x" if count > 1 else ""
-    w_txt = 0.0 if not txt else BADGE_R * (1.10 * len(txt))
+    w_txt = 0.0 if not txt else T.BADGE_R * (1.10 * len(txt))
     if letter:
-        span = 2 * BADGE_R + (w_txt + 6 if txt else 0)
+        span = 2 * T.BADGE_R + (w_txt + 6 if txt else 0)
     else:
         span = w_txt
-    base = span / 2 * abs(dx) + BADGE_R * abs(dy) + 14
-    aside = span / 2 * abs(dy) + BADGE_R * abs(dx) + 14
+    base = span / 2 * abs(dx) + T.BADGE_R * abs(dy) + 14
+    aside = span / 2 * abs(dy) + T.BADGE_R * abs(dx) + 14
 
     def spots(cx, cy):
         """Badge centre and text anchor for a caption centred on (cx, cy)."""
         left = cx - span / 2
         if letter:
-            return (left + BADGE_R, cy), (left + 2 * BADGE_R + 6, cy)
+            return (left + T.BADGE_R, cy), (left + 2 * T.BADGE_R + 6, cy)
         return None, (left, cy)
 
-    tries = [(tail[0] - dx * (base + k * BADGE_R * 1.7),
-              tail[1] - dy * (base + k * BADGE_R * 1.7)) for k in range(5)]
+    tries = [(tail[0] - dx * (base + k * T.BADGE_R * 1.7),
+              tail[1] - dy * (base + k * T.BADGE_R * 1.7)) for k in range(5)]
     for s in (1, -1):
         for k in range(3):
-            tries.append((tail[0] - dy * s * (aside + k * BADGE_R * 1.6)
-                          - dx * k * BADGE_R * 0.8,
-                          tail[1] + dx * s * (aside + k * BADGE_R * 1.6)
-                          - dy * k * BADGE_R * 0.8))
+            tries.append((tail[0] - dy * s * (aside + k * T.BADGE_R * 1.6)
+                          - dx * k * T.BADGE_R * 0.8,
+                          tail[1] + dx * s * (aside + k * T.BADGE_R * 1.6)
+                          - dy * k * T.BADGE_R * 0.8))
 
     def cost(c):
         out = 0
         for probe in (c, (c[0] - span / 2, c[1]), (c[0] + span / 2, c[1])):
-            if not (page.x0 + BADGE_R + 8 <= probe[0] <= page.x1 - BADGE_R - 8
-                    and page.y0 + BADGE_R + 8 <= probe[1]
-                    <= page.y1 - BADGE_R - 8):
+            if not (page.x0 + T.BADGE_R + 8 <= probe[0] <= page.x1 - T.BADGE_R - 8
+                    and page.y0 + T.BADGE_R + 8 <= probe[1]
+                    <= page.y1 - T.BADGE_R - 8):
                 out += 10
-            if inset is not None and _in_rect(probe, inset, BADGE_R * 0.7):
+            if inset is not None and _in_rect(probe, inset, T.BADGE_R * 0.7):
                 out += 14
             out += sum(1 for q in page.badge_spots
-                       if not _apart(probe, q, 2 * BADGE_R + 4))
+                       if not _apart(probe, q, 2 * T.BADGE_R + 4))
             out += sum(6 for q in avoid
-                       if not _apart(probe, q, BADGE_R + 10))
+                       if not _apart(probe, q, T.BADGE_R + 10))
         # And having stepped out of the way, it steps no further than it had
         # to: a caption that has wandered is one the reader has to guess at.
-        out += math.hypot(c[0] - tail[0], c[1] - tail[1]) / (BADGE_R * 8.0)
+        out += math.hypot(c[0] - tail[0], c[1] - tail[1]) / (T.BADGE_R * 8.0)
         return out
 
     centre = min(((cost(c), k, c) for k, c in enumerate(tries)))[2]
@@ -1279,7 +1300,7 @@ def mark_label(page, tail, direction, letter, count, inset=None, avoid=()):
     if b_at is not None:
         badge(page, b_at, letter)
     if txt:
-        page.text((t_at[0], t_at[1] - BADGE_R * 0.42), txt, BADGE_R * 1.25,
+        page.text((t_at[0], t_at[1] - T.BADGE_R * 0.42), txt, T.BADGE_R * 1.25,
                   weight="bold")
         page.badge_spots.append((t_at[0] + w_txt / 2, t_at[1]))
 
@@ -1291,7 +1312,6 @@ def mark_label(page, tail, direction, letter, count, inset=None, avoid=()):
 INSET_W_FRAC = 0.345          # of the page width
 INSET_ROW_FRAC = 0.185        # row height, of the panel width
 INSET_CELL_FRAC = 0.62        # section-cell height, of the cell width
-INSET_PAD = 16.0              # model mm, inside the panel border
 
 
 def inset_layout(page, n_sections, n_rows):
@@ -1301,9 +1321,9 @@ def inset_layout(page, n_sections, n_rows):
     row_h = w * INSET_ROW_FRAC
     cols = 1 if n_sections <= 1 else 2
     rows_of_cells = -(-n_sections // cols) if n_sections else 0
-    cell_w = (w - 2 * INSET_PAD) / cols
+    cell_w = (w - 2 * T.INSET_PAD) / cols
     cell_h = cell_w * INSET_CELL_FRAC
-    h = (2 * INSET_PAD + rows_of_cells * cell_h
+    h = (2 * T.INSET_PAD + rows_of_cells * cell_h
          + (10 if n_sections else 0) + n_rows * row_h)
     return w, h, cols, cell_w, cell_h, row_h
 
@@ -1315,35 +1335,35 @@ def draw_inset(page, box, sections, step_fasteners, glyph_dir, letters):
     rows = step_fasteners[:4]
     _w, _h, cols, cell_w, cell_h, row_h = inset_layout(page, len(sections),
                                                        len(rows))
-    page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=W_RULE)
+    page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=T.W_RULE)
 
-    top = y + h - INSET_PAD
+    top = y + h - T.INSET_PAD
     for i, (specs, label) in enumerate(sections):
-        cx = x + INSET_PAD + (i % cols) * cell_w
+        cx = x + T.INSET_PAD + (i % cols) * cell_w
         cy = top - (i // cols + 1) * cell_h
         joint_section(page, (cx, cy, cell_w, cell_h), specs, letters, label)
     if sections:
         top -= (-(-len(sections) // cols)) * cell_h + 10
-        page.line((x + INSET_PAD, top + 4), (x + w - INSET_PAD, top + 4),
-                  GREY, W_LEAD)
+        page.line((x + T.INSET_PAD, top + 4), (x + w - T.INSET_PAD, top + 4),
+                  GREY, T.W_LEAD)
 
     for name, qty, svg, letter in rows:
-        left = x + INSET_PAD
+        left = x + T.INSET_PAD
         if letter:
-            badge(page, (left + BADGE_R, top - row_h / 2), letter)
-            left += 2 * BADGE_R + 14
+            badge(page, (left + T.BADGE_R, top - row_h / 2), letter)
+            left += 2 * T.BADGE_R + 14
         gw, gh = glyph_dims(os.path.join(glyph_dir, svg))
         # Every glyph is drawn to one scale and carries it in its viewBox
         # height, so a long screw stays longer than a short one here too.
         eh = min(row_h * 0.70 * gh / 120.0, row_h * 0.90)
         ew = eh * gw / gh
-        avail = x + w - INSET_PAD - row_h * 1.6 - left
+        avail = x + w - T.INSET_PAD - row_h * 1.6 - left
         if ew > avail:
             eh *= avail / ew
             ew = avail
         page.embed_svg(os.path.join(glyph_dir, svg),
                        left, top - row_h / 2 - eh / 2, ew, eh)
-        page.text((x + w - INSET_PAD, top - row_h / 2 - row_h * 0.20),
+        page.text((x + w - T.INSET_PAD, top - row_h / 2 - row_h * 0.20),
                   f"{qty}x", row_h * 0.60, anchor="end", weight="bold")
         top -= row_h
 
@@ -1445,7 +1465,7 @@ def half_crop(plines, marks=(), frac=HALF_FRAC):
         # From the HOLE, not from the tip: the drawn fastener stands off the
         # hole by its own length plus the hover, and its caption stands off
         # that again. Five badge radii is what the caption can wander.
-        r = (f.get("length") or f.get("reach") or 40.0) + BADGE_R * 5.0
+        r = (f.get("length") or f.get("reach") or 40.0) + T.BADGE_R * 5.0
         for p in (m["a2"], m["p2"]):
             xs.append(p[0] - r)
             hi.append(p[0] + r)
@@ -1453,7 +1473,7 @@ def half_crop(plines, marks=(), frac=HALF_FRAC):
     # The cut is where the FAR end is dropped, not a guillotine: a joint on the
     # near side of it keeps everything it needs, even where that reaches a
     # little past the line.
-    return ((min(xs) - PAD, min(ys) - PAD, max(hi) + PAD, max(ys) + PAD),
+    return ((min(xs) - T.PAD, min(ys) - T.PAD, max(hi) + T.PAD, max(ys) + T.PAD),
             dict(cut=cut, x0=bx0, x1=bx1, frac=frac))
 
 
@@ -1468,8 +1488,8 @@ def mirror_note(page, prior_lines, new_lines, box, half):
     on this page is still counted for the whole frame.
     """
     x, y, w, h = box
-    page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=W_RULE)
-    pad = INSET_PAD
+    page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=T.W_RULE)
+    pad = T.INSET_PAD
     cap_h = w * 0.075
     count_w = w * 0.17
     cell_w = w - 2 * pad - count_w
@@ -1488,8 +1508,10 @@ def mirror_note(page, prior_lines, new_lines, box, half):
     def moved(pls):
         return [[to_page(p) for p in pl] for pl in pls]
 
-    page.polylines(moved(prior_lines), GREY, max(W_PRIOR * k, 1.4))
-    page.polylines(moved(new_lines), INK, max(W_NEW * k * 0.7, 3.0))
+    page.polylines(moved(prior_lines), GREY,
+                   max(T.W_PRIOR * k, T.THUMB_PRIOR_MIN))
+    page.polylines(moved(new_lines), INK,
+                   max(T.W_NEW * k * 0.7, T.THUMB_NEW_MIN))
 
     # A ring round each end - the same two corners, and the reason the page
     # only draws one of them. The bands are the crop's own width, taken off
@@ -1505,12 +1527,12 @@ def mirror_note(page, prior_lines, new_lines, box, half):
         ring_r = max(ring_r, math.hypot(ex1 - ex0, ey1 - ey0) * 0.34)
     ring_r = min(ring_r, cell_w * 0.30)
     for c in rings:
-        page.circle(c, ring_r, width=W_RULE * 1.1)
+        page.circle(c, ring_r, width=T.W_RULE * 1.1)
     # The mirror axis between them, in the drawing convention for one: a
     # long-dash-short-dash centre line.
     mx = (rings[0][0] + rings[1][0]) / 2
     page.line((mx, cy - cell_h / 2), (mx, cy + cell_h / 2),
-              INK, W_LEAD, dash="30 10 6 10")
+              INK, T.W_LEAD, dash="30 10 6 10")
 
     page.text((x + w - pad, cy - cap_h * 0.60), "×2", cap_h * 1.70,
               anchor="end", weight="bold")
@@ -1549,22 +1571,22 @@ def thumbnails(page, view, G, before_parts, box):
         moved = [[(cx + (p[0] - (bx0 + bx1) / 2) * k,
                    cy + (p[1] - (by0 + by1) / 2) * k) for p in pl]
                  for pl in plines]
-        page.polylines(moved, INK, W_NEW * 0.55)
+        page.polylines(moved, INK, T.W_NEW * 0.55)
     page.arrow((x + cell + 8, y + h / 2), (x + cell + 52, y + h / 2),
-               INK, W_MARK, 20)
+               INK, T.W_MARK, 20)
 
 
 def magnifier(page, src, dst_c, dst_r, src_r, new_only, prior_lines):
     """The real line work around one point, blown up in a circle."""
-    page.circle(src, src_r, width=W_LEAD)
-    page.line(src, dst_c, GREY, W_LEAD, dash="18 14")
-    page.circle(dst_c, dst_r, fill="#ffffff", width=W_RULE)
+    page.circle(src, src_r, width=T.W_LEAD)
+    page.line(src, dst_c, GREY, T.W_LEAD, dash="18 14")
+    page.circle(dst_c, dst_r, fill="#ffffff", width=T.W_RULE)
     page.polylines(remap(clip_to_circle(prior_lines, src, src_r),
                          src, src_r, dst_c, dst_r),
-                   GREY, W_PRIOR * dst_r / src_r)
+                   GREY, T.W_PRIOR * dst_r / src_r)
     page.polylines(remap(clip_to_circle(new_only, src, src_r),
                          src, src_r, dst_c, dst_r),
-                   INK, W_NEW * dst_r / src_r)
+                   INK, T.W_NEW * dst_r / src_r)
 
 
 def info_panel(page, box, G):
@@ -1583,14 +1605,15 @@ def info_panel(page, box, G):
     constraint arrow on each side, and prints the range rather than a number.
     """
     x, y, w, h = box
-    page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=W_RULE)
-    page.circle((x + 40, y + h - 40), 22, width=W_RULE)
-    page.text((x + 40, y + h - 50), "i", 46, anchor="middle", weight="bold")
-    page.text((x + 78, y + h - 52), "MADRASS", 44, weight="bold")
-    page.text((x + 22, y + h - 112), "STANDARD 80 x 200 cm", 40)
-    page.text((x + 22, y + h - 166),
-              f"TYKKELSE {G.MATTRESS_H_MIN}–{G.MATTRESS_H_MAX} mm", 44,
+    page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=T.W_RULE)
+    page.circle((x + 40, y + h - 40), 22, width=T.W_RULE)
+    page.text((x + 40, y + h - 50), "i", T.S_ICON, anchor="middle",
               weight="bold")
+    page.text((x + 78, y + h - 52), "MADRASS", T.S_TITLE, weight="bold")
+    page.text((x + 22, y + h - 112), "STANDARD 80 x 200 cm", T.S_BODY)
+    page.text((x + 22, y + h - 166),
+              f"TYKKELSE {G.MATTRESS_H_MIN}–{G.MATTRESS_H_MAX} mm",
+              T.S_TITLE, weight="bold")
 
     # Section: slat top, mattress, the opening, both guard bands, post top.
     top = y + h - 208
@@ -1602,25 +1625,25 @@ def info_panel(page, box, G):
     def zy(z):
         return bot + (z - z0) * k
 
-    page.line((sx, zy(G.SLAT_Z1)), (sx + sw, zy(G.SLAT_Z1)), INK, W_RULE)
+    page.line((sx, zy(G.SLAT_Z1)), (sx + sw, zy(G.SLAT_Z1)), INK, T.W_RULE)
     page.rect(sx, zy(G.MATTRESS_Z0), sw * 0.44,
-              (G.MATTRESS_Z1 - G.MATTRESS_Z0) * k, fill="none", width=W_RULE)
+              (G.MATTRESS_Z1 - G.MATTRESS_Z0) * k, fill="none", width=T.W_RULE)
     for zb in G.GUARD_BAND_Z0:
         page.rect(sx, zy(zb), sw * 0.44, G.GUARD_W * k, fill="none",
-                  width=W_RULE)
+                  width=T.W_RULE)
     for i, zb in enumerate(G.GUARD_BAND_Z0):
         page.text((sx + 14, zy(zb) + G.GUARD_W * k / 2 - 10),
-                  "REKKVERK" if i == 0 else "REKKVERK 2", 26)
+                  "REKKVERK" if i == 0 else "REKKVERK 2", T.S_NOTE)
     page.text((sx + 14, zy(G.MATTRESS_Z0)
                + (G.MATTRESS_Z1 - G.MATTRESS_Z0) * k / 2 - 10),
-              "MADRASS", 26)
+              "MADRASS", T.S_NOTE)
 
     def between(ax, za, zb, txt, limit):
         ya, yb = zy(za), zy(zb)
-        page.arrow((ax, ya + 4), (ax, yb), INK, W_LEAD, 12)
-        page.arrow((ax, yb - 4), (ax, ya), INK, W_LEAD, 12)
-        page.text((ax + 12, (ya + yb) / 2 - 11), txt, 32, weight="bold")
-        page.text((ax + 12, (ya + yb) / 2 - 44), limit, 24)
+        page.arrow((ax, ya + 4), (ax, yb), INK, T.W_LEAD, 12)
+        page.arrow((ax, yb - 4), (ax, ya), INK, T.W_LEAD, 12)
+        page.text((ax + 12, (ya + yb) / 2 - 11), txt, T.S_DIM, weight="bold")
+        page.text((ax + 12, (ya + yb) / 2 - 44), limit, T.S_LIMIT)
 
     # MIN side: the gap under the lower band. MAX side: the barrier above the
     # mattress, measured to the top of the guard.
@@ -1749,14 +1772,14 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         marks = [m for m in marks if m["p2"][0] <= half["cut"]]
     x0, y0, x1, y1 = page_box
     page = Page(x0, y0, x1, y1)
-    page.polylines(combined.get("prior", []), GREY, W_PRIOR)
+    page.polylines(combined.get("prior", []), GREY, T.W_PRIOR)
     # The new part is drawn whole - but the stretch of it that something
     # already standing hides is drawn DASHED, because that is the only thing
     # on the page that says which side of the frame it goes on. The front side
     # rail passes BEHIND the front posts, and a solid line across the post
     # says the opposite.
-    page.polylines(new_only, INK, W_NEW * 0.45, dash="26 20")
-    page.polylines(combined.get("new", []), INK, W_NEW)
+    page.polylines(new_only, INK, T.W_NEW * 0.45, dash="26 20")
+    page.polylines(combined.get("new", []), INK, T.W_NEW)
 
     # No step number in the drawing: the page header already carries it, and
     # two of them is one too many.
@@ -1910,8 +1933,8 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                                                        hole[1] + poff[1])
             start = body[1] if body is not None else tip
             if _apart(start, entry, 1.0):
-                page.line(start, entry, GREY, W_PHANTOM, dash=DASH_INSERT)
-            page.dot(entry, 6.0, colour=INK)
+                page.line(start, entry, GREY, T.W_PHANTOM, dash=DASH_INSERT)
+            page.dot(entry, T.ENTRY_R, colour=INK)
             if f["kind"] != "plate":
                 assert_on_axis(view, f, body, tip, entry, poff, m["jid"])
             # The caption goes behind the HEAD, i.e. further from the hole -
@@ -1957,7 +1980,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
             for m in near:
                 page.line(_edge_of_box(anchor, m["p2"], bx, by, inset_w,
                                        inset_h),
-                          m["p2"], GREY, W_LEAD, dash="16 14")
+                          m["p2"], GREY, T.W_LEAD, dash="16 14")
 
     # The J12 bracket used to need a magnifier of its own here: at page scale
     # it was 40 mm of steel behind a 1794 mm ledger and nobody could place it.
@@ -2061,6 +2084,7 @@ def part_families(G):
 
 
 def render_all(G, data, out_dir, width, only):
+    use_model(G)
     uni = universe(G)
     box = full_bed(G).bounding_box()
     look_at = box.center()
@@ -2084,7 +2108,7 @@ def render_all(G, data, out_dir, width, only):
         views[key] = View(camera_direction(az, elev), look_at)
         bx0, by0, bx1, by1 = bounds(
             project(views[key], [("all", full_bed(G))])["all"])
-        pages[key] = (bx0 - PAD, by0 - PAD, bx1 + PAD, by1 + PAD)
+        pages[key] = (bx0 - T.PAD, by0 - T.PAD, bx1 + T.PAD, by1 + T.PAD)
 
     made, placed = [], []
     for st in data["steps"]:
@@ -2129,13 +2153,14 @@ def render_all(G, data, out_dir, width, only):
 
 
 def render_hero(G, out_dir, width, az=330, elev=22):
+    use_model(G)
     bed = full_bed(G)
     look_at = bed.bounding_box().center()
     view = View(camera_direction(az, elev), look_at)
     plines = project(view, [("all", bed)])["all"]
     x0, y0, x1, y1 = bounds(plines)
-    page = Page(x0 - PAD, y0 - PAD, x1 + PAD, y1 + PAD)
-    page.polylines(plines, INK, W_HERO)
+    page = Page(x0 - T.PAD, y0 - T.PAD, x1 + T.PAD, y1 + T.PAD)
+    page.polylines(plines, INK, T.W_HERO)
     svg = os.path.join(out_dir, "hanna-hero.svg")
     png = os.path.join(out_dir, "hanna-hero.png")
     page.write(svg)

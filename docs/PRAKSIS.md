@@ -167,7 +167,19 @@ monteringsanvisninger, og som denne manualen har tatt i bruk bevisst:
 
 ### Skala
 
-Én frihet er tatt, og det er den samme enhver beslagtegning tar: **diameteren
+**Én penn.** Hver strekbredde, radius, marg og punktstørrelse på en stegside er
+et multiplum av ett eneste mål:
+
+    penn = diagonalen i tegningsobjektets egen bbox / 400
+
+Tallet er sengens, ikke sidens, så hele pennsettet følger det som tegnes.
+Tabellen står i `tools/layout.py` (`RATIOS`), og `Theme` deler den ut. Sidenære
+størrelser — innsettpanelets bredde, eksplosjonens sprang, den hvite margen —
+er fortsatt brøkdeler av SIDEN, for det er det de er. Regelen er den samme som
+ellers i repoet: skal en strek bli tykkere, endres forholdstallet ett sted, og
+alle tolv sidene følger etter.
+
+Én frihet er tatt utover det, og det er den samme enhver beslagtegning tar: **diameteren
 er overdrevet**, med faktor `SCREW_FATTEN`. En 6 mm skrue på en to meter bred
 side er tynnere enn streken sengen selv er tegnet med. **Lengden er sann**, med
 et gulv på `FORESHORTEN_FLOOR` mot ren forkortning: en skrue drevet inn i

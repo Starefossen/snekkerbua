@@ -161,7 +161,7 @@ def _insertion(page, RL, view, extents, off, ends=2, steel=False):
         a = view.xy((p[0] + off[0], p[1] + off[1], p[2] + off[2]))
         b = view.xy(p)
         page.line(a, b, RL.GREY,
-                  RL.W_PHANTOM if steel else RL.W_LEAD,
+                  RL.T.W_PHANTOM if steel else RL.T.W_LEAD,
                   dash=RL.DASH_INSERT if steel else "20 16")
 
 
@@ -176,7 +176,7 @@ def _ghost(page, RL, view, xs, ys, z):
     ring = [(xs[0], ys[0]), (xs[1], ys[0]), (xs[1], ys[1]), (xs[0], ys[1])]
     pts = [view.xy((x, y, z)) for x, y in ring]
     for a, b in zip(pts, pts[1:] + pts[:1]):
-        page.line(a, b, RL.GREY, RL.W_LEAD * 0.85, dash="16 12")
+        page.line(a, b, RL.GREY, RL.T.W_LEAD * 0.85, dash="16 12")
 
 
 def _glyph_box(view, seat, off, gw, gh):
@@ -209,9 +209,9 @@ def _thumbnail(page, RL, G, view, box, panel, battens, title):
                   cy + (p[1] - (by0 + by1) / 2) * k) for p in pl]
                 for pl in plines]
 
-    page.polylines(fit(frame), RL.GREY, RL.W_PRIOR / k * 1.15)
-    page.polylines(fit(unit), RL.INK, RL.W_NEW / k * 0.85)
-    page.text((cx, y - RL.BADGE_R * 1.5), title, RL.BADGE_R * 1.05,
+    page.polylines(fit(frame), RL.GREY, RL.T.W_PRIOR / k * 1.15)
+    page.polylines(fit(unit), RL.INK, RL.T.W_NEW / k * 0.85)
+    page.text((cx, y - RL.T.BADGE_R * 1.5), title, RL.T.BADGE_R * 1.05,
               anchor="middle", weight="bold")
 
 
@@ -308,10 +308,10 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # go back INTO those bounds before the page is cut - every arrow on this
     # page rises out of the plate's top face.
     arrow_len = max(ax1 - ax0, ay1 - ay0) * 0.115
-    ay1 += arrow_len + 2.8 * RL.BADGE_R
-    ay0 -= 2.6 * RL.BADGE_R
-    ax0 -= 1.6 * RL.BADGE_R
-    ax1 += 3.2 * RL.BADGE_R
+    ay1 += arrow_len + 2.8 * RL.T.BADGE_R
+    ay0 -= 2.6 * RL.T.BADGE_R
+    ax0 -= 1.6 * RL.T.BADGE_R
+    ax1 += 3.2 * RL.T.BADGE_R
 
     # The left column is exactly as wide as the inset panel, whose width is a
     # fixed fraction of the PAGE - so the page width is what falls out of
@@ -327,7 +327,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     inset_w, inset_h = RL.inset_layout(tmp, 0, len(rows))[:2]
     cell_w = (col_w - COL_EXTRA) * THUMB_FRAC
     cell_h = cell_w / 1.25
-    gap = 2.6 * RL.BADGE_R
+    gap = 2.6 * RL.T.BADGE_R
     left_h = 2 * (cell_h + gap) + inset_h + 3 * gap
     page_h = max((ay1 - ay0) + 2 * PAGE_PAD, left_h)
     y0 = ay0 - PAGE_PAD - (page_h - ((ay1 - ay0) + 2 * PAGE_PAD)) * 0.5
@@ -343,10 +343,10 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         _insertion(page, RL, view, b["box3"], b["off"], ends=1, steel=True)
 
     _draw_solid(page, RL, view, plate_lines, panel.extents, (0, 0, 0),
-                RL.W_NEW)
+                RL.T.W_NEW)
     for ext, pl in zip(batten_ext, batten_lines):
         _draw_solid(page, RL, view, pl, _shift(ext, DROP_BATTEN), (0, 0, 0),
-                    RL.W_NEW)
+                    RL.T.W_NEW)
     for b in beslag:
         gw, gh = RL.glyph_dims(os.path.join(glyph_dir, b["svg"]))
         gx, gy, gwd, ghd = _glyph_box(view, b["seat"], b["off"], gw, gh)
@@ -369,7 +369,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         _ghost(page, RL, view, (bx0, bx1), (by0, by1), top)
         for hy in holes:
             page.circle(view.xy(((bx0 + bx1) / 2, hy, top)), 9.0,
-                        stroke=RL.INK, width=RL.W_LEAD)
+                        stroke=RL.INK, width=RL.T.W_LEAD)
         # The two lekter stand only 178 mm apart in X, which is next to
         # nothing across the page, so their marks are staggered ALONG the
         # lekt - the one axis that has room here - and towards opposite ends,
@@ -383,7 +383,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         _ghost(page, RL, view, b["box3"][0], b["box3"][1], top)
         for hy in b["holes"]:
             page.circle(view.xy((b["seat"][0], hy, top)), 6.5,
-                        stroke=RL.INK, width=RL.W_LEAD)
+                        stroke=RL.INK, width=RL.T.W_LEAD)
         marks.append(dict(
             name=n_m6, per=2, letter=letters.get(n_m6),
             p3=(b["seat"][0], b["seat"][1], top),
@@ -403,7 +403,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     for m in sorted(marks, key=lambda q: (-q["p3"][1], q["p3"][0])):
         p2 = view.xy(m["p3"])
         tail = (p2[0] - dx * arrow_len, p2[1] - dy * arrow_len)
-        page.line(tail, p2, RL.GREY, RL.W_PHANTOM, dash=RL.DASH_INSERT)
+        page.line(tail, p2, RL.GREY, RL.T.W_PHANTOM, dash=RL.DASH_INSERT)
         page.dot(p2, 6.5, colour=RL.INK)
         RL.mark_label(page, tail, (dx, dy), m["letter"], m["per"], box)
 
@@ -412,7 +412,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     for b in beslag:
         gx, gy, gwd, ghd = b["glyph_box"]
         letter = letters.get(b["name"])
-        at = (gx + gwd / 2, gy - RL.BADGE_R * 1.35)
+        at = (gx + gwd / 2, gy - RL.T.BADGE_R * 1.35)
         if letter:
             RL.badge(page, at, letter)
         marks.append(dict(name=b["name"], per=1, letter=letter,
