@@ -936,12 +936,6 @@ def _apart(a, b, gap):
     return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 > gap * gap
 
 
-def _in_rect(p, rect, grow=0.0):
-    x, y, w, h = rect
-    return (x - grow <= p[0] <= x + w + grow
-            and y - grow <= p[1] <= y + h + grow)
-
-
 def choose_marks(marks, inset=None):
     """One mark per DRAWN ELEMENT, without losing a single screw. R2 and R4.
 
@@ -969,7 +963,7 @@ def choose_marks(marks, inset=None):
     kept = []
     deferred = []
     for m in sorted(marks, key=lambda q: (-q["area"], q["p2"])):
-        if inset is not None and _in_rect(m["p2"], inset, 10.0):
+        if inset is not None and layout._in_rect(m["p2"], inset, 10.0):
             deferred.append(m)
             continue
         same = [q for q in kept
@@ -1646,35 +1640,42 @@ def draw_inset(page, box, sections, step_fasteners, glyph_dir, letters):
 # ---------------------------------------------------------------------------
 # THE STEP PAGES
 # ---------------------------------------------------------------------------
-def _overlap(a, b):
-    ax, ay, aw, ah = a
-    bx, by, bw, bh = b
-    return (max(0.0, min(ax + aw, bx + bw) - max(ax, bx))
-            * max(0.0, min(ay + ah, by + bh) - max(ay, by)))
+# What a panel costs where it lands, in the units layout.place() scores in.
+# A panel is opaque, so these are not preferences in the way a caption's are:
+# line work it covers is line work nobody can read, a fastening point it
+# covers loses its own mark and has to hand its count to a joint somewhere
+# else on the page, and a panel on a panel is simply one page short.
+PANEL_INK = 1.0
+PANEL_MARK = 60.0
+PANEL_PANEL = 4000.0
 
 
 def emptiest_corner(plines, page, box_w, box_h, marks=(),
                     avoid_top_left=False, avoid=()):
     """Put the inset where the drawing is not - and, above all, where the
-    fastening points are not: a joint the panel covers loses its own arrow and
-    has to hand its count to a joint somewhere else on the page.
+    fastening points are not.
 
-    `avoid` is any panel already on the page. Two panels in one corner is not
-    crowding, it is one panel hiding the other."""
-    best, best_cost = None, None
-    corners = [("tr", page.x1 - box_w - 20, page.y1 - box_h - 20),
-               ("br", page.x1 - box_w - 20, page.y0 + 20),
-               ("bl", page.x0 + 20, page.y0 + 20)]
+    Four candidates, in the order they are preferred, through the same placer
+    every other annotation goes through. `avoid` is any panel already on the
+    page. Two panels in one corner is not crowding, it is one panel hiding the
+    other."""
+    occ = layout.Occupancy()
+    occ.add_lines(plines, weight=PANEL_INK, tag="art")
+    # The mark's own radius on top of the box's margin: a panel edge 40 mm
+    # from a fastening point is already on it.
+    occ.add_points([m["p2"] for m in marks], radius=10.0, weight=PANEL_MARK,
+                   tag="mark")
+    for a in avoid:
+        occ.add_box(a, weight=PANEL_PANEL)
+    corners = [(page.x1 - box_w - 20, page.y1 - box_h - 20),
+               (page.x1 - box_w - 20, page.y0 + 20),
+               (page.x0 + 20, page.y0 + 20)]
     if not avoid_top_left:
-        corners.append(("tl", page.x0 + 20, page.y1 - box_h - 20))
-    for _name, bx, by in corners:
-        box = (bx, by, box_w, box_h)
-        cost = sum(1 for pl in plines for p in pl if _in_rect(p, box, 30))
-        cost += 60 * sum(1 for m in marks if _in_rect(m["p2"], box, 40))
-        cost += sum(4000 for a in avoid if _overlap(box, a) > 1.0)
-        if best_cost is None or cost < best_cost:
-            best, best_cost = (bx, by), cost
-    return best
+        corners.append((page.x0 + 20, page.y1 - box_h - 20))
+    at = layout.place([(bx + box_w / 2, by + box_h / 2)
+                       for bx, by in corners],
+                      (box_w, box_h), occ, grow=30.0)
+    return (at[0] - box_w / 2, at[1] - box_h / 2)
 
 
 # ---------------------------------------------------------------------------

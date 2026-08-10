@@ -283,7 +283,8 @@ FOREIGN_PENALTY = 40.0
 
 
 def place(candidates, footprint, occ, tether=None, pull=0.0, owner=None,
-          bounds=None, edge=0.0, edge_penalty=10.0, tags=None, extra=None):
+          bounds=None, edge=0.0, edge_penalty=10.0, tags=None, grow=0.0,
+          extra=None):
     """The cheapest of a fixed list of candidate CENTRES for one footprint.
 
     `candidates`  centres, in the order the caller prefers them
@@ -298,6 +299,8 @@ def place(candidates, footprint, occ, tether=None, pull=0.0, owner=None,
                   stops a badge parking on the neighbour's screw.
     `bounds`      (x0, y0, x1, y1) the footprint has to stay inside of, with
                   `edge` of air to spare.
+    `grow`        margin round the footprint that also counts as occupied - a
+                  panel edge touching a line is a panel on the line.
 
     Returns the winning centre.
     """
@@ -305,7 +308,7 @@ def place(candidates, footprint, occ, tether=None, pull=0.0, owner=None,
     best = None
     for i, c in enumerate(candidates):
         rect = (c[0] - w / 2, c[1] - h / 2, w, h)
-        score = occ.cost(rect, tags=tags, skip_owner=owner)
+        score = occ.cost(rect, grow=grow, tags=tags, skip_owner=owner)
         if bounds is not None:
             x0, y0, x1, y1 = bounds
             if (rect[0] < x0 + edge or rect[1] < y0 + edge
