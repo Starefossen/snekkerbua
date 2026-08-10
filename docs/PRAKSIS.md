@@ -124,10 +124,11 @@ byte-identisk med og uten festemidler, og det er en test i seg selv.
 
 ### Formen
 
-En skrue er hode, forsenking, skaft og spiss. **Ingen gjenger.** På
-tegningsskala er det silhuetten som bærer informasjonen, og en modellert gjenge
-koster tusen trekanter for null lesbarhet. Beslagene er bøyde plater bygd av
-bokser.
+En skrue er hode, forsenking, skaft og spiss. **Ingen gjenger i SOLIDEN.** En
+modellert gjenge koster tusen trekanter for null lesbarhet i en 3D-visning.
+Gjengen finnes bare i strektegningen, som en tegnet bølge langs konturen — se
+«Én skrue, ett billedspråk» i §4 — og den er en tegnekonvensjon, ikke geometri.
+Beslagene er bøyde plater bygd av bokser.
 
 Et vinkelbeslags **andre** flik er ikke en ny rad med data. Den faller ut av
 den første: en rett vinkel gjør `run` om til den andre flikens skrueretning og
@@ -183,12 +184,60 @@ alle tolv sidene følger etter.
 **diameteren er overdrevet**, med faktor `SCREW_FATTEN` — som står i
 `tools/layout.py` sammen med pennen, fordi det er én knapp for hvor stort et
 festemiddel tegnes. En 6 mm skrue på en to meter bred side er tynnere enn
-streken sengen selv er tegnet med. Faktoren er 3,0: på 2,2 var en 5×40 og en
-6×90 elleve og tretten millimeter brede på en 1250 mm side, og forskjellen var
-en avrundingsfeil. Nå er de femten og atten, og typen leses av silhuetten før
-bokstaven leses. **Lengden er sann**, med et gulv på `FORESHORTEN_FLOOR` mot
-ren forkortning: en skrue drevet inn i papiret skal se kort ut, men den skal
-fortsatt se ut som en skrue.
+streken sengen selv er tegnet med. **Lengden er sann**, med et gulv på
+`FORESHORTEN_FLOOR` mot ren forkortning: en skrue drevet inn i papiret skal se
+kort ut, men den skal fortsatt se ut som en skrue.
+
+### Én skrue, ett billedspråk
+
+**Silhuetten finnes ett sted: `gen_glyphs.screw_profile()`.** Katalogglyfen i
+beslagtabellen, raden i innsettpanelet og skruen som tegnes inn i selve
+stegtegningen er den samme konturen, lagt inn i hvert sitt koordinatsystem —
+forsenket hode, kjerne, gjenge, spiss.
+
+Det var ikke slik før, og det er den feilen dette avsnittet finnes for.
+Stegsiden tegnet sin egen sju-punkts kapsel: en flens i den ene enden, en pigg
+i den andre, ingenting imellom. Blåst opp 3,0 ganger leste den som en **pil** —
+og pil er reservert for tredeler som skal føres på plass, så siden brukte
+byggerens ene formkode til å si feil ting. Samtidig sto den ekte silhuetten
+i panelet ti centimeter unna. To billedspråk for én ting er det en
+monteringsanvisning ikke har råd til, for det er formen leseren kjenner delen
+igjen på.
+
+Med den ekte konturen bærer formen gjenkjenningen, og faktoren trenger bare
+bære størrelsen: **`SCREW_FATTEN` er 2,0** (var 3,0). Hodet er
+`HEAD_DIA_RATIO` = 1,95 nominelle diametre og kjernen 0,72, så en 6×90 er
+23,4 mm over hodet og 8,6 mm over kjernen der den før var 34 og 18. Siden har
+fått en tredjedel av blekket sitt tilbake. `W_SCREW` fulgte med ned, fra 0,60
+til 0,40 penn: konturen er streken rundt et ti millimeter bredt objekt, ikke
+rundt sengen, og på 0,60 var skruen en svart splint med ingen plass til
+fyllkoden inni seg.
+
+**Gjengen er en tekstur, og en tekstur følger rasteret** — nøyaktig samme regel
+som fyllkoden har (`gen_glyphs.thread_pitch`). Stigningen er den groveste av
+
+> **formkravet** 1,15 × d, og **oppløsningskravet** at én TANN — en halv
+> periode — aldri blir under `THREAD_MIN_PX` = 4,5 piksler der siden faktisk
+> rastres.
+
+Blir det da færre enn `THREAD_MIN_PITCHES` = 2,5 hele omdreininger igjen på
+den gjengede strekningen, tegnes ingen gjenge: konturen faller tilbake på sin
+egen omhyllingskurve — samme hode, samme kjerne, samme spiss, uten bølgen. Det
+er én nedgradering, ikke et annet billedspråk.
+
+Beviset ble tegnet, ikke argumentert. De to stedene endringen ble bedømt på er
+hjørnet på steg 1 og stubbefotklyngen på steg 5, klippet ut av de ferdige
+sidene før og etter (`docs/preview/krop-steg1-*.png`,
+`krop-steg5-*.png` — `docs/preview/` er gjennomgangsmateriale og er ikke
+sjekket inn, se `.gitignore`). Skal formen endres igjen, klippes de to samme
+utsnittene på nytt: det er der en pil ser ut som en pil.
+
+To ting til er verdt å vite. **Stigningen regnes av SANN diameter, ikke tegnet.**
+Licensen er bredde; en stigning er et mål langs skruen, og regnes den av den
+feite bredden dobles den sammen med bredden mens lengden står — da får en 5×40
+to omdreininger på siden der glyfen viser sju. **Og siden må kjenne rasteret
+sitt før den tegner**: `Page.px_per_unit` settes i `render_step()` med én gang,
+ikke først i `write()`, fordi gjengen velges mens skruen tegnes.
 
 ### Merking og sammenslåing
 
@@ -235,6 +284,22 @@ fortsatt se ut som en skrue.
   Steg 1 (6×90 mot 6×120) og steg 6 (5×60 mot 6×80) ligger begge på nøyaktig
   25 % og faller utenfor.
 
+  **Ett mønster per silhuett (R8).** Gjengen og fyllkoden er to teksturer av
+  samme størrelsesorden inne i en kropp som er ti–tolv millimeter bred, og
+  legges de oppå hverandre leses ingen av dem — skraveringen og gjengetennene
+  går sammen til et tauverk, og Ⓑ og Ⓒ blir like. Prøven ble tegnet begge
+  veier før valget: med begge er B og C to teksturerte tau, med én hver er B
+  rene parallelle streker og C rene ruter.
+
+  Derfor tar koden kroppen fra gjengen — **men bare der koden faktisk ER et
+  mønster**. `open` er fraværet av ett, og den deles ut til den bokstaven siden
+  har flest av, så den vanligste skruen på en kodet side (seksten av tjue på
+  steg 5) beholder gjengen sin og ser ut som det samme objektet den er på alle
+  andre sider. Ingenting konkurrerer med den der, så ingenting er kjøpt ved å
+  ta den bort. Regelen er `render_lineart.thread_cues()`, og
+  `fyllkontrast.png` tegnes med den, ellers beviser prøven en tegning manualen
+  ikke lager.
+
   **Retningen er asserta, ikke fyllet.** `render_lineart.assert_fill_code_rule()`
   måler det som ble tegnet: en side med et tvetydig par som likevel kom ut uten
   fyll stopper bygget — der har leseren ingenting igjen å skille de to på. Den
@@ -271,32 +336,68 @@ fortsatt se ut som en skrue.
   ikke å slå dem sammen, men det ene trekket et eksplodert festemiddel uansett
   har: lenger ut langs sin egen akse. Begge deler er asserter som måler blekket
   (`assert_bodies_apart`).
-* **Kontakt eller leder (R6).** Et merke skal enten RØRE kroppen det navngir —
-  sitte på hodet som et flagg på en stang — eller ha en tynn strek inn til den.
+* **Kontakt eller leder (R6).** Et merke skal enten RØRE en av kroppene det
+  navngir — sitte på hodet som et flagg på en stang — eller ha en tynn strek
+  inn til den.
   Det finnes ingen tredje plass. Et merke som svever ved siden av en klynge er
   ikke en anvisning, det er en gåte, og på steg 5 sto det tre av dem og gjettet
   samtidig. Regelen er priset inn i `layout.place()` — kontakt er verdt mer enn
   hvilken som helst mengde hvitt papir — og `assert_badges_anchored()` måler
   den etterpå av blekket: rører merket sin egen kropp, ender lederen på den, og
   starter den i merkets egen rand.
-* **Ett merke per løp (R7).** To eller flere festemidler av samme slag, i samme
-  ledd, som ligger etter hverandre uten noe fremmed imellom, bærer ett merke.
-  Åtte like bokstaver nedover en stigevange er ikke åtte opplysninger, det er
-  én, gjentatt til den blir tapet. Vilkårene er strenge nettopp fordi merkets
-  hele verdi er at det er entydig: samme bokstav, samme ledd, kroppene i en
-  kjede, og ingenting fremmed innimellom. Merket som blir stående er det første
-  i sidens egen tegnerekkefølge, og det er fortsatt underlagt R6.
-* **Sammenslåing går aldri på tvers av ledd.** På steg 3 møtes endebjelkens to
-  6×90 og bæreklossens ene i det samme hjørnet, og «3×» der ville sendt
-  byggeren til feil hull. To ledd, to merker. Regelen er ett flagg i
+* **Ett merke per type per klynge (R7).** Åtte like bokstaver nedover en
+  stigevange er ikke åtte opplysninger, det er én, gjentatt til den blir tapet
+  — og tapetet er det som trenger bort merket som faktisk sier noe nytt.
+
+  Første versjon av regelen slo sammen et LØP: samme bokstav, samme ledd,
+  kroppene i en ubrutt kjede, ingenting fremmed imellom. Den var for forsiktig
+  til å hjelpe der det trengtes. Stubbefothjørnet på steg 5 kom ut med elleve
+  bokstaver over to ledd, fordi to ledd er to ledd og fordi Ⓓ-beslaget sto midt
+  i hvert eneste løp og brøt det. Elleve bokstaver for FIRE slags festemidler,
+  i et hjørne leseren ser på som ett stykke arbeid.
+
+  Enheten er derfor ikke løpet, men **stedet**. En klynge er alt som ligger
+  innenfor `CLUSTER_R_BADGES` = 16 merkeradier fra en kjerne — uansett ledd,
+  uansett type — og inne i én klynge bærer hver TYPE nøyaktig ett merke, det
+  første i sidens egen tegnerekkefølge. Merket står for hele familien sin.
+  Innsettpanelet er fortsatt hele nøkkelen: hver type på siden har sin rad der,
+  med antall, så ingenting av det leseren blir fortalt er borte — bare hvor
+  mange ganger.
+
+  Klyngen er en KULE og ikke en kjede, med vilje. Kjeding er transitiv, og på
+  en side som spilefeltet ville én kjede slukt hele sengen og latt én bokstav i
+  et hjørne stå for tjueåtte skruer en meter unna. En kjerne og en radius kan
+  ikke gjøre det: et merke er aldri lenger fra kroppen det står for enn radien
+  regelen er skrevet med.
+
+  To asserter holder den ærlig, og begge måler blekket. **Dekning**
+  (`assert_badges_cover`): hvert eneste tegnede festemiddel med en bokstav må
+  ha den bokstavens merke blant merkene som står for NETTOPP DET — ikke et
+  merke et sted på siden, ett hvis egen familie det er i. **Eierskap** (R5, i
+  `assert_badges_anchored`): merket må ligge nærmere ETT AV medlemmene i sin
+  egen familie enn noen fremmed kropp. Det er den gamle regelen med «min»
+  utvidet fra én kropp til familien — som er nøyaktig det merket nå navngir.
+
+  Resultatet, side for side: 5 → 4 merker på steg 1, 7 → 3 på steg 3, 11 → 7 på
+  steg 5, 26 → 7 på steg 6, 6 → 6 på steg 9. 55 bokstaver ble 27.
+* **KROPPER slås aldri sammen på tvers av ledd.** På steg 3 møtes endebjelkens
+  to 6×90 og bæreklossens ene i det samme hjørnet, og «3×» der ville sendt
+  byggeren til feil hull. To ledd, to kropper. Regelen er ett flagg i
   `render_lineart.py` (`MERGE_ACROSS_JOINTS`), så den er en linje å snu og
   ikke en antakelse å lete etter — men den står av, og tegningene er tegnet
   med den av.
-* **Et merke ligger nærmere sitt eget feste enn noe annet (R5).** Et badge
+
+  Merk forskjellen fra R7: den regelen slår sammen BOKSTAVER og går gjerne på
+  tvers av ledd, fordi en bokstav bare peker på en rad i en tabell. Denne
+  regelen slår sammen KROPPER og et antall, og et antall i feil hull er en feil
+  anvisning. Hver skrue tegnes fortsatt som sin egen kropp der den er sin egen
+  kropp.
+* **Et merke ligger nærmere sin egen familie enn noe annet (R5).** Et badge
   ved siden av feil skrue er ikke en trang tegning, det er en feil anvisning.
   Regelen er en assert som måler blekket: merkene leses ut av `Page.record`
-  der de LANDET, og hvert av dem må ha sitt eget feste som nærmeste kropp —
-  målt mot kroppenes egne kapsler, ikke mot punkter i nærheten av dem.
+  der de LANDET, og hvert av dem må ha en av kroppene det står for som
+  nærmeste kropp — målt mot kroppenes egne kapsler, ikke mot punkter i
+  nærheten av dem.
 * **Innsettpanelet har ingen lederlinjer (R3).** Bokstaven knytter allerede
   merket til raden i panelet, og den gjør det for alle merkene — ikke for de
   fire som tilfeldigvis lå nærmest. Lupen er noe annet og blir stående: den
