@@ -400,11 +400,52 @@ SCREW_FATTEN = layout.SCREW_FATTEN
 # short - but past a point it stops being a screw and becomes a dot, and the
 # reader loses the one number the drawing has to get right.
 FORESHORTEN_FLOOR = 0.72
+# SHOULD THE FLOOR BE HIGHER FOR A SHORT SCREW? It is the obvious worry - a
+# fraction treats a 5x40 and a 6x120 alike, and what makes a silhouette read as
+# a SCREW is not its length in millimetres but how much longer it is than the
+# head is WIDE, and the head does not shrink when the length does. So the pages
+# were measured, every drawn body against its own drawn head:
+#
+#   1.81 heads   5x40, J10 (step 5) and J12 (step 1) - the shortest in the book
+#   1.85         6x60, J9-F (step 3) - the shortest the FLOOR itself makes
+#   2.2 - 3.3    everything else
+#
+# The answer is no, and the measurement is why. The stubbiest bodies in the
+# manual are NOT floored at all: a 5x40 seen at this angle projects to 35.6 of
+# its 40 mm all by itself, well clear of 28.8, so the floor never touches it
+# and raising the floor cannot reach it. And it could not reach far if it did:
+# a floor may never draw a screw LONGER than it is, so the whole of what a
+# short screw could gain is the 12 % up to its true 40 mm - 1.81 heads becoming
+# 2.05, which is not a difference anyone can see. What actually sets how stubby
+# a 40 mm screw looks is the head, i.e. SCREW_FATTEN, and that number was
+# settled on its own proof (docs/preview/formkontrast.png).
+#
+# What the worry deserves is not a second knob but a TRIPWIRE, and 1.75 is the
+# value that was landed: no drawn body may come out under STUB_ASPECT of its
+# own drawn head. It sits just under what the pages measure today, so the day a
+# new camera, a shorter screw or a wider head makes a real dart of one, the
+# build stops and a human looks at it - instead of the manual quietly acquiring
+# an arrowhead where a fastener should be. assert_no_stubs() is the rule, and
+# it measures the ink.
+STUB_ASPECT = 1.75
 # Below this much of its true length on the page a screw has no axis left to
 # draw and becomes a ringed dot. One number, used by the shape function and by
 # the explosion alike: a fastener that is a dot is not backed out of anything,
 # because a dot cannot show which way it came.
 AXIS_ON_PAGE = FORESHORTEN_FLOOR * 0.5
+
+
+def foreshorten_floor(length):
+    """The shortest a screw may be DRAWN, in model mm.
+
+    One function, because the floor is asked for in four places - the
+    silhouette, the explosion's hop back, a group's beat and the capsule every
+    distance rule measures against - and a floor that four callers work out for
+    themselves is four floors.
+    """
+    return length * FORESHORTEN_FLOOR
+
+
 # HOW FAR OUT AN EXPLODED FASTENER SITS - and it is not one rule, because a
 # screw and a bracket are not the same kind of object.
 #
@@ -580,9 +621,18 @@ def body_capsule(view, f, shift=(0.0, 0.0, 0.0), page_off=(0.0, 0.0)):
     p0 = (view.xy(anchor)[0] + ox, view.xy(anchor)[1] + oy)
     p1 = (view.xy(tip)[0] + ox, view.xy(tip)[1] + oy)
     r = drawn_head_r(f["d"])
-    if math.hypot(p1[0] - p0[0], p1[1] - p0[1]) < f["length"] * AXIS_ON_PAGE:
+    n = math.hypot(p1[0] - p0[0], p1[1] - p0[1])
+    if n < f["length"] * AXIS_ON_PAGE:
         # Head on: the page draws a ringed dot, so that is the body.
         return (p0, p0, T.RING_R)
+    # The capsule is the body the page DRAWS, floor and all - not the raw
+    # projection. A foreshortened screw is stretched back to the floor when it
+    # is drawn, and a capsule that stopped short of it would let a badge park
+    # on ink the rule believes is white.
+    floor = foreshorten_floor(f["length"])
+    if n < floor:
+        p1 = (p0[0] + (p1[0] - p0[0]) * floor / n,
+              p0[1] + (p1[1] - p0[1]) * floor / n)
     return (p0, p1, r)
 
 
@@ -684,13 +734,82 @@ def _centroid(pts):
             sum(p[1] for p in pts) / len(pts))
 
 
-def float_plate(occ, view, plate, screws, hop):
-    """Where an exploded bracket goes: R1 for the direction, the field for how
-    far. The DIRECTION is given - the caller does not get a vote and neither
-    does the paper - so the only thing left to choose is the distance, and
-    that is a single run of layout.place() over candidates strung out along
-    that one line. A bracket that finds no room simply goes further out; it
-    never leans, for the same reason a screw never does.
+# ---------------------------------------------------------------------------
+# R9 - A BRACKET AND ITS SCREWS COME OFF AS ONE GROUP
+# ---------------------------------------------------------------------------
+# R1 says which way a bracket leaves. It says nothing about how far, and it
+# says nothing at all about the screws that go THROUGH the bracket - and those
+# two silences were what made the J12 corner unreadable. The bracket floated
+# as far off its seat as the paper allowed; its two screws then backed out of
+# it by their own drawn length plus a hop that had nothing to do with the
+# bracket's; and the three dotted lines that resulted crossed each other in the
+# middle of a corner the reader is trying to take in as one piece of work.
+#
+# A corner like that is ONE disassembly, not three, and an exploded view is a
+# picture of taking things apart in order:
+#
+#     seat  --d-->  bracket  --d-->  each of its screws
+#
+# ONE RHYTHM, d, for the whole group. The bracket sits d off its seat along its
+# disassembly direction (R1); every screw that rides on it then continues from
+# WHERE THE BRACKET ENDED UP, along its own drive axis (which is the screws'
+# own rule and is never bent), until the gap between its drawn point and its
+# hole in the floated bracket is d as well. Two equal steps, and the eye reads
+# them as one movement outward rather than as three unrelated escapes.
+#
+# The tethers follow from it and become a nested chain: seat -> bracket, and
+# bracket -> each screw's own hole ON the bracket. Two asserts hold it, and
+# both measure the ink: assert_chain_rhythm(), the steps are equal, and
+# assert_chain_untangled(), the nesting is not cut - no screw's line crosses
+# the leash it hangs off and none runs through a body in its own group. What is
+# NOT assertable is two sibling lines meeting near the bracket; see the note
+# there for the measurement that says why.
+#
+# What is still free is d itself: the group as a whole moves further out if
+# there is no room close in, which is the same single degree of freedom R1
+# already left the bracket. It moves as ONE - and that is also how the group
+# gets its screws apart from each other. A lone screw that lands on another
+# body queues one body further back along its own axis, which is a move only IT
+# makes; a screw in a group may not, because a queued screw is a screw a beat
+# out of time. What the group does instead is take a LONGER beat, all of it at
+# once, until every one of its screws has its own paper. Four 5x40 and an angle
+# in the stub-foot corner of step 5 need the second beat; J12's two need the
+# first.
+BRACKET_HOPS = (1.0, 1.4, 1.9, 2.5)
+
+
+def group_shift(view, f, d):
+    """Where a screw in a bracket group sits, in MODEL space, at rhythm `d`.
+
+    One function, because the answer is needed twice - once to pick the beat
+    that gets the group's screws off each other, and again when the screw is
+    actually drawn - and two versions of it would be two explosions.
+    """
+    dx, dy = view.dir_xy(f["direction"])
+    nrm = math.hypot(dx, dy)
+    if nrm < AXIS_ON_PAGE:
+        # Head on: a ringed dot has no axis to travel down and does not move.
+        return (0.0, 0.0, 0.0)
+    blen = max(f["length"] * nrm, foreshorten_floor(f["length"]))
+    return tuple(-c * ((blen + d) / nrm) for c in f["direction"])
+
+
+def float_plate(occ, view, plate, screws, riders, hop):
+    """The group's whole explosion: (page offset, rhythm d). R1 and R9.
+
+    The DIRECTION is given - the caller does not get a vote and neither does
+    the paper - so the only thing left to choose is the distance, and that is a
+    single run of layout.place() over candidates strung out along that one
+    line. A bracket that finds no room simply goes further out; it never leans,
+    for the same reason a screw never does.
+
+    The distance comes back with the offset because it is not the bracket's
+    private business any more: it is the group's rhythm, and the screws that
+    ride on this bracket are spaced by the same number (R9). `riders` is the
+    set of them the page is actually going to draw, and a beat that would land
+    two of those on top of each other is struck off the list before the paper
+    is consulted at all: R2 is not negotiable, and the group has a way of
+    obeying it that does not break the rhythm.
     """
     ux, uy = disassembly_dir(view, plate, screws)
     pts = plate_page_points(view, plate)
@@ -698,10 +817,24 @@ def float_plate(occ, view, plate, screws, hop):
     ys = [p[1] for p in pts]
     home = _centroid(pts)
     foot = (max(xs) - min(xs), max(ys) - min(ys))
-    cands = [(home[0] + ux * hop * k, home[1] + uy * hop * k)
-             for k in (1.0, 1.4, 1.9, 2.5)]
+
+    def clashes(d):
+        poff = (ux * d, uy * d)
+        caps = [body_capsule(view, f, group_shift(view, f, d), poff)
+                for f in riders]
+        return any(capsules_overlap(caps[i], caps[j])
+                   for i in range(len(caps)) for j in range(i + 1, len(caps)))
+
+    beats = [k for k in BRACKET_HOPS if not clashes(hop * k)] or [
+        BRACKET_HOPS[-1]]
+    cands = [(home[0] + ux * hop * k, home[1] + uy * hop * k) for k in beats]
     at = layout.place(cands, foot, occ, tether=home, pull=1.0 / (hop * 6.0))
-    return (at[0] - home[0], at[1] - home[1])
+    # Off the multiplier rather than off the winning point, so the rhythm is
+    # exactly the number both halves of the chain are built from.
+    k = beats[min(range(len(cands)),
+                  key=lambda i: (cands[i][0] - at[0]) ** 2
+                  + (cands[i][1] - at[1]) ** 2)]
+    return ((ux * hop * k, uy * hop * k), hop * k)
 
 
 def assert_float_direction(page, view, plate, want, jid):
@@ -806,7 +939,7 @@ def screw_shape(view, anchor, direction, length, d, fatten=SCREW_FATTEN,
     ux, uy, L = _unit2(p0, p1)
     if L < length * AXIS_ON_PAGE:
         return None, p0, p1, (0.0, 0.0), 0.0
-    L = max(L, length * FORESHORTEN_FLOOR)
+    L = max(L, foreshorten_floor(length))
     return (screw_outline(p0, (ux, uy), L, d, fatten, name, px_per_unit,
                           threads), p0, p1, (ux, uy), L)
 
@@ -976,6 +1109,7 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
                                 name=f["name"], mark=mark_owner(m),
                                 letter=m.get("letter"),
                                 points=[p0], axis=None,
+                                head_r=drawn_head_r(f["d"]),
                                 cap=(p0, p0, T.RING_R)))
         return p0, p0, None
     if solid:
@@ -1007,6 +1141,10 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
                             name=f["name"], mark=mark_owner(m),
                             letter=m.get("letter"),
                             points=list(outline), axis=body,
+                            # The width the body was drawn with, beside the
+                            # length it was drawn at: the two together are what
+                            # says whether this is still a screw (STUB_ASPECT).
+                            head_r=drawn_head_r(f["d"]),
                             cap=body_capsule(view, f, shift, page_off)))
     return p0, p1, body
 
@@ -1630,7 +1768,7 @@ def joint_section(page, box, specs, codes, letter_label=""):
 
 
 def badge(page, centre, letter, r=None, owner=None, body=None, leader=None,
-          family=None, family_owners=None):
+          family=None, family_owners=None, family_lens=None):
     """One circled sans letter - the same mark the step table carries.
 
     `body` is the capsule of the element the badge is DRAWN FROM and `leader`
@@ -1649,7 +1787,13 @@ def badge(page, centre, letter, r=None, owner=None, body=None, leader=None,
                             at=centre, r=r, body=body, leader=leader,
                             family=list(family) if family else None,
                             family_owners=list(family_owners)
-                            if family_owners else None))
+                            if family_owners else None,
+                            # The drawn lengths of everything this badge stands
+                            # for - what assert_badges_homogeneous()
+                            # re-measures
+                            # the R7 amendment on.
+                            family_lens=list(family_lens)
+                            if family_lens else None))
 
 
 # R5 - A MARK BELONGS TO ITS OWN ELEMENT
@@ -1669,6 +1813,22 @@ CAP_NOCONTACT = 90.0
 # R5: nearer somebody else's body than its own. Not a preference at all.
 CAP_FOREIGN = 400.0
 CAP_TAGS = ("panel", "mark", "badge")
+
+
+def drawn_length(rec):
+    """How long a drawn fastener came out on the paper, off its own record.
+
+    `None` where the question does not apply - nothing was drawn, or what was
+    drawn is a bracket, which is a plate and not an axis. `0.0` for the ringed
+    dot a head-on screw becomes: it has no length, and that is not a small
+    length, it is a different picture.
+    """
+    if rec is None or rec["kind"] != "screw":
+        return None
+    ax = rec.get("axis")
+    if ax is None:
+        return 0.0
+    return math.hypot(ax[1][0] - ax[0][0], ax[1][1] - ax[0][1])
 
 
 def cap_dist(p, cap):
@@ -1750,6 +1910,7 @@ def mark_label(page, tail, direction, letter, occ=None, owner=None, body=None,
     kin = list(family) if family else [dict(owner=owner, body=body)]
     kin_owners = {q["owner"] for q in kin}
     kin_bodies = [q["body"] for q in kin if q["body"] is not None]
+    kin_lens = [q.get("plen") for q in kin if q["body"] is not None]
     foreign = [q["cap"] for q in page.record
                if q["kind"] in ("screw", "plate") and q.get("cap")
                and q.get("mark") is not None and q.get("mark") not in
@@ -1793,7 +1954,8 @@ def mark_label(page, tail, direction, letter, occ=None, owner=None, body=None,
         leader = (near, far)
         body = near_body
     badge(page, centre, letter, owner=owner, body=body, leader=leader,
-          family=kin_bodies, family_owners=sorted(kin_owners))
+          family=kin_bodies, family_owners=sorted(kin_owners),
+          family_lens=kin_lens)
     occ.add_point(centre, radius=r, weight=CAP_BADGE, owner=owner, tag="badge")
     page.record.append(dict(kind="label", owner=owner, letter=letter,
                             at=centre, tether=tail,
@@ -1818,6 +1980,118 @@ def assert_bodies_apart(page):
                 f"{a['jid']} {a['name']} og {b['jid']} {b['name']} er tegnet "
                 f"oppå hverandre - to kropper på samme papir er ett merke, "
                 f"ikke to. Se choose_marks() (R2) og køen langs egen akse")
+
+
+# R9, measured off the ink. The rhythm is allowed this much slack, as a
+# fraction of the step itself: the bracket's leash is the float vector exactly,
+# while a screw's is read back off the drawn silhouette's own point, so the two
+# are the same number arrived at two ways and the last digits are not going to
+# agree. Anything a reader could SEE as unequal is orders of magnitude above
+# this.
+CHAIN_TOL_FRAC = 0.02
+
+
+def _chain_groups(page):
+    """The recorded tethers, grouped by the bracket group they belong to."""
+    out = {}
+    for r in page.record:
+        if r["kind"] == "tether" and r.get("group") is not None:
+            out.setdefault(r["group"], []).append(r)
+    return out
+
+
+def _crosses(a, b):
+    """Do two segments cross OTHER than at a shared end? R9's question.
+
+    A chain is allowed to touch itself - every screw's tether starts at a hole
+    in the bracket the bracket's own leash starts from - and is not allowed to
+    cut across itself. So an intersection at either segment's endpoint is not a
+    crossing; one in both interiors is.
+    """
+    (a0, a1), (b0, b1) = a, b
+    d1 = (a1[0] - a0[0], a1[1] - a0[1])
+    d2 = (b1[0] - b0[0], b1[1] - b0[1])
+    den = d1[0] * d2[1] - d1[1] * d2[0]
+    if abs(den) < 1e-12:
+        return False                      # parallel: no proper crossing
+    dx, dy = b0[0] - a0[0], b0[1] - a0[1]
+    t = (dx * d2[1] - dy * d2[0]) / den
+    s = (dx * d1[1] - dy * d1[0]) / den
+    eps = 1e-6
+    return eps < t < 1.0 - eps and eps < s < 1.0 - eps
+
+
+def assert_chain_untangled(page):
+    """R9, measured off the ink: the chain is nested, not tangled.
+
+    Two things are asked of a bracket group's dotted lines, and both are about
+    the NESTING - the claim the picture makes is "the bracket comes off the
+    seat, and these screws come out of the bracket", so no line in it may reach
+    back across the link it hangs off, and none may cut across a body in its
+    own group:
+
+      1. no screw's line crosses the bracket's own LEASH. A screw whose line
+         cuts the leash is a screw the reader ties to the seat instead of to
+         the bracket, which is the one relation the group exists to show.
+      2. no line crosses a drawn BODY in the group. A dotted line that runs
+         through a silhouette does not read as that silhouette's travel; it
+         reads as somebody else's.
+
+    What is NOT asserted, because it is not a placement decision, is two
+    SIBLING lines crossing near the bracket. J12 drives one 5x40 into the post
+    and one up into the ledger, at right angles, through two holes 17 mm apart
+    on the page - and this camera puts the ledger screw's hole on the far side
+    of the post screw's own axis. Their two lines therefore meet, and they meet
+    at a point on that axis that no rhythm can move: shorten the hop and the
+    crossing moves off the dotted line and onto the SOLID body, which is worse.
+    It is a fact about where the joint is seen from, not a choice the drawing
+    made, and the rules here only assert what the drawing can obey.
+    """
+    bodies = {}
+    for r in page.record:
+        if r["kind"] in ("screw", "plate") and r.get("cap"):
+            bodies.setdefault(r["owner"], r["cap"])
+    for _gid, ts in _chain_groups(page).items():
+        leash = [r for r in ts if r["owner"] == _gid]
+        for a in ts:
+            for lead in leash:
+                if a is lead:
+                    continue
+                assert not _crosses(a["seg"], lead["seg"]), (
+                    f"{a['jid']}: innstikkslinjen for {a['name']} krysser "
+                    f"beslagets egen lenke tilbake til setet - kjeden "
+                    f"sete->beslag->skrue er nøstet, og en linje som skjærer "
+                    f"leddet den henger i knytter skruen til feil ting (R9)")
+            for r in ts:
+                cap = bodies.get(r["owner"])
+                if r is a or cap is None or cap[0] == cap[1]:
+                    continue
+                assert not _crosses(a["seg"], (cap[0], cap[1])), (
+                    f"{a['jid']}: innstikkslinjen for {a['name']} går tvers "
+                    f"gjennom kroppen til {r['name']} i samme beslagklynge - "
+                    f"en prikket linje gjennom en silhuett leses som "
+                    f"silhuettens egen vei (R9)")
+
+
+def assert_chain_rhythm(page):
+    """R9, measured off the ink: the chain's two steps are the same step.
+
+    Every tether in a group is measured where it LANDED - the bracket's leash
+    back to its seat, and each screw's from the point that was drawn to its
+    hole in the floated bracket - and they all have to be one length. Two
+    unequal steps do not read as one movement outward; they read as two
+    accidents that happened to point the same way.
+    """
+    for _gid, ts in _chain_groups(page).items():
+        legs = [(math.hypot(r["seg"][1][0] - r["seg"][0][0],
+                            r["seg"][1][1] - r["seg"][0][1]), r) for r in ts]
+        lo = min(legs, key=lambda q: q[0])
+        hi = max(legs, key=lambda q: q[0])
+        assert hi[0] - lo[0] <= CHAIN_TOL_FRAC * hi[0], (
+            f"{hi[1]['jid']}: klyngen eksploderer i ulike sprang - "
+            f"{hi[1]['name']} står {hi[0]:.1f} mm ut og {lo[1]['name']} "
+            f"{lo[0]:.1f} mm. Sete->beslag og beslag->skrue skal være samme "
+            f"sprang (R9)")
 
 
 def assert_badges_anchored(page):
@@ -1868,6 +2142,16 @@ def assert_badges_anchored(page):
         kin = b.get("family") or [mine]
         kin_owners = set(b.get("family_owners") or [b["owner"]])
         d_own = min(cap_dist(b["at"], q) for q in kin)
+        # R7's own promise, measured: a badge is never further from a body it
+        # stands for than the radius the cluster rule is written with. A
+        # cluster is a ball round a seed, so two of its members can be twice
+        # that apart - and a letter standing for a screw most of a page away is
+        # a letter the reader cannot get back from.
+        far = max(cap_dist(b["at"], q) for q in kin)
+        assert far <= T.BADGE_R * CLUSTER_R_BADGES + b["r"] + 1e-6, (
+            f"merket {b['letter']} står for en kropp {far:.0f} mm unna, "
+            f"utenfor klyngeradien det er skrevet med - da er ikke merket å "
+            f"finne fra kroppen (R7)")
         for other in bodies:
             if other["mark"] in kin_owners:
                 continue
@@ -1900,6 +2184,51 @@ def assert_badges_cover(page):
             f"{r['jid']} {r['name']} er tegnet uten at merket "
             f"{r['letter']} står for det - ingen bokstav innenfor klyngen "
             f"sin, og da finner ikke leseren raden i tabellen (R7)")
+
+
+def assert_no_stubs(page):
+    """No drawn fastener has been foreshortened into a dart. See STUB_ASPECT.
+
+    Measured off the ink, on the two numbers that decide whether a silhouette
+    still reads as a screw: the axis the page drew, and the head it drew it
+    with. A ringed dot is exempt - it has no axis at all, and it is a
+    convention the reader has been taught rather than a screw that came out
+    short.
+    """
+    for r in page.record:
+        if r["kind"] != "screw" or r.get("axis") is None:
+            continue
+        head = 2.0 * r["head_r"]
+        length = drawn_length(r)
+        assert length >= STUB_ASPECT * head - 1e-9, (
+            f"{r['jid']} {r['name']}: kroppen er tegnet {length:.1f} mm lang "
+            f"over et {head:.1f} mm hode - {length / head:.2f} hoder, under "
+            f"{STUB_ASPECT}, og da er silhuetten en pil og ikke en skrue. "
+            f"Se FORESHORTEN_FLOOR og SCREW_FATTEN")
+
+
+def assert_badges_homogeneous(page):
+    """The R7 amendment, measured off the ink: a family LOOKS like one.
+
+    Every badge that stands for more than one body is asked what those bodies
+    came out looking like - the lengths are read back out of the page's own
+    record of the silhouettes it drew - and the spread has to be inside
+    HOMOGENEITY_SPREAD. A letter standing for a full-length screw and a stub is
+    a letter that answers the reader's question about one of them and leaves
+    the other one nameless.
+    """
+    for b in page.record:
+        if b["kind"] != "badge":
+            continue
+        lens = [v for v in (b.get("family_lens") or []) if v is not None]
+        if len(lens) < 2:
+            continue
+        lo, hi = min(lens), max(lens)
+        assert hi - lo <= HOMOGENEITY_SPREAD * hi + 1e-9, (
+            f"merket {b['letter']} står for kropper som er tegnet "
+            f"{lo:.0f} og {hi:.0f} mm lange - over {_pct(HOMOGENEITY_SPREAD)} "
+            f"spredning er de to slags ting på papiret, og da skal hver av "
+            f"dem ha sitt eget merke (R7)")
 
 
 def assert_marks_own_element(page, occ):
@@ -1999,9 +2328,94 @@ def caption_clusters(captions, radius):
     return out
 
 
+# THE AMENDMENT: A FAMILY HAS TO LOOK LIKE ONE.
+# ---------------------------------------------
+# One badge for a type is a saving because the reader sees a row of the same
+# thing and needs telling once. That argument is about the PICTURE, not about
+# the parts list, and it fails the moment the picture stops repeating itself.
+#
+# The J12 corner is where it failed. Two 5x40 go into it, one into the post and
+# one up into the ledger, and they are the same screw out of the same box - but
+# the camera looks nearly down the first one's axis and across the second's, so
+# the page drew a stub beside a full-length screw and put ONE letter on the
+# full-length one. The stub was then a fastener with no badge that looked like
+# no other fastener on the page, which is precisely the reader's question ("and
+# what is that one?") left unanswered by a rule that exists to answer it.
+#
+# So a type may share a badge only where its members are VISUALLY HOMOGENEOUS:
+# the spread of drawn lengths inside the family - (longest - shortest) over
+# the longest - no more than HOMOGENEITY_SPREAD. It is the same 25 % the fill
+# code's ambiguity test uses (gen_glyphs.ambiguous_pairs, PRAKSIS 4) and for
+# the same reason - below a quarter two lengths are one length to the eye,
+# above it they are two things.
+#
+# Where a type is not homogeneous it is not un-merged wholesale, it is CUT at
+# the gaps: the members are split into runs that are alike within the tolerance
+# and each run keeps a badge. A family of eight identical ladder screws and one
+# foreshortened odd one out is nine bodies, two appearances and two badges -
+# not nine badges, which would hand the wallpaper back, and not one, which is
+# the failure above.
+HOMOGENEITY_SPREAD = 0.25
+
+
+def homogeneous_runs(fam, order):
+    """One type's captions, split into runs that LOOK alike. R7 amendment.
+
+    `order` is the page's own drawing order, and it does two jobs: it breaks
+    ties between equal lengths so the split is reproducible, and it decides
+    which member of each run carries the badge - the first one drawn, exactly
+    as the unamended rule chose.
+    """
+    lens = [c.get("plen") for c in fam]
+    if len(fam) < 2 or any(v is None for v in lens):
+        # A bracket has no drawn length to compare (its silhouette is a plate,
+        # not an axis), and two brackets of one type in one cluster are two
+        # identical plates. Nothing to split.
+        return [fam]
+    runs = []
+    for c in sorted(fam, key=lambda q: (q["plen"], order[id(q)])):
+        if runs and c["plen"] - runs[-1][0]["plen"] <= (HOMOGENEITY_SPREAD
+                                                        * c["plen"]):
+            runs[-1].append(c)
+        else:
+            runs.append([c])
+    return [sorted(r, key=lambda q: order[id(q)]) for r in runs]
+
+
+def reach_runs(fam, radius):
+    """One type's captions, split so a badge is never out of reach of one.
+
+    A cluster is a ball of `radius` round a SEED, so two members of it can be
+    twice that apart - and the promise R7 is written with is that a badge is
+    never further from a body it stands for than the radius. The same greedy
+    ball, applied inside the type, keeps the promise: the first member drawn
+    takes in everything within reach of itself, and whatever is left seeds the
+    next badge. Step 5's two stub-foot corners are the case - two identical
+    brackets 437 mm apart, in one cluster because a screw between them seeded
+    it, and one letter for both would have left the second corner's bracket
+    bare with its badge most of a page away.
+    """
+    left = list(fam)
+    out = []
+    while left:
+        seed = left.pop(0)
+        grp, rest = [seed], []
+        for c in left:
+            if (seed["body"] is not None and c["body"] is not None
+                    and _seg_seg_dist(seed["body"][0], seed["body"][1],
+                                      c["body"][0], c["body"][1]) <= radius):
+                grp.append(c)
+            else:
+                rest.append(c)
+        left = rest
+        out.append(grp)
+    return out
+
+
 def thin_clusters(captions):
     """One badge per fastener TYPE per cluster, each carrying its family. R7."""
     radius = T.BADGE_R * CLUSTER_R_BADGES
+    order = {id(c): i for i, c in enumerate(captions)}
     keep = []
     for group in caption_clusters(captions, radius):
         families = {}
@@ -2012,9 +2426,13 @@ def thin_clusters(captions):
                 keep.append(dict(c, family=[c]))
                 continue
             families.setdefault(c["letter"], []).append(c)
+        # Two cuts through a type's family, and they ask two different
+        # questions: is the badge WITHIN REACH of everything it stands for, and
+        # does everything it stands for LOOK like one thing.
         for _letter, fam in families.items():
-            keep.append(dict(fam[0], family=fam))
-    order = {id(c): i for i, c in enumerate(captions)}
+            for near in reach_runs(fam, radius):
+                for run in homogeneous_runs(near, order):
+                    keep.append(dict(run[0], family=run))
     return sorted(keep, key=lambda c: order[id(c["family"][0])])
 
 
@@ -2583,19 +3001,33 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # explode from where the bracket ended up, so they have to know its float
     # before their own hop back is worked out.
     floats = {}
-    if style == "eksplodert":
-        for m in keep:
-            if m["spec"]["kind"] == "plate":
-                floats[id(m["spec"])] = float_plate(
-                    occ, view, m["spec"], plate_screws(G, m["spec"]), float_d)
     plates = [m["spec"] for m in keep if m["spec"]["kind"] == "plate"]
+    if style == "eksplodert":
+        for p in plates:
+            # The direction comes off the model's own screws (R1 - a bracket
+            # comes off the way it is HELD, whether or not this page draws
+            # every screw that holds it); the beat has to clear the screws the
+            # page is actually going to draw (R9).
+            riders = [m["spec"] for m in keep
+                      if m["spec"]["kind"] != "plate"
+                      and m["spec"]["jid"] == p["jid"]
+                      and screw_on_plate(p, m["spec"])]
+            floats[id(p)] = float_plate(occ, view, p, plate_screws(G, p),
+                                        riders, float_d)
 
     def rides_on(f):
-        """The bracket this screw goes through, if it goes through one."""
+        """The bracket this screw goes through, if it goes through one.
+
+        Returns (the bracket, its page offset, the group's rhythm) - all three,
+        because a screw in a bracket group needs all three: it explodes FROM
+        where the bracket ended up, BY the same step the bracket took, and its
+        tether belongs to that group's chain when R9 comes to measure it.
+        """
         for p in plates:
             if p["jid"] == f["jid"] and screw_on_plate(p, f):
-                return floats.get(id(p), (0.0, 0.0))
-        return (0.0, 0.0)
+                poff, d = floats.get(id(p), ((0.0, 0.0), None))
+                return (p, poff, d)
+        return (None, (0.0, 0.0), None)
 
     # R2's other half. Two bodies that do NOT overlap are two marks, so the
     # page has to be able to show them as two - and the only move an exploded
@@ -2617,7 +3049,8 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
             if f["kind"] == "plate":
                 # No axis, so no hop back: the float on the paper IS the whole
                 # explosion, and the dotted line is the leash to its seat.
-                poff = floats[id(f)]
+                poff, rhythm = floats[id(f)]
+                group = id(f)
                 shift = (0.0, 0.0, 0.0)
                 # The caption goes OUTBOARD of the float, away from the seat:
                 # parked on the leash side it reads as a label for the hole.
@@ -2627,37 +3060,50 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                 # Backed out along its own axis in MODEL space, so the pulled
                 # screw stays on the line it travels no matter where the camera
                 # stands. The hop is measured off the projection - the screw's
-                # own drawn length plus `hover` - so the point ends up exactly
+                # own drawn length plus the gap - so the point ends up exactly
                 # that far short of its hole whatever the angle, and body,
-                # dotted line and hole are one straight run.
-                poff = rides_on(f)
+                # dotted line and hole are one straight run. The GAP is the
+                # group's rhythm where the screw rides on a bracket (R9), and
+                # `hover` grown until it finds paper where it does not.
+                host, poff, rhythm = rides_on(f)
+                group = None if host is None else id(host)
                 if nrm >= AXIS_ON_PAGE:
                     ux, uy = dx / nrm, dy / nrm
                     blen = max(f["length"] * nrm,
-                               f["length"] * FORESHORTEN_FLOOR)
-                    # The hop is the drawn body plus air, grown along the axis
-                    # if that is what it takes to find paper. Room is looked
-                    # for where the screw will actually BE - which for one
-                    # through a floated bracket is the bracket's hole, not the
-                    # seat it has left. Coaxial screws then queue up BEHIND one
-                    # another on the shared axis - never beside it - so every
-                    # one of them still points at the hole it belongs to.
-                    out = clear_back(occ, (hole[0] + poff[0],
-                                            hole[1] + poff[1]),
-                                     (ux, uy), blen, blen + hover,
-                                     hover, f["d"] * SCREW_FATTEN * 0.75)
-                    # ...and then out again, one body at a time, until it is
-                    # clear of every body already on the page. QUEUE_MAX is
-                    # where it gives up and overlaps rather than ending up in
-                    # the next county: at that point the two really are one
-                    # place and the drawing says so by drawing them there.
-                    for q in range(QUEUE_MAX):
-                        back = (out + (blen + hover) * q) / nrm
-                        shift = tuple(-c * back for c in f["direction"])
-                        cap = body_capsule(view, f, shift, poff)
-                        if not any(capsules_overlap(cap, c)
-                                   for c in drawn_caps):
-                            break
+                               foreshorten_floor(f["length"]))
+                    if rhythm is not None:
+                        # R9: this screw is the second step of a chain whose
+                        # first step the bracket has already taken. The gap is
+                        # the group's rhythm exactly - not a hop this screw
+                        # negotiates for itself - so seat, bracket and point
+                        # come out evenly spaced along one movement outward.
+                        # Nothing is looked up in the field and nothing queues:
+                        # a group that needs more room takes a longer beat, and
+                        # it takes it in float_plate(), for all of its screws
+                        # at once.
+                        shift = group_shift(view, f, rhythm)
+                    else:
+                        # The hop is the drawn body plus air, grown along the
+                        # axis if that is what it takes to find paper.
+                        out = clear_back(occ, (hole[0] + poff[0],
+                                               hole[1] + poff[1]),
+                                         (ux, uy), blen, blen + hover,
+                                         hover, f["d"] * SCREW_FATTEN * 0.75)
+                        # ...and then out again, one body at a time, until it
+                        # is clear of every body already on the page. QUEUE_MAX
+                        # is where it gives up and overlaps rather than ending
+                        # up in the next county: at that point the two really
+                        # are one place and the drawing says so by drawing them
+                        # there. Coaxial screws queue up BEHIND one another on
+                        # the shared axis - never beside it - so every one of
+                        # them still points at the hole it belongs to.
+                        for q in range(QUEUE_MAX):
+                            back = (out + (blen + hover) * q) / nrm
+                            shift = tuple(-c * back for c in f["direction"])
+                            cap = body_capsule(view, f, shift, poff)
+                            if not any(capsules_overlap(cap, c)
+                                       for c in drawn_caps):
+                                break
                     label_dir = (ux, uy)
                 else:
                     # Driven straight into the paper. There is no axis on the
@@ -2684,6 +3130,13 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
             start = body[1] if body is not None else tip
             if _apart(start, entry, 1.0):
                 page.line(start, entry, GREY, T.W_PHANTOM, dash=DASH_INSERT)
+                # Into the record with everything else that went on the paper:
+                # R9's two asserts - equal steps, and no two lines in a group
+                # crossing - are questions about these segments, and they are
+                # asked of the ink rather than of the offsets that produced it.
+                page.record.append(dict(kind="tether", owner=id(f),
+                                        jid=m["jid"], name=f["name"],
+                                        group=group, seg=(start, entry)))
             page.dot(entry, T.ENTRY_R, colour=INK)
             if f["kind"] == "plate":
                 assert_float_direction(
@@ -2712,9 +3165,30 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         drawn = [r for r in page.record
                  if r["kind"] in ("screw", "plate")
                  and r.get("mark") == mark_owner(m)]
+        if f["kind"] == "plate" and drawn and style == "eksplodert":
+            # A bracket is barely bigger than the badge that names it - a 40 mm
+            # angle and a 49 mm circle - so a badge that satisfies R6 by
+            # sitting ON it satisfies it by HIDING it, and the reader is left
+            # with a letter where the part should be. The tail therefore sits
+            # on the bracket's own outboard rim, the far side from the seat, so
+            # the first candidate in the ladder is a badge tangent to the plate
+            # rather than one centred on it: contact, and the bracket still
+            # visible under its own letter.
+            c0, _c1, rad = drawn[-1]["cap"]
+            label_at = (c0[0] - label_dir[0] * rad,
+                        c0[1] - label_dir[1] * rad)
         captions.append(dict(at=label_at, dir=label_dir, letter=m["letter"],
                              owner=mark_owner(m), jid=m["jid"],
-                             body=drawn[-1]["cap"] if drawn else None))
+                             body=drawn[-1]["cap"] if drawn else None,
+                             # HOW LONG THIS ONE CAME OUT, off the drawn
+                             # silhouette's own axis: it is what the R7
+                             # amendment asks, and a screw's appearance is not
+                             # its catalogue length but the length the camera
+                             # left it with. None for a bracket, which has no
+                             # axis to compare; zero for a head-on ringed dot,
+                             # which looks like nothing else on the page and
+                             # should not be merged with anything.
+                             plen=drawn_length(drawn[-1] if drawn else None)))
 
     # THE CAPTIONS, once every fastener is down. Placing each one as its own
     # fastener was drawn is what let the second badge on a crowded corner park
@@ -2726,8 +3200,12 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                    c["body"], family=c["family"])
     if style == "eksplodert":
         assert_bodies_apart(page)
+        assert_chain_rhythm(page)
+        assert_chain_untangled(page)
+    assert_no_stubs(page)
     assert_badges_anchored(page)
     assert_badges_cover(page)
+    assert_badges_homogeneous(page)
     assert_marks_own_element(page, occ)
 
     # R3 - NO LEADERS FROM THE INSET.
