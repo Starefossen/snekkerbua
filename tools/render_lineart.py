@@ -1740,7 +1740,8 @@ def half_crop(plines, marks=(), frac=HALF_FRAC):
     # The cut is where the FAR end is dropped, not a guillotine: a joint on the
     # near side of it keeps everything it needs, even where that reaches a
     # little past the line.
-    return ((min(xs) - T.PAD, min(ys) - T.PAD, max(hi) + T.PAD, max(ys) + T.PAD),
+    return ((min(xs) - T.PAD, min(ys) - T.PAD,
+             max(hi) + T.PAD, max(ys) + T.PAD),
             dict(cut=cut, x0=bx0, x1=bx1, frac=frac))
 
 

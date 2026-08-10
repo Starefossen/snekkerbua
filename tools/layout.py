@@ -118,7 +118,8 @@ class Theme:
     def __repr__(self):
         if self.pen is None:
             return "Theme(usatt)"
-        return f"Theme(subject_diag={self.subject_diag:.2f}, pen={self.pen:.4f})"
+        return (f"Theme(subject_diag={self.subject_diag:.2f}, "
+                f"pen={self.pen:.4f})")
 
 
 # ONE theme per process, and it lives here rather than in the drawing module
