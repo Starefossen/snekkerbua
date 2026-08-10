@@ -413,11 +413,19 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         page.line(tail, p2, RL.GREY, RL.T.W_PHANTOM, dash=RL.DASH_INSERT)
         page.dot(p2, 6.5, colour=RL.INK)
         owner = (m["name"], round(p2[0], 3), round(p2[1], 3))
+        m["p2"] = p2
         occ.add_points([p2, tail], radius=RL.T.BADGE_R + 10,
                        weight=RL.CAP_MARK, owner=owner, tag="mark")
         placed_marks.append((tail, m, owner))
     for tail, m, owner in placed_marks:
-        RL.mark_label(page, tail, (dx, dy), m["letter"], m["per"], occ, owner)
+        # This page draws no screw bodies - it draws the drilling pattern on
+        # the plate and a dotted line into each hole - so the element the
+        # badge names is that LINE, from where the fastener comes in to the
+        # hole it ends in. R6 is satisfied the flag way: the badge sits on the
+        # line's near end, and the line is its own leader to the hole.
+        RL.mark_label(page, tail, (dx, dy), m["letter"], occ, owner,
+                      body=(tail, m["p2"], RL.T.ENTRY_R))
+    RL.assert_badges_anchored(page)
     RL.assert_marks_own_element(page, occ)
 
     # The beslag themselves carry a badge each, beside the glyph: they ARE

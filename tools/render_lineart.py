@@ -849,7 +849,7 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
             for pl in polys:
                 page.poly(pl, fill="#ffffff", stroke=INK, width=T.W_RULE)
         page.record.append(dict(kind="plate", owner=id(f), jid=f["jid"],
-                                name=f["name"],
+                                name=f["name"], mark=mark_owner(m),
                                 cap=body_capsule(view, f, shift, page_off),
                                 # without each ring's repeated closing point,
                                 # so the recorded centroid is the polygon's
@@ -881,6 +881,13 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
         # the screw is in or out.
         page.circle(p0, T.RING_R, fill=paint, width=T.W_SCREW)
         page.dot(p0, T.RING_DOT_R)
+        # The ring IS the drawn body on this page - there is no axis to draw -
+        # so it goes into the record as one. A badge has to be able to touch
+        # it, and R5 has to be able to measure against it.
+        page.record.append(dict(kind="screw", owner=id(f), jid=f["jid"],
+                                name=f["name"], mark=mark_owner(m),
+                                points=[p0], axis=None,
+                                cap=(p0, p0, T.RING_R)))
         return p0, p0, None
     if solid:
         page.poly(outline, fill=paint, stroke=INK, width=T.W_SCREW)
@@ -905,7 +912,8 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
     body = (((outline[0][0] + outline[-1][0]) / 2,
              (outline[0][1] + outline[-1][1]) / 2), outline[3])
     page.record.append(dict(kind="screw", owner=id(f), jid=f["jid"],
-                            name=f["name"], points=list(outline), axis=body,
+                            name=f["name"], mark=mark_owner(m),
+                            points=list(outline), axis=body,
                             cap=body_capsule(view, f, shift, page_off)))
     return p0, p1, body
 
@@ -1488,14 +1496,20 @@ def joint_section(page, box, specs, letters, letter_label=""):
                      y + h - T.BADGE_R * 0.9), ch, T.BADGE_R * 0.82)
 
 
-def badge(page, centre, letter, r=None):
-    """One circled sans letter - the same mark the step table carries."""
+def badge(page, centre, letter, r=None, owner=None, body=None, leader=None):
+    """One circled sans letter - the same mark the step table carries.
+
+    `body` is the capsule of the element the badge NAMES, and `leader` the
+    line drawn to it where the badge could not sit on it. Both go into the
+    record because that is what assert_badges_anchored() re-measures: a badge
+    is only a label if the reader can see WHAT it labels.
+    """
     r = T.BADGE_R if r is None else r
     page.circle(centre, r, fill="#ffffff", stroke=INK, width=T.W_RULE)
     page.text((centre[0], centre[1] - r * 0.40), letter,
               r * 1.20, anchor="middle", weight="bold")
-    page.record.append(dict(kind="badge", owner=None, letter=letter,
-                            at=centre, r=r))
+    page.record.append(dict(kind="badge", owner=owner, letter=letter,
+                            at=centre, r=r, body=body, leader=leader))
 
 
 # R5 - A MARK BELONGS TO ITS OWN ELEMENT
@@ -1508,91 +1522,124 @@ CAP_EDGE = 30.0        # hanging off the page
 CAP_MARK = 18.0        # sitting on a fastener this caption does not name
 CAP_BADGE = 3.0        # sitting on another caption
 CAP_PANEL = 42.0       # sitting on the inset panel, which is opaque
+# R6: off its own body, so it needs a leader. Allowed - a crowded corner has
+# to be allowed something - but dearer than any amount of crowding, so the
+# badge only ever leaves its screw when there is nowhere on it to sit.
+CAP_NOCONTACT = 90.0
+# R5: nearer somebody else's body than its own. Not a preference at all.
+CAP_FOREIGN = 400.0
 CAP_TAGS = ("panel", "mark", "badge")
 
 
-def mark_label(page, tail, direction, letter, count, occ=None, owner=None):
-    """One fastener's caption, parked behind its tail.
+def cap_dist(p, cap):
+    """Distance from a point to a drawn body's own edge, negative inside."""
+    return layout._seg_dist(p, cap[0], cap[1]) - cap[2]
 
-    A mark carries at most one letter - each kind of fastener points at its
-    own spot - and beside it the number of screws that mark stands for. "2x"
-    is there because a marker is not always one screw: two 5x60 driven 30 mm
-    apart into the same rekkverksbord end are one arrow at this scale, and the
-    page has to say so.
 
-    The natural place is straight back along the tail, and four things can
-    spoil it: the page edge, the inset panel, another caption, and a fastener
-    this caption does not name. The last is the worst of them by a distance,
-    because a badge sitting on somebody else's screw does not merely crowd the
-    page - it tells the builder to put the wrong screw there. Step 1 had
-    exactly that: J9-B's screw points left, so "behind its head" is to the
-    RIGHT, straight at J8-B's screw, and the page read
-    "[skrue] A [skrue] A 2x" - two A marks with a foreign body between each
-    badge and the screw it names.
+def cap_point(p, cap):
+    """The point on a drawn body's axis nearest `p` - where a leader lands."""
+    a, b = cap[0], cap[1]
+    vx, vy = b[0] - a[0], b[1] - a[1]
+    ll = vx * vx + vy * vy
+    if ll < 1e-12:
+        return a
+    t = ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / ll
+    t = 0.0 if t < 0.0 else (1.0 if t > 1.0 else t)
+    return (a[0] + vx * t, a[1] + vy * t)
 
-    So the rule is not "avoid crowding". It is R5, and layout.place() enforces
-    it: A CAPTION MAY NOT LAND NEARER A FOREIGN BODY THAN ITS OWN. Given that,
-    the second A moves itself and nothing has to be merged, renamed or
-    special-cased.
+
+def mark_label(page, tail, direction, letter, occ=None, owner=None, body=None):
+    """One fastener's badge - ON its screw, or on a leader to it.
+
+    R6 - CONTACT OR LEADER. A badge that floats near a cluster is not a label,
+    it is a riddle: the reader has to guess which of the four fasteners in the
+    corner it names, and on step 5 there were three of them guessing at once.
+    So a badge now has exactly two legal positions:
+
+      TOUCHING   the badge circle overlaps the drawn body it names, sitting on
+                 the head like a flag on a pole. This is the first thing tried
+                 and what almost every badge gets.
+      LEADERED   where the paper round the head is taken, the badge steps back
+                 and a thin solid line runs from its edge to the body. The line
+                 is the label; the badge is only its head.
+
+    There is no third case, and assert_badges_anchored() re-measures both off
+    the ink. Everything else about the placement is the old rule set: the
+    candidates run straight back along the fastener's own axis first, then to
+    either side, and layout.place() picks the cheapest - with R5 still in it,
+    so a badge may never land nearer a FOREIGN body than its own.
+
+    The COUNT is gone from here. Every screw the step drives is drawn as its
+    own body now, so a "2x" beside one of them says nothing the picture does
+    not; the counts live in the inset panel and in the step's table, where a
+    number is read rather than looked at.
     """
+    if not letter:
+        # One kind of fastener on the page: the glyph in its table is already
+        # the whole answer, so there is nothing to park. Page.record is what
+        # went on the paper, and this went nowhere.
+        return None
     dx, dy = direction
-    txt = f"{count}x" if count > 1 else ""
-    w_txt = 0.0 if not txt else T.BADGE_R * (1.10 * len(txt))
-    if letter:
-        span = 2 * T.BADGE_R + (w_txt + 6 if txt else 0)
-    else:
-        span = w_txt
-    base = span / 2 * abs(dx) + T.BADGE_R * abs(dy) + 14
-    aside = span / 2 * abs(dy) + T.BADGE_R * abs(dx) + 14
-
-    def spots(cx, cy):
-        """Badge centre and text anchor for a caption centred on (cx, cy)."""
-        left = cx - span / 2
-        if letter:
-            return (left + T.BADGE_R, cy), (left + 2 * T.BADGE_R + 6, cy)
-        return None, (left, cy)
-
-    # Straight back along the tail first, then progressively further; then to
-    # either side. The ORDER is the preference, and layout.place() breaks ties
-    # on it, so an uncrowded page still parks every caption behind its head.
-    tries = [(tail[0] - dx * (base + k * T.BADGE_R * 1.7),
-              tail[1] - dy * (base + k * T.BADGE_R * 1.7)) for k in range(5)]
+    r = T.BADGE_R
+    # Straight back along the axis, hugging the head first: the badge sits ON
+    # the fastener before it sits anywhere else. Then out along the same line,
+    # then to either side - the ORDER is the preference, and layout.place()
+    # breaks ties on it.
+    tries = [(tail[0] - dx * r * k, tail[1] - dy * r * k)
+             for k in (0.95, 1.45, 2.05, 2.75, 3.6)]
     for s in (1, -1):
         for k in range(3):
-            tries.append((tail[0] - dy * s * (aside + k * T.BADGE_R * 1.6)
-                          - dx * k * T.BADGE_R * 0.8,
-                          tail[1] + dx * s * (aside + k * T.BADGE_R * 1.6)
-                          - dy * k * T.BADGE_R * 0.8))
+            tries.append((tail[0] - dy * s * (r * 1.15 + k * r * 1.5)
+                          - dx * k * r * 0.8,
+                          tail[1] + dx * s * (r * 1.15 + k * r * 1.5)
+                          - dy * k * r * 0.8))
+
+    # R6 and R5 are priced INTO the placer rather than checked after it. The
+    # asserts are still there and still measure the ink, but a rule that only
+    # ever fires as a build failure is a rule the drawing has no way to obey:
+    # the placer has to be able to see that touching its own screw is worth
+    # more than any amount of white paper, and that landing nearer somebody
+    # else's is worth nothing at all.
+    foreign = [q["cap"] for q in page.record
+               if q["kind"] in ("screw", "plate") and q.get("cap")
+               and q.get("mark") is not None and q.get("mark") != owner]
+
+    def price(c):
+        if body is None:
+            return 0.0
+        out = 0.0
+        d_own = cap_dist(c, body)
+        if d_own > r:
+            out += CAP_NOCONTACT
+        if foreign and min(cap_dist(c, q) for q in foreign) < d_own:
+            out += CAP_FOREIGN
+        return out
 
     occ = layout.Occupancy() if occ is None else occ
     centre = layout.place(
-        tries, (span, 2 * T.BADGE_R), occ,
+        tries, (2 * r, 2 * r), occ,
         tether=tail,
         # Having stepped out of the way it steps no further than it had to: a
-        # caption that has wandered is one the reader has to guess at.
-        pull=1.0 / (T.BADGE_R * 8.0),
+        # badge that has wandered is one the reader has to guess at.
+        pull=1.0 / (r * 8.0),
         owner=owner, tags=CAP_TAGS,
         bounds=(page.x0, page.y0, page.x1, page.y1),
-        edge=T.BADGE_R + 8, edge_penalty=CAP_EDGE)
-    b_at, t_at = spots(*centre)
-    if b_at is None and not txt:
-        # A single screw of the page's only kind carries neither a letter nor
-        # a count, so there is nothing to park: the drawn body IS the whole
-        # caption. Nothing is recorded either - Page.record is what went on
-        # the paper, and this went nowhere.
-        return None
-    if b_at is not None:
-        badge(page, b_at, letter)
-        occ.add_point(b_at, radius=T.BADGE_R, weight=CAP_BADGE, owner=owner,
-                      tag="badge")
-    if txt:
-        page.text((t_at[0], t_at[1] - T.BADGE_R * 0.42), txt, T.BADGE_R * 1.25,
-                  weight="bold")
-        at = (t_at[0] + w_txt / 2, t_at[1])
-        occ.add_point(at, radius=T.BADGE_R, weight=CAP_BADGE, owner=owner,
-                      tag="badge")
+        edge=r + 8, edge_penalty=CAP_EDGE, extra=price)
+
+    leader = None
+    if body is not None and cap_dist(centre, body) > r:
+        # Out of reach of its own body: it gets a line instead. Drawn from the
+        # badge's rim, not its centre, so the circle stays a clean disc, and
+        # to the point on the body's own axis nearest it.
+        far = cap_point(centre, body)
+        ux, uy, n = _unit2(centre, far)
+        near = (centre[0] + ux * r, centre[1] + uy * r) if n > 0 else centre
+        page.line(near, far, INK, T.W_LEAD)
+        leader = (near, far)
+    badge(page, centre, letter, owner=owner, body=body, leader=leader)
+    occ.add_point(centre, radius=r, weight=CAP_BADGE, owner=owner, tag="badge")
     page.record.append(dict(kind="label", owner=owner, letter=letter,
-                            count=count, at=centre, tether=tail))
+                            at=centre, tether=tail))
     return centre
 
 
@@ -1613,6 +1660,56 @@ def assert_bodies_apart(page):
                 f"{a['jid']} {a['name']} og {b['jid']} {b['name']} er tegnet "
                 f"oppå hverandre - to kropper på samme papir er ett merke, "
                 f"ikke to. Se choose_marks() (R2) og køen langs egen akse")
+
+
+def assert_badges_anchored(page):
+    """R6, measured off the ink: no badge floats.
+
+    Three questions per badge, and all three are asked of what was WRITTEN -
+    the circle's landing place, the body's drawn capsule, the leader's two
+    ends - rather than of what was meant:
+
+      1. does it touch the body it names, or
+      2. does a recorded leader run from it to that body, landing ON it;
+      3. and is its own body still the nearest one? A badge whose leader
+         crosses somebody else's screw on the way is a badge pointing at the
+         wrong hole, which is the failure this whole rule exists to stop.
+
+    Badges without a body - the letters in an inset section, the panel rows -
+    are not marks on the drawing and are not asked.
+    """
+    bodies = [r for r in page.record
+              if r["kind"] in ("screw", "plate") and r.get("cap")
+              and r.get("mark") is not None]
+    for b in page.record:
+        if b["kind"] != "badge" or b.get("body") is None:
+            continue
+        mine, r = b["body"], b["r"]
+        if b["leader"] is None:
+            gap = cap_dist(b["at"], mine)
+            assert gap <= r + 1e-6, (
+                f"merket {b['letter']} står {gap:.0f} mm fra kroppen sitt "
+                f"eget feste tegner, uten lederlinje - et merke skal enten "
+                f"røre festet sitt eller peke på det (R6)")
+        else:
+            near, far = b["leader"]
+            assert cap_dist(far, mine) <= 1e-6, (
+                f"merket {b['letter']} har en lederlinje som ender "
+                f"{cap_dist(far, mine):.0f} mm utenfor sitt eget feste (R6)")
+            assert abs(math.hypot(near[0] - b["at"][0],
+                                  near[1] - b["at"][1]) - r) < 1e-6, (
+                f"merket {b['letter']} sin lederlinje starter ikke i "
+                f"merkets egen rand (R6)")
+        d_own = cap_dist(b["at"], mine)
+        for other in bodies:
+            if other["mark"] == b["owner"]:
+                continue
+            d_foreign = cap_dist(b["at"], other["cap"])
+            assert d_foreign >= d_own - 1e-6, (
+                f"merket {b['letter']} ligger {d_foreign:.0f} mm fra "
+                f"{other['jid']} {other['name']} og {d_own:.0f} mm fra sitt "
+                f"eget feste - et merke skal aldri lande nærmere en fremmed "
+                f"kropp enn sin egen (R5)")
 
 
 def assert_marks_own_element(page, occ):
@@ -1636,6 +1733,71 @@ def assert_marks_own_element(page, occ):
             f"ligger {mine:.0f} mm fra sitt eget feste og {theirs:.0f} mm fra "
             f"{who[0]} sitt - et merke skal aldri lande nærmere en fremmed "
             f"kropp enn sin egen (R5)")
+
+
+# ---------------------------------------------------------------------------
+# R7 - ONE BADGE PER RUN
+# ---------------------------------------------------------------------------
+# A ladder stile takes eight identical 5x60 in a column, and the page used to
+# put eight identical letters down beside them. Eight badges is not eight
+# pieces of information: it is one, repeated until it becomes wallpaper, and
+# the wallpaper is what crowds the badge that DOES say something new.
+#
+# So a RUN - two or more fasteners of the same kind, in the same joint, whose
+# drawn bodies are near neighbours - carries one badge. The conditions are
+# strict, because the whole value of the badge is that it is unambiguous:
+#
+#   * same letter and same joint. Merging across joints is the mistake
+#     PRAKSIS section 4 has a paragraph about, and it stays out.
+#   * the bodies form a CHAIN, each within RUN_GAP of the next. A run is a
+#     thing the eye follows; two screws at opposite ends of a rail are not one.
+#   * nothing FOREIGN inside the run. If another kind of fastener sits among
+#     them, the one surviving badge would be the nearest label to somebody
+#     else's screw, and R5 exists to stop exactly that.
+#
+# The badge that survives is the first in the page's own drawing order, so the
+# choice is as reproducible as everything else here, and it is still subject
+# to R6: it has to touch its own body or carry a leader to it.
+RUN_GAP_BADGES = 2.6           # neighbour distance, in badge radii
+
+
+def thin_runs(captions):
+    """One badge per contiguous same-type run. R7."""
+    gap = T.BADGE_R * RUN_GAP_BADGES
+    groups = []
+    for c in captions:
+        if c["body"] is None or not c["letter"]:
+            groups.append([c])
+            continue
+        joined = [g for g in groups
+                  if g[0]["body"] is not None
+                  and g[0]["letter"] == c["letter"] and g[0]["jid"] == c["jid"]
+                  and any(_seg_seg_dist(q["body"][0], q["body"][1],
+                                        c["body"][0], c["body"][1]) <= gap
+                          for q in g)]
+        if not joined:
+            groups.append([c])
+            continue
+        first = joined[0]
+        first.append(c)
+        for g in joined[1:]:
+            first += g
+            groups.remove(g)
+    drop = set()
+    for g in groups:
+        if len(g) < 2:
+            continue
+        foreign = [c for c in captions
+                   if c["body"] is not None
+                   and (c["letter"] != g[0]["letter"]
+                        or c["jid"] != g[0]["jid"])]
+        clear = all(
+            _seg_seg_dist(f["body"][0], f["body"][1], q["body"][0],
+                          q["body"][1]) > gap
+            for q in g for f in foreign)
+        if clear:
+            drop |= {id(c) for c in g[1:]}
+    return [c for c in captions if id(c) not in drop]
 
 
 # The inset panel is the same shape on every page: the same fraction of the
@@ -2313,18 +2475,27 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         # a field that knows whose everything is.
         occ.add_points(mine, radius=T.BADGE_R + 10, weight=CAP_MARK,
                        owner=mark_owner(m), tag="mark")
-        captions.append((label_at, label_dir, m["letter"], m["per"],
-                         mark_owner(m)))
+        # The body as it was actually drawn, off the page's own record: R6
+        # asks whether the badge touches THAT, so it is the ink that answers
+        # and not the offset that was computed.
+        drawn = [r for r in page.record
+                 if r["kind"] in ("screw", "plate")
+                 and r.get("mark") == mark_owner(m)]
+        captions.append(dict(at=label_at, dir=label_dir, letter=m["letter"],
+                             owner=mark_owner(m), jid=m["jid"],
+                             body=drawn[-1]["cap"] if drawn else None))
 
     # THE CAPTIONS, once every fastener is down. Placing each one as its own
     # fastener was drawn is what let the second badge on a crowded corner park
     # itself neatly on top of the ninth screw - which had not been drawn yet,
     # so nothing objected. A caption that sits on a fastener it does not name
     # is worse than no caption: it is a wrong one.
-    for label_at, label_dir, letter, per, owner in captions:
-        mark_label(page, label_at, label_dir, letter, per, occ, owner)
+    for c in thin_runs(captions):
+        mark_label(page, c["at"], c["dir"], c["letter"], occ, c["owner"],
+                   c["body"])
     if style == "eksplodert":
         assert_bodies_apart(page)
+    assert_badges_anchored(page)
     assert_marks_own_element(page, occ)
 
     # R3 - NO LEADERS FROM THE INSET.
