@@ -202,7 +202,12 @@ papiret skal se kort ut, men den skal fortsatt se ut som en skrue.
   stegsiden. Navnene leses ut av `docs/generated/beslagliste.md`, så en ny
   skruestørrelse i leddtabellen gir et nytt ikon uten at noen rører glyphfila.
 * **Piktogrammene** («før du begynner») er Lucide-baserte, én strektykkelse,
-  ingen fyll, ingen tekst i ikonet.
+  ingen fyll, ingen tekst i ikonet. `docs/icons/lucide/` er **vendoret, ikke
+  speilet**: der ligger bare de ikonene `PICTOGRAMS` faktisk slår opp, og
+  ingenting annet. Et ikon som ikke står i den tabellen skal ut av katalogen —
+  ellers vokser den til et halvt ikonbibliotek som ingen bygger leser og ingen
+  lisensfil dekker meningsfullt. (Fem ubrukte ble slettet i denne runden:
+  `baby`, `hammer`, `pencil`, `person-standing`, `phone`.)
 * **Merkebokstavene** er ett tegn i en sirkel, samme radius overalt.
 * Alt skrives både som `.svg` (originalen) og `.png` (det Markdown-en bygger
   inn), så manualen leses på en maskin uten noe av dette installert.
@@ -238,6 +243,19 @@ JSON har ingen kommentarer). Skal et tall endres, endres det i modellen.
 en diff viser hva en endring i modellen faktisk gjorde med tegningene. Det er
 poenget med å ha dem i git: `git diff --stat` etter `mise run build` er
 konsekvensanalysen.
+
+Den avlesningen er verdiløs hvis kjeden selv kan gi to svar på samme spørsmål,
+så determinismen er ikke en forventning — den er en assert:
+
+```
+mise run check        kjør hele kjeden to ganger, krev byte-identiske artefakter
+```
+
+`check` kjører `build` + `montering` to fulle ganger og sammenligner sjekksummen
+av hver innsjekkede, utledede fil (`docs/generated/`, `docs/MONTERING.md`,
+`docs/img/`, `parts.tsv`). Ryker den, er det **ikke** en modellendring: det er
+en usortert `dict`, et tidsstempel, en `id()`-sortering eller en flyttallssum
+som avhenger av rekkefølgen. Rett årsaken, ikke artefaktet.
 
 ---
 

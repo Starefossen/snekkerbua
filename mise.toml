@@ -36,6 +36,38 @@ description = "Sett sammen den trykkeklare PDF-en (docs/hanna.pdf) av MONTERING,
 run = "python tools/build_pdf.py"
 depends = ["install"]
 
+[tasks.check]
+description = "Determinismesjekk: kjør hele kjeden to ganger og krev byte-identiske artefakter"
+# Alt i docs/generated/, docs/MONTERING.md, docs/img/ og parts.tsv er utledet
+# av modellen, og det er sjekket inn nettopp for at en diff skal vise hva en
+# endring i modellen gjorde med tegningene. Den avlesningen er verdiløs hvis
+# kjeden selv kan gi to svar på samme spørsmål, så dette er den asserten:
+# kjør den to ganger og krev samme bytes. Ryker den, er det en usortert dict,
+# en tidsstempel eller en id()-sortering et sted - ikke en modellendring.
+run = """
+set -e
+work="$(mktemp -d)"
+trap 'rm -rf "$work"' EXIT
+snap() {
+  git ls-files -z -- docs/generated docs/MONTERING.md docs/img parts.tsv \\
+    | xargs -0 shasum -a 256
+}
+for pass in 1 2; do
+  python tools/gen_doc_tables.py > "$work/build-$pass.log" 2>&1 \\
+    || { cat "$work/build-$pass.log"; exit 1; }
+  python tools/render_lineart.py --width 1600 > "$work/draw-$pass.log" 2>&1 \\
+    || { cat "$work/draw-$pass.log"; exit 1; }
+  snap > "$work/sum-$pass"
+done
+if ! diff -u "$work/sum-1" "$work/sum-2" > "$work/delta"; then
+  echo "IKKE DETERMINISTISK - to like kjøringer ga ulike artefakter:"
+  cat "$work/delta"
+  exit 1
+fi
+echo "OK  $(wc -l < "$work/sum-1" | tr -d ' ') artefakter byte-identiske over to fulle kjøringer"
+"""
+depends = ["install"]
+
 [tasks.montering-skyggelagt]
 description = "The shaded USD renders of the same steps, for reference (macOS: usdrecord + swift)"
 depends = ["build"]
