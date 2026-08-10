@@ -182,6 +182,31 @@ def hardware_total(steps):
 # `camera`    (azimuth, elevation, distance) for tools/render_steps.py.
 #             Azimuth 0 looks the ladder straight in the face; 270 is the
 #             X = 1990 end; the back wall is at 180.
+#
+# WHAT KIND OF PAGE A STEP GETS is declared here too, because it is a property
+# of the STEP and not of its number. tools/render_lineart.py used to carry it
+# as a handful of `if n == 0`, `if n == 2`, `if n == 10`, a HALF_VIEW_STEPS
+# set and one label prefix match, which meant the answer to "why is this page
+# different" lived in a file that is not allowed to know anything the model
+# does not. All of these default to false/absent, so an ordinary step says
+# nothing at all:
+#
+# `page`             "cutpage" or "panel": a page that is not a projection of
+#                    the bed and has a module of its own.
+# `half_view`        the step builds the SAME CORNER TWICE, once at each end,
+#                    and nothing in between - so the drawing is cropped to one
+#                    end and a mirror pictogram carries the other. The counts
+#                    stay whole-step counts.
+# `thumbnails`       before/after pair: the one step that changes the
+#                    workpiece's orientation.
+# `crop_to_subject`  the step's parts are a narrow thing in a wide bed and get
+#                    a page cut round them instead of the shared bed page.
+# `no_fasteners`     nothing is fastened: no marks, no inset, no coverage
+#                    check.
+# `info_panel`       the corner panel is an information panel rather than a
+#                    fastener list.
+# `avoid_top_left`   the top left corner is what the drawing is ABOUT, so no
+#                    panel may be parked there.
 def build_steps(G):
     return [
         dict(
@@ -191,6 +216,7 @@ def build_steps(G):
             # tools/render_cutpage.py lays every purchase length out as a bar
             # with its cuts marked. So `image` is true and `camera` is None.
             image=True,
+            page="cutpage",
             parts=[],
             highlight=[],
             camera=None,
@@ -228,6 +254,7 @@ def build_steps(G):
                    "Bench Rail Back (continuous)", "Table Ledger Back",
                    "Bench Rail Bearing Block Back *"],
             camera=(330, 24, 3.4),
+            half_view=True,
             intro="Hele baksiden av sengen er ett eneste flatt lag: to korte "
                   "stolper og tre vannrette deler i samme plan. Det laget er "
                   "monteringsflaten mot veggen. Og det MÅ bygges som én "
@@ -265,6 +292,7 @@ def build_steps(G):
             parts=[],
             highlight=["Upper Side Rail Back"],
             camera=(330, 24, 3.4),
+            thumbnails=True,
             intro="Sengen festes til veggen gjennom den bakre sidevangen. "
                   "Vangen ligger flatt mot veggen i hele sin lengde, så "
                   "skruene går rett gjennom den og inn i stenderne. De "
@@ -300,6 +328,7 @@ def build_steps(G):
                    "End Beam Bearing Block *",
                    "Bench Rail Bearing Block Front *"],
             camera=(325, 22, 3.4),
+            half_view=True,
             intro="Nå bygges de to endene ut fra bakrammen. Endebjelken går "
                   "fra den bakre stolpen til den fremre og bærer begge "
                   "sidevanger.",
@@ -355,6 +384,7 @@ def build_steps(G):
             title="Fremre benkevanger og alle fire stubbeføtter",
             parts=["Bench Rail Front *", "Bench Stub Leg *"],
             camera=(330, 20, 3.4),
+            half_view=True,
             intro="Den fremre benkevangen er delt i to. Midtpartiet er med "
                   "vilje åpent, slik at gulvet foran stigen er helt fritt.",
             do=[
@@ -382,6 +412,7 @@ def build_steps(G):
             title="Stigen",
             parts=["Ladder Upright *", "Rung Block *", "Ladder Rung_*"],
             camera=(0, 16, 3.6),
+            crop_to_subject=True,
             intro="Bygg hele stigen ferdig liggende på gulvet, og skru den så "
                   "på den fremre sidevangen.",
             do=[
@@ -475,6 +506,7 @@ def build_steps(G):
             title="Løs plate med avstivningslekter og beslag",
             parts=["Movable Panel (bed mode)", "Panel Stiffener Batten *"],
             camera=(325, 30, 3.6),
+            page="panel",
             intro="Platen er ikke et løst bord. Den er en liten enhet som "
                   "løftes ut i ett stykke, og beslagene på den er "
                   "konstruksjon — de holder platen nede OG avstiver stigen.",
@@ -509,6 +541,9 @@ def build_steps(G):
             title="Madrass og sluttsjekk",
             parts=["Mattress *"],
             camera=(330, 26, 3.4),
+            no_fasteners=True,
+            info_panel=True,
+            avoid_top_left=True,
             intro="Sengen er dimensjonert rundt en STANDARD madrass på "
                   "80 × 200 cm — den er ikke spesialmål og skal ikke "
                   "spesialbestilles. Det eneste målet du må velge selv er "
@@ -1632,14 +1667,23 @@ def _buy_hint(name, qty):
 
 
 def emit_json(G, out_dir, steps, idx, rows):
+    # The drawing flags travel with the step, so tools/render_lineart.py can
+    # look up what kind of page this is instead of branching on its number.
+    # They are written out even when false: a reader of byggesteg.json should
+    # be able to see that a step is NOT a half view without knowing that the
+    # key exists on other steps.
+    page_flags = ("half_view", "thumbnails", "crop_to_subject",
+                  "no_fasteners", "info_panel", "avoid_top_left")
     data = dict(
         steps=[dict(n=st["n"], title=st["title"], image=st.get("image", True),
+                    page=st.get("page", "step"),
                     labels=st["labels"], highlight=st["highlight_labels"],
                     camera=st["camera"], intro=st["intro"], do=st["do"],
                     check=st["check"],
                     fasteners=step_fastener_summary(st),
                     joints=st["joints"],
-                    parts=step_part_summary(G, st, idx))
+                    parts=step_part_summary(G, st, idx),
+                    **{k: bool(st.get(k, False)) for k in page_flags})
                for st in steps],
         bolt_rows={k: v for k, v in rows.items() if not k.startswith("_")},
     )

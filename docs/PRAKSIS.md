@@ -266,6 +266,16 @@ mise run usdz               .usdz for Quick Look (macOS)
 mise run render-validate    de fem designvalideringsbildene
 ```
 
+### Hva slags side et steg får
+
+Står i `tools/gen_doc_tables.build_steps()`, sammen med alt annet som
+definerer et byggesteg, og følger med ut i `byggesteg.json`:
+`page` («cutpage»/«panel»), `half_view`, `thumbnails`, `crop_to_subject`,
+`no_fasteners`, `info_panel`, `avoid_top_left`. `render_lineart.py` slår dem
+opp; den har ingen `if n == 0` og ingen navnematch på «Mattress» igjen.
+Grunnen er den samme som i §1: hvilken side et steg får er en egenskap ved
+STEGET, og et steg er definert ett sted.
+
 **Ingenting i `docs/generated/` skal redigeres for hånd.** Alle Markdown-filene
 der starter med en kommentar som sier det (`byggesteg.json` kan ikke bære en,
 JSON har ingen kommentarer). Skal et tall endres, endres det i modellen.

@@ -4,6 +4,7 @@
       "n": 0,
       "title": "Kapping, forboring og forsenking",
       "image": true,
+      "page": "cutpage",
       "labels": [],
       "highlight": [],
       "camera": null,
@@ -26,12 +27,19 @@
       "joints": {
         "J15": 8
       },
-      "parts": []
+      "parts": [],
+      "half_view": false,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 1,
       "title": "Bakrammen — bygg den flatt på gulvet",
       "image": true,
+      "page": "step",
       "labels": [
         "Bench Rail Back (continuous)",
         "Bench Rail Bearing Block Back Left",
@@ -86,12 +94,19 @@
         "2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48",
         "2× Hjørnestolpe, bak (veggside) 36×98 × 1065",
         "1× Sidevange, øvre 48×98 × 1984"
-      ]
+      ],
+      "half_view": true,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 2,
       "title": "Reis bakrammen og skru den fast i veggen",
       "image": true,
+      "page": "step",
       "labels": [],
       "highlight": [
         "Upper Side Rail Back"
@@ -120,12 +135,19 @@
       "joints": {
         "J14": 1
       },
-      "parts": []
+      "parts": [],
+      "half_view": false,
+      "thumbnails": true,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 3,
       "title": "Endebjelkene og de fremre stolpene",
       "image": true,
+      "page": "step",
       "labels": [
         "Bench Rail Bearing Block Front Left",
         "Bench Rail Bearing Block Front Right",
@@ -183,12 +205,19 @@
         "4× Bærekloss, endebjelke (J1-B) 36×48 × 36",
         "2× Endebjelke 48×98 × 836",
         "2× Hjørnestolpe, front 36×98 × 1700"
-      ]
+      ],
+      "half_view": true,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 4,
       "title": "Fremre sidevange",
       "image": true,
+      "page": "step",
       "labels": [
         "Upper Side Rail Front"
       ],
@@ -218,12 +247,19 @@
       },
       "parts": [
         "1× Sidevange, øvre 48×98 × 1984"
-      ]
+      ],
+      "half_view": false,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 5,
       "title": "Fremre benkevanger og alle fire stubbeføtter",
       "image": true,
+      "page": "step",
       "labels": [
         "Bench Rail Front Left (segment)",
         "Bench Rail Front Right (segment)",
@@ -270,12 +306,19 @@
       "parts": [
         "2× Benkevange, front (bit) 48×73 × 642",
         "4× Stubbefot 48×73 × 186"
-      ]
+      ],
+      "half_view": true,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 6,
       "title": "Stigen",
       "image": true,
+      "page": "step",
       "labels": [
         "Ladder Rung_1",
         "Ladder Rung_2",
@@ -339,12 +382,19 @@
         "4× Rungetrinn 48×73 × 320",
         "8× Stigekloss 36×48 × 73",
         "2× Stigevange 36×48 × 1700"
-      ]
+      ],
+      "half_view": false,
+      "thumbnails": false,
+      "crop_to_subject": true,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 7,
       "title": "Benkespiler",
       "image": true,
+      "page": "step",
       "labels": [
         "Bench Slat Left_1",
         "Bench Slat Left_2",
@@ -392,12 +442,19 @@
       },
       "parts": [
         "10× Benkespile 36×98 × 800"
-      ]
+      ],
+      "half_view": false,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 8,
       "title": "Køyespiler",
       "image": true,
+      "page": "step",
       "labels": [
         "Bed Slat_1",
         "Bed Slat_10",
@@ -454,12 +511,19 @@
       },
       "parts": [
         "14× Køyespile 36×98 × 800"
-      ]
+      ],
+      "half_view": false,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 9,
       "title": "Rekkverk foran",
       "image": true,
+      "page": "step",
       "labels": [
         "Guard Rail Front Left_1",
         "Guard Rail Front Left_2",
@@ -495,12 +559,19 @@
       },
       "parts": [
         "4× Rekkverksbord, front 36×98 × 832"
-      ]
+      ],
+      "half_view": false,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 10,
       "title": "Løs plate med avstivningslekter og beslag",
       "image": true,
+      "page": "panel",
       "labels": [
         "Movable Panel (bed mode)",
         "Panel Stiffener Batten Left (bed mode)",
@@ -543,12 +614,19 @@
       "parts": [
         "2× Avstivningslekt under plate 48×73 × 715",
         "1× Løs plate 18 mm plate, 680 bred × 800"
-      ]
+      ],
+      "half_view": false,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     },
     {
       "n": 11,
       "title": "Madrass og sluttsjekk",
       "image": true,
+      "page": "step",
       "labels": [
         "Mattress 200x80 (reference)"
       ],
@@ -576,7 +654,13 @@
       "joints": {},
       "parts": [
         "1× Madrass (se nøkkelmål)"
-      ]
+      ],
+      "half_view": false,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": true,
+      "info_panel": true,
+      "avoid_top_left": true
     }
   ],
   "bolt_rows": {

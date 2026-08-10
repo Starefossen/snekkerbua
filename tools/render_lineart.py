@@ -1694,7 +1694,9 @@ def emptiest_corner(plines, page, box_w, box_h, marks=(),
 # parts table and the step's own text stay whole-step totals, because a builder
 # counting screws into a bag is not building half a bed - and the pictogram
 # says that in words as well as showing it.
-HALF_VIEW_STEPS = {1, 3, 5}
+# WHICH steps those are is not this file's to know: `half_view` is a field on
+# the step in docs/generated/byggesteg.json, declared in the one table that
+# defines what a build step IS (tools/gen_doc_tables.build_steps).
 # How much of the frame's length the crop keeps. Enough to hold the corner
 # cluster and a clear run of every member leaving it; short enough that the
 # reader can see it is a crop and not a shorter bed.
@@ -1975,7 +1977,7 @@ def check_coverage(st, kept, fasteners, families, share=1):
         assert qty % share == 0, (
             f"steg {st['n']}: {qty} x '{name}' kan ikke deles på {share} "
             f"halvdeler - steget er ikke det speilparet halvsnittet påstår. "
-            f"Ta steget ut av HALF_VIEW_STEPS.")
+            f"Sett half_view=False på steget i gen_doc_tables.build_steps().")
         assert got == qty // share, (
             f"steg {st['n']}: tegningen viser {got} x '{name}', "
             f"tabellen sier {qty}"
@@ -2022,9 +2024,15 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # whole answer. This has to be known before the page rectangle is fixed:
     # an exploded screw sticks out past the timber it goes into, and a crop
     # that only knows about the timber would cut its head off.
-    is_mattress = any(p.label.startswith("Mattress") for p in new)
+    # WHAT KIND OF PAGE THIS IS comes off the step, not out of a label match.
+    # The mattress page used to be recognised by a part name beginning with
+    # "Mattress", and that one match then steered six different behaviours -
+    # no marks, a panel of its own size, a corner ruled out, an information
+    # panel instead of a fastener list, no coverage check, no magnifier. Six
+    # behaviours behind one string is five accidents waiting: the step now
+    # says each of them out loud.
     letters = {name: letter for name, _q, _s, letter in fasteners if letter}
-    marks = [] if is_mattress else step_marks(G, st, letters, view)
+    marks = [] if st.get("no_fasteners") else step_marks(G, st, letters, view)
 
     if half:
         page_box, half = half_crop(combined.get("prior", []) + new_only,
@@ -2049,21 +2057,21 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # two of them is one too many.
 
     sections = step_sections(marks)
-    if is_mattress:
+    if st.get("info_panel"):
         # The information panel carries a section as well as three lines of
         # text, so it needs more room than a fastener list does.
         inset_w, inset_h = page.w * 0.32, page.h * 0.36
     else:
         inset_w, inset_h = inset_layout(page, len(sections),
                                         len(fasteners[:4]))[:2]
-    # The mattress step has no fastener marks to steer the panel away from
-    # anything, and the mattress itself is only a handful of outline points -
-    # so "emptiest" picks the top left corner, which is exactly the corner the
-    # panel is drawing: the mattress meeting the back wall. Rule that corner
-    # out on this one page.
+    # A step with no fastener marks has nothing to steer the panel away from,
+    # and the mattress itself is only a handful of outline points - so
+    # "emptiest" would pick the top left corner, which is exactly the corner
+    # the panel is about: the mattress meeting the back wall. The step says so
+    # itself with avoid_top_left.
     bx, by = emptiest_corner(combined.get("prior", []) + new_only,
                              page, inset_w, inset_h, marks,
-                             avoid_top_left=is_mattress)
+                             avoid_top_left=st.get("avoid_top_left"))
     box = (bx, by, inset_w, inset_h)
     # Both of these are measured on the SHORT side of the page, so a step
     # that gets a tall page of its own - the ladder - does not get arrows and
@@ -2073,11 +2081,11 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                            {families[l] for l in st["labels"]
                             if l in families})
 
-    if is_mattress:
+    if st.get("info_panel"):
         info_panel(page, (bx, by, inset_w, inset_h), G)
     elif fasteners:
         draw_inset(page, box, sections, fasteners, glyph_dir, letters)
-    if not is_mattress:
+    if not st.get("no_fasteners"):
         check_coverage(st, keep, fasteners, families, share=2 if half else 1)
 
     # The mirror pictogram is PLACED here and DRAWN last: it has to be out of
@@ -2262,7 +2270,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # half view they ran straight through the corner the page exists to show.
     # A magnifier is different and stays: it carries real line work, and its
     # short leader says which spot has been blown up.
-    if keep and not is_mattress and fasteners:
+    if keep and fasteners:
         if len(mark_clusters(keep, T.BADGE_R * 2)) <= 2:
             src = keep[0]["p2"]
             src_r = max(page.w, page.h) * 0.055
@@ -2282,10 +2290,10 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # covering a quarter of the drawing to say it.
 
     # Before / after: the frame is built flat and then stood up.
-    if st.get("thumbnails"):
+    if st.get("thumbnail_parts"):
         tb_w = page.w * 0.30
         tb_h = page.h * 0.22
-        thumbnails(page, view, G, st["thumbnails"],
+        thumbnails(page, view, G, st["thumbnail_parts"],
                    (x0 + 30, y1 - tb_h - 130, tb_w, tb_h))
 
     if note_box is not None:
@@ -2344,20 +2352,22 @@ def crop_to_subject(view, page_box, new_parts):
     """A tighter page for a step whose subject is a narrow thing in a wide bed.
 
     Every page is cut from the FINISHED bed, so nothing jumps between drawings
-    - and that is right for the eleven steps that build across the whole 1990
-    mm of it. The ladder is not one of them: it is 416 mm wide and 1700 tall,
-    and on a bed-wide page it comes out as a sliver with four badges fighting
-    for the 320 mm between its stiles. So a step whose new parts fill less
-    than a third of the page gets a page of its own, cut round them - the
-    scale goes up, the badges stay the size they are, and the grey frame
-    behind simply falls outside the viewBox.
+    - and that is right for the ten steps that build across the whole 1990 mm
+    of it. The ladder is not one of them: it is 416 mm wide and 1700 tall, and
+    on a bed-wide page it comes out as a sliver with four badges fighting for
+    the 320 mm between its stiles. So that step asks for a page of its own,
+    cut round its parts - the scale goes up, the badges stay the size they
+    are, and the grey frame behind simply falls outside the viewBox.
+
+    WHICH step is the step's own business (`crop_to_subject` in
+    byggesteg.json), not a threshold guessed at here. The old test - "does the
+    subject fill less than a third of the page" - answered the question
+    correctly for exactly one step and would have answered it differently the
+    day somebody re-aimed a camera.
     """
     if not new_parts:
         return page_box
-    x0, y0, x1, y1 = page_box
     bx0, by0, bx1, by1 = bounds(project(view, [("s", comp(new_parts))])["s"])
-    if (bx1 - bx0) > (x1 - x0) * 0.34:
-        return page_box
     mx = (bx1 - bx0) * 1.05                # room for arrows and badges
     my = (by1 - by0) * 0.06
     return (bx0 - mx, by0 - my, bx1 + mx, by1 + my)
@@ -2407,7 +2417,7 @@ def render_all(G, data, out_dir, width, only):
         if not st["image"]:
             placed += st["labels"]
             continue
-        if n == 0:
+        if st.get("page") == "cutpage":
             # The cutting page is not a view of the bed at all.
             if only is None or n == only:
                 import render_cutpage
@@ -2418,14 +2428,16 @@ def render_all(G, data, out_dir, width, only):
         key = tuple(st["camera"][:2])
         if only is None or n == only:
             st = dict(st)
-            half = n in HALF_VIEW_STEPS
-            box = (pages[key] if half else
-                   crop_to_subject(views[key], pages[key],
-                                   [uni[l] for l in st["highlight"]]))
-            if n == 2:
-                # The one step that changes the workpiece's orientation.
-                st["thumbnails"] = [uni[l] for l in placed]
-            if n == 10:
+            half = st.get("half_view")
+            box = pages[key]
+            if st.get("crop_to_subject"):
+                box = crop_to_subject(views[key], box,
+                                      [uni[l] for l in st["highlight"]])
+            if st.get("thumbnails"):
+                # The one step that changes the workpiece's orientation shows
+                # it before and after; "before" is everything already standing.
+                st["thumbnail_parts"] = [uni[l] for l in placed]
+            if st.get("page") == "panel":
                 import render_panel
                 png = render_panel.render(G, views[key], st, uni, placed,
                                           out_dir, width, pages[key],
