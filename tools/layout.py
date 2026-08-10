@@ -58,10 +58,26 @@ PEN_DIVISOR = 400.0
 # the reader is meant to tell a 5x40 from a 6x90 by LOOKING - which is why a
 # picture-based assembly guide draws a fastener far fatter than it is: the
 # family has to read before the letter does. At 2.2 the two were 11 and 13 mm
-# wide on a 1250 mm page and the difference was a rounding error; at 3.0 they
-# are 15 and 18, and the length difference they carry with them is
-# unmistakable.
-SCREW_FATTEN = 3.0
+# wide on a 1250 mm page and the difference was a rounding error.
+#
+# It went to 3.0 to buy that difference, and 3.0 was too much - but the fault
+# was never really the factor. The drawn screw was a seven-point capsule with
+# a wide flange on one end and a long spike on the other, and blown up three
+# times it stopped reading as a screw and started reading as an ARROW, which
+# is the one thing a fastener on an assembly page may not look like: arrows
+# are reserved for wood parts being brought together.
+#
+# The silhouette is now the catalogue glyph's own (gen_glyphs.screw_profile),
+# so the shape carries the recognition and the factor only has to carry the
+# SIZE. Two things follow. The head is HEAD_DIA_RATIO = 1.95 times this
+# nominal width rather than 1.9 times a shank that was itself the full width,
+# so a screw at 2.0 is about as wide across the head as the old one at 3.0 was
+# across the shank; and the shank is the true core, 0.72 of nominal, so the
+# body is far slimmer while the head - the part the reader recognises - is
+# not. 2.0 is where a 5x40 and a 6x90 are 10 and 12 mm across the core and
+# 19.5 and 23.4 across the head: the two still separate at a glance, and the
+# page has got a third of its ink back.
+SCREW_FATTEN = 2.0
 
 # Every subject-relative size on a drawing, in pens. The comment is what the
 # hand-tuned absolute used to be at this bed's scale (pen = 6.87 mm), so the
@@ -75,7 +91,15 @@ RATIOS = {
     "W_LEAD": 0.35,         # 2.4   leader lines
     "W_MARK": 0.75,         # 5.2   fastening-point markers
     "W_HATCH": 0.22,        # 1.5   the 45 deg hatching on a cut face
-    "W_SCREW": 0.60,        # 4.2   a drawn fastener's own outline
+    # A drawn fastener's own outline, and it is the one weight that had to
+    # move when SCREW_FATTEN did. It is the line round an object about ten
+    # millimetres wide, not round the bed: at 0.60 it was 4.1 mm of ink on
+    # either side of an 8.6 mm core, so a screw drawn with it came out as a
+    # black splinter and the fill code inside it had nowhere to be. The rule
+    # is the same one the fill code obeys - a mark has to be small enough that
+    # what it marks is still visible - and 0.40 leaves the core about four
+    # stroke widths across on every page the manual prints.
+    "W_SCREW": 0.40,        # 2.7   a drawn fastener's own outline
     "W_PHANTOM": 0.44,      # 3.0   the buried part of one
     # --- marks and margins -------------------------------------------------
     "BADGE_R": 3.60,        # 25.0  the circled letters
@@ -297,21 +321,29 @@ class Occupancy:
                 out += weight
         return out
 
-    def nearest(self, p, owner=None, foreign=False):
+    def nearest(self, p, owner=None, foreign=False, family=None):
         """(distance, owner) of the closest recorded point.
 
         `owner=X, foreign=True` asks the question R5 is written in: how close
         is the nearest thing that is NOT mine. A caption that is nearer to
         somebody else's screw than to its own is not crowding the page, it is
         labelling the wrong hole.
+
+        `family` widens MINE from one mark to a set of them, and it is what
+        cluster badging needs: a badge that stands for the four 6x90 in a
+        corner is not misplaced when it sits nearer the second of them than
+        the first. It is still misplaced the moment anything OUTSIDE the
+        family is nearer than everything inside it, which is the rule.
         """
+        mine = set(family) if family else ({owner} if owner is not None
+                                           else None)
         best, who = None, None
         for q, radius, _weight, own, _tag in self.points:
             if own is None:
                 continue
-            if foreign and own == owner:
+            if foreign and mine is not None and own in mine:
                 continue
-            if not foreign and owner is not None and own != owner:
+            if not foreign and mine is not None and own not in mine:
                 continue
             d = math.hypot(p[0] - q[0], p[1] - q[1]) - radius
             if best is None or d < best:
@@ -331,7 +363,7 @@ FOREIGN_PENALTY = 40.0
 
 def place(candidates, footprint, occ, tether=None, pull=0.0, owner=None,
           bounds=None, edge=0.0, edge_penalty=10.0, tags=None, grow=0.0,
-          extra=None):
+          extra=None, family=None):
     """The cheapest of a fixed list of candidate CENTRES for one footprint.
 
     `candidates`  centres, in the order the caller prefers them
@@ -365,7 +397,8 @@ def place(candidates, footprint, occ, tether=None, pull=0.0, owner=None,
             d_own = math.hypot(c[0] - tether[0], c[1] - tether[1])
             score += pull * d_own
             if owner is not None:
-                d_foreign, _who = occ.nearest(c, owner=owner, foreign=True)
+                d_foreign, _who = occ.nearest(c, owner=owner, foreign=True,
+                                              family=family)
                 if d_foreign is not None and d_foreign < d_own:
                     score += FOREIGN_PENALTY
         if extra is not None:
