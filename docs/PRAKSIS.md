@@ -159,7 +159,9 @@ monteringsanvisninger, og som denne manualen har tatt i bruk bevisst:
   alltid en tredel som skal føres på plass.
 * **Eksplodert langs innsettingsaksen.** Et festemiddel som skal settes i,
   tegnes trukket rett ut langs sin egen akse — ikke ved siden av, ikke i
-  margen. Leseren skal kunne følge linjen.
+  margen. Leseren skal kunne følge linjen. Et beslag har ingen egen akse og
+  følger sine egne skruer ut, med samme sprang som dem: «Kjeden i et
+  beslaghjørne» nedenfor.
 * **Stiplet = skjult, men virkelig.** Fantomlinjen er den eneste ærlige måten å
   vise en skrue som er helt inne i to stykker tre.
 * **Svart = det du gjør nå, grått = det som allerede står.** Den nye delen
@@ -187,6 +189,35 @@ festemiddel tegnes. En 6 mm skrue på en to meter bred side er tynnere enn
 streken sengen selv er tegnet med. **Lengden er sann**, med et gulv på
 `FORESHORTEN_FLOOR` mot ren forkortning: en skrue drevet inn i papiret skal se
 kort ut, men den skal fortsatt se ut som en skrue.
+
+**Burde gulvet vært høyere for KORTE skruer?** Det er den nærliggende
+innvendingen — en brøk behandler en 5×40 og en 6×120 likt, og det som gjør en
+silhuett til en SKRUE er ikke lengden i millimeter, men hvor mye lengre den er
+enn hodet er bredt. Hodet krymper ikke når lengden gjør det. Så sidene ble
+målt, hver tegnet kropp mot sitt eget tegnede hode:
+
+| Hoder lang | Hvem |
+|---|---|
+| 1,81 | 5×40, J10 (steg 5) og J12 (steg 1) — de korteste i boka |
+| 1,85 | 6×60, J9-F (steg 3) — den korteste GULVET selv lager |
+| 2,2–3,3 | alt annet |
+
+Svaret er nei, og målingen er hvorfor. De stubbete kroppene er ikke gulvet i
+det hele tatt: en 5×40 projiseres i denne vinkelen til 35,6 av sine 40 mm, godt
+klar av 28,8, så gulvet rører den aldri og et høyere gulv når den ikke. Og det
+ville ikke nådd langt om det gjorde: et gulv får aldri tegne en skrue LENGRE
+enn den er, så alt en kort skrue kan hente er de 12 % opp til sine sanne 40 mm
+— 1,81 hoder blir 2,05, og det er ingen som ser. Det som avgjør hvor stubbet en
+40 mm skrue ser ut, er hodet, altså `SCREW_FATTEN`, og det tallet ble avgjort
+på sin egen prøve.
+
+Innvendingen fortjener derfor ikke en knapp til, men en **snubletråd**:
+`STUB_ASPECT` = 1,75, og `assert_no_stubs()` måler blekket. Ingen tegnet kropp
+får komme ut kortere enn 1,75 av sitt eget hode. Verdien ligger like under det
+sidene måler i dag, så den dagen et nytt kamera, en kortere skrue eller et
+bredere hode lager en ekte pil av en av dem, stopper bygget og et menneske ser
+på den — i stedet for at manualen stille skaffer seg en pilspiss der det skulle
+stått et festemiddel.
 
 ### Én skrue, ett billedspråk
 
@@ -238,6 +269,66 @@ feite bredden dobles den sammen med bredden mens lengden står — da får en 5�
 to omdreininger på siden der glyfen viser sju. **Og siden må kjenne rasteret
 sitt før den tegner**: `Page.px_per_unit` settes i `render_step()` med én gang,
 ikke først i `write()`, fordi gjengen velges mens skruen tegnes.
+
+### Kjeden i et beslaghjørne (R9)
+
+**Et beslag og skruene som holder det er én demontering, ikke tre.** R1 sier
+hvilken vei et beslag går av — minus resultanten av drivvektorene til skruene
+som holder det — og det er en opplysning om leddet, ikke om papiret. Men den
+sa ingenting om hvor LANGT, og ingenting i det hele tatt om skruene som går
+gjennom beslaget. De to taushetene er det J12-hjørnet på steg 1 var ulesbart
+av: beslaget fløt så langt av setet som papiret tillot, skruene bakket ut av
+det med hvert sitt sprang som ikke hadde noe med beslagets å gjøre, og de tre
+prikkede linjene skar hverandre midt i et hjørne leseren ser på som ett stykke
+arbeid.
+
+Regelen er **ett sprang, `d`, for hele klyngen**:
+
+    sete --d--> beslaget --d--> hver av beslagets egne skruer
+
+Beslaget står `d` fra setet langs demonteringsretningen. Hver skrue som sitter
+i beslaget fortsetter fra der BESLAGET havnet, langs sin egen drivakse — som
+aldri bøyes — til avstanden fra tegnet spiss til hullet i det flyttede
+beslaget også er `d`. To like sprang leses som én bevegelse utover; tre ulike
+leses som tre uhell som tilfeldigvis peker samme vei.
+
+Det som fortsatt er fritt er `d` selv, og friheten tilhører KLYNGEN. Finnes det
+ikke plass, tas et lengre slag — av alle sammen, samtidig. En enslig skrue som
+lander oppå en annen kropp køer seg én kroppslengde lenger ut langs sin egen
+akse (R2); en skrue i en klynge får ikke, for en køet skrue er en skrue ute av
+takt. Stubbefothjørnet på steg 5 — fire 5×40 og en vinkel — trenger det andre
+slaget; J12s to greier seg med det første.
+
+To asserter holder den, og begge måler blekket:
+
+* **Takten** (`assert_chain_rhythm`). Hver prikket linje i klyngen leses der
+  den landet, og de skal være like lange. Slarken er 2 % av spranget, fordi
+  beslagets lenke er flytevektoren nøyaktig mens skruens leses av spissen på
+  den tegnede silhuetten — samme tall kommet fram to veier.
+* **Nøstingen** (`assert_chain_untangled`). Ingen skrues linje krysser
+  beslagets egen lenke tilbake til setet, og ingen linje går tvers gjennom en
+  kropp i sin egen klynge. Det første er selve påstanden kjeden gjør; det
+  andre er at en prikket linje gjennom en silhuett leses som silhuettens egen
+  vei.
+
+**Det som IKKE er asserta, og hvorfor.** To SØSKENLINJER som møtes like ved
+beslaget. J12 driver én 5×40 inn i stolpen og én opp i lekta, i rett vinkel,
+gjennom to hull som ligger 17 mm fra hverandre på papiret — og dette kameraet
+setter lektaskruens hull på andre siden av stolpeskruens egen akse. Da må de to
+møtes, og de møtes i et punkt på den aksen som ingen takt kan flytte: kortes
+spranget, flytter krysset seg fra den prikkede linjen over på den SOLIDE
+kroppen, som er verre. Det er en opplysning om hvor leddet ses fra, ikke et
+valg tegningen tok, og reglene her asserter bare det tegningen kan adlyde.
+
+**Merket til et beslag står på randen, ikke oppå.** Et vinkelbeslag 40×40 og et
+merke på 49 mm er omtrent like store, så et merke som oppfyller R6 ved å sitte
+PÅ beslaget, oppfyller den ved å SKJULE det — og leseren sitter igjen med en
+bokstav der delen skulle vært. Halen merket søker ut fra ligger derfor på
+beslagets egen utoverkant, den siden som vender fra setet, så det første
+kandidatpunktet er et merke som tangerer platen i stedet for et som dekker den.
+
+Beviset ble tegnet, ikke argumentert, i de to samme utsnittene som formvalget
+ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
 
 ### Merking og sammenslåing
 
@@ -380,6 +471,36 @@ ikke først i `write()`, fordi gjengen velges mens skruen tegnes.
 
   Resultatet, side for side: 5 → 4 merker på steg 1, 7 → 3 på steg 3, 11 → 7 på
   steg 5, 26 → 7 på steg 6, 6 → 6 på steg 9. 55 bokstaver ble 27.
+
+  **Tillegget: en familie må SE UT som én, og den må være innen rekkevidde.**
+  Sammenslåingen er kjøpt med et argument om BILDET — leseren ser en rekke av
+  det samme og trenger å få det sagt én gang — og argumentet svikter i det
+  bildet slutter å gjenta seg selv. Derfor to kutt til gjennom hver type, og de
+  spør hver sin ting.
+
+  *Homogenitet.* Spredningen i TEGNET lengde inne i familien,
+  (lengste − korteste) / lengste, høyst `HOMOGENEITY_SPREAD` = 25 %. Det er den
+  samme fjerdedelen fyllkodens tvetydighetsprøve bruker, og av samme grunn:
+  under en fjerdedel er to lengder én lengde for øyet, over den er de to ting.
+  Er typen ikke homogen, slås den ikke opp i sine enkeltdeler, den KUTTES i
+  gapene: åtte like stigeskruer og én forkortet raring er ni kropper, to
+  utseender og to merker. `assert_badges_homogeneous()` måler det på blekket —
+  lengdene leses ut av `Page.record`, av de silhuettene som faktisk ble tegnet.
+
+  *Rekkevidde.* Klyngen er en kule om en KJERNE, så to av medlemmene kan ligge
+  to radier fra hverandre selv om ingen av dem ligger mer enn én radie fra
+  kjernen — og da er regelens eget løfte («et merke er aldri lenger fra kroppen
+  det står for enn radien») brutt. Samme grådige kule, kjørt inne i typen,
+  holder løftet: den første kroppen i tegnerekkefølgen tar inn alt innenfor
+  rekkevidde av seg selv, og resten sår neste merke. Asserten står i
+  `assert_badges_anchored()` sammen med de andre målingene av merket.
+
+  Med dagens sider slår **homogenitetskuttet ikke til noe sted**: J12-paret som
+  saken begynte i måler 36,5 og 35,6 mm på papiret — 2,5 % fra hverandre, altså
+  én ting sett to veier — og deler Ⓑ som før. Rekkeviddekuttet slår til ett
+  sted: de to stubbefotbeslagene på steg 5 ligger 437 mm fra hverandre i én og
+  samme klynge, og uten kuttet ville det andre hjørnets vinkel stått uten
+  bokstav med sin egen Ⓓ en halv side unna.
 * **KROPPER slås aldri sammen på tvers av ledd.** På steg 3 møtes endebjelkens
   to 6×90 og bæreklossens ene i det samme hjørnet, og «3×» der ville sendt
   byggeren til feil hull. To ledd, to kropper. Regelen er ett flagg i
