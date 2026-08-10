@@ -2561,12 +2561,20 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
 # test. It is written to docs/preview/, beside the page previews, because it is
 # review material and not part of the manual.
 PAGE_SCALES = {}
-PROOF_PATTERNS = ("solid", "open", "hatch", "cross", "dots")
+# The set in letter order, plus the one candidate that did not make it: dots
+# reads well enough at page size but is the first to go to grey at half, and
+# four codes is all a step has ever needed. It stays in the proof so that the
+# next person to want a fifth can see what they are buying.
+PROOF_EXTRA = ("dots",)
 
 
 def fill_contrast_strip(out_dir, px_per_mm):
     """docs/preview/fyllkontrast.{svg,png} - every fill code at page size."""
     import gen_glyphs
+    patterns = tuple(gen_glyphs.FILL_CODES) + PROOF_EXTRA
+    heads = [f"{gen_glyphs.BADGE_ALPHABET[i]}  {c.upper()}"
+             if i < len(gen_glyphs.FILL_CODES) else f"({c.upper()})"
+             for i, c in enumerate(patterns)]
     col = 118.0
     lab = 150.0
     rows = [
@@ -2578,7 +2586,7 @@ def fill_contrast_strip(out_dir, px_per_mm):
         ("5x40 PA HALV SIDE", "screw", 5.0, 40.0, 0.5),
     ]
     row_h = 34.0
-    w = lab + col * len(PROOF_PATTERNS) + 20.0
+    w = lab + col * len(patterns) + 20.0
     h = 42.0 + row_h * len(rows) + 16.0
     page = Page(0.0, 0.0, w, h)
     top = h - 16.0
@@ -2587,14 +2595,14 @@ def fill_contrast_strip(out_dir, px_per_mm):
               f"tegnet i {px_per_mm:.2f} px per mm - stegsidenes egen skala",
               9.5)
     top -= 34.0
-    for i, code in enumerate(PROOF_PATTERNS):
-        page.text((lab + col * i + col / 2, top), code.upper(), 10.0,
+    for i, head in enumerate(heads):
+        page.text((lab + col * i + col / 2, top), head, 10.0,
                   anchor="middle", weight="bold")
     top -= 6.0
     for label, kind, d, arg, k in rows:
         cy = top - row_h / 2
         page.text((lab - 12.0, cy - 3.5), label, 9.5, anchor="end")
-        for i, code in enumerate(PROOF_PATTERNS):
+        for i, code in enumerate(patterns):
             paint = page.fill_paint(code)
             x = lab + col * i + 8.0
             if kind == "screw":
@@ -2630,7 +2638,7 @@ def fill_contrast_strip(out_dir, px_per_mm):
         page.line((10.0, top - row_h), (w - 10.0, top - row_h), GREY,
                   T.W_LEAD * 0.5)
         top -= row_h
-    page.fills |= set(PROOF_PATTERNS)
+    page.fills |= set(patterns)
     os.makedirs(out_dir, exist_ok=True)
     svg = os.path.join(out_dir, "fyllkontrast.svg")
     png = os.path.join(out_dir, "fyllkontrast.png")
