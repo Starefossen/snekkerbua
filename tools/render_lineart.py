@@ -123,7 +123,6 @@ INK = "#111111"
 # Arrows are for WOOD now - the before/after thumbnails, the dimension marks
 # on the mattress panel, the screwdriver stub in a section, and the exploded
 # panel page. A fastener is drawn as itself; see DRAWING A FASTENER below.
-HEAD_FRAC = 0.22       # arrowhead length, as a fraction of the arrow
 # Above this many marks on one page the exploded style stops helping - the
 # slat fields drive one screw per slat end and there are twenty-eight of them,
 # and twenty-eight screws hanging in the air over a bed is a hedge, not an
@@ -132,8 +131,6 @@ EXPLODE_MAX = 18
 
 FONT = "Helvetica, Arial, sans-serif"
 PAD = 70               # white margin around the bed, model mm
-TOL = 0.51             # two faces this close count as touching, mm
-MIN_CONTACT = 900.0    # ignore contact patches smaller than this, mm2
 
 
 def _f(v):
@@ -1707,7 +1704,8 @@ def check_coverage(st, kept, fasteners, families, share=1):
     missing = sorted(f for f in want - covered if f)
     assert not missing, (
         f"steg {st['n']}: {missing} står i deletabellen, men ingen "
-        f"festing av dem er tegnet. Legg leddet inn i JOINT_CONTACTS.")
+        f"festing av dem er tegnet. Legg leddet inn i JOINTS i "
+        f"generate_loftbed.py.")
 
 
 def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,

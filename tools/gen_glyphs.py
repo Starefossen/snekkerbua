@@ -653,6 +653,10 @@ LEGEND_HAIR = 2.4           # målelinjer - tynnere enn motivet
 LEGEND_STROKE = 8.0         # skruens hovedkontur, brukerenheter
 LEGEND_DETAIL = 5.0         # skruens innvendige detalj
 
+# The one home of the badge alphabet. tools/gen_doc_tables.py assigns the
+# letters to a step's fastener rows and tools/render_lineart.py draws them on
+# the page; both import this name rather than repeating the string, because two
+# files that have to agree about a value are one file too many (PRAKSIS §1).
 BADGE_ALPHABET = "ABCDEFGH"
 
 

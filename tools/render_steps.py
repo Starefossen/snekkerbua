@@ -9,7 +9,8 @@ Reads docs/generated/byggesteg.json - the step description emitted by
 tools/gen_doc_tables.py during `mise run build` - and, for every step that
 asks for an image, runs the same mesh chain the .usdz deliverables use:
 
-    per-step .stl groups   (written by generate_loftbed.py)
+    per-step .stl groups   (written by tools/gen_doc_tables.py's
+                            emit_step_meshes(), off the model's own solids)
       -> tools/mesh_to_usda.swift   two named UsdPreviewSurface materials
       -> tools/make_render_stage.py adds the camera from the step's hint
       -> usdrecord                  shaded PNG

@@ -24,8 +24,8 @@ WHAT IS WRITTEN
                                    rung / guard coordinates, bolt rows
   docs/generated/byggesteg.md      the full step-by-step build guide
   docs/generated/byggesteg.json    the same steps, machine readable, consumed
-                                   by tools/render_steps.py and
-                                   tools/gen_montering.py
+                                   by tools/render_lineart.py and
+                                   tools/render_steps.py
 
 Nothing here is hand-maintained: rerun `mise run build` and it is all rebuilt.
 """
@@ -116,9 +116,16 @@ def step_fastener_rows(st):
     return sorted(total.items())
 
 
-# The letters a step's fastener kinds are badged with. tools/gen_glyphs.py
-# draws them and holds the same alphabet.
-BADGE_ALPHABET = "ABCDEFGH"
+def _badge_alphabet():
+    """The letters a step's fastener kinds are badged with.
+
+    Defined once, in tools/gen_glyphs.py - the file that DRAWS them. Imported
+    late because gen_glyphs pulls in the SVG machinery this module does not
+    otherwise need.
+    """
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import gen_glyphs
+    return gen_glyphs.BADGE_ALPHABET
 
 
 def step_badges(st):
@@ -137,7 +144,8 @@ def step_badges(st):
     if len(rows) < 2:
         return {}
     order = sorted(rows, key=lambda r: (-r[1], r[0]))
-    return {name: BADGE_ALPHABET[i] for i, (name, _q) in enumerate(order)}
+    alphabet = _badge_alphabet()
+    return {name: alphabet[i] for i, (name, _q) in enumerate(order)}
 
 
 def step_fastener_summary(st):
