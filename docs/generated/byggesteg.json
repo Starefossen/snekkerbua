@@ -28,6 +28,7 @@
         "J15": 8
       },
       "parts": [],
+      "fill_code": false,
       "half_view": false,
       "thumbnails": false,
       "crop_to_subject": false,
@@ -95,6 +96,7 @@
         "2× Hjørnestolpe, bak (veggside) 36×98 × 1065",
         "1× Sidevange, øvre 48×98 × 1984"
       ],
+      "fill_code": false,
       "half_view": true,
       "thumbnails": false,
       "crop_to_subject": false,
@@ -136,6 +138,7 @@
         "J14": 1
       },
       "parts": [],
+      "fill_code": false,
       "half_view": false,
       "thumbnails": true,
       "crop_to_subject": false,
@@ -206,6 +209,7 @@
         "2× Endebjelke 48×98 × 836",
         "2× Hjørnestolpe, front 36×98 × 1700"
       ],
+      "fill_code": false,
       "half_view": true,
       "thumbnails": false,
       "crop_to_subject": false,
@@ -248,6 +252,7 @@
       "parts": [
         "1× Sidevange, øvre 48×98 × 1984"
       ],
+      "fill_code": false,
       "half_view": false,
       "thumbnails": false,
       "crop_to_subject": false,
@@ -307,6 +312,7 @@
         "2× Benkevange, front (bit) 48×73 × 642",
         "4× Stubbefot 48×73 × 186"
       ],
+      "fill_code": true,
       "half_view": true,
       "thumbnails": false,
       "crop_to_subject": false,
@@ -383,6 +389,7 @@
         "8× Stigekloss 36×48 × 73",
         "2× Stigevange 36×48 × 1700"
       ],
+      "fill_code": false,
       "half_view": false,
       "thumbnails": false,
       "crop_to_subject": true,
@@ -443,6 +450,7 @@
       "parts": [
         "10× Benkespile 36×98 × 800"
       ],
+      "fill_code": false,
       "half_view": false,
       "thumbnails": false,
       "crop_to_subject": false,
@@ -512,6 +520,7 @@
       "parts": [
         "14× Køyespile 36×98 × 800"
       ],
+      "fill_code": false,
       "half_view": false,
       "thumbnails": false,
       "crop_to_subject": false,
@@ -560,6 +569,7 @@
       "parts": [
         "4× Rekkverksbord, front 36×98 × 832"
       ],
+      "fill_code": false,
       "half_view": false,
       "thumbnails": false,
       "crop_to_subject": false,
@@ -615,6 +625,7 @@
         "2× Avstivningslekt under plate 48×73 × 715",
         "1× Løs plate 18 mm plate, 680 bred × 800"
       ],
+      "fill_code": false,
       "half_view": false,
       "thumbnails": false,
       "crop_to_subject": false,
@@ -655,6 +666,7 @@
       "parts": [
         "1× Madrass (se nøkkelmål)"
       ],
+      "fill_code": false,
       "half_view": false,
       "thumbnails": false,
       "crop_to_subject": false,

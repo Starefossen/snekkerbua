@@ -213,10 +213,41 @@ fortsatt se ut som en skrue.
   fra 6×90; bokstaven krever at leseren finner og leser et lite tegn; sammen
   holder de hverandre oppe, og ingen av dem trenger farge.
 
+  **Men bare der formen faktisk svikter.** Fyllet er ikke gratis: det legger et
+  mønster i hver eneste skrue på siden, og på en side der silhuettene skiller
+  seg fra hverandre helt av seg selv gjør det bare siden travlere. Koden ble
+  kjøpt for ett problem, og betales bare der problemet finnes. Vilkåret er
+  regnet ut, ikke vurdert — to festemidler på samme side er **tvetydige av
+  form** når
+
+  > lengdeforskjellen er under **25 %** av den lengste, **og** diameterne er i
+  > samme klasse (like) eller skiller seg med høyst **1 mm**.
+
+  Finnes ett slikt par på siden, kodes **hele** sidens sett; finnes det ingen,
+  står alle festemidlene i ren kontur, med bokstaver og antall som før. Hele
+  settet, ikke bare paret: kodede og ukodede skruer om hverandre på ett ark er
+  en tredje opplysning ingen har lært leseren.
+
+  Tallene står ett sted, i `gen_glyphs.ambiguous_pairs()`, og svaret følger
+  steget ut i `byggesteg.json` som `fill_code` — utledet av leddataene, ikke
+  skrudd på for hånd (se §5). Med dagens ledd slår regelen til på **ett** steg:
+  steg 5, der Ⓑ 5×70 og Ⓒ 6×80 er 12,5 % og ett diametertrinn fra hverandre.
+  Steg 1 (6×90 mot 6×120) og steg 6 (5×60 mot 6×80) ligger begge på nøyaktig
+  25 % og faller utenfor.
+
+  **Retningen er asserta, ikke fyllet.** `render_lineart.assert_fill_code_rule()`
+  måler det som ble tegnet: en side med et tvetydig par som likevel kom ut uten
+  fyll stopper bygget — der har leseren ingenting igjen å skille de to på. Den
+  motsatte feilen, fyll på en side som ikke trengte det, er en rapportlinje og
+  ikke en stopp: den koster blekk, ikke anvisning.
+
   **Settet er bevist, ikke valgt.** `python tools/render_lineart.py
   --fill-contrast` skriver `docs/preview/fyllkontrast.png`: hver kode i den
   størrelsen den minste bokstavsiden faktisk gir en skrue, i innsettets
-  størrelse, og i halv størrelse som stresstest. Prøven avgjorde to ting som
+  størrelse, og i halv størrelse som stresstest. Prøven blir stående selv om
+  bare én side i dag bruker koden: den er dokumentasjonen på hvorfor settet ser
+  ut som det gjør, og den skal leses igjen den dagen et ledd bytter skrue.
+  Prøven avgjorde to ting som
   ikke lot seg resonnere fram — **hodet alene kan ikke bære koden** (et
   forsenket hode er en 5 mm flens, sju piksler på siden, og der er alle
   mønstrene like, så hele silhuetten fylles), og **krysskraveringen må ha
@@ -296,11 +327,14 @@ fortsatt se ut som en skrue.
   lisensfil dekker meningsfullt. (Fem ubrukte ble slettet i denne runden:
   `baby`, `hammer`, `pencil`, `person-standing`, `phone`.)
 * **Merkebokstavene** er ett tegn i en sirkel, samme radius overalt.
-* **De kodede glyfene.** Der et steg deler ut bokstaver, skrives skrueglyfen
-  også i sin egen fyllkode (`treskrue-5x40-hatch.svg`), og det er den fila både
-  innsettpanelets rad og stegets tabell bruker. Hvilke par som finnes bestemmes
-  av STEGENE, for det er der bokstavene deles ut; et par ingen side viser er en
-  fil ingen leser. Beslagsiden får i tillegg `fyllkode.svg` — de fire kodene i
+* **De kodede glyfene.** Der et steg koder festemidlene sine, skrives
+  skrueglyfen også i sin egen fyllkode (`treskrue-5x70-hatch.svg`), og det er
+  den fila både innsettpanelets rad og stegets tabell bruker. Hvilke par som
+  finnes bestemmes av STEGENE — av hvem som deler ut bokstaver **og** hvem
+  regelen over slår til på; et par ingen side viser er en fil ingen leser, og
+  den skal ut av katalogen. En side uten fyll bruker den bare glyfen, så
+  tabellen viser det tegningen viser. Beslagsiden får i tillegg
+  `fyllkode.svg` — de fire kodene i
   full størrelse, én per bokstav — og det er der koden læres. På en stegside er
   den en påminnelse.
 * Alt skrives både som `.svg` (originalen) og `.png` (det Markdown-en bygger
@@ -338,6 +372,12 @@ definerer et byggesteg, og følger med ut i `byggesteg.json`:
 opp; den har ingen `if n == 0` og ingen navnematch på «Mattress» igjen.
 Grunnen er den samme som i §1: hvilken side et steg får er en egenskap ved
 STEGET, og et steg er definert ett sted.
+
+`fill_code` står i den samme lista og leses på samme måte, men er ikke skrevet
+for hånd: den **regnes ut** av stegets eget sett festemidler
+(`step_fill_code()`, regelen i §4). Om en side trenger fyllkoden er en
+opplysning om skruene den driver, så ingen skal måtte huske å skru den på den
+dagen et ledd bytter lengde — og ingen skal kunne skru den av.
 
 **Ingenting i `docs/generated/` skal redigeres for hånd.** Alle Markdown-filene
 der starter med en kommentar som sier det (`byggesteg.json` kan ikke bære en,

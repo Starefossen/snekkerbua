@@ -303,8 +303,15 @@ def bounds(polylines):
 # from - and a drawing is just those records seen from a camera. The contact
 # patches, the joint table, the fit rule and the EC5 row geometry all live
 # there now; what used to be a second copy of them in this file is gone.
-def step_marks(G, st, letters, view):
-    """One mark per fastener the step drives, in the drawing's own frame."""
+def step_marks(G, st, letters, codes, view):
+    """One mark per fastener the step drives, in the drawing's own frame.
+
+    The mark carries both keys the page hangs on a fastener: the badge LETTER,
+    which every lettered page has, and the fill CODE, which only a page the
+    rule fired on has. They are looked up here, once, off the two dicts the
+    page was handed - so the body, the section and the panel row all draw the
+    same fastener the same way, and a bare page is bare everywhere.
+    """
     out = []
     for f in G.FASTENER_SPECS:
         if f["jid"] not in st["joints"]:
@@ -324,6 +331,7 @@ def step_marks(G, st, letters, view):
         out.append(dict(p3=p3, p2=view.xy(p3), a2=view.xy(f["anchor"]),
                         dir3=d3, per=1, jid=f["jid"],
                         name=f["name"], letter=letters.get(f["name"]),
+                        code=codes.get(f["name"]),
                         area=area, spec=f,
                         # The body as the page would draw it sitting in its
                         # hole - what R2 asks its question of.
@@ -444,6 +452,24 @@ def fill_code(letter):
     """
     import gen_glyphs
     return gen_glyphs.fill_code(letter)
+
+
+def page_fill_codes(st, letters):
+    """{handelsnavn: fyllkode} for one page - EMPTY where the page draws bare.
+
+    Whether a page codes its fasteners is not this file's decision and not a
+    number in this file either. It is a property of the STEP, derived from the
+    fasteners the step drives and written into byggesteg.json as `fill_code`
+    (tools/gen_doc_tables.step_fill_code), on the same terms as `half_view`
+    and the rest: the code is bought to separate two screws the silhouette
+    cannot separate, so it is paid for on the pages that have such a pair and
+    nowhere else. An empty dict here means every fastener on the page comes
+    out as a bare outline - badges, leaders and counts unchanged, because
+    those answer a different question.
+    """
+    if not st.get("fill_code"):
+        return {}
+    return {name: fill_code(letter) for name, letter in letters.items()}
 
 
 def _unit2(a, b):
@@ -874,7 +900,10 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
     # The fill code: the letter again, as a pattern in the silhouette itself,
     # so a reader looking at a corner with four fasteners in it can see WHICH
     # of the four a given screw is without finding and reading a 5 mm letter.
-    paint = page.fill_paint(fill_code(m.get("letter")), f["d"] * SCREW_FATTEN)
+    # It comes off the MARK, which got it from the page, which got it from the
+    # step - and it is None on a page whose screws separate by shape, where
+    # this call paints white and the silhouette stands bare.
+    paint = page.fill_paint(m.get("code"), f["d"] * SCREW_FATTEN)
     if outline is None:
         # Straight at the reader: the drawing convention for an axis with no
         # length on the page is a ringed dot, and it is the same mark whether
@@ -1373,7 +1402,7 @@ def _long_axis(part):
     return sizes.index(max(sizes))
 
 
-def joint_section(page, box, specs, letters, letter_label=""):
+def joint_section(page, box, specs, codes, letter_label=""):
     """ONE joint, cut through and drawn honestly.
 
     Both members keep their real cross-section: an axis is only trimmed where
@@ -1425,7 +1454,7 @@ def joint_section(page, box, specs, letters, letter_label=""):
             continue
         draw.append(dict(kind="screw", a=a0, v=(v[0] / n, v[1] / n),
                          length=f["length"] * n, d=f["d"],
-                         code=fill_code(letters.get(f["name"]))))
+                         code=codes.get(f["name"])))
 
     # The window: whole cross-sections, trimmed lengths, and room for the
     # fasteners that stick out of them.
@@ -1863,9 +1892,14 @@ def inset_layout(page, n_sections, n_rows):
     return w, h, cols, cell_w, cell_h, row_h
 
 
-def draw_inset(page, box, sections, step_fasteners, glyph_dir, letters):
+def draw_inset(page, box, sections, step_fasteners, glyph_dir, codes):
     """The corner panel: one section per joint in the step, then the
-    fasteners at large scale with their counts."""
+    fasteners at large scale with their counts.
+
+    `codes` is the page's fill code - empty on a page that draws bare, and
+    then the sections in the panel draw bare too. The panel is the same page
+    as the drawing above it and answers for the same screws.
+    """
     x, y, w, h = box
     rows = step_fasteners[:4]
     _w, _h, cols, cell_w, cell_h, row_h = inset_layout(page, len(sections),
@@ -1876,7 +1910,7 @@ def draw_inset(page, box, sections, step_fasteners, glyph_dir, letters):
     for i, (specs, label) in enumerate(sections):
         cx = x + T.INSET_PAD + (i % cols) * cell_w
         cy = top - (i // cols + 1) * cell_h
-        joint_section(page, (cx, cy, cell_w, cell_h), specs, letters, label)
+        joint_section(page, (cx, cy, cell_w, cell_h), specs, codes, label)
     if sections:
         top -= (-(-len(sections) // cols)) * cell_h + 10
         page.line((x + T.INSET_PAD, top + 4), (x + w - T.INSET_PAD, top + 4),
@@ -2300,7 +2334,9 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # behaviours behind one string is five accidents waiting: the step now
     # says each of them out loud.
     letters = {name: letter for name, _q, _s, letter in fasteners if letter}
-    marks = [] if st.get("no_fasteners") else step_marks(G, st, letters, view)
+    codes = page_fill_codes(st, letters)
+    marks = ([] if st.get("no_fasteners")
+             else step_marks(G, st, letters, codes, view))
 
     if half:
         page_box, half = half_crop(combined.get("prior", []) + new_only,
@@ -2352,7 +2388,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     if st.get("info_panel"):
         info_panel(page, (bx, by, inset_w, inset_h), G)
     elif fasteners:
-        draw_inset(page, box, sections, fasteners, glyph_dir, letters)
+        draw_inset(page, box, sections, fasteners, glyph_dir, codes)
     if not st.get("no_fasteners"):
         check_coverage(st, keep, fasteners, families, share=2 if half else 1)
 
@@ -2621,6 +2657,50 @@ ALL_FASTENERS = layout.ALL_FASTENERS
 PROOF_EXTRA = ("dots",)
 
 
+def _pct(frac):
+    return f"{frac * 100:.1f}".replace(".", ",") + " %"
+
+
+def assert_fill_code_rule(data):
+    """The fill code's SAFETY DIRECTION, measured on the ink that landed.
+
+    The rule that switches the code on is derived data (see
+    tools/gen_doc_tables.step_fill_code), and derived data can be wrong in two
+    directions that are not worth the same. A page that PUTS the code on a set
+    the silhouette already separates is only busier than it needed to be - it
+    is reported and the build goes on. A page whose set contains a pair the
+    silhouette does NOT separate, and which draws them bare anyway, has taken
+    the reader's only remaining way of telling two screws apart away from
+    them. That is the failure, and it is checked here rather than trusted,
+    because it is checked against what was DRAWN: `PAGE_FILL_SCALES` is
+    written by the pages themselves as they put a pattern on paper, so a
+    plumbing mistake between the step data and the paint cannot pass.
+    """
+    import gen_glyphs
+    declared = {st["n"]: bool(st.get("fill_code")) for st in data["steps"]}
+    coded = []
+    for n in sorted(PAGE_FASTENERS):
+        names = [row[0] for row in PAGE_FASTENERS[n]]
+        pairs = gen_glyphs.ambiguous_pairs(names)
+        drawn = n in PAGE_FILL_SCALES
+        detail = "; ".join(f"{a} / {b}: {_pct(frac)}, Ø{dd:g} mm"
+                           for a, b, frac, dd in pairs)
+        if pairs:
+            assert declared.get(n), (
+                f"steg {n}: {detail} — formen skiller dem ikke, men steget "
+                f"er ikke merket med fyllkode i byggesteg.json")
+            assert drawn, (
+                f"steg {n}: {detail} — formen skiller dem ikke, og siden "
+                f"tegner dem uten fyll. Da har leseren ingenting igjen å "
+                f"skille dem på")
+            coded.append(f"steg {n} ({detail})")
+        elif drawn:
+            print(f"  ! steg {n} bærer fyllkode, men ingen to festemidler på "
+                  f"siden er nære nok i form til å trenge den")
+    print("  fyllkode: " + ("; ".join(coded) if coded
+                            else "ingen side trengte den"))
+
+
 def fill_contrast_strip(out_dir, px_per_mm, worst=None):
     """docs/preview/fyllkontrast.{svg,png} - every fill code at page size.
 
@@ -2756,14 +2836,13 @@ def fill_contrast_strip(out_dir, px_per_mm, worst=None):
 # bought for. The proof lays both cases out, bare and then filled, so the
 # answer is looked at rather than argued.
 def _screw_dims(name):
-    """(d, length) for a fastener that has an axis, else None."""
+    """(d, length) for a fastener that has an axis, else None.
+
+    One definition, in the file that draws the glyphs and owns the rule that
+    reads these two numbers (PRAKSIS §1).
+    """
     import gen_glyphs
-    if not gen_glyphs.is_screw_glyph(name):
-        return None
-    dims = gen_glyphs._dims(name)
-    if len(dims) < 2:
-        return None
-    return dims[0], dims[1]
+    return gen_glyphs.screw_dims(name)
 
 
 def form_contrast_strip(out_dir, px_per_mm):
@@ -2932,13 +3011,17 @@ def step_fastener_glyphs(st, glyph_dir):
         rows.append((name, int(qty.strip())))
     rows.sort(key=lambda r: (-r[1], r[0]))
     letters = gen_glyphs.BADGE_ALPHABET if len(rows) > 1 else [None] * len(rows)
+    coded = bool(st.get("fill_code"))
 
     out = []
     for (name, qty), letter in zip(rows, letters):
         # The panel row shows the glyph with its own fill code in it, which is
         # the same file the step's table under the picture uses: the row is
-        # where the reader meets the pattern and the letter side by side.
-        svg = gen_glyphs.coded_slug(name, gen_glyphs.fill_code(letter)) + ".svg"
+        # where the reader meets the pattern and the letter side by side. On a
+        # page the rule left bare, that file is the bare glyph - the row shows
+        # what the drawing shows.
+        code = gen_glyphs.fill_code(letter) if coded else None
+        svg = gen_glyphs.coded_slug(name, code) + ".svg"
         if not os.path.exists(os.path.join(glyph_dir, svg)):
             svg = gen_glyphs.slug(name) + ".svg"
         if os.path.exists(os.path.join(glyph_dir, svg)):
@@ -3050,6 +3133,10 @@ def render_all(G, data, out_dir, width, only):
             if png:
                 made.append(png)
         placed += st["labels"]
+    if only is None:
+        # Every page has been drawn, so the question can be asked of all of
+        # them at once. On a single-step run there is nothing to ask it of.
+        assert_fill_code_rule(data)
     return made
 
 

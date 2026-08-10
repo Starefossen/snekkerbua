@@ -254,6 +254,11 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         batten_ext.append(b.extents)
 
     letters = {name: letter for name, _q, _s, letter in fasteners if letter}
+    # The panel page follows the same rule as every other page: it codes its
+    # fasteners only where the step says the shapes need it. It draws no screw
+    # bodies of its own - the drilling pattern and a dotted line into each
+    # hole is what it draws - so in practice this decides its panel rows.
+    codes = RL.page_fill_codes(st, letters)
     names = [name for name, _q, _s, _l in fasteners]
 
     def by_prefix(prefix):
@@ -395,7 +400,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     bx = x0 + (col_w - inset_w) / 2
     box = (bx, y0 + gap, inset_w, inset_h)
     if rows:
-        RL.draw_inset(page, box, [], rows, glyph_dir, letters)
+        RL.draw_inset(page, box, [], rows, glyph_dir, codes)
 
     # Dotted, not an arrow: on this page as on every other, a dotted line is a
     # fastener going into its hole and an arrow is a wooden part being brought

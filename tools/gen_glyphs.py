@@ -860,6 +860,78 @@ def fill_code(letter: str | None) -> str | None:
     return FILL_CODES[i] if i < len(FILL_CODES) else None
 
 
+# --------------------------------------------------------------------------
+# NÅR KODEN SLÅS PÅ - og at den ikke alltid gjør det
+# --------------------------------------------------------------------------
+# Fyllkoden er ikke gratis. Den legger et mønster i hver eneste skrue på siden,
+# og et mønster er blekk som ikke er tegning: en side der silhuettene skiller
+# seg fra hverandre helt av seg selv blir ikke tydeligere av å bli kodet, den
+# blir travlere. Koden ble kjøpt for ett bestemt problem — to skruer på den
+# samme siden som er så nær hverandre i størrelse at formen ikke skiller dem —
+# og den skal derfor bare betales der det problemet finnes.
+#
+# TVETYDIG AV FORM er definert her, i tall, slik at spørsmålet «trenger denne
+# siden koden?» har ett svar som kan regnes ut av leddataene og ikke et som
+# avgjøres av hvem som ser på siden:
+#
+#   * lengdeforskjellen er under 25 % av den lengste, OG
+#   * diameterne er i samme klasse (like) eller skiller seg med høyst 1 mm.
+#
+# Begge må holde. En 5x40 ved siden av en 6x120 er tre ganger lengden og det er
+# ingen konkurranse; en 5x70 ved siden av en 6x80 er 12,5 % og ett
+# diametertrinn, og det er nettopp den avlesningen fyllkoden ble kjøpt for.
+# (Diameterleddet er skrevet som «samme klasse ELLER høyst 1 mm»; den første
+# halvdelen er inneholdt i den andre, og den står der fordi det er den måten
+# regelen leses på: skruer i samme grovhet, som bare skiller seg i lengde.)
+#
+# REGELEN GJELDER SIDEN, IKKE PARET. Slår den til, kodes HELE settet på siden.
+# Å kode bare de to som ligner ville gitt siden to slags skruer — kodede og
+# ukodede — og det er en tredje opplysning leseren ikke er fortalt, altså sin
+# egen forvirring.
+AMBIG_LEN_FRAC = 0.25       # lengdeforskjell, som andel av den lengste
+AMBIG_DIAM_MM = 1.0         # diameterforskjell, i millimeter
+
+
+def screw_dims(name: str) -> tuple[float, float] | None:
+    """(diameter, lengde) for et festemiddel med akse, ellers None.
+
+    Beslagene har ingen: en vinkel er en plate, ikke en silhuett med lengde,
+    og den står utenfor både fyllkoden og regelen som slår den på.
+    """
+    if not is_screw_glyph(name):
+        return None
+    dims = _dims(name)
+    if len(dims) < 2:
+        return None
+    return dims[0], dims[1]
+
+
+def ambiguous_pairs(names) -> list[tuple[str, str, float, float]]:
+    """Parene på én side som formen ikke skiller.
+
+    -> [(navn_a, navn_b, lengdeandel, diameterforskjell), ...], sortert på
+    navn slik at rapporten kommer ut likt hver gang.
+    """
+    sized = [(n, screw_dims(n)) for n in sorted(set(names))]
+    sized = [(n, d) for n, d in sized if d]
+    out = []
+    for i, (na, (da, la)) in enumerate(sized):
+        for nb, (db, lb) in sized[i + 1:]:
+            longest = max(la, lb)
+            if longest <= 0.0:
+                continue
+            frac = abs(la - lb) / longest
+            ddiff = abs(da - db)
+            if frac < AMBIG_LEN_FRAC and ddiff <= AMBIG_DIAM_MM:
+                out.append((na, nb, frac, ddiff))
+    return out
+
+
+def shape_ambiguous(names) -> bool:
+    """Trenger en side med disse festemidlene fyllkoden?"""
+    return bool(ambiguous_pairs(names))
+
+
 def _text(x, y, s, size, anchor="start", weight="normal") -> str:
     return (f'<text x="{_f(x)}" y="{_f(y)}" font-family="{FONT_STACK}" '
             f'font-size="{_f(size)}" font-weight="{weight}" '

@@ -28,7 +28,7 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 
 **Trukket ut av hullet:** på de fleste stegene er festemidlene tegnet et stykke ut langs sin egen akse, med en **prikket linje** ned i hullet de skal i og en **prikk** der hullet er. Den prikkede linjen betyr festemiddel og ingenting annet; **piler** brukes bare om tredeler som skal føres sammen. På de stegene som setter tjue-tretti like skruer — spilene — er de tegnet **der de havner** i stedet: hodet fylt, og den delen som ligger begravd i treet **stiplet**.
 
-**Bokstaven i ringen** (Ⓐ, Ⓑ …) sier hvilken av stegets typer et festemiddel er, og går igjen i tabellen under bildet. Den sitter alltid **på** skruen den gjelder, eller har en tynn strek bort til den — den peker aldri i løse lufta. Skruen bærer den samme bokstaven én gang til, som **fyll** i silhuetten, så du ser hvilken av dem det er uten å lese: åpen, skravert, krysskravert, heldekt. Hele koden står på [beslagsiden](#beslag).
+**Bokstaven i ringen** (Ⓐ, Ⓑ …) sier hvilken av stegets typer et festemiddel er, og går igjen i tabellen under bildet. Den sitter alltid **på** skruen den gjelder, eller har en tynn strek bort til den — den peker aldri i løse lufta. Der to skruer på samme side er nesten like lange, skilles de i tillegg med **fyll** i silhuetten — den samme bokstaven én gang til, så du ser hvilken av dem det er uten å lese: åpen, skravert, krysskravert, heldekt. Ellers står skruene i ren kontur, for da skiller lengden dem selv. Hele koden står på [beslagsiden](#beslag).
 
 **Antallet står ikke i bildet.** Festemidlene er tegnet ett for ett, der de går — bare to som havner nøyaktig oppå hverandre på papiret er tegnet én gang. Hvor mange det er i alt står i ruta i hjørnet og i tabellen under bildet. **Ruta i hjørnet** viser leddet i snitt, med delene i riktig innbyrdes størrelse, skravur på snittflatene og festemidlene i full lengde — hodet på skrusiden, spissen inne i mottakerdelen.
 
@@ -50,7 +50,7 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 
 <img src="img/beslag/fyllkode.svg" alt="Fyllkoden: A åpen, B skravert, C krysskravert, D heldekt" height="96">
 
-**Fyllkode.** På en stegside med flere typer festemidler har hver bokstav sitt eget fyll, og skruen på tegningen bærer det samme fyllet. Da ser du hvilken av dem som går hvor uten å lese bokstaven.
+**Fyllkode.** Der to skruer på samme side er nesten like lange, skilles de med fyll — ellers står festemidlene i ren kontur.
 
 | | |
 |:---:|---|
@@ -137,11 +137,11 @@ Ledd **J15** → [beslagliste](generated/beslagliste.md)
 | | | |
 |:---:|:---:|---|
 | <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="30"> **6x** | Treskrue 6×90 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-5x40-hatch.svg" alt="Treskrue 5×40 forsenket Torx" height="30"> **4x** | Treskrue 5×40 |
-| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x120-cross.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **4x** | Treskrue 6×120 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="30"> **4x** | Treskrue 5×40 |
+| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **4x** | Treskrue 6×120 |
 | <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="58"> **2x** | Vinkelbeslag 40×40×20 |
 
-Bokstavene viser hvor på tegningen hver type går, og fyllet i skruen er den samme bokstaven om igjen — se [fyllkoden på beslagsiden](#beslag).
+Bokstavene viser hvor på tegningen hver type går.
 
 Ledd **J2-B**, **J8-B**, **J9-B**, **J12** → [beslagliste](generated/beslagliste.md)
 
@@ -185,9 +185,9 @@ Ledd **J14** → [beslagliste](generated/beslagliste.md)
 | | | |
 |:---:|:---:|---|
 | <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="30"> **12x** | Treskrue 6×90 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x60-hatch.svg" alt="Treskrue 6×60 forsenket Torx" height="30"> **2x** | Treskrue 6×60 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x60.svg" alt="Treskrue 6×60 forsenket Torx" height="30"> **2x** | Treskrue 6×60 |
 
-Bokstavene viser hvor på tegningen hver type går, og fyllet i skruen er den samme bokstaven om igjen — se [fyllkoden på beslagsiden](#beslag).
+Bokstavene viser hvor på tegningen hver type går.
 
 Ledd **J1**, **J1-B**, **J9-F** → [beslagliste](generated/beslagliste.md)
 
@@ -237,7 +237,7 @@ Ledd **J2** → [beslagliste](generated/beslagliste.md)
 | <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80-cross.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **4x** | Treskrue 6×80 |
 | <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/vinkelbeslag-90x90x40.svg" alt="Vinkelbeslag 90×90×40×2,5 varmforsinket" height="72"> **4x** | Vinkelbeslag 90×90×40×2,5 |
 
-Bokstavene viser hvor på tegningen hver type går, og fyllet i skruen er den samme bokstaven om igjen — se [fyllkoden på beslagsiden](#beslag).
+Bokstavene viser hvor på tegningen hver type går. To av dem er nesten like lange, så de bærer fyll også — den samme bokstaven om igjen — se [fyllkoden på beslagsiden](#beslag).
 
 Ledd **J8**, **J10** → [beslagliste](generated/beslagliste.md)
 
@@ -262,10 +262,10 @@ Ledd **J8**, **J10** → [beslagliste](generated/beslagliste.md)
 | | | |
 |:---:|:---:|---|
 | <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **16x** | Treskrue 5×60 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x120-hatch.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **8x** | Treskrue 6×120 |
-| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80-cross.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **6x** | Treskrue 6×80 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **8x** | Treskrue 6×120 |
+| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **6x** | Treskrue 6×80 |
 
-Bokstavene viser hvor på tegningen hver type går, og fyllet i skruen er den samme bokstaven om igjen — se [fyllkoden på beslagsiden](#beslag).
+Bokstavene viser hvor på tegningen hver type går.
 
 Ledd **J3**, **J4**, **J5** → [beslagliste](generated/beslagliste.md)
 
@@ -355,11 +355,11 @@ Ledd **J7** → [beslagliste](generated/beslagliste.md)
 | | | |
 |:---:|:---:|---|
 | <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **12x** | Treskrue 5×60 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/senkhodeskrue-m6x30-hatch.svg" alt="Senkhodeskrue M6×30 + skive M6 + låsemutter M6" height="30"> **8x** | Senkhodeskrue M6×30 + skive + mutter |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/senkhodeskrue-m6x30.svg" alt="Senkhodeskrue M6×30 + skive M6 + låsemutter M6" height="30"> **8x** | Senkhodeskrue M6×30 + skive + mutter |
 | <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/krokplate-30x4.svg" alt="Krokplate, bøyd av flattstål 30×4" height="63"> **2x** | Krokplate |
 | <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/u-brakett-30x4.svg" alt="U-brakett, bøyd av flattstål 30×4" height="67"> **2x** | U-brakett |
 
-Bokstavene viser hvor på tegningen hver type går, og fyllet i skruen er den samme bokstaven om igjen — se [fyllkoden på beslagsiden](#beslag).
+Bokstavene viser hvor på tegningen hver type går.
 
 Ledd **J13a**, **J13b**, **J13c** → [beslagliste](generated/beslagliste.md)
 

@@ -148,6 +148,32 @@ def step_badges(st):
     return {name: alphabet[i] for i, (name, _q) in enumerate(order)}
 
 
+def step_fill_code(st):
+    """Does this step's page code its fasteners with a fill pattern?
+
+    A DERIVED PROPERTY OF THE STEP, exactly like `half_view` or `info_panel`,
+    and it travels with the step into byggesteg.json so that the drawing looks
+    it up instead of deciding it. What it is derived FROM is the step's own
+    fastener set: the code is bought to separate two screws the SILHOUETTE
+    cannot separate, so it is switched on where such a pair exists on the page
+    and nowhere else. The threshold is one definition, in tools/gen_glyphs.py
+    beside the codes themselves - see `ambiguous_pairs()` there.
+
+    Two consequences worth saying out loud. It is the PAGE that is coded, not
+    the pair: fire the rule and every fastener on the page carries its own
+    fill, because a page with coded and uncoded screws on it would be telling
+    the reader something a third time in a language nobody taught them. And a
+    step with a single kind of fastener can never fire it - it has no letters
+    either, and a code with one value codes nothing.
+    """
+    rows = step_fastener_rows(st)
+    if len(rows) < 2:
+        return False
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import gen_glyphs
+    return gen_glyphs.shape_ambiguous([name for name, _q in rows])
+
+
 def step_fastener_summary(st):
     """The fastener line for one step, summed from the joints it completes."""
     return [f"{qty}× {name}" for name, qty in step_fastener_rows(st)]
@@ -1310,8 +1336,16 @@ def emit_montering(G, root, steps, idx):
     # same pattern the drawing above it puts in that screw. Which (fastener,
     # code) pairs exist is decided by the STEPS, because that is where the
     # letters are handed out; a pair no page shows is a file nobody reads.
+    #
+    # And a page only hands out fills where the SHAPES need them - see
+    # step_fill_code(). A step whose screws tell themselves apart draws them
+    # bare, and its table draws them bare too: the table is the key to the
+    # picture above it, so a coded row over an uncoded screw would be a key to
+    # a lock that is not there.
     coded_pairs = set()
     for st in steps:
+        if not step_fill_code(st):
+            continue
         for name, letter in step_badges(st).items():
             code = gen_glyphs.fill_code(letter)
             if code and code != "open":
@@ -1379,10 +1413,12 @@ def emit_montering(G, root, steps, idx):
     L.append("**Bokstaven i ringen** (Ⓐ, Ⓑ …) sier hvilken av stegets typer "
              "et festemiddel er, og går igjen i tabellen under bildet. Den "
              "sitter alltid **på** skruen den gjelder, eller har en tynn "
-             "strek bort til den — den peker aldri i løse lufta. Skruen bærer "
-             "den samme bokstaven én gang til, som **fyll** i silhuetten, så "
+             "strek bort til den — den peker aldri i løse lufta. Der to "
+             "skruer på samme side er nesten like lange, skilles de i tillegg "
+             "med **fyll** i silhuetten — den samme bokstaven én gang til, så "
              "du ser hvilken av dem det er uten å lese: åpen, skravert, "
-             "krysskravert, heldekt. Hele koden står på [beslagsiden]"
+             "krysskravert, heldekt. Ellers står skruene i ren kontur, for da "
+             "skiller lengden dem selv. Hele koden står på [beslagsiden]"
              "(#beslag).\n\n")
     L.append("**Antallet står ikke i bildet.** Festemidlene er tegnet ett for "
              "ett, der de går — bare to som havner nøyaktig oppå hverandre på "
@@ -1416,10 +1452,9 @@ def emit_montering(G, root, steps, idx):
                   int(gen_glyphs.FILL_LEGEND_PX),
                   "Fyllkoden: A åpen, B skravert, C krysskravert, D heldekt")
              + "\n\n")
-    L.append("**Fyllkode.** På en stegside med flere typer festemidler har "
-             "hver bokstav sitt eget fyll, og skruen på tegningen bærer det "
-             "samme fyllet. Da ser du hvilken av dem som går hvor uten å lese "
-             "bokstaven.\n\n")
+    L.append("**Fyllkode.** Der to skruer på samme side er nesten like lange, "
+             "skilles de med fyll — ellers står festemidlene i ren "
+             "kontur.\n\n")
     L.append("| | |\n|:---:|---|\n")
     for name, qty in sorted(total_fast.items(), key=lambda kv: (-kv[1], kv[0])):
         L.append(f"| {gimg(name, 44)} **{qty}x** | {name} |\n")
@@ -1462,15 +1497,21 @@ def emit_montering(G, root, steps, idx):
             # the same letters on the drawing's fastening arrows. Listed in
             # letter order, which is the order the drawing's inset lists them
             # in too - commonest first.
+            fills_on = step_fill_code(st)
             L.append("| | | |\n|:---:|:---:|---|\n")
             for name, qty in sorted(fast, key=lambda r: badges[r[0]]):
-                code = gen_glyphs.fill_code(badges[name])
+                code = gen_glyphs.fill_code(badges[name]) if fills_on else None
                 L.append(f"| {_img('img/ikon/' + merke[badges[name]], 20, badges[name])}"
                          f" | {gimg(name, gen_glyphs.GLYPH_MIN_PX, cap=72, code=code)} "
                          f"**{qty}x** | {_fast_short(name)} |\n")
-            L.append("\nBokstavene viser hvor på tegningen hver type går, og "
-                     "fyllet i skruen er den samme bokstaven om igjen — "
-                     "se [fyllkoden på beslagsiden](#beslag).\n\n")
+            if fills_on:
+                L.append("\nBokstavene viser hvor på tegningen hver type går. "
+                         "To av dem er nesten like lange, så de bærer fyll "
+                         "også — den samme bokstaven om igjen — "
+                         "se [fyllkoden på beslagsiden](#beslag).\n\n")
+            else:
+                L.append("\nBokstavene viser hvor på tegningen hver type "
+                         "går.\n\n")
         elif fast:
             L.append("| | |\n|:---:|---|\n")
             for name, qty in fast:
@@ -1711,6 +1752,12 @@ def emit_json(G, out_dir, steps, idx, rows):
     # They are written out even when false: a reader of byggesteg.json should
     # be able to see that a step is NOT a half view without knowing that the
     # key exists on other steps.
+    #
+    # `fill_code` is in the same list and is written the same way, but it is
+    # not declared by hand in build_steps() - it is COMPUTED from the step's
+    # own fastener set by step_fill_code(). That is the point: whether a page
+    # needs the fill code is a fact about the screws it drives, so nobody has
+    # to remember to switch it on the day a joint changes size.
     page_flags = ("half_view", "thumbnails", "crop_to_subject",
                   "no_fasteners", "info_panel", "avoid_top_left")
     data = dict(
@@ -1722,6 +1769,7 @@ def emit_json(G, out_dir, steps, idx, rows):
                     fasteners=step_fastener_summary(st),
                     joints=st["joints"],
                     parts=step_part_summary(G, st, idx),
+                    fill_code=step_fill_code(st),
                     **{k: bool(st.get(k, False)) for k in page_flags})
                for st in steps],
         bolt_rows={k: v for k, v in rows.items() if not k.startswith("_")},
