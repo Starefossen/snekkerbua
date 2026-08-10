@@ -659,6 +659,105 @@ LEGEND_DETAIL = 5.0         # skruens innvendige detalj
 # files that have to agree about a value are one file too many (PRAKSIS §1).
 BADGE_ALPHABET = "ABCDEFGH"
 
+# --------------------------------------------------------------------------
+# FYLLKODEN - bokstaven, en gang til, som mønster
+# --------------------------------------------------------------------------
+# Merkebokstaven er den ene knytningen mellom en skrue på tegningen og en rad
+# i tabellen, og den er et lite tegn i en ring. Leseren som holder to skruer i
+# hånda og ser på et hjørne med fire festemidler i, skal slippe å lese den for
+# å se HVILKEN AV DE FIRE en gitt skrue er. Derfor bærer skruen kodingen én
+# gang til, i selve silhuetten: samme bokstav, samme fyll, overalt den
+# opptrer - i stegtegningen, i innsettpanelet og i tabellen under bildet.
+#
+# Redundant koding er poenget. Formen alene (lengde, tykkelse) skiller 5x40
+# fra 6x120, men ikke 6x80 fra 6x90; bokstaven alene krever at leseren finner
+# og leser et 5 mm tegn; sammen holder de hverandre oppe, og ingen av dem
+# trenger farge - dette er en svart-hvit manual, og et fyllmønster fungerer
+# like godt for en fargeblind leser som for en kopimaskin.
+#
+# HVA SOM ER FYLT. Ikke hodet alene: et forsenket hode er en 5 mm lang flens
+# på tegningen (7 px på siden), og der får ingen mønster plass. Hele
+# silhuetten fylles - hode, skaft og spiss - for det er den flaten leseren
+# ser.
+#
+# Settet er valgt etter kontrastprøven, ikke etter smak; se
+# docs/preview/fyllkontrast.png og PRAKSIS §4. Prøven avgjorde to ting:
+#
+#   * hodet alene kan ikke bære koden. Et forsenket hode er en flens på 5 mm
+#     langs skruen — 7 px på siden — og der er alle fem kandidatene like.
+#     Hele silhuetten fylles.
+#   * krysskraveringen må ha grovere rute enn skraveringen, ellers er de to
+#     bare to gråtoner ved 19 px bredde.
+#
+# REKKEFØLGEN er heller ikke smak. Bokstavene deles ut etter antall, flest
+# først, så Ⓐ er den skruen siden har flest av: den beholder den åpne, lyse
+# silhuetten, for seksten heldekte skruer ville gjort siden svart og skjult
+# nettopp den lengdeforskjellen fyllkoden skal støtte. Den heldekte er sist,
+# der den er sjeldnest — og på to av de fire sidene med bokstaver er den siste
+# raden et vinkelbeslag, som allerede tegnes som en heldekt plate. Koden
+# lander altså der fyllet var fra før.
+FILL_CODES = ("open", "hatch", "cross", "solid")
+
+# Hvert mønster som en tile: (elementer i en periode x periode-rute, rotasjon).
+# `t` er strekbredden. Mønstrene tegnes i SIDENS koordinatsystem, ikke i
+# skruens, så to skruer med samme kode ser like ut uansett hvilken vei de
+# står - det er koden som skal leses, ikke retningen.
+#
+# Hvert mønster har sin egen periode, som et multiplum av grunnperioden.
+# Krysskraveringen er den grove: to retninger på samme finhet som den enkle
+# skraveringen blir en grå flate ved 19 px bredde, og da koder den ingenting.
+# Grovere rute gir den en form leseren ser med én gang - ruter, ikke gråtone.
+PATTERN_PERIOD = {"hatch": 1.0, "cross": 1.45, "dots": 1.15}
+
+
+def _fill_tile(kind: str, period: float, t: float) -> tuple[str, str]:
+    """(innholdet i mønsterruta, patternTransform) for én fyllkode."""
+    if kind == "hatch":
+        return (f'<path d="M {_f(period / 2)} 0 V {_f(period)}" '
+                f'stroke="{INK}" stroke-width="{_f(t)}" fill="none"/>',
+                "rotate(45)")
+    if kind == "cross":
+        return (f'<path d="M {_f(period / 2)} 0 V {_f(period)} '
+                f'M 0 {_f(period / 2)} H {_f(period)}" '
+                f'stroke="{INK}" stroke-width="{_f(t)}" fill="none"/>',
+                "rotate(45)")
+    if kind == "dots":
+        return (f'<circle cx="{_f(period / 2)}" cy="{_f(period / 2)}" '
+                f'r="{_f(t * 0.95)}" fill="{INK}" stroke="none"/>', "")
+    raise KeyError(kind)
+
+
+def fill_defs(base: float, t: float, prefix: str = "fyll") -> str:
+    """<defs> med ett <pattern> per fyllkode som trenger ett."""
+    out = []
+    for kind in ("hatch", "cross", "dots"):
+        period = base * PATTERN_PERIOD[kind]
+        body, xform = _fill_tile(kind, period, t)
+        tf = f' patternTransform="{xform}"' if xform else ""
+        out.append(f'<pattern id="{prefix}-{kind}" width="{_f(period)}" '
+                   f'height="{_f(period)}" patternUnits="userSpaceOnUse"'
+                   f'{tf}>{body}</pattern>')
+    return "<defs>" + "".join(out) + "</defs>"
+
+
+def fill_paint(kind: str | None, prefix: str = "fyll") -> str:
+    """Malingen en fyllkode gir: en farge for de to flate, en url for resten."""
+    if kind is None or kind == "open":
+        return "#ffffff"
+    if kind == "solid":
+        return INK
+    return f"url(#{prefix}-{kind})"
+
+
+def fill_code(letter: str | None) -> str | None:
+    """Fyllkoden en merkebokstav bærer, eller None når siden ikke har
+    bokstaver i det hele tatt - da er det bare én type på siden, og en kode
+    som bare har én verdi koder ingenting."""
+    if not letter or letter not in BADGE_ALPHABET:
+        return None
+    i = BADGE_ALPHABET.index(letter)
+    return FILL_CODES[i] if i < len(FILL_CODES) else None
+
 
 def _text(x, y, s, size, anchor="start", weight="normal") -> str:
     return (f'<text x="{_f(x)}" y="{_f(y)}" font-family="{FONT_STACK}" '

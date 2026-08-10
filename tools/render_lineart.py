@@ -434,6 +434,18 @@ EXPLODE_PLATE_FRAC = 0.055
 STACK_STEP = 0.6               # coaxial screws, as a fraction of the head
 
 
+def fill_code(letter):
+    """The fill a badge letter carries, or None where the page has no letters.
+
+    THE CODE IS THE LETTER, one more time, in a form the reader does not have
+    to read. It is defined in tools/gen_glyphs.py - the file that draws the
+    badge and the table glyph - so the drawing, the panel and the table cannot
+    end up coding the same letter three different ways (PRAKSIS section 1).
+    """
+    import gen_glyphs
+    return gen_glyphs.fill_code(letter)
+
+
 def _unit2(a, b):
     dx, dy = b[0] - a[0], b[1] - a[1]
     n = math.hypot(dx, dy)
@@ -735,6 +747,18 @@ def screw_shape(view, anchor, direction, length, d, fatten=SCREW_FATTEN):
     if L < length * AXIS_ON_PAGE:
         return None, p0, p1, (0.0, 0.0)
     L = max(L, length * FORESHORTEN_FLOOR)
+    return (screw_outline(p0, (ux, uy), L, d, fatten), p0, p1, (ux, uy))
+
+
+def screw_outline(p0, u, L, d, fatten=None):
+    """The silhouette itself: head, countersink, shank, point.
+
+    Split out of screw_shape() so that everything which draws a fastener draws
+    the SAME seven points - the step page, and the fill-code contrast proof
+    that has to show the reader exactly what the step page will show them.
+    """
+    fatten = SCREW_FATTEN if fatten is None else fatten
+    ux, uy = u
     w = d * fatten
     hw, head_l, tip_l = w * 0.95, w * 0.30, w * 0.85
 
@@ -743,7 +767,7 @@ def screw_shape(view, anchor, direction, length, d, fatten=SCREW_FATTEN):
 
     prof = [(0, hw), (head_l, w / 2), (L - tip_l, w / 2), (L, 0),
             (L - tip_l, -w / 2), (head_l, -w / 2), (0, -hw)]
-    return [P(t, q) for t, q in prof], p0, p1, (ux, uy)
+    return [P(t, q) for t, q in prof]
 
 
 def plate_quads(spec):
@@ -847,22 +871,31 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
         p1 = (p1[0] + ox, p1[1] + oy)
         if outline:
             outline = [(x + ox, y + oy) for x, y in outline]
+    # The fill code: the letter again, as a pattern in the silhouette itself,
+    # so a reader looking at a corner with four fasteners in it can see WHICH
+    # of the four a given screw is without finding and reading a 5 mm letter.
+    paint = page.fill_paint(fill_code(m.get("letter")))
     if outline is None:
         # Straight at the reader: the drawing convention for an axis with no
         # length on the page is a ringed dot, and it is the same mark whether
         # the screw is in or out.
-        page.circle(p0, T.RING_R, width=T.W_SCREW)
+        page.circle(p0, T.RING_R, fill=paint, width=T.W_SCREW)
         page.dot(p0, T.RING_DOT_R)
         return p0, p0, None
     if solid:
-        page.poly(outline, fill="#ffffff", stroke=INK, width=T.W_SCREW)
+        page.poly(outline, fill=paint, stroke=INK, width=T.W_SCREW)
     else:
         # In situ: the head is the only part anybody can see, so it is the
         # only part drawn solid. The rest is a phantom line.
         # The head is the only part anybody can see, so it is the only part
         # drawn solid. The rest is a phantom line - same ink, dashed, a shade
         # lighter in weight, which is the drawing convention for "this is
-        # really there and it is inside the wood".
+        # really there and it is inside the wood". The fill code goes UNDER the
+        # phantom line, in the body it belongs to: the buried screw still has
+        # to say which of the step's screws it is, and on a page like the
+        # ladder's it is the only fastener drawing there is.
+        if paint != "#ffffff":
+            page.poly(outline, fill=paint, stroke="none", width=0)
         page.polylines([outline[1:len(outline) - 1] + [outline[1]]],
                        INK, T.W_SCREW * 0.62, dash=DASH_PHANTOM)
         page.poly(outline[:2] + outline[-2:], fill=INK, stroke=INK,
@@ -1035,6 +1068,11 @@ class Page:
     def __init__(self, x0, y0, x1, y1):
         self.x0, self.y0, self.x1, self.y1 = x0, y0, x1, y1
         self.body = []
+        # The fill-code patterns this page has actually used. Written into the
+        # SVG's <defs> only if something asked for one, so a page with a single
+        # kind of fastener - which has no letters and therefore no code - comes
+        # out exactly as it did before.
+        self.fills = set()
         # WHAT ACTUALLY WENT ON THE PAPER. Every drawn body, badge and label
         # registers itself here with its geometry and its owner, and the
         # asserts read THIS rather than the numbers that went in. It is the
@@ -1171,11 +1209,32 @@ class Page:
             f'height="{_f(h)}" viewBox="{vb}" '
             f'preserveAspectRatio="xMidYMid meet">{inner}</svg>')
 
+    def fill_paint(self, code):
+        """The paint for one fill code, and the pattern registered with it.
+
+        The page carries the <defs> because the pattern is in the PAGE's
+        coordinate system: the code has to look the same on a screw driven
+        left as on one driven down, so it is the paper that is hatched and not
+        the screw.
+        """
+        if code is None:
+            return "#ffffff"
+        import gen_glyphs
+        self.fills.add(code)
+        return gen_glyphs.fill_paint(code)
+
+    def _defs(self):
+        if not self.fills - {"solid", "open"}:
+            return ""
+        import gen_glyphs
+        return gen_glyphs.fill_defs(T.FILL_PERIOD, T.W_FILL) + "\n"
+
     def write(self, path):
         head = (f'<svg xmlns="http://www.w3.org/2000/svg" '
                 f'viewBox="{_f(self.x0)} {_f(-self.y1)} {_f(self.w)} '
                 f'{_f(self.h)}">')
-        bg = (f'<rect x="{_f(self.x0)}" y="{_f(-self.y1)}" '
+        bg = (self._defs()
+              + f'<rect x="{_f(self.x0)}" y="{_f(-self.y1)}" '
               f'width="{_f(self.w)}" height="{_f(self.h)}" fill="#ffffff"/>')
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(head + "\n" + bg + "\n" + "\n".join(self.body)
@@ -1320,7 +1379,8 @@ def joint_section(page, box, specs, letters, letter_label=""):
         if n < 1e-6:                       # straight out of the section
             continue
         draw.append(dict(kind="screw", a=a0, v=(v[0] / n, v[1] / n),
-                         length=f["length"] * n, d=f["d"]))
+                         length=f["length"] * n, d=f["d"],
+                         code=fill_code(letters.get(f["name"]))))
 
     # The window: whole cross-sections, trimmed lengths, and room for the
     # fasteners that stick out of them.
@@ -1416,7 +1476,8 @@ def joint_section(page, box, specs, letters, letter_label=""):
         prof = [(0, head_d / 2), (head_l, d / 2), (L - tip_l, d / 2),
                 (L, 0), (L - tip_l, -d / 2), (head_l, -d / 2),
                 (0, -head_d / 2)]
-        page.poly([P(t_, q) for t_, q in prof], fill="#ffffff", stroke=INK,
+        page.poly([P(t_, q) for t_, q in prof],
+                  fill=page.fill_paint(sdr["code"]), stroke=INK,
                   width=T.W_RULE * 0.8)
         # A short arrow behind the head: the way the screwdriver goes.
         page.arrow(P(-L * 0.42, 0), P(-head_d * 0.55, 0), INK, T.W_MARK * 0.7,
@@ -2308,8 +2369,104 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     png = os.path.join(out_dir, f"steg-{n:02d}.png")
     page.write(svg)
     to_png(svg, png, width)
+    if letters:
+        PAGE_SCALES[n] = width / page.w
     print(f"  steg {n:2d}  {len(combined.get('prior', [])):4d} gra / "
           f"{len(new_only):4d} svarte / {len(keep):2d} festepunkt -> {png}")
+    return png
+
+
+# ---------------------------------------------------------------------------
+# THE CONTRAST PROOF
+# ---------------------------------------------------------------------------
+# A fill code that cannot be told apart at the size it is printed is not a
+# code, it is a texture. So the set is not chosen and then trusted: it is
+# drawn, at the sizes the step pages actually give a fastener, and looked at.
+#
+# `PAGE_SCALES` is filled in as the pages are drawn - {step: px per model mm}
+# for every page that carries badge letters, because those are the only pages
+# a fill code appears on. The proof then renders at the SMALLEST of them, which
+# is the worst case the manual contains, and at half that again as a stress
+# test. It is written to docs/preview/, beside the page previews, because it is
+# review material and not part of the manual.
+PAGE_SCALES = {}
+PROOF_PATTERNS = ("solid", "open", "hatch", "cross", "dots")
+
+
+def fill_contrast_strip(out_dir, px_per_mm):
+    """docs/preview/fyllkontrast.{svg,png} - every fill code at page size."""
+    import gen_glyphs
+    col = 118.0
+    lab = 150.0
+    rows = [
+        ("5x40 EKSPLODERT", "screw", 5.0, 40.0, 1.0),
+        ("6x90 EKSPLODERT", "screw", 6.0, 90.0, 1.0),
+        ("5x60 I SITU (FANTOM)", "situ", 5.0, 60.0, 1.0),
+        ("5x60 HODET ALENE", "head", 5.0, 0.30, 1.0),
+        ("INNSETT (SNITT)", "sect", 5.0, 50.0, 1.0),
+        ("5x40 PA HALV SIDE", "screw", 5.0, 40.0, 0.5),
+    ]
+    row_h = 34.0
+    w = lab + col * len(PROOF_PATTERNS) + 20.0
+    h = 42.0 + row_h * len(rows) + 16.0
+    page = Page(0.0, 0.0, w, h)
+    top = h - 16.0
+    page.text((10.0, top), "FYLLKODE - KONTRASTPROVE", 13.0, weight="bold")
+    page.text((10.0, top - 15.0),
+              f"tegnet i {px_per_mm:.2f} px per mm - stegsidenes egen skala",
+              9.5)
+    top -= 34.0
+    for i, code in enumerate(PROOF_PATTERNS):
+        page.text((lab + col * i + col / 2, top), code.upper(), 10.0,
+                  anchor="middle", weight="bold")
+    top -= 6.0
+    for label, kind, d, arg, k in rows:
+        cy = top - row_h / 2
+        page.text((lab - 12.0, cy - 3.5), label, 9.5, anchor="end")
+        for i, code in enumerate(PROOF_PATTERNS):
+            paint = page.fill_paint(code)
+            x = lab + col * i + 8.0
+            if kind == "screw":
+                pts = screw_outline((x, cy), (1.0, 0.0), arg * k, d * k)
+                page.poly(pts, fill=paint, stroke=INK, width=T.W_SCREW * k)
+            elif kind == "situ":
+                # Buried in wood: the outline is a phantom line and only the
+                # head is solid, so the fill has the whole body to live in but
+                # no continuous edge round it.
+                pts = screw_outline((x, cy), (1.0, 0.0), arg * k, d * k)
+                page.poly(pts, fill=paint, stroke="none", width=0)
+                page.polylines([pts[1:len(pts) - 1] + [pts[1]]], INK,
+                               T.W_SCREW * 0.62 * k, dash=DASH_PHANTOM)
+                page.poly(pts[:2] + pts[-2:], fill=INK, stroke=INK,
+                          width=T.W_SCREW * 0.8 * k)
+            elif kind == "head":
+                w_s = d * SCREW_FATTEN * k
+                hl = w_s * arg
+                page.poly([(x, cy + w_s * 0.95), (x + hl, cy + w_s / 2),
+                           (x + hl, cy - w_s / 2), (x, cy - w_s * 0.95)],
+                          fill=paint, stroke=INK, width=T.W_SCREW * 0.8 * k)
+            else:
+                # The inset's own section screw: floored at SEC_SCREW_MIN and
+                # drawn with the section's lighter pen.
+                w_s = max(d * 0.8, T.SEC_SCREW_MIN) * k
+                hd, hl, tl = w_s * 1.9, w_s * 0.55, w_s * 1.7
+                L = arg * k
+                page.poly([(x, cy + hd / 2), (x + hl, cy + w_s / 2),
+                           (x + L - tl, cy + w_s / 2), (x + L, cy),
+                           (x + L - tl, cy - w_s / 2), (x + hl, cy - w_s / 2),
+                           (x, cy - hd / 2)],
+                          fill=paint, stroke=INK, width=T.W_RULE * 0.8 * k)
+        page.line((10.0, top - row_h), (w - 10.0, top - row_h), GREY,
+                  T.W_LEAD * 0.5)
+        top -= row_h
+    page.fills |= set(PROOF_PATTERNS)
+    os.makedirs(out_dir, exist_ok=True)
+    svg = os.path.join(out_dir, "fyllkontrast.svg")
+    png = os.path.join(out_dir, "fyllkontrast.png")
+    page.write(svg)
+    to_png(svg, png, int(round(w * px_per_mm)))
+    print(f"  fyllkontrast  {w:.0f} x {h:.0f} mm @ {px_per_mm:.2f} px/mm "
+          f"-> {png}")
     return png
 
 
@@ -2481,9 +2638,11 @@ def main(argv):
     width = 1600
     out_dir = os.path.join(ROOT, "docs", "img")
     only = None
-    hero_only = steps_only = False
+    hero_only = steps_only = proof = False
     i = 1
     while i < len(argv):
+        if argv[i] == "--fill-contrast":
+            proof = True; i += 1; continue
         if argv[i] == "--width":
             width = int(argv[i + 1]); i += 2
         elif argv[i] == "--out":
@@ -2509,6 +2668,9 @@ def main(argv):
         made += render_all(G, data, out_dir, width, only)
     if not steps_only and only is None:
         made.append(render_hero(G, out_dir, width))
+    if proof:
+        fill_contrast_strip(os.path.join(ROOT, "docs", "preview"),
+                            min(PAGE_SCALES.values()))
     print(f"\n{len(made)} tegninger i {out_dir}")
 
 

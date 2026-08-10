@@ -81,6 +81,14 @@ RATIOS = {
     "BADGE_R": 3.60,        # 25.0  the circled letters
     "PAD": 10.00,           # 70    white margin round the subject
     "INSET_PAD": 2.30,      # 16.0  inside the inset panel's border
+    # --- the fill code -----------------------------------------------------
+    # The period of a hatched fastener's pattern and the weight of one of its
+    # lines. Both are pen multiples like everything else, and both were set by
+    # the contrast proof rather than by eye: a 5 mm screw is 15 mm wide on the
+    # page, so a period much over one pen leaves it one stripe wide and a line
+    # much under a third of one greys out in the raster.
+    "FILL_PERIOD": 0.78,    # 5.4   one period of hatch or cross
+    "W_FILL": 0.30,         # 2.1   one line of it
     # --- type --------------------------------------------------------------
     "S_ICON": 6.70,         # 46    the "i" in the information panel
     "S_TITLE": 6.40,        # 44    a panel heading
