@@ -358,27 +358,44 @@ SCREW_FATTEN = 2.2
 # short - but past a point it stops being a screw and becomes a dot, and the
 # reader loses the one number the drawing has to get right.
 FORESHORTEN_FLOOR = 0.72
-# HOW FAR OUT AN EXPLODED FASTENER SITS. Backing a screw straight down its own
-# axis until it is clear of everything is the obvious move and the wrong one:
-# on a corner where four screws come in from three directions it puts them a
-# page apart from the holes they belong to, and the reader is left matching
-# dotted lines instead of reading a joint. The furniture-manual idiom is the
-# opposite - the part HOVERS at its hole, a short hop out and a little to the
-# SIDE, so the gap says "this goes in here" and nothing else. So two offsets,
-# and they do different jobs:
+# Below this much of its true length on the page a screw has no axis left to
+# draw and becomes a ringed dot. One number, used by the shape function and by
+# the explosion alike: a fastener that is a dot is not backed out of anything,
+# because a dot cannot show which way it came.
+AXIS_ON_PAGE = FORESHORTEN_FLOOR * 0.5
+# HOW FAR OUT AN EXPLODED FASTENER SITS - and it is not one rule, because a
+# screw and a bracket are not the same kind of object.
 #
-#   EXPLODE_FRAC       along the drive axis. Just enough air between point and
-#                      hole to read as "not in yet".
-#   EXPLODE_SIDE_FRAC  across it, in PAGE space, picked towards whichever side
-#                      of the axis has more white paper on it. This is what
-#                      lifts the screw off the timber it would otherwise lie
-#                      along, and what turns the insertion line from a spike
-#                      into a short diagonal that can be followed by eye.
+# A SCREW comes out STRICTLY ALONG ITS OWN DRIVE AXIS. Its drawn body, the
+# dotted insertion line and the hole are one straight line: the line is a pure
+# extension of the screw, and the screw is a pure extension of the line. That
+# is the whole claim the picture makes - "this one goes in HERE, this way" -
+# and nothing is allowed to break it. Not a sideways lift to find white paper,
+# not a stack offset: the moment the body steps off its own line, the reader
+# stops reading a joint and starts matching a drawing to a dotted stub, which
+# is exactly the work the drawing exists to save. Where an exploded screw
+# collides with line work, the answer is a longer hop back down the same axis,
+# or letting it lie over GHOST line work - never a sidestep.
+#
+#   EXPLODE_FRAC       the air between point and hole, on top of the screw's
+#                      own drawn length. Just enough to read as "not in yet".
+#
+# Two screws whose tips land on the same page point - the camera looking down
+# their shared axis - are separated by QUEUEING them, each one a body further
+# back along that same axis. Both of them stay on the line.
+#
+# A BRACKET has no drive axis. It lies flat against two faces, and "backing it
+# out" along anything drives it into the timber it sits on. So it gets the one
+# move a screw is denied: a short DIAGONAL float on the PAPER, out in x and y,
+# close enough to its seat that the dotted leash back is unmistakable. Its own
+# screws then explode along their axes from where the BRACKET ended up, and
+# two screws entering from each side reads straight off the main drawing -
+# which is why those brackets no longer need a magnifier to be understood.
 #
 # Both are fractions of the page's short side, so a cropped page gets the same
 # picture at its own scale.
 EXPLODE_FRAC = 0.038
-EXPLODE_SIDE_FRAC = 0.052
+EXPLODE_PLATE_FRAC = 0.055
 STACK_STEP = 0.6               # coaxial screws, as a fraction of the head
 
 
@@ -419,38 +436,101 @@ def ink_clearance(p, plines, cap):
     return best
 
 
-def clear_side(plines, hole, u, n, back, step):
-    """Which way to lift an exploded fastener off the drawing.
+def clear_diagonal(plines, seat, step, span):
+    """Which way to float an exploded BRACKET off its seat.
 
-    Both sides of the drive axis are tried, the fastener's own body is sampled
-    along each of them, and the side with more white paper under it wins. That
-    is what puts the screw off the timber rather than along it, and it is why
-    the two screws that enter a corner from the same face end up on opposite
-    sides of their own axes instead of on top of each other.
+    All four diagonals are tried, the path the bracket would take is sampled
+    along each of them, and the one with the most white paper under it wins.
+    Diagonal on purpose: a bracket floated straight out along x or y reads as
+    a part sliding along the timber it is bolted to, and out along x AND y at
+    once is the one direction no member of this bed runs in.
+
+    Screws never come here. A screw that steps sideways off its own axis has
+    stopped saying where it goes.
     """
-    best, best_sgn = None, 1
-    for sgn in (1, -1):
-        room = min(
-            ink_clearance((hole[0] - u[0] * t + n[0] * step * sgn,
-                           hole[1] - u[1] * t + n[1] * step * sgn),
-                          plines, step * 2.4)
-            for t in (0.0, back * 0.5, back))
+    best, best_v = None, (step, step)
+    for sx in (1.0, -1.0):
+        for sy in (1.0, -1.0):
+            room = min(
+                ink_clearance((seat[0] + step * sx * t,
+                               seat[1] + step * sy * t), plines, span)
+                for t in (0.6, 1.0, 1.4))
+            if best is None or room > best + 1e-9:
+                best, best_v = room, (step * sx, step * sy)
+    return best_v
+
+
+def clear_back(dark, hole, u, body, base, step, want, tries=4):
+    """How far back along its own axis an exploded screw has to sit.
+
+    The one degree of freedom a screw is allowed. Its body is sampled at each
+    candidate distance and the SHORTEST hop that finds white paper for the
+    whole of it wins; if none does, the roomiest one does. Only the black line
+    work counts - a screw is welcome to lie across the ghosted frame that is
+    already standing, and on a page where everything is new there is nothing
+    to be precious about anyway.
+
+    What it never does is lean. A screw that cannot find room on its axis
+    comes further out along it, and if there is still no room it stays where
+    it is and overlaps: an exploded screw's whole job is to point at its hole,
+    and a screw beside its own dotted line has stopped doing it.
+    """
+    best, best_d = None, base
+    for k in range(tries):
+        d = base + k * step
+        room = min(ink_clearance((hole[0] - u[0] * (d - body * t),
+                                  hole[1] - u[1] * (d - body * t)),
+                                 dark, want)
+                   for t in (0.0, 0.35, 0.7, 1.0))
+        if room >= want - 1e-9:
+            return d
         if best is None or room > best + 1e-9:
-            best, best_sgn = room, sgn
-    return best_sgn
+            best, best_d = room, d
+    return best_d
+
+
+def screw_on_plate(plate, f):
+    """Is this screw one of the ones that go THROUGH that bracket?
+
+    The two flanges are the test, taken off the model's own record: the screw
+    belongs to the bracket when its head sits on one of them. It matters
+    because a bracket's screws travel with the bracket when it floats, and a
+    screw that merely passes nearby does not - J10 drives four through the
+    90x90x40 and one 5x70 toe screw past its edge into the same joint, and
+    dragging that one along would put it in mid air.
+    """
+    C, n, r = plate["anchor"], plate["direction"], plate["run"]
+    reach, w = plate["reach"], plate["width"]
+    cross = [j for j in range(3) if abs(n[j]) < 0.5 and abs(r[j]) < 0.5]
+    if not cross:
+        return False
+    d = [a - c for a, c in zip(f["anchor"], C)]
+    if abs(d[cross[0]]) > w / 2 + 2.0:
+        return False
+    a_run = sum(d[j] * r[j] for j in range(3))
+    a_n = -sum(d[j] * n[j] for j in range(3))
+    tol = 3.0
+    return ((-tol <= a_run <= reach + tol and abs(a_n) <= tol)
+            or (-tol <= a_n <= reach + tol and abs(a_run) <= tol))
 
 
 def screw_shape(view, anchor, direction, length, d, fatten=SCREW_FATTEN):
     """(outline, head-end, tip-end, unit) for one screw, on the page.
 
     `outline` is the silhouette in page coordinates: head, countersink,
-    shank, point. `None` when the screw points straight at the reader and has
-    no length on the page at all - the caller draws a ringed dot instead.
+    shank, point - laid out along the PROJECTED DRIVE AXIS and nowhere else.
+    There is no upright screw glyph in this function and there must never be
+    one: a 6x90 driven at 65 deg into a corner is drawn at 65 deg, because
+    the angle is the instruction. The only licence taken is the diameter.
+
+    `None` when the screw points straight at the reader and has no length on
+    the page at all - the caller draws a ringed dot instead, which is the
+    head-on convention and, being a circle, cannot point the wrong way.
     """
     tip3 = tuple(a + c * length for a, c in zip(anchor, direction))
     p0, p1 = view.xy(anchor), view.xy(tip3)
     ux, uy, L = _unit2(p0, p1)
-    if L < length * FORESHORTEN_FLOOR * 0.5:
+    if L < length * AXIS_ON_PAGE:
         return None, p0, p1, (0.0, 0.0)
     L = max(L, length * FORESHORTEN_FLOOR)
     w = d * fatten
@@ -504,19 +584,28 @@ def plate_quads(spec):
 
 def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
                   page_off=(0.0, 0.0)):
-    """One fastener on the page. Returns the point its insertion line ends at.
+    """One fastener on the page.
+
+    Returns (head, tip, body). `body` is the axis of the silhouette that was
+    ACTUALLY put on the paper - (head centre, point) off the drawn polygon,
+    not off the numbers that went in - or None when nothing with an axis was
+    drawn. assert_on_axis() checks the drawing against the model with it, so
+    the check cannot be satisfied by the intention instead of the ink.
 
     `shift` moves it in MODEL space - that is the hop back down its own drive
     axis, and it has to be done in the model so the fastener stays on the line
-    it really travels. `page_off` moves the finished drawing sideways on the
-    PAPER, which is a different thing on purpose: it is not a direction the
-    screw could ever go, it is the draughtsman lifting it off the timber so
-    the reader can see it, and no camera angle is allowed to swallow it.
+    it really travels. It is the ONLY thing that moves an exploded screw.
 
-    `stack` pushes coaxial fasteners apart sideways: two screws driven into
-    the same joint from the same face land on the same page point when the
-    camera looks along their axis, and an exploded pile of them is one screw
-    as far as the reader can tell.
+    `page_off` moves the finished drawing bodily on the PAPER. It belongs to
+    BRACKETS: a bracket has no axis to come out along, so it floats a little
+    way off its seat instead, and the screws that go through it are handed the
+    same offset so they explode from where the bracket ended up rather than
+    from a seat it has left. A screw is never given a page offset of its own.
+
+    `stack` pushes coaxial fasteners apart sideways, and it is for the IN SITU
+    style only: two screws driven at the same page point are one screw as far
+    as the reader can tell. The exploded style separates the same pair by
+    queueing them along their shared axis, which the caller does in `shift`.
     """
     f = m["spec"]
     anchor = tuple(a + s for a, s in zip(f["anchor"], shift))
@@ -537,7 +626,7 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
         run_end = view.xy(tuple(a + r * f["reach"]
                                 for a, r in zip(anchor, f["run"])))
         return ((run_end[0] + ox, run_end[1] + oy),
-                (seat[0] + ox, seat[1] + oy))
+                (seat[0] + ox, seat[1] + oy), None)
 
     outline, p0, p1, u = screw_shape(view, anchor, f["direction"],
                                      f["length"], f["d"])
@@ -550,13 +639,12 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
         if outline:
             outline = [(x + ox, y + oy) for x, y in outline]
     if outline is None:
-        _ = None
         # Straight at the reader: the drawing convention for an axis with no
         # length on the page is a ringed dot, and it is the same mark whether
         # the screw is in or out.
         page.circle(p0, 14, width=W_SCREW)
         page.dot(p0, 5)
-        return p0, p0
+        return p0, p0, None
     if solid:
         page.poly(outline, fill="#ffffff", stroke=INK, width=W_SCREW)
     else:
@@ -570,7 +658,69 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
                        INK, W_SCREW * 0.62, dash=DASH_PHANTOM)
         page.poly(outline[:2] + outline[-2:], fill=INK, stroke=INK,
                   width=W_SCREW * 0.8)
-    return p0, p1
+    # Straight off the polygon: the two head corners are prof[0] and prof[-1],
+    # so their midpoint is the head centre, and prof[3] is the point.
+    body = (((outline[0][0] + outline[-1][0]) / 2,
+             (outline[0][1] + outline[-1][1]) / 2), outline[3])
+    return p0, p1, body
+
+
+AXIS_TOL_DEG = 1.0
+
+
+def _angle_between(a, b):
+    """Degrees between two page-space directions, or None if either is nil."""
+    na, nb = math.hypot(*a), math.hypot(*b)
+    if na < 1e-9 or nb < 1e-9:
+        return None
+    c = (a[0] * b[0] + a[1] * b[1]) / (na * nb)
+    return math.degrees(math.acos(max(-1.0, min(1.0, c))))
+
+
+def assert_on_axis(view, f, body, tip, entry, poff, jid):
+    """The drawing is checked against the model, not against the intention.
+
+    Three things have to be true of every exploded screw, and none of them is
+    a matter of taste:
+
+      1. the silhouette that was drawn points along the PROJECTED DRIVE AXIS.
+         A 6x90 driven at 65 deg into a corner post is drawn at 65 deg. There
+         is no upright glyph anywhere on a step drawing - the legend keeps
+         canonical pictures, the drawing keeps the real projected solid.
+      2. the dotted insertion line is COLLINEAR with it, not merely attached
+         to it. Body and line are one straight run or the reader is matching
+         shapes to stubs.
+      3. that line ends exactly at the hole the model put there - offset with
+         the bracket, when the screw goes through a bracket that has floated,
+         because that is where the screw really enters.
+
+    Measured off the ink: `body` comes back from the polygon draw_fastener
+    actually emitted. A drawing that fails this does not get written.
+    """
+    want = view.dir_xy(f["direction"])
+    seat = view.xy(f["anchor"])
+    expect = (seat[0] + poff[0], seat[1] + poff[1])
+    off = math.hypot(entry[0] - expect[0], entry[1] - expect[1])
+    assert off < 1e-6, (
+        f"{jid} {f['name']}: innstikkslinjen ender {off:.3f} mm fra hullet")
+    if body is None:
+        # No axis on the page, so nothing may have moved it off one: a ringed
+        # dot sits ON its hole and says only "into the paper, here".
+        gap = math.hypot(tip[0] - entry[0], tip[1] - entry[1])
+        assert gap < 1e-6, (
+            f"{jid} {f['name']}: rettvendt feste er flyttet {gap:.1f} mm "
+            f"fra hullet uten en akse a flyttes langs")
+        return
+    axis = (body[1][0] - body[0][0], body[1][1] - body[0][1])
+    dev = _angle_between(axis, want)
+    assert dev is not None and dev < AXIS_TOL_DEG, (
+        f"{jid} {f['name']}: tegnet kropp ligger {dev:.2f} grader av sin "
+        f"egen drivakse")
+    lead = (entry[0] - body[1][0], entry[1] - body[1][1])
+    dev = _angle_between(lead, want)
+    assert dev is None or dev < AXIS_TOL_DEG, (
+        f"{jid} {f['name']}: innstikkslinjen ligger {dev:.2f} grader av "
+        f"skruens akse")
 
 
 def _apart(a, b, gap):
@@ -1067,7 +1217,7 @@ def badge(page, centre, letter, r=BADGE_R):
     page.badge_spots.append(centre)
 
 
-def mark_label(page, tail, direction, letter, count, inset=None):
+def mark_label(page, tail, direction, letter, count, inset=None, avoid=()):
     """One arrow's caption, parked behind its tail.
 
     A mark carries at most one letter now - each kind of fastener points at
@@ -1076,9 +1226,12 @@ def mark_label(page, tail, direction, letter, count, inset=None):
     30 mm apart into the same rekkverksbord end are one arrow at this scale,
     and the page has to say so.
 
-    The natural place is straight back along the tail. Three things can spoil
-    it: the page edge, the inset panel, and another caption - so a handful of
-    positions are tried and the cleanest one wins.
+    The natural place is straight back along the tail. Four things can spoil
+    it: the page edge, the inset panel, another caption, and - `avoid` - a
+    fastener this caption does not name, which is the worst of them, because a
+    badge sitting on somebody else's screw does not merely crowd the page, it
+    tells the builder to put the wrong screw there. So a handful of positions
+    are tried and the cleanest one wins.
     """
     dx, dy = direction
     txt = f"{count}x" if count > 1 else ""
@@ -1117,6 +1270,11 @@ def mark_label(page, tail, direction, letter, count, inset=None):
                 out += 14
             out += sum(1 for q in page.badge_spots
                        if not _apart(probe, q, 2 * BADGE_R + 4))
+            out += sum(6 for q in avoid
+                       if not _apart(probe, q, BADGE_R + 10))
+        # And having stepped out of the way, it steps no further than it had
+        # to: a caption that has wandered is one the reader has to guess at.
+        out += math.hypot(c[0] - tail[0], c[1] - tail[1]) / (BADGE_R * 8.0)
         return out
 
     centre = min(((cost(c), k, c) for k, c in enumerate(tries)))[2]
@@ -1412,219 +1570,6 @@ def magnifier(page, src, dst_c, dst_r, src_r, new_only, prior_lines):
                    INK, W_NEW * dst_r / src_r)
 
 
-def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset,
-                          note=None, busy=()):
-    """WHERE the 40x40x40 sits, and which way its four screws go.
-
-    The bracket is the one piece of hardware in the bed that an overview
-    drawing cannot place: it is 40 mm of steel behind a 1794 mm ledger, and at
-    page scale it is a smudge. So it gets a magnifier - the real line work of
-    the joint, blown up, with the bracket drawn on top in its true position:
-    the standing leg flat on the post's inner face, the lying leg under the
-    ledger's end, two screws into each.
-    """
-    # Either end of the ledger does; take the one whose locator circle is not
-    # half off the paper - the corner posts sit on the page's own edge.
-    room = max(page.w, page.h) * 0.072 + 10
-    cands_m = [m for m in keep if m["jid"] == "J12"]
-    inside = [m for m in cands_m
-              if page.x0 + room <= m["p2"][0] <= page.x1 - room
-              and page.y0 + room <= m["p2"][1] <= page.y1 - room]
-    mark = (inside or cands_m or [None])[0]
-    if mark is None:
-        return
-    f = mark["spec"]
-    pa, pb = f["pa"], f["pb"]
-    post = pa if pa.label.startswith("Corner Post Back") else pb
-    ledger = pb if post is pa else pa
-    # The mark's own arrow overshoots into the post, so the sign is the way
-    # the screw travels; the bracket lies the other way, out under the ledger.
-    e = 1.0 if ledger.extents[0][0] > post.extents[0][0] else -1.0
-    xf = post.extents[0][1] if e > 0 else post.extents[0][0]
-    zf = ledger.extents[2][0]
-    y0, y1 = post.extents[1]
-    ym = (y0 + y1) / 2
-    leg = next((q["spec"]["reach"] for q in cands_m
-                if q["spec"]["kind"] == "plate"), 40.0)
-
-    # Centred on the CORNER itself - post face meets ledger underside - so the
-    # circle holds a piece of both members and not just the steel.
-    src = view.xy((xf, ym, zf))
-    # Tight on the STEEL: a circle scaled to the page would put a 40 mm
-    # bracket at a tenth of its diameter and the magnifier would magnify
-    # nothing. Three flange lengths across is what makes the bend readable.
-    src_r = leg * 3.0
-    dst_r = page.w * 0.145
-    edge = dst_r + 105                    # room for the caption under it
-    # Away from every panel already spoken for, on the emptiest paper left.
-    # Corners only is not enough of a choice: a page carrying an inset, a
-    # mirror note and eight exploded fasteners can have all four of them
-    # spoken for while the middle of the frame - which is a hole - is empty.
-    panels = [p for p in (inset, note) if p is not None]
-
-    def _spread(lo, hi):
-        if hi - lo < 1e-6:
-            return [(lo + hi) / 2]
-        return [lo + (hi - lo) * i / 4.0 for i in range(5)]
-    cands = [(cx_, cy_)
-             for cx_ in _spread(page.x0 + edge, page.x1 - edge)
-             for cy_ in _spread(page.y0 + edge, page.y1 - edge)]
-
-    lines = new_only + prior_lines
-
-    def ink(c2):
-        for px_, py_, pw_, ph_ in panels:
-            if _in_rect(c2, (px_ - dst_r, py_ - dst_r,
-                             pw_ + 2 * dst_r, ph_ + 2 * dst_r)):
-                return 10 ** 9
-        # How much line work the circle would rub out, measured as distance to
-        # the nearest EDGE. Counting projected vertices instead is what put
-        # this circle on top of a post once: a 1065 mm post is two points and
-        # neither of them is anywhere near its middle.
-        cost = max(0.0, dst_r * 1.25
-                   - ink_clearance(c2, lines, dst_r * 1.6)) * 4.0
-        # The caption sits under the circle and is opaque in its own right,
-        # and it is WIDER than the circle - so the band it needs is sampled
-        # across its whole length, not at its middle.
-        for q in (-1.0, -0.5, 0.0, 0.5, 1.0):
-            cap = (c2[0] + q * dst_r * 1.7, c2[1] - dst_r - 45)
-            cost += max(0.0, 55.0 - ink_clearance(cap, lines, 55.0)) * 3.0
-        # The circle is filled white, so a fastener under it is GONE. That is
-        # not a crowded page, it is a page that has stopped telling the truth.
-        cost += sum(dst_r * 3 for p in busy
-                    if math.hypot(p[0] - c2[0], p[1] - c2[1]) < dst_r * 1.35)
-        # And it has to stand clear of the joint it is magnifying, or the
-        # leader line has nothing to lead across.
-        reach = math.hypot(c2[0] - src[0], c2[1] - src[1])
-        cost += max(0.0, dst_r * 1.9 - reach) * 3.0
-        return cost
-    dst_c = min(cands, key=ink)
-
-    # The locator on the drawing itself, heavy enough to be found, and the
-    # dashed leader out to the blown-up circle.
-    page.circle(src, src_r, width=W_MARK * 0.7)
-    page.line(src, dst_c, GREY, W_LEAD, dash="18 14")
-    page.circle(dst_c, dst_r, fill="#ffffff", width=W_RULE)
-    page.clip_begin(dst_c, dst_r)
-    k = dst_r / src_r
-
-    def P(p3):
-        p = view.xy(p3)
-        return (dst_c[0] + (p[0] - src[0]) * k, dst_c[1] + (p[1] - src[1]) * k)
-
-    # The two members, as the faces the bracket is actually screwed to: the
-    # post's inner face, and the ledger's underside and front. Filled light so
-    # they read as timber, with the real projected edges drawn back on top.
-    ly0, ly1 = ledger.extents[1]
-    lz1 = ledger.extents[2][1]
-    reach = leg * 2.4
-    faces = [
-        [(xf, y0, zf - reach * 0.5), (xf, y1, zf - reach * 0.5),
-         (xf, y1, zf + reach), (xf, y0, zf + reach)],          # stolpens innerflate
-        [(xf, ly0, zf), (xf, ly1, zf), (xf + e * reach, ly1, zf),
-         (xf + e * reach, ly0, zf)],                            # lektas underside
-        [(xf, ly1, zf), (xf + e * reach, ly1, zf),
-         (xf + e * reach, ly1, lz1), (xf, ly1, lz1)],           # lektas forside
-    ]
-    for quad in faces:
-        page.poly([P(q) for q in quad], fill="#efefef", stroke=GREY,
-                  width=W_RULE * 0.8)
-    page.polylines(remap(clip_to_circle(prior_lines, src, src_r),
-                         src, src_r, dst_c, dst_r),
-                   GREY, W_PRIOR * k)
-    page.polylines(remap(clip_to_circle(new_only, src, src_r),
-                         src, src_r, dst_c, dst_r), INK, W_NEW * k * 0.8)
-
-    # THE BRACKET ITSELF, off the model's own record - the same corners
-    # generate_loftbed.py built the solid from. Nothing here is a second
-    # drawing of a bracket somebody once measured: if the model turns it over,
-    # this turns over with it.
-    plate = next((q["spec"] for q in cands_m
-                  if q["spec"]["kind"] == "plate"
-                  and q["spec"]["pa"] is pa and q["spec"]["pb"] is pb), None)
-    if plate is None:
-        plate = next(q["spec"] for q in cands_m if q["spec"]["kind"] == "plate")
-    for quad in plate_quads(plate):
-        page.poly([P(q) for q in quad], fill="#9a9a9a", stroke=INK,
-                  width=W_RULE * 0.9)
-    # ...and the screws through it, at their own length and their own angle.
-    for q in cands_m:
-        g = q["spec"]
-        if g["kind"] != "screw":
-            continue
-        head3 = g["anchor"]
-        tip3 = tuple(c + d * g["length"]
-                     for c, d in zip(head3, g["direction"]))
-        h2, t2 = P(head3), P(tip3)
-        ux, uy, ln = _unit2(h2, t2)
-        if ln < 1e-6:
-            page.dot(h2, 4.0 * k)
-            continue
-        w2 = g["d"] * k * 0.5
-        hd = w2 * 1.9
-        page.poly([(h2[0] - uy * hd, h2[1] + ux * hd),
-                   (h2[0] + ux * hd * 0.5 - uy * w2,
-                    h2[1] + uy * hd * 0.5 + ux * w2),
-                   (t2[0] - uy * w2 * 0.15, t2[1] + ux * w2 * 0.15),
-                   (t2[0] + uy * w2 * 0.15, t2[1] - ux * w2 * 0.15),
-                   (h2[0] + ux * hd * 0.5 + uy * w2,
-                    h2[1] + uy * hd * 0.5 - ux * w2),
-                   (h2[0] + uy * hd, h2[1] - ux * hd)],
-                  fill="#ffffff", stroke=INK, width=W_RULE * 0.8)
-        a_len = dst_r * 0.22
-        page.arrow((h2[0] - ux * a_len, h2[1] - uy * a_len), h2,
-                   INK, W_MARK * 0.55, a_len * 0.36)
-    page.clip_end()
-    cap = plate["name"].split(" varmforsinket")[0].upper()
-    # The caption is set to the PAGE, not to a fixed point size: a half-view
-    # page is half as wide as a whole-bed one, and a 21-character word at the
-    # old size would be two thirds of the way across it.
-    size = max(24.0, min(44.0, page.w * 0.030))
-    half_w = len(cap) * size * 0.32
-
-    def cap_cost(spot):
-        tx_, ty_ = spot
-        rect = (tx_ - half_w - 10, ty_ - size * 0.32,
-                2 * half_w + 20, size * 1.4)
-        if any(_overlap(rect, q) > 1.0 for q in panels):
-            return -10.0 ** 6      # a panel is opaque; the plate would eat it
-        if any(_in_rect(b, rect, BADGE_R) for b in page.badge_spots):
-            return -10.0 ** 6      # nor is a badge something to rub out
-        return min(ink_clearance((tx_ + q * half_w, ty_ + size * 0.36),
-                                 lines, 70.0)
-                   for q in (-1.0, -0.5, 0.0, 0.5, 1.0))
-
-    # Under the circle or over it, and free to slide along that line: a label
-    # is allowed to step out of the way sideways, and on a narrow page it has
-    # to. It is SCORED rather than picked in order, because "there is room
-    # below" and "below is empty" are different questions and only the second
-    # one matters.
-    rows = []
-    if dst_c[1] - dst_r - size * 1.5 >= page.y0 + 12:
-        rows.append(dst_c[1] - dst_r - size * 1.4)
-    if dst_c[1] + dst_r + size * 1.4 <= page.y1 - 12:
-        rows.append(dst_c[1] + dst_r + size * 0.55)
-    spots = []
-    for ty_ in rows:
-        for q in (0.0, -0.7, 0.7, -1.4, 1.4):
-            tx_ = min(max(dst_c[0] + q * half_w, page.x0 + half_w + 12),
-                      page.x1 - half_w - 12)
-            spots.append((tx_, ty_))
-    spots = [sp for sp in spots if cap_cost(sp) > -1.0]
-    if spots:
-        tx, ty = max(spots, key=cap_cost)
-    else:
-        # Nowhere outside: it goes inside the circle's own white, and then it
-        # has to FIT the circle - a plate wider than the lens would cut the
-        # lens in half, and a magnifier with its rim erased is not one.
-        tx, ty = dst_c[0], dst_c[1] - dst_r + size * 0.8
-        size *= min(1.0, dst_r * 1.55 / (2 * half_w))
-        half_w = len(cap) * size * 0.32
-    page.rect(tx - half_w - 10, ty - size * 0.32, 2 * half_w + 20, size * 1.4,
-              fill="#ffffff", stroke="none", width=0)
-    page.text((tx, ty), cap, size, anchor="middle", weight="bold")
-
-
 def info_panel(page, box, G):
     """The mattress panel. Every number is read off the model.
 
@@ -1871,12 +1816,35 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     style = "eksplodert" if len(keep) <= EXPLODE_MAX else "in situ"
     short = min(page.w, page.h)
     hover = short * EXPLODE_FRAC
-    aside = short * EXPLODE_SIDE_FRAC
+    float_d = short * EXPLODE_PLATE_FRAC * 0.7071      # per axis: x and y
     ink = combined.get("prior", []) + new_only
+    # What is drawn in BLACK. A screw is allowed to lie over the ghosted frame
+    # that is already standing - that is what ghosting is for - but not over
+    # the piece this step is about.
+    dark = new_only + combined.get("new", [])
     stacks = {}
-    # Where the drawn fasteners actually ended up, so a magnifier placed later
-    # cannot white one of them out.
+    # Where the drawn fasteners actually ended up, so a caption - or a
+    # magnifier placed later - cannot white one of them out.
     busy = []
+    captions = []
+    # The brackets are placed BEFORE anything is drawn: a bracket's own screws
+    # explode from where the bracket ended up, so they have to know its float
+    # before their own hop back is worked out.
+    floats = {}
+    if style == "eksplodert":
+        for m in keep:
+            if m["spec"]["kind"] == "plate":
+                floats[id(m["spec"])] = clear_diagonal(
+                    ink, view.xy(m["spec"]["anchor"]), float_d, float_d * 2.0)
+    plates = [m["spec"] for m in keep if m["spec"]["kind"] == "plate"]
+
+    def rides_on(f):
+        """The bracket this screw goes through, if it goes through one."""
+        for p in plates:
+            if p["jid"] == f["jid"] and screw_on_plate(p, f):
+                return floats.get(id(p), (0.0, 0.0))
+        return (0.0, 0.0)
+
     for m in sorted(keep, key=lambda q: (-q["p2"][1], q["p2"][0])):
         f = m["spec"]
         key = (round(m["p2"][0] / 6.0), round(m["p2"][1] / 6.0),
@@ -1884,54 +1852,91 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         stack = stacks.get(key, 0)
         stacks[key] = stack + 1
         if style == "eksplodert":
-            # Backed out along its own axis in MODEL space, so the pulled
-            # fastener stays on the line it travels no matter where the
-            # camera stands - and then lifted sideways on the PAPER, which no
-            # camera can undo. The hop back is measured off the projection: it
-            # is the fastener's own drawn length plus `hover`, so the point
-            # ends up exactly that far short of the hole whatever the angle.
             dx, dy = view.dir_xy(f["direction"])
             nrm = math.hypot(dx, dy)
             hole = view.xy(f["anchor"])
-            if nrm > 0.12:
-                ux, uy = dx / nrm, dy / nrm
-                if f["kind"] == "plate":
-                    body = 0.0        # a bracket lies BEHIND its own anchor
-                else:
-                    body = max(f["length"] * nrm,
-                               f["length"] * FORESHORTEN_FLOOR)
-                back = (body + hover) / nrm
-                step = aside
+            if f["kind"] == "plate":
+                # No axis, so no hop back: the float on the paper IS the whole
+                # explosion, and the dotted line is the leash to its seat.
+                poff = floats[id(f)]
+                shift = (0.0, 0.0, 0.0)
+                # The caption goes OUTBOARD of the float, away from the seat:
+                # parked on the leash side it reads as a label for the hole.
+                lead = math.hypot(*poff)
+                label_dir = (-poff[0] / lead, -poff[1] / lead)
             else:
-                # Driven straight into the paper: there is no axis to back out
-                # along, so the sideways lift is the whole explosion and it is
-                # given a little more room to be one.
-                ux, uy = 0.0, -1.0
-                back = 0.0
-                step = aside * 1.3
-            shift = tuple(-c * back for c in f["direction"])
-            sgn = clear_side(ink, hole, (ux, uy), (-uy, ux), back * nrm, step)
-            poff = (-uy * step * sgn, ux * step * sgn)
-            head, tip = draw_fastener(page, view, m, style, shift, stack, poff)
+                # Backed out along its own axis in MODEL space, so the pulled
+                # screw stays on the line it travels no matter where the camera
+                # stands. The hop is measured off the projection - the screw's
+                # own drawn length plus `hover` - so the point ends up exactly
+                # that far short of its hole whatever the angle, and body,
+                # dotted line and hole are one straight run.
+                poff = rides_on(f)
+                if nrm >= AXIS_ON_PAGE:
+                    ux, uy = dx / nrm, dy / nrm
+                    blen = max(f["length"] * nrm,
+                               f["length"] * FORESHORTEN_FLOOR)
+                    # The hop is the drawn body plus air, grown along the axis
+                    # if that is what it takes to find paper. Room is looked
+                    # for where the screw will actually BE - which for one
+                    # through a floated bracket is the bracket's hole, not the
+                    # seat it has left. Coaxial screws then queue up BEHIND one
+                    # another on the shared axis - never beside it - so every
+                    # one of them still points at the hole it belongs to.
+                    out = clear_back(dark, (hole[0] + poff[0],
+                                            hole[1] + poff[1]),
+                                     (ux, uy), blen, blen + hover,
+                                     hover, f["d"] * SCREW_FATTEN * 0.75)
+                    back = (out + (blen + hover) * stack) / nrm
+                    label_dir = (ux, uy)
+                else:
+                    # Driven straight into the paper. There is no axis on the
+                    # page to come out along and no honest direction an
+                    # explosion could take, so the ringed dot - which is the
+                    # convention for exactly this - stays where the hole is.
+                    back = 0.0
+                    label_dir = (0.0, -1.0)
+                shift = tuple(-c * back for c in f["direction"])
+            head, tip, body = draw_fastener(page, view, m, style, shift, 0,
+                                            poff)
             # Dotted, not dashed and not an arrow: this line is a fastener's
-            # travel, and the page keeps that convention to itself. It runs
-            # diagonally now - down the axis and back across the offset - and
-            # that short slanted path is the whole reason the screw is legible
-            # at a corner where three of them meet.
-            page.line(tip, hole, GREY, W_PHANTOM, dash=DASH_INSERT)
-            page.dot(hole, 6.0, colour=INK)
+            # travel, and the page keeps that convention to itself. For a screw
+            # it is a pure extension of the screw's own axis, and it leaves the
+            # POINT that was drawn - not the point the unstretched projection
+            # would have had, which is somewhere up inside the body. A
+            # bracket's line is the leash back to its true seat; a screw's runs
+            # to its hole in whatever it goes into, and if that is a floated
+            # bracket the line follows the bracket - which is where the screw
+            # actually goes in.
+            entry = hole if f["kind"] == "plate" else (hole[0] + poff[0],
+                                                       hole[1] + poff[1])
+            start = body[1] if body is not None else tip
+            if _apart(start, entry, 1.0):
+                page.line(start, entry, GREY, W_PHANTOM, dash=DASH_INSERT)
+            page.dot(entry, 6.0, colour=INK)
+            if f["kind"] != "plate":
+                assert_on_axis(view, f, body, tip, entry, poff, m["jid"])
             # The caption goes behind the HEAD, i.e. further from the hole -
             # the one direction that cannot land on the fastener itself.
-            label_at, label_dir = head, (
-                (dx / nrm, dy / nrm) if nrm > 1e-6 else (0.0, -1.0))
-            busy += [head, tip, ((head[0] + tip[0]) / 2,
-                                 (head[1] + tip[1]) / 2)]
+            label_at = head
+            mine = [head, tip, ((head[0] + tip[0]) / 2,
+                                (head[1] + tip[1]) / 2), entry]
         else:
             draw_fastener(page, view, m, style, stack=stack)
             label_at = m["p2"]
             label_dir = (0.0, -1.0)
-            busy.append(m["p2"])
-        mark_label(page, label_at, label_dir, m["letter"], m["per"], box)
+            mine = [m["p2"]]
+        busy += mine
+        captions.append((label_at, label_dir, m["letter"], m["per"], mine))
+
+    # THE CAPTIONS, once every fastener is down. Placing each one as its own
+    # fastener was drawn is what let the second badge on a crowded corner park
+    # itself neatly on top of the ninth screw - which had not been drawn yet,
+    # so nothing objected. A caption that sits on a fastener it does not name
+    # is worse than no caption: it is a wrong one.
+    for label_at, label_dir, letter, per, mine in captions:
+        others = [p for p in busy if p not in mine]
+        mark_label(page, label_at, label_dir, letter, per, box, others)
 
     # Leaders from the inset to the joints, or one magnifier when there is
     # only a location or two to point at.
@@ -1956,11 +1961,13 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                                        inset_h),
                           m["p2"], GREY, W_LEAD, dash="16 14")
 
-    # A bracket nobody can place from the overview gets a magnifier of its
-    # own: the 40x40x40 under the table ledger, drawn where it sits.
-    if any(m["jid"] == "J12" for m in keep):
-        ledger_bracket_detail(page, view, keep, new_only,
-                              combined.get("prior", []), box, note_box, busy)
+    # The J12 bracket used to need a magnifier of its own here: at page scale
+    # it was 40 mm of steel behind a 1794 mm ledger and nobody could place it.
+    # It does not need one any more. The bracket now floats off its seat on a
+    # short dotted leash with its two screws coming out along their own axes -
+    # one into the post, one up into the ledger - and that says everything the
+    # blown-up circle said, in the place it is actually about, without a lens
+    # covering a quarter of the drawing to say it.
 
     # Before / after: the frame is built flat and then stood up.
     if st.get("thumbnails"):

@@ -204,9 +204,9 @@
 <text x="108.53" y="-32.73" font-family="Helvetica, Arial, sans-serif" font-size="31.25" font-weight="bold" text-anchor="start" fill="#111111">2x</text>
 <path d="M246.94,-113.63 L246.94,102.98" fill="none" stroke="#9a9a9a" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 13"/>
 <circle cx="246.94" cy="102.98" r="6.5" fill="#111111"/>
-<circle cx="216.44" cy="-195.13" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
-<text x="216.44" y="-185.13" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">A</text>
-<text x="247.44" y="-184.63" font-family="Helvetica, Arial, sans-serif" font-size="31.25" font-weight="bold" text-anchor="start" fill="#111111">6x</text>
+<circle cx="146.94" cy="-113.63" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
+<text x="146.94" y="-103.63" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="#111111">A</text>
+<text x="177.94" y="-103.13" font-family="Helvetica, Arial, sans-serif" font-size="31.25" font-weight="bold" text-anchor="start" fill="#111111">6x</text>
 <path d="M-240.63,-329.47 L-240.63,-112.86" fill="none" stroke="#9a9a9a" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 13"/>
 <circle cx="-240.63" cy="-112.86" r="6.5" fill="#111111"/>
 <circle cx="-271.13" cy="-368.47" r="25" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>
