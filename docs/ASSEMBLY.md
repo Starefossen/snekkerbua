@@ -479,7 +479,7 @@ sofaputene har et spor å folde seg ned i.
 | | Hva | Ca. pris | Merknad |
 |---|---|---|---|
 | **a** | Industrisøm, skumplate 12 cm kvalitet 35P, 120 × 200, kappes til | ≈ 2 590 kr | Én plate dekker alle tre putene. Fastest og mest «møbelaktig». Du kapper selv, eller får det kappet |
-| **b** | IKEA ÅGOTNES 80 × 200 × 10, kappes til | ≈ 450 kr | Klart billigst. 10 cm er i tynneste laget som sitteunderlag — legg en fastere topper på de to benkeputene |
+| **b** | Billig skummadrass 80 × 200 × 10 fra en møbelkjede, kappes til | ≈ 450 kr | Klart billigst. 10 cm er i tynneste laget som sitteunderlag — legg en fastere topper på de to benkeputene |
 | **c** | Kaldskum 39K, eller mål-tilpasset fra maaho.com | ≈ 4 299 kr | Dyrest, men du får riktig mål og riktig fasthet levert, uten å kappe |
 
 **Alle tre trenger trekk.** Skum uten trekk smuldrer og blir skittent. Regn med

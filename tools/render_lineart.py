@@ -2086,9 +2086,9 @@ def magnifier(page, src, dst_c, dst_r, src_r, new_only, prior_lines):
 def info_panel(page, box, G):
     """The mattress panel. Every number is read off the model.
 
-    IKEA writes a maximum here. This bed needs BOTH bounds, and they pull
-    opposite ways off the same two fixed heights - the slat top the mattress
-    lies on, and the guard above it:
+    A flat-pack manual writes a single maximum here. This bed needs BOTH
+    bounds, and they pull opposite ways off the same two fixed heights - the
+    slat top the mattress lies on, and the guard above it:
 
         too THIN  and the gap under the lower guard band opens past the
                   EN 747 entrapment limit. The arrow is UNDER the mattress.
