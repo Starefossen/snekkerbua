@@ -331,26 +331,102 @@ def bent_bar(centerline, thickness: float, depth: float,
 
 
 # --------------------------------------------------------------------------
-# Skruer
+# Skruer - ÉN SILHUETT, ETT STED
 # --------------------------------------------------------------------------
+# Katalogglyfen i beslagtabellen og skruen som tegnes inn i en stegside er det
+# samme objektet, og de er nå den samme KONTUREN. `screw_profile()` er den ene
+# beskrivelsen av hvordan en forsenket treskrue ser ut fra siden - i skruens
+# egne koordinater, hodeflaten i x = 0, drivaksen på y = 0, spissen i
+# x = length - og begge kallerne legger den inn i sitt eget system.
+#
+# Det var to før: tools/render_lineart.py hadde sin egen sju-punkts kapsel med
+# en flens i den ene enden og en pigg i den andre, og på en stegside leste den
+# som en PIL, ikke som en skrue - mens panelet ved siden av viste den ekte
+# silhuetten. To billedspråk for én ting er den ene feilen en
+# monteringsanvisning ikke har råd til, for leseren bruker formen til å kjenne
+# igjen delen. Nå finnes formen ett sted, og det som skiller sidene fra
+# hverandre er BARE hva rasteret har plass til (se `thread_pitch`).
+HEAD_DIA_RATIO = 1.95       # hodediameter, i nominelle diametre
+CORE_DIA_RATIO = 0.72       # gjengens kjerne, samme
+TIP_RATIO = 1.7             # spissens lengde, samme
+HEAD_H_FRAC = 0.92          # forsenkningens høyde, av (hode - kjerne)/2
+
 
 def _head_dia(d: float) -> float:
-    return 1.95 * d
+    return HEAD_DIA_RATIO * d
 
 
-def _screw_body(d: float, length: float, threaded_frac: float = 0.72,
-                pointed: bool = True):
-    """Skrue liggende, hode til venstre, spiss til høyre. Origo i hodets
-    ytterflate, aksen på y = 0. Returnerer (elementer, bbox)."""
+# HVOR FIN EN GJENGE FÅR TEGNES - samme regel som fyllkoden har, og av samme
+# grunn (se FILL_MIN_PERIOD_PX). En gjenge er en tekstur, og en tekstur koder
+# bare så lenge leseren ser de enkelte tennene. Under et par piksler per tann
+# folder kantutjevningen tann og bunn sammen til en grå ullen kant, og da har
+# siden ikke fått en skrue - den har fått støy langs en kontur.
+#
+# Perioden er derfor den GROVESTE av formkravet (1,15 x diameteren, som er den
+# overtydelige stigningen glyfen alltid har tegnet) og oppløsningskravet
+# (en TANN, altså en halv periode, aldri under THREAD_MIN_PX piksler der
+# flaten faktisk vises). Og blir det da for få tenner igjen på den gjengede
+# strekningen til at det leses som en gjenge, tegnes ingen: silhuetten faller
+# tilbake på sin egen omhyllingskurve - samme hode, samme kjerne, samme spiss,
+# bare uten bølgen. Det er én nedgradering, ikke et annet billedspråk.
+THREAD_MIN_PX = 4.5         # én tann - en halv periode - der den vises minst
+THREAD_MIN_PITCHES = 2.5    # færre hele omdreininger enn dette: ingen gjenge
+
+
+def thread_pitch(d: float, threaded_len: float,
+                 px_per_unit: float | None = None) -> float:
+    """Gjengedelingen en tegnet skrue får, eller 0,0 der rasteret spiser den.
+
+    `d`            SANN diameter, i kallerens egne enheter
+    `threaded_len` hvor lang den gjengede strekningen er, samme enheter
+    `px_per_unit`  piksler per enhet der skruen vises minst; None = spør ikke
+
+    SANN diameter, ikke den tegnede. En stegside overdriver bredden på et
+    festemiddel og lar LENGDEN stå - det er hele licensen (layout.SCREW_FATTEN)
+    - og stigningen er et mål LANGS skruen. Regnes den av den feite bredden,
+    dobles den sammen med bredden mens skruen beholder sin lengde, og en 5x40
+    som i katalogglyfen har sju omdreininger får to på siden. Da er det ikke en
+    gjenge lenger, det er tre hakk. Delingen er den samme 1,15 x d overalt, og
+    det er derfor skruen i tegningen og skruen i tabellen ser like ut.
+    """
+    pitch = max(1.15 * d, 5.5)
+    if px_per_unit:
+        pitch = max(pitch, 2.0 * THREAD_MIN_PX / px_per_unit)
+    if threaded_len < pitch * THREAD_MIN_PITCHES:
+        return 0.0
+    return pitch
+
+
+def screw_style(name: str) -> tuple[float, bool]:
+    """(gjengeandel, spiss) for ett handelsnavn - den samme oppdelingen
+    build_fastener() gjør, slik at skruen på tegningen er den skruen glyfen
+    viser og ikke en generisk pinne (PRAKSIS §1)."""
+    key = _ascii_fold(name)
+    if key.startswith("senkhodeskrue"):
+        return (0.86, False)
+    if key.startswith("veggfeste"):
+        return (0.66, True)
+    return (0.70, True)
+
+
+def screw_profile(d: float, length: float, threaded_frac: float = 0.72,
+                  pointed: bool = True, pitch: float | None = None):
+    """Silhuetten som punktliste, lukket, i skruens egne koordinater.
+
+    `pitch`  None = glyfens egen grove deling; 0 = ingen gjenge, bare
+             omhyllingskurven; ellers den delingen kalleren har regnet ut med
+             `thread_pitch()`.
+    """
     D = _head_dia(d)                    # hodediameter
-    ds = 0.72 * d                       # kjernediameter
-    hh = (D - ds) / 2.0 * 0.92          # hodehøyde, forsenket 90 grader
-    tip = 1.7 * d if pointed else 0.0
+    ds = CORE_DIA_RATIO * d             # kjernediameter
+    hh = (D - ds) / 2.0 * HEAD_H_FRAC   # hodehøyde, forsenket 90 grader
+    tip = TIP_RATIO * d if pointed else 0.0
     smooth_end = hh + (length - hh) * (1.0 - threaded_frac)
-    xs = smooth_end
+    xs = min(smooth_end, length)
     # Grov gjengedeling: manualen viser glyfene rundt 1 px per mm, så en
     # naturtro stigning ville gå i grøt. Tennene tegnes derfor overtydelige.
-    pitch = max(1.15 * d, 5.5)
+    if pitch is None:
+        pitch = max(1.15 * d, 5.5)
     x_taper = length - tip
 
     def env(x, radius):
@@ -360,15 +436,25 @@ def _screw_body(d: float, length: float, threaded_frac: float = 0.72,
         return radius * f
 
     top = [(0.0, -D / 2.0), (hh, -ds / 2.0), (xs, -ds / 2.0)]
-    k = 0
-    x = xs
-    while x < length - 1e-6:
-        x = min(xs + k * pitch / 2.0, length)
-        radius = ds / 2.0 if k % 2 == 0 else d / 2.0
-        top.append((x, -env(x, radius)))
-        k += 1
-        if k > 4000:
-            break
+    if pitch <= 0.0:
+        # Ingen gjenge: skaftet går ut i krestdiameteren og spissen tar det
+        # derfra. Samme omhyllingskurve som den gjengede har, uten bølgen.
+        top.append((xs, -env(xs, d / 2.0)))
+        if pointed:
+            top.append((x_taper, -d / 2.0) if x_taper > xs
+                       else (xs, -env(xs, d / 2.0)))
+        else:
+            top.append((length, -d / 2.0))
+    else:
+        k = 0
+        x = xs
+        while x < length - 1e-6:
+            x = min(xs + k * pitch / 2.0, length)
+            radius = ds / 2.0 if k % 2 == 0 else d / 2.0
+            top.append((x, -env(x, radius)))
+            k += 1
+            if k > 4000:
+                break
     if pointed:
         top.append((length, 0.0))
     else:
@@ -379,6 +465,16 @@ def _screw_body(d: float, length: float, threaded_frac: float = 0.72,
         outline = top + bottom
     else:
         outline = top + bottom[1:]
+    return outline, (0.0, -D / 2.0, length, D / 2.0)
+
+
+def _screw_body(d: float, length: float, threaded_frac: float = 0.72,
+                pointed: bool = True):
+    """Skrue liggende, hode til venstre, spiss til høyre. Origo i hodets
+    ytterflate, aksen på y = 0. Returnerer (elementer, bbox)."""
+    D = _head_dia(d)
+    hh = (D - CORE_DIA_RATIO * d) / 2.0 * HEAD_H_FRAC
+    outline, _bb = screw_profile(d, length, threaded_frac, pointed)
 
     elems = [poly(outline, close=True)]
 
