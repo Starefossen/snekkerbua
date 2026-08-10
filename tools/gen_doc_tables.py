@@ -1376,14 +1376,22 @@ def emit_montering(G, root, steps, idx):
              "stegene som setter tjue-tretti like skruer — spilene — er de "
              "tegnet **der de havner** i stedet: hodet fylt, og den delen "
              "som ligger begravd i treet **stiplet**.\n\n")
-    L.append("Står det **2×** ved et festemiddel, står det merket for to på "
-             "samme sted — tegningen viser aldri færre festemidler enn "
-             "steget bruker, og den slår aldri sammen på tvers av to ulike "
-             "ledd. **Bokstaven i ringen** (Ⓐ, Ⓑ …) sier hvilken av stegets "
-             "typer det er, og går igjen i tabellen under bildet. **Ruta i "
-             "hjørnet** viser leddet i snitt, med delene i riktig innbyrdes "
-             "størrelse, skravur på snittflatene og festemidlene i full "
-             "lengde — hodet på skrusiden, spissen inne i mottakerdelen.\n\n")
+    L.append("**Bokstaven i ringen** (Ⓐ, Ⓑ …) sier hvilken av stegets typer "
+             "et festemiddel er, og går igjen i tabellen under bildet. Den "
+             "sitter alltid **på** skruen den gjelder, eller har en tynn "
+             "strek bort til den — den peker aldri i løse lufta. Skruen bærer "
+             "den samme bokstaven én gang til, som **fyll** i silhuetten, så "
+             "du ser hvilken av dem det er uten å lese: åpen, skravert, "
+             "krysskravert, heldekt. Hele koden står på [beslagsiden]"
+             "(#beslag).\n\n")
+    L.append("**Antallet står ikke i bildet.** Festemidlene er tegnet ett for "
+             "ett, der de går — bare to som havner nøyaktig oppå hverandre på "
+             "papiret er tegnet én gang. Hvor mange det er i alt står i ruta i "
+             "hjørnet og i tabellen under bildet. **Ruta i hjørnet** viser "
+             "leddet i snitt, med "
+             "delene i riktig innbyrdes størrelse, skravur på snittflatene og "
+             "festemidlene i full lengde — hodet på skrusiden, spissen inne i "
+             "mottakerdelen.\n\n")
     L.append("| Slik | Ikke slik | |\n|:---:|:---:|---|\n")
     for do, dont, line in PREP:
         yes = (_img("img/ikon/" + pikto[do], 72, do) + " "

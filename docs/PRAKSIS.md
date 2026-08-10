@@ -179,11 +179,16 @@ er fortsatt brøkdeler av SIDEN, for det er det de er. Regelen er den samme som
 ellers i repoet: skal en strek bli tykkere, endres forholdstallet ett sted, og
 alle tolv sidene følger etter.
 
-Én frihet er tatt utover det, og det er den samme enhver beslagtegning tar: **diameteren
-er overdrevet**, med faktor `SCREW_FATTEN`. En 6 mm skrue på en to meter bred
-side er tynnere enn streken sengen selv er tegnet med. **Lengden er sann**, med
-et gulv på `FORESHORTEN_FLOOR` mot ren forkortning: en skrue drevet inn i
-papiret skal se kort ut, men den skal fortsatt se ut som en skrue.
+Én frihet er tatt utover det, og det er den samme enhver beslagtegning tar:
+**diameteren er overdrevet**, med faktor `SCREW_FATTEN` — som står i
+`tools/layout.py` sammen med pennen, fordi det er én knapp for hvor stort et
+festemiddel tegnes. En 6 mm skrue på en to meter bred side er tynnere enn
+streken sengen selv er tegnet med. Faktoren er 3,0: på 2,2 var en 5×40 og en
+6×90 elleve og tretten millimeter brede på en 1250 mm side, og forskjellen var
+en avrundingsfeil. Nå er de femten og atten, og typen leses av silhuetten før
+bokstaven leses. **Lengden er sann**, med et gulv på `FORESHORTEN_FLOOR` mot
+ren forkortning: en skrue drevet inn i papiret skal se kort ut, men den skal
+fortsatt se ut som en skrue.
 
 ### Merking og sammenslåing
 
@@ -191,17 +196,65 @@ papiret skal se kort ut, men den skal fortsatt se ut som en skrue.
   tabellen under bildet. Rekkefølgen er «flest først, uavgjort brytes på navn»,
   og både `gen_doc_tables.py` og `render_lineart.py` regner den ut av de samme
   radene, så de kan ikke bli uenige.
+* **Fyllkoden: bokstaven én gang til, som mønster.** Et hjørne med fire
+  festemidler i tvang leseren til å finne og lese et 5 mm tegn for å se hvilken
+  skrue som var hvilken. Hver bokstav har derfor sitt eget fyll, og skruens
+  silhuett bærer det — på stegtegningen, i snittene i innsettpanelet, i
+  panelraden og i stegets egen festetabell:
+
+  | | Fyll | Hvorfor der |
+  |---|---|---|
+  | Ⓐ | åpen | flest av — sekston heldekte skruer ville sortnet siden |
+  | Ⓑ | skravert | |
+  | Ⓒ | krysskravert | grovere rute enn Ⓑ, ellers er de to bare to gråtoner |
+  | Ⓓ | heldekt | sjeldnest, og oftest et vinkelbeslag, som er heldekt fra før |
+
+  Koden er redundant med vilje: formen skiller 5×40 fra 6×120, men ikke 6×80
+  fra 6×90; bokstaven krever at leseren finner og leser et lite tegn; sammen
+  holder de hverandre oppe, og ingen av dem trenger farge.
+
+  **Settet er bevist, ikke valgt.** `python tools/render_lineart.py
+  --fill-contrast` skriver `docs/preview/fyllkontrast.png`: hver kode i den
+  størrelsen den minste bokstavsiden faktisk gir en skrue, i innsettets
+  størrelse, og i halv størrelse som stresstest. Prøven avgjorde to ting som
+  ikke lot seg resonnere fram — **hodet alene kan ikke bære koden** (et
+  forsenket hode er en 5 mm flens, sju piksler på siden, og der er alle
+  mønstrene like, så hele silhuetten fylles), og **krysskraveringen må ha
+  grovere rute enn skraveringen**. Skal settet endres, endres prøven først.
+  Beslagene står utenfor: en vinkel er allerede en heldekt plate, og et mønster
+  oppå den ville lest som en tredje slags flate.
 * **En stegside med bare én type festemiddel får ingen bokstaver.** Ikonet i
-  tabellen er allerede hele svaret.
-* **Ett merke per tegnet kropp (R4), og `2×` bare når de to kroppene faktisk
-  ligger oppå hverandre (R2).** Spørsmålet er ikke hvor langt fra hverandre to
-  festemidler er — det er om de to SILHUETTENE siden tegner havner på samme
-  papir. To som gjør det kan bare tegnes én gang, og da bærer merket antallet.
-  To som ikke rører hverandre er to ting leseren kan telle, selv 30 mm fra
-  hverandre, og da er de to merker. Blir det trangt, er svaret ikke å slå dem
-  sammen, men det ene trekket et eksplodert festemiddel uansett har: lenger ut
-  langs sin egen akse. Begge deler er asserter som måler blekket
+  tabellen er allerede hele svaret — og da er det heller ingen fyllkode, for en
+  kode med bare én verdi koder ingenting.
+* **Antallet står ikke i bildet.** Hver skrue steget driver tegnes som sin egen
+  kropp, så «2×» ved siden av én av dem sier ingenting bildet ikke sier.
+  Antallene står i innsettpanelet og i stegets tabell, der tall leses i stedet
+  for å telles. Kontrollen svekkes ikke av det: `check_coverage` teller
+  KROPPENE siden har satt av, ikke tallene den har trykt.
+* **Ett merke per tegnet kropp (R4), og bare én kropp der to silhuetter faller
+  sammen (R2).** Spørsmålet er ikke hvor langt fra hverandre to festemidler er
+  — det er om de to SILHUETTENE siden tegner havner på samme papir. To som gjør
+  det kan bare tegnes én gang, og det ene merket står da for begge (antallet
+  ligger i panelet). To som ikke rører hverandre er to ting leseren kan telle,
+  selv 30 mm fra hverandre, og da er de to merker. Blir det trangt, er svaret
+  ikke å slå dem sammen, men det ene trekket et eksplodert festemiddel uansett
+  har: lenger ut langs sin egen akse. Begge deler er asserter som måler blekket
   (`assert_bodies_apart`).
+* **Kontakt eller leder (R6).** Et merke skal enten RØRE kroppen det navngir —
+  sitte på hodet som et flagg på en stang — eller ha en tynn strek inn til den.
+  Det finnes ingen tredje plass. Et merke som svever ved siden av en klynge er
+  ikke en anvisning, det er en gåte, og på steg 5 sto det tre av dem og gjettet
+  samtidig. Regelen er priset inn i `layout.place()` — kontakt er verdt mer enn
+  hvilken som helst mengde hvitt papir — og `assert_badges_anchored()` måler
+  den etterpå av blekket: rører merket sin egen kropp, ender lederen på den, og
+  starter den i merkets egen rand.
+* **Ett merke per løp (R7).** To eller flere festemidler av samme slag, i samme
+  ledd, som ligger etter hverandre uten noe fremmed imellom, bærer ett merke.
+  Åtte like bokstaver nedover en stigevange er ikke åtte opplysninger, det er
+  én, gjentatt til den blir tapet. Vilkårene er strenge nettopp fordi merkets
+  hele verdi er at det er entydig: samme bokstav, samme ledd, kroppene i en
+  kjede, og ingenting fremmed innimellom. Merket som blir stående er det første
+  i sidens egen tegnerekkefølge, og det er fortsatt underlagt R6.
 * **Sammenslåing går aldri på tvers av ledd.** På steg 3 møtes endebjelkens to
   6×90 og bæreklossens ene i det samme hjørnet, og «3×» der ville sendt
   byggeren til feil hull. To ledd, to merker. Regelen er ett flagg i
@@ -211,12 +264,15 @@ papiret skal se kort ut, men den skal fortsatt se ut som en skrue.
 * **Et merke ligger nærmere sitt eget feste enn noe annet (R5).** Et badge
   ved siden av feil skrue er ikke en trang tegning, det er en feil anvisning.
   Regelen er en assert som måler blekket: merkene leses ut av `Page.record`
-  der de LANDET, og hvert av dem må ha sitt eget feste som nærmeste kropp.
+  der de LANDET, og hvert av dem må ha sitt eget feste som nærmeste kropp —
+  målt mot kroppenes egne kapsler, ikke mot punkter i nærheten av dem.
 * **Innsettpanelet har ingen lederlinjer (R3).** Bokstaven knytter allerede
   merket til raden i panelet, og den gjør det for alle merkene — ikke for de
   fire som tilfeldigvis lå nærmest. Lupen er noe annet og blir stående: den
   bærer virkelig strektegning, og den korte lederen sier hvilket sted som er
-  forstørret.
+  forstørret. R6-lederen er en tredje ting igjen: den er kort, den går fra ett
+  merke til den ene kroppen merket navngir, og den finnes bare der merket ikke
+  fikk plass oppå den.
 * **Ingenting forsvinner.** Et merke som blir trengt bort gir antallet sitt til
   merket som trengte det bort, og `check_coverage` sammenligner totalen med
   stegets egen tabell. Og et merke som ble slått sammen slik at en DEL mistet
@@ -240,6 +296,13 @@ papiret skal se kort ut, men den skal fortsatt se ut som en skrue.
   lisensfil dekker meningsfullt. (Fem ubrukte ble slettet i denne runden:
   `baby`, `hammer`, `pencil`, `person-standing`, `phone`.)
 * **Merkebokstavene** er ett tegn i en sirkel, samme radius overalt.
+* **De kodede glyfene.** Der et steg deler ut bokstaver, skrives skrueglyfen
+  også i sin egen fyllkode (`treskrue-5x40-hatch.svg`), og det er den fila både
+  innsettpanelets rad og stegets tabell bruker. Hvilke par som finnes bestemmes
+  av STEGENE, for det er der bokstavene deles ut; et par ingen side viser er en
+  fil ingen leser. Beslagsiden får i tillegg `fyllkode.svg` — de fire kodene i
+  full størrelse, én per bokstav — og det er der koden læres. På en stegside er
+  den en påminnelse.
 * Alt skrives både som `.svg` (originalen) og `.png` (det Markdown-en bygger
   inn), så manualen leses på en maskin uten noe av dette installert.
 
