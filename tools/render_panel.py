@@ -435,7 +435,11 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         letter = letters.get(b["name"])
         at = (gx + gwd / 2, gy - RL.T.BADGE_R * 1.35)
         if letter:
-            RL.badge(page, at, letter)
+            # Under the glyph and touching it: R6 holds for every badge on
+            # this page too, and here the element is the beslag's own drawing.
+            RL.badge(page, at, letter, owner=(b["name"], gx, gy),
+                     body=((gx + gwd / 2, gy), (gx + gwd / 2, gy + ghd),
+                           gwd / 2))
         marks.append(dict(name=b["name"], per=1, letter=letter,
                           p3=b["seat"], parts=(panel,)))
 
