@@ -463,6 +463,20 @@ def foreshorten_floor(length):
 #   EXPLODE_FRAC       the air between point and hole, on top of the screw's
 #                      own drawn length. Just enough to read as "not in yet".
 #
+# HOW MUCH AIR IS ENOUGH. The first drawings were made at 0.038 of the short
+# side - 42 mm on a 1114 mm page, more than a whole 5x40 - and the answer was
+# measured on the paper rather than argued: at that gap the eye has to TRAVEL
+# from a drawn point to a hole across empty white, and on a page with six of
+# them it does that six times. The gap only has to be big enough that the point
+# is visibly not in the hole yet; every millimetre past that is distance the
+# reader crosses for nothing. 0.024 is 27 mm, about two thirds of the screw's
+# own drawn body, which reads as "just short of home" at a glance and still
+# leaves the dotted line three or four dashes long. The floor is the receiving
+# edge: the gap may not shrink so far that the point touches the timber it is
+# about to enter, and clear_back() is what keeps it off - it samples the body
+# in the occupancy field and hops further out along the SAME axis where the
+# close-in position is taken.
+#
 # Two screws whose tips land on the same page point - the camera looking down
 # their shared axis - are separated by QUEUEING them, each one a body further
 # back along that same axis. Both of them stay on the line.
@@ -478,8 +492,8 @@ def foreshorten_floor(length):
 #
 # Both are fractions of the page's short side, so a cropped page gets the same
 # picture at its own scale.
-EXPLODE_FRAC = 0.038
-EXPLODE_PLATE_FRAC = 0.055
+EXPLODE_FRAC = 0.024
+EXPLODE_PLATE_FRAC = 0.024
 STACK_STEP = 0.6               # coaxial screws, as a fraction of the head
 
 
@@ -775,7 +789,27 @@ def _centroid(pts):
 # once, until every one of its screws has its own paper. Four 5x40 and an angle
 # in the stub-foot corner of step 5 need the second beat; J12's two need the
 # first.
-BRACKET_HOPS = (1.0, 1.4, 1.9, 2.5)
+#
+# HOW LONG THE BEAT IS. EXPLODE_PLATE_FRAC, and it came down from 0.055 of the
+# page's short side to 0.024 - 61 mm to 27 mm on the step-1 page - because a
+# group whose every step is longer than the parts in it has stopped being one
+# unit. At 61 mm the J12 corner spread a leash, a bracket and two screw hops
+# over more than 200 mm of paper, and the reader met four objects scattered
+# round a corner instead of one corner coming apart. The beat is now shorter
+# than the 40 mm screws it spaces: the bracket sits just clear of its seat,
+# each screw just clear of the bracket, and seat, bracket and points are inside
+# one glance. Nothing else about the rule moved - the steps are still equal,
+# still measured off the ink, and a group that needs room still buys it by
+# taking a LONGER beat rather than by breaking the rhythm.
+#
+# The LADDER grew two rungs when the base shrank, and it had to: every rung is
+# a multiple of the base, so a base cut to 44 % cuts the reach of all of them
+# to 44 %. The stub-foot corner on step 5 - four 5x40 and an angle - needs
+# about 86 mm before its own screws are clear of each other, and 86 mm was the
+# second rung of a 61 mm beat where it is the fifth of a 27 mm one. Same
+# ratios, same rule, two more places to go; what a group may never do is take
+# a beat that is not one of these.
+BRACKET_HOPS = (1.0, 1.4, 1.9, 2.5, 3.2, 4.0)
 
 
 def group_shift(view, f, d):
@@ -864,6 +898,28 @@ def assert_float_direction(page, view, plate, want, jid):
         f"disassembly_dir()")
 
 
+# A LONGER HOP HAS TO BUY SOMETHING. clear_back() returns the shortest hop
+# that clears `want`; the question this answers is what it should do when NO
+# hop on the axis clears it, which is the normal case rather than the odd one.
+# A screw driven along a rail travels inside that rail's own silhouette for the
+# whole of its journey, and on a page where every line is black - step 1 has no
+# ghosted layer at all - there is no white anywhere on that axis to find.
+#
+# The old answer was "then take the roomiest", with no floor under how much
+# roomier. Measured on step 1: the four candidates for a 6x90 into the post
+# offered 0.78, 0.12, 1.03 and 1.06 mm of paper, so the screw went 80 mm
+# further out than it had to in exchange for a quarter of a millimetre nobody
+# can see - and it landed in the slot the NEXT screw into the same corner
+# wanted, which then queued a whole body length past both of them. Two screws
+# 25 mm apart in the model ended up 107 and 240 mm out.
+#
+# A hop the reader can see has to buy clearance the reader can see. A candidate
+# only displaces the incumbent by beating it by a quarter of what was asked
+# for; short of that the screw stays at the beat it started on and the drawing
+# keeps its point next to its hole.
+ROOM_GAIN = 0.25
+
+
 def clear_back(occ, hole, u, body, base, step, want, tries=4):
     """How far back along its own axis an exploded screw has to sit.
 
@@ -871,9 +927,11 @@ def clear_back(occ, hole, u, body, base, step, want, tries=4):
     same only freedom, that float_plate() leaves a bracket. Its body is
     sampled at each candidate distance in the occupancy field and the SHORTEST
     hop that finds white paper for the whole of it wins; if none does, the
-    roomiest one does. Only the BLACK line work counts - a screw is welcome to
-    lie across the ghosted frame that is already standing, and on a page where
-    everything is new there is nothing to be precious about anyway.
+    shortest one that is meaningfully roomier than the first does, and where
+    nothing is - see ROOM_GAIN - the first one stands. Only the BLACK line work
+    counts: a screw is welcome to lie across the ghosted frame that is already
+    standing, and on a page where everything is new there is nothing to be
+    precious about anyway.
 
     What it never does is lean. A screw that cannot find room on its axis
     comes further out along it, and if there is still no room it stays where
@@ -889,7 +947,7 @@ def clear_back(occ, hole, u, body, base, step, want, tries=4):
                    for t in (0.0, 0.35, 0.7, 1.0))
         if room >= want - 1e-9:
             return d
-        if best is None or room > best + 1e-9:
+        if best is None or room > best + want * ROOM_GAIN:
             best, best_d = room, d
     return best_d
 
@@ -1815,6 +1873,112 @@ CAP_FOREIGN = 400.0
 CAP_TAGS = ("panel", "mark", "badge")
 
 
+# ---------------------------------------------------------------------------
+# R10 - THE CHAIN CORRIDOR IS NOT A PLACE FOR A LETTER
+# ---------------------------------------------------------------------------
+# R9 draws a bracket group as ONE movement outward - seat, bracket, each of its
+# screws, all in one beat - and the dotted links between them are the only
+# thing on the paper saying that those four objects are one disassembly. A
+# badge dropped into the middle of that fan cuts it. On the J12 corner it did
+# exactly that: the D badge landed between the floated bracket and the 5x40
+# coming up underneath it, so a reader following the chain met a letter where
+# the next link should have been - and the one screw whose direction the corner
+# exists to show, the one driven from BELOW, was the link that got hidden.
+#
+# It is not a crowding problem and it does not get a crowding weight. The
+# corridor is a place a label may not be, and it is measured off the ink:
+#
+#     the group's LINKS - the recorded tethers themselves, seat to bracket and
+#     bracket to each of its screws - and no badge circle may touch one.
+#
+# THE CONVEX REGION WAS WRITTEN FIRST, and the fan is why it is not what gets
+# measured. The obvious statement of this rule is "stay off the convex hull of
+# seat, bracket and screw points", and it turns out to be unsatisfiable for the
+# one badge it was written for. A bracket's links leave in every direction at
+# once - the seat on one side, its own screws on the other two or three - so
+# the bracket lies INSIDE its own hull, and a badge outside the hull can never
+# touch the bracket it names. R6 would have to be broken to obey R10.
+#
+# It is worse than that, and the placer said so when the hull rule was run: on
+# the stub-foot corner of step 5 every candidate that got the D badge out of
+# the hull put one of the corner's own 5x40 nearer to it than the bracket was,
+# which is R5, which outranks everything here and should. The badge was priced
+# back into the fan it had just been evicted from. A rule with no legal move is
+# not a rule.
+#
+# The links carry the whole of what the region was for. A 49 mm badge in a
+# corner whose beat is 27 mm cannot stand anywhere in the fan without lying
+# across a link, so keeping off the links empties the fan by itself; and where
+# there really is room between two links - a wide corner, a long beat - a
+# letter in that gap covers nothing and hides nothing, which is the case the
+# hull would have refused for no gain.
+#
+# What is NOT covered is a LEADER from a badge that had to step out: it ends on
+# the body it names, so it reaches the chain by definition. A hairline touching
+# a link is not a letter sitting on it, and a rule that forbade it would forbid
+# labelling a bracket at all.
+CAP_CORRIDOR = 250.0
+
+
+def chain_corridors(page):
+    """R10: every link of every bracket group on the page, as a segment.
+
+    Read off page.record once the page has drawn all its fasteners and before
+    it has placed a single caption - the one moment when every chain is whole
+    and nothing is standing in one. Every badge is then asked about every link
+    on the page: a letter belonging to one corner has no more business lying
+    on another corner's chain than on its own.
+    """
+    return [r["seg"] for r in page.record
+            if r["kind"] == "tether" and r.get("group") is not None]
+
+
+def corridor_gap(p, links):
+    """How far a point is from the nearest chain link."""
+    return min((layout._seg_dist(p, a, b) for a, b in links),
+               default=float("inf"))
+
+
+def badge_gap_dir(view, poff, riders):
+    """Which way a BRACKET's badge leaves the plate. R10's other half.
+
+    A rule that only forbids is a rule the page obeys by failing. The badge of
+    a bracket used to set off straight outboard, along the float - which is
+    the one direction the group's own screws also travel in, so it walked down
+    the middle of the fan and had to be evicted from every candidate it was
+    offered. R5 then sent it back: a bracket is 40 mm of steel with four of its
+    own screws round it, so any badge that leaves the plate has one of THEM
+    nearer than the plate, and the two rules between them left the letter
+    nowhere to stand.
+
+    So the badge is given the one direction that is not a link. Every link
+    leaves the plate on a known bearing - the leash back to the seat, and each
+    rider backwards along its own drive axis - and those bearings are known
+    here, before anything is drawn, because they are the group's own rule and
+    not a property of the paper. The badge sets off through the middle of the
+    WIDEST gap between two consecutive bearings: touching its plate, so R6 and
+    R5 are satisfied where they are easiest to satisfy, and as far from every
+    link as that corner allows, which is what R10 asks. Ties go to the lowest
+    bearing, so the same corner always sends its letter the same way.
+    """
+    bearings = []
+    if math.hypot(*poff) > 1e-9:
+        bearings.append(math.atan2(-poff[1], -poff[0]))
+    for f in riders:
+        dx, dy = view.dir_xy(f["direction"])
+        if math.hypot(dx, dy) > 1e-9:
+            bearings.append(math.atan2(-dy, -dx))
+    if not bearings:
+        return (0.0, -1.0)
+    bearings = sorted(round(b, 9) for b in bearings)
+    best, at = None, bearings[0]
+    for i, a in enumerate(bearings):
+        nxt = bearings[i + 1] if i + 1 < len(bearings) else bearings[0] + 2.0 * math.pi
+        if best is None or nxt - a > best:
+            best, at = nxt - a, a + (nxt - a) / 2.0
+    return (math.cos(at), math.sin(at))
+
+
 def drawn_length(rec):
     """How long a drawn fastener came out on the paper, off its own record.
 
@@ -1849,7 +2013,7 @@ def cap_point(p, cap):
 
 
 def mark_label(page, tail, direction, letter, occ=None, owner=None, body=None,
-               family=None):
+               family=None, corridors=None):
     """One fastener's badge - ON its screw, or on a leader to it.
 
     `family` is every caption this badge now stands for: its own cluster's
@@ -1892,10 +2056,16 @@ def mark_label(page, tail, direction, letter, occ=None, owner=None, body=None,
     # the fastener before it sits anywhere else. Then out along the same line,
     # then to either side - the ORDER is the preference, and layout.place()
     # breaks ties on it.
+    # The sideways ladder runs two rungs further than it used to, and R10 is
+    # why: a badge that has to leave a bracket group's chain corridor has to be
+    # able to get OUT of it, and the corridor of a five-fastener corner is
+    # wider than three rungs. Nothing else changed - the new rungs are further
+    # from the tether than every old one, so `pull` reaches them only when
+    # everything nearer has been priced out.
     tries = [(tail[0] - dx * r * k, tail[1] - dy * r * k)
              for k in (0.95, 1.45, 2.05, 2.75, 3.6)]
     for s in (1, -1):
-        for k in range(3):
+        for k in range(5):
             tries.append((tail[0] - dy * s * (r * 1.15 + k * r * 1.5)
                           - dx * k * r * 0.8,
                           tail[1] + dx * s * (r * 1.15 + k * r * 1.5)
@@ -1917,9 +2087,14 @@ def mark_label(page, tail, direction, letter, occ=None, owner=None, body=None,
                kin_owners]
 
     def price(c):
-        if not kin_bodies:
-            return 0.0
         out = 0.0
+        # R10 first, and it is asked even of a badge with no body to measure
+        # against: a chain corridor is a place no letter may stand, whoever
+        # the letter belongs to.
+        if corridors and corridor_gap(c, corridors) < r:
+            out += CAP_CORRIDOR
+        if not kin_bodies:
+            return out
         d_own = min(cap_dist(c, q) for q in kin_bodies)
         # Contact is asked of the body this badge is DRAWN from: a letter
         # standing on the far member of its own family, with its own screw
@@ -2161,6 +2336,31 @@ def assert_badges_anchored(page):
                 f"{other['jid']} {other['name']} og {d_own:.0f} mm fra det "
                 f"nærmeste festet det står for - et merke skal aldri lande "
                 f"nærmere en fremmed kropp enn sin egen familie (R5)")
+
+
+def assert_badges_clear_chain(page):
+    """R10, measured off the ink: no badge stands in a bracket group's chain.
+
+    The corridor is rebuilt here from the recorded tethers rather than handed
+    down from the placer, and the badge's landing place is read out of the
+    record too, so what is checked is the picture that was written - not the
+    candidate list it was chosen from.
+
+    Badges with no body are the inset panel's and the fastener table's; they
+    are not marks on the drawing and there is no chain where they live.
+    """
+    corridors = chain_corridors(page)
+    if not corridors:
+        return
+    for b in page.record:
+        if b["kind"] != "badge" or b.get("body") is None:
+            continue
+        gap = corridor_gap(b["at"], corridors)
+        assert gap >= b["r"] - 1e-6, (
+            f"merket {b['letter']} ligger {b['r'] - gap:.0f} mm inn over et "
+            f"ledd i en beslagklynges kjede - kjeden sete->beslag->skruer er "
+            f"det eneste som sier at hjørnet er én demontering, og en bokstav "
+            f"oppå den bryter den (R10)")
 
 
 def assert_badges_cover(page):
@@ -3001,6 +3201,11 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # explode from where the bracket ended up, so they have to know its float
     # before their own hop back is worked out.
     floats = {}
+    # Which way each bracket's own letter sets off - through the widest gap
+    # between the group's links (R10). It is worked out here with the float
+    # because it is made of the same two things: the leash's bearing and the
+    # riders' drive axes.
+    badge_out = {}
     plates = [m["spec"] for m in keep if m["spec"]["kind"] == "plate"]
     if style == "eksplodert":
         for p in plates:
@@ -3014,6 +3219,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                       and screw_on_plate(p, m["spec"])]
             floats[id(p)] = float_plate(occ, view, p, plate_screws(G, p),
                                         riders, float_d)
+            badge_out[id(p)] = badge_gap_dir(view, floats[id(p)][0], riders)
 
     def rides_on(f):
         """The bracket this screw goes through, if it goes through one.
@@ -3052,10 +3258,14 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                 poff, rhythm = floats[id(f)]
                 group = id(f)
                 shift = (0.0, 0.0, 0.0)
-                # The caption goes OUTBOARD of the float, away from the seat:
-                # parked on the leash side it reads as a label for the hole.
-                lead = math.hypot(*poff)
-                label_dir = (-poff[0] / lead, -poff[1] / lead)
+                # The caption sets off through the gap between the group's own
+                # links, and `label_dir` is the direction a caption ladder
+                # walks BACKWARDS along - see mark_label() - so it is that
+                # bearing negated. Outboard along the float is what this used
+                # to be, and outboard along the float is exactly where the
+                # group's screws go too (R10).
+                out_x, out_y = badge_out[id(f)]
+                label_dir = (-out_x, -out_y)
             else:
                 # Backed out along its own axis in MODEL space, so the pulled
                 # screw stays on the line it travels no matter where the camera
@@ -3170,10 +3380,11 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
             # angle and a 49 mm circle - so a badge that satisfies R6 by
             # sitting ON it satisfies it by HIDING it, and the reader is left
             # with a letter where the part should be. The tail therefore sits
-            # on the bracket's own outboard rim, the far side from the seat, so
-            # the first candidate in the ladder is a badge tangent to the plate
-            # rather than one centred on it: contact, and the bracket still
-            # visible under its own letter.
+            # on the bracket's own RIM, on the bearing badge_gap_dir() picked -
+            # the widest gap between the group's own links (R10) - so the first
+            # candidate in the ladder is a badge tangent to the plate rather
+            # than one centred on it: contact, the bracket still visible under
+            # its own letter, and the chain not walked over to get there.
             c0, _c1, rad = drawn[-1]["cap"]
             label_at = (c0[0] - label_dir[0] * rad,
                         c0[1] - label_dir[1] * rad)
@@ -3195,13 +3406,18 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # itself neatly on top of the ninth screw - which had not been drawn yet,
     # so nothing objected. A caption that sits on a fastener it does not name
     # is worse than no caption: it is a wrong one.
+    # R10: the chain corridors, off the tethers that have just been written.
+    # Every fastener is down and no caption is placed yet, which is the one
+    # moment the whole of every chain exists and nothing is standing in it.
+    corridors = chain_corridors(page)
     for c in thin_clusters(captions):
         mark_label(page, c["at"], c["dir"], c["letter"], occ, c["owner"],
-                   c["body"], family=c["family"])
+                   c["body"], family=c["family"], corridors=corridors)
     if style == "eksplodert":
         assert_bodies_apart(page)
         assert_chain_rhythm(page)
         assert_chain_untangled(page)
+        assert_badges_clear_chain(page)
     assert_no_stubs(page)
     assert_badges_anchored(page)
     assert_badges_cover(page)
