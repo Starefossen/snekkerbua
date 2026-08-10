@@ -620,8 +620,42 @@ def build_fastener(name: str):
     return glyph_wood_screw(d, L)
 
 
-def fastener_svg(name: str) -> str:
+def is_screw_glyph(name: str) -> bool:
+    """Bærer denne glyfen en skruesilhuett fyllkoden kan legges i?
+
+    Beslagene gjør ikke. En vinkel eller en krokplate er allerede tegnet som
+    en heldekt plate i isometri, og et mønster oppå den ville lest som en
+    tredje slags flate - de beholder platelooken sin, slik snittene i
+    innsettpanelet også gjør.
+    """
+    key = _ascii_fold(name)
+    return not (key.startswith("vinkelbeslag") or key.startswith("krokplate")
+                or key.startswith("u-brakett") or key.startswith("u brakett")
+                or key.startswith("filtknott") or "mobeltapp" in key)
+
+
+def _filled(elem: str, paint: str) -> str:
+    """Samme element, men med fyll. Konturen står som den står."""
+    return elem[:-2].rstrip() + f' fill="{paint}"/>'
+
+
+def coded_slug(name: str, code: str | None) -> str:
+    """Filnavnet en glyf med fyllkode får. Den åpne koden er glyfen selv."""
+    base = slug(name)
+    return base if code in (None, "open") else f"{base}-{code}"
+
+
+def fastener_svg(name: str, code: str | None = None) -> str:
     elems, (x0, y0, x1, y1) = build_fastener(name)
+    defs = ""
+    if code not in (None, "open") and is_screw_glyph(name):
+        # Mønsterperioden er skruens egen, ikke sidens: glyfen settes i alt
+        # fra 30 til 130 px høyde, og det eneste som holder antallet striper
+        # over skaftet konstant er å knytte perioden til diameteren.
+        dims = _dims(name)
+        d = dims[0] if dims else 5.0
+        defs = "  " + fill_defs(0.24 * d, 0.08 * d) + "\n"
+        elems = [_filled(elems[0], fill_paint(code))] + list(elems[1:])
     w_mm = (x1 - x0) + 2 * MARGIN_MM
     h_mm = max(BASE_H_MM, (y1 - y0) + 2 * MARGIN_MM)
     tx = MARGIN_MM - x0
@@ -630,7 +664,8 @@ def fastener_svg(name: str) -> str:
             f'translate({_f(tx)} {_f(ty)})" stroke-width="{_f(STROKE_MM)}">\n'
             + "\n".join("      " + e for e in elems)
             + "\n    </g>")
-    return svg_document(name, w_mm * SCALE, h_mm * SCALE, body, STROKE_MM * SCALE)
+    return svg_document(name, w_mm * SCALE, h_mm * SCALE, defs + body,
+                        STROKE_MM * SCALE)
 
 
 # --------------------------------------------------------------------------
@@ -1033,6 +1068,85 @@ def emit_fastener_glyphs(names: list[str], out_dir: str) -> dict[str, str]:
         write_png(target, PNG_PX_PER_UNIT)
         result[name] = fname
     return result
+
+
+def emit_coded_glyphs(pairs, out_dir: str) -> dict[tuple[str, str], str]:
+    """Én glyf per (festemiddel, fyllkode) et steg faktisk bruker.
+
+    Ikke én per kombinasjon som finnes: bokstavene deles ut per steg, så det
+    er stegene som avgjør hvilke par som oppstår, og et par ingen side viser
+    er en fil ingen leser."""
+    os.makedirs(out_dir, exist_ok=True)
+    result: dict[tuple[str, str], str] = {}
+    for name, code in sorted(pairs):
+        if not is_screw_glyph(name):
+            # A bracket keeps its plate look, so a coded copy of it would be
+            # the same drawing under a second name.
+            continue
+        fname = coded_slug(name, code) + ".svg"
+        target = os.path.join(out_dir, fname)
+        with open(target, "w", encoding="utf-8") as fh:
+            fh.write(fastener_svg(name, code))
+        write_png(target, PNG_PX_PER_UNIT)
+        result[(name, code)] = fname
+    return result
+
+
+# Kodenavnene på norsk, i bokstavrekkefølge - forklaringen på beslagsiden.
+FILL_CODE_NAMES = {"open": "åpen", "hatch": "skravert",
+                   "cross": "krysskravert", "solid": "heldekt"}
+
+
+def fill_code_legend_svg(d: float = 6.0, length: float = 45.0) -> str:
+    """Fyllkoden i full størrelse: hver bokstav med sin egen silhuett.
+
+    Beslagsiden er der leseren lærer notasjonen - hva de to tallene i «5×60»
+    er, og hva «100x» teller. Fyllkoden hører hjemme samme sted, og den må
+    læres én gang i en størrelse der ingen to mønstre kan forveksles. På
+    stegsiden er den en påminnelse; her er den definisjonen.
+    """
+    global STROKE_MM, DETAIL_MM
+    S = 4.0
+    keep = (STROKE_MM, DETAIL_MM)
+    STROKE_MM, DETAIL_MM = 5.0 / S, 3.2 / S
+    try:
+        screw, (x0, _y0, x1, _y1) = glyph_wood_screw(d, length)
+        stroke_mm = STROKE_MM
+    finally:
+        STROKE_MM, DETAIL_MM = keep
+
+    cell = 232.0
+    axis = 86.0
+    body = ["  " + fill_defs(0.24 * d * S, 0.08 * d * S)]
+    for i, code in enumerate(FILL_CODES):
+        letter = BADGE_ALPHABET[i]
+        ox = i * cell + 20.0
+        r = 21.0
+        body.append("    " + circle(ox + r, axis - 46.0, r,
+                                    stroke_width=_f(2.6)))
+        body.append("    " + _text(ox + r, axis - 46.0 + r * 0.40, letter,
+                                   r * 1.20, "middle", "bold"))
+        elems = [_filled(screw[0], fill_paint(code))] + list(screw[1:])
+        body.append(f'    <g transform="translate({_f(ox)} {_f(axis)}) '
+                    f'scale({_f(S)})" stroke-width="{_f(stroke_mm)}">')
+        body += ["      " + e for e in elems]
+        body.append("    </g>")
+        body.append("    " + _text(ox, axis + 54.0, FILL_CODE_NAMES[code],
+                                   30.0, "start"))
+    w = cell * len(FILL_CODES) + 20.0
+    return svg_document("Fyllkoden: bokstaven som mønster", w, 150.0,
+                        "\n".join(body), 2.6)
+
+
+def emit_fill_code_legend(out_dir: str) -> str:
+    """Skriver fyllkodeforklaringen til beslagsiden. -> filnavn."""
+    os.makedirs(out_dir, exist_ok=True)
+    fname = "fyllkode.svg"
+    target = os.path.join(out_dir, fname)
+    with open(target, "w", encoding="utf-8") as fh:
+        fh.write(fill_code_legend_svg())
+    write_png(target, PNG_PX_PER_UNIT)
+    return fname
 
 
 def emit_notation_legend(out_dir: str) -> str:

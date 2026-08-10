@@ -1304,13 +1304,29 @@ def emit_montering(G, root, steps, idx):
     glyph = gen_glyphs.emit_fastener_glyphs(sorted(total_fast),
                                             os.path.join(img_dir, "beslag"))
     legend = gen_glyphs.emit_notation_legend(os.path.join(img_dir, "beslag"))
+    # THE FILL CODE. A badge letter carries a fill pattern as well as a
+    # letter, and the pattern follows it everywhere the letter goes - so the
+    # glyph in a step's own fastener table is the coded one, drawn with the
+    # same pattern the drawing above it puts in that screw. Which (fastener,
+    # code) pairs exist is decided by the STEPS, because that is where the
+    # letters are handed out; a pair no page shows is a file nobody reads.
+    coded_pairs = set()
+    for st in steps:
+        for name, letter in step_badges(st).items():
+            code = gen_glyphs.fill_code(letter)
+            if code and code != "open":
+                coded_pairs.add((name, code))
+    coded = gen_glyphs.emit_coded_glyphs(coded_pairs,
+                                         os.path.join(img_dir, "beslag"))
+    fill_legend = gen_glyphs.emit_fill_code_legend(
+        os.path.join(img_dir, "beslag"))
     pikto = gen_glyphs.emit_pictograms(os.path.join(img_dir, "ikon"))
     # As many letters as the busiest step needs, and no more.
     widest = max((len(step_badges(st)) for st in steps), default=0)
     merke = gen_glyphs.emit_badges(os.path.join(img_dir, "ikon"), widest)
 
-    def gimg(name, screw_px, cap=None):
-        f = glyph[name]
+    def gimg(name, screw_px, cap=None, code=None):
+        f = coded.get((name, code), glyph[name])
         h = _glyph_height(os.path.join(img_dir, "beslag", f), screw_px, cap)
         return _img("img/beslag/" + f, h, name)
 
@@ -1385,6 +1401,16 @@ def emit_montering(G, root, steps, idx):
     L.append(_img("img/beslag/" + legend, 104,
                   "5 = tykkelse i mm, 60 = lengde i mm, 100x = antall")
              + "\n\n")
+    # And the fill code, in the one place it is worth learning: full size,
+    # all four at once. On a step page it is a reminder; here it is the
+    # definition.
+    L.append(_img("img/beslag/" + fill_legend, 96,
+                  "Fyllkoden: A åpen, B skravert, C krysskravert, D heldekt")
+             + "\n\n")
+    L.append("**Fyllkode.** På en stegside med flere typer festemidler har "
+             "hver bokstav sitt eget fyll, og skruen på tegningen bærer det "
+             "samme fyllet. Da ser du hvilken av dem som går hvor uten å lese "
+             "bokstaven.\n\n")
     L.append("| | |\n|:---:|---|\n")
     for name, qty in sorted(total_fast.items(), key=lambda kv: (-kv[1], kv[0])):
         L.append(f"| {gimg(name, 44)} **{qty}x** | {name} |\n")
@@ -1429,10 +1455,13 @@ def emit_montering(G, root, steps, idx):
             # in too - commonest first.
             L.append("| | | |\n|:---:|:---:|---|\n")
             for name, qty in sorted(fast, key=lambda r: badges[r[0]]):
+                code = gen_glyphs.fill_code(badges[name])
                 L.append(f"| {_img('img/ikon/' + merke[badges[name]], 20, badges[name])}"
-                         f" | {gimg(name, 30, cap=72)} **{qty}x** | "
-                         f"{_fast_short(name)} |\n")
-            L.append("\nBokstavene viser hvor på tegningen hver type går.\n\n")
+                         f" | {gimg(name, 30, cap=72, code=code)} "
+                         f"**{qty}x** | {_fast_short(name)} |\n")
+            L.append("\nBokstavene viser hvor på tegningen hver type går, og "
+                     "fyllet i skruen er den samme bokstaven om igjen — "
+                     "se [fyllkoden på beslagsiden](#beslag).\n\n")
         elif fast:
             L.append("| | |\n|:---:|---|\n")
             for name, qty in fast:

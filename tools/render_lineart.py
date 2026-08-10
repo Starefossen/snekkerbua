@@ -2504,7 +2504,12 @@ def step_fastener_glyphs(st, glyph_dir):
 
     out = []
     for (name, qty), letter in zip(rows, letters):
-        svg = gen_glyphs.slug(name) + ".svg"
+        # The panel row shows the glyph with its own fill code in it, which is
+        # the same file the step's table under the picture uses: the row is
+        # where the reader meets the pattern and the letter side by side.
+        svg = gen_glyphs.coded_slug(name, gen_glyphs.fill_code(letter)) + ".svg"
+        if not os.path.exists(os.path.join(glyph_dir, svg)):
+            svg = gen_glyphs.slug(name) + ".svg"
         if os.path.exists(os.path.join(glyph_dir, svg)):
             out.append((name, qty, svg, letter))
     return out
