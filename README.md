@@ -1,169 +1,183 @@
-# Alcove-Style Bunk Bed Frame
+# HANNA — a loft bed whose manual is compiled, not written
 
-This project contains Python scripts using the `build123d` library to
-programmatically generate 3D models of bed frames and export them as STEP,
-STL, GLB, USDZ and SVG. The loft bed it builds is called **HANNA**.
+![HANNA](docs/img/hanna-hero.png)
 
-* `v1/generate_bed_frame.py` — an alcove-style bunk bed frame.
-* `generate_loftbed.py` — HANNA, the loft bed, with a convertible sofa / table
-  / bed underneath. It is built for a niche: fitted between two walls and
-  standing against the back wall, screwed fast to it. There are no guard rails
-  at the back, because the wall is the barrier there. Boards and posts are
-  unified on **36×98**, the single dimension most of the bed is cut from, so
-  the saw takes four settings for the whole main board. Four corner posts
-  carry the mattress platform, with the slats lying **flush on top** of the
-  side rails, so the mattress lands exactly on the slat ends at both edges.
-  Each end has a single 48×98 end beam under the side rails and is otherwise
-  **fully open above the mattress**. The ladder sits flat against the front
-  rail, in the same plane as the front posts: 36×48 uprights, four 48×73
-  treads on cleat blocks, and a climb-through gap in both front guard bands,
-  as wide as the ladder itself. The front bench rail stops at the sofa ends,
-  so the whole floor between the benches is open. Between the benches an 18 mm
-  panel, stiffened by two 48×73 battens on edge underneath, rests on wood at
-  bench height (bed mode) or table height (table mode). Every part is
-  validated to touch the rest of the assembly and to clash with nothing (see
-  the checks in the build output). Widths, depths, heights and every part
-  length live in [docs/generated/nokkelmal.md](docs/generated/nokkelmal.md)
-  and [docs/generated/kappliste.md](docs/generated/kappliste.md).
+A parametric loft bed in [build123d](https://github.com/gumyr/build123d) /
+OpenCascade, built for one 199 cm alcove between two walls. The model is the
+only source of truth: **every drawing, every table and all 62 pages of the
+printed assembly manual are generated from the solids and machine-checked
+before they are allowed to exist.** Nothing is hand-drawn and no number is
+hand-transcribed.
 
-`parts.tsv` is the tracked regression snapshot: label, colour group and
-bounding box for every part, both panel modes included. It is rewritten by
-`mise run build`, so a diff on it is the diff on the model. Every other
-generated *model* file is gitignored.
+<img src="docs/img/steg-05.png" alt="Step 5 of the generated assembly manual" width="560">
 
-## Building it — read this first
+*Step 5, drawn by `tools/render_lineart.py`. The bed is a hidden-line
+projection of the real B-rep solids. Every screw is a modelled body, exploded
+along its own drive axis, in its true length. The letters, the fill code, the
+counts in the inset panel and the sectioned corner are all derived — and a
+build-failing assert measures the finished ink to prove each badge sits on the
+fastener it names.*
 
-* **[docs/ASSEMBLY.md](docs/ASSEMBLY.md)** — the build guide. Tools, hardware,
-  every joint (J1…J15), the build order and why it has to be that order,
-  mattress and cushions, safety, and the load-path appendix. In Norwegian.
-* **[docs/MONTERING.md](docs/MONTERING.md)** — the same build, one picture per
-  step, drawn as black-and-white line art with almost no words. Same step
-  numbers as the text guide.
-* **[docs/PRAKSIS.md](docs/PRAKSIS.md)** — for whoever changes the model or
-  the drawings, not for whoever builds the bed: the single-source rule, what
-  makes an assert worth writing here, how the fasteners are modelled and where
-  the boundary between steel and timber runs, the drawing conventions, and how
-  to regenerate everything. Deliberately not in the printed manual.
+---
 
-Both are driven by the model. `mise run build` regenerates the tables in
-`docs/generated/` (cut list, buying list, key dimensions, hardware list, the
-step-by-step text and the machine-readable step data) straight from
-`generate_loftbed.py`, and `docs/ASSEMBLY.md` links to them rather than
-restating any dimension. `mise run montering` re-draws the line art in
-`docs/img/` — the cover drawing and one drawing per build step, projected out
-of the model itself by `tools/render_lineart.py`. Those files **are**
-committed, because the guide has to be readable and printable on a machine
-with none of this toolchain installed.
+## Key facts
 
-## Setup & Usage
+| | |
+|---|---|
+| **Envelope** | 1990 × 836 × 1700 mm — a wall-to-wall fit in a 1990 mm alcove. Through-running parts are cut 1984 mm, because a 1990 mm board will not swing into a 1990 mm opening |
+| **Timber** | **69 wooden parts** in **5 timber profiles** plus one 18 mm plywood sheet — 47.1 running metres. 32 of the 69 pieces come off a single profile (36×98) in four saw settings |
+| **Steel** | **186 fasteners laid out across 21 joints**, **180 of them modelled as solid bodies** — head, countersink, shank and point, each with its own drive vector |
+| **Checks** | **317 asserts in the model** and 30 more in the drawing tools, all build-failing. Screw directions are derived from physics (8 of 27 are forced by the thicknesses alone); screw counts must fit the face they stand on; every part must touch the assembly and clash with nothing |
+| **Determinism** | `mise run check` runs the whole chain twice and demands **121 byte-identical artefacts**. Determinism is an assert, not an expectation |
+| **Output** | A **62-page print-ready PDF** in one command, plus a picture-only manual, a written build guide, six schematics, and STEP / STL / GLB / USDZ exports |
+| **Standards** | Clearances, guard heights and the mattress thickness window come out of EN 747; edge distances and screw spacing out of Eurocode 5 |
 
-This project uses `mise` for environment management and task running. 
+The bed's *functional* design — a loft platform over a bench/table/spare-bed
+that converts by moving one panel between two heights — is adapted from a
+Hoppekids convertible loft bed. The structure, the dimensions, every joint and
+all of the documentation here are original.
 
-1. Ensure you have `mise` installed.
-2. In your terminal, navigate to this directory.
-3. You can now use the built-in mise tasks to run the project.
+---
 
-To see available tasks:
-```bash
-mise run
+## How it works
+
+```
+generate_loftbed.py           the model: geometry, parts, fasteners, 317 asserts
+  ├─ tools/gen_doc_tables.py  → docs/generated/*.md, docs/MONTERING.md, byggesteg.json
+  ├─ tools/render_lineart.py  → docs/img/steg-NN.svg/.png   (+ check_coverage)
+  │    ├─ tools/render_cutpage.py   step 0, the cutting plan
+  │    └─ tools/render_panel.py     step 10, the loose panel
+  ├─ tools/gen_glyphs.py      → fastener glyphs and pictograms
+  └─ tools/build_pdf.py       → docs/hanna.pdf
 ```
 
-### Available Tasks:
+**One source.** Any number that appears in the documentation *comes from* the
+model — not "was copied from". The tools import `generate_loftbed.py`, read its
+module globals and print. None of them defines geometry, and none of them
+re-derives something the model already knows. The one hand-written document,
+`docs/ASSEMBLY.md`, is allowed to name parts and cite joint numbers, but it may
+never restate a dimension a generated fragment already carries; it links
+instead. The rule behind it: **if two files have to agree about a number, the
+number is in the wrong place.**
 
-* **Install dependencies** (run automatically when building):
-  ```bash
-  mise run install
-  ```
-* **Generate the 3D models** (`.step`, `.stl`, `.glb`, `.svg`):
-  ```bash
-  mise run build
-  ```
-* **Convert the models to `.usdz`** (runs `build` first):
-  ```bash
-  mise run usdz
-  ```
-* **Render shaded PNG previews** of both modes (runs `usdz` first):
-  ```bash
-  mise run render      # -> loftbed_bed_mode.png, loftbed_table_mode.png
-  ```
-* **Draw the assembly manual's line art** (runs `build` first, needs
-  `rsvg-convert` for the PNGs):
-  ```bash
-  mise run montering   # -> docs/img/hanna-hero.*, docs/img/steg-NN.*
-  ```
-* **Shaded reference renders of the same steps** (macOS: `usdrecord` + Swift):
-  ```bash
-  mise run montering-skyggelagt   # -> docs/img/skyggelagt/, not committed
-  ```
-* **Preview the model natively on macOS**:
-  ```bash
-  mise run view        # STEP in FreeCAD
-  mise run view-usdz   # USDZ in Quick Look
-  ```
+**The drawings are projections, not illustrations.** `render_lineart.py` puts
+the actual solids through OpenCascade's hidden-line removal — no meshes — and
+composes one page per build step: parts already standing in thin grey, the
+parts you fit now in heavy black, the hidden run of a new part dashed. That is
+the convention a picture-only assembly manual uses, the kind that comes in the
+box with flat-pack furniture, and it is used here because the model can satisfy
+it exactly.
 
-## Viewing the `.usdz` Files
+**A rule/constraint layout engine, not tuned coordinates.** `tools/layout.py`
+knows nothing about beds. It answers the two questions every annotation asks —
+*how big* and *where is there room* — from rules rather than from numbers
+somebody liked the look of. Every stroke width, radius, margin and point size
+on a step page is a multiple of one length, `pen = bbox diagonal / 400`, so the
+whole pen set follows what is being drawn. Badge placement is a scored search
+over an occupancy field, with contact to the named body priced above any amount
+of white paper.
 
-`mise run usdz` produces `loftbed_bed_mode.usdz` and `loftbed_table_mode.usdz`.
-These open directly in Xcode and in macOS Quick Look — no extra software needed:
+**The manual cannot lie.** The asserts are almost never "this number is that
+number" — they are relations, derived from something outside the drawing, and
+they say where to fix it when they break. Four families:
+
+* **Screw length.** A through screw must clear the part it is driven from and
+  end inside the other: `t(from) < length < t(from) + t(into)`. Where only one
+  direction satisfies that, the direction is *derived* and the joint table only
+  gets to agree.
+* **Fits the face.** A row of `n` screws needs `(n-1)·4d + 2·3d` mm of real
+  contact face. Switching this on deleted four screw counts that had stood
+  unchallenged.
+* **Completeness.** Every part in exactly one step; every joint present as
+  often as the table says; the shopping list equal to the fasteners actually
+  placed; and every step page must *draw* at least one of each fastener type it
+  lists, with the drawn count matching the printed count. That last one catches
+  silent drawings — a part listed but never shown being fixed.
+* **Orientation.** A bracket screwed into wood is not necessarily the right way
+  up. A bracket that *bears* something must have its horizontal leg driven
+  upward into the underside of what it carries.
+
+And because the derived artefacts are committed — so that `git diff --stat`
+after a build *is* the impact analysis — the chain itself has to be
+reproducible. `mise run check` runs it twice and compares checksums. A failure
+there is never a model change: it is an unsorted `dict`, a timestamp, an
+`id()`-ordering or an order-dependent float sum.
+
+---
+
+## Quickstart
+
+Needs [`mise`](https://mise.jdx.dev/). Everything else is
+`pip install -r requirements.txt` (build123d, markdown) plus `rsvg-convert` for
+the PNGs and a headless Chrome for the PDF.
 
 ```bash
-open loftbed_bed_mode.usdz     # Quick Look / Preview
-open -a Xcode loftbed_bed_mode.usdz
+mise run build      # model + all generated tables + docs/MONTERING.md
+mise run montering  # re-draw the line art in docs/img/
+mise run check      # run the whole chain twice, demand byte-identical output
+mise run pdf        # docs/hanna.pdf, 62 pages, print-ready
 ```
 
-They are also what you want for AR on an iPhone or iPad: AirDrop the file, or
-put it on a web page, and AR Quick Look will place the bed in the room at 1:1
-scale. The conversion re-orients the model to the USD conventions (metres,
-origin centred on the floor) and passes `usdchecker --arkit`.
+| Task | What it does |
+|---|---|
+| `build` | Builds and validates the model, exports it, writes every fragment in `docs/generated/` and `docs/MONTERING.md` |
+| `build-full` | Same plus the slow deliverables: `.glb` and the whole-model hidden-line `.svg` projections |
+| `montering` | Draws the cover and one line-art page per build step into `docs/img/` |
+| `check` | Determinism assert: two full runs, 121 artefacts, byte-identical or fail |
+| `pdf` | Assembles `docs/hanna.pdf` from the checked-in documents (no build123d needed) |
+| `schematics` | Renders `docs/schematics/*.svg` to PNG for proofreading |
+| `usdz` | Converts the meshes to `.usdz` for Quick Look / Xcode / AR, one material per colour group |
+| `render`, `render-validate` | Shaded previews and the five design-validation views (macOS `usdrecord`) |
+| `montering-skyggelagt` | Shaded reference renders of the same build steps |
+| `view`, `view-usdz` | Open the model in FreeCAD / Quick Look |
 
-The pipeline is `generate_loftbed.py` → one `.stl` per colour group →
-`tools/mesh_to_usda.swift` → `usdcat` → `usdzip`. All the converter tools ship
-with macOS, so there is nothing extra to install. The `.usdz` carries **five
-named meshes with five `UsdPreviewSurface` materials** (posts, rails, boards,
-panel, mattress — the mattress is translucent). The per-group `.stl`
-intermediates are written to a scratch directory (`$TMPDIR/loftbed_groups`,
-override with `LOFTBED_GROUP_DIR`), never into the repo. The per-part names
-and the cut list live in the `.step` and `.glb` files.
+---
 
-## Orientation of the exported files
+## Repo map
 
-* `.step` keeps the CAD convention: millimetres, **Z-up**, floor at Z = 0.
-* `.stl`, `.glb` and `.usdz` are **Y-up**, so the bed stands upright by
-  default in Quick Look, Preview and Xcode. For the STL the rotation is baked
-  into the vertex data; `export_gltf` writes it onto the root node itself.
+| Path | |
+|---|---|
+| `generate_loftbed.py` | The model. Geometry, the joint table, the fasteners as solids, and the asserts |
+| `tools/` | Everything that reads the model: doc tables, line art, cut page, panel page, glyphs, PDF, USD helpers |
+| `docs/generated/` | Machine-written, never edited by hand: cut list, buying list, key dimensions, hardware list, screw directions, step text, `byggesteg.json` |
+| `docs/img/`, `docs/schematics/` | The committed drawings — so the manual is readable and printable on a machine with none of this toolchain |
+| `docs/hanna.pdf` | The 62-page print manual. Deliberately untracked — the tooling is in git, the binary is one `mise run pdf` away |
+| `parts.tsv` | Tracked regression snapshot: label, colour group and bounding box of every part, both panel modes. A diff on it is the diff on the model |
+| `v1/` | The first alcove bunk-bed frame, kept for history |
 
-## Shaded previews
+---
 
-`mise run render` uses `usdrecord` (part of the USD tools that ship with
-macOS) plus `tools/make_render_stage.py`, which wraps the `.usdz` in a
-throwaway stage with a 3/4-view camera. The result is `loftbed_bed_mode.png`
-and `loftbed_table_mode.png` in the repo root.
+## The build documents
 
-## Line drawings
+These are **in Norwegian** — they are what someone standing at the saw actually
+reads.
 
-`tools/render_lineart.py` (`mise run montering`) is what draws the assembly
-manual. It projects the solids themselves — no meshes — through OpenCascade's
-hidden-line removal, and writes one SVG per build step in which the parts
-already standing are thin grey and the parts you fit in that step are heavy
-black, plus `docs/img/hanna-hero.svg`, the all-black cover drawing of the
-finished bed. `rsvg-convert` turns each one into the PNG the manual embeds.
-Whole-model hidden-line `.svg` projections of both modes are a separate,
-slower deliverable from `mise run build-full`.
+* **[docs/MONTERING.md](docs/MONTERING.md)** — the picture manual. Twelve steps
+  (0–11), one drawing per step, almost no words. Generated.
+* **[docs/ASSEMBLY.md](docs/ASSEMBLY.md)** — the reasoning: tools, timber,
+  every joint J1…J15, the build order and why it has to be that order,
+  mattress and cushions, safety, and the load-path appendix. The one
+  hand-written file.
+* **[docs/generated/](docs/generated/)** — cut list, buying list with a
+  board-by-board cutting plan, key dimensions, hardware list and screw
+  directions.
+* `docs/hanna.pdf` — all of the above, imposed for print. Not committed; run
+  `mise run pdf` and it appears, identical, from the tracked documents.
 
-## Viewing the `.step` File
+## For whoever changes the model
 
-A STEP (`.step` or `.stp`) file is a standard 3D CAD file format. To view it on your Mac, you can use any of the following options:
+**[docs/PRAKSIS.md](docs/PRAKSIS.md)** is the practices deep-dive (in
+Norwegian): the single-source rule, what makes an assert worth writing here,
+where the boundary between steel and timber runs, every drawing convention and
+the reason behind it, and how to regenerate the lot. Deliberately not part of
+the printed manual.
 
-1. **FreeCAD** (Recommended for Engineering): 
-   A free, powerful, open-source 3D CAD modeler. You can download it at [freecad.org](https://www.freecad.org/) or install it via Homebrew (`brew install --cask freecad`). Once installed, open FreeCAD and simply go to `File > Open` and select the `bed_frame.step` file.
+## Limits
 
-2. **Visual Studio Code**:
-   If you use VS Code, you can install the **OCP CAD Viewer** extension. This allows you to view STEP files right inside your code editor.
-
-3. **Online Viewers** (No installation required):
-   You can drag and drop your `.step` file into a free online viewer, such as:
-   - [3DViewerOnline](https://www.3dvieweronline.com/)
-   - [CAD Exchanger](https://cadexchanger.com/view/)
-
-4. **eDrawings Viewer for Mac**:
-   A free dedicated desktop application from Dassault Systèmes for viewing 3D CAD files.
+This is one product, not a furniture framework. Everything is axis-aligned box
+furniture: all cuts are 90°, there is no mitre and no curve in the bed, and the
+drawing engine assumes rectangular solids in an orthographic projection. The
+model is parametric in the sense that the dimensions are constants with asserts
+holding them together — change the alcove width or the main board profile and
+the chain will tell you loudly what no longer fits — but it is not a
+configurator, and the bed is wall-side-specific and not reversible.
