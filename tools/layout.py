@@ -82,13 +82,12 @@ RATIOS = {
     "PAD": 10.00,           # 70    white margin round the subject
     "INSET_PAD": 2.30,      # 16.0  inside the inset panel's border
     # --- the fill code -----------------------------------------------------
-    # The period of a hatched fastener's pattern and the weight of one of its
-    # lines. Both are pen multiples like everything else, and both were set by
-    # the contrast proof rather than by eye: a 5 mm screw is 15 mm wide on the
-    # page, so a period much over one pen leaves it one stripe wide and a line
-    # much under a third of one greys out in the raster.
-    "FILL_PERIOD": 0.78,    # 5.4   one period of hatch or cross
-    "W_FILL": 0.30,         # 2.1   one line of it
+    # NOT HERE. The fill code's period used to be a pen multiple, and that was
+    # wrong twice over: a drawn fastener is 15-18 mm wide whatever size the bed
+    # is, so the pattern in it never had anything to do with the pen; and a pen
+    # multiple cannot know how many PIXELS one period will be on the surface it
+    # ends up on. It is now derived, on every surface, by
+    # gen_glyphs.fill_metrics(span, px_per_unit) - see the note there.
     # --- type --------------------------------------------------------------
     "S_ICON": 6.70,         # 46    the "i" in the information panel
     "S_TITLE": 6.40,        # 44    a panel heading
@@ -153,6 +152,29 @@ class Theme:
 # draws with. layout is only ever imported, so this object is the same object
 # for everybody.
 THEME = Theme()
+
+# WHAT THE PAGES TURNED OUT TO BE, and it lives here for exactly the reason
+# the theme does. `PAGE_SCALES` is {step: px per model mm} for every page that
+# carries badge letters, `PAGE_FASTENERS` the same pages' fastener rows, and
+# `ALL_FASTENERS` every fastener name any step draws. The two contrast proofs
+# read all three, and a proof that misses a page is worse than no proof.
+#
+# They used to live in tools/render_lineart.py, and the panel page - which is
+# drawn by tools/render_panel.py, which imports render_lineart back - wrote to
+# the OTHER copy of that module. So step 10 was silently absent from
+# PAGE_SCALES, and the fill-code proof had been rendering at the smallest
+# scale of the pages it happened to know about rather than of the pages that
+# exist. Here there is only ever one dict.
+PAGE_SCALES = {}
+PAGE_FASTENERS = {}
+ALL_FASTENERS = {}
+# The subset of PAGE_SCALES that actually put a FILL CODE on the paper. It is
+# not the same set: the exploded panel page carries badge letters and a
+# fastener table, but it draws no screw bodies at all - it draws the drilling
+# pattern and a dotted line into each hole - so the fill code never appears on
+# it, and letting its very wide page decide the fill proof's worst case would
+# be proving a size the code is never printed at.
+PAGE_FILL_SCALES = {}
 
 
 def subject_diag(shape):

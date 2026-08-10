@@ -457,8 +457,17 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
 
     svg = os.path.join(out_dir, f"steg-{n:02d}.svg")
     png = os.path.join(out_dir, f"steg-{n:02d}.png")
-    page.write(svg)
+    page.write(svg, width)
     RL.to_png(svg, png, width)
+    for f_name, *_rest in fasteners:
+        RL.ALL_FASTENERS.setdefault(f_name, n)
+    if letters:
+        # The panel page carries badge letters like any other, so it belongs
+        # in the two contrast proofs on the same terms.
+        RL.PAGE_SCALES[n] = width / page.w
+        RL.PAGE_FASTENERS[n] = list(fasteners)
+        if page.fill_spans:
+            RL.PAGE_FILL_SCALES[n] = width / page.w
     print(f"  steg {n:2d}  eksplodert plate: {len(plate_lines)} + "
           f"{sum(len(p) for p in batten_lines)} kanter / "
           f"{len(beslag)} beslag / {len(marks)} festepunkt -> {png}")

@@ -647,17 +647,26 @@ def coded_slug(name: str, code: str | None) -> str:
 
 def fastener_svg(name: str, code: str | None = None) -> str:
     elems, (x0, y0, x1, y1) = build_fastener(name)
-    defs = ""
-    if code not in (None, "open") and is_screw_glyph(name):
-        # Mønsterperioden er skruens egen, ikke sidens: glyfen settes i alt
-        # fra 30 til 130 px høyde, og det eneste som holder antallet striper
-        # over skaftet konstant er å knytte perioden til diameteren.
-        dims = _dims(name)
-        d = dims[0] if dims else 5.0
-        defs = "  " + fill_defs(0.24 * d, 0.08 * d) + "\n"
-        elems = [_filled(elems[0], fill_paint(code))] + list(elems[1:])
     w_mm = (x1 - x0) + 2 * MARGIN_MM
     h_mm = max(BASE_H_MM, (y1 - y0) + 2 * MARGIN_MM)
+    defs = ""
+    if code not in (None, "open") and is_screw_glyph(name):
+        dims = _dims(name)
+        d = dims[0] if dims else 5.0
+        # EGEN PREFIKS PER FIL. Glyfen blir lagt inn hel i stegsidens
+        # innsettpanel, og den siden har sine egne mønstre med de samme
+        # navnene. To elementer med samme id i ett dokument er ikke to
+        # mønstre - det første vinner - så en delt prefiks lot sidens
+        # periode gjelde i glyfen og glyfens i naboglyfen. Filnavnet er
+        # unikt og deterministisk, så det er prefiksen.
+        prefix = "fyll-" + coded_slug(name, code)
+        # Mønsteret ligger inne i `scale(SCALE)`-gruppa, altså i
+        # MILLIMETER, og lerretet er h_mm høyt. Settes glyfen så lite som
+        # manualen noen gang setter den, blir det GLYPH_MIN_PX / h_mm
+        # piksler per millimeter - og det er den skalaen perioden må tåle.
+        base, t = fill_metrics(d, GLYPH_MIN_PX / h_mm)
+        defs = "  " + fill_defs(base, t, prefix) + "\n"
+        elems = [_filled(elems[0], fill_paint(code, prefix))] + list(elems[1:])
     tx = MARGIN_MM - x0
     ty = (h_mm - (y1 - y0)) / 2.0 - y0
     body = (f'    <g transform="scale({_f(SCALE)}) '
@@ -743,6 +752,63 @@ FILL_CODES = ("open", "hatch", "cross", "solid")
 # skraveringen blir en grå flate ved 19 px bredde, og da koder den ingenting.
 # Grovere rute gir den en form leseren ser med én gang - ruter, ikke gråtone.
 PATTERN_PERIOD = {"hatch": 1.0, "cross": 1.45, "dots": 1.15}
+
+# HVOR FIN PERIODEN FÅR VÆRE - og dette er regelen, ikke et tall noen likte.
+#
+# Et mønster koder bare så lenge leseren ser de enkelte strekene. Under et par
+# piksler per periode folder rasterets kantutjevning strek og mellomrom sammen
+# til én gråtone, og da er Ⓑ og Ⓒ det samme festemiddelet. Det var nøyaktig det
+# som skjedde: glyfen i stegets egen festetabell bandt perioden til skruens
+# SANNE diameter (0,24 x d = 1,44 mm for en 6 mm skrue) mens manualen setter
+# den samme glyfen 30 px høy på et lerret som er 30 mm - altså 1 px per mm.
+# 1,44 px periode med 0,48 px strek er ingen skravering, det er 33 % grått.
+#
+# Perioden velges derfor aldri fritt. Den er den GROVESTE av to krav:
+#
+#   * FORMKRAVET   - flaten den skal dekke, delt på hvor mange striper vi vil
+#                    ha over den. Det er dette kravet som binder på stegsiden,
+#                    der skruen er tegnet feit og sitter på en stor side.
+#   * OPPLØSNINGSKRAVET - én periode skal aldri bli mindre enn
+#                    FILL_MIN_PERIOD_PX piksler DER FLATEN FAKTISK VISES. Det
+#                    er dette kravet som binder i tabellglyfen og i
+#                    forklaringen, der hele skruen er noen få piksler tykk.
+#
+# Kalleren oppgir begge tallene i sitt eget koordinatsystem: `span` er bredden
+# mønsteret skal krysse, `px_per_unit` er hvor mange piksler én enhet blir når
+# flaten settes SÅ LITE SOM MANUALEN NOEN GANG SETTER DEN. Da er svaret riktig
+# på hver eneste flate uten at noen av dem kjenner de andres skala.
+#
+# Tallene under er lest av kontrastprøven (docs/preview/fyllkontrast.png),
+# ikke gjettet: 2,8 striper er det stegsidens hånd-innstilte periode allerede
+# svarte til (15 mm tegnet bredde / 5,36 mm periode), og 5 px er der prøven
+# viser at skraveringen slutter å være grå og blir striper igjen.
+FILL_STRIPES = 2.8          # perioder over flaten mønsteret skal dekke
+FILL_LINE_FRAC = 0.384      # én strek, som andel av perioden
+FILL_MIN_PERIOD_PX = 5.0    # én periode, i piksler, på det minste den vises
+FILL_MIN_LINE_PX = 1.5      # én strek, samme sted
+
+# Den minste manualen noen gang setter en festemiddelglyf: raden i stegets
+# egen festetabell, `height="30"` i docs/MONTERING.md. Den står her fordi det
+# er denne filen som må kjenne den for å velge perioden, og
+# tools/gen_doc_tables.py henter den herfra i stedet for å skrive 30 en gang
+# til (PRAKSIS §1).
+GLYPH_MIN_PX = 30.0
+# Og den største: fyllkodeforklaringen på beslagsiden, som er der koden læres.
+FILL_LEGEND_PX = 96.0
+
+
+def fill_metrics(span: float, px_per_unit: float) -> tuple[float, float]:
+    """(grunnperiode, strekbredde) for én flate, i kallerens egne enheter.
+
+    `span`         bredden mønsteret skal krysse
+    `px_per_unit`  piksler per enhet der flaten vises minst
+    """
+    assert span > 0.0 and px_per_unit > 0.0, (
+        f"fyllmønsteret kan ikke måles mot span={span} px_per_unit="
+        f"{px_per_unit}")
+    period = max(span / FILL_STRIPES, FILL_MIN_PERIOD_PX / px_per_unit)
+    return period, max(period * FILL_LINE_FRAC,
+                       FILL_MIN_LINE_PX / px_per_unit)
 
 
 def _fill_tile(kind: str, period: float, t: float) -> tuple[str, str]:
@@ -1117,7 +1183,15 @@ def fill_code_legend_svg(d: float = 6.0, length: float = 45.0) -> str:
 
     cell = 232.0
     axis = 86.0
-    body = ["  " + fill_defs(0.24 * d * S, 0.08 * d * S)]
+    vb_h = 150.0
+    # SAMME MØNSTER SOM TABELLGLYFEN, ikke et som er valgt for forklaringens
+    # egen (større) størrelse. Dette er den samme skruen i den samme
+    # millimeterskalaen, bare satt større på siden, og forklaringen er stedet
+    # koden LÆRES: gir vi den en finere periode fordi den har plass, lærer
+    # leseren et mønster som ikke er det tabellen viser. Perioden hentes
+    # derfor med tabellglyfens egne to tall.
+    base, t = fill_metrics(d, GLYPH_MIN_PX / BASE_H_MM)
+    body = ["  " + fill_defs(base, t)]
     for i, code in enumerate(FILL_CODES):
         letter = BADGE_ALPHABET[i]
         ox = i * cell + 20.0
@@ -1134,7 +1208,7 @@ def fill_code_legend_svg(d: float = 6.0, length: float = 45.0) -> str:
         body.append("    " + _text(ox, axis + 54.0, FILL_CODE_NAMES[code],
                                    30.0, "start"))
     w = cell * len(FILL_CODES) + 20.0
-    return svg_document("Fyllkoden: bokstaven som mønster", w, 150.0,
+    return svg_document("Fyllkoden: bokstaven som mønster", w, vb_h,
                         "\n".join(body), 2.6)
 
 

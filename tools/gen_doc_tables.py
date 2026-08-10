@@ -1412,7 +1412,8 @@ def emit_montering(G, root, steps, idx):
     # And the fill code, in the one place it is worth learning: full size,
     # all four at once. On a step page it is a reminder; here it is the
     # definition.
-    L.append(_img("img/beslag/" + fill_legend, 96,
+    L.append(_img("img/beslag/" + fill_legend,
+                  int(gen_glyphs.FILL_LEGEND_PX),
                   "Fyllkoden: A åpen, B skravert, C krysskravert, D heldekt")
              + "\n\n")
     L.append("**Fyllkode.** På en stegside med flere typer festemidler har "
@@ -1465,7 +1466,7 @@ def emit_montering(G, root, steps, idx):
             for name, qty in sorted(fast, key=lambda r: badges[r[0]]):
                 code = gen_glyphs.fill_code(badges[name])
                 L.append(f"| {_img('img/ikon/' + merke[badges[name]], 20, badges[name])}"
-                         f" | {gimg(name, 30, cap=72, code=code)} "
+                         f" | {gimg(name, gen_glyphs.GLYPH_MIN_PX, cap=72, code=code)} "
                          f"**{qty}x** | {_fast_short(name)} |\n")
             L.append("\nBokstavene viser hvor på tegningen hver type går, og "
                      "fyllet i skruen er den samme bokstaven om igjen — "
@@ -1473,7 +1474,8 @@ def emit_montering(G, root, steps, idx):
         elif fast:
             L.append("| | |\n|:---:|---|\n")
             for name, qty in fast:
-                L.append(f"| {gimg(name, 30, cap=72)} **{qty}x** | "
+                L.append(f"| {gimg(name, gen_glyphs.GLYPH_MIN_PX, cap=72)} "
+                         f"**{qty}x** | "
                          f"{_fast_short(name)} |\n")
             L.append("\n")
 

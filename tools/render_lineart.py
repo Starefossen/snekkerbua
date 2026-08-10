@@ -874,7 +874,7 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
     # The fill code: the letter again, as a pattern in the silhouette itself,
     # so a reader looking at a corner with four fasteners in it can see WHICH
     # of the four a given screw is without finding and reading a 5 mm letter.
-    paint = page.fill_paint(fill_code(m.get("letter")))
+    paint = page.fill_paint(fill_code(m.get("letter")), f["d"] * SCREW_FATTEN)
     if outline is None:
         # Straight at the reader: the drawing convention for an axis with no
         # length on the page is a ringed dot, and it is the same mark whether
@@ -1081,6 +1081,14 @@ class Page:
         # kind of fastener - which has no letters and therefore no code - comes
         # out exactly as it did before.
         self.fills = set()
+        # The narrowest thing a fill code has been asked to cross on this
+        # page, in model millimetres, and how many pixels one of those
+        # millimetres becomes in the PNG. Together they are the two numbers
+        # gen_glyphs.fill_metrics() needs, and they are collected as the page
+        # is drawn rather than assumed, because the answer belongs to what was
+        # actually put on the paper.
+        self.fill_spans = []
+        self.px_per_unit = None
         # WHAT ACTUALLY WENT ON THE PAPER. Every drawn body, badge and label
         # registers itself here with its geometry and its owner, and the
         # asserts read THIS rather than the numbers that went in. It is the
@@ -1205,7 +1213,10 @@ class Page:
     def embed_svg(self, path, x, y, w, h):
         """Drop one of the fastener glyphs in, at its own aspect ratio."""
         with open(path, encoding="utf-8") as fh:
-            raw = fh.read()
+            self.embed_svg_text(fh.read(), x, y, w, h)
+
+    def embed_svg_text(self, raw, x, y, w, h):
+        """The same, from SVG already in hand rather than off disk."""
         raw = re.sub(r"<\?xml[^>]*\?>", "", raw)
         m = re.search(r'viewBox="([^"]+)"', raw)
         if not m:
@@ -1217,27 +1228,53 @@ class Page:
             f'height="{_f(h)}" viewBox="{vb}" '
             f'preserveAspectRatio="xMidYMid meet">{inner}</svg>')
 
-    def fill_paint(self, code):
+    def fill_paint(self, code, span=None):
         """The paint for one fill code, and the pattern registered with it.
 
         The page carries the <defs> because the pattern is in the PAGE's
         coordinate system: the code has to look the same on a screw driven
         left as on one driven down, so it is the paper that is hatched and not
         the screw.
+
+        `span` is how wide the thing being filled is - the drawn diameter of
+        the fastener, in model millimetres. It is the shape half of
+        gen_glyphs.fill_metrics(); the resolution half is the page's own
+        px_per_unit. Nothing here picks a period, and nothing here may.
         """
         if code is None:
             return "#ffffff"
         import gen_glyphs
         self.fills.add(code)
+        if span:
+            self.fill_spans.append(float(span))
         return gen_glyphs.fill_paint(code)
+
+    # The width a fill has to cross when the page never told us: the thinnest
+    # screw the manual uses, at its drawn diameter. It is a floor on the
+    # SHAPE term only - the resolution term still applies - and it exists so
+    # that a page which fills something without declaring its width cannot end
+    # up with a finer pattern than the page next to it.
+    FILL_SPAN_FLOOR = 5.0 * SCREW_FATTEN
 
     def _defs(self):
         if not self.fills - {"solid", "open"}:
             return ""
         import gen_glyphs
-        return gen_glyphs.fill_defs(T.FILL_PERIOD, T.W_FILL) + "\n"
+        assert self.px_per_unit, (
+            "siden fyller noe med en kode, men vet ikke hvor mange piksler "
+            "per millimeter den rasterres i - sett Page.px_per_unit før "
+            "write()")
+        span = min(self.fill_spans) if self.fill_spans else self.FILL_SPAN_FLOOR
+        base, t = gen_glyphs.fill_metrics(span, self.px_per_unit)
+        return gen_glyphs.fill_defs(base, t) + "\n"
 
-    def write(self, path):
+    def write(self, path, px_width=None):
+        """The SVG. `px_width` is the width the PNG beside it is rastered at,
+        and it is not decoration: the fill code's period has a floor in DEVICE
+        PIXELS, so the page cannot choose its patterns without knowing what it
+        is about to be reduced to."""
+        if px_width:
+            self.px_per_unit = px_width / self.w
         head = (f'<svg xmlns="http://www.w3.org/2000/svg" '
                 f'viewBox="{_f(self.x0)} {_f(-self.y1)} {_f(self.w)} '
                 f'{_f(self.h)}">')
@@ -1476,17 +1513,20 @@ def joint_section(page, box, specs, letters, letter_label=""):
         ux, uy = ux / n, uy / n
         L = sdr["length"] * scale
         d = max(sdr["d"] * scale, T.SEC_SCREW_MIN)
-        head_d, head_l, tip_l = d * 1.9, d * 0.55, d * 1.7
+        # The SAME seven points the step page draws, at the section's own
+        # scale: `d` is already the drawn width here, so the diameter licence
+        # is spent and fatten is 1. It does not declare its span to the page,
+        # because a section screw is a schematic detail at a deliberately
+        # reduced scale - it rides on the pattern the page's real fasteners
+        # set, rather than dragging the whole page down to its size.
+        head_d = d * 1.9
+        outline = screw_outline(o, (ux, uy), L, d, 1.0)
+        page.poly(outline, fill=page.fill_paint(sdr["code"]), stroke=INK,
+                  width=T.W_RULE * 0.8)
 
         def P(t_, q, o=o, ux=ux, uy=uy):
             return (o[0] + ux * t_ - uy * q, o[1] + uy * t_ + ux * q)
 
-        prof = [(0, head_d / 2), (head_l, d / 2), (L - tip_l, d / 2),
-                (L, 0), (L - tip_l, -d / 2), (head_l, -d / 2),
-                (0, -head_d / 2)]
-        page.poly([P(t_, q) for t_, q in prof],
-                  fill=page.fill_paint(sdr["code"]), stroke=INK,
-                  width=T.W_RULE * 0.8)
         # A short arrow behind the head: the way the screwdriver goes.
         page.arrow(P(-L * 0.42, 0), P(-head_d * 0.55, 0), INK, T.W_MARK * 0.7,
                    head_d * 0.7)
@@ -2538,10 +2578,15 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
 
     svg = os.path.join(out_dir, f"steg-{n:02d}.svg")
     png = os.path.join(out_dir, f"steg-{n:02d}.png")
-    page.write(svg)
+    page.write(svg, width)
     to_png(svg, png, width)
+    for f_name, *_rest in fasteners:
+        ALL_FASTENERS.setdefault(f_name, n)
     if letters:
         PAGE_SCALES[n] = width / page.w
+        PAGE_FASTENERS[n] = list(fasteners)
+        if page.fill_spans:
+            PAGE_FILL_SCALES[n] = width / page.w
     print(f"  steg {n:2d}  {len(combined.get('prior', [])):4d} gra / "
           f"{len(new_only):4d} svarte / {len(keep):2d} festepunkt -> {png}")
     return png
@@ -2556,11 +2601,19 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
 #
 # `PAGE_SCALES` is filled in as the pages are drawn - {step: px per model mm}
 # for every page that carries badge letters, because those are the only pages
-# a fill code appears on. The proof then renders at the SMALLEST of them, which
-# is the worst case the manual contains, and at half that again as a stress
-# test. It is written to docs/preview/, beside the page previews, because it is
-# review material and not part of the manual.
-PAGE_SCALES = {}
+# a fill code appears on. The SHEET is rastered at the largest of them, so its
+# own labels stay readable, and the row that matters is drawn at the smallest:
+# the exploded panel page is 3458 mm wide against step 1's 1114, so a fastener
+# there is drawn at a third of the size, and that ratio is the worst case the
+# manual actually contains. It is written to docs/preview/, beside the page
+# previews, because it is review material and not part of the manual.
+# One home, in tools/layout.py, because tools/render_panel.py imports this
+# module back and would otherwise fill in a second copy of these - see the
+# note there.
+PAGE_SCALES = layout.PAGE_SCALES
+PAGE_FASTENERS = layout.PAGE_FASTENERS
+PAGE_FILL_SCALES = layout.PAGE_FILL_SCALES
+ALL_FASTENERS = layout.ALL_FASTENERS
 # The set in letter order, plus the one candidate that did not make it: dots
 # reads well enough at page size but is the first to go to grey at half, and
 # four codes is all a step has ever needed. It stays in the proof so that the
@@ -2568,9 +2621,14 @@ PAGE_SCALES = {}
 PROOF_EXTRA = ("dots",)
 
 
-def fill_contrast_strip(out_dir, px_per_mm):
-    """docs/preview/fyllkontrast.{svg,png} - every fill code at page size."""
+def fill_contrast_strip(out_dir, px_per_mm, worst=None):
+    """docs/preview/fyllkontrast.{svg,png} - every fill code at page size.
+
+    `px_per_mm` is the sheet's own raster, i.e. the LARGEST scale a lettered
+    page is drawn at; `worst` the smallest, which the stress row is drawn at.
+    """
     import gen_glyphs
+    k_worst = (worst / px_per_mm) if worst else 0.5
     patterns = tuple(gen_glyphs.FILL_CODES) + PROOF_EXTRA
     heads = [f"{gen_glyphs.BADGE_ALPHABET[i]}  {c.upper()}"
              if i < len(gen_glyphs.FILL_CODES) else f"({c.upper()})"
@@ -2583,7 +2641,25 @@ def fill_contrast_strip(out_dir, px_per_mm):
         ("5x60 I SITU (FANTOM)", "situ", 5.0, 60.0, 1.0),
         ("5x60 HODET ALENE", "head", 5.0, 0.30, 1.0),
         ("INNSETT (SNITT)", "sect", 5.0, 50.0, 1.0),
-        ("5x40 PA HALV SIDE", "screw", 5.0, 40.0, 0.5),
+        # The smallest a fastener is ever drawn in this manual: the same 5x40,
+        # on the widest page there is. The pattern it carries is the sheet's,
+        # which is the pattern a FULL-SIZE page gets, so this row is a shade
+        # harsher than the real step 10 - that page derives a coarser period
+        # off its own scale. A stress row is allowed to be pessimistic.
+        (f"5x40 PA MINSTE SIDESKALA ({k_worst:.2f}x)", "screw",
+         5.0, 40.0, k_worst),
+        # And half of that again, which no page asks for - the margin the set
+        # has left before it stops coding anything.
+        ("5x40 PA HALVE DET IGJEN", "screw", 5.0, 40.0, k_worst * 0.5),
+        # THE ROW THE PROOF WAS MISSING, and the one the bug lived in: the
+        # glyph as the step's own fastener table sets it, at the pixel height
+        # docs/MONTERING.md actually writes into the <img> tag. Everything
+        # above is drawn by this file at page scale; this row is the OTHER
+        # drawing of a fastener the manual has, rendered through the same
+        # embedding the inset panel uses, so the two sit side by side and the
+        # reader of the proof can see whether they say the same thing.
+        ("TABELLGLYF 6x60 @30 px", "glyph", 6.0, 60.0, 1.0),
+        ("TABELLGLYF 5x40 @30 px", "glyph", 5.0, 40.0, 1.0),
     ]
     row_h = 34.0
     w = lab + col * len(patterns) + 20.0
@@ -2592,8 +2668,8 @@ def fill_contrast_strip(out_dir, px_per_mm):
     top = h - 16.0
     page.text((10.0, top), "FYLLKODE - KONTRASTPROVE", 13.0, weight="bold")
     page.text((10.0, top - 15.0),
-              f"tegnet i {px_per_mm:.2f} px per mm - stegsidenes egen skala",
-              9.5)
+              f"tegnet i {px_per_mm:.2f} px per mm - den storste stegsidens "
+              f"egen skala", 9.5)
     top -= 34.0
     for i, head in enumerate(heads):
         page.text((lab + col * i + col / 2, top), head, 10.0,
@@ -2603,8 +2679,26 @@ def fill_contrast_strip(out_dir, px_per_mm):
         cy = top - row_h / 2
         page.text((lab - 12.0, cy - 3.5), label, 9.5, anchor="end")
         for i, code in enumerate(patterns):
-            paint = page.fill_paint(code)
             x = lab + col * i + 8.0
+            if kind == "glyph":
+                # The step table's own glyph, at the height docs/MONTERING.md
+                # sets it: gen_glyphs picks the period off that height, so the
+                # only honest way to prove it is to embed the real file at the
+                # real size. GLYPH_MIN_PX device pixels is
+                # GLYPH_MIN_PX / px_per_mm millimetres on this strip.
+                name = f"Treskrue {d:g}×{arg:g} forsenket Torx"
+                raw = gen_glyphs.fastener_svg(name, code)
+                m = re.search(r'viewBox="[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+'
+                              r'([\d.]+)"', raw)
+                gw, gh = float(m.group(1)), float(m.group(2))
+                eh = gen_glyphs.GLYPH_MIN_PX / px_per_mm
+                page.embed_svg_text(raw, x, cy - eh / 2, eh * gw / gh, eh)
+                continue
+            # No span declared on purpose: the proof has to carry the pattern
+            # a STEP PAGE would give it, not one fitted to the proof's own
+            # rows, or the half-scale stress row would quietly make every row
+            # above it finer and the proof would stop proving the manual.
+            paint = page.fill_paint(code)
             if kind == "screw":
                 pts = screw_outline((x, cy), (1.0, 0.0), arg * k, d * k)
                 page.poly(pts, fill=paint, stroke=INK, width=T.W_SCREW * k)
@@ -2626,14 +2720,12 @@ def fill_contrast_strip(out_dir, px_per_mm):
                           fill=paint, stroke=INK, width=T.W_SCREW * 0.8 * k)
             else:
                 # The inset's own section screw: floored at SEC_SCREW_MIN and
-                # drawn with the section's lighter pen.
+                # drawn with the section's lighter pen - through the same
+                # seven points joint_section() uses, because a proof drawn by
+                # a second copy of the code proves the copy.
                 w_s = max(d * 0.8, T.SEC_SCREW_MIN) * k
-                hd, hl, tl = w_s * 1.9, w_s * 0.55, w_s * 1.7
-                L = arg * k
-                page.poly([(x, cy + hd / 2), (x + hl, cy + w_s / 2),
-                           (x + L - tl, cy + w_s / 2), (x + L, cy),
-                           (x + L - tl, cy - w_s / 2), (x + hl, cy - w_s / 2),
-                           (x, cy - hd / 2)],
+                page.poly(screw_outline((x, cy), (1.0, 0.0), arg * k, w_s,
+                                        1.0),
                           fill=paint, stroke=INK, width=T.W_RULE * 0.8 * k)
         page.line((10.0, top - row_h), (w - 10.0, top - row_h), GREY,
                   T.W_LEAD * 0.5)
@@ -2642,11 +2734,171 @@ def fill_contrast_strip(out_dir, px_per_mm):
     os.makedirs(out_dir, exist_ok=True)
     svg = os.path.join(out_dir, "fyllkontrast.svg")
     png = os.path.join(out_dir, "fyllkontrast.png")
-    page.write(svg)
+    page.write(svg, w * px_per_mm)
     to_png(svg, png, int(round(w * px_per_mm)))
     print(f"  fyllkontrast  {w:.0f} x {h:.0f} mm @ {px_per_mm:.2f} px/mm "
           f"-> {png}")
     return png
+
+
+# ---------------------------------------------------------------------------
+# THE SHAPE PROOF
+# ---------------------------------------------------------------------------
+# The fill code exists because SHAPE was judged not to be enough. This proof
+# is that judgement put back on the table, drawn instead of asserted.
+#
+# It asks the question in the form the reader actually meets it. Not "can you
+# tell eight screws apart" - nobody is ever shown eight at once - but "on THIS
+# page, with THESE two to four types beside each other at the size the page
+# draws them, does the silhouette separate them on its own". A 5x40 next to a
+# 6x120 is three times the length and it is no contest; a 6x80 next to a 6x90
+# is twelve per cent, and twelve per cent of a screw is what the fill code was
+# bought for. The proof lays both cases out, bare and then filled, so the
+# answer is looked at rather than argued.
+def _screw_dims(name):
+    """(d, length) for a fastener that has an axis, else None."""
+    import gen_glyphs
+    if not gen_glyphs.is_screw_glyph(name):
+        return None
+    dims = gen_glyphs._dims(name)
+    if len(dims) < 2:
+        return None
+    return dims[0], dims[1]
+
+
+def form_contrast_strip(out_dir, px_per_mm):
+    """docs/preview/formkontrast.{svg,png} - can the SILHOUETTE carry the code?
+
+    Drawn in model millimetres and rastered at `px_per_mm`, the smallest scale
+    any lettered step page is rendered at, so a screw drawn here at its page
+    size comes out the pixel size the reader is given.
+    """
+    import gen_glyphs
+    steps = sorted(PAGE_FASTENERS)
+    # Every type the manual uses - off ALL_FASTENERS and not off the lettered
+    # pages, because the wall fixing and the M6 set live on pages that carry
+    # one kind of fastener and therefore no letters at all. Longest first.
+    every = {name: _screw_dims(name) for name in ALL_FASTENERS}
+    every = {k: v for k, v in every.items() if v}
+    order = sorted(every, key=lambda k: (-every[k][1], -every[k][0], k))
+
+    lab = 260.0
+    row_h = 30.0
+    head_h = 26.0
+    gap = 14.0
+    tab_h = gen_glyphs.GLYPH_MIN_PX / px_per_mm      # 30 px, in millimetres
+
+    # Width: the longest screw anything on the sheet draws, plus the gutters.
+    longest = max([L for _d, L in every.values()]
+                  + [d_L[1] * PAGE_SCALES[n] / px_per_mm
+                     for n in steps
+                     for d_L in [_screw_dims(r[0]) for r in PAGE_FASTENERS[n]]
+                     if d_L])
+    w = max(lab + longest + 100.0, 620.0)
+    n_rows = (len(order) * 2                      # section 1: scene + table
+              + sum(len(PAGE_FASTENERS[n]) for n in steps) * 2)  # 2 and 3
+    h = (44.0 + 4 * (head_h * 0.55 + 8.0) + len(steps) * 2 * (head_h * 0.8)
+         + n_rows * row_h + len(steps) * 2 * 6.0 + 30.0)
+    page = Page(0.0, 0.0, w, h)
+    top = h - 16.0
+    page.text((10.0, top), "FORMKONTRAST - BAERER SILHUETTEN KODEN?", 13.0,
+              weight="bold")
+    top -= 15.0
+    page.text((10.0, top),
+              f"sann lengde og sann diameter, {SCREW_FATTEN:g}x fortykket som "
+              f"paa sidene - tegnet i {px_per_mm:.2f} px per mm", 9.5)
+    top -= 22.0
+
+    def heading(text, size=11.0):
+        nonlocal top
+        page.text((10.0, top), text, size, weight="bold")
+        top -= head_h * 0.55
+
+    def rule():
+        nonlocal top
+        page.line((10.0, top), (w - 10.0, top), GREY, T.W_LEAD * 0.5)
+        top -= 8.0
+
+    def scene_row(label, d, L, tag, code=None):
+        """One screw at the size a step page draws it."""
+        nonlocal top
+        cy = top - row_h / 2
+        page.text((lab - 12.0, cy - 3.5), label, 9.0, anchor="end")
+        paint = page.fill_paint(code) if code else "#ffffff"
+        page.poly(screw_outline((lab, cy), (1.0, 0.0), L, d), fill=paint,
+                  stroke=INK, width=T.W_SCREW)
+        page.text((lab + L + 10.0, cy - 3.5), tag, 9.0)
+        top -= row_h
+
+    # ---- 1. every type, bare, at both sizes -------------------------------
+    heading("1  ALLE TYPER, BAR SILHUETT - SCENESKALA (stegsiden)")
+    for name in order:
+        d, L = every[name]
+        scene_row(_short(name), d, L, f"{d:g}x{L:g}")
+    rule()
+    heading(f"1b ALLE TYPER, BAR SILHUETT - TABELLSKALA "
+            f"({gen_glyphs.GLYPH_MIN_PX:.0f} px, tabellen under bildet)")
+    for name in order:
+        d, L = every[name]
+        cy = top - row_h / 2
+        page.text((lab - 12.0, cy - 3.5), _short(name), 9.0, anchor="end")
+        raw = gen_glyphs.fastener_svg(name)
+        m = re.search(r'viewBox="[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)"',
+                      raw)
+        gw, gh = float(m.group(1)), float(m.group(2))
+        page.embed_svg_text(raw, lab, cy - tab_h / 2, tab_h * gw / gh, tab_h)
+        page.text((lab + tab_h * gw / gh + 10.0, cy - 3.5), f"{d:g}x{L:g}",
+                  9.0)
+        top -= row_h
+    rule()
+
+    # ---- 2 and 3. the pages' own sets, bare and then coded ----------------
+    for coded in (False, True):
+        heading("3  SAMME SETT MED FYLLKODE" if coded else
+                "2  SETTET HVER SIDE FAKTISK VISER, BAR SILHUETT")
+        for n in steps:
+            k = PAGE_SCALES[n] / px_per_mm
+            note = "" if n in PAGE_FILL_SCALES else \
+                "  - siden tegner ingen skruekropper; tabellen er eneste sted"
+            page.text((10.0, top - 10.0),
+                      f"STEG {n}   ({PAGE_SCALES[n]:.2f} px/mm){note}", 9.5,
+                      weight="bold")
+            top -= head_h * 0.8
+            for name, qty, _svg, letter in PAGE_FASTENERS[n]:
+                dims = _screw_dims(name)
+                if dims is None:
+                    cy = top - row_h / 2
+                    page.text((lab - 12.0, cy - 3.5),
+                              f"{letter}  {_short(name)}", 9.0, anchor="end")
+                    page.text((lab, cy - 3.5), "(beslag - ingen akse)", 9.0)
+                    top -= row_h
+                    continue
+                d, L = dims
+                scene_row(f"{letter}  {_short(name)}  {qty}x", d * k, L * k,
+                          f"{d:g}x{L:g}",
+                          gen_glyphs.fill_code(letter) if coded else None)
+            top -= 6.0
+        rule()
+
+    os.makedirs(out_dir, exist_ok=True)
+    svg = os.path.join(out_dir, "formkontrast.svg")
+    png = os.path.join(out_dir, "formkontrast.png")
+    page.write(svg, w * px_per_mm)
+    to_png(svg, png, int(round(w * px_per_mm)))
+    print(f"  formkontrast  {w:.0f} x {h:.0f} mm @ {px_per_mm:.2f} px/mm "
+          f"-> {png}")
+    return png
+
+
+def _short(name):
+    """The trade name without the boilerplate, for a proof's label column."""
+    if name.startswith("Veggfeste"):
+        return "Veggfeste 8×100"
+    if name.startswith("Senkhodeskrue"):
+        return "Senkhodeskrue M6×30 + skive + mutter"
+    for tail in (" forsenket Torx", " varmforsinket"):
+        name = name.replace(tail, "")
+    return name.replace(", bøyd av flattstål 30×4", "")
 
 
 def to_png(svg_path, png_path, width):
@@ -2812,7 +3064,7 @@ def render_hero(G, out_dir, width, az=330, elev=22):
     page.polylines(plines, INK, T.W_HERO)
     svg = os.path.join(out_dir, "hanna-hero.svg")
     png = os.path.join(out_dir, "hanna-hero.png")
-    page.write(svg)
+    page.write(svg, width)
     to_png(svg, png, width)
     print(f"  hero    az {az} elev {elev}  {len(plines)} kanter  -> {png}")
     return png
@@ -2853,8 +3105,13 @@ def main(argv):
     if not steps_only and only is None:
         made.append(render_hero(G, out_dir, width))
     if proof:
-        fill_contrast_strip(os.path.join(ROOT, "docs", "preview"),
-                            min(PAGE_SCALES.values()))
+        preview = os.path.join(ROOT, "docs", "preview")
+        # The sheets are rastered at the LARGEST page scale so their own type
+        # stays readable; every row inside them is then drawn at the size the
+        # page it stands for gives it.
+        fill_contrast_strip(preview, max(PAGE_FILL_SCALES.values()),
+                            min(PAGE_FILL_SCALES.values()))
+        form_contrast_strip(preview, max(PAGE_SCALES.values()))
     print(f"\n{len(made)} tegninger i {out_dir}")
 
 

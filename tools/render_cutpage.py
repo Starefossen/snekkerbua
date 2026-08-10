@@ -670,7 +670,7 @@ def render(G, out_dir, width, glyph_dir):
 
     svg = os.path.join(out_dir, "steg-00.svg")
     png = os.path.join(out_dir, "steg-00.png")
-    page.write(svg)
+    page.write(svg, width)
     RL.to_png(svg, png, width)
     print(f"  steg  0  {n_boards} bord / {n_pieces} deler "
           f"({PAGE_W:.0f} × {height:.0f}, {PAGE_W / height:.3f}) -> {png}")
