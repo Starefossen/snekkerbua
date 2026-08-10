@@ -701,9 +701,13 @@ def apply_page_numbers(doc: str, found: dict[str, int]) -> str:
 
 
 def make_previews(pdf: Path, width: int) -> list[Path]:
-    if PREVIEW_DIR.exists():
-        shutil.rmtree(PREVIEW_DIR)
-    PREVIEW_DIR.mkdir(parents=True)
+    # Only the page previews are this run's to throw away. docs/preview is the
+    # review shelf, and other things live on it - the fill-code contrast proof
+    # (`render_lineart.py --fill-contrast`) among them - which a PDF build has
+    # no business deleting just because it is about to write beside them.
+    for old in PREVIEW_DIR.glob("page-*.png"):
+        old.unlink()
+    PREVIEW_DIR.mkdir(parents=True, exist_ok=True)
     if shutil.which("pdftoppm"):
         subprocess.run(
             ["pdftoppm", "-png", "-scale-to-x", str(width), "-scale-to-y", "-1",
