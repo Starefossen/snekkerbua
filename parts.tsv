@@ -30,10 +30,10 @@ Bench Slat Right_2	boards	1681.75	1779.75	-48	752	259	295
 Bench Slat Right_3	boards	1569.5	1667.5	-48	752	259	295
 Bench Slat Right_4	boards	1457.25	1555.25	-48	752	259	295
 Bench Slat Right_5	boards	1345	1443	-48	752	259	295
-Bench Stub Leg Back Left	posts	597	645	-48	0	0	186
-Bench Stub Leg Back Right	posts	1345	1393	-48	0	0	186
-Bench Stub Leg Front Left	posts	597	645	704	752	0	186
-Bench Stub Leg Front Right	posts	1345	1393	704	752	0	186
+Bench Stub Leg Back Left	posts	572	645	-48	0	0	186
+Bench Stub Leg Back Right	posts	1345	1418	-48	0	0	186
+Bench Stub Leg Front Left	posts	572	645	704	752	0	186
+Bench Stub Leg Front Right	posts	1345	1418	704	752	0	186
 Corner Post Back Left	posts	0	98	-48	-12	0	1065
 Corner Post Back Right	posts	1892	1990	-48	-12	0	1065
 Corner Post Front Left	posts	0	98	752	788	0	1700

@@ -18,11 +18,11 @@ Alle mål i mm. Alle kutt er 90°. Posisjonen er delens plass i modellen: X lang
 | Rekkverksbord, front | 36×98 | **832** | 4 | 3..1987 (fordelt) | 716..752 | 1414..1685 (fordelt) |
 | Benkespile | 36×98 | **800** | 10 | 98..1892 (fordelt) | -48..752 | 259..295 |
 | Køyespile | 36×98 | **800** | 14 | 20..1970 (fordelt) | -48..752 | 1163..1199 |
-| Stubbefot | 48×48 | **186** | 4 | 597..1393 (fordelt) | -48..752 (fordelt) | 0..186 |
 | Benkevange, bak (gjennomgående) | 48×73 | **1794** | 1 | 98..1892 | -48..0 | 186..259 |
 | Avstivningslekt under plate | 48×73 | **715** | 2 | 882..1108 (fordelt) | 0..715 | 186..259 |
 | Benkevange, front (bit) | 48×73 | **642** | 2 | 3..1987 (fordelt) | 704..752 | 186..259 |
 | Rungetrinn | 48×73 | **320** | 4 | 835..1155 | 715..788 | 211..958 (fordelt) |
+| Stubbefot | 48×73 | **186** | 4 | 572..1418 (fordelt) | -48..752 (fordelt) | 0..186 |
 | Sidevange, øvre | 48×98 | **1984** | 2 | 3..1987 | -48..752 (fordelt) | 1065..1163 |
 | Endebjelke | 48×98 | **836** | 2 | 98..1892 (fordelt) | -48..788 | 967..1065 |
 
@@ -30,6 +30,6 @@ Alle mål i mm. Alle kutt er 90°. Posisjonen er delens plass i modellen: X lang
 
 «(fordelt)» betyr at delene i den raden står på flere posisjoner langs den aksen; kolonnen viser da hele området de dekker. Nøyaktige posisjoner står i [nøkkelmål](nokkelmal.md).
 
-Fordelt på dimensjon: **36×98** 32 stk. · **36×48** 18 stk. · **48×73** 9 stk. · **48×48** 4 stk. · **48×98** 4 stk. · **18 mm plate, 680 bred** 1 stk. · **21×95** 1 stk.
+Fordelt på dimensjon: **36×98** 32 stk. · **36×48** 18 stk. · **48×73** 13 stk. · **48×98** 4 stk. · **18 mm plate, 680 bred** 1 stk. · **21×95** 1 stk.
 
 Sagstopp for hovedbordet 36×98: **2 stk. à 1700** · **2 stk. à 1065** · **4 stk. à 832** · **24 stk. à 800** — 4 innstillinger på sagen, ikke én per del.

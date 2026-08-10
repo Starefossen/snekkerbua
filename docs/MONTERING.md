@@ -59,7 +59,7 @@ Står det **2×** ved et festemiddel, står det merket for to på samme sted —
 | <img src="img/beslag/treskrue-5x70.svg" alt="Treskrue 5×70 forsenket Torx" height="44"> **4x** | Treskrue 5×70 forsenket Torx |
 | <img src="img/beslag/vinkelbeslag-90x90x40.svg" alt="Vinkelbeslag 90×90×40×2,5 varmforsinket" height="179"> **4x** | Vinkelbeslag 90×90×40×2,5 varmforsinket |
 | <img src="img/beslag/krokplate-30x4.svg" alt="Krokplate, bøyd av flattstål 30×4" height="92"> **2x** | Krokplate, bøyd av flattstål 30×4 |
-| <img src="img/beslag/treskrue-6x70.svg" alt="Treskrue 6×70 forsenket Torx" height="44"> **2x** | Treskrue 6×70 forsenket Torx |
+| <img src="img/beslag/treskrue-6x60.svg" alt="Treskrue 6×60 forsenket Torx" height="44"> **2x** | Treskrue 6×60 forsenket Torx |
 | <img src="img/beslag/u-brakett-30x4.svg" alt="U-brakett, bøyd av flattstål 30×4" height="98"> **2x** | U-brakett, bøyd av flattstål 30×4 |
 | <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="84"> **2x** | Vinkelbeslag 40×40×20 |
 
@@ -82,11 +82,11 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Rekkverksbord, front | 36×98 | 832 | **4** |
 | Benkespile | 36×98 | 800 | **10** |
 | Køyespile | 36×98 | 800 | **14** |
-| Stubbefot | 48×48 | 186 | **4** |
 | Benkevange, bak (gjennomgående) | 48×73 | 1794 | **1** |
 | Avstivningslekt under plate | 48×73 | 715 | **2** |
 | Benkevange, front (bit) | 48×73 | 642 | **2** |
 | Rungetrinn | 48×73 | 320 | **4** |
+| Stubbefot | 48×73 | 186 | **4** |
 | Sidevange, øvre | 48×98 | 1984 | **2** |
 | Endebjelke | 48×98 | 836 | **2** |
 
@@ -179,7 +179,7 @@ Ledd **J14** → [beslagliste](generated/beslagliste.md)
 | | | |
 |:---:|:---:|---|
 | <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="30"> **12x** | Treskrue 6×90 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x70.svg" alt="Treskrue 6×70 forsenket Torx" height="30"> **2x** | Treskrue 6×70 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x60.svg" alt="Treskrue 6×60 forsenket Torx" height="30"> **2x** | Treskrue 6×60 |
 
 Bokstavene viser hvor på tegningen hver type går.
 
@@ -222,7 +222,7 @@ Ledd **J2** → [beslagliste](generated/beslagliste.md)
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **2×** | Benkevange, front (bit) | 48×73 | 642 |
-| **4×** | Stubbefot | 48×48 | 186 |
+| **4×** | Stubbefot | 48×73 | 186 |
 
 | | | |
 |:---:|:---:|---|

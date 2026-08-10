@@ -64,9 +64,10 @@ U1  THE BOARD IS 36x98, NOT 34x98. 34x98 came off a drawing; 36x98 is what the
     absorbs the whole 2 mm, 17 -> 15 mm. Barrier still 346 above the mattress.
 U2  THE CORNER POSTS ARE 36x98 TOO, AND THE LADDER UPRIGHTS TURN. The four
     corner posts go 48x48 -> 36x98, thin face to the room: 36 in Y, 98 in X.
-    48x48 leaves the frame entirely; only the four bench stub legs still use
-    it (they cannot follow - a leg 36 deep would hang out of the 48 mm bench
-    rail it bears under). What the change buys:
+    48x48 leaves the frame entirely; the four bench stub legs were the last
+    thing on it (they cannot follow - a leg 36 deep would hang out of the
+    48 mm bench rail it bears under), and U5 below takes them to 48x73, so
+    the profile leaves the bed altogether. What the change buys:
       * ONE PROFILE. 36x98 is now 32 of the bed's 69 pieces and 28 of its 47
         running metres - slats, bench slats, guards AND posts off one pile;
       * a BIGGER post. A = 3528 mm2 against 2304, and about the strong axis
@@ -122,6 +123,33 @@ U4  M8 IS OUT OF EVERY POST JOINT. D4's argument for a single central M8 was
     tie. Affected joints: J1 (end beam), J2 (front side rail), J8 (bench
     rail), plus the W9 end fixings of the back bench rail and the back ledger.
     The exact screw counts per joint are the docs round's to set.
+U5  THE BENCH STUB LEGS GO BACK TO 48x73 AND 48x48 LEAVES THE BED. v9/W3 had
+    squared the four legs off, 48x73 -> 48x48, for exactly one reason: 48x48
+    was the corner-post section then, so it consolidated two profiles into
+    one. U2 above moved the posts to 36x98 and that reason is gone. What was
+    left was an ORPHAN profile: 48x48 bought for four 186 mm pieces and
+    nothing else - 744 mm of wood off a 2,4 m board, 69% waste, its own line
+    in the shopping list and its own pile on the floor. So the legs revert to
+    48x73, which is the BENCH RAIL'S OWN profile - the very member each leg
+    bears under - and they are cut from the rest the four rungs leave on the
+    2,4 m 48x73 board. The purchase is unchanged (1 x 4,8 m + 1 x 2,4 m of
+    48x73), one board and one profile leave the list, and the bed is down to
+    FIVE timber profiles plus the plywood sheet.
+    The Y dimension - the binding one - never moves: 48, the bench rail's own
+    depth, so the leg is flush in Y as it always was. All the change is in X,
+    where there is a whole rail to sit under. Consequences:
+      leg-on-rail bearing  48 x 48 = 2304 -> 48 x 73 = 3504 mm2, i.e. ~8,0 kN
+                           against the ~0,5 kN a leg sees; utilisation
+                           0.09 -> 0.06
+      X positions          the RULE is unchanged (inner face on the inner end
+                           of its own bench, X 645 / 1345, leg running
+                           outward from there, fully under its rail segment),
+                           so only the outer faces move: 597..645 -> 572..645
+                           and 1345..1393 -> 1345..1418
+      J10                  the bracket and its screws re-derive against a
+                           73 mm leg face instead of 48 - see the joint
+    Unchanged: the leg height (186), the bench rail segments, the open front
+    floor X 645..1345, the walk-around, and every other profile in the bed.
 
 DESIGN INTENT (v10 - "the back posts tuck under the bunk")
 --------------------------------------------------------------------------
@@ -221,16 +249,18 @@ W2  SHORT BACK POSTS - CUT FLUSH WITH THE PLATFORM. The two BACK corner posts
         the rail, not a slat, and the clearance to the mattress underside is
         a whole rail height (132 mm) rather than zero.
 W3  SQUARE STUB LEGS. The four bench stub legs go 48x73 -> 48x48, the same
-    section as the corner posts. (v11/U2 breaks that identity: the posts are
-    36x98 now and the legs stay 48x48, because a 36 mm leg would hang out of
-    the 48 mm bench rail it bears under. 48x48 is down to these four pieces.)
+    section as the corner posts. (v11/U2 breaks that identity: the posts go
+    36x98 and the legs cannot follow, because a 36 mm leg would hang out of
+    the 48 mm bench rail it bears under - which left 48x48 an orphan profile
+    on four pieces. v11/U5 therefore REVERSES THIS ENTRY: the legs are 48x73
+    again, the bench rail's own profile. Read W3 as history.)
     The leg is an end bearing under a 642 mm
     (front) / 1984 mm (back) rail, not a column: at 48x48 the leg-on-rail
     contact is 2304 mm2, ~0.09 utilisation in compression perpendicular to
     the grain, and the leg's own buckling length is 186 mm. Their inner
     faces stay exactly where they were, on the inner end of their bench-rail
-    segment (X 645 / 1345); only the section changes, so they now stand at
-    X 597..645 and 1345..1393.
+    segment (X 645 / 1345); only the section changes, so they stood at
+    X 597..645 and 1345..1393 until U5 put them back at 572..645 / 1345..1418.
 W4  THE PLATFORM RUNS TO THE WALL. The slat field goes 13 -> 14 slats and the
     twelve MIDDLE slats grow 800 -> 847 mm, Y -95..752, i.e. 1 mm clear of
     the wall plane Y = -96. The old 48 mm slot between the slat ends and the
@@ -538,7 +568,7 @@ uprights.
 
 Lower level: a convertible sofa / table / bed. The 48x73 bench rails sit at
 Z 186..259, carried by the corner posts (via 36x48 J9-B bearing blocks, C2)
-and by four 48x48 stub legs (v9/W3). The BACK rail is one continuous 1794 mm
+and by four 48x73 stub legs (v9/W3, v11/U5). The BACK rail is one continuous 1794 mm
 member butting the two back posts, X 98..1892 (C5, v10/W9, v11/U2); the FRONT
 one is two 642 mm segments that stop at the sofa ends on their stub legs,
 leaving the whole front floor between the benches open (D11/D13). The two
@@ -613,7 +643,8 @@ FULL_EXPORT = os.environ.get("LOFTBED_FULL", "").lower() in ("1", "true", "yes",
 # has 24 mm edge distance = 3d, exactly the EC5 minimum for an unloaded edge.
 #
 # U2 (v11): THE CORNER POSTS BECOME 36x98 - THE BOARD PROFILE. 48x48 disappears
-# from the frame entirely (only the four bench stub legs still use it). The post
+# from the frame entirely (the four bench stub legs were the last thing on it,
+# and U5 has since taken them to 48x73 as well, so it is gone). The post
 # turns its THIN face to the room: 36 in Y, 98 in X. What that does, in order:
 #   * ONE PROFILE. The posts are cut from the same 36x98 plank as every slat and
 #     every guard board (U1), so the whole bed is five timber profiles and the
@@ -659,27 +690,34 @@ POST_W = 98          # corner posts, wide dim (X)  [was 48, 73]
 UPRIGHT_W = 48       # ladder uprights, X  [was 36 - the upright turned, U2]
 UPRIGHT_T = 36       # ladder uprights, Y  [was 48] - the 36 mm front-plane depth
 
-# W3: the four bench stub legs go 48x73 -> 48x48, the corner-post section.
+# U5: THE FOUR BENCH STUB LEGS GO BACK TO 48x73 - THE BENCH RAIL'S OWN PROFILE.
 # The leg is an END BEARING under a bench rail, not a column. What it has to do
 # is (a) present enough face to the rail underside and (b) not buckle over its
-# own 186 mm. At 48x48 the leg-on-rail contact is 48 x 48 = 2304 mm2; against
-# f_c90,d with k_c90 = 1.5 that is ~5.3 kN, i.e. utilisation ~0.09 at the ~0.5 kN
-# a leg actually sees - the same bearing, and the same number, as the C2 blocks
-# under the end beams. Buckling is a non-question at 186 mm (lambda ~13).
-# The X POSITION is unchanged in the sense that matters: the leg's INNER face
-# still lands on the inner end of its bench-rail segment (X 645 / 1345), so the
-# rail still has zero cantilever past it. Only the outer face moves in, 572 ->
-# 597 and 1418 -> 1393.
-# U2 NOTE: W3 sized the leg as "the corner-post section", and the corner posts
-# have left 48x48 behind (they are 36x98 now). The leg does NOT follow them. It
-# is not a column - it is an end bearing under a rail - and what it needs is a
-# face at least as wide as the 48 mm rail it carries, in BOTH directions: 36 mm
-# in Y would hang 12 mm out of the rail's own 48 mm depth and break the "fully
-# under exactly one bench rail" rule the validation block enforces. So 48x48
-# stays, and it is the one profile in the bed that nothing else shares - four
-# 186 mm pieces, rippable from a 48x98 offcut. Flagged for the docs round.
+# own 186 mm. Buckling is a non-question at 186 mm (lambda ~13), so the section
+# is decided by the bearing and by the cut list.
+# HISTORY. v9/W3 took the leg 48x73 -> 48x48 for one reason only: 48x48 was the
+# corner-post section at the time, so the change CONSOLIDATED two profiles into
+# one. v11/U2 then took the corner posts to 36x98 and that argument evaporated -
+# 48x48 was left as an ORPHAN profile carrying four 186 mm pieces and nothing
+# else, i.e. a whole 2.4 m board bought for 744 mm of wood: 69% waste, an extra
+# line in the shopping list and an extra pile on the floor. U5 reverses W3. The
+# leg is 48x73 again, which is the bench rail's own profile - the very member it
+# bears under - so the four legs are cut from the 48x73 board that already has
+# 1108 mm of rest on it after the four rungs. One fewer profile, one fewer
+# board, no new stock.
+# The Y DIMENSION IS THE CONSTRAINT AND IT DOES NOT MOVE: 48, exactly the bench
+# rail's depth, so the leg is flush in Y and neither hangs out of the rail nor
+# leaves a lip. All the change is in X, where there is a whole rail to sit
+# under. At 48x73 the leg-on-rail contact is 48 x 73 = 3504 mm2 (was 2304);
+# against f_c90,d with k_c90 = 1.5 that is ~8.0 kN, i.e. utilisation ~0.06 at
+# the ~0.5 kN a leg actually sees.
+# The X POSITION rule is unchanged and is what the validation block enforces:
+# the leg's INNER face lands on the inner end of its bench-rail segment
+# (X 645 / 1345), so the rail still has zero cantilever past it, and the whole
+# leg stays under that segment. Only the OUTER face moves back out, 597 -> 572
+# and 1393 -> 1418 (the pre-W3 positions).
 LEG_T = 48           # bench stub legs, thin dim (Y)   - unchanged stock
-LEG_W = 48           # bench stub legs, wide dim (X)   [was 73, W3]
+LEG_W = 73           # bench stub legs, wide dim (X)   [48 in W3..U4; 73 again, U5]
 
 RAIL_T = 48          # upper bed side rails and end beams, thickness
 RAIL_H = 98          # upper bed side rails and end beams, height  [was 123]
@@ -1383,17 +1421,21 @@ BENCH_SLAT_PITCH = (BENCH_LEN - BENCH_SLAT_X_START - BENCH_SLAT_W) / \
     (BENCH_SLAT_COUNT - 1)                     # 112.25  [was 124.75, 137.5]
 MAX_BENCH_SLAT_GAP = MAX_SLAT_GAP              # 60, the same seat/platform limit
 STUB_LEG_H = BENCH_RAIL_BOTTOM                 # 186, floor to bench rail underside
-# W3: the legs are 48x48 now, so the same "inner face on the bench end" rule
-# puts them at 597..645 / 1345..1393 (was 572..645 / 1345..1418).
-STUB_LEG_X = [BENCH_LEN - LEG_W,               # 597..645
-              WALL_SPAN - BENCH_LEN]           # 1345..1393
+# The RULE, unchanged since W3 and re-derived here for U5: the leg's INNER face
+# is on the inner end of its bench - X 645 on the left bench, X 1345 on the
+# right - and the leg runs OUTWARD from there, away from the open floor, so it
+# is always fully under its own rail segment whatever its width. At 73 mm that
+# puts them at 572..645 / 1345..1418 (they were 597..645 / 1345..1393 while the
+# leg was 48 wide; 572/1418 is where W3 found them).
+STUB_LEG_X = [BENCH_LEN - LEG_W,               # 572..645
+              WALL_SPAN - BENCH_LEN]           # 1345..1418
 # W3: the minimum end bearing in X of a bench rail on a stub leg. 40 mm is the
-# same floor the C2 bearing blocks are held to; the 48 mm leg clears it.
+# same floor the C2 bearing blocks are held to; the 73 mm leg clears it easily.
 MIN_LEG_BEARING = 40
-# W3: leg-on-rail contact area and its compression-perpendicular utilisation.
-# 48 x 48 = 2304 mm2; at f_c90,d ~ 1.53 MPa with k_c90 = 1.5 that is ~5.3 kN
-# against the ~0.5 kN a leg carries -> ~0.09. (Was 73 x 48 = 3504 mm2, ~0.06.)
-LEG_BEARING_AREA = LEG_W * LEG_T               # 2304 mm2  [was 3504]
+# U5: leg-on-rail contact area and its compression-perpendicular utilisation.
+# 48 x 73 = 3504 mm2; at f_c90,d ~ 1.53 MPa with k_c90 = 1.5 that is ~8.0 kN
+# against the ~0.5 kN a leg carries -> ~0.06. (Was 48 x 48 = 2304 mm2, ~0.09.)
+LEG_BEARING_AREA = LEG_W * LEG_T               # 3504 mm2  [was 2304, W3..U4]
 
 # D13: the front bench rail segments end at the SOFA ends, on their stub legs.
 FRONT_BENCH_RAIL_SEGMENTS = [(THROUGH_X0, BENCH_LEN),              # 3 .. 645
@@ -2223,7 +2265,7 @@ JOINTS = [
          side="Fra klossens bakside, inn i stolpen. Kortere skrue enn de "
               "andre klossene — her er det bare 36 mm stolpe bak klossen",
          contacts=[dict(a="bench_blk_f", b="post_front", axis=1, drives=[
-             drive("Treskrue 6×70 forsenket Torx", 1, frm="bench_blk_f")])]),
+             drive("Treskrue 6×60 forsenket Torx", 1, frm="bench_blk_f")])]),
     dict(id="J10", title="Benkevange → stubbefot", n=4,
          drill="⌀3 i foten og i vangen; skråskruene forbores ⌀3,5",
          side="Vinkelbeslaget sitter i hjørnet mellom fotens utside og "
@@ -3032,10 +3074,13 @@ FASTENERS = build_fasteners() if FASTENERS_ON else []
 # THE ASSERTS - asked of the SHAPES
 # ---------------------------------------------------------------------------
 FASTENER_TOL = 0.15
-# The tightest tip cover in the bed is J9-F: a 6x70 through a 36 mm bearing
-# block leaves 34 mm in a 36 mm post, so 2 mm of wood stands behind the point.
-# That is the number the rule is set by, and it is called out in ASSEMBLY.md.
-FASTENER_MIN_TIP_COVER = 2.0
+# The tightest tip cover in the bed is the 6x80 pattern into a side or bench
+# rail (J2, J3, J8): through 36 mm of post or upright, 44 mm left in a 48 mm
+# rail, so 4 mm of wood stands behind the point. J9-F used to set this number
+# and set it at 2 mm - a 6x70 through the 36 mm bearing block left 34 mm in a
+# 36 mm post - but that screw is a 6x60 now: 24 mm into the post, 12 mm of
+# cover, three times the margin and one length fewer to buy.
+FASTENER_MIN_TIP_COVER = 4.0
 FASTENER_VOL_TOL = 2.0           # mm3 - OCC boolean noise on a tangent face
 TOE_HEAD_ALLOWANCE = 0.10        # of a skew screw's volume - see the note below
 
@@ -3530,9 +3575,9 @@ assert len(back_posts) == 2 and len(front_posts) == 2
 assert not any(p.label.startswith("Back Post Mid") for p in parts), \
     "D1: the intermediate back posts are supposed to be gone"
 # D13/W2/W6: the three families share neither section nor length any more -
-# 2 x front corner post 48x48 x 1700, 2 x back corner post 48x48 x 1065,
-# 2 x ladder upright 36x48 x 1700 (36 in X, 48 in Y so the bolting face is
-# unchanged).
+# 2 x front corner post 36x98 x 1700, 2 x back corner post 36x98 x 1065 (U2;
+# both were 48x48 up to v10), 2 x ladder upright 36x48 x 1700 (U2 turned them:
+# 48 in X, 36 in Y, so the whole front plane is one 36 mm layer).
 for p in verticals:
     (x0, x1), (y0, y1), (z0, z1) = p.extents
     fam = vertical_family(p)
@@ -4409,9 +4454,9 @@ for r in front_bench_rails:
     bear = min(x1, a1) - max(x0, a0)
     assert abs(bear - LEG_W) < TOL, \
         f"D13: '{r.label}' only bears {bear} mm on its stub leg, want {LEG_W}"
-    # W3 re-check: the leg is 48 wide now instead of 73, so the end bearing in X
-    # has to be re-measured against the absolute minimum, not just against
-    # LEG_W. 48 >= 40 with the whole leg under the rail and no cantilever.
+    # U5 re-check: the leg is 73 wide again instead of 48, so the end bearing in
+    # X has to be re-measured against the absolute minimum, not just against
+    # LEG_W. 73 >= 40 with the whole leg under the rail and no cantilever.
     assert bear >= MIN_LEG_BEARING, \
         f"W3: '{r.label}' bears only {bear} mm in X on its stub leg, want at " \
         f"least {MIN_LEG_BEARING}"
@@ -4492,11 +4537,15 @@ print(f"OK  D11/D13: front bench rail = 2 x {sec(BENCH_RAIL_T, BENCH_RAIL_H)} x 
       f"{bay_gap} mm (X {OPEN_FLOOR_X[0]}..{OPEN_FLOOR_X[1]}) from the floor to "
       f"the bench rail top, everywhere in front of the back rail")
 
-# W3: SQUARE STUB LEGS. All four legs are 48x48x186 now, the corner-post
-# section. Three things to hold: the section, the position (the leg's inner face
-# still on the inner end of its bench, X 645 / 1345, which is what makes the
-# front segments zero-cantilever end-bearing members), and the bearing - the
-# whole 48 x 48 face has to be under its rail, not hanging off the side of it.
+# U5: THE STUB LEGS ARE 48x73x186 - the bench rail's own section (W3 had made
+# them 48x48 to share the then-48x48 corner post; U2 moved the posts to 36x98
+# and left 48x48 an orphan). Three things to hold, and they are the same three
+# W3 held - only the width changed: the section, the position (the leg's inner
+# face still on the inner end of its bench, X 645 / 1345, with the leg running
+# OUTWARD from there, which is what makes the front segments zero-cantilever
+# end-bearing members), and the bearing - the whole 48 x 73 face has to be under
+# its rail, not hanging off the side of it. The Y dimension is the binding one
+# and is untouched at 48: the rail is 48 deep, so the leg is flush in Y.
 legs = [p for p in parts if p.label.startswith("Bench Stub Leg")]
 assert len(legs) == 4, f"W3: expected 4 stub legs, got {len(legs)}"
 rail_pieces = [p for p in parts if "Bench Rail" in p.label and "Block" not in p.label]
@@ -4525,18 +4574,21 @@ for leg in legs:
         f"W3: '{leg.label}' is only {lx1 - lx0} mm long in X (min {MIN_LEG_BEARING})"
     leg_rail_bearings.append((leg.label, carried[0].label, area))
 assert {p.extents[0] for p in legs} == {
-    (BENCH_LEN - LEG_W, BENCH_LEN),                          # 597..645
-    (WALL_SPAN - BENCH_LEN, WALL_SPAN - BENCH_LEN + LEG_W),  # 1345..1393
-}, f"W3: the legs are at {sorted({p.extents[0] for p in legs})}"
-print(f"OK  W3: 4 stub legs {sec(LEG_T, LEG_W)} x {STUB_LEG_H} (was "
-      f"{sec(LEG_T, 73)}; U2 left them behind when the corner posts went "
-      f"{sec(BOARD36_T, BOARD36_W)} - a leg has to stay inside its rail's "
-      f"{BENCH_RAIL_T} mm depth) at X {STUB_LEG_X[0]}..{STUB_LEG_X[0] + LEG_W} / "
+    (BENCH_LEN - LEG_W, BENCH_LEN),                          # 572..645
+    (WALL_SPAN - BENCH_LEN, WALL_SPAN - BENCH_LEN + LEG_W),  # 1345..1418
+}, f"U5: the legs are at {sorted({p.extents[0] for p in legs})}"
+print(f"OK  U5: 4 stub legs {sec(LEG_T, LEG_W)} x {STUB_LEG_H} (was "
+      f"{sec(LEG_T, 48)} in W3..U4, when 48x48 was the corner-post section; "
+      f"U2 took the posts to {sec(BOARD36_T, BOARD36_W)} and left that profile "
+      f"an orphan, so the leg goes back to the bench rail's own "
+      f"{sec(BENCH_RAIL_T, BENCH_RAIL_H)}) at X "
+      f"{STUB_LEG_X[0]}..{STUB_LEG_X[0] + LEG_W} / "
       f"{STUB_LEG_X[1]}..{STUB_LEG_X[1] + LEG_W} - inner faces still on the "
-      f"bench ends {BENCH_LEN} / {WALL_SPAN - BENCH_LEN}; each one fully under "
-      f"its rail with {LEG_BEARING_AREA} mm2 of contact (was 3504), "
-      f"compression-perpendicular utilisation ~0.09, and {LEG_W} mm >= "
-      f"{MIN_LEG_BEARING} mm of bearing in X")
+      f"bench ends {BENCH_LEN} / {WALL_SPAN - BENCH_LEN}, running outward from "
+      f"there; each one fully under its rail with {LEG_BEARING_AREA} mm2 of "
+      f"contact (was 2304), compression-perpendicular utilisation ~0.06, and "
+      f"{LEG_W} mm >= {MIN_LEG_BEARING} mm of bearing in X. Y is unchanged at "
+      f"{LEG_T}, flush in the rail's {BENCH_RAIL_T} mm depth")
 
 # D13: WALK-AROUND. There must be a real passage on each side of the ladder,
 # between the sofa end and the upright outer face, clear from the floor up to
@@ -5182,15 +5234,21 @@ EXPECTED_PROFILES = {
     sec(BOARD36_T, BOARD36_W),      # 36x98 - boards AND corner posts (U1/U2)
     sec(BLOCK_T, BLOCK_H),          # 36x48 - ladder uprights and every block
     sec(BENCH_RAIL_T, BENCH_RAIL_H),  # 48x73 - bench rails, rungs, battens
+                                      #         AND the four stub legs (U5)
     sec(RAIL_T, RAIL_H),            # 48x98 - side rails and end beams
-    sec(LEG_T, LEG_W),              # 48x48 - the four bench stub legs, only
     sec(BOARD_T, BOARD_W),          # 21x95 - the back table ledger, only
 }
+# U5: the stub legs are cut from the bench-rail profile now, so they add no
+# entry of their own - this is the assert that would have caught 48x48 coming
+# back in through the side door.
+assert sec(LEG_T, LEG_W) == sec(BENCH_RAIL_T, BENCH_RAIL_H), \
+    f"U5: the stub legs are {sec(LEG_T, LEG_W)}, not the bench rail profile " \
+    f"{sec(BENCH_RAIL_T, BENCH_RAIL_H)} - that is a sixth profile again"
 assert set(TIMBER_PROFILES) == EXPECTED_PROFILES, \
     f"the bed is built from {sorted(TIMBER_PROFILES)}, expected " \
     f"{sorted(EXPECTED_PROFILES)}"
-assert len(TIMBER_PROFILES) == 6, \
-    f"U1/U2 aimed at 6 timber profiles, this is {len(TIMBER_PROFILES)}"
+assert len(TIMBER_PROFILES) == 5, \
+    f"U1/U2/U5 aimed at 5 timber profiles, this is {len(TIMBER_PROFILES)}"
 assert by_section[sec(BOARD36_T, BOARD36_W)] == 32 and \
     max(by_metres, key=by_metres.get) == sec(BOARD36_T, BOARD36_W), \
     "U1/U2: 36x98 must be both the most numerous and the longest profile"
@@ -5286,15 +5344,20 @@ print(f"Note (W5): the mattress is PINNED again. The clear between the wall "
       f"so it can wander {MATTRESS_WANDER} mm and leaves {MAX_MATTRESS_GAP} mm "
       f"of gap at either long edge - the EN 747 {MAX_GUARD_OPENING} mm limit is "
       f"not in play at all - with slat underneath it the whole way.")
-print(f"Note (W3): the four bench stub legs are {sec(LEG_T, LEG_W)} x "
-      f"{STUB_LEG_H} (was 48x73). W3 chose that as the corner-post section; U2 "
-      f"has since taken the posts to {sec(POST_T, POST_W)} and the legs cannot "
-      f"follow - a {POST_T} mm leg would hang out of the {BENCH_RAIL_T} mm "
-      f"bench rail it bears under - so 48x48 is theirs alone. Their inner faces "
-      f"are unmoved on the bench ends X {BENCH_LEN} / {WALL_SPAN - BENCH_LEN}, "
-      f"so the front rail segments are still zero-cantilever end-bearing "
-      f"members; the leg-on-rail contact is {LEG_BEARING_AREA} mm2 (was 3504), "
-      f"utilisation ~0.09 in compression perpendicular to the grain.")
+print(f"Note (U5): the four bench stub legs are {sec(LEG_T, LEG_W)} x "
+      f"{STUB_LEG_H} again (48x48 from W3 to U4). W3 squared them off to share "
+      f"the corner-post section; U2 has since taken the posts to "
+      f"{sec(POST_T, POST_W)} and the legs cannot follow - a {POST_T} mm leg "
+      f"would hang out of the {BENCH_RAIL_T} mm bench rail it bears under - so "
+      f"48x48 was left as an orphan profile carrying four 186 mm pieces, a "
+      f"whole 2.4 m board at 69% waste. They are cut from the "
+      f"{sec(BENCH_RAIL_T, BENCH_RAIL_H)} bench-rail board instead, off the "
+      f"rest that the four rungs leave. Their inner faces are unmoved on the "
+      f"bench ends X {BENCH_LEN} / {WALL_SPAN - BENCH_LEN} and they run outward "
+      f"from there, so the front rail segments are still zero-cantilever "
+      f"end-bearing members; the leg-on-rail contact is {LEG_BEARING_AREA} mm2 "
+      f"(was 2304), utilisation ~0.06 in compression perpendicular to the "
+      f"grain.")
 print(f"Note (D13): the ladder is {LADDER_CLEAR} mm clear (was 420) on "
       f"{sec(UPRIGHT_T, UPRIGHT_W)} uprights (was 48x48), so the rungs are "
       f"{RUNG_LEN} mm and the front guard segments {FRONT_GUARD_SEG_LEN} mm. "
@@ -5314,8 +5377,10 @@ print(f"Note (U1): the board profile is {sec(BOARD36_T, BOARD36_W)}, not 34x98. 
       f"{POST_HEIGHT - (GUARD_BAND_Z0[1] + GUARD_W)} mm.")
 print(f"Note (U2): the four CORNER POSTS are {sec(POST_T, POST_W)} as well - "
       f"the same plank as the boards, turned thin-face-to-the-room ({POST_T} in "
-      f"Y, {POST_W} in X). 48x48 leaves the frame; only the four bench stub legs "
-      f"still use it. Consequences, all asserted above: the posts stand at X "
+      f"Y, {POST_W} in X). 48x48 leaves the frame; the four bench stub legs were "
+      f"the last thing on it, and U5 has since taken them to "
+      f"{sec(BENCH_RAIL_T, BENCH_RAIL_H)} too, so the profile is gone from the "
+      f"bed. Consequences, all asserted above: the posts stand at X "
       f"0..{POST_W} / {WALL_SPAN - POST_W}..{WALL_SPAN}; the end beams move out "
       f"to the new inner faces X {END_BEAM_X[0]}..{END_BEAM_X[0] + RAIL_T} / "
       f"{END_BEAM_X[1]}..{END_BEAM_X[1] + RAIL_T} and shorten to {END_BEAM_LEN}; "
@@ -5359,11 +5424,12 @@ print(f"Note (D5/D7/U1/U2): {sec(BOARD36_T, BOARD36_W)} is the stock of this "
       f"piece), then {len(FRONT_GUARD_SEGMENTS) * len(GUARD_BAND_Z0)} guards at "
       f"{FRONT_GUARD_SEG_LEN} and the posts at {BACK_POST_HEIGHT} / "
       f"{POST_HEIGHT}. Four saw stops for the biggest pile in the bed.")
-print(f"Note (D7): 21x95 appears exactly once in the whole bed - the back table "
-      f"ledger, {BETWEEN_POSTS_LEN} mm. Nothing else uses it. 48x48 is now in "
-      f"the same position: the four {STUB_LEG_H} mm bench stub legs and nothing "
-      f"else (U2 took the corner posts off it), so both are candidates for the "
-      f"docs round to rip out of a bigger profile.")
+print(f"Note (D7/U5): 21x95 appears exactly once in the whole bed - the back "
+      f"table ledger, {BETWEEN_POSTS_LEN} mm - and is now the ONLY profile in "
+      f"that position. 48x48 used to be the other one (the four "
+      f"{STUB_LEG_H} mm bench stub legs, after U2 took the corner posts off "
+      f"it); U5 has ripped them out of the {sec(BENCH_RAIL_T, BENCH_RAIL_H)} "
+      f"bench-rail board instead and 48x48 is off the shopping list.")
 print("Note (D5): the slat cleats are gone; the upper slats are screwed "
       "straight down onto the side rails, one 5x60 per end.")
 

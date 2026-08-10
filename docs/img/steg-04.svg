@@ -27,14 +27,14 @@
   </g>
 </svg>
 <text x="1104.7" y="1116.42" font-family="Helvetica, Arial, sans-serif" font-size="87.37" font-weight="bold" text-anchor="end" fill="#111111">4x</text>
-<path d="M1192.27,-134.13 L1192.45,-141.26 L1157.77,-165.69 L1152.4,-177.55 L1165.37,-176.48 L1200.05,-152.05 L1206.71,-154.63 Z" fill="#ffffff" stroke="#111111" stroke-width="4.2" stroke-linejoin="round"/>
-<path d="M1159.49,-172.56 L1026.96,-265.92" fill="none" stroke="#9a9a9a" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 13"/>
+<path d="M1195.59,-266.02 L1195.77,-273.16 L1161.1,-297.59 L1155.72,-309.45 L1168.7,-308.38 L1203.38,-283.95 L1210.03,-286.53 Z" fill="#ffffff" stroke="#111111" stroke-width="4.2" stroke-linejoin="round"/>
+<path d="M1162.81,-304.46 L1026.96,-265.92" fill="none" stroke="#9a9a9a" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 13"/>
 <circle cx="1026.96" cy="-265.92" r="6" fill="#111111"/>
-<text x="1213.58" y="-104.58" font-family="Helvetica, Arial, sans-serif" font-size="31.25" font-weight="bold" text-anchor="start" fill="#111111">2x</text>
-<path d="M-443.66,250.04 L-443.47,242.9 L-478.15,218.47 L-483.52,206.61 L-470.55,207.68 L-435.87,232.11 L-429.21,229.53 Z" fill="#ffffff" stroke="#111111" stroke-width="4.2" stroke-linejoin="round"/>
-<path d="M-476.43,211.61 L-608.96,118.24" fill="none" stroke="#9a9a9a" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 13"/>
+<text x="1216.91" y="-236.47" font-family="Helvetica, Arial, sans-serif" font-size="31.25" font-weight="bold" text-anchor="start" fill="#111111">2x</text>
+<path d="M-440.33,118.14 L-440.15,111 L-474.83,86.57 L-480.2,74.71 L-467.22,75.78 L-432.55,100.21 L-425.89,97.64 Z" fill="#ffffff" stroke="#111111" stroke-width="4.2" stroke-linejoin="round"/>
+<path d="M-473.11,79.71 L-608.96,118.24" fill="none" stroke="#9a9a9a" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 13"/>
 <circle cx="-608.96" cy="118.24" r="6" fill="#111111"/>
-<text x="-422.34" y="279.59" font-family="Helvetica, Arial, sans-serif" font-size="31.25" font-weight="bold" text-anchor="start" fill="#111111">2x</text>
+<text x="-419.02" y="147.69" font-family="Helvetica, Arial, sans-serif" font-size="31.25" font-weight="bold" text-anchor="start" fill="#111111">2x</text>
 <circle cx="-648.96" cy="90.06" r="125.48" fill="none" stroke="#111111" stroke-width="2.4"/>
 <path d="M-648.96,90.06 L727.16,224.22" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="18 14"/>
 <circle cx="727.16" cy="224.22" r="236.12" fill="#ffffff" stroke="#111111" stroke-width="2.6"/>

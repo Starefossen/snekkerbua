@@ -13,8 +13,7 @@ Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regne
 | **21×95** | **1 stk. 2,4 m** | 25 % |
 | **36×48** | **1 stk. 4,8 m** | 10 % |
 | **36×98** | **7 stk. 4,8 m** | 16 % |
-| **48×48** | **1 stk. 2,4 m** | 69 % |
-| **48×73** | **1 stk. 4,8 m** + **1 stk. 2,4 m** | 20 % |
+| **48×73** | **1 stk. 4,8 m** + **1 stk. 2,4 m** | 9 % |
 | **48×98** | **1 stk. 4,2 m** + **1 stk. 2,4 m** | 15 % |
 
 ## Kappeplan, bord for bord
@@ -53,22 +52,14 @@ Kjøpt 33,60 m, brukt 28,06 m, svinn 16 %.
 | 6 | 4800 | 4 × 800 (Køyespile) | 1588 |
 | 7 | 4800 | 1 × 1065 (Hjørnestolpe, bak (veggside)) + 2 × 1700 (Hjørnestolpe, front) | 327 |
 
-### 48×48
-
-Kjøpt 2,40 m, brukt 0,74 m, svinn 69 %.
-
-| Bord | Kjøpelengde | Kappes til | Rest |
-|---:|---:|---|---:|
-| 1 | 2400 | 4 × 186 (Stubbefot) | 1644 |
-
 ### 48×73
 
-Kjøpt 7,20 m, brukt 5,79 m, svinn 20 %.
+Kjøpt 7,20 m, brukt 6,53 m, svinn 9 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 2 × 715 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 2 × 642 (Benkevange, front (bit)) | 276 |
-| 2 | 2400 | 4 × 320 (Rungetrinn) | 1108 |
+| 1 | 4800 | 2 × 715 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 2 × 642 (Benkevange, front (bit)) + 1 × 186 (Stubbefot) | 86 |
+| 2 | 2400 | 4 × 320 (Rungetrinn) + 3 × 186 (Stubbefot) | 538 |
 
 ### 48×98
 
@@ -83,6 +74,6 @@ Kjøpt 6,60 m, brukt 5,64 m, svinn 15 %.
 
 * **36×98** er hovedbordet i denne sengen — det aller meste av delelista er kappet av det. Ring og bestill før du drar; butikken har sjelden nok av én dimensjon på lager. Får du ikke akkurat 36×98, kan modellen kjøres om på en nabodimensjon — det er én konstant i `generate_loftbed.py` — men da må hele kapplista og alle nøkkelmål regnes på nytt. Ikke improviser på sagbenken.
 * Salgslengder: **36×98** finnes bare i 4,8 m. Kappeplanen over er derfor lagt på den lengden alene — de kortere salgslengdene finnes ikke i denne dimensjonen, og et bord du ikke kan kjøpe er ingen plan.
-* Planen forutsetter **C24** i alle dimensjoner. Lekt- og rekkedimensjonene (36×48, 48×48, 48×73) selges mange steder bare som «klasse 1 lekt/rekke — ikke-bærende». Stigevangen (36×48) og rungetrinnene (48×73) er bærende, og lasttabellen regner C24: spør etter C24 i disse dimensjonene, eller ta klasse 1 som et bevisst valg.
+* **Alt konstruksjonsvirke kjøpes som C24** (styrkesortert), også lektdimensjonene 36×48 og 48×73. Står de i hylla bare som «klasse 1 lekt/rekke — ikke-bærende», så spør i skranken: stigevangene, rungetrinnene og stubbeføttene er alle bærende, og lasttabellen regner C24.
 * Platen er **680 mm bred**. Limtre furu i butikkhylla stopper på 600 mm, så platen skal kappes av **18 mm kryssfiner**.
 * Vil du kunne bygge om til frittstående seng senere, trengs to rekkverksbord til i samme dimensjon som de fremre, og to bakre stolper i full høyde (1700 mm, som de fremre). Kjøp dem gjerne nå, og forbor de bakre stolpene for rekkverket mens de ligger på bukken.

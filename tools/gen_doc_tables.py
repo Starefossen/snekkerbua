@@ -606,7 +606,7 @@ NO_NAMES = {
     "Ladder rung block": "Stigekloss",
     "Bearing block, end beam (C2)": "Bærekloss, endebjelke (J1-B)",
     # All four are the same piece off the same stick; the back pair is the
-    # J9-B joint (6x90 into the back post) and the front pair J9-F (6x70 -
+    # J9-B joint (6x90 into the back post) and the front pair J9-F (6x60 -
     # only 36 mm of post behind it), so the label has to name both.
     "Bearing block, bench rail (C2)": "Bærekloss, benkevange (J9-B / J9-F)",
     "Bench rail, back (C5)": "Benkevange, bak (gjennomgående)",
@@ -894,12 +894,19 @@ def emit_innkjopsliste(G, out_dir):
     L.append(f"* Salgslengder: {only}. Kappeplanen over er derfor lagt på den "
              f"lengden alene — de kortere salgslengdene finnes ikke i denne "
              f"dimensjonen, og et bord du ikke kan kjøpe er ingen plan.\n")
-    L.append(f"* Planen forutsetter **C24** i alle dimensjoner. Lekt- og "
-             f"rekkedimensjonene (36×48, 48×48, 48×73) selges mange steder "
-             f"bare som «klasse 1 lekt/rekke — ikke-bærende». Stigevangen "
-             f"(36×48) og rungetrinnene (48×73) er bærende, og lasttabellen "
-             f"regner C24: spør etter C24 i disse dimensjonene, eller ta "
-             f"klasse 1 som et bevisst valg.\n")
+    # U5: the two lekt dimensions are named off the model, not typed in, so a
+    # profile that leaves the bed leaves this sentence too. 48×48 used to be a
+    # third one here, with an "unless you can only get klasse 1" escape for the
+    # four stub legs; the legs are cut from the 48×73 bench-rail board now, and
+    # that board also holds the load-bearing rungs, so there is no escape left
+    # and none is needed.
+    lekt = " og ".join(x.replace("x", "×") for x in (
+        G.sec(G.BLOCK_T, G.BLOCK_H), G.sec(G.BENCH_RAIL_T, G.BENCH_RAIL_H)))
+    L.append(f"* **Alt konstruksjonsvirke kjøpes som C24** (styrkesortert), "
+             f"også lektdimensjonene {lekt}. Står de i hylla bare som "
+             f"«klasse 1 lekt/rekke — ikke-bærende», så spør i skranken: "
+             f"stigevangene, rungetrinnene og stubbeføttene er alle bærende, "
+             f"og lasttabellen regner C24.\n")
     L.append(f"* Platen er **{G.PANEL_W} mm bred**. Limtre furu i "
              f"butikkhylla stopper på 600 mm, så platen skal kappes av "
              f"**18 mm kryssfiner**.\n")

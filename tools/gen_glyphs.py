@@ -975,7 +975,7 @@ FASTENERS = [
     "Treskrue 5×40 forsenket Torx",
     "Treskrue 5×60 forsenket Torx",
     "Treskrue 5×70 forsenket Torx",
-    "Treskrue 6×70 forsenket Torx",
+    "Treskrue 6×60 forsenket Torx",
     "Treskrue 6×80 forsenket Torx",
     "Treskrue 6×90 forsenket Torx",
     "Treskrue 6×120 forsenket Torx",

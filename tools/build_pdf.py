@@ -540,10 +540,13 @@ td img { display: block; margin: 0 auto; }
 .step-head h1 { font-size: 16pt; margin: 0; }
 .step-figure { text-align: center; margin: 0 0 4mm; }
 .step-figure img { max-height: 122mm; width: auto; max-width: 100%; }
-/* En stegtegning som staar paa hoykant - stigen, kappeplanen - faar all
-   hoyden som blir til overs naar tittel, tabell og notat har sitt. */
-.step.tall .step-figure img { max-height: 172mm; }
-.step.tall .step-tables { column-count: 1; }
+/* En stegtegning som staar paa hoykant - stigen, halvsnittene, kappeplanen -
+   faar all hoyden som blir til overs naar tittel, tabell og notat har sitt.
+   Tabellene beholder TO spalter her: en hoy tegning legger beslag paa hoyden,
+   og en enspaltet tabell under den skyver resten over pa en side som ellers
+   er tom. */
+.step.tall .step-figure img { max-height: 136mm; }
+.step.tall .step-tables { column-count: 2; }
 /* Kappesiden er 14 bord i full lengde og vil ha bredden: liggende A4. */
 @page cutplan { size: A4 landscape; margin: 13mm 14mm; }
 /* ...and it must NOT split. At 142mm the drawing pushed the joint line, the

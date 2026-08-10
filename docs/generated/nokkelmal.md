@@ -75,7 +75,7 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | Benkene | 0..645 og 1345..1990 |
 | Åpent gulv mellom benkene | 645..1345 (700 mm) |
 | Gangpassasje ved siden av stigen | 142 mm på hver side |
-| Stubbeføtter | 597..645 og 1345..1393 |
+| Stubbeføtter | 572..645 og 1345..1418 |
 | Løs plate | 655..1335 (680 mm bred) |
 | Avstivningslekter | 882..930 og 1060..1108 |
 

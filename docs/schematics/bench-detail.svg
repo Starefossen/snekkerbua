@@ -55,8 +55,8 @@
   <rect x="567" y="591.5" width="1203" height="109.5" class="raig"/>
   <!-- fremre benkevange, X 3..645 -->
   <rect x="424.5" y="591.5" width="963" height="109.5" class="rai"/>
-  <!-- stubbefot X 597..645 -->
-  <rect x="1315.5" y="701" width="72" height="279" class="pst"/>
+  <!-- stubbefot X 572..645 -->
+  <rect x="1278" y="701" width="109.5" height="279" class="pst"/>
   <!-- bærekloss J9-F, skjult bak stolpen, X 0..48, Z 138..186 -->
   <rect x="420" y="701" width="72" height="72" class="gho"/>
   <!-- benkespiler, X 98 / 210,25 / 322,5 / 434,75 / 547, Z 259..295 -->
@@ -115,7 +115,7 @@
   <!-- J8: 2 x 6x80 langs Y ved X 50,5, Z 210,5 og 234,5 -->
   <circle cx="495.75" cy="664.25" r="11" class="scrg"/>
   <circle cx="495.75" cy="628.25" r="11" class="scrg"/>
-  <!-- J9-F: 1 x 6x70 langs Y, skjult - X 24, Z 162 -->
+  <!-- J9-F: 1 x 6x60 langs Y, skjult - X 24, Z 162 -->
   <circle cx="456" cy="737" r="11" class="scrg"/>
   <!-- J11: 5x60 ned gjennom hver benkespile -->
   <line x1="640.5" y1="537.5" x2="640.5" y2="612.5" class="scrl"/>
@@ -129,21 +129,21 @@
   <line x1="1314" y1="537.5" x2="1314" y2="612.5" class="scrl"/>
   <circle cx="1314" cy="537.5" r="7" class="scr"/>
   <!-- J10: vinkelbeslag + skråskrue ved stubbefoten. Den loddrette fliken
-       ligger på fotens innerflate (X 645), den vannrette i vangens
+       ligger på fotens ytterflate (X 572), den vannrette i vangens
        underkant (Z 186). -->
-  <polyline points="1180.5,701 1315.5,701 1315.5,836" class="steelw"/>
-  <circle cx="1315.5" cy="768.5" r="7" class="scr"/>
-  <circle cx="1248" cy="701" r="7" class="scr"/>
+  <polyline points="1143,701 1278,701 1278,836" class="steelw"/>
+  <circle cx="1278" cy="768.5" r="7" class="scr"/>
+  <circle cx="1210.5" cy="701" r="7" class="scr"/>
 
   <!-- målkjeder A -->
   <line x1="420" y1="980" x2="420" y2="1122" class="ext"/>
   <line x1="567" y1="980" x2="567" y2="1122" class="ext"/>
-  <line x1="1315.5" y1="980" x2="1315.5" y2="1122" class="ext"/>
+  <line x1="1278" y1="980" x2="1278" y2="1122" class="ext"/>
   <line x1="1387.5" y1="980" x2="1387.5" y2="1122" class="ext"/>
   <line x1="420" y1="1032" x2="567" y2="1032" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="493" y="1060" class="dm" text-anchor="middle">98  stolpe</text>
-  <line x1="1315.5" y1="1032" x2="1387.5" y2="1032" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1352" y="1060" class="dm" text-anchor="middle">48</text>
+  <line x1="1278" y1="1032" x2="1387.5" y2="1032" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1332.8" y="1060" class="dm" text-anchor="middle">73</text>
   <line x1="420" y1="1108" x2="1387.5" y2="1108" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="903.8" y="1134" class="dm" text-anchor="middle">645  benkelengde</text>
   <line x1="1387.5" y1="1108" x2="1770" y2="1108" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
@@ -191,8 +191,8 @@
   <polyline points="500,646 1838,862" class="ldr" marker-start="url(#aE)"/>
   <text x="1850" y="870" class="lbl" text-anchor="start">J8: 2 × treskrue 6×80 langs Y ved X 50,5, Z 210,5 og 234,5.</text>
   <text x="1850" y="900" class="sml" text-anchor="start">Drives fra stolpens FORSIDE, gjennom stolpen og inn i vangen.</text>
-  <polyline points="1352,830 1838,962" class="ldr" marker-start="url(#aE)"/>
-  <text x="1850" y="970" class="lbl" text-anchor="start">Stubbefot 48×48 × 186 – 4 stk. (én i hvert vangeplan).</text>
+  <polyline points="1333,830 1838,962" class="ldr" marker-start="url(#aE)"/>
+  <text x="1850" y="970" class="lbl" text-anchor="start">Stubbefot 48×73 × 186 – 4 stk. (én i hvert vangeplan).</text>
   <text x="1850" y="1000" class="sml" text-anchor="start">J10: 1 vinkelbeslag 90×90×40×2,5 + 4 × 5×40 + 1 skråskrue 5×70 nedenfra.</text>
 
   <!-- ============================================================ B -->
@@ -299,8 +299,8 @@
   <text x="1560" y="2400" class="lbl" text-anchor="start">Benkevange, front – to biter 48×73 × 642. Midtpartiet er</text>
   <text x="1560" y="2430" class="sml" text-anchor="start">kuttet bort, så gulvet foran stigen er helt fritt.</text>
   <polyline points="1401,2070 1548,2472" class="ldr" marker-start="url(#aE)"/>
-  <text x="1560" y="2480" class="lbl" text-anchor="start">Stubbefot 48×48 × 186 – én under hvert vangeplan, X 597–645.</text>
-  <text x="1560" y="2510" class="sml" text-anchor="start">Vangebiten bærer på hele 48 × 48 mm av foten, uten utkraging.</text>
+  <text x="1560" y="2480" class="lbl" text-anchor="start">Stubbefot 48×73 × 186 – én under hvert vangeplan, X 572–645.</text>
+  <text x="1560" y="2510" class="sml" text-anchor="start">Vangebiten bærer på hele 48 × 73 mm av foten, uten utkraging.</text>
   <polyline points="1253,1852 1548,2552" class="ldr" marker-start="url(#aE)"/>
   <text x="1560" y="2560" class="lbl" text-anchor="start">Løs plate (ligger ved X 655–1335) – 18 mm lavere enn benketoppen</text>
 
@@ -367,7 +367,7 @@
   <text x="2380" y="2526" class="sml" text-anchor="start">Skruene er bånd; hele vertikallasten går i klossen.</text>
   <text x="2380" y="2590" class="sml" text-anchor="start">MERK: den FREMRE bæreklossen J9-F er 48 × 36 × 48 ved X 0–48,</text>
   <text x="2380" y="2622" class="sml" text-anchor="start">Y 716–752, Z 138–186, skrudd fra klossens bakside inn i den</text>
-  <text x="2380" y="2654" class="sml" text-anchor="start">fremre stolpen med 1 × 6×70 – kortere skrue, det står bare</text>
+  <text x="2380" y="2654" class="sml" text-anchor="start">fremre stolpen med 1 × 6×60 – kortere skrue, det står bare</text>
   <text x="2380" y="2686" class="sml" text-anchor="start">36 mm stolpe bak den.</text>
 
   <text x="510" y="660" class="jl" text-anchor="start">J8</text>
@@ -383,7 +383,7 @@
   <rect x="90" y="2700" width="2200" height="185" class="legbox"/>
   <text x="114" y="2740" class="leg" text-anchor="start">TEGNFORKLARING</text>
   <rect x="114" y="2758" width="50" height="26" class="pst"/>
-  <text x="180" y="2779" class="sml" text-anchor="start">Hjørnestolpe 36×98 / stubbefot 48×48</text>
+  <text x="180" y="2779" class="sml" text-anchor="start">Hjørnestolpe 36×98 / stubbefot 48×73</text>
   <rect x="114" y="2798" width="50" height="26" class="rai"/>
   <text x="180" y="2819" class="sml" text-anchor="start">Benkevange 48×73</text>
   <rect x="114" y="2838" width="50" height="26" class="brd"/>

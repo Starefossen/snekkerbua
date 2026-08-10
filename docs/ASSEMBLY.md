@@ -348,7 +348,8 @@ plass til. Beslaget er 40 mm bredt og ikke 65: en 65 mm flik ville stukket
 
 I tillegg går **én** skråskrue nedenfra opp gjennom foten og inn i vangen, fra
 den fotsiden som vender inn mot benkeåpningen. Én og ikke to: foten er 48 mm
-bred, og to 5 mm skråskruer ved siden av hverandre trenger 50.
+dyp — like dyp som vangen den bærer — og to 5 mm skråskruer ved siden av
+hverandre trenger 50.
 
 De **fremre** føttene står akkurat der vangebiten slutter. Vangebiten skal ikke
 stikke ut forbi foten i det hele tatt — den ender på den.
@@ -499,11 +500,11 @@ sklir de fra hverandre den første natta noen sover der.
 * **Hovedbordet finnes bare i 4,8 m.** 36×98 C24 selges som fast lengde bare
   på 4800 mm; 4200 og 3600 finnes ikke i denne dimensjonen. Kappeplanen i
   innkjøpslista er lagt på 4,8 m-bord alene.
-* **Spør etter C24 i lektdimensjonene.** 36×48, 48×48 og 48×73 står mange
-  steder i hylla bare som «klasse 1 lekt/rekke — ikke-bærende». To av dem er
-  bærende her: stigevangen (36×48) og rungetrinnene (48×73). Lasttabellen i
-  vedlegg A regner C24. Kjøp C24 i disse dimensjonene — eller ta klasse 1 som
-  et bevisst valg, med den lavere fastheten det innebærer.
+* **Kjøp alt konstruksjonsvirke som C24.** Det gjelder også lektdimensjonene
+  36×48 og 48×73, som mange steder står i hylla bare som «klasse 1 lekt/rekke
+  — ikke-bærende». Spør i skranken: stigevangene (36×48), rungetrinnene og
+  stubbeføttene (48×73) er alle bærende, og lasttabellen i vedlegg A regner
+  C24.
 * **Platen må kappes av kryssfiner.** Den er bredere enn limtreplatene i
   furuhylla rekker. Kjøp 18 mm kryssfiner og kapp.
 * **Vil du kunne bygge om til frittstående seng senere?** Da trenger du to
@@ -623,11 +624,11 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Benkespile 36×98 | Bøyning — samme stykke som køyespilen | 800 mm | 1 kN på én spile | **0,57** | ✓ Ved vanlig sitting, 0,5 kN, er utnyttelsen 0,29 |
 | Spile → benkevange | Trelagring 48 × 98 | 4704 mm² → 10,9 kN | 0,5 kN | 0,05 | ✓ |
 | Bakre benkevange 48×73 | Bøyning over åpningen mellom stubbeføttene | 700 mm | 0,5 kN | **0,14** | ✓ Ved 1 kN: 0,28 |
-| Fremre benkevangebit 48×73 | Bøyning, to opplegg, ingen utkraging | 597 mm | 0,5 kN | < 0,14 | ✓ Innerenden lander helt på stubbefoten — rent endeopplegg, null utkraging |
-| Benkevange → stubbefot | **Trelagring** 48 × 48 | 2304 mm² → 5,3 kN | 0,5 kN | 0,09 | ✓ |
+| Fremre benkevangebit 48×73 | Bøyning, to opplegg, ingen utkraging | 584 mm | 0,5 kN | < 0,14 | ✓ Innerenden lander helt på stubbefoten — rent endeopplegg, null utkraging |
+| Benkevange → stubbefot | **Trelagring** 48 × 73 | 3504 mm² → 8,0 kN | 0,5 kN | 0,06 | ✓ |
 | Benkevange → bærekloss J9-B | **Trelagring** 48 × 48 | 2304 mm² → 5,3 kN | 0,5 kN | 0,09 | ✓ |
 | Bærekloss → stolpe (J9-B / J9-F) | Skruskjær, 1 × 6 mm | 2,0 kN | 0,5 kN | 0,25 | ✓ Samme sak som J1-B, halv last |
-| Stubbefot 48×48 | Knekking over 186 mm | λ ≈ 13 | 0,5 kN | ≈ 0 | ✓ Ikke en søyle, et opplegg |
+| Stubbefot 48×73 | Knekking over 186 mm | λ ≈ 13 | 0,5 kN | ≈ 0 | ✓ Ikke en søyle, et opplegg |
 
 ### A.4 Plate og rekkverk
 

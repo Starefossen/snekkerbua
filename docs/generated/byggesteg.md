@@ -81,7 +81,7 @@ Nå bygges de to endene ut fra bakrammen. Endebjelken går fra den bakre stolpen
 
 **Deler:** 2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48 · 4× Bærekloss, endebjelke (J1-B) 36×48 × 36 · 2× Endebjelke 48×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
 
-**Festemidler:** 2× Treskrue 6×70 forsenket Torx · 12× Treskrue 6×90 forsenket Torx
+**Festemidler:** 2× Treskrue 6×60 forsenket Torx · 12× Treskrue 6×90 forsenket Torx
 
 **Ledd:** J1, J1-B, J9-F — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
@@ -125,7 +125,7 @@ Den fremre vangen lukker rammen i overetasjen. Den hviler på begge endebjelker 
 
 Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gulvet foran stigen er helt fritt.
 
-**Deler:** 2× Benkevange, front (bit) 48×73 × 642 · 4× Stubbefot 48×48 × 186
+**Deler:** 2× Benkevange, front (bit) 48×73 × 642 · 4× Stubbefot 48×73 × 186
 
 **Festemidler:** 16× Treskrue 5×40 forsenket Torx · 4× Treskrue 5×70 forsenket Torx · 4× Treskrue 6×80 forsenket Torx · 4× Vinkelbeslag 90×90×40×2,5 varmforsinket
 

@@ -303,7 +303,8 @@ def step_marks(G, st, letters, view):
                        for a, d in zip(f["anchor"], f["direction"]))
             d3 = f["direction"]
         area = f["contact"][3] if f["contact"] is not None else 1e9
-        out.append(dict(p3=p3, p2=view.xy(p3), dir3=d3, per=1, jid=f["jid"],
+        out.append(dict(p3=p3, p2=view.xy(p3), a2=view.xy(f["anchor"]),
+                        dir3=d3, per=1, jid=f["jid"],
                         name=f["name"], letter=letters.get(f["name"]),
                         area=area, spec=f))
     return out
@@ -357,7 +358,27 @@ SCREW_FATTEN = 2.2
 # short - but past a point it stops being a screw and becomes a dot, and the
 # reader loses the one number the drawing has to get right.
 FORESHORTEN_FLOOR = 0.72
-EXPLODE_FRAC = 0.10            # of the page's short side
+# HOW FAR OUT AN EXPLODED FASTENER SITS. Backing a screw straight down its own
+# axis until it is clear of everything is the obvious move and the wrong one:
+# on a corner where four screws come in from three directions it puts them a
+# page apart from the holes they belong to, and the reader is left matching
+# dotted lines instead of reading a joint. The furniture-manual idiom is the
+# opposite - the part HOVERS at its hole, a short hop out and a little to the
+# SIDE, so the gap says "this goes in here" and nothing else. So two offsets,
+# and they do different jobs:
+#
+#   EXPLODE_FRAC       along the drive axis. Just enough air between point and
+#                      hole to read as "not in yet".
+#   EXPLODE_SIDE_FRAC  across it, in PAGE space, picked towards whichever side
+#                      of the axis has more white paper on it. This is what
+#                      lifts the screw off the timber it would otherwise lie
+#                      along, and what turns the insertion line from a spike
+#                      into a short diagonal that can be followed by eye.
+#
+# Both are fractions of the page's short side, so a cropped page gets the same
+# picture at its own scale.
+EXPLODE_FRAC = 0.038
+EXPLODE_SIDE_FRAC = 0.052
 STACK_STEP = 0.6               # coaxial screws, as a fraction of the head
 
 
@@ -365,6 +386,58 @@ def _unit2(a, b):
     dx, dy = b[0] - a[0], b[1] - a[1]
     n = math.hypot(dx, dy)
     return (dx / n, dy / n, n) if n > 1e-9 else (0.0, 0.0, 0.0)
+
+
+def _seg_dist(p, a, b):
+    vx, vy = b[0] - a[0], b[1] - a[1]
+    ll = vx * vx + vy * vy
+    if ll < 1e-12:
+        return math.hypot(p[0] - a[0], p[1] - a[1])
+    t = ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / ll
+    t = 0.0 if t < 0.0 else (1.0 if t > 1.0 else t)
+    return math.hypot(p[0] - (a[0] + vx * t), p[1] - (a[1] + vy * t))
+
+
+def ink_clearance(p, plines, cap):
+    """How much white paper is round `p`, given up on once `cap` is reached.
+
+    The bed is drawn as line work, so "is there room here" is the distance to
+    the nearest SEGMENT - not to the nearest projected vertex. A 1794 mm rail
+    is two points and a hundred model millimetres of clearance from either end
+    of it says nothing about the edge running between them.
+    """
+    best = cap
+    for pl in plines:
+        for a, b in zip(pl, pl[1:]):
+            if (min(a[0], b[0]) - p[0] > best or p[0] - max(a[0], b[0]) > best
+                    or min(a[1], b[1]) - p[1] > best
+                    or p[1] - max(a[1], b[1]) > best):
+                continue
+            d = _seg_dist(p, a, b)
+            if d < best:
+                best = d
+    return best
+
+
+def clear_side(plines, hole, u, n, back, step):
+    """Which way to lift an exploded fastener off the drawing.
+
+    Both sides of the drive axis are tried, the fastener's own body is sampled
+    along each of them, and the side with more white paper under it wins. That
+    is what puts the screw off the timber rather than along it, and it is why
+    the two screws that enter a corner from the same face end up on opposite
+    sides of their own axes instead of on top of each other.
+    """
+    best, best_sgn = None, 1
+    for sgn in (1, -1):
+        room = min(
+            ink_clearance((hole[0] - u[0] * t + n[0] * step * sgn,
+                           hole[1] - u[1] * t + n[1] * step * sgn),
+                          plines, step * 2.4)
+            for t in (0.0, back * 0.5, back))
+        if best is None or room > best + 1e-9:
+            best, best_sgn = room, sgn
+    return best_sgn
 
 
 def screw_shape(view, anchor, direction, length, d, fatten=SCREW_FATTEN):
@@ -429,8 +502,16 @@ def plate_quads(spec):
     return faces
 
 
-def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0):
+def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
+                  page_off=(0.0, 0.0)):
     """One fastener on the page. Returns the point its insertion line ends at.
+
+    `shift` moves it in MODEL space - that is the hop back down its own drive
+    axis, and it has to be done in the model so the fastener stays on the line
+    it really travels. `page_off` moves the finished drawing sideways on the
+    PAPER, which is a different thing on purpose: it is not a direction the
+    screw could ever go, it is the draughtsman lifting it off the timber so
+    the reader can see it, and no camera angle is allowed to swallow it.
 
     `stack` pushes coaxial fasteners apart sideways: two screws driven into
     the same joint from the same face land on the same page point when the
@@ -439,11 +520,13 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0):
     """
     f = m["spec"]
     anchor = tuple(a + s for a, s in zip(f["anchor"], shift))
+    ox, oy = page_off
     solid = style == "eksplodert"
     if f["kind"] == "plate":
         polys = []
         for q in plate_quads(dict(f, anchor=anchor)):
-            polys.append([view.xy(p) for p in q] + [view.xy(q[0])])
+            pl = [view.xy(p) for p in q]
+            polys.append([(x + ox, y + oy) for x, y in pl + [pl[0]]])
         if solid:
             for pl in polys:
                 page.poly(pl, fill=INK, stroke=INK, width=W_RULE * 0.6)
@@ -453,17 +536,19 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0):
         seat = view.xy(anchor)
         run_end = view.xy(tuple(a + r * f["reach"]
                                 for a, r in zip(anchor, f["run"])))
-        return run_end, seat
+        return ((run_end[0] + ox, run_end[1] + oy),
+                (seat[0] + ox, seat[1] + oy))
 
     outline, p0, p1, u = screw_shape(view, anchor, f["direction"],
                                      f["length"], f["d"])
-    if stack:
-        off = f["d"] * SCREW_FATTEN * STACK_STEP * stack
-        nx, ny = (-u[1], u[0]) if u != (0.0, 0.0) else (1.0, 0.0)
-        p0 = (p0[0] + nx * off, p0[1] + ny * off)
-        p1 = (p1[0] + nx * off, p1[1] + ny * off)
+    off = f["d"] * SCREW_FATTEN * STACK_STEP * stack if stack else 0.0
+    nx, ny = (-u[1], u[0]) if u != (0.0, 0.0) else (1.0, 0.0)
+    ox, oy = ox + nx * off, oy + ny * off
+    if ox or oy:
+        p0 = (p0[0] + ox, p0[1] + oy)
+        p1 = (p1[0] + ox, p1[1] + oy)
         if outline:
-            outline = [(x + nx * off, y + ny * off) for x, y in outline]
+            outline = [(x + ox, y + oy) for x, y in outline]
     if outline is None:
         _ = None
         # Straight at the reader: the drawing convention for an axis with no
@@ -1122,11 +1207,21 @@ def _edge_of_box(centre, target, bx, by, bw, bh):
     return (centre[0] + dx * t, centre[1] + dy * t)
 
 
+def _overlap(a, b):
+    ax, ay, aw, ah = a
+    bx, by, bw, bh = b
+    return (max(0.0, min(ax + aw, bx + bw) - max(ax, bx))
+            * max(0.0, min(ay + ah, by + bh) - max(ay, by)))
+
+
 def emptiest_corner(plines, page, box_w, box_h, marks=(),
-                    avoid_top_left=False):
+                    avoid_top_left=False, avoid=()):
     """Put the inset where the drawing is not - and, above all, where the
     fastening points are not: a joint the panel covers loses its own arrow and
-    has to hand its count to a joint somewhere else on the page."""
+    has to hand its count to a joint somewhere else on the page.
+
+    `avoid` is any panel already on the page. Two panels in one corner is not
+    crowding, it is one panel hiding the other."""
     best, best_cost = None, None
     corners = [("tr", page.x1 - box_w - 20, page.y1 - box_h - 20),
                ("br", page.x1 - box_w - 20, page.y0 + 20),
@@ -1137,9 +1232,135 @@ def emptiest_corner(plines, page, box_w, box_h, marks=(),
         box = (bx, by, box_w, box_h)
         cost = sum(1 for pl in plines for p in pl if _in_rect(p, box, 30))
         cost += 60 * sum(1 for m in marks if _in_rect(m["p2"], box, 40))
+        cost += sum(4000 for a in avoid if _overlap(box, a) > 1.0)
         if best_cost is None or cost < best_cost:
             best, best_cost = (bx, by), cost
     return best
+
+
+# ---------------------------------------------------------------------------
+# THE HALF VIEW
+# ---------------------------------------------------------------------------
+# Three steps in this bed build the SAME CORNER TWICE, once at each end of a
+# two-metre frame, and nothing at all in between: the back frame (1), the end
+# beams and front posts (3), and the front bench rails on their stub legs (5).
+# Drawn whole, the page spends four fifths of its width on a rail passing
+# through, and the joint the step is actually about - four fasteners inside a
+# 100 mm corner - lands at a scale where two screws are one smudge.
+#
+# So those pages take the furniture-manual half view: ONE end at better than
+# twice the size, the frame running out of the crop the way it runs out of the
+# reader's hand, and a small pictogram saying the other end is the same thing
+# mirrored. The COUNTS do not halve with the picture - the inset table, the
+# parts table and the step's own text stay whole-step totals, because a builder
+# counting screws into a bag is not building half a bed - and the pictogram
+# says that in words as well as showing it.
+HALF_VIEW_STEPS = {1, 3, 5}
+# How much of the frame's length the crop keeps. Enough to hold the corner
+# cluster and a clear run of every member leaving it; short enough that the
+# reader can see it is a crop and not a shorter bed.
+HALF_FRAC = 0.44
+
+
+def half_crop(plines, marks=(), frac=HALF_FRAC):
+    """(page box, the crop's own record) for the left end of a wide drawing.
+
+    The cut is made on the PAPER, not in the model: keep the left `frac` of the
+    projection and throw the rest over the edge. Which end of the bed that is
+    depends on where the camera stands, and it does not matter - what matters
+    is that the reader gets the near end of the page at full size and the
+    members run out of the crop rather than stopping.
+
+    The kept band sets the page's height as well as its width. Trimming the
+    height to what is actually inside the crop is what keeps a half view from
+    coming out as a ribbon: the far end of a two-metre frame seen in isometric
+    sits a long way up or down the page, and none of that paper is wanted here.
+    """
+    bx0, by0, bx1, by1 = bounds(plines)
+    cut = bx0 + (bx1 - bx0) * frac
+    xs, hi = [bx0], [cut]
+    ys = [p[1] for pl in plines for p in pl if p[0] <= cut]
+    # The line work is not the whole page: every fastener this end drives is
+    # about to be drawn hanging out of its hole with a badge behind it, and a
+    # crop taken off the timber alone slices the heads off.
+    for m in marks:
+        if m["p2"][0] > cut:
+            continue
+        f = m["spec"]
+        # From the HOLE, not from the tip: the drawn fastener stands off the
+        # hole by its own length plus the hover, and its caption stands off
+        # that again. Five badge radii is what the caption can wander.
+        r = (f.get("length") or f.get("reach") or 40.0) + BADGE_R * 5.0
+        for p in (m["a2"], m["p2"]):
+            xs.append(p[0] - r)
+            hi.append(p[0] + r)
+            ys += [p[1] - r, p[1] + r]
+    # The cut is where the FAR end is dropped, not a guillotine: a joint on the
+    # near side of it keeps everything it needs, even where that reaches a
+    # little past the line.
+    return ((min(xs) - PAD, min(ys) - PAD, max(hi) + PAD, max(ys) + PAD),
+            dict(cut=cut, x0=bx0, x1=bx1, frac=frac))
+
+
+def mirror_note(page, prior_lines, new_lines, box, half):
+    """The half view's own footnote, and it is a picture before it is a line.
+
+    A reader who has just been handed one corner at twice the usual size will
+    not go hunting for a sentence, so the note is the whole assembly at
+    thumbnail scale with a ring round each end and the mirror axis drawn
+    between them: build this, then build it again the other way round. The
+    caption is there for the one thing a picture cannot say - that every number
+    on this page is still counted for the whole frame.
+    """
+    x, y, w, h = box
+    page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=W_RULE)
+    pad = INSET_PAD
+    cap_h = w * 0.075
+    count_w = w * 0.17
+    cell_w = w - 2 * pad - count_w
+    cell_h = h - 2 * pad - cap_h
+
+    allp = prior_lines + new_lines
+    bx0, by0, bx1, by1 = bounds(allp)
+    k = min(cell_w / max(bx1 - bx0, 1e-6), cell_h / max(by1 - by0, 1e-6))
+    cx = x + pad + cell_w / 2
+    cy = y + pad + cap_h + cell_h / 2
+
+    def to_page(p):
+        return (cx + (p[0] - (bx0 + bx1) / 2) * k,
+                cy + (p[1] - (by0 + by1) / 2) * k)
+
+    def moved(pls):
+        return [[to_page(p) for p in pl] for pl in pls]
+
+    page.polylines(moved(prior_lines), GREY, max(W_PRIOR * k, 1.4))
+    page.polylines(moved(new_lines), INK, max(W_NEW * k * 0.7, 3.0))
+
+    # A ring round each end - the same two corners, and the reason the page
+    # only draws one of them. The bands are the crop's own width, taken off
+    # either end, so the left ring is exactly what the big drawing shows.
+    band = half["cut"] - half["x0"]
+    ring_r = 0.0
+    rings = []
+    for a, b in ((half["x0"], half["cut"]), (half["x1"] - band, half["x1"])):
+        pts = [to_page(p) for pl in allp for p in pl if a <= p[0] <= b]
+        ex0, ey0 = min(q[0] for q in pts), min(q[1] for q in pts)
+        ex1, ey1 = max(q[0] for q in pts), max(q[1] for q in pts)
+        rings.append(((ex0 + ex1) / 2, (ey0 + ey1) / 2))
+        ring_r = max(ring_r, math.hypot(ex1 - ex0, ey1 - ey0) * 0.34)
+    ring_r = min(ring_r, cell_w * 0.30)
+    for c in rings:
+        page.circle(c, ring_r, width=W_RULE * 1.1)
+    # The mirror axis between them, in the drawing convention for one: a
+    # long-dash-short-dash centre line.
+    mx = (rings[0][0] + rings[1][0]) / 2
+    page.line((mx, cy - cell_h / 2), (mx, cy + cell_h / 2),
+              INK, W_LEAD, dash="30 10 6 10")
+
+    page.text((x + w - pad, cy - cap_h * 0.60), "×2", cap_h * 1.70,
+              anchor="end", weight="bold")
+    page.text((x + w / 2, y + pad * 0.7), "ANTALL GJELDER HELE RAMMEN",
+              cap_h * 0.62, anchor="middle", weight="bold")
 
 
 def flat_placement(G, parts):
@@ -1191,7 +1412,8 @@ def magnifier(page, src, dst_c, dst_r, src_r, new_only, prior_lines):
                    INK, W_NEW * dst_r / src_r)
 
 
-def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset):
+def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset,
+                          note=None, busy=()):
     """WHERE the 40x40x40 sits, and which way its four screws go.
 
     The bracket is the one piece of hardware in the bed that an overview
@@ -1234,18 +1456,48 @@ def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset):
     src_r = leg * 3.0
     dst_r = page.w * 0.145
     edge = dst_r + 105                    # room for the caption under it
-    # Away from the inset panel, in the emptiest of the two low corners.
-    ix, iy, iw, ih = inset
-    cands = [(page.x0 + edge, page.y0 + edge),
-             (page.x1 - edge, page.y0 + edge),
-             (page.x0 + edge, page.y1 - edge),
-             (page.x1 - edge, page.y1 - edge)]
+    # Away from every panel already spoken for, on the emptiest paper left.
+    # Corners only is not enough of a choice: a page carrying an inset, a
+    # mirror note and eight exploded fasteners can have all four of them
+    # spoken for while the middle of the frame - which is a hole - is empty.
+    panels = [p for p in (inset, note) if p is not None]
+
+    def _spread(lo, hi):
+        if hi - lo < 1e-6:
+            return [(lo + hi) / 2]
+        return [lo + (hi - lo) * i / 4.0 for i in range(5)]
+    cands = [(cx_, cy_)
+             for cx_ in _spread(page.x0 + edge, page.x1 - edge)
+             for cy_ in _spread(page.y0 + edge, page.y1 - edge)]
+
+    lines = new_only + prior_lines
+
     def ink(c2):
-        if _in_rect(c2, (ix - dst_r, iy - dst_r, iw + 2 * dst_r,
-                         ih + 2 * dst_r)):
-            return 10 ** 6
-        return sum(1 for pl in new_only + prior_lines for p in pl
-                   if math.hypot(p[0] - c2[0], p[1] - c2[1]) < dst_r * 1.15)
+        for px_, py_, pw_, ph_ in panels:
+            if _in_rect(c2, (px_ - dst_r, py_ - dst_r,
+                             pw_ + 2 * dst_r, ph_ + 2 * dst_r)):
+                return 10 ** 9
+        # How much line work the circle would rub out, measured as distance to
+        # the nearest EDGE. Counting projected vertices instead is what put
+        # this circle on top of a post once: a 1065 mm post is two points and
+        # neither of them is anywhere near its middle.
+        cost = max(0.0, dst_r * 1.25
+                   - ink_clearance(c2, lines, dst_r * 1.6)) * 4.0
+        # The caption sits under the circle and is opaque in its own right,
+        # and it is WIDER than the circle - so the band it needs is sampled
+        # across its whole length, not at its middle.
+        for q in (-1.0, -0.5, 0.0, 0.5, 1.0):
+            cap = (c2[0] + q * dst_r * 1.7, c2[1] - dst_r - 45)
+            cost += max(0.0, 55.0 - ink_clearance(cap, lines, 55.0)) * 3.0
+        # The circle is filled white, so a fastener under it is GONE. That is
+        # not a crowded page, it is a page that has stopped telling the truth.
+        cost += sum(dst_r * 3 for p in busy
+                    if math.hypot(p[0] - c2[0], p[1] - c2[1]) < dst_r * 1.35)
+        # And it has to stand clear of the joint it is magnifying, or the
+        # leader line has nothing to lead across.
+        reach = math.hypot(c2[0] - src[0], c2[1] - src[1])
+        cost += max(0.0, dst_r * 1.9 - reach) * 3.0
+        return cost
     dst_c = min(cands, key=ink)
 
     # The locator on the drawing itself, heavy enough to be found, and the
@@ -1323,16 +1575,54 @@ def ledger_bracket_detail(page, view, keep, new_only, prior_lines, inset):
         page.arrow((h2[0] - ux * a_len, h2[1] - uy * a_len), h2,
                    INK, W_MARK * 0.55, a_len * 0.36)
     page.clip_end()
-    # The caption goes wherever there is paper: under the circle, over it, or
-    # - if the circle sits in a corner - just inside its lower edge.
-    if dst_c[1] - dst_r - 66 >= page.y0 + 12:
-        ty = dst_c[1] - dst_r - 62
-    elif dst_c[1] + dst_r + 62 <= page.y1 - 12:
-        ty = dst_c[1] + dst_r + 24
+    cap = plate["name"].split(" varmforsinket")[0].upper()
+    # The caption is set to the PAGE, not to a fixed point size: a half-view
+    # page is half as wide as a whole-bed one, and a 21-character word at the
+    # old size would be two thirds of the way across it.
+    size = max(24.0, min(44.0, page.w * 0.030))
+    half_w = len(cap) * size * 0.32
+
+    def cap_cost(spot):
+        tx_, ty_ = spot
+        rect = (tx_ - half_w - 10, ty_ - size * 0.32,
+                2 * half_w + 20, size * 1.4)
+        if any(_overlap(rect, q) > 1.0 for q in panels):
+            return -10.0 ** 6      # a panel is opaque; the plate would eat it
+        if any(_in_rect(b, rect, BADGE_R) for b in page.badge_spots):
+            return -10.0 ** 6      # nor is a badge something to rub out
+        return min(ink_clearance((tx_ + q * half_w, ty_ + size * 0.36),
+                                 lines, 70.0)
+                   for q in (-1.0, -0.5, 0.0, 0.5, 1.0))
+
+    # Under the circle or over it, and free to slide along that line: a label
+    # is allowed to step out of the way sideways, and on a narrow page it has
+    # to. It is SCORED rather than picked in order, because "there is room
+    # below" and "below is empty" are different questions and only the second
+    # one matters.
+    rows = []
+    if dst_c[1] - dst_r - size * 1.5 >= page.y0 + 12:
+        rows.append(dst_c[1] - dst_r - size * 1.4)
+    if dst_c[1] + dst_r + size * 1.4 <= page.y1 - 12:
+        rows.append(dst_c[1] + dst_r + size * 0.55)
+    spots = []
+    for ty_ in rows:
+        for q in (0.0, -0.7, 0.7, -1.4, 1.4):
+            tx_ = min(max(dst_c[0] + q * half_w, page.x0 + half_w + 12),
+                      page.x1 - half_w - 12)
+            spots.append((tx_, ty_))
+    spots = [sp for sp in spots if cap_cost(sp) > -1.0]
+    if spots:
+        tx, ty = max(spots, key=cap_cost)
     else:
-        ty = dst_c[1] - dst_r + 34
-    page.text((dst_c[0], ty), plate["name"].split(" varmforsinket")[0].upper(),
-              44, anchor="middle", weight="bold")
+        # Nowhere outside: it goes inside the circle's own white, and then it
+        # has to FIT the circle - a plate wider than the lens would cut the
+        # lens in half, and a magnifier with its rim erased is not one.
+        tx, ty = dst_c[0], dst_c[1] - dst_r + size * 0.8
+        size *= min(1.0, dst_r * 1.55 / (2 * half_w))
+        half_w = len(cap) * size * 0.32
+    page.rect(tx - half_w - 10, ty - size * 0.32, 2 * half_w + 20, size * 1.4,
+              fill="#ffffff", stroke="none", width=0)
+    page.text((tx, ty), cap, size, anchor="middle", weight="bold")
 
 
 def info_panel(page, box, G):
@@ -1433,7 +1723,7 @@ def step_sections(marks):
     return out[:4]
 
 
-def check_coverage(st, kept, fasteners, families):
+def check_coverage(st, kept, fasteners, families, share=1):
     """The hard check: everything the step's tables list is on the drawing.
 
     Two ways a page can lie, and both are build failures. It can show fewer
@@ -1442,16 +1732,28 @@ def check_coverage(st, kept, fasteners, families):
     kind than the fastener table counts. So: every part family in the step's
     own parts table must carry at least one marker, and the marker counts must
     add up to the table's counts, kind for kind.
+
+    `share` is what the HALF VIEW does to that sum and nothing else: a page
+    that draws one of two identical ends must show exactly half of every kind,
+    no more and no less. An odd count would mean the step is not the mirror
+    pair the crop claims it is, and that is a build failure too.
     """
     shown = {}
     for m in kept:
         shown[m["name"]] = shown.get(m["name"], 0) + m["per"]
     for name, qty, _svg, _letter in fasteners:
         got = shown.get(name, 0)
-        assert got == qty, (
+        assert qty % share == 0, (
+            f"steg {st['n']}: {qty} x '{name}' kan ikke deles på {share} "
+            f"halvdeler - steget er ikke det speilparet halvsnittet påstår. "
+            f"Ta steget ut av HALF_VIEW_STEPS.")
+        assert got == qty // share, (
             f"steg {st['n']}: tegningen viser {got} x '{name}', "
-            f"tabellen sier {qty}. Festepunktene og beslaglista er ikke "
-            f"enige - se JOINT_CONTACTS i tools/render_lineart.py.")
+            f"tabellen sier {qty}"
+            + (f" ({qty // share} på den halvdelen som tegnes)"
+               if share > 1 else "")
+            + ". Festepunktene og beslaglista er ikke enige - se JOINTS i "
+              "generate_loftbed.py.")
     covered = set()
     for m in kept:
         for part in mark_parts(m):
@@ -1464,7 +1766,7 @@ def check_coverage(st, kept, fasteners, families):
 
 
 def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
-                fasteners, families, centre):
+                fasteners, families, centre, half=None):
     n = st["n"]
     prior = [uni[l] for l in placed if l not in st["highlight"]]
     new = [uni[l] for l in st["highlight"]]
@@ -1482,6 +1784,26 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     combined = project(view, groups)
     new_only = project(view, [("new", comp(new))])["new"] if new else []
 
+    # A mirror-symmetric step is cropped to one of its two identical ends, and
+    # the crop is taken off the finished projection - which is also where the
+    # mirror pictogram gets the whole thing from.
+    # Where the fasteners go, in the drawing's own frame. A step that drives
+    # only one kind needs no letters: the glyph in its table is already the
+    # whole answer. This has to be known before the page rectangle is fixed:
+    # an exploded screw sticks out past the timber it goes into, and a crop
+    # that only knows about the timber would cut its head off.
+    is_mattress = any(p.label.startswith("Mattress") for p in new)
+    letters = {name: letter for name, _q, _s, letter in fasteners if letter}
+    marks = [] if is_mattress else step_marks(G, st, letters, view)
+
+    if half:
+        page_box, half = half_crop(combined.get("prior", []) + new_only,
+                                   marks)
+        # Only the end that is drawn. The other end's fasteners are not
+        # dropped from the manual - they are still in every count on the page
+        # - they are dropped from the PICTURE, which is the whole point of a
+        # half view and is what the mirror pictogram says out loud.
+        marks = [m for m in marks if m["p2"][0] <= half["cut"]]
     x0, y0, x1, y1 = page_box
     page = Page(x0, y0, x1, y1)
     page.polylines(combined.get("prior", []), GREY, W_PRIOR)
@@ -1495,15 +1817,6 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
 
     # No step number in the drawing: the page header already carries it, and
     # two of them is one too many.
-
-    # Where the fasteners go, in the drawing's own frame. A step that drives
-    # only one kind needs no letters: the glyph in its table is already the
-    # whole answer.
-    is_mattress = any(p.label.startswith("Mattress") for p in new)
-    letters = {name: letter for name, _q, _s, letter in fasteners if letter}
-    names = [name for name, _q, _s, _l in fasteners]
-
-    marks = [] if is_mattress else step_marks(G, st, letters, view)
 
     sections = step_sections(marks)
     if is_mattress:
@@ -1536,7 +1849,19 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     elif fasteners:
         draw_inset(page, box, sections, fasteners, glyph_dir, letters)
     if not is_mattress:
-        check_coverage(st, keep, fasteners, families)
+        check_coverage(st, keep, fasteners, families, share=2 if half else 1)
+
+    # The mirror pictogram is PLACED here and DRAWN last: it has to be out of
+    # the magnifiers' way before they go looking for paper, and on top of the
+    # line work when it lands.
+    note_box = None
+    if half:
+        note_w = page.w * 0.38
+        note_h = note_w * 0.42
+        nx, ny = emptiest_corner(combined.get("prior", []) + new_only,
+                                 page, note_w, note_h, keep,
+                                 avoid=(box,))
+        note_box = (nx, ny, note_w, note_h)
 
     # THE FASTENERS THEMSELVES. Two styles, and which one a page gets is
     # decided by how many marks survive the merge: a step that drives eight
@@ -1544,8 +1869,14 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # that drives twenty-eight - the slat fields - would be a forest. Those
     # get the in-situ phantom instead, which says the same thing quietly.
     style = "eksplodert" if len(keep) <= EXPLODE_MAX else "in situ"
-    pull = min(page.w, page.h) * EXPLODE_FRAC
+    short = min(page.w, page.h)
+    hover = short * EXPLODE_FRAC
+    aside = short * EXPLODE_SIDE_FRAC
+    ink = combined.get("prior", []) + new_only
     stacks = {}
+    # Where the drawn fasteners actually ended up, so a magnifier placed later
+    # cannot white one of them out.
+    busy = []
     for m in sorted(keep, key=lambda q: (-q["p2"][1], q["p2"][0])):
         f = m["spec"]
         key = (round(m["p2"][0] / 6.0), round(m["p2"][1] / 6.0),
@@ -1555,26 +1886,51 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         if style == "eksplodert":
             # Backed out along its own axis in MODEL space, so the pulled
             # fastener stays on the line it travels no matter where the
-            # camera stands. The 3-D distance that lands `pull` page units
-            # clear is worked out off the projection itself.
+            # camera stands - and then lifted sideways on the PAPER, which no
+            # camera can undo. The hop back is measured off the projection: it
+            # is the fastener's own drawn length plus `hover`, so the point
+            # ends up exactly that far short of the hole whatever the angle.
             dx, dy = view.dir_xy(f["direction"])
             nrm = math.hypot(dx, dy)
-            back = pull / nrm if nrm > 0.12 else pull * 8
-            shift = tuple(-c * back for c in f["direction"])
             hole = view.xy(f["anchor"])
-            head, tip = draw_fastener(page, view, m, style, shift, stack)
+            if nrm > 0.12:
+                ux, uy = dx / nrm, dy / nrm
+                if f["kind"] == "plate":
+                    body = 0.0        # a bracket lies BEHIND its own anchor
+                else:
+                    body = max(f["length"] * nrm,
+                               f["length"] * FORESHORTEN_FLOOR)
+                back = (body + hover) / nrm
+                step = aside
+            else:
+                # Driven straight into the paper: there is no axis to back out
+                # along, so the sideways lift is the whole explosion and it is
+                # given a little more room to be one.
+                ux, uy = 0.0, -1.0
+                back = 0.0
+                step = aside * 1.3
+            shift = tuple(-c * back for c in f["direction"])
+            sgn = clear_side(ink, hole, (ux, uy), (-uy, ux), back * nrm, step)
+            poff = (-uy * step * sgn, ux * step * sgn)
+            head, tip = draw_fastener(page, view, m, style, shift, stack, poff)
             # Dotted, not dashed and not an arrow: this line is a fastener's
-            # travel, and the page keeps that convention to itself.
+            # travel, and the page keeps that convention to itself. It runs
+            # diagonally now - down the axis and back across the offset - and
+            # that short slanted path is the whole reason the screw is legible
+            # at a corner where three of them meet.
             page.line(tip, hole, GREY, W_PHANTOM, dash=DASH_INSERT)
             page.dot(hole, 6.0, colour=INK)
             # The caption goes behind the HEAD, i.e. further from the hole -
             # the one direction that cannot land on the fastener itself.
             label_at, label_dir = head, (
                 (dx / nrm, dy / nrm) if nrm > 1e-6 else (0.0, -1.0))
+            busy += [head, tip, ((head[0] + tip[0]) / 2,
+                                 (head[1] + tip[1]) / 2)]
         else:
             draw_fastener(page, view, m, style, stack=stack)
             label_at = m["p2"]
             label_dir = (0.0, -1.0)
+            busy.append(m["p2"])
         mark_label(page, label_at, label_dir, m["letter"], m["per"], box)
 
     # Leaders from the inset to the joints, or one magnifier when there is
@@ -1604,7 +1960,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # own: the 40x40x40 under the table ledger, drawn where it sits.
     if any(m["jid"] == "J12" for m in keep):
         ledger_bracket_detail(page, view, keep, new_only,
-                              combined.get("prior", []), box)
+                              combined.get("prior", []), box, note_box, busy)
 
     # Before / after: the frame is built flat and then stood up.
     if st.get("thumbnails"):
@@ -1612,6 +1968,9 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         tb_h = page.h * 0.22
         thumbnails(page, view, G, st["thumbnails"],
                    (x0 + 30, y1 - tb_h - 130, tb_w, tb_h))
+
+    if note_box is not None:
+        mirror_note(page, combined.get("prior", []), new_only, note_box, half)
 
     svg = os.path.join(out_dir, f"steg-{n:02d}.svg")
     png = os.path.join(out_dir, f"steg-{n:02d}.png")
@@ -1739,8 +2098,10 @@ def render_all(G, data, out_dir, width, only):
         key = tuple(st["camera"][:2])
         if only is None or n == only:
             st = dict(st)
-            box = crop_to_subject(views[key], pages[key],
-                                  [uni[l] for l in st["highlight"]])
+            half = n in HALF_VIEW_STEPS
+            box = (pages[key] if half else
+                   crop_to_subject(views[key], pages[key],
+                                   [uni[l] for l in st["highlight"]]))
             if n == 2:
                 # The one step that changes the workpiece's orientation.
                 st["thumbnails"] = [uni[l] for l in placed]
@@ -1755,7 +2116,7 @@ def render_all(G, data, out_dir, width, only):
                 png = render_step(G, views[key], st, uni, placed, out_dir,
                                   width, box, glyph_dir,
                                   step_fastener_glyphs(st, glyph_dir),
-                                  families, centre)
+                                  families, centre, half)
             if png:
                 made.append(png)
         placed += st["labels"]

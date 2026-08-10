@@ -189,7 +189,7 @@
   <circle cx="-16" cy="1465.5" r="11" class="scrg"/>
   <!-- J9-B: 1 x 6x90 fra klossens frie ende inn i stolpen, langs X - Y −30, Z 168 -->
   <circle cx="-30" cy="1532" r="11" class="scrg"/>
-  <!-- J9-F: 1 x 6x70 fra klossens bakside inn i fremre stolpe - Y 716, Z 162 -->
+  <!-- J9-F: 1 x 6x60 fra klossens bakside inn i fremre stolpe - Y 716, Z 162 -->
   <line x1="716" y1="1538" x2="774" y2="1538" class="scrl"/>
   <circle cx="716" cy="1538" r="9" class="scr"/>
   <!-- J12: vinkelbeslag 40x40x20 under lektas ende, på stolpens innerflate -->
