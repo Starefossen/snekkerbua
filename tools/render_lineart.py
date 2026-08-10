@@ -383,7 +383,10 @@ def mark_parts(mark):
 # the reader has to get right.
 DASH_PHANTOM = "15 11"
 DASH_INSERT = "4 13"           # dotted: fasteners only
-SCREW_FATTEN = 2.2
+# How much fatter than life a drawn fastener is. ONE knob, and it lives with
+# the rest of the pen set in tools/layout.py - see the note there for why it
+# is 3.0 and not the 2.2 the first drawings were made with.
+SCREW_FATTEN = layout.SCREW_FATTEN
 # No fastener is drawn shorter than this fraction of its true length. Straight
 # foreshortening is information - a screw driven into the page SHOULD look
 # short - but past a point it stops being a screw and becomes a dot, and the

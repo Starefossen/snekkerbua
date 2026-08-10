@@ -47,6 +47,22 @@ import math
 
 PEN_DIVISOR = 400.0
 
+# The one licence a fastener drawing takes, and the one knob that sets how big
+# a drawn fastener is: its DIAMETER is exaggerated by this factor. It is not a
+# pen multiple, because it is not a length - it is the ratio between the screw
+# the model has and the screw the page draws, and it belongs here with the
+# other drawing-wide constants so that "make the screws bigger" is one number
+# rather than a hunt through the drawing module.
+#
+# It carries a load beyond looks. Once a page draws every screw individually,
+# the reader is meant to tell a 5x40 from a 6x90 by LOOKING - which is why a
+# picture-based assembly guide draws a fastener far fatter than it is: the
+# family has to read before the letter does. At 2.2 the two were 11 and 13 mm
+# wide on a 1250 mm page and the difference was a rounding error; at 3.0 they
+# are 15 and 18, and the length difference they carry with them is
+# unmistakable.
+SCREW_FATTEN = 3.0
+
 # Every subject-relative size on a drawing, in pens. The comment is what the
 # hand-tuned absolute used to be at this bed's scale (pen = 6.87 mm), so the
 # table can be read against the drawings it replaces.
