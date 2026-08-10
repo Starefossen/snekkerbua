@@ -3,7 +3,7 @@
 
 # Innkjøpsliste — trevirke
 
-Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regnet med 4 mm sagsnitt mellom hvert kutt, og hvert bord er valgt som den korteste salgslengden som rommer det som skal kappes av det.
+Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regnet med 4 mm sagsnitt mellom hvert kutt, og hvert bord er valgt som den korteste salgslengden som rommer det som skal kappes av det — blant de lengdene dimensjonen faktisk selges i. Se merknadene nederst.
 
 ## Kort handleliste
 
@@ -11,8 +11,8 @@ Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regne
 |---|---|---:|
 | **18 mm plate, 680 bred** | 1 plate 18 mm kryssfiner furu, minst 680 × 800 mm | — |
 | **21×95** | **1 stk. 2,4 m** | 25 % |
-| **36×48** | **1 stk. 4,8 m** | 9 % |
-| **36×98** | **2 stk. 4,8 m** + **4 stk. 4,2 m** + **1 stk. 3,6 m** | 6 % |
+| **36×48** | **1 stk. 4,8 m** | 10 % |
+| **36×98** | **7 stk. 4,8 m** | 16 % |
 | **48×48** | **1 stk. 2,4 m** | 69 % |
 | **48×73** | **1 stk. 4,8 m** + **1 stk. 2,4 m** | 20 % |
 | **48×98** | **1 stk. 4,2 m** + **1 stk. 2,4 m** | 15 % |
@@ -33,25 +33,25 @@ Kjøpt 2,40 m, brukt 1,79 m, svinn 25 %.
 
 ### 36×48
 
-Kjøpt 4,80 m, brukt 4,37 m, svinn 9 %.
+Kjøpt 4,80 m, brukt 4,32 m, svinn 10 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 4 × 48 (Bærekloss, benkevange (J9-B / J9-F)) + 4 × 48 (Bærekloss, endebjelke (J1-B)) + 8 × 73 (Stigekloss) + 2 × 1700 (Stigevange) | 364 |
+| 1 | 4800 | 4 × 48 (Bærekloss, benkevange (J9-B / J9-F)) + 4 × 36 (Bærekloss, endebjelke (J1-B)) + 8 × 73 (Stigekloss) + 2 × 1700 (Stigevange) | 412 |
 
 ### 36×98
 
-Kjøpt 30,00 m, brukt 28,06 m, svinn 6 %.
+Kjøpt 33,60 m, brukt 28,06 m, svinn 16 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
 | 1 | 4800 | 1 × 1065 (Hjørnestolpe, bak (veggside)) + 4 × 832 (Rekkverksbord, front) | 391 |
-| 2 | 4800 | 1 × 1065 (Hjørnestolpe, bak (veggside)) + 2 × 1700 (Hjørnestolpe, front) | 327 |
-| 3 | 4200 | 5 × 800 (Benkespile) | 184 |
-| 4 | 4200 | 5 × 800 (Benkespile) | 184 |
-| 5 | 4200 | 5 × 800 (Køyespile) | 184 |
-| 6 | 4200 | 5 × 800 (Køyespile) | 184 |
-| 7 | 3600 | 4 × 800 (Køyespile) | 388 |
+| 2 | 4800 | 5 × 800 (Benkespile) | 784 |
+| 3 | 4800 | 5 × 800 (Benkespile) | 784 |
+| 4 | 4800 | 5 × 800 (Køyespile) | 784 |
+| 5 | 4800 | 5 × 800 (Køyespile) | 784 |
+| 6 | 4800 | 4 × 800 (Køyespile) | 1588 |
+| 7 | 4800 | 1 × 1065 (Hjørnestolpe, bak (veggside)) + 2 × 1700 (Hjørnestolpe, front) | 327 |
 
 ### 48×48
 
@@ -82,5 +82,7 @@ Kjøpt 6,60 m, brukt 5,64 m, svinn 15 %.
 ## Merknader fra butikken
 
 * **36×98** er hovedbordet i denne sengen — det aller meste av delelista er kappet av det. Ring og bestill før du drar; butikken har sjelden nok av én dimensjon på lager. Får du ikke akkurat 36×98, kan modellen kjøres om på en nabodimensjon — det er én konstant i `generate_loftbed.py` — men da må hele kapplista og alle nøkkelmål regnes på nytt. Ikke improviser på sagbenken.
+* Salgslengder: **36×98** finnes bare i 4,8 m. Kappeplanen over er derfor lagt på den lengden alene — de kortere salgslengdene finnes ikke i denne dimensjonen, og et bord du ikke kan kjøpe er ingen plan.
+* Planen forutsetter **C24** i alle dimensjoner. Lekt- og rekkedimensjonene (36×48, 48×48, 48×73) selges mange steder bare som «klasse 1 lekt/rekke — ikke-bærende». Stigevangen (36×48) og rungetrinnene (48×73) er bærende, og lasttabellen regner C24: spør etter C24 i disse dimensjonene, eller ta klasse 1 som et bevisst valg.
 * Platen er **680 mm bred**. Limtre furu i butikkhylla stopper på 600 mm, så platen skal kappes av **18 mm kryssfiner**.
 * Vil du kunne bygge om til frittstående seng senere, trengs to rekkverksbord til i samme dimensjon som de fremre, og to bakre stolper i full høyde (1700 mm, som de fremre). Kjøp dem gjerne nå, og forbor de bakre stolpene for rekkverket mens de ligger på bukken.

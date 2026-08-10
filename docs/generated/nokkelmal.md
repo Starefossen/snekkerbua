@@ -89,7 +89,7 @@ Ingen bolt går inn i en stolpe. Stolpen er 36 mm tykk, og på den tykkelsen har
 
 | Ledd | Skruer | Z | Kantavstand | Avstand mellom | I planet |
 |---|---:|---|---|---:|---|
-| J1 — endebjelke 48×98 | 2 per ledd | **994** og **1038** | 994 / 27 | 44 | Y -30 og 770 (midt i stolpedybden) |
+| J1 — endebjelke 48×98 | 2 per ledd | **994** og **1038** | 27 / 27 | 44 | Y -30 og 770 (midt i stolpedybden) |
 | J2 — sidevange 48×98 | 2 per ledd | **1092** og **1136** | 27 / 27 | 44 | X 50,5 fra hver vegg |
 | J8 — benkevange 48×73 | 2 per ledd | **210,5** og **234,5** | 24,5 / 24,5 | 24 | X 50,5 fra hver vegg |
 

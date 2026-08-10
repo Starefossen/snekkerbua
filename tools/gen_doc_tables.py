@@ -43,7 +43,22 @@ import sys
 # these and cut down; the packer below opens 4800 mm boards and then shrinks
 # each one to the shortest sale length that still holds what it was given.
 SALE_LENGTHS = [2400, 3000, 3600, 4200, 4800]
+# ...except where the trade does not actually stock the whole ladder. Butikk-
+# runden: 36x98 C24 is sold as a fixed length ONLY at 4800 mm (Montér). 4200 is
+# not listed by any retailer and 3600 does not exist in 36 mm C24 at all -
+# Moelven mills 4200/4800/5100/5400 and the counter carries 4800. Planning on
+# 4200/3600 boards would send the reader home with lengths he cannot buy, so
+# the main board is packed into 4800s only. Costs a little more offcut; the cut
+# list itself is untouched, this is purchasing.
+SALE_LENGTHS_BY_SECTION = {
+    "36×98": [4800],
+}
 KERF = 4                 # saw kerf allowance between two cuts, mm
+
+# Butikkrunden: treskruer selges i faste pakkestørrelser. «1 pk. (24 stk.)» er
+# ikke en vare - kolonnen «Kjøp» skal navngi en pakke som finnes, og «Behov»
+# blir stående som det tallet sengen faktisk trenger.
+SCREW_PACK_SIZES = [8, 20, 25, 50, 100, 200]
 
 # The joint table, the trade names, the counts and the EC5 row geometry all
 # live in generate_loftbed.py now - the model places the fasteners, so the
@@ -711,28 +726,30 @@ def cut_index(G):
 # ---------------------------------------------------------------------------
 # BUYING LIST - first-fit-decreasing into sale lengths
 # ---------------------------------------------------------------------------
-def pack(pieces):
-    """First-fit-decreasing bin packing into SALE_LENGTHS.
+def pack(pieces, lengths=None):
+    """First-fit-decreasing bin packing into the sale lengths of one profile.
 
     Boards are opened at the longest sale length and shrunk afterwards to the
     shortest one that still holds what they were given, which is what you
-    would do at the counter.
+    would do at the counter - unless the profile only comes in one length, in
+    which case there is nothing to shrink to.
     """
+    lengths = lengths or SALE_LENGTHS
     boards = []
     for name, length in sorted(pieces, key=lambda p: -p[1]):
         for b in boards:
             used = sum(x[1] for x in b) + KERF * len(b)
-            if used + length <= max(SALE_LENGTHS):
+            if used + length <= max(lengths):
                 b.append((name, length))
                 break
         else:
-            assert length <= max(SALE_LENGTHS), \
+            assert length <= max(lengths), \
                 f"'{name}' is {length} mm - longer than any sale length"
             boards.append([(name, length)])
     out = []
     for b in boards:
         need = sum(x[1] for x in b) + KERF * (len(b) - 1)
-        buy = min(s for s in SALE_LENGTHS if s >= need)
+        buy = min(s for s in lengths if s >= need)
         out.append(dict(buy=buy, pieces=b, used=sum(x[1] for x in b),
                         rest=buy - need))
     out.sort(key=lambda b: (-b["buy"], -len(b["pieces"])))
@@ -749,7 +766,7 @@ def buy_table(G):
         if "plate" in section or "panel" in section:   # sheet, not a stick
             out.append(dict(section=section, sheet=True, pieces=pieces))
             continue
-        boards = pack(pieces)
+        boards = pack(pieces, SALE_LENGTHS_BY_SECTION.get(section))
         bought = sum(b["buy"] for b in boards)
         used = sum(b["used"] for b in boards)
         out.append(dict(section=section, sheet=False, boards=boards,
@@ -819,7 +836,8 @@ def emit_innkjopsliste(G, out_dir):
          "Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. "
          f"Kappingen under er regnet med {KERF} mm sagsnitt mellom hvert "
          "kutt, og hvert bord er valgt som den korteste salgslengden som "
-         "rommer det som skal kappes av det.\n\n"]
+         "rommer det som skal kappes av det — blant de lengdene dimensjonen "
+         "faktisk selges i. Se merknadene nederst.\n\n"]
 
     L.append("## Kort handleliste\n\n| Dimensjon | Kjøp | Svinn |\n")
     L.append("|---|---|---:|\n")
@@ -868,6 +886,20 @@ def emit_innkjopsliste(G, out_dir):
              f"det er én konstant i `generate_loftbed.py` — men da må hele "
              f"kapplista og alle nøkkelmål regnes på nytt. Ikke improviser på "
              f"sagbenken.\n")
+    only = ", ".join(
+        f"**{s}** finnes bare i "
+        + " / ".join(f"{ln / 1000:.1f}".replace(".", ",") + " m"
+                     for ln in sorted(lns))
+        for s, lns in sorted(SALE_LENGTHS_BY_SECTION.items()))
+    L.append(f"* Salgslengder: {only}. Kappeplanen over er derfor lagt på den "
+             f"lengden alene — de kortere salgslengdene finnes ikke i denne "
+             f"dimensjonen, og et bord du ikke kan kjøpe er ingen plan.\n")
+    L.append(f"* Planen forutsetter **C24** i alle dimensjoner. Lekt- og "
+             f"rekkedimensjonene (36×48, 48×48, 48×73) selges mange steder "
+             f"bare som «klasse 1 lekt/rekke — ikke-bærende». Stigevangen "
+             f"(36×48) og rungetrinnene (48×73) er bærende, og lasttabellen "
+             f"regner C24: spør etter C24 i disse dimensjonene, eller ta "
+             f"klasse 1 som et bevisst valg.\n")
     L.append(f"* Platen er **{G.PANEL_W} mm bred**. Limtre furu i "
              f"butikkhylla stopper på 600 mm, så platen skal kappes av "
              f"**18 mm kryssfiner**.\n")
@@ -1235,7 +1267,15 @@ def emit_montering(G, root, steps, idx):
     # ----- page 1: cover ---------------------------------------------------
     parts_rows = cut_table(G)
     n_parts = sum(r[3] for r in parts_rows)
-    n_steps = sum(1 for st in steps if st["n"] > 0)
+    # Every numbered page is a step, and step 0 - the cutting, drilling and
+    # countersinking that happens before anything is raised - is one of them.
+    # The cover counts what the reader will actually turn: 12 steg (0-11), the
+    # same count byggerekkefolge.svg prints. Counting only 1..11 said 11 and
+    # left the two documents contradicting each other.
+    n_steps = len(steps)
+    step_lo = min(st["n"] for st in steps)
+    step_hi = max(st["n"] for st in steps)
+    assert n_steps == step_hi - step_lo + 1, "stegnumrene har hull"
     L = [MONTERING_HEAD,
          "# HANNA\n\n",
          "## Loftseng med sofa, bord og ekstraseng under\n\n",
@@ -1243,7 +1283,7 @@ def emit_montering(G, root, steps, idx):
          "| Bredde | Dybde | Høyde |\n|---:|---:|---:|\n",
          f"| **{G.WALL_SPAN} mm** | **{G.OVERALL_DEPTH} mm** | "
          f"**{G.POST_HEIGHT} mm** |\n\n",
-         f"{n_parts} deler · {n_steps} steg · 2 personer · "
+         f"{n_parts} deler · {n_steps} steg ({step_lo}–{step_hi}) · 2 personer · "
          f"passer standard madrass 80 × 200 cm\n\n",
          "Sengen står inntil bakveggen og inntil begge sidevegger, og skrus "
          "fast i bakveggen. **Bygg bakfra og utover.**\n\n",
@@ -1535,6 +1575,13 @@ def emit_beslagliste(out_dir, steps):
          "| Post | Behov | Kjøp |\n|---|---:|---|\n"]
     for name, qty in sorted(total.items(), key=lambda kv: (-kv[1], kv[0])):
         L.append(f"| {name} | {qty} | {_buy_hint(name, qty)} |\n")
+    L.append("\n**Behov** er antallet sengen bruker; **Kjøp** er den minste "
+             "pakken som finnes i butikk og dekker behovet. Treskruer selges "
+             "i pakker à "
+             + " / ".join(str(n) for n in SCREW_PACK_SIZES)
+             + " stk. Står det samme tall i begge kolonnene, har du ingen "
+               "reserve — ta en pakke opp. En skrue du mangler koster en "
+               "kveld.\n")
     L.append("\n## Hvor det går — ledd for ledd\n\n")
     L.append("| Ledd | Hva | Antall ledd | Per ledd | Forboring | "
              "Drives fra |\n|---|---|---:|---|---|---|\n")
@@ -1551,7 +1598,13 @@ def _buy_hint(name, qty):
     if "Låseskrue M8" in name:
         return f"{qty + 5} stk. (bolt, mutter og skive hver for seg)"
     if name.startswith("Treskrue"):
-        return "1 eske 200" if qty > 40 else f"1 pk. ({qty + 10} stk.)"
+        # Treskruer selges i faste pakker, ikke i «behov + 10». Kjøp nærmeste
+        # pakke opp.
+        for size in SCREW_PACK_SIZES:
+            if size >= qty:
+                return f"1 pk. à {size} stk."
+        n = -(-qty // SCREW_PACK_SIZES[-1])
+        return f"{n} pk. à {SCREW_PACK_SIZES[-1]} stk."
     if "M6×30" in name:
         return f"{qty + 2} sett"
     if "Vinkelbeslag" in name:

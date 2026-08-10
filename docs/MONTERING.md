@@ -12,7 +12,7 @@
 |---:|---:|---:|
 | **1990 mm** | **836 mm** | **1700 mm** |
 
-69 deler · 11 steg · 2 personer · passer standard madrass 80 × 200 cm
+69 deler · 12 steg (0–11) · 2 personer · passer standard madrass 80 × 200 cm
 
 Sengen står inntil bakveggen og inntil begge sidevegger, og skrus fast i bakveggen. **Bygg bakfra og utover.**
 
@@ -76,7 +76,7 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Stigevange | 36×48 | 1700 | **2** |
 | Stigekloss | 36×48 | 73 | **8** |
 | Bærekloss, benkevange (J9-B / J9-F) | 36×48 | 48 | **4** |
-| Bærekloss, endebjelke (J1-B) | 36×48 | 48 | **4** |
+| Bærekloss, endebjelke (J1-B) | 36×48 | 36 | **4** |
 | Hjørnestolpe, front | 36×98 | 1700 | **2** |
 | Hjørnestolpe, bak (veggside) | 36×98 | 1065 | **2** |
 | Rekkverksbord, front | 36×98 | 832 | **4** |
@@ -172,7 +172,7 @@ Ledd **J14** → [beslagliste](generated/beslagliste.md)
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **2×** | Bærekloss, benkevange (J9-B / J9-F) | 36×48 | 48 |
-| **4×** | Bærekloss, endebjelke (J1-B) | 36×48 | 48 |
+| **4×** | Bærekloss, endebjelke (J1-B) | 36×48 | 36 |
 | **2×** | Endebjelke | 48×98 | 836 |
 | **2×** | Hjørnestolpe, front | 36×98 | 1700 |
 

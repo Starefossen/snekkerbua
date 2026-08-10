@@ -113,11 +113,10 @@
   <line x1="1792" y1="980" x2="1774" y2="998" class="ext"/>
 
   <!-- J8: 2 x 6x80 langs Y ved X 50,5, Z 210,5 og 234,5 -->
-  <circle cx="493.5" cy="668.75" r="11" class="scrg"/>
-  <circle cx="493.5" cy="623.75" r="11" class="scrg"/>
-  <!-- J9-F: 2 x 6x70 langs Y, skjult -->
-  <circle cx="442" cy="745" r="11" class="scrg"/>
-  <circle cx="470" cy="729" r="11" class="scrg"/>
+  <circle cx="495.75" cy="664.25" r="11" class="scrg"/>
+  <circle cx="495.75" cy="628.25" r="11" class="scrg"/>
+  <!-- J9-F: 1 x 6x70 langs Y, skjult - X 24, Z 162 -->
+  <circle cx="456" cy="737" r="11" class="scrg"/>
   <!-- J11: 5x60 ned gjennom hver benkespile -->
   <line x1="640.5" y1="537.5" x2="640.5" y2="612.5" class="scrl"/>
   <circle cx="640.5" cy="537.5" r="7" class="scr"/>
@@ -129,10 +128,12 @@
   <circle cx="1145.6" cy="537.5" r="7" class="scr"/>
   <line x1="1314" y1="537.5" x2="1314" y2="612.5" class="scrl"/>
   <circle cx="1314" cy="537.5" r="7" class="scr"/>
-  <!-- J10: vinkelbeslag + skråskrue ved stubbefoten -->
-  <polyline points="1382,815 1382,708.5 1299,708.5" class="steelw"/>
-  <circle cx="1382" cy="758" r="7" class="scr"/>
-  <circle cx="1324" cy="708.5" r="7" class="scr"/>
+  <!-- J10: vinkelbeslag + skråskrue ved stubbefoten. Den loddrette fliken
+       ligger på fotens innerflate (X 645), den vannrette i vangens
+       underkant (Z 186). -->
+  <polyline points="1180.5,701 1315.5,701 1315.5,836" class="steelw"/>
+  <circle cx="1315.5" cy="768.5" r="7" class="scr"/>
+  <circle cx="1248" cy="701" r="7" class="scr"/>
 
   <!-- målkjeder A -->
   <line x1="420" y1="980" x2="420" y2="1122" class="ext"/>
@@ -245,10 +246,10 @@
   <circle cx="441.8" cy="1816.5" r="7" class="scr"/>
   <line x1="1419.4" y1="1816.5" x2="1419.4" y2="1882" class="scrl"/>
   <circle cx="1419.4" cy="1816.5" r="7" class="scr"/>
-  <polyline points="423.6,2057 423.6,1965 486,1965" class="steelw"/>
-  <polyline points="1401,2057 1401,1965 1339,1965" class="steelw"/>
-  <circle cx="423.6" cy="2008" r="7" class="scr"/>
-  <circle cx="1401" cy="2008" r="7" class="scr"/>
+  <polyline points="441.8,2050.2 441.8,1958.2 504.2,1958.2" class="steelw"/>
+  <polyline points="1419.4,2050.2 1419.4,1958.2 1357,1958.2" class="steelw"/>
+  <circle cx="441.8" cy="2004" r="7" class="scr"/>
+  <circle cx="1419.4" cy="2004" r="7" class="scr"/>
 
   <line x1="410.6" y1="2200" x2="410.6" y2="2317" class="ext"/>
   <line x1="473" y1="2200" x2="473" y2="2317" class="ext"/>
@@ -327,11 +328,9 @@
   <circle cx="2830" cy="1548" r="7" class="scr"/>
   <line x1="2830" y1="1620" x2="2600" y2="1722" class="scrl"/>
   <circle cx="2830" cy="1620" r="7" class="scr"/>
-  <!-- J9-B: 2 x 6x90 fra klossens frie ende inn i stolpen -->
-  <line x1="2890" y1="1752" x2="2600" y2="1752" class="scrl"/>
-  <circle cx="2890" cy="1752" r="7" class="scr"/>
-  <line x1="2890" y1="1800" x2="2600" y2="1800" class="scrl"/>
-  <circle cx="2890" cy="1800" r="7" class="scr"/>
+  <!-- J9-B: 1 x 6x90 fra klossens frie ende inn i stolpen - X 146, Z 168 -->
+  <line x1="2890" y1="1776" x2="2600" y2="1776" class="scrl"/>
+  <circle cx="2890" cy="1776" r="7" class="scr"/>
   <!-- J11 -->
   <line x1="2872" y1="1395" x2="2872" y2="1524" class="scrl"/>
   <circle cx="2872" cy="1395" r="7" class="scr"/>
@@ -373,7 +372,7 @@
 
   <text x="510" y="660" class="jl" text-anchor="start">J8</text>
   <text x="960" y="520" class="jl" text-anchor="start">J11</text>
-  <text x="1410" y="775" class="jl" text-anchor="start">J10</text>
+  <text x="1195" y="768" class="jl" text-anchor="start">J10</text>
   <text x="498" y="772" class="jl" text-anchor="start">J9-F</text>
   <text x="395" y="2005" class="jl" text-anchor="start">J10</text>
   <text x="455" y="1795" class="jl" text-anchor="start">J11</text>

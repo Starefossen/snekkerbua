@@ -496,6 +496,14 @@ sklir de fra hverandre den første natta noen sover der.
   nærmeste nabo-dimensjon, er det mulig — men da er det én konstant i
   `generate_loftbed.py` som endres, og hele modellen må kjøres på nytt og
   kapplista regnes om. Ikke improviser på sagbenken.
+* **Hovedbordet finnes bare i 4,8 m.** 36×98 C24 selges som fast lengde bare
+  på 4800 mm; 4200 og 3600 finnes ikke i denne dimensjonen. Kappeplanen i
+  innkjøpslista er lagt på 4,8 m-bord alene.
+* **Spør etter C24 i lektdimensjonene.** 36×48, 48×48 og 48×73 står mange
+  steder i hylla bare som «klasse 1 lekt/rekke — ikke-bærende». To av dem er
+  bærende her: stigevangen (36×48) og rungetrinnene (48×73). Lasttabellen i
+  vedlegg A regner C24. Kjøp C24 i disse dimensjonene — eller ta klasse 1 som
+  et bevisst valg, med den lavere fastheten det innebærer.
 * **Platen må kappes av kryssfiner.** Den er bredere enn limtreplatene i
   furuhylla rekker. Kjøp 18 mm kryssfiner og kapp.
 * **Vil du kunne bygge om til frittstående seng senere?** Da trenger du to
@@ -558,9 +566,12 @@ nøkkelmålene.
 
 **Materiale:** C24 gran. f<sub>m,k</sub> = 24, f<sub>c,0,k</sub> = 21,
 f<sub>c,90,k</sub> = 2,5, f<sub>v,k</sub> = 4,0 MPa, E<sub>mean</sub> = 11 000
-MPa. γ<sub>M</sub> = 1,3. Med k<sub>mod</sub> = 0,9 (korttids- og dynamisk last)
-blir f<sub>m,d</sub> = **16,6 MPa**. Trykk på tvers av fiberretningen med
-k<sub>c,90</sub> = 1,5 gir **2,31 MPa**.
+MPa. γ<sub>M</sub> = 1,3. Bøyningen regnes med k<sub>mod</sub> = 0,9
+(korttids- og dynamisk last), så f<sub>m,d</sub> = 24 × 0,9 / 1,3 =
+**16,6 MPa**. Trykket regnes med k<sub>mod</sub> = 0,8 (middels lang lastvarighet
+— egenvekt og vedvarende opplegg), så f<sub>c,0,d</sub> = 21 × 0,8 / 1,3 =
+**12,92 MPa** og f<sub>c,90,d</sub> = 2,5 × 0,8 / 1,3 = **1,54 MPa**. Trykk på
+tvers av fiberretningen med k<sub>c,90</sub> = 1,5 gir **2,31 MPa**.
 
 **Festemidler**, konservative erfaringstall: treskrue 5 mm i skjær ≈ **1,5 kN**,
 6 mm ≈ **2,0 kN**. Det går ingen bolt inn i en stolpe i denne sengen; M6-bolten
@@ -577,9 +588,9 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Køyespile 36×98 | Bøyning | 800 mm | 1 kN på én spile | **0,57** | ✓ σ ≈ 9,5 MPa |
 | Køyespile, **bar bunn** | Bøyning | 800 mm | 2 kN dynamisk på én spile | **1,14** | ✗ Se 7.4 — madrassen fordeler lasten |
 | Spile → sidevange | Trelagring, full vangebredde under hver spile | 48 mm opplegg | 0,7 kN | 0,05 | ✓ |
-| Bakre sidevange, regnet som fritt spenn mellom hjørnestolpene | Bøyning | 1894 mm | 2 kN | **0,73** | ✓ Konservativt — se raden under |
-| Bakre sidevange **som bygget** | Bøyning, men vangen er skrudd til veggen i hver stender den treffer, så den er understøttet flere ganger på veien | ≈ 600 mm mellom veggfestene | 2 kN | ≈ **0,08** | ✓ Dette er grunnen til at veggfestet ikke er valgfritt |
-| Fremre sidevange 48×98 | Bøyning, avstivet av de to stigevangene | 1894 mm | 2 kN | < 0,73 | ✓ |
+| Bakre sidevange, regnet som fritt spenn mellom hjørnestolpene | Bøyning | 1794 mm | 2 kN | **0,73** | ✓ Konservativt — se raden under |
+| Bakre sidevange **som bygget** | Bøyning, men vangen er skrudd til veggen i hver stender den treffer, så den er understøttet flere ganger på veien | ≈ 397 mm mellom veggfestene (6 fester over 1984 mm) | 2 kN | ≈ **0,08** | ✓ Dette er grunnen til at veggfestet ikke er valgfritt |
+| Fremre sidevange 48×98 | Bøyning, avstivet av de to stigevangene | 1794 mm | 2 kN | < 0,73 | ✓ |
 | Vange → endebjelke | **Trelagring** | ≈ 5,3 kN | ≤ 1 kN | 0,19 | ✓ Vangen hviler, den henger ikke |
 | Bakre vange → bakre stolpetopp | **Trelagring** på stolpens endeved, 95 × 36 mm | ≈ 7,9 kN | < 1 kN | 0,13 | ✓ Ingen festemidler i lastens vei. Hele stolpetoppens endeved er opplegg |
 | Endebjelke 48×98 | Bøyning | 836 mm | 2 kN | **0,26** | ✓ |
@@ -601,7 +612,7 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Samme hjørne, **kombinert skjærvei** | Klossens skrue + trinnendens 6×120 gjennom stigevangen | 3,5 kN | 0,5 kN | 0,14 | ✓ Trinnet låser også klossen mot å rotere om sin ene skrue |
 | Skrue i trinnenden | Bærer ingen vertikal last | — | ≈ 0 | — | ✓ Riktig utformet |
 | Stigevange → gulv | Ren søyle helt ned til gulvet | — | 1 kN | — | ✓ Ingen festemiddel i klatrelastens vei nedover |
-| Stigevange, knekking **ut av planet** | Fri lengde gulv → fremre sidevange | λ ≈ 103, k<sub>c</sub> ≈ 0,29 → 7,3 kN | 1 kN | **0,14** | ✓ men se vedlegg B, avvik 2. Vangen står med den tynne siden ut av planet |
+| Stigevange, knekking **ut av planet** | Fri lengde gulv → fremre sidevange | λ ≈ 102, k<sub>c</sub> ≈ 0,29 → 6,5 kN | 1 kN | **0,15** | ✓ men se vedlegg B, avvik 2. Vangen står med den tynne siden ut av planet |
 | Stigevange → fremre sidevange (J3) | Skruskjær, 3 × 6 mm — 98 mm omlegg tar ikke fire i rad | 6,0 kN | < 1 kN | 0,17 | ✓ Samme detalj som hele rammen bruker |
 | Stigens stivhet i eget plan | Rammevirkning: to vanger + fire trinn | — | — | — | ✓ |
 
@@ -612,7 +623,7 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Benkespile 36×98 | Bøyning — samme stykke som køyespilen | 800 mm | 1 kN på én spile | **0,57** | ✓ Ved vanlig sitting, 0,5 kN, er utnyttelsen 0,29 |
 | Spile → benkevange | Trelagring 48 × 98 | 4704 mm² → 10,9 kN | 0,5 kN | 0,05 | ✓ |
 | Bakre benkevange 48×73 | Bøyning over åpningen mellom stubbeføttene | 700 mm | 0,5 kN | **0,14** | ✓ Ved 1 kN: 0,28 |
-| Fremre benkevangebit 48×73 | Bøyning, to opplegg, ingen utkraging | 597 mm | 0,5 kN | < 0,14 | ✓ Innerenden står midt på stubbefoten |
+| Fremre benkevangebit 48×73 | Bøyning, to opplegg, ingen utkraging | 597 mm | 0,5 kN | < 0,14 | ✓ Innerenden lander helt på stubbefoten — rent endeopplegg, null utkraging |
 | Benkevange → stubbefot | **Trelagring** 48 × 48 | 2304 mm² → 5,3 kN | 0,5 kN | 0,09 | ✓ |
 | Benkevange → bærekloss J9-B | **Trelagring** 48 × 48 | 2304 mm² → 5,3 kN | 0,5 kN | 0,09 | ✓ |
 | Bærekloss → stolpe (J9-B / J9-F) | Skruskjær, 1 × 6 mm | 2,0 kN | 0,5 kN | 0,25 | ✓ Samme sak som J1-B, halv last |
@@ -625,7 +636,7 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Plate 18 mm, **bar** | Bøyning over to opplegg | 715 mm | 2 kN dynamisk | **1,40** | ✗ Holder ikke alene |
 | Plate 18 mm **med to avstivningslekter 48×73 på høykant** | To T-bjelker med platen som flens | 715 mm | 2 kN dynamisk | **0,26** | ✓ Dette er hele grunnen til at lektene finnes |
 | Plate → U-brakett | M6 i skjær | ≈ 3 kN per bolt | 0,13 kN | 0,04 | ✓ |
-| Bordbærelekt 21×95 **på høykant** | Bøyning om sterk akse | 1794 mm | 0,55 kN bordlast | **0,15** | ✓ Flatt lagt faller kapasiteten med faktor 20 |
+| Bordbærelekt 21×95 **på høykant** | Bøyning om sterk akse | 1794 mm | 0,55 kN bordlast | **0,17** | ✓ Flatt lagt faller kapasiteten med faktor 20 |
 | Bordbærelekt → stolpe | Skruskjær, 1 × 5 mm per beslagflik — 40 mm flik tar ikke to | 1,5 kN | 0,13 kN | 0,09 | ✓ Lekta ligger dessuten PÅ den vannrette fliken; skruen holder den bare nede |
 | Rekkverksbord 36×98 | Bøyning om svak akse, vannrett last | ≈ 760 mm | 0,5 kN | **0,13** | ✓ |
 | Rekkverksbord → stolpe | Skruskjær, 2 × 5 mm per omlegg | 3,0 kN | 0,25 kN | 0,08 | ✓ |
@@ -650,8 +661,12 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Endebjelke | 0,26 |
 | Plate med avstivningslekter | 0,26 |
 | Endebjelke → bærekloss (trelagring), bærekloss J9-B/J9-F → stolpe | 0,25 |
+| Vange → endebjelke (trelagring) | 0,19 |
 | Stigevange → fremre sidevange (J3) | 0,17 |
-| Stigevange, knekking ut av planet | 0,14 |
+| Rungetrinn, bøyning | 0,17 |
+| Bordbærelekt på høykant | 0,17 |
+| Stigevange, knekking ut av planet | 0,15 |
+| Bakre benkevange over åpningen mellom stubbeføttene | 0,14 |
 | Alle andre ledd | ≤ 0,13 |
 
 De to øverste skrueradene er de eneste stedene i sengen der en loddrett

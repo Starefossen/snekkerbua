@@ -139,11 +139,9 @@
   <circle cx="-30" cy="662" r="11" class="scrg"/>
   <circle cx="770" cy="706" r="11" class="scrg"/>
   <circle cx="770" cy="662" r="11" class="scrg"/>
-  <!-- J1-B: 2 x 6x90 pr. kloss, langs X -->
-  <circle cx="-38" cy="759" r="11" class="scrg"/>
-  <circle cx="-22" cy="742" r="11" class="scrg"/>
-  <circle cx="762" cy="759" r="11" class="scrg"/>
-  <circle cx="778" cy="742" r="11" class="scrg"/>
+  <!-- J1-B: 1 x 6x90 pr. kloss, langs X - Y −30 / 770, Z 949 -->
+  <circle cx="-30" cy="751" r="11" class="scrg"/>
+  <circle cx="770" cy="751" r="11" class="scrg"/>
   <!-- J2: 2 x 6x80, fra stolpens forside Y 788 inn i fremre sidevange, Z 1092 og 1136 -->
   <line x1="788" y1="608" x2="700" y2="608" class="scrl"/>
   <circle cx="788" cy="608" r="9" class="scr"/>
@@ -152,9 +150,9 @@
   <!-- J2-B: 2 x 6x120 rett NED gjennom vangen i stolpens endeved.
        Skruene ligger bak snittplanet (X ca. 30 og 70), derfor stiplet. -->
   <line x1="-34" y1="566" x2="-34" y2="700" class="gho"/>
-  <line x1="14" y1="566" x2="14" y2="700" class="gho"/>
+  <line x1="-14" y1="566" x2="-14" y2="700" class="gho"/>
   <circle cx="-34" cy="570" r="9" class="scr"/>
-  <circle cx="14" cy="570" r="9" class="scr"/>
+  <circle cx="-14" cy="570" r="9" class="scr"/>
   <!-- J14: veggfeste gjennom bakre sidevange, ut i veggen -->
   <line x1="0" y1="608" x2="-150" y2="608" class="scrl"/>
   <circle cx="0" cy="608" r="9" class="scr"/>
@@ -182,21 +180,18 @@
   <line x1="716" y1="39" x2="784" y2="39" class="scrl"/>
   <circle cx="716" cy="39" r="9" class="scr"/>
   <!-- J8: 2 x 6x80 fra fremre stolpes forside inn i benkevangen, Z 210,5 og 234,5 -->
-  <line x1="788" y1="1492.5" x2="700" y2="1492.5" class="scrl"/>
-  <circle cx="788" cy="1492.5" r="9" class="scr"/>
-  <line x1="788" y1="1462.5" x2="700" y2="1462.5" class="scrl"/>
-  <circle cx="788" cy="1462.5" r="9" class="scr"/>
+  <line x1="788" y1="1489.5" x2="700" y2="1489.5" class="scrl"/>
+  <circle cx="788" cy="1489.5" r="9" class="scr"/>
+  <line x1="788" y1="1465.5" x2="700" y2="1465.5" class="scrl"/>
+  <circle cx="788" cy="1465.5" r="9" class="scr"/>
   <!-- J8-B: skråskruer, hovedsakelig langs X - ut av planet -->
-  <circle cx="-16" cy="1490" r="11" class="scrg"/>
-  <circle cx="-16" cy="1462" r="11" class="scrg"/>
-  <!-- J9-B: 2 x 6x90 fra klossens frie ende inn i stolpen, langs X -->
-  <circle cx="-38" cy="1541" r="11" class="scrg"/>
-  <circle cx="-14" cy="1523" r="11" class="scrg"/>
-  <!-- J9-F: 2 x 6x70 fra klossens bakside inn i fremre stolpe -->
-  <line x1="716" y1="1548" x2="774" y2="1548" class="scrl"/>
-  <circle cx="716" cy="1548" r="9" class="scr"/>
-  <line x1="716" y1="1528" x2="774" y2="1528" class="scrl"/>
-  <circle cx="716" cy="1528" r="9" class="scr"/>
+  <circle cx="-16" cy="1489.5" r="11" class="scrg"/>
+  <circle cx="-16" cy="1465.5" r="11" class="scrg"/>
+  <!-- J9-B: 1 x 6x90 fra klossens frie ende inn i stolpen, langs X - Y −30, Z 168 -->
+  <circle cx="-30" cy="1532" r="11" class="scrg"/>
+  <!-- J9-F: 1 x 6x70 fra klossens bakside inn i fremre stolpe - Y 716, Z 162 -->
+  <line x1="716" y1="1538" x2="774" y2="1538" class="scrl"/>
+  <circle cx="716" cy="1538" r="9" class="scr"/>
   <!-- J12: vinkelbeslag 40x40x20 under lektas ende, på stolpens innerflate -->
   <polyline points="-48,1353 -48,1313 -8,1313" class="stll"/>
   <circle cx="-38" cy="1338" r="11" class="scrg"/>
@@ -369,7 +364,7 @@
 
   <polyline points="400,519 862,546" class="ldr" marker-start="url(#aE)"/>
   <text x="880" y="542" class="lbl" text-anchor="start">Køyespile 36×98 × 800 – 14 like, én lengde</text>
-  <text x="880" y="584" class="sml" text-anchor="start">ligger oppå BEGGE sidevanger, s/s 142,5, klaring 44,5 mm · J6</text>
+  <text x="880" y="584" class="sml" text-anchor="start">ligger oppå BEGGE sidevanger, s/s 142,46, klaring 44,46 mm · J6</text>
 
   <polyline points="728,586 862,636" class="ldr" marker-start="url(#aE)"/>
   <text x="880" y="632" class="lbl" text-anchor="start">Sidevange, øvre 48×98 × 1984 – bak og front</text>
@@ -380,7 +375,7 @@
   <text x="880" y="769" class="sml" text-anchor="start">overkant flukter med underkant sidevange (Z 1065) · J1: 2× 6×90 pr. stolpe</text>
 
   <polyline points="782,751 862,826" class="ldr" marker-start="url(#aE)"/>
-  <text x="880" y="822" class="lbl" text-anchor="start">Bærekloss, endebjelke (J1-B) 36×48, 48 lang – ok Z 967</text>
+  <text x="880" y="822" class="lbl" text-anchor="start">Bærekloss, endebjelke (J1-B) 36×48, 36 lang – ok Z 967</text>
   <text x="880" y="864" class="sml" text-anchor="start">hele vertikallasten går tre mot tre; skruene er rene bånd</text>
 
   <polyline points="770,980 862,941" class="ldr" marker-start="url(#aE)"/>

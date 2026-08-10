@@ -79,7 +79,7 @@ Sengen festes til veggen gjennom den bakre sidevangen. Vangen ligger flatt mot v
 
 Nå bygges de to endene ut fra bakrammen. Endebjelken går fra den bakre stolpen til den fremre og bærer begge sidevanger.
 
-**Deler:** 2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48 · 4× Bærekloss, endebjelke (J1-B) 36×48 × 48 · 2× Endebjelke 48×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
+**Deler:** 2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48 · 4× Bærekloss, endebjelke (J1-B) 36×48 × 36 · 2× Endebjelke 48×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
 
 **Festemidler:** 2× Treskrue 6×70 forsenket Torx · 12× Treskrue 6×90 forsenket Torx
 

@@ -102,7 +102,7 @@
   <line x1="1646" y1="1240" x2="1629" y2="1257" class="ext"/>
   <rect x="572" y="903.3" width="929.5" height="94.9" class="bat"/>
   <rect x="509.6" y="879.9" width="1040" height="23.4" class="pnl"/>
-  <!-- J13b U-beslag rundt trinnet -->
+  <!-- J13b U-brakett rundt trinnet -->
   <polyline points="1470,879.9 1549.6,879.9 1549.6,903.3 1596.4,903.3 1596.4,965.7 1512,965.7" class="steelb"/>
   <circle cx="1490" cy="891.6" r="12" class="blt"/>
   <line x1="1478" y1="891.6" x2="1502" y2="891.6" class="blt"/>
@@ -256,34 +256,34 @@
   <rect x="363.2" y="1760" width="646" height="760" class="pnl"/>
   <rect x="578.85" y="1805.6" width="45.6" height="678.65" class="batp"/>
   <rect x="748" y="1805.6" width="45.6" height="678.65" class="batp"/>
-  <rect x="634" y="2470.6" width="38" height="83.6" class="steelp"/>
-  <rect x="700.4" y="2470.6" width="38" height="83.6" class="steelp"/>
-  <circle cx="653" cy="2485" r="10" class="blt"/>
-  <line x1="643" y1="2485" x2="663" y2="2485" class="blt"/>
-  <line x1="653" y1="2475" x2="653" y2="2495" class="blt"/>
-  <circle cx="653" cy="2508" r="10" class="blt"/>
-  <line x1="643" y1="2508" x2="663" y2="2508" class="blt"/>
-  <line x1="653" y1="2498" x2="653" y2="2518" class="blt"/>
-  <circle cx="719.4" cy="2485" r="10" class="blt"/>
-  <line x1="709.4" y1="2485" x2="729.4" y2="2485" class="blt"/>
-  <line x1="719.4" y1="2475" x2="719.4" y2="2495" class="blt"/>
-  <circle cx="719.4" cy="2508" r="10" class="blt"/>
-  <line x1="709.4" y1="2508" x2="729.4" y2="2508" class="blt"/>
-  <line x1="719.4" y1="2498" x2="719.4" y2="2518" class="blt"/>
-  <rect x="462.9" y="1760" width="28.5" height="64.6" class="steelq2"/>
-  <circle cx="477" cy="1775" r="10" class="blt"/>
-  <line x1="467" y1="1775" x2="487" y2="1775" class="blt"/>
-  <line x1="477" y1="1765" x2="477" y2="1785" class="blt"/>
-  <circle cx="477" cy="1800" r="10" class="blt"/>
-  <line x1="467" y1="1800" x2="487" y2="1800" class="blt"/>
-  <line x1="477" y1="1790" x2="477" y2="1810" class="blt"/>
-  <rect x="881.2" y="1760" width="28.5" height="64.6" class="steelq2"/>
-  <circle cx="895.4" cy="1775" r="10" class="blt"/>
-  <line x1="885.4" y1="1775" x2="905.4" y2="1775" class="blt"/>
-  <line x1="895.4" y1="1765" x2="895.4" y2="1785" class="blt"/>
-  <circle cx="895.4" cy="1800" r="10" class="blt"/>
-  <line x1="885.4" y1="1800" x2="905.4" y2="1800" class="blt"/>
-  <line x1="895.4" y1="1790" x2="895.4" y2="1810" class="blt"/>
+  <rect x="633.95" y="2470.6" width="28.5" height="83.6" class="steelp"/>
+  <rect x="709.95" y="2470.6" width="28.5" height="83.6" class="steelp"/>
+  <circle cx="648.2" cy="2485" r="10" class="blt"/>
+  <line x1="638.2" y1="2485" x2="658.2" y2="2485" class="blt"/>
+  <line x1="648.2" y1="2475" x2="648.2" y2="2495" class="blt"/>
+  <circle cx="648.2" cy="2508" r="10" class="blt"/>
+  <line x1="638.2" y1="2508" x2="658.2" y2="2508" class="blt"/>
+  <line x1="648.2" y1="2498" x2="648.2" y2="2518" class="blt"/>
+  <circle cx="724.2" cy="2485" r="10" class="blt"/>
+  <line x1="714.2" y1="2485" x2="734.2" y2="2485" class="blt"/>
+  <line x1="724.2" y1="2475" x2="724.2" y2="2495" class="blt"/>
+  <circle cx="724.2" cy="2508" r="10" class="blt"/>
+  <line x1="714.2" y1="2508" x2="734.2" y2="2508" class="blt"/>
+  <line x1="724.2" y1="2498" x2="724.2" y2="2518" class="blt"/>
+  <rect x="633.95" y="1760" width="28.5" height="64.6" class="steelq2"/>
+  <circle cx="648.2" cy="1775" r="10" class="blt"/>
+  <line x1="638.2" y1="1775" x2="658.2" y2="1775" class="blt"/>
+  <line x1="648.2" y1="1765" x2="648.2" y2="1785" class="blt"/>
+  <circle cx="648.2" cy="1800" r="10" class="blt"/>
+  <line x1="638.2" y1="1800" x2="658.2" y2="1800" class="blt"/>
+  <line x1="648.2" y1="1790" x2="648.2" y2="1810" class="blt"/>
+  <rect x="709.95" y="1760" width="28.5" height="64.6" class="steelq2"/>
+  <circle cx="724.2" cy="1775" r="10" class="blt"/>
+  <line x1="714.2" y1="1775" x2="734.2" y2="1775" class="blt"/>
+  <line x1="724.2" y1="1765" x2="724.2" y2="1785" class="blt"/>
+  <circle cx="724.2" cy="1800" r="10" class="blt"/>
+  <line x1="714.2" y1="1800" x2="734.2" y2="1800" class="blt"/>
+  <line x1="724.2" y1="1790" x2="724.2" y2="1810" class="blt"/>
 
   <line x1="363.2" y1="2554" x2="363.2" y2="2631" class="ext"/>
   <line x1="578.85" y1="2554" x2="578.85" y2="2631" class="ext"/>
@@ -314,12 +314,12 @@
   <text x="349" y="1738" class="sml" text-anchor="start">VEGGSIDE ↑   (Y = −48)</text>
   <text x="349" y="2600" class="sml" text-anchor="start">ROMSIDE ↓ (stigen)</text>
 
-  <polyline points="477,1790 1228,1752" class="ldr" marker-start="url(#aE)"/>
+  <polyline points="648.2,1790 1228,1752" class="ldr" marker-start="url(#aE)"/>
   <text x="1240" y="1760" class="lbl" text-anchor="start">J13c KROKPLATE BAK – 2 stk., bøyd av flattstål 30×4</text>
   <text x="1240" y="1792" class="sml" text-anchor="start">Henger ned FORAN den bakre benkevangen og haker seg inn UNDER den.</text>
   <text x="1240" y="1824" class="sml" text-anchor="start">Ingenting av beslaget kommer på veggsiden – den flaten skal være helt plan.</text>
   <text x="1240" y="1856" class="sml" text-anchor="start">2 × senkhodeskrue M6×30 + skive + låsemutter: ⌀6,5 gjennom platen,</text>
-  <text x="1240" y="1888" class="sml" text-anchor="start">forsenk ⌀13 i oversiden, mutter under. Plassert i X klar av lektene.</text>
+  <text x="1240" y="1888" class="sml" text-anchor="start">forsenk ⌀13 i oversiden, mutter under. X 955 og 1035 – klar av lektene.</text>
   <polyline points="406,1930 1228,1950" class="ldr" marker-start="url(#aE)"/>
   <text x="1240" y="1958" class="lbl" text-anchor="start">Løs plate 18 mm, 680 × 800 (X 655–1335, Y −48 … 752).</text>
   <text x="1240" y="1990" class="sml" text-anchor="start">10 mm klaring mot hver benk; forkanten butter mot stigevangenes</text>
@@ -332,8 +332,8 @@
   <text x="1240" y="2228" class="sml" text-anchor="start">1,42 til ca. 0,27 – uten dem holder ikke platen når noen setter seg.</text>
   <polyline points="686,2510 1228,2300" class="ldr" marker-start="url(#aE)"/>
   <text x="1240" y="2308" class="lbl" text-anchor="start">Rungetrinn 48×73 under platens forkant – 37 mm anlegg (Y 715–752)</text>
-  <polyline points="653,2530 1228,2380" class="ldr" marker-start="url(#aE)"/>
-  <text x="1240" y="2388" class="lbl" text-anchor="start">J13b U-BESLAG i flattstål 30×4 – 2 stk., i X klar av lektene.</text>
+  <polyline points="648.2,2530 1228,2380" class="ldr" marker-start="url(#aE)"/>
+  <text x="1240" y="2388" class="lbl" text-anchor="start">J13b U-BRAKETT i flattstål 30×4 – 2 stk., X 955 og 1035.</text>
   <text x="1240" y="2420" class="sml" text-anchor="start">Omslutter rungetrinnet og klemmer platen til stigen: både platens</text>
   <text x="1240" y="2452" class="sml" text-anchor="start">anti-vipp OG avstivningen som binder stigefoten tilbake til den</text>
   <text x="1240" y="2484" class="sml" text-anchor="start">bakre bærelinja. 2 × M6×30 ned gjennom platen, mutter under.</text>
@@ -376,7 +376,7 @@
   <line x1="130" y1="2872" x2="130" y2="2896" class="blt"/>
   <text x="180" y="2892" class="sml" text-anchor="start">Senkhodeskrue M6×30 + skive + låsemutter, ned gjennom platen</text>
   <polyline points="118,2914 118,2938 154,2938" class="steelb"/>
-  <text x="180" y="2932" class="sml" text-anchor="start">U-beslag i snitt (J13b) – ligger i snittplanet</text>
+  <text x="180" y="2932" class="sml" text-anchor="start">U-brakett i snitt (J13b) – ligger i snittplanet</text>
   <polyline points="118,2952 118,2976 154,2976" class="steelq"/>
   <text x="180" y="2970" class="sml" text-anchor="start">Krokplate i snitt (J13c) – tegnet inn, står i et annet X-snitt</text>
 

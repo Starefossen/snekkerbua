@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 150 3450 2250" width="1600">
-  <title>Loftseng - byggerekkefolge, 12 steg</title>
+  <title>Loftseng - byggerekkefolge, 12 steg (0-11)</title>
   <defs>
     <marker id="aE" markerWidth="13" markerHeight="10" refX="12" refY="4.5" orient="auto"><path d="M0,0 L12,4.5 L0,9 z" fill="#000"/></marker>
     <marker id="aS" markerWidth="13" markerHeight="10" refX="1" refY="4.5" orient="auto"><path d="M12,0 L0,4.5 L12,9 z" fill="#000"/></marker>
@@ -45,7 +45,7 @@
     .notebox{ fill:#fff; stroke:#000; stroke-width:3; }
   </style>
 
-  <text x="90" y="220" class="ttl">BYGGEREKKEFØLGE – 12 STEG</text>
+  <text x="90" y="220" class="ttl">BYGGEREKKEFØLGE – 12 STEG (0–11)</text>
   <text x="90" y="262" class="sub">Numrene svarer til stegene i docs/generated/byggesteg.md og docs/MONTERING.md · veggplan Y = −48 · alle mål i mm</text>
   <text x="90" y="300" class="sub">Rekkefølgen er ikke fri: hele baksiden er ett flatt lag, og det laget er monteringsflaten mot veggen. Derfor bygges den bakfra og utover.</text>
 
@@ -84,8 +84,8 @@
   <line x1="250" y1="1022" x2="200" y2="1022" class="scrl"/><circle cx="250" cy="1022" r="8" class="scr"/>
   <line x1="1304" y1="1010" x2="1354" y2="1010" class="scrl"/><circle cx="1304" cy="1010" r="8" class="scr"/>
   <line x1="1304" y1="1022" x2="1354" y2="1022" class="scrl"/><circle cx="1304" cy="1022" r="8" class="scr"/>
-  <polyline points="192,880 220.76,880 220.76,908" class="stll"/>
-  <polyline points="1362,880 1333,880 1333,908" class="stll"/>
+  <polyline points="248.76,880 220.76,880 220.76,908" class="stll"/>
+  <polyline points="1305.04,880 1333.04,880 1333.04,908" class="stll"/>
 
   <circle cx="600" cy="430" r="19" class="bal"/><text x="600" y="439" class="baln" text-anchor="middle">2</text>
   <circle cx="1010" cy="430" r="19" class="bal"/><text x="1010" y="439" class="baln" text-anchor="middle">1</text>
@@ -227,7 +227,7 @@
 
   <circle cx="1520" cy="1794" r="19" class="bal"/><text x="1520" y="1803" class="baln" text-anchor="middle">8</text>
   <text x="1560" y="1802" class="st" text-anchor="start">Køyespiler</text>
-  <text x="1560" y="1836" class="sml" text-anchor="start">14 stk. 36×98×800 oppå BEGGE sidevanger, s/s 142,5, klaring 44,5.  Ledd: J6.</text>
+  <text x="1560" y="1836" class="sml" text-anchor="start">14 stk. 36×98×800 oppå BEGGE sidevanger, s/s 142,46, klaring 44,46.  Ledd: J6.</text>
 
   <circle cx="1520" cy="1912" r="19" class="bal"/><text x="1520" y="1921" class="baln" text-anchor="middle">9</text>
   <text x="1560" y="1920" class="st" text-anchor="start">Rekkverk foran</text>
@@ -235,7 +235,7 @@
 
   <circle cx="1520" cy="2030" r="19" class="bal"/><text x="1520" y="2039" class="baln" text-anchor="middle">10</text>
   <text x="1560" y="2038" class="st" text-anchor="start">Løs plate med avstivningslekter og beslag</text>
-  <text x="1560" y="2072" class="sml" text-anchor="start">Plate 18 mm 680×800 · 2 lekter 48×73×715 · 2 U-beslag · 2 krokplater.  Ledd: J13a, J13b, J13c.</text>
+  <text x="1560" y="2072" class="sml" text-anchor="start">Plate 18 mm 680×800 · 2 lekter 48×73×715 · 2 U-braketter · 2 krokplater.  Ledd: J13a, J13b, J13c.</text>
 
   <circle cx="1520" cy="2148" r="19" class="bal"/><text x="1520" y="2157" class="baln" text-anchor="middle">11</text>
   <text x="1560" y="2156" class="st" text-anchor="start">Madrass og sluttsjekk</text>

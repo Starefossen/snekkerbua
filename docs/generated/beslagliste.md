@@ -9,20 +9,22 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 
 | Post | Behov | Kjøp |
 |---|---:|---|
-| Treskrue 5×60 forsenket Torx | 92 | 1 eske 200 |
-| Treskrue 5×40 forsenket Torx | 20 | 1 pk. (30 stk.) |
-| Treskrue 6×90 forsenket Torx | 18 | 1 pk. (28 stk.) |
-| Treskrue 6×80 forsenket Torx | 14 | 1 pk. (24 stk.) |
-| Treskrue 6×120 forsenket Torx | 12 | 1 pk. (22 stk.) |
+| Treskrue 5×60 forsenket Torx | 92 | 1 pk. à 100 stk. |
+| Treskrue 5×40 forsenket Torx | 20 | 1 pk. à 20 stk. |
+| Treskrue 6×90 forsenket Torx | 18 | 1 pk. à 20 stk. |
+| Treskrue 6×80 forsenket Torx | 14 | 1 pk. à 20 stk. |
+| Treskrue 6×120 forsenket Torx | 12 | 1 pk. à 20 stk. |
 | Filtknott / møbeltapp ⌀40 | 8 | 1 pk. |
 | Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | 8 | 10 sett |
 | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | 6 | 6 stk. |
-| Treskrue 5×70 forsenket Torx | 4 | 1 pk. (14 stk.) |
+| Treskrue 5×70 forsenket Torx | 4 | 1 pk. à 8 stk. |
 | Vinkelbeslag 90×90×40×2,5 varmforsinket | 4 | 6 stk. |
 | Krokplate, bøyd av flattstål 30×4 | 2 | kappes av flattstål 30×4 — én meter dekker alle stålbeslagene |
-| Treskrue 6×70 forsenket Torx | 2 | 1 pk. (12 stk.) |
+| Treskrue 6×70 forsenket Torx | 2 | 1 pk. à 8 stk. |
 | U-brakett, bøyd av flattstål 30×4 | 2 | kappes av flattstål 30×4 — én meter dekker alle stålbeslagene |
 | Vinkelbeslag 40×40×20 | 2 | 4 stk. |
+
+**Behov** er antallet sengen bruker; **Kjøp** er den minste pakken som finnes i butikk og dekker behovet. Treskruer selges i pakker à 8 / 20 / 25 / 50 / 100 / 200 stk. Står det samme tall i begge kolonnene, har du ingen reserve — ta en pakke opp. En skrue du mangler koster en kveld.
 
 ## Hvor det går — ledd for ledd
 

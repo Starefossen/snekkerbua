@@ -1038,7 +1038,12 @@ BEAM_BLOCK_DY = POST_T                         # 36 (Y), matches the post depth
 BEAM_BLOCK_DZ = BLOCK_T                        # 36 (Z)
 BEAM_BLOCK_Z1 = END_BEAM_Z0                    # 967, flush with the beam underside
 BEAM_BLOCK_Z0 = BEAM_BLOCK_Z1 - BEAM_BLOCK_DZ  # 931
-BEAM_BLOCK_LEN = BEAM_BLOCK_DX                 # 48, cut length off 36x48 stock
+# The stock is 36x48 (BLOCK_T x BLOCK_H) and the block is 48 (X) x 36 (Y) x
+# 36 (Z): the 48 and one of the 36s ARE the stock section, so what is left to
+# saw is the other 36. Reading the cut length off DX would sell a 48 mm piece
+# and, worse, imply a block 48 deep in Y - which would stand in the Y 788..800
+# layer the U3 assert requires to be empty.
+BEAM_BLOCK_LEN = BEAM_BLOCK_DY                 # 36, cut length off 36x48 stock
 
 # ---------------------------------------------------------------------------
 # LADDER
@@ -2769,7 +2774,15 @@ def screw_rows():
                               ("J8", "benkevange", 2)):
         fs = [f for f in FASTENER_SPECS if f["jid"] == jid]
         assert fs, jid
-        band = fs[0]["into"].extents[axis]
+        # The edge distance is measured in the JOINT, not in whichever of the
+        # two members happens to be the target: the band is the overlap of the
+        # two, i.e. the contact window patch_window() already computes. Reading
+        # it off `into` alone is only right when the target is the shorter
+        # member in this axis - it is for J2 and J8 (post into rail), and it is
+        # NOT for J1, where the screws go through the beam INTO the post and
+        # the post runs 0..1065, printing a 994 mm "edge distance" off the
+        # floor instead of the 27 mm up from the beam's own underside.
+        band = patch_window(fs[0]["contact"])[axis]
         zs = sorted({round(f["anchor"][axis], 3) for f in fs})
         sec_ = sec(*_SECTION_OF[jid])
         rows[jid] = dict(z=zs, member=f"{member} {sec_.replace('x', '×')}",
@@ -3235,7 +3248,7 @@ if FASTENERS_ON:
           f"plan med flaten, spiss inne i delen den tar tak i (minst "
           f"{FASTENER_MIN_TIP_COVER:g} mm dekning), ingenting i noen annen "
           f"del i noen av de to stillingene")
-    print(f"OK  {_n_ang} vinkelbeslag og {_n_hook} krok-/U-beslag: hver flik "
+    print(f"OK  {_n_ang} vinkelbeslag og {_n_hook} krok-/U-braketter: hver flik "
           f"har tre bak seg i skrueretningen")
 else:
     print("(fasteners off - LOFTBED_FASTENERS=0)")

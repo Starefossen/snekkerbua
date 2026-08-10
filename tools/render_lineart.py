@@ -1357,7 +1357,7 @@ def info_panel(page, box, G):
     page.text((x + 78, y + h - 52), "MADRASS", 44, weight="bold")
     page.text((x + 22, y + h - 112), "STANDARD 80 x 200 cm", 40)
     page.text((x + 22, y + h - 166),
-              f"TYKKELSE {G.MATTRESS_H_MIN}-{G.MATTRESS_H_MAX} mm", 44,
+              f"TYKKELSE {G.MATTRESS_H_MIN}–{G.MATTRESS_H_MAX} mm", 44,
               weight="bold")
 
     # Section: slat top, mattress, the opening, both guard bands, post top.
@@ -1513,8 +1513,14 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     else:
         inset_w, inset_h = inset_layout(page, len(sections),
                                         len(fasteners[:4]))[:2]
+    # The mattress step has no fastener marks to steer the panel away from
+    # anything, and the mattress itself is only a handful of outline points -
+    # so "emptiest" picks the top left corner, which is exactly the corner the
+    # panel is drawing: the mattress meeting the back wall. Rule that corner
+    # out on this one page.
     bx, by = emptiest_corner(combined.get("prior", []) + new_only,
-                             page, inset_w, inset_h, marks)
+                             page, inset_w, inset_h, marks,
+                             avoid_top_left=is_mattress)
     box = (bx, by, inset_w, inset_h)
     # Both of these are measured on the SHORT side of the page, so a step
     # that gets a tall page of its own - the ladder - does not get arrows and

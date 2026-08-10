@@ -202,69 +202,57 @@
   <circle cx="1844" cy="706" r="9" class="scr"/>
   <line x1="1844" y1="662" x2="1934" y2="662" class="scrl"/>
   <circle cx="1844" cy="662" r="9" class="scr"/>
-  <!-- J1-B: 2 x 6x90 fra klossens frie ende inn i stolpen -->
-  <line x1="146" y1="742" x2="60" y2="742" class="scrl"/>
-  <circle cx="146" cy="742" r="9" class="scr"/>
-  <line x1="146" y1="760" x2="60" y2="760" class="scrl"/>
-  <circle cx="146" cy="760" r="9" class="scr"/>
-  <line x1="1844" y1="742" x2="1930" y2="742" class="scrl"/>
-  <circle cx="1844" cy="742" r="9" class="scr"/>
-  <line x1="1844" y1="760" x2="1930" y2="760" class="scrl"/>
-  <circle cx="1844" cy="760" r="9" class="scr"/>
-  <!-- J2: 2 x 6x80 gjennom stolpen inn i fremre sidevange - langs Y, ut av planet -->
-  <circle cx="49" cy="608" r="11" class="scrg"/>
-  <circle cx="49" cy="564" r="11" class="scrg"/>
-  <circle cx="1941" cy="608" r="11" class="scrg"/>
-  <circle cx="1941" cy="564" r="11" class="scrg"/>
-  <!-- J3: 4 x 6x80 gjennom stigevangen inn i sidevangen - langs Y -->
-  <circle cx="799" cy="608" r="11" class="scrg"/>
-  <circle cx="823" cy="608" r="11" class="scrg"/>
-  <circle cx="799" cy="564" r="11" class="scrg"/>
-  <circle cx="823" cy="564" r="11" class="scrg"/>
-  <circle cx="1167" cy="608" r="11" class="scrg"/>
-  <circle cx="1191" cy="608" r="11" class="scrg"/>
-  <circle cx="1167" cy="564" r="11" class="scrg"/>
-  <circle cx="1191" cy="564" r="11" class="scrg"/>
+  <!-- J1-B: 1 x 6x90 fra klossens frie ende inn i stolpen (Z 949) -->
+  <line x1="146" y1="751" x2="60" y2="751" class="scrl"/>
+  <circle cx="146" cy="751" r="9" class="scr"/>
+  <line x1="1844" y1="751" x2="1930" y2="751" class="scrl"/>
+  <circle cx="1844" cy="751" r="9" class="scr"/>
+  <!-- J2: 2 x 6x80 gjennom stolpen inn i fremre sidevange - langs Y, ut av planet.
+       X 50,5 fra hver vegg, Z 1092 og 1136 -->
+  <circle cx="50.5" cy="608" r="11" class="scrg"/>
+  <circle cx="50.5" cy="564" r="11" class="scrg"/>
+  <circle cx="1939.5" cy="608" r="11" class="scrg"/>
+  <circle cx="1939.5" cy="564" r="11" class="scrg"/>
+  <!-- J3: 3 x 6x80 gjennom stigevangen inn i sidevangen - langs Y.
+       X 811 / 1179 (stigevangens midtlinje), Z 1090 / 1114 / 1138 -->
+  <circle cx="811" cy="610" r="11" class="scrg"/>
+  <circle cx="811" cy="586" r="11" class="scrg"/>
+  <circle cx="811" cy="562" r="11" class="scrg"/>
+  <circle cx="1179" cy="610" r="11" class="scrg"/>
+  <circle cx="1179" cy="586" r="11" class="scrg"/>
+  <circle cx="1179" cy="562" r="11" class="scrg"/>
   <!-- J4 + J5, alle fire trinn -->
   <g>
     <line x1="787" y1="1465" x2="890" y2="1465" class="scrl"/><circle cx="787" cy="1465" r="9" class="scr"/>
     <line x1="853" y1="1441" x2="853" y2="1501" class="scrl"/><circle cx="853" cy="1441" r="9" class="scr"/>
-    <line x1="871" y1="1500" x2="815" y2="1500" class="scrl"/><circle cx="871" cy="1500" r="9" class="scr"/>
-    <line x1="871" y1="1526" x2="815" y2="1526" class="scrl"/><circle cx="871" cy="1526" r="9" class="scr"/>
+    <line x1="871" y1="1513" x2="815" y2="1513" class="scrl"/><circle cx="871" cy="1513" r="9" class="scr"/>
     <line x1="1203" y1="1465" x2="1100" y2="1465" class="scrl"/><circle cx="1203" cy="1465" r="9" class="scr"/>
     <line x1="1137" y1="1441" x2="1137" y2="1501" class="scrl"/><circle cx="1137" cy="1441" r="9" class="scr"/>
-    <line x1="1119" y1="1500" x2="1175" y2="1500" class="scrl"/><circle cx="1119" cy="1500" r="9" class="scr"/>
-    <line x1="1119" y1="1526" x2="1175" y2="1526" class="scrl"/><circle cx="1119" cy="1526" r="9" class="scr"/>
+    <line x1="1119" y1="1513" x2="1175" y2="1513" class="scrl"/><circle cx="1119" cy="1513" r="9" class="scr"/>
   </g>
   <g>
     <line x1="787" y1="1242" x2="890" y2="1242" class="scrl"/><circle cx="787" cy="1242" r="9" class="scr"/>
     <line x1="853" y1="1218" x2="853" y2="1278" class="scrl"/><circle cx="853" cy="1218" r="9" class="scr"/>
-    <line x1="871" y1="1277" x2="815" y2="1277" class="scrl"/><circle cx="871" cy="1277" r="9" class="scr"/>
-    <line x1="871" y1="1303" x2="815" y2="1303" class="scrl"/><circle cx="871" cy="1303" r="9" class="scr"/>
+    <line x1="871" y1="1290" x2="815" y2="1290" class="scrl"/><circle cx="871" cy="1290" r="9" class="scr"/>
     <line x1="1203" y1="1242" x2="1100" y2="1242" class="scrl"/><circle cx="1203" cy="1242" r="9" class="scr"/>
     <line x1="1137" y1="1218" x2="1137" y2="1278" class="scrl"/><circle cx="1137" cy="1218" r="9" class="scr"/>
-    <line x1="1119" y1="1277" x2="1175" y2="1277" class="scrl"/><circle cx="1119" cy="1277" r="9" class="scr"/>
-    <line x1="1119" y1="1303" x2="1175" y2="1303" class="scrl"/><circle cx="1119" cy="1303" r="9" class="scr"/>
+    <line x1="1119" y1="1290" x2="1175" y2="1290" class="scrl"/><circle cx="1119" cy="1290" r="9" class="scr"/>
   </g>
   <g>
     <line x1="787" y1="1004" x2="890" y2="1004" class="scrl"/><circle cx="787" cy="1004" r="9" class="scr"/>
     <line x1="853" y1="980" x2="853" y2="1040" class="scrl"/><circle cx="853" cy="980" r="9" class="scr"/>
-    <line x1="871" y1="1039" x2="815" y2="1039" class="scrl"/><circle cx="871" cy="1039" r="9" class="scr"/>
-    <line x1="871" y1="1065" x2="815" y2="1065" class="scrl"/><circle cx="871" cy="1065" r="9" class="scr"/>
+    <line x1="871" y1="1052" x2="815" y2="1052" class="scrl"/><circle cx="871" cy="1052" r="9" class="scr"/>
     <line x1="1203" y1="1004" x2="1100" y2="1004" class="scrl"/><circle cx="1203" cy="1004" r="9" class="scr"/>
     <line x1="1137" y1="980" x2="1137" y2="1040" class="scrl"/><circle cx="1137" cy="980" r="9" class="scr"/>
-    <line x1="1119" y1="1039" x2="1175" y2="1039" class="scrl"/><circle cx="1119" cy="1039" r="9" class="scr"/>
-    <line x1="1119" y1="1065" x2="1175" y2="1065" class="scrl"/><circle cx="1119" cy="1065" r="9" class="scr"/>
+    <line x1="1119" y1="1052" x2="1175" y2="1052" class="scrl"/><circle cx="1119" cy="1052" r="9" class="scr"/>
   </g>
   <g>
     <line x1="787" y1="766" x2="890" y2="766" class="scrl"/><circle cx="787" cy="766" r="9" class="scr"/>
     <line x1="853" y1="742" x2="853" y2="802" class="scrl"/><circle cx="853" cy="742" r="9" class="scr"/>
-    <line x1="871" y1="801" x2="815" y2="801" class="scrl"/><circle cx="871" cy="801" r="9" class="scr"/>
-    <line x1="871" y1="827" x2="815" y2="827" class="scrl"/><circle cx="871" cy="827" r="9" class="scr"/>
+    <line x1="871" y1="814" x2="815" y2="814" class="scrl"/><circle cx="871" cy="814" r="9" class="scr"/>
     <line x1="1203" y1="766" x2="1100" y2="766" class="scrl"/><circle cx="1203" cy="766" r="9" class="scr"/>
     <line x1="1137" y1="742" x2="1137" y2="802" class="scrl"/><circle cx="1137" cy="742" r="9" class="scr"/>
-    <line x1="1119" y1="801" x2="1175" y2="801" class="scrl"/><circle cx="1119" cy="801" r="9" class="scr"/>
-    <line x1="1119" y1="827" x2="1175" y2="827" class="scrl"/><circle cx="1119" cy="827" r="9" class="scr"/>
+    <line x1="1119" y1="814" x2="1175" y2="814" class="scrl"/><circle cx="1119" cy="814" r="9" class="scr"/>
   </g>
   <!-- J6: 1 x 5x60 pr. spileende, ned i vangen -->
   <line x1="69" y1="501" x2="69" y2="548" class="scrl"/><circle cx="69" cy="501" r="9" class="scr"/>
@@ -298,30 +286,34 @@
   <circle cx="1179" cy="39" r="11" class="scrg"/>
   <circle cx="1940" cy="89" r="11" class="scrg"/>
   <circle cx="1940" cy="39" r="11" class="scrg"/>
-  <!-- J8: 2 x 6x80 gjennom fremre stolpe inn i benkevangen - langs Y -->
-  <circle cx="49" cy="1492.5" r="11" class="scrg"/>
-  <circle cx="49" cy="1462.5" r="11" class="scrg"/>
-  <circle cx="1941" cy="1492.5" r="11" class="scrg"/>
-  <circle cx="1941" cy="1462.5" r="11" class="scrg"/>
-  <!-- J8-B og J9-B: bak, skjult -->
-  <line x1="98" y1="1470" x2="180" y2="1470" class="ghol2"/>
-  <circle cx="110" cy="1470" r="11" class="scrg"/>
-  <line x1="1892" y1="1470" x2="1810" y2="1470" class="ghol2"/>
-  <circle cx="1880" cy="1470" r="11" class="scrg"/>
+  <!-- J8: 2 x 6x80 gjennom fremre stolpe inn i benkevangen - langs Y.
+       X 50,5 fra hver vegg, Z 210,5 og 234,5 -->
+  <circle cx="50.5" cy="1489.5" r="11" class="scrg"/>
+  <circle cx="50.5" cy="1465.5" r="11" class="scrg"/>
+  <circle cx="1939.5" cy="1489.5" r="11" class="scrg"/>
+  <circle cx="1939.5" cy="1465.5" r="11" class="scrg"/>
+  <!-- J8-B og J9-B: bak, skjult. J8-B er 2 skråskruer per ende (X 132 / 1858,
+       Z 210,5 og 234,5), J9-B er én per kloss (X 146 / 1844, Z 168) -->
+  <line x1="98" y1="1477.5" x2="180" y2="1477.5" class="ghol2"/>
+  <circle cx="132" cy="1489.5" r="11" class="scrg"/>
+  <circle cx="132" cy="1465.5" r="11" class="scrg"/>
+  <line x1="1892" y1="1477.5" x2="1810" y2="1477.5" class="ghol2"/>
+  <circle cx="1858" cy="1489.5" r="11" class="scrg"/>
+  <circle cx="1858" cy="1465.5" r="11" class="scrg"/>
   <circle cx="122" cy="1532" r="11" class="scrg"/>
   <circle cx="1868" cy="1532" r="11" class="scrg"/>
-  <!-- J9-F: skjult bak fremre stolpe -->
-  <circle cx="24" cy="1526" r="11" class="scrg"/>
-  <circle cx="24" cy="1550" r="11" class="scrg"/>
-  <circle cx="1966" cy="1526" r="11" class="scrg"/>
-  <circle cx="1966" cy="1550" r="11" class="scrg"/>
-  <!-- J10: vinkelbeslag + skråskruer ved stubbeføttene -->
-  <polyline points="641,1588 641,1519 585,1519" class="brk"/>
-  <circle cx="641" cy="1555" r="9" class="scr"/>
-  <circle cx="605" cy="1519" r="9" class="scr"/>
-  <polyline points="1349,1588 1349,1519 1405,1519" class="brk"/>
-  <circle cx="1349" cy="1555" r="9" class="scr"/>
-  <circle cx="1385" cy="1519" r="9" class="scr"/>
+  <!-- J9-F: skjult bak fremre stolpe - 1 x 6x70 per kloss, Z 162 -->
+  <circle cx="24" cy="1538" r="11" class="scrg"/>
+  <circle cx="1966" cy="1538" r="11" class="scrg"/>
+  <!-- J10: vinkelbeslag + skråskruer ved stubbeføttene.
+       Den loddrette fliken ligger på stubbefotens innerflate (X 645 / 1345),
+       den vannrette i vangens underkant (Z 186). -->
+  <polyline points="507,1514 597,1514 597,1604" class="brk"/>
+  <circle cx="597" cy="1550" r="9" class="scr"/>
+  <circle cx="552" cy="1514" r="9" class="scr"/>
+  <polyline points="1483,1514 1393,1514 1393,1604" class="brk"/>
+  <circle cx="1393" cy="1550" r="9" class="scr"/>
+  <circle cx="1438" cy="1514" r="9" class="scr"/>
   <!-- J11: 1 x 5x60 pr. benkespileende -->
   <line x1="147" y1="1405" x2="147" y2="1458" class="scrl"/><circle cx="147" cy="1405" r="9" class="scr"/>
   <line x1="259.3" y1="1405" x2="259.3" y2="1458" class="scrl"/><circle cx="259.3" cy="1405" r="9" class="scr"/>
@@ -463,7 +455,7 @@
   <line x1="69" y1="501" x2="69" y2="432" class="ext"/>
   <line x1="211.5" y1="501" x2="211.5" y2="432" class="ext"/>
   <line x1="69" y1="445" x2="211.5" y2="445" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="140.2" y="435" class="dmh" text-anchor="middle">142,5 s/s</text>
+  <text x="140.2" y="435" class="dmh" text-anchor="middle">142,46 s/s</text>
   <line x1="147" y1="1405" x2="147" y2="1330" class="ext"/>
   <line x1="259.3" y1="1405" x2="259.3" y2="1330" class="ext"/>
   <line x1="147" y1="1340" x2="259.3" y2="1340" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
@@ -522,7 +514,7 @@
   <polyline points="1930,519 2020,485" class="ldr" marker-start="url(#aE)"/>
   <text x="2110" y="478" class="lbl" text-anchor="start">Køyespile 36×98 × 800 – 14 like,</text>
   <text x="2110" y="519" class="lbl" text-anchor="start">én lengde (Y −48 … 752)</text>
-  <text x="2110" y="556" class="sml" text-anchor="start">s/s 142,5 · klaring 44,5 mm · J6</text>
+  <text x="2110" y="556" class="sml" text-anchor="start">s/s 142,46 · klaring 44,46 mm · J6</text>
   <polyline points="1930,586 2020,625" class="ldr" marker-start="url(#aE)"/>
   <text x="2110" y="618" class="lbl" text-anchor="start">Sidevange, øvre – front</text>
   <text x="2110" y="659" class="lbl" text-anchor="start">48×98 × 1984  (X 3–1987)</text>
@@ -542,8 +534,8 @@
   <!-- == blokk mellom venstre stolpe og stigen == -->
   <polyline points="146,690 160,784" class="ldr" marker-start="url(#aE)"/>
   <text x="170" y="790" class="sml" text-anchor="start">Endebjelke 48×98 × 836 (Y −48…788), X 98–146</text>
-  <polyline points="146,762 160,820" class="ldr" marker-start="url(#aE)"/>
-  <text x="170" y="826" class="sml" text-anchor="start">Bærekloss J1-B 36×48, 48 lang – ok Z 967</text>
+  <polyline points="146,751 160,820" class="ldr" marker-start="url(#aE)"/>
+  <text x="170" y="826" class="sml" text-anchor="start">Bærekloss J1-B 36×48, 36 lang – ok Z 967</text>
   <polyline points="330,1250 160,884" class="ldr" marker-start="url(#aE)"/>
   <text x="170" y="890" class="sml" text-anchor="start">Bordbærelekt, bak 21×95 × 1794 (X 98–1892) – skjult</text>
   <polyline points="430,1470 160,948" class="ldr" marker-start="url(#aE)"/>
@@ -585,7 +577,7 @@
   <text x="190" y="1462" class="jl" text-anchor="start">J8-B</text>
   <text x="70" y="1592" class="jl" text-anchor="start">J9-F</text>
   <text x="190" y="1548" class="jl" text-anchor="start">J9-B</text>
-  <text x="668" y="1540" class="jl" text-anchor="start">J10</text>
+  <text x="608" y="1600" class="jl" text-anchor="start">J10</text>
   <text x="240" y="1385" class="jl" text-anchor="start">J11</text>
   <text x="190" y="1282" class="jl" text-anchor="start">J12</text>
 

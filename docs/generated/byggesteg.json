@@ -180,7 +180,7 @@
       },
       "parts": [
         "2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48",
-        "4× Bærekloss, endebjelke (J1-B) 36×48 × 48",
+        "4× Bærekloss, endebjelke (J1-B) 36×48 × 36",
         "2× Endebjelke 48×98 × 836",
         "2× Hjørnestolpe, front 36×98 × 1700"
       ]
@@ -587,11 +587,11 @@
       ],
       "member": "endebjelke 48×98",
       "band": [
-        0,
+        967,
         1065
       ],
       "edge": [
-        994.0,
+        27.0,
         27.0
       ],
       "spacing": 44.0,
