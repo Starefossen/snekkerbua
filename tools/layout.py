@@ -188,13 +188,13 @@ class Occupancy:
         self.boxes.append((rect, weight, tag))
         return self
 
-    def add_point(self, p, radius=0.0, weight=1.0, owner=None):
-        self.points.append((p, radius, weight, owner))
+    def add_point(self, p, radius=0.0, weight=1.0, owner=None, tag="mark"):
+        self.points.append((p, radius, weight, owner, tag))
         return self
 
-    def add_points(self, ps, radius=0.0, weight=1.0, owner=None):
+    def add_points(self, ps, radius=0.0, weight=1.0, owner=None, tag="mark"):
         for p in ps:
-            self.add_point(p, radius, weight, owner)
+            self.add_point(p, radius, weight, owner, tag)
         return self
 
     # -- asking it questions ------------------------------------------------
@@ -222,8 +222,14 @@ class Occupancy:
                         best = d
         return best
 
-    def cost(self, rect, grow=0.0, tags=None):
-        """How much is in the way of a box put here."""
+    def cost(self, rect, grow=0.0, tags=None, skip_owner=None):
+        """How much is in the way of a box put here.
+
+        `tags` narrows the question - a caption asks about panels and marks
+        and not about the timber it is welcome to sit on, a bracket asks
+        about everything. `skip_owner` leaves out what the box being placed
+        already owns: a badge is not in its own way.
+        """
         out = 0.0
         for plines, weight, tag in self.lines:
             if tags is not None and tag not in tags:
@@ -235,7 +241,11 @@ class Occupancy:
                 continue
             if _overlap(rect, box) > 1.0:
                 out += weight
-        for p, radius, weight, _owner in self.points:
+        for p, radius, weight, owner, tag in self.points:
+            if tags is not None and tag not in tags:
+                continue
+            if skip_owner is not None and owner == skip_owner:
+                continue
             if _in_rect(p, rect, grow + radius):
                 out += weight
         return out
@@ -249,7 +259,9 @@ class Occupancy:
         labelling the wrong hole.
         """
         best, who = None, None
-        for q, radius, _weight, own in self.points:
+        for q, radius, _weight, own, _tag in self.points:
+            if own is None:
+                continue
             if foreign and own == owner:
                 continue
             if not foreign and owner is not None and own != owner:
@@ -271,7 +283,7 @@ FOREIGN_PENALTY = 40.0
 
 
 def place(candidates, footprint, occ, tether=None, pull=0.0, owner=None,
-          bounds=None, edge=0.0, edge_penalty=10.0, extra=None):
+          bounds=None, edge=0.0, edge_penalty=10.0, tags=None, extra=None):
     """The cheapest of a fixed list of candidate CENTRES for one footprint.
 
     `candidates`  centres, in the order the caller prefers them
@@ -293,7 +305,7 @@ def place(candidates, footprint, occ, tether=None, pull=0.0, owner=None,
     best = None
     for i, c in enumerate(candidates):
         rect = (c[0] - w / 2, c[1] - h / 2, w, h)
-        score = occ.cost(rect)
+        score = occ.cost(rect, tags=tags, skip_owner=owner)
         if bounds is not None:
             x0, y0, x1, y1 = bounds
             if (rect[0] < x0 + edge or rect[1] < y0 + edge

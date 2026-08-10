@@ -61,9 +61,12 @@ that is what anchors every annotation to real geometry:
     mark dropped for crowding hands its count to the mark that crowded it,
     and the page is checked at build time to show every fastener the step's
     table lists.
-  * leader lines run from the inset to the fastening points; a step with only
-    one or two of them gets a circular magnifier of the real line work there
-    instead.
+  * nothing runs from the inset to the fastening points. The badge letter is
+    already the tie between a mark and its row in the panel, and it ties ALL
+    of them rather than the four that happened to be nearest. A step with only
+    one or two locations to point at gets a circular magnifier of the real
+    line work there instead - that one carries information, so it keeps its
+    short leader.
   * the step that stands the back frame up gets before/after thumbnails, the
     second being the same parts drawn again from a laid-flat placement. That
     placement is a drawing transform - it moves nothing in the model.
@@ -323,6 +326,18 @@ def step_marks(G, st, letters, view):
                         name=f["name"], letter=letters.get(f["name"]),
                         area=area, spec=f))
     return out
+
+
+def mark_owner(mark):
+    """A stable name for the thing a mark is about.
+
+    It has to survive being written down in an occupancy field and compared
+    later, and it has to be the SAME from run to run - so it is built out of
+    the joint, the fastener's name and where on the page it landed, not out of
+    an id() that a rerun would hand out differently.
+    """
+    return (mark["jid"], mark["name"],
+            round(mark["p2"][0], 3), round(mark["p2"][1], 3))
 
 
 def mark_parts(mark):
@@ -909,9 +924,6 @@ class Page:
     def __init__(self, x0, y0, x1, y1):
         self.x0, self.y0, self.x1, self.y1 = x0, y0, x1, y1
         self.body = []
-        # Where the badge letters have already landed, so the next row can
-        # step out of their way instead of on top of them.
-        self.badge_spots = []
         # WHAT ACTUALLY WENT ON THE PAPER. Every drawn body, badge and label
         # registers itself here with its geometry and its owner, and the
         # asserts read THIS rather than the numbers that went in. It is the
@@ -1310,24 +1322,46 @@ def badge(page, centre, letter, r=None):
     page.circle(centre, r, fill="#ffffff", stroke=INK, width=T.W_RULE)
     page.text((centre[0], centre[1] - r * 0.40), letter,
               r * 1.20, anchor="middle", weight="bold")
-    page.badge_spots.append(centre)
+    page.record.append(dict(kind="badge", owner=None, letter=letter,
+                            at=centre, r=r))
 
 
-def mark_label(page, tail, direction, letter, count, inset=None, avoid=()):
-    """One arrow's caption, parked behind its tail.
+# R5 - A MARK BELONGS TO ITS OWN ELEMENT
+# --------------------------------------
+# What a caption costs, in the units layout.place() scores in. The numbers are
+# the old hand-tuned cost function's, carried over so that the pages that were
+# right stay right; what is NEW is the last one, and it is the rule that makes
+# the whole thing more than a tidiness heuristic.
+CAP_EDGE = 30.0        # hanging off the page
+CAP_MARK = 18.0        # sitting on a fastener this caption does not name
+CAP_BADGE = 3.0        # sitting on another caption
+CAP_PANEL = 42.0       # sitting on the inset panel, which is opaque
+CAP_TAGS = ("panel", "mark", "badge")
 
-    A mark carries at most one letter now - each kind of fastener points at
-    its own spot - and beside it the number of screws that mark stands for.
-    "2x" is there because a marker is not always one screw: two 5x60 driven
-    30 mm apart into the same rekkverksbord end are one arrow at this scale,
-    and the page has to say so.
 
-    The natural place is straight back along the tail. Four things can spoil
-    it: the page edge, the inset panel, another caption, and - `avoid` - a
-    fastener this caption does not name, which is the worst of them, because a
-    badge sitting on somebody else's screw does not merely crowd the page, it
-    tells the builder to put the wrong screw there. So a handful of positions
-    are tried and the cleanest one wins.
+def mark_label(page, tail, direction, letter, count, occ=None, owner=None):
+    """One fastener's caption, parked behind its tail.
+
+    A mark carries at most one letter - each kind of fastener points at its
+    own spot - and beside it the number of screws that mark stands for. "2x"
+    is there because a marker is not always one screw: two 5x60 driven 30 mm
+    apart into the same rekkverksbord end are one arrow at this scale, and the
+    page has to say so.
+
+    The natural place is straight back along the tail, and four things can
+    spoil it: the page edge, the inset panel, another caption, and a fastener
+    this caption does not name. The last is the worst of them by a distance,
+    because a badge sitting on somebody else's screw does not merely crowd the
+    page - it tells the builder to put the wrong screw there. Step 1 had
+    exactly that: J9-B's screw points left, so "behind its head" is to the
+    RIGHT, straight at J8-B's screw, and the page read
+    "[skrue] A [skrue] A 2x" - two A marks with a foreign body between each
+    badge and the screw it names.
+
+    So the rule is not "avoid crowding". It is R5, and layout.place() enforces
+    it: A CAPTION MAY NOT LAND NEARER A FOREIGN BODY THAN ITS OWN. Given that,
+    the second A moves itself and nothing has to be merged, renamed or
+    special-cased.
     """
     dx, dy = direction
     txt = f"{count}x" if count > 1 else ""
@@ -1346,6 +1380,9 @@ def mark_label(page, tail, direction, letter, count, inset=None, avoid=()):
             return (left + T.BADGE_R, cy), (left + 2 * T.BADGE_R + 6, cy)
         return None, (left, cy)
 
+    # Straight back along the tail first, then progressively further; then to
+    # either side. The ORDER is the preference, and layout.place() breaks ties
+    # on it, so an uncrowded page still parks every caption behind its head.
     tries = [(tail[0] - dx * (base + k * T.BADGE_R * 1.7),
               tail[1] - dy * (base + k * T.BADGE_R * 1.7)) for k in range(5)]
     for s in (1, -1):
@@ -1355,32 +1392,53 @@ def mark_label(page, tail, direction, letter, count, inset=None, avoid=()):
                           tail[1] + dx * s * (aside + k * T.BADGE_R * 1.6)
                           - dy * k * T.BADGE_R * 0.8))
 
-    def cost(c):
-        out = 0
-        for probe in (c, (c[0] - span / 2, c[1]), (c[0] + span / 2, c[1])):
-            if not (page.x0 + T.BADGE_R + 8 <= probe[0] <= page.x1 - T.BADGE_R - 8
-                    and page.y0 + T.BADGE_R + 8 <= probe[1]
-                    <= page.y1 - T.BADGE_R - 8):
-                out += 10
-            if inset is not None and _in_rect(probe, inset, T.BADGE_R * 0.7):
-                out += 14
-            out += sum(1 for q in page.badge_spots
-                       if not _apart(probe, q, 2 * T.BADGE_R + 4))
-            out += sum(6 for q in avoid
-                       if not _apart(probe, q, T.BADGE_R + 10))
-        # And having stepped out of the way, it steps no further than it had
-        # to: a caption that has wandered is one the reader has to guess at.
-        out += math.hypot(c[0] - tail[0], c[1] - tail[1]) / (T.BADGE_R * 8.0)
-        return out
-
-    centre = min(((cost(c), k, c) for k, c in enumerate(tries)))[2]
+    occ = layout.Occupancy() if occ is None else occ
+    centre = layout.place(
+        tries, (span, 2 * T.BADGE_R), occ,
+        tether=tail,
+        # Having stepped out of the way it steps no further than it had to: a
+        # caption that has wandered is one the reader has to guess at.
+        pull=1.0 / (T.BADGE_R * 8.0),
+        owner=owner, tags=CAP_TAGS,
+        bounds=(page.x0, page.y0, page.x1, page.y1),
+        edge=T.BADGE_R + 8, edge_penalty=CAP_EDGE)
     b_at, t_at = spots(*centre)
     if b_at is not None:
         badge(page, b_at, letter)
+        occ.add_point(b_at, radius=T.BADGE_R, weight=CAP_BADGE, owner=owner,
+                      tag="badge")
     if txt:
         page.text((t_at[0], t_at[1] - T.BADGE_R * 0.42), txt, T.BADGE_R * 1.25,
                   weight="bold")
-        page.badge_spots.append((t_at[0] + w_txt / 2, t_at[1]))
+        at = (t_at[0] + w_txt / 2, t_at[1])
+        occ.add_point(at, radius=T.BADGE_R, weight=CAP_BADGE, owner=owner,
+                      tag="badge")
+    page.record.append(dict(kind="label", owner=owner, letter=letter,
+                            count=count, at=centre, tether=tail))
+    return centre
+
+
+def assert_marks_own_element(page, occ):
+    """R5, measured off the ink: no caption is nearer somebody else's body.
+
+    The badges are read back out of the page's own record - where they LANDED,
+    not where they were aimed - and each one is asked the only question that
+    matters about it: is the nearest drawn fastener the one you name? A page
+    where it is not does not get written, because a badge beside the wrong
+    screw is not a crowded drawing, it is a wrong instruction.
+    """
+    for r in page.record:
+        if r["kind"] != "label" or r["owner"] is None:
+            continue
+        mine, _who = occ.nearest(r["at"], owner=r["owner"], foreign=False)
+        theirs, who = occ.nearest(r["at"], owner=r["owner"], foreign=True)
+        if mine is None or theirs is None:
+            continue
+        assert mine <= theirs + 1e-6, (
+            f"merket {r['letter'] or '(uten bokstav)'} for {r['owner'][0]} "
+            f"ligger {mine:.0f} mm fra sitt eget feste og {theirs:.0f} mm fra "
+            f"{who[0]} sitt - et merke skal aldri lande nærmere en fremmed "
+            f"kropp enn sin egen (R5)")
 
 
 # The inset panel is the same shape on every page: the same fraction of the
@@ -1449,17 +1507,6 @@ def draw_inset(page, box, sections, step_fasteners, glyph_dir, letters):
 # ---------------------------------------------------------------------------
 # THE STEP PAGES
 # ---------------------------------------------------------------------------
-def _edge_of_box(centre, target, bx, by, bw, bh):
-    """Where the line centre->target leaves the inset, so leaders start there."""
-    dx, dy = target[0] - centre[0], target[1] - centre[1]
-    t = 1.0
-    if abs(dx) > 1e-9:
-        t = min(t, abs((bw / 2) / dx))
-    if abs(dy) > 1e-9:
-        t = min(t, abs((bh / 2) / dy))
-    return (centre[0] + dx * t, centre[1] + dy * t)
-
-
 def _overlap(a, b):
     ax, ay, aw, ah = a
     bx, by, bw, bh = b
@@ -1926,9 +1973,6 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     occ.add_lines(new_only + combined.get("new", []), weight=1.0, tag="dark")
     occ.add_box(box, weight=40.0)
     stacks = {}
-    # Where the drawn fasteners actually ended up, so a caption - or a
-    # magnifier placed later - cannot white one of them out.
-    busy = []
     captions = []
     # The brackets are placed BEFORE anything is drawn: a bracket's own screws
     # explode from where the bracket ended up, so they have to know its float
@@ -2033,22 +2077,33 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
             label_at = m["p2"]
             label_dir = (0.0, -1.0)
             mine = [m["p2"]]
-        busy += mine
-        captions.append((label_at, label_dir, m["letter"], m["per"], mine))
+        # Into the field, under this mark's OWN name: R5 is the question "is
+        # there anything nearer than my own body", and it can only be asked of
+        # a field that knows whose everything is.
+        occ.add_points(mine, radius=T.BADGE_R + 10, weight=CAP_MARK,
+                       owner=mark_owner(m), tag="mark")
+        captions.append((label_at, label_dir, m["letter"], m["per"],
+                         mark_owner(m)))
 
     # THE CAPTIONS, once every fastener is down. Placing each one as its own
     # fastener was drawn is what let the second badge on a crowded corner park
     # itself neatly on top of the ninth screw - which had not been drawn yet,
     # so nothing objected. A caption that sits on a fastener it does not name
     # is worse than no caption: it is a wrong one.
-    for label_at, label_dir, letter, per, mine in captions:
-        others = [p for p in busy if p not in mine]
-        mark_label(page, label_at, label_dir, letter, per, box, others)
+    for label_at, label_dir, letter, per, owner in captions:
+        mark_label(page, label_at, label_dir, letter, per, occ, owner)
+    assert_marks_own_element(page, occ)
 
-    # Leaders from the inset to the joints, or one magnifier when there is
-    # only a location or two to point at.
+    # R3 - NO LEADERS FROM THE INSET.
+    # The panel used to trail up to four long grey dashed lines across the
+    # drawing to the nearest fastening points. They said nothing: the badge
+    # letter already ties every mark to its row in the panel, and it does it
+    # for ALL the marks rather than for the four that happen to be closest.
+    # What the lines did do was cross the line work at every angle, and on a
+    # half view they ran straight through the corner the page exists to show.
+    # A magnifier is different and stays: it carries real line work, and its
+    # short leader says which spot has been blown up.
     if keep and not is_mattress and fasteners:
-        anchor = (bx + inset_w / 2, by + inset_h / 2)
         if len({(round(m["p2"][0]), round(m["p2"][1])) for m in keep}) <= 2:
             src = keep[0]["p2"]
             src_r = max(page.w, page.h) * 0.055
@@ -2058,15 +2113,6 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                 dst_c = (bx + inset_w / 2, by - dst_r - 60)
             magnifier(page, src, dst_c, dst_r, src_r, new_only,
                       combined.get("prior", []))
-        else:
-            # One leader per joint would bury the drawing, so the inset points
-            # at the nearest few and the markers carry the rest.
-            near = sorted(keep, key=lambda kp: (kp["p2"][0] - anchor[0]) ** 2
-                          + (kp["p2"][1] - anchor[1]) ** 2)[:4]
-            for m in near:
-                page.line(_edge_of_box(anchor, m["p2"], bx, by, inset_w,
-                                       inset_h),
-                          m["p2"], GREY, T.W_LEAD, dash="16 14")
 
     # The J12 bracket used to need a magnifier of its own here: at page scale
     # it was 40 mm of steel behind a 1794 mm ledger and nobody could place it.

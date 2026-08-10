@@ -59,8 +59,4 @@
 <text x="-748.31" y="-513.13" font-family="Helvetica, Arial, sans-serif" font-size="30.91" font-weight="bold" text-anchor="start" fill="#111111">2x</text>
 <text x="-223.46" y="-581.96" font-family="Helvetica, Arial, sans-serif" font-size="30.91" font-weight="bold" text-anchor="start" fill="#111111">2x</text>
 <text x="-748.31" y="-352.73" font-family="Helvetica, Arial, sans-serif" font-size="30.91" font-weight="bold" text-anchor="start" fill="#111111">2x</text>
-<path d="M-692.11,503.89 L-614.96,-235.17" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="16 14"/>
-<path d="M-696.58,503.89 L-614.96,-395.57" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="16 14"/>
-<path d="M-517.76,503.89 L43.65,-377.62" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="16 14"/>
-<path d="M-542.19,503.89 L43.65,-538.02" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="16 14"/>
 </svg>

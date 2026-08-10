@@ -399,13 +399,26 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
 
     # Dotted, not an arrow: on this page as on every other, a dotted line is a
     # fastener going into its hole and an arrow is a wooden part being brought
-    # into place.
+    # into place. The captions go through the same placer and the same
+    # occupancy field as every other page's - this page has its own geometry,
+    # not its own rules - so R5 holds here too: a badge may not land nearer a
+    # fastener it does not name than its own.
+    import layout
+    occ = layout.Occupancy()
+    occ.add_box(box, weight=RL.CAP_PANEL)
+    placed_marks = []
     for m in sorted(marks, key=lambda q: (-q["p3"][1], q["p3"][0])):
         p2 = view.xy(m["p3"])
         tail = (p2[0] - dx * arrow_len, p2[1] - dy * arrow_len)
         page.line(tail, p2, RL.GREY, RL.T.W_PHANTOM, dash=RL.DASH_INSERT)
         page.dot(p2, 6.5, colour=RL.INK)
-        RL.mark_label(page, tail, (dx, dy), m["letter"], m["per"], box)
+        owner = (m["name"], round(p2[0], 3), round(p2[1], 3))
+        occ.add_points([p2, tail], radius=RL.T.BADGE_R + 10,
+                       weight=RL.CAP_MARK, owner=owner, tag="mark")
+        placed_marks.append((tail, m, owner))
+    for tail, m, owner in placed_marks:
+        RL.mark_label(page, tail, (dx, dy), m["letter"], m["per"], occ, owner)
+    RL.assert_marks_own_element(page, occ)
 
     # The beslag themselves carry a badge each, beside the glyph: they ARE
     # items in the step's table, not just something screws go through.

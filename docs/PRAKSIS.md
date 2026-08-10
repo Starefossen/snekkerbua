@@ -198,6 +198,15 @@ papiret skal se kort ut, men den skal fortsatt se ut som en skrue.
 * **Sammenslåing går aldri på tvers av ledd.** På steg 3 møtes endebjelkens to
   6×90 og bæreklossens ene i det samme hjørnet, og «3×» der ville sendt
   byggeren til feil hull. To ledd, to merker.
+* **Et merke ligger nærmere sitt eget feste enn noe annet (R5).** Et badge
+  ved siden av feil skrue er ikke en trang tegning, det er en feil anvisning.
+  Regelen er en assert som måler blekket: merkene leses ut av `Page.record`
+  der de LANDET, og hvert av dem må ha sitt eget feste som nærmeste kropp.
+* **Innsettpanelet har ingen lederlinjer (R3).** Bokstaven knytter allerede
+  merket til raden i panelet, og den gjør det for alle merkene — ikke for de
+  fire som tilfeldigvis lå nærmest. Lupen er noe annet og blir stående: den
+  bærer virkelig strektegning, og den korte lederen sier hvilket sted som er
+  forstørret.
 * **Ingenting forsvinner.** Et merke som blir trengt bort gir antallet sitt til
   merket som trengte det bort, og `check_coverage` sammenligner totalen med
   stegets egen tabell. Og et merke som ble slått sammen slik at en DEL mistet
