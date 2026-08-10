@@ -324,7 +324,10 @@ def step_marks(G, st, letters, view):
         out.append(dict(p3=p3, p2=view.xy(p3), a2=view.xy(f["anchor"]),
                         dir3=d3, per=1, jid=f["jid"],
                         name=f["name"], letter=letters.get(f["name"]),
-                        area=area, spec=f))
+                        area=area, spec=f,
+                        # The body as the page would draw it sitting in its
+                        # hole - what R2 asks its question of.
+                        body=body_capsule(view, f)))
     return out
 
 
@@ -432,6 +435,112 @@ def _unit2(a, b):
     dx, dy = b[0] - a[0], b[1] - a[1]
     n = math.hypot(dx, dy)
     return (dx / n, dy / n, n) if n > 1e-9 else (0.0, 0.0, 0.0)
+
+
+# ---------------------------------------------------------------------------
+# R2 - WHAT COUNTS AS TWO BODIES IN ONE PLACE
+# ---------------------------------------------------------------------------
+# The old rule was a distance: two marks of the same kind within `gap` of each
+# other became one mark carrying "2x". That is a guess about legibility, and
+# it merged things that are simply NEAR - on step 1 the two A screws it left
+# behind are 50 mm apart and never touch.
+#
+# The honest question is not how far apart two fasteners are, it is whether
+# the two BODIES the page draws end up on top of each other. Two silhouettes
+# drawn over one another are a lie whatever the table says, and two that do
+# not touch are two things the reader can count. So:
+#
+#   OVERLAPPING drawn bodies  ->  one mark, carrying the count
+#   bodies that do not touch  ->  two marks, and if the drawing crowds them
+#                                 they separate ALONG THEIR OWN AXES, which is
+#                                 the one move an exploded fastener is allowed
+#
+# A drawn screw is a capsule - that is exactly what the silhouette is, a
+# rectangle with a point on one end - so "do these two overlap" is the
+# distance between their two axis segments against the sum of their half
+# widths. It is measured on the page, in the projection, which is where the
+# overlap either happens or does not.
+#
+# Merging never crosses a JOINT. PRAKSIS section 4 gives the case: on step 3
+# the end beam's two 6x90 and the bearing block's one land in the same corner,
+# and "3x" there would send the builder to the wrong holes. The flag is here
+# so that the rule is a line to turn rather than an assumption to find, but it
+# is OFF and the drawings are drawn with it off.
+MERGE_ACROSS_JOINTS = False
+# How many body-lengths back an exploded fastener will queue before it accepts
+# the overlap. Four is already a long way out on a page this size.
+QUEUE_MAX = 4
+
+
+def _seg_seg_dist(a0, a1, b0, b1):
+    """Distance between two segments on the page, 0 where they cross."""
+    def cross(o, p, q):
+        return ((p[0] - o[0]) * (q[1] - o[1])
+                - (p[1] - o[1]) * (q[0] - o[0]))
+
+    d1, d2 = cross(b0, b1, a0), cross(b0, b1, a1)
+    d3, d4 = cross(a0, a1, b0), cross(a0, a1, b1)
+    if ((d1 > 0) != (d2 > 0)) and ((d3 > 0) != (d4 > 0)):
+        return 0.0
+    return min(layout._seg_dist(a0, b0, b1), layout._seg_dist(a1, b0, b1),
+               layout._seg_dist(b0, a0, a1), layout._seg_dist(b1, a0, a1))
+
+
+def body_capsule(view, f, shift=(0.0, 0.0, 0.0), page_off=(0.0, 0.0)):
+    """The drawn body as (end, end, half-width) on the page.
+
+    For a screw that is what the silhouette IS. For a bracket - which has no
+    axis - it is the disc round its projected corners, which is close enough
+    for a question no bracket has ever had to answer: a merge only ever
+    considers two fasteners with the SAME NAME, and no bracket shares a name
+    with a screw.
+    """
+    anchor = tuple(a + s for a, s in zip(f["anchor"], shift))
+    ox, oy = page_off
+    if f["kind"] == "plate":
+        pts = plate_page_points(view, dict(f, anchor=anchor), page_off)
+        c = _centroid(pts)
+        r = max(math.hypot(p[0] - c[0], p[1] - c[1]) for p in pts)
+        return (c, c, r)
+    tip = tuple(a + d * f["length"]
+                for a, d in zip(anchor, f["direction"]))
+    p0 = (view.xy(anchor)[0] + ox, view.xy(anchor)[1] + oy)
+    p1 = (view.xy(tip)[0] + ox, view.xy(tip)[1] + oy)
+    r = f["d"] * SCREW_FATTEN * 0.95
+    if math.hypot(p1[0] - p0[0], p1[1] - p0[1]) < f["length"] * AXIS_ON_PAGE:
+        # Head on: the page draws a ringed dot, so that is the body.
+        return (p0, p0, T.RING_R)
+    return (p0, p1, r)
+
+
+def capsules_overlap(a, b, slack=0.0):
+    """Do two drawn bodies actually share paper?"""
+    return _seg_seg_dist(a[0], a[1], b[0], b[1]) < a[2] + b[2] + slack
+
+
+def mark_clusters(marks, slack):
+    """How many PLACES a set of marks is at, not how many marks it is.
+
+    Two screws 30 mm apart are two marks now - R2 only merges bodies that
+    actually overlap - but they are still one place on the page, and some
+    decisions are about places: whether a step has few enough locations to
+    point at that a magnifier of one of them is worth the paper. `slack` is
+    how far apart two bodies have to be to count as two places.
+    """
+    groups = []
+    for m in marks:
+        hit = [g for g in groups
+               if any(capsules_overlap(m["body"], q["body"], slack)
+                      for q in g)]
+        if not hit:
+            groups.append([m])
+            continue
+        first = hit[0]
+        first.append(m)
+        for g in hit[1:]:
+            first += g
+            groups.remove(g)
+    return groups
 
 
 # ---------------------------------------------------------------------------
@@ -714,6 +823,7 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
                 page.poly(pl, fill="#ffffff", stroke=INK, width=T.W_RULE)
         page.record.append(dict(kind="plate", owner=id(f), jid=f["jid"],
                                 name=f["name"],
+                                cap=body_capsule(view, f, shift, page_off),
                                 # without each ring's repeated closing point,
                                 # so the recorded centroid is the polygon's
                                 # and not a corner counted twice
@@ -759,7 +869,8 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
     body = (((outline[0][0] + outline[-1][0]) / 2,
              (outline[0][1] + outline[-1][1]) / 2), outline[3])
     page.record.append(dict(kind="screw", owner=id(f), jid=f["jid"],
-                            name=f["name"], points=list(outline), axis=body))
+                            name=f["name"], points=list(outline), axis=body,
+                            cap=body_capsule(view, f, shift, page_off)))
     return p0, p1, body
 
 
@@ -831,21 +942,29 @@ def _in_rect(p, rect, grow=0.0):
             and y - grow <= p[1] <= y + h + grow)
 
 
-def choose_marks(marks, gap, inset=None):
-    """Thin the marks to what a page can hold WITHOUT losing a single screw.
+def choose_marks(marks, inset=None):
+    """One mark per DRAWN ELEMENT, without losing a single screw. R2 and R4.
 
-    Two fasteners of the same kind driven at the same joint 30 mm apart are
-    one mark at this scale, and so are the two ends of a joint that the camera
-    happens to stack. It never merges across JOINTS, though: on step 3 the two
+    Two fasteners of the same kind whose bodies land on top of each other are
+    one mark, and it carries the count: the page can only draw one of the two
+    silhouettes, so pretending there are two badges' worth of separate things
+    there is a lie. Two whose bodies do NOT touch are two marks - even 40 mm
+    apart, even in the same corner - because the reader can see two screws and
+    has to be able to count them. Where that crowds the page the answer is not
+    a merge, it is the move an exploded fastener is allowed anyway: further
+    out along its own axis.
+
+    It never merges across JOINTS (see MERGE_ACROSS_JOINTS). On step 3 the two
     6x90 into the end beam and the one into the bearing block under it land in
     the same corner, and "3x" there would tell the builder to put three screws
     in one place. Two joints, two marks, 2x and 1x.
-    A mark that is crowded out does not disappear:
-    its count is handed to the mark that crowded it, and that mark says "4x"
-    instead of "2x". The same happens to a mark that lands under the inset
-    panel, which is opaque and would hide the very line work the arrow is
-    about. render_step() then checks the totals against the step's own
-    fastener table, so nothing can go missing silently.
+
+    A mark that is crowded out does not disappear: its count is handed to the
+    mark that crowded it, and that mark says "4x" instead of "2x". The same
+    happens to a mark that lands under the inset panel, which is opaque and
+    would hide the very line work the mark is about. render_step() then checks
+    the totals against the step's own fastener table, so nothing can go
+    missing silently.
     """
     kept = []
     deferred = []
@@ -853,15 +972,10 @@ def choose_marks(marks, gap, inset=None):
         if inset is not None and _in_rect(m["p2"], inset, 10.0):
             deferred.append(m)
             continue
-        # Same fastener, same spot on the page: one mark, and it counts them
-        # both. This crosses joint numbers on purpose - at the end of a ladder
-        # rung the 5x60 driven down into the block and the two driven through
-        # the block into the stile are three screws in one corner, and three
-        # badges there say nothing the number does not say better.
         same = [q for q in kept
                 if q["letter"] == m["letter"] and q["name"] == m["name"]
-                and q["jid"] == m["jid"]
-                and not _apart(q["p2"], m["p2"], gap)]
+                and (MERGE_ACROSS_JOINTS or q["jid"] == m["jid"])
+                and capsules_overlap(q["body"], m["body"])]
         if same:
             same[0]["per"] += m["per"]
             same[0]["absorbed"].append(m)
@@ -1403,6 +1517,12 @@ def mark_label(page, tail, direction, letter, count, occ=None, owner=None):
         bounds=(page.x0, page.y0, page.x1, page.y1),
         edge=T.BADGE_R + 8, edge_penalty=CAP_EDGE)
     b_at, t_at = spots(*centre)
+    if b_at is None and not txt:
+        # A single screw of the page's only kind carries neither a letter nor
+        # a count, so there is nothing to park: the drawn body IS the whole
+        # caption. Nothing is recorded either - Page.record is what went on
+        # the paper, and this went nowhere.
+        return None
     if b_at is not None:
         badge(page, b_at, letter)
         occ.add_point(b_at, radius=T.BADGE_R, weight=CAP_BADGE, owner=owner,
@@ -1416,6 +1536,25 @@ def mark_label(page, tail, direction, letter, count, occ=None, owner=None):
     page.record.append(dict(kind="label", owner=owner, letter=letter,
                             count=count, at=centre, tether=tail))
     return centre
+
+
+def assert_bodies_apart(page):
+    """R2, measured off the ink: no two drawn SCREWS share paper.
+
+    Two silhouettes on top of each other are one silhouette as far as the
+    reader is concerned, and a page that draws two there is claiming a count
+    it cannot show. Either the two overlap - and then they are one mark
+    carrying "2x", which is what choose_marks() decides - or they do not, and
+    then the page has to have got them apart along their own axes. There is
+    no third case, so this is an assert and not a preference.
+    """
+    caps = [r for r in page.record if r["kind"] == "screw" and r.get("cap")]
+    for i, a in enumerate(caps):
+        for b in caps[i + 1:]:
+            assert not capsules_overlap(a["cap"], b["cap"]), (
+                f"{a['jid']} {a['name']} og {b['jid']} {b['name']} er tegnet "
+                f"oppå hverandre - to kropper på samme papir er ett merke, "
+                f"ikke to. Se choose_marks() (R2) og køen langs egen akse")
 
 
 def assert_marks_own_element(page, occ):
@@ -1929,8 +2068,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # Both of these are measured on the SHORT side of the page, so a step
     # that gets a tall page of its own - the ladder - does not get arrows and
     # spacings scaled off a height it never uses across.
-    gap = min(page.w, page.h) * 0.034
-    keep = choose_marks(marks, gap, inset=box)
+    keep = choose_marks(marks, inset=box)
     keep = restore_orphans(keep, families,
                            {families[l] for l in st["labels"]
                             if l in families})
@@ -1992,6 +2130,13 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                 return floats.get(id(p), (0.0, 0.0))
         return (0.0, 0.0)
 
+    # R2's other half. Two bodies that do NOT overlap are two marks, so the
+    # page has to be able to show them as two - and the only move an exploded
+    # fastener has is further out along its OWN axis. Every body that has been
+    # drawn is kept here as the capsule it is, and the next one queues up
+    # behind its own hole until it is clear of all of them. Never sideways:
+    # a screw beside its own dotted line has stopped saying where it goes.
+    drawn_caps = []
     for m in sorted(keep, key=lambda q: (-q["p2"][1], q["p2"][0])):
         f = m["spec"]
         key = (round(m["p2"][0] / 6.0), round(m["p2"][1] / 6.0),
@@ -2034,7 +2179,18 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                                             hole[1] + poff[1]),
                                      (ux, uy), blen, blen + hover,
                                      hover, f["d"] * SCREW_FATTEN * 0.75)
-                    back = (out + (blen + hover) * stack) / nrm
+                    # ...and then out again, one body at a time, until it is
+                    # clear of every body already on the page. QUEUE_MAX is
+                    # where it gives up and overlaps rather than ending up in
+                    # the next county: at that point the two really are one
+                    # place and the drawing says so by drawing them there.
+                    for q in range(QUEUE_MAX):
+                        back = (out + (blen + hover) * q) / nrm
+                        shift = tuple(-c * back for c in f["direction"])
+                        cap = body_capsule(view, f, shift, poff)
+                        if not any(capsules_overlap(cap, c)
+                                   for c in drawn_caps):
+                            break
                     label_dir = (ux, uy)
                 else:
                     # Driven straight into the paper. There is no axis on the
@@ -2042,8 +2198,9 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                     # explosion could take, so the ringed dot - which is the
                     # convention for exactly this - stays where the hole is.
                     back = 0.0
+                    shift = (0.0, 0.0, 0.0)
                     label_dir = (0.0, -1.0)
-                shift = tuple(-c * back for c in f["direction"])
+            drawn_caps.append(body_capsule(view, f, shift, poff))
             head, tip, body = draw_fastener(page, view, m, style, shift, 0,
                                             poff)
             # Dotted, not dashed and not an arrow: this line is a fastener's
@@ -2092,6 +2249,8 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # is worse than no caption: it is a wrong one.
     for label_at, label_dir, letter, per, owner in captions:
         mark_label(page, label_at, label_dir, letter, per, occ, owner)
+    if style == "eksplodert":
+        assert_bodies_apart(page)
     assert_marks_own_element(page, occ)
 
     # R3 - NO LEADERS FROM THE INSET.
@@ -2104,7 +2263,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # A magnifier is different and stays: it carries real line work, and its
     # short leader says which spot has been blown up.
     if keep and not is_mattress and fasteners:
-        if len({(round(m["p2"][0]), round(m["p2"][1])) for m in keep}) <= 2:
+        if len(mark_clusters(keep, T.BADGE_R * 2)) <= 2:
             src = keep[0]["p2"]
             src_r = max(page.w, page.h) * 0.055
             dst_r = inset_w * 0.30

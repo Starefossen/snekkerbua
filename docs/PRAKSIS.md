@@ -193,11 +193,21 @@ papiret skal se kort ut, men den skal fortsatt se ut som en skrue.
   radene, så de kan ikke bli uenige.
 * **En stegside med bare én type festemiddel får ingen bokstaver.** Ikonet i
   tabellen er allerede hele svaret.
-* **`2×` betyr at ett merke står for to festemidler.** To skruer 30 mm fra
-  hverandre er ett merke på en side av denne størrelsen.
+* **Ett merke per tegnet kropp (R4), og `2×` bare når de to kroppene faktisk
+  ligger oppå hverandre (R2).** Spørsmålet er ikke hvor langt fra hverandre to
+  festemidler er — det er om de to SILHUETTENE siden tegner havner på samme
+  papir. To som gjør det kan bare tegnes én gang, og da bærer merket antallet.
+  To som ikke rører hverandre er to ting leseren kan telle, selv 30 mm fra
+  hverandre, og da er de to merker. Blir det trangt, er svaret ikke å slå dem
+  sammen, men det ene trekket et eksplodert festemiddel uansett har: lenger ut
+  langs sin egen akse. Begge deler er asserter som måler blekket
+  (`assert_bodies_apart`).
 * **Sammenslåing går aldri på tvers av ledd.** På steg 3 møtes endebjelkens to
   6×90 og bæreklossens ene i det samme hjørnet, og «3×» der ville sendt
-  byggeren til feil hull. To ledd, to merker.
+  byggeren til feil hull. To ledd, to merker. Regelen er ett flagg i
+  `render_lineart.py` (`MERGE_ACROSS_JOINTS`), så den er en linje å snu og
+  ikke en antakelse å lete etter — men den står av, og tegningene er tegnet
+  med den av.
 * **Et merke ligger nærmere sitt eget feste enn noe annet (R5).** Et badge
   ved siden av feil skrue er ikke en trang tegning, det er en feil anvisning.
   Regelen er en assert som måler blekket: merkene leses ut av `Page.record`
