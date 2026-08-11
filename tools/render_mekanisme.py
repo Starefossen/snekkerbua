@@ -20,11 +20,16 @@ crops 223 mm apart - the left crop is the rear seat (wood on wood, nothing
 between the panel and the rail), the right crop is the guide in its shaft with
 the measured clearance written on it.
 
-The lock sheet is a comparison, not a decision. None of the three is wired
-into the model: the shopping list has a TBD line and the manual says so. V3
-moved the point they all act at onto WOOD - the front cross batten's end face
-against the front bench rail's end face, across the side gap - and that pair
-of faces only exists in bed mode, which is the argument for the location.
+The lock sheet is HISTORY, not a shopping list. V4 took the decision and the
+answer is NO LOCK - an accepted deviation, docs/ASSEMBLY.md vedlegg B avvik 4 -
+so none of the three is wired into the model and none of them is on the
+beslagliste. The sheet is kept because the WOOD it is drawn on is unchanged and
+asserted: V3 moved the point all three act at onto the front cross batten's end
+face against the front bench rail's end face, across the side gap, and that pair
+of faces only exists in bed mode. Anyone who later wants a lock can fit any of
+the three without touching a single piece of timber, and this is the page that
+says so. It is not in the build gate; it is made by hand with
+`mise run mekanisme`.
 """
 
 import math
@@ -214,8 +219,9 @@ def lock_sheet(RL, G, path):
               f"og vangen er ikke der, så låsen kan ikke stå på i feil "
               f"stilling — det følger av geometrien.", RL.T.BADGE_R * 0.8)
     page.text((pad, h - pad * 2.2),
-              "Ingen av dem er valgt — modellen har en TBD-linje i "
-              "beslaglista.", RL.T.BADGE_R * 0.8)
+              "INGEN av dem monteres. Låsen er valgt bort (akseptert avvik "
+              "4); dette arket er ettermonteringsgrunnlaget, ikke en "
+              "bestilling.", RL.T.BADGE_R * 0.8)
     for i, (title, body) in enumerate(LOCKS):
         box = (pad + i * (cell + pad), box_y, cell, cell)
 

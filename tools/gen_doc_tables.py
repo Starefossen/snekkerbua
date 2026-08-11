@@ -250,8 +250,35 @@ def build_steps(G):
                   "Etterpå kommer du ikke til med drillen på de flatene som "
                   "vender mot vegg.",
             do=[
-                "Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring.",
+                "Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring "
+                  "— med to navngitte unntak, og begge står i kapplista: de "
+                  "to kilelektene under platens forkant, og vinkelklossen.",
+                "Skråkapp de to kilelektene. De er 48×73 × 116 mm og skal "
+                  "sages ned i ett rett snitt fra full høyde i den ene enden "
+                  f"til {G.NOSE_TIP_H} mm i den andre ("
+                  + f"{G.NOSE_TAPER_DEG:.1f}".replace(".", ",")
+                  + "°). Håndsag eller båndsag; "
+                  "overkanten — den som skal limes mot plata — skal stå "
+                  "urørt og plan.",
+                "Kapp vinkelklossen, borjiggen til de to skråskruene "
+                  "(J8-B og J10). Én bit 48×73 av restene, "
+                  f"{G.TOE_JIG_LEN} mm lang, med en rampe i hver ende: "
+                  f"{G.TOE_JIG_ANGLES['J8-B']:g}° i den ene (J8-B) og "
+                  f"{G.TOE_JIG_ANGLES['J10']:g}° i den andre (J10). "
+                  "Kappsag med bladet vippet. Den skal ikke bygges inn i "
+                  "sengen — den er verktøy.",
                 "Merk hver del med blyant på en flate som blir skjult.",
+                "**Bryt alle kanter et barn kan nå, nå — mens delene er "
+                  "løse.** Kravet er brutt kant, ikke en bestemt metode: "
+                  "45° fas eller avrunding, du velger. Fres med V-spor eller "
+                  "avrundingsfres om du har fres; ellers gjør en blokkhøvel "
+                  "eller en pussekloss med 120-korn nøyaktig samme nytte. "
+                  "Viktigst: plateenhetens underside — begge styrelektenes "
+                  "nedre kanter og begge kilene — for det er der et kne "
+                  "møter treet når noen sitter ved bordet. Deretter platens "
+                  "fire egne kanter, og så stolper, rekkverksbord, trinn og "
+                  "stigevangenes kanter. Modellen tegner alle deler skarpe; "
+                  "kantbrytningen er en instruks og flytter ingen mål.",
                 "Bor alle gjennomgående hull i stolper, vanger, endebjelker "
                   "og benkevanger — diameter etter forboringskolonnen i "
                   "beslaglista. Bor gjennom begge deler samtidig, med delene "
@@ -299,6 +326,13 @@ def build_steps(G):
                   "klossene, og fest den etter J8-B. Vangen er kappet "
                   "nøyaktig så den fyller mellom de to stolpene — den kan "
                   "ikke tres inn senere.",
+                "J8-B er skråskruer, og de skal ha SETE først: klem "
+                  "vinkelklossen fra steg 0 mot vangens forside med "
+                  f"{G.TOE_JIG_ANGLES['J8-B']:g}°-rampa over merket, bor "
+                  f"⌀{G.TOE_SEAT_D:g} forstner "
+                  f"{G.TOE_SEAT_DEPTH:g} mm ned LANGS rampa, og forbor "
+                  "videre i samme spor. Da ligger skruehodet flatt i "
+                  "bunnen av lommen og helt under treet.",
                 "Sett vinkelbeslagene til bordbærelekta på stolpenes "
                   "innsider, legg lekta på høykant mellom stolpene og fest "
                   "etter J12.",
@@ -421,7 +455,12 @@ def build_steps(G):
                   "ingen utstikk forbi foten.",
                 "Sett de to bakre stubbeføttene under den bakre benkevangen, "
                   "rett under de samme punktene.",
-                "Fest alle fire føtter etter J10.",
+                "Fest alle fire føtter etter J10. Den ene 5×70 per fot er "
+                  "en skråskrue og skal ha SETE først — vinkelklossen fra "
+                  f"steg 0, {G.TOE_JIG_ANGLES['J10']:g}°-rampa mot fotens "
+                  f"innerside, ⌀{G.TOE_SEAT_D:g} forstner "
+                  f"{G.TOE_SEAT_DEPTH:g} mm ned langs rampa, så forboret i "
+                  "samme spor.",
             ],
             check=[
                 "Ingenting skal krysse gulvet mellom de to benkene.",
@@ -542,18 +581,30 @@ def build_steps(G):
                   "plassen selv. Det er ikke ett beslag i denne mekanismen, "
                   "og det skal ikke være én skrue synlig oppå platen.",
             do=[
-                "Bor hullene i lektene FØR noe limes: ⌀12 kontrabor 46 mm "
-                  "opp i lektas underside, og ⌀3,5 videre gjennom resten. "
-                  "Da står skruehodet 46 mm inne i lekta og skruen tar "
-                  "13 mm i den 18 mm tykke platen.",
+                "Bor hullene i lektene FØR noe limes. Regelen er den samme "
+                  "for alle fire delene, og den er lettest å huske slik: "
+                  f"bor ⌀12 opp i undersiden TIL DET STÅR "
+                  f"{G.PANEL_UPSCREW_PASS} mm igjen opp til plata, og ⌀3,5 "
+                  "videre gjennom de siste "
+                  f"{G.PANEL_UPSCREW_PASS} mm. På de to lange "
+                  f"styrelektene, som er {G.BATTEN_H} mm hele veien, blir "
+                  f"det {G.PANEL_UPSCREW_CBORE} mm kontrabor. På de to "
+                  "skråkappede kilene blir det dypest ved roten og null ved "
+                  "tuppen — tuppen ER "
+                  f"{G.PANEL_UPSCREW_PASS} mm, så der ligger hodet i flukt "
+                  "med kilens egen underside. Skruen tar "
+                  f"{G.PANEL_UPSCREW_BITE} mm i den {G.PANEL_T} mm tykke "
+                  f"platen uansett, med {G.PANEL_UPSCREW_COVER} mm plate "
+                  "igjen over spissen.",
                 "Legg platen med undersiden opp. Merk av de to lange "
                   "avstivningslektene 116 mm inn fra hver sidekant — det er "
                   "målet som gjør at de treffer utsiden av trinnenden.",
                 "Lim (D3) hele lektas overkant, legg den på plass og skru "
                   "opp fra undersiden (J13a). Skruene er tvinger: de "
                   "trekker limfugen sammen og blir sittende.",
-                "Samme sak for de to korte tverrlektene, i flukt med "
-                  "platens forkant og med enden mot den lange lekta (J13b). "
+                "Samme sak for de to kilelektene, i flukt med platens "
+                  "forkant og med den HØYE enden mot den lange lekta "
+                  "(J13b) — den skråkappede tuppen peker ut mot platekanten. "
                   "De bærer hjørnet trinnet ikke rekker fram til.",
                 "Ingenting går gjennom platens overside. Har du et hull "
                   "der, har du boret feil vei.",
@@ -711,7 +762,7 @@ NO_NAMES = {
     "Table ledger, back": "Bordbærelekt, bak",
     "Movable panel": "Løs plate",
     "Panel stiffener batten (M4)": "Avstivningslekt under plate",
-    "Panel front cross batten (M5)": "Tverrlekt under platens forkant",
+    "Panel front cross batten (M5)": "Kilelekt under platens forkant (skråkappet)",
 }
 
 
@@ -883,7 +934,8 @@ def write(path, text):
 def emit_kappliste(G, out_dir):
     rows = cut_table(G)
     L = [HEAD, "# Kappliste\n\n",
-         "Alle mål i mm. Alle kutt er 90°. Posisjonen er delens plass i "
+         "Alle mål i mm. Alle kutt er 90° på to nær — se merknaden "
+         "under tabellen. Posisjonen er delens plass i "
          f"modellen: X langs veggen (0 = venstre vegg, {G.WALL_SPAN} = høyre "
          f"vegg), Y i dybden ({_fmt(G.WALL_Y)} = bakveggen), Z opp fra "
          "gulvet.\n\n",
@@ -899,6 +951,33 @@ def emit_kappliste(G, out_dir):
              "posisjoner langs den aksen; kolonnen viser da hele området de "
              "dekker. Nøyaktige posisjoner står i "
              "[nøkkelmål](nokkelmal.md).\n\n")
+    # V4: THE TWO CUTS THAT ARE NOT 90 DEGREES, named where the "alle kutt er
+    # 90°" line is, so the two do not have to be reconciled by the reader.
+    L.append("**Ett unntak fra «alle kutt er 90°»:** de to kilelektene under "
+             "platens forkant. De sages i ett rett snitt fra full "
+             f"{G.NOSE_ROOT_H} mm ved roten — enden som støter mot "
+             f"styrelekta — ned til {G.NOSE_TIP_H} mm ved tuppen på platens "
+             "ytterkant, altså "
+             + f"{G.NOSE_TAPER_DEG:.1f}".replace(".", ",")
+             + "° på langs. Overkanten, "
+             "den som limes mot plata, blir stående urørt i hele lengden. "
+             "Håndsag eller båndsag; se steg 0 og J13b.\n\n")
+
+    # SHOP AIDS: cut, but not built in. They are not parts, so they are not in
+    # the count above and not in parts.tsv - and they are here rather than in
+    # a note somewhere because a jig you were never told to make is a jig you
+    # do not have when you need it.
+    L.append("## Hjelpedeler — kappes, men bygges ikke inn\n\n")
+    L.append("| Del | Dim. | Lengde | Ant. | Kapp | Brukes til |\n")
+    L.append("|---|---|---:|---:|---|---|\n")
+    for aid in G.SHOP_AIDS:
+        L.append(f"| {aid['name']} | "
+                 f"{aid['section'].replace('x', '×')} | "
+                 f"**{_fmt(aid['length'])}** | {aid['qty']} | "
+                 f"{aid['cut']} | {aid['use']} |\n")
+    L.append("\nDisse er ikke med i de "
+             f"{total} delene over og ikke i innkjøpslista — de kappes av "
+             "restene i steg 0.\n\n")
 
     by_section = {}
     for no_name, section, length, qty, _sp, _en in rows:
@@ -968,6 +1047,22 @@ def emit_innkjopsliste(G, out_dir):
             L.append(f"| {i} | {_fmt(b['buy'])} | {txt} | "
                      f"{_fmt(b['rest'])} |\n")
         L.append("\n")
+        # SHOP AIDS COME OFF THE OFFCUT PILE, and the manual says so in two
+        # places (kappliste, steg 0). That claim is only true if a board of
+        # the right profile actually has the rest to give, so it is checked
+        # here rather than hoped for.
+        for aid in G.SHOP_AIDS:
+            if aid["section"] != e["section"].replace("×", "x"):
+                continue
+            best = max(bb["rest"] for bb in e["boards"])
+            assert best >= aid["length"], (
+                f"'{aid['name']}' is {aid['length']} mm of "
+                f"{aid['section']} and the longest offcut on that profile is "
+                f"{best} mm - the manual says it comes off the rest pile and "
+                f"it does not")
+            L.append(f"Vinkelklossen ({_fmt(aid['length'])} mm, se "
+                     f"[kapplista](kappliste.md)) kappes av resten over — den "
+                     f"lengste er {_fmt(best)} mm.\n\n")
 
     L.append("## Merknader fra butikken\n\n")
     board = G.sec(G.BOARD36_T, G.BOARD36_W).replace("x", "×")
@@ -1700,10 +1795,23 @@ def emit_skrueretninger(G, out_dir, idx):
                 _t = (f["through"].extents[_ax][1]
                       - f["through"].extents[_ax][0])
                 _bite = f["length"] - (_t - dr["counterbore"])
-                what += (f" — hodet står {dr['counterbore']:g} mm inne i "
-                         f"{e_no}, i bunnen av kontraboret, så skruen tar "
-                         f"{_bite:g} mm i {t_no} og ingenting går gjennom "
-                         f"den andre siden")
+                if getattr(f["through"], "tapered", None):
+                    # The wedge: one rule, a different depth at every hole.
+                    what += (f" — hodet står {_t - dr['counterbore']:g} mm "
+                             f"under plata i alle tre hullene, så "
+                             f"kontraboret grunner ut mot den skråkappede "
+                             f"tuppen (dypest ved roten, null ved tuppen) og "
+                             f"skruen tar {_bite:g} mm i {t_no} uansett")
+                else:
+                    what += (f" — hodet står {dr['counterbore']:g} mm inne i "
+                             f"{e_no}, i bunnen av kontraboret, så skruen "
+                             f"tar {_bite:g} mm i {t_no} og ingenting går "
+                             f"gjennom den andre siden")
+            if f.get("seat"):
+                what += (f" — skruen står i et flatbunnet sete, "
+                         f"⌀{f['seat_d']:g} forstner {f['seat']:g} mm ned "
+                         f"langs skruens egen akse (vinkelklossen), så hodet "
+                         f"ligger helt under flaten")
         if mirrored:
             what += " (speilvendt i den andre enden)"
         basis = BASIS[status]
@@ -1756,37 +1864,32 @@ def emit_beslagliste(out_dir, steps):
                  f"{j['drill']} | {j['side']} |\n")
     L.append("\nForklaringen til hvert ledd står i "
              "[ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene).\n")
-    # V2: THE ONE OPEN LINE. The panel is a drop-in unit and nothing holds it
-    # DOWN - that is deliberate, and it is the only decision this manual
-    # leaves to the builder. It is written here, in the shopping list, because
-    # that is where an unbought part belongs.
-    L.append("\n## Lås i sengestilling — IKKE VALGT\n\n"
-             "Platen løftes rett opp i begge stillinger. Ingenting holder den "
-             "ned, og i sengestilling er det et valg som må tas før sengen "
-             "brukes. Dette er den ENESTE posten med stål igjen i "
-             "platemekanismen — de fire vinkelbeslagene er ute, lektene gjør "
-             "jobben deres.\n\n"
-             "Alle tre virker på det samme stedet: **tverrlektas endeved mot "
-             "enden av den fremre benkevangen**, tvers over de "
-             f"{_MODEL.LOCK_GAP} mm i sideklaringen. De to flatene ligger side om "
-             "side i sengestilling og i samme høydebånd; i bordstilling står "
-             "tverrlekta 150 mm høyere og har ingenting å ta i. Låsen kan "
-             "altså ikke stå på i feil stilling — det følger av geometrien, "
-             "ikke av en instruks.\n\n"
-             "| Valg | Hva | Verktøy | EN 747 |\n|---|---|---|---|\n"
-             "| **i** | flattstål 60×24×3 over spalten, 2× treskrue 5×40 i "
-             "hver ende | ja | konform grunnlinje (4.1.1: omstilling skal "
-             "kreve verktøy) |\n"
-             "| **ii** | fingerskrue M6 gjennom samme flattstål, i "
-             "gjengeinnsats i vangeenden | nei | grensetilfelle — "
-             "verktøyfritt betyr at et barn òg kan gjøre det |\n"
-             "| **iii** | oversenterlås, hus på vangeenden og bøyle i "
-             "tverrlekta | nei | samme innvending som ii, men trekker "
-             "platen ned og fjerner klapringen |\n\n"
-             "Tegnet side ved side i "
-             "[docs/preview/laasvalg.png](../preview/laasvalg.png) — "
-             "gjennomgangsmateriell, lages med `mise run mekanisme`. "
-             "Antallet er 2 uansett valg — ett i hvert fremre hjørne.\n")
+    # THE LINE THAT USED TO BE OPEN, AND IS NOT ANY MORE. The panel is a
+    # drop-in unit and nothing holds it DOWN. Until this round that was the
+    # one decision the manual left to the builder, and it sat here - in the
+    # shopping list - as three costed options and a TBD. The decision is
+    # taken now: NO LOCK, accepted deviation, and the reasoning is in
+    # ASSEMBLY vedlegg B. So there is no unbought part left to list, and the
+    # beslagliste says so instead of asking.
+    L.append("\n## Lås i sengestilling — ingen, og det er et valg\n\n"
+             "**Det står ingen lås i denne lista, og det er ikke en glipp.** "
+             "Platen løftes rett opp i begge stillinger, og etter denne "
+             "runden er det ingen ståldel igjen i platemekanismen i det hele "
+             "tatt — verken beslag eller lås.\n\n"
+             "Begrunnelsen står i sin helhet i "
+             "[ASSEMBLY, vedlegg B, avvik 4](../ASSEMBLY.md#vedlegg-b--aksepterte-avvik). "
+             "Kort: madrassen ligger *oppå* platen og må fjernes før platen "
+             "kan løftes, dette er underetasjen med ~26 cm fallhøyde, og "
+             "platen veier ~9 kg.\n\n"
+             "Trevirket for en ettermontert lås står likevel der det sto: "
+             "**kilelektas endeved mot enden av den fremre benkevangen**, "
+             f"tvers over de {_MODEL.LOCK_GAP} mm i sideklaringen, i samme "
+             "høydebånd i sengestilling og 223 mm fra hverandre i "
+             "bordstilling. Geometrien er målt og asserted i modellen, så "
+             "alle tre løsningene i "
+             "[docs/preview/laasvalg.png](../preview/laasvalg.png) kan "
+             "monteres senere uten at noe tre må endres. Det arket er "
+             "historikk nå, ikke en bestilling.\n")
     write(os.path.join(out_dir, "beslagliste.md"), "".join(L))
 
 

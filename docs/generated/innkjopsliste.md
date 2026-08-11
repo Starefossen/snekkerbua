@@ -49,8 +49,10 @@ Kjøpt 9,00 m, brukt 8,63 m, svinn 4 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 320 (Rungetrinn) + 1 × 116 (Tverrlekt under platens forkant) | 10 |
-| 2 | 4200 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 (Benkevange, front (bit)) + 3 × 320 (Rungetrinn) + 4 × 186 (Stubbefot) + 1 × 116 (Tverrlekt under platens forkant) | 306 |
+| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 116 (Kilelekt under platens forkant (skråkappet)) + 1 × 320 (Rungetrinn) | 10 |
+| 2 | 4200 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 (Benkevange, front (bit)) + 1 × 116 (Kilelekt under platens forkant (skråkappet)) + 3 × 320 (Rungetrinn) + 4 × 186 (Stubbefot) | 306 |
+
+Vinkelklossen (160 mm, se [kapplista](kappliste.md)) kappes av resten over — den lengste er 306 mm.
 
 ### 48×98
 

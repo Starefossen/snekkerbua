@@ -90,7 +90,7 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Benkevange, front (bit) | 48×73 | 642 | **2** |
 | Rungetrinn | 48×73 | 320 | **4** |
 | Stubbefot | 48×73 | 186 | **4** |
-| Tverrlekt under platens forkant | 48×73 | 116 | **2** |
+| Kilelekt under platens forkant (skråkappet) | 48×73 | 116 | **2** |
 | Sidevange, øvre | 48×98 | 1984 | **2** |
 | Endebjelke | 48×98 | 836 | **2** |
 
@@ -348,8 +348,8 @@ Ledd **J7** → [beslagliste](generated/beslagliste.md)
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **2×** | Avstivningslekt under plate | 48×73 | 750 |
+| **2×** | Kilelekt under platens forkant (skråkappet) | 48×73 | 116 |
 | **1×** | Løs plate | 18 mm plate, 652 bred | 798 |
-| **2×** | Tverrlekt under platens forkant | 48×73 | 116 |
 
 | | |
 |:---:|---|

@@ -501,8 +501,9 @@ V2  THE PANEL BECOMES A DROP-IN ASSEMBLY. Four shop angle brackets, on the
         point, and if it has to become a requirement the answer is a brace
         from the ladder foot to the frame - not a bracket on the panel.
       * UPLIFT IS NOT BLOCKED, ON PURPOSE. The panel is meant to lift out.
-        The bed-mode lock is a separate decision, presented as three options
-        in docs/preview/laasvalg.png, and none of them is wired in here.
+        The bed-mode lock was a separate decision, presented as three options
+        in docs/preview/laasvalg.png; V4 takes it, and the answer is NONE -
+        an accepted deviation, vedlegg B avvik 4.
 V3  THE MECHANISM BECOMES WOOD, AND THE TABLE TOP BECOMES UNBROKEN. V2 had
     got the panel down to four shop brackets and no bespoke steel. V3 asks the
     next question - what are the brackets for that a batten could not do - and
@@ -515,8 +516,8 @@ V3  THE MECHANISM BECOMES WOOD, AND THE TABLE TOP BECOMES UNBROKEN. V2 had
         bracket flange used to stand in - so X+, X- and rotation about Z are
         taken by 48 x 35 mm of wood against end grain instead of 2 mm of
         galvanised plate, in BOTH modes, because the rung ends are at the same
-        X at both heights. All four angle brackets leave the beslagliste; the
-        only steel the panel still asks for is the bed-mode lock, still TBD.
+        X at both heights. All four angle brackets leave the beslagliste, and
+        with V4's lock decision (none) the panel asks for no steel at all.
       * WHAT THE MOVE COSTS, SAID OUT LOUD. Outboard of the rung end there is
         nothing under the batten's front end, so it hands its reaction into
         the sheet and the sheet carries it 26 mm across into the rung: ~0.69
@@ -1664,8 +1665,9 @@ PANEL_LEN = PANEL_Y1 - PANEL_Y0                # 798  [was 800]
 #                           LOCK goes: a screw straight down through it.
 #
 # WHAT IS NOT BLOCKED, AND ON PURPOSE: uplift. The panel is meant to be lifted
-# out, in both modes, straight up. The bed-mode lock is the answer to that and
-# it is a decision, not a detail - see docs/preview/laasvalg.png.
+# out, in both modes, straight up. A bed-mode lock was the candidate answer;
+# V4 decides against fitting one (accepted deviation, vedlegg B avvik 4) and
+# keeps the wood-to-wood geometry as the retrofit point.
 PANEL_UNDER_BED = BENCH_RAIL_TOP               # 259, rests on the rails/rung 1
 PANEL_TOP_BED = PANEL_UNDER_BED + PANEL_T      # 277
 PANEL_UNDER_TABLE = RUNG_TOPS[1]               # 482, rests on rung 2/the ledger
@@ -1850,13 +1852,97 @@ PANEL_UPSCREW_BITE = PANEL_UPSCREW_LEN - PANEL_UPSCREW_PASS   # 13, into the ply
 PANEL_UPSCREW_COVER = PANEL_T - PANEL_UPSCREW_BITE            # 5, ply over it
 
 # ---------------------------------------------------------------------------
-# V3: WHERE THE BED-MODE LOCK GOES - STILL THE ONE THING THAT IS NOT CHOSEN
+# V4/M5: THE FRONT WINGS BECOME WEDGES - AND WHY NOT PLYWOOD DOUBLERS
 # ---------------------------------------------------------------------------
-# The panel lifts straight out, on purpose, and in BED mode that is a decision
-# somebody has to make before a child sleeps on it. Until V3 the lock point was
-# a hole in the rear angle bracket's flange; there is no bracket now, so the
-# point moves onto wood - and it moves to the one pair of faces in this bed
-# that are side by side in bed mode and nowhere near each other in table mode:
+# THE COMPLAINT, and it is a fair one: the MECHANISM is the two guide battens.
+# The two front cross battens are not mechanism at all, they are there for one
+# load case - a knee on the free corner of the sheet - and at utilisation 0.16
+# they are three times the wood that case needs. Under a table you look at from
+# a sofa, two 73 mm blocks hanging under the front corners are the only clutter
+# left. Three ways out were costed and the numbers are here, because the one
+# that lost lost on a number and not on taste.
+#
+#   (c) 18 mm PLYWOOD CORNER DOUBLERS - REJECTED, and this is the one that
+#       looked best. A patch of the panel's own sheet glued under each front
+#       corner: no protrusion at all, invisible, and the insertion sweep does
+#       not even notice it. The bending case is the free-corner cantilever
+#       strip, sigma = 6P/t^2 with the effective width cancelling:
+#         FULL composite action (36 mm laminate):  6*1000/36^2 = 4.63 MPa,
+#           utilisation 0.67 on the ~6.95 MPa the bare-panel row is calibrated
+#           on. Passes.
+#         ZERO composite action (two 18 mm plies sharing the load, each on its
+#           own): 6*500/18^2 = 9.26 MPa, utilisation 1.33. FAILS.
+#       So the whole detail hangs on ONE glue line, and that glue line sits at
+#       the NEUTRAL AXIS of the laminate, which is where longitudinal shear is
+#       greatest: tau = 1.5V/(b*h) = 1.5*1000/(116*36) = 0.36 MPa. The glue
+#       itself is fine (D3 is several MPa) and even plywood's rolling shear
+#       (~0.6-0.8 MPa design) has margin. The glue line is not what kills it.
+#       WHAT KILLS IT IS THAT NOTHING CAN BACK IT UP. Every other glued joint
+#       in this panel has screws as clamps; here there is no screw that fits.
+#       An 18 mm doubler under an 18 mm sheet is 36 mm of material, and the
+#       shortest screw in this bed is a 5x40 - 4 mm of it would come out of the
+#       panel's TOP face, the one face that must never be broken - while a
+#       counterbore cannot be sunk in 18 mm and still leave meat. So the
+#       doubler would be glue-only, clamped, with a no-glue bound that is a
+#       FAILURE. A detail whose fallback is 1.33 is not a detail this bed
+#       carries under a child's knee.
+#   (b) SLIMMER WINGS, 48x48 - workable, not chosen. Utilisation goes
+#       0.16 * (73/48)^2 = 0.37, which is fine, but 48x48 is a profile this bed
+#       spent two revisions (W3, U5) getting RID of, and re-opening it for two
+#       116 mm pieces is exactly the orphan-profile trap U5 closed. Ripping
+#       48x73 down to 48x48 needs a rip cut, and every cut in this bed is 90
+#       degrees on a crosscut saw.
+#   (a) THE WEDGE - CHOSEN. Same 48x73 stock, same 116 mm, same two screws'
+#       worth of work, one extra saw cut: the underside is planed off in a
+#       single straight line from FULL 73 mm at the root, where it butts the
+#       guide batten, down to PANEL_UPSCREW_PASS at the tip on the panel's own
+#       edge. The low outer corner - the whole of what you see from the sofa -
+#       is gone, and what is left follows the moment diagram: a cantilever off
+#       the guide batten has its moment at the ROOT and nothing at the TIP.
+#
+# WHY THE TIP IS 27 AND NOT A NUMBER SOMEBODY LIKED. It is the up-screw. Every
+# J13 screw's head sits PANEL_UPSCREW_PASS below the panel's underside - that
+# is what the 46 mm counterbore in a 73 mm batten means - so the wing has to be
+# at least that deep wherever a screw goes through it. At exactly 27 the
+# counterbore has vanished and the head is flush with the wing's own underside;
+# below 27 the screw would have nothing to sit in. So the tip is the screw
+# seat, and the counterbore rule is unchanged and now reads the same for all
+# four pieces: bore up until PANEL_UPSCREW_PASS of wood is left.
+#
+# THE CRITICAL SECTION IS NOT THE ROOT. With h(x) = tip + (root-tip)*x/L
+# measured from the tip, sigma(x) = 6*P*x/(b*h(x)^2) peaks where h = 2*tip,
+# i.e. at x = tip*L/(root-tip) = 27*116/46 = 68 mm from the tip - INSIDE the
+# piece, not at the root. There h = 54 mm and sigma = 2.92 MPa against
+# f_m,d = 16.6 for C24: utilisation 0.18, against 0.16 at the root (2.72 MPa)
+# and 0.16 for the old full-depth block. The wedge costs two utilisation points
+# and gives back 46 mm of visible depth at the corner. Shear is the other end
+# of the piece: at the 27 mm tip, tau = 1.5*1000/(48*27) = 1.16 MPa against
+# f_v,d = 2.77, utilisation 0.42 - the highest number on the part, and it is
+# the number that says do not take the tip any thinner.
+NOSE_TIP_H = PANEL_UPSCREW_PASS                # 27, the up-screw's own seat
+NOSE_ROOT_H = BATTEN_H                         # 73, full depth at the root
+NOSE_TAPER_DEG = math.degrees(math.atan2(NOSE_ROOT_H - NOSE_TIP_H, NOSE_LEN))
+# where the bending peaks along the taper, measured from the TIP
+NOSE_CRIT_X = NOSE_TIP_H * NOSE_LEN / (NOSE_ROOT_H - NOSE_TIP_H)      # 68.1
+NOSE_CRIT_H = NOSE_TIP_H * 2                                          # 54
+
+# ---------------------------------------------------------------------------
+# V4: WHERE A BED-MODE LOCK WOULD GO - AND WHY THERE IS NOT ONE
+# ---------------------------------------------------------------------------
+# THE DECISION, TAKEN: there is NO lock. It is an accepted deviation from
+# EN 747 4.1.1 and the reasoning is written out in docs/ASSEMBLY.md, vedlegg B,
+# avvik 4 - in one line: the mattress lies ON the panel and has to come off
+# before the panel can lift, this is the LOWER bunk with a ~26 cm fall to the
+# floor, and the panel is a ~9 kg unit whose guides take every lateral degree
+# of freedom.
+#
+# WHAT STAYS HERE IS THE WOOD. The geometry below is kept as a measured,
+# asserted RETROFIT POINT, because all three options drawn in
+# docs/preview/laasvalg.png act across exactly these two faces and none of them
+# needs a single millimetre of timber changed: fit one later and the only thing
+# that happens is that a fastener appears. The faces are the one pair in this
+# bed that are side by side in bed mode and nowhere near each other in table
+# mode:
 #
 #   the FRONT CROSS BATTEN's outboard end face   X 669 / 1321, Y 702..750
 #   the FRONT BENCH RAIL's end face              X 645 / 1345, Y 704..752
@@ -1867,8 +1953,8 @@ PANEL_UPSCREW_COVER = PANEL_T - PANEL_UPSCREW_BITE            # 5, ply over it
 # lock fitted here is a BED-MODE lock by geometry and not by instruction: it
 # cannot be left engaged in the wrong position, because in the wrong position
 # it has nothing to engage. All three options in docs/preview/laasvalg.png act
-# across that 24 mm, and none of them is chosen - the beslagliste carries the
-# open line.
+# across that 24 mm; the geometry of all three stays valid whether or not one
+# is ever fitted, which is exactly why the numbers below are still asserted.
 LOCK_GAP = PANEL_SIDE_GAP                      # 24, the side gap itself
 LOCK_FACE_Y = (NOSE_Y0, NOSE_Y1)               # 702..750, the cross batten
 
@@ -1945,6 +2031,64 @@ def block(x0, y0, z0, dx, dy, dz, label, group, cut=None):
     b.color = GROUP_COLORS[group]
     b.group = group
     b.extents = ((x0, x0 + dx), (y0, y0 + dy), (z0, z0 + dz))
+    if cut is not None:
+        name, section, length = cut
+        key = (name, section, round(length))
+        CUT_LIST[key] = CUT_LIST.get(key, 0) + 1
+    return b
+
+
+# ---------------------------------------------------------------------------
+# THE ONE PART THAT IS NOT A BOX
+# ---------------------------------------------------------------------------
+# Every piece of wood in this bed is an axis-aligned box, and a great deal of
+# the machinery leans on it: contacts() finds joints by looking for shared
+# faces with area behind them, patch_window() cuts the fastener rows out of
+# those faces, and every clearance, sweep and overlap assert is arithmetic on
+# `extents`. V4 introduces exactly ONE exception - the tapered front wing
+# (M5) - and it is safe for a reason that has to be stated rather than hoped
+# for:
+#
+#   * THE MATING FACES ARE STILL RECTANGLES. The wing meets the panel over its
+#     whole top face (116 x 48, unchanged) and meets nothing else. The face
+#     that got cut is the UNDERSIDE, which touches nothing in either mode.
+#     So contacts(), patch_window() and bearing_area() see exactly what they
+#     saw before.
+#   * THE BOUNDING BOX IS UNCHANGED, so every clearance and sweep assert that
+#     reads `extents` is still true and is now CONSERVATIVE: the real solid is
+#     strictly inside the box those asserts clear.
+#   * WHAT IS NOT CONSERVATIVE is anything that reads VOLUME or draws the
+#     silhouette, and those two read the solid, not the box.
+def wedge(x0, y0, z0, dx, dy, dz, tip_dz, tip_at_x0, label, group, cut=None):
+    """A box with one long edge planed away: full `dz` at one end in X,
+    `tip_dz` at the other, TOP FACE FLAT the whole way.
+
+    `tip_at_x0` says which end is the thin one. The cut is a single straight
+    saw line down the length of the piece - one pass, one wedge - which is why
+    the shop instruction is "skråkapp", not "profile it".
+    """
+    b = Box(dx, dy, dz).moved(Location((x0 + dx / 2, y0 + dy / 2, z0 + dz / 2)))
+    # The plane the saw runs in: through the LOW corner at the fat end and the
+    # underside corner at the thin end. Built as a big box whose top face is
+    # that plane, turned about Y and hung off the fat end's low corner, then
+    # subtracted - so the geometry comes out of the same two numbers the cut
+    # list prints and cannot drift from them.
+    rise, run = dz - tip_dz, dx
+    ang = math.degrees(math.atan2(rise, run))
+    pivot_x = x0 if not tip_at_x0 else x0 + dx
+    big = max(dx, dz) * 4
+    cutter = Box(big, dy + 4, big).moved(Location((0, 0, -big / 2)))
+    cutter = Location((0, 0, 0), (0, 1, 0),
+                      ang if tip_at_x0 else -ang) * cutter
+    cutter = Location((pivot_x, y0 + dy / 2, z0)) * cutter
+    b = b - cutter
+    b.label = label
+    b.color = GROUP_COLORS[group]
+    b.group = group
+    # The BOX extents, on purpose: see the note above. Everything that clears
+    # this part clears the box it was cut from.
+    b.extents = ((x0, x0 + dx), (y0, y0 + dy), (z0, z0 + dz))
+    b.tapered = (tip_dz, tip_at_x0)
     if cut is not None:
         name, section, length = cut
         key = (name, section, round(length))
@@ -2229,18 +2373,26 @@ for i, bx0 in enumerate(BATTEN_X):
                                f"Panel Stiffener Batten {side} (table mode)",
                                "panel"))
 
-# V2/M5: the two front cross battens, one under each front corner. Same stock,
-# same Z band, same trip: they are part of the panel assembly and are screwed
-# up into it, so they are built per mode alongside the panel they hang under.
+# V2/M5, V4: the two front WINGS, one under each front corner. Same stock, same
+# Z band, same trip - they are part of the panel assembly and are screwed up
+# into it, so they are built per mode alongside the panel they hang under - but
+# the underside is now a single straight saw cut from the full 73 mm at the
+# ROOT, where the piece butts its guide batten, down to the up-screw's own seat
+# at the TIP on the panel's edge. `tip_at_x0` is therefore "is the panel edge
+# the low-X end", which it is on the left and is not on the right: both wings
+# taper OUTWARDS, away from the guide batten they hang off.
 for i, (nx0, nx1) in enumerate(NOSE_X):
     side = "Left" if i == 0 else "Right"
-    battens_bed.append(block(nx0, NOSE_Y0, BATTEN_Z0_BED,
+    tip_at_x0 = (i == 0)
+    battens_bed.append(wedge(nx0, NOSE_Y0, BATTEN_Z0_BED,
                              nx1 - nx0, BATTEN_W, BATTEN_H,
+                             NOSE_TIP_H, tip_at_x0,
                              f"Panel Front Batten {side} (bed mode)", "panel",
                              ("Panel front cross batten (M5)",
                               sec(BATTEN_W, BATTEN_H), nx1 - nx0)))
-    battens_table.append(block(nx0, NOSE_Y0, BATTEN_Z0_TABLE,
+    battens_table.append(wedge(nx0, NOSE_Y0, BATTEN_Z0_TABLE,
                                nx1 - nx0, BATTEN_W, BATTEN_H,
+                               NOSE_TIP_H, tip_at_x0,
                                f"Panel Front Batten {side} (table mode)",
                                "panel"))
 
@@ -2347,7 +2499,7 @@ PART_NO = {
     "guard": "rekkverksbord", "guard_host": "hjørnestolpe / stigevange",
     "bed_slat": "køyespile", "bench_slat": "benkespile",
     "panel": "løs plate", "batten": "avstivningslekt",
-    "nose": "fremre tverrlekt",
+    "nose": "fremre kilelekt",
 }
 
 
@@ -2493,8 +2645,78 @@ def drive(name, per, frm=None, into=None, axis=None, sign=None, row=None,
 # A toe screw is quoted by the face it enters, how far back from the joint it
 # starts and how far it is tilted off that face's normal. Both of the bed's
 # skew joints are here and nowhere else.
+#
+# V4: AND EVERY ONE OF THEM NOW SITS IN A SEAT. Until this round a skew screw's
+# head simply stood where the face was and part of it stood PROUD of the wood -
+# the model even had a tolerance for it (TOE_HEAD_ALLOWANCE, a tenth of the
+# screw's volume allowed outside the joint) and the beslagliste asked for "a
+# counterbore" in prose. Both are gone. A 90 degree countersink met at 25-30
+# degrees cannot lie flush and never could; what makes it lie flush is a
+# FLAT-BOTTOMED SEAT BORED ALONG THE SCREW'S OWN AXIS - a pocket, drilled with
+# an 18 mm Forstner bit running in the drill-guide block (VINKELKLOSS, below),
+# whose flat bottom is square to the screw and therefore square to the head.
+#
+#   TOE_SEAT_D       18 mm, the Forstner size. The 6 mm screw's head is 11.8
+#                    across, so 18 leaves 3 mm all round for the head and room
+#                    for the bit to enter at the angle.
+#   TOE_SEAT_DEPTH   18 mm, measured ALONG THE SCREW, from the mouth of the
+#                    pocket to its flat bottom - i.e. exactly how far the head
+#                    is moved into the wood. It is one number for both joints
+#                    (one setting on the depth stop), and it is set by the
+#                    steeper of the two: the head is a disc of radius r_h in a
+#                    plane square to the screw, so its highest point stands
+#                    r_h*sin(deg) above the head centre measured along the face
+#                    normal, and the centre is seat*cos(deg) below the face.
+#                    Head fully under the wood therefore wants
+#                    seat > r_h*tan(deg), which at J8-B's 65 deg and an 11.8 mm
+#                    head is 12.7 mm. 18 - the same number as the bit, one
+#                    thing to remember - leaves 2.3 mm of wood over the highest
+#                    point of the head at J8-B and 4.9 at J10, and the assert
+#                    below measures both on the solid rather than trusting this
+#                    note.
+# What it costs is length: 18 mm of the screw is spent in the pocket, so J8-B's
+# 6x90 buries 72 mm of thread and J10's 5x70 buries 52. Both are re-checked by
+# the ordinary tip-inside / tip-cover asserts, which know nothing about seats.
+TOE_SEAT_D = 18.0                # Forstner diameter for the seat
+TOE_SEAT_DEPTH = 18.0            # along the screw axis, mouth to flat bottom
+TOE_SEAT_MIN_COVER = 1.0         # mm of wood over the highest point of the head
 TOE_BENCH_POST = dict(face=1, face_sign=1, deg=65.0, back=34.0)
 TOE_STUB_RAIL = dict(face=0, face_sign="inboard", deg=60.0, back=35.0)
+
+# THE DRILL-GUIDE BLOCK - "vinkelkloss". A skew hole started freehand walks,
+# and it walks worst exactly where these two are: near an end, in a face the
+# bit meets at 25 or 30 degrees. The jig is an offcut of the bed's own 48x73
+# with a ramp sawn on each end at the angle the drill has to keep - one end for
+# each joint - clamped flat to the face with its ramp over the mark. It is NOT
+# part of the bed, so it is not in `parts` and not in the cut list proper; it
+# is a shop aid and it is listed as one (SHOP_AIDS below), cut in steg 0 on the
+# mitre saw with the blade tilted.
+#
+#     ramp angle off the face = 90 - deg, i.e. the drill's own angle to the
+#     face, because the bit lies ON the ramp.
+TOE_JIG_LEN = 160                # one offcut, a ramp on each end
+TOE_JIG_ANGLES = {"J8-B": 90.0 - TOE_BENCH_POST["deg"],     # 25 deg
+                  "J10": 90.0 - TOE_STUB_RAIL["deg"]}       # 30 deg
+
+# SHOP AIDS - things you CUT but do not BUILD IN. They are not parts of the
+# bed, so they are not in `parts`, not in parts.tsv, not in CUT_LIST and not in
+# the piece count; they are cut in steg 0 off the offcut pile and they belong
+# in the manual because a jig you were never told to make is a jig you do not
+# have when you need it.
+SHOP_AIDS = [
+    dict(key="vinkelkloss",
+         name="Vinkelkloss (borjigg for skråskruene)",
+         section=sec(BATTEN_W, BATTEN_H), length=TOE_JIG_LEN, qty=1,
+         cut=(f"kappsag med bladet vippet, rampe målt FRA FLATEN: "
+              f"{TOE_JIG_ANGLES['J8-B']:g}° i den ene enden (J8-B, dvs. "
+              f"{TOE_BENCH_POST['deg']:g}° fra flatens normal) og "
+              f"{TOE_JIG_ANGLES['J10']:g}° i den andre (J10, dvs. "
+              f"{TOE_STUB_RAIL['deg']:g}°)"),
+         use=("klemmes flatt mot flaten med rampa over merket; "
+              f"⌀{TOE_SEAT_D:g} forstnerbor og deretter forboret hviler PÅ "
+              f"rampa, så hullet får den vinkelen leddet er regnet på. "
+              f"Brukes i J8-B og J10")),
+]
 
 JOINTS = [
     dict(id="J1", title="Endebjelke → hjørnestolpe", n=4,
@@ -2566,9 +2788,12 @@ JOINTS = [
                    row=2)])]),
     dict(id="J8-B", title="Bakre benkevange → bakre hjørnestolpe "
                           "(endeskjøt)", n=2,
-         drill="⌀6 skrått gjennom vangen, ⌀4 i stolpen — forbor hele veien, "
-               "dette er en skråskrue nær en ende",
-         side="Skrått fra vangens forside inn i stolpen. Vangen ligger fast "
+         drill="Først sete: ⌀18 forstner 18 mm ned LANGS skruens akse, med "
+               "vinkelklossen som styring. Så ⌀6 skrått videre gjennom "
+               "vangen og ⌀4 i stolpen — forbor hele veien, dette er en "
+               "skråskrue nær en ende",
+         side="Skrått fra vangens forside inn i stolpen, ut av et flatbunnet "
+              "sete så hodet ligger helt under treet. Vangen ligger fast "
               "mellom de to stolpene, så skruene er bånd, ikke opplegg",
          contacts=[dict(a="bench_back", b="post_back", axis=0, drives=[
              drive("Treskrue 6×90 forsenket Torx", 2, frm="bench_back",
@@ -2588,11 +2813,14 @@ JOINTS = [
          contacts=[dict(a="bench_blk_f", b="post_front", axis=1, drives=[
              drive("Treskrue 6×60 forsenket Torx", 1, frm="bench_blk_f")])]),
     dict(id="J10", title="Benkevange → stubbefot", n=4,
-         drill="⌀3 i foten og i vangen; skråskruene forbores ⌀3,5",
+         drill="⌀3 i foten og i vangen. Skråskruen får først sete: ⌀18 "
+               "forstner 18 mm ned langs skruens akse, med vinkelklossen som "
+               "styring, så ⌀3,5 videre",
          side="Vinkelbeslaget sitter i hjørnet mellom fotens utside og "
               "vangens underside, med den ene fliken opp i vangen og den "
               "andre inn i foten; den ene 5×70 er en skråskrue nedenfra og "
-              "opp i vangen",
+              "opp i vangen, ut av et flatbunnet sete så hodet ligger helt "
+              "under treet",
          contacts=[dict(a="bench_rail", b="stub", axis=2, drives=[
              drive(BRACKETS["vinkel90"]["name"], 1, into="stub", axis=0,
                    sign="inboard", row=2, row_sign=-1, bracket="vinkel90",
@@ -2638,12 +2866,15 @@ JOINTS = [
          contacts=[dict(a="panel", b="batten", axis=2, drives=[
              drive("Treskrue 5×40 forsenket Torx", 6, frm="batten",
                    counterbore=PANEL_UPSCREW_CBORE)])]),
-    dict(id="J13b", title="Fremre tverrlekt → løs plate (limt, skrudd "
+    dict(id="J13b", title="Fremre kilelekt (vinge) → løs plate (limt, skrudd "
                           "nedenfra)", n=2,
-         drill="⌀12 kontrabor 46 mm opp i lektas underside, ⌀3,5 videre "
-               "gjennom resten av lekta. Ingenting gjennom platens overside",
-         side="Nedenfra, som J13a. Lekta ligger med forkanten i flukt med "
-              "platens forkant, med enden mot avstivningslekta",
+         drill="⌀12 kontrabor opp i vingens underside TIL DET STÅR 27 mm "
+               "IGJEN opp til plata — vingen er skråkappet, så det blir "
+               "dypest ved roten og null ved tuppen. ⌀3,5 videre gjennom de "
+               "siste 27 mm. Ingenting gjennom platens overside",
+         side="Nedenfra, som J13a. Vingen ligger med forkanten i flukt med "
+              "platens forkant, full høyde mot avstivningslekta og "
+              "skråkappet ut mot platekanten",
          contacts=[dict(a="panel", b="nose", axis=2, drives=[
              drive("Treskrue 5×40 forsenket Torx", 3, frm="nose",
                    counterbore=PANEL_UPSCREW_CBORE)])]),
@@ -2979,16 +3210,27 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift, side=None):
                     for n, t in zip(n_in, t_dir))
         row = (dr["row"] if dr["row"] is not None
                else [j for j in range(3) if j not in (f_ax, axis)][0])
+        # V4: THE SEAT. `back` locates the MOUTH of the pocket on the face; the
+        # head sits `seat` further along the screw's own axis, at the pocket's
+        # flat bottom. Everything downstream reads that bottom as the face the
+        # screw is driven from - the same contract the straight counterbore
+        # already has - so the head assert stays a comparison between two
+        # independently derived numbers and not a tautology.
+        seat = toe.get("seat", TOE_SEAT_DEPTH)
+        seat_face = face + vec[f_ax] * seat
         out = []
         for v in row_positions(win[row][0], win[row][1], dr["per"], d,
                                f"{what} (skråskrue)"):
-            p = [0.0, 0.0, 0.0]
-            p[f_ax] = face
-            p[axis] = cp[axis] - sign * toe["back"]
-            p[row] = v
+            mouth = [0.0, 0.0, 0.0]
+            mouth[f_ax] = face
+            mouth[axis] = cp[axis] - sign * toe["back"]
+            mouth[row] = v
+            p = [m + vv * seat for m, vv in zip(mouth, vec)]
             out.append(dict(kind="screw", anchor=at(p), direction=vec,
-                            length=length, d=d, face=(f_ax, face),
-                            through=entry, into=target, toe=True))
+                            length=length, d=d, face=(f_ax, seat_face),
+                            through=entry, into=target, toe=True,
+                            seat=seat, seat_d=TOE_SEAT_D,
+                            seat_face=(f_ax, f_sign, face)))
         return out
 
     # --- the ordinary through screw, and the plates bolted through one -----
@@ -3380,7 +3622,13 @@ FASTENER_TOL = 0.15
 # cover, three times the margin and one length fewer to buy.
 FASTENER_MIN_TIP_COVER = 4.0
 FASTENER_VOL_TOL = 2.0           # mm3 - OCC boolean noise on a tangent face
-TOE_HEAD_ALLOWANCE = 0.10        # of a skew screw's volume - see the note below
+# TOE_HEAD_ALLOWANCE is GONE (V4). It used to let a tenth of a skew screw's
+# volume stand outside the wood, because a 90 degree countersink met at 25-30
+# degrees cannot be flush. It is not a tolerance any more, it is a seat: every
+# toe screw is bored a flat-bottomed pocket along its own axis (TOE_SEAT_DEPTH)
+# and its head is entirely under the surface. So a toe screw is checked exactly
+# like every other screw - fully contained, no allowance - plus one assert of
+# its own that measures the wood standing over the highest point of the head.
 
 
 def _boxes_apart(a, b):
@@ -3428,6 +3676,7 @@ def _inside(point, member, grow=0.0):
 # are stated here, where the rule is used.
 PANEL_JOINT = "J13"          # every joint id in the panel sub-assembly
 _FIXED_IDS = frozenset(id(p) for p in parts)
+TOE_SEAT_COVER = []          # (label, mm of wood over the head) per toe screw
 
 if FASTENERS_ON:
     _others = {}
@@ -3462,6 +3711,25 @@ if FASTENERS_ON:
                 f"{_label}: the head is at {_f['anchor'][_fx]:g} on axis "
                 f"{'XYZ'[_fx]}, the face it is driven from is at {_face:g}")
 
+            # 1b - V4, A SKEW SCREW'S HEAD IS UNDER THE WOOD. Measured on the
+            #      solid, not on the seat arithmetic: take the whole screw's
+            #      furthest reach towards the face it came in through and
+            #      require wood over it. This is the assert that replaces
+            #      TOE_HEAD_ALLOWANCE, and it is a stronger claim - the old one
+            #      merely capped how much could stick out.
+            if _f.get("toe"):
+                _sax, _ssg, _surf = _f["seat_face"]
+                _high = (_s.extents[_sax][1] if _ssg > 0
+                         else _s.extents[_sax][0])
+                _under = (_surf - _high) if _ssg > 0 else (_high - _surf)
+                assert _under >= TOE_SEAT_MIN_COVER, (
+                    f"{_label}: the highest point of the head stands "
+                    f"{-_under:+.2f} mm past the face at {_surf:g} on axis "
+                    f"{'XYZ'[_sax]} — the "
+                    f"{_f['seat_d']:g} mm seat is {_f['seat']:g} mm deep and "
+                    f"wants to leave {TOE_SEAT_MIN_COVER} mm of wood over it")
+                TOE_SEAT_COVER.append((_label, _under))
+
             # 2 - the tip is INSIDE the member it grips, with wood behind it.
             _tip = tuple(a + d * _f["length"]
                          for a, d in zip(_f["anchor"], _f["direction"]))
@@ -3492,12 +3760,10 @@ if FASTENERS_ON:
         if _f["kind"] == "screw":
             _v = abs(_s.volume)
             _in = sum(_cut_volume(_s, p) for p in _own)
-            # A SKEW screw's head cannot be flush: a 90 deg countersink met at
-            # 60-65 deg leaves part of the head standing out of the face, and
-            # that is why both toe joints call for a counterbore in the
-            # beslagliste. The allowance is the head, and only the head.
-            _slack = (TOE_HEAD_ALLOWANCE * _v if _f.get("toe")
-                      else max(FASTENER_VOL_TOL, 0.02 * _v))
+            # V4: no special case for skew screws any more. The seat put the
+            # head under the wood, so a toe screw has to be as fully contained
+            # as any other.
+            _slack = max(FASTENER_VOL_TOL, 0.02 * _v)
             assert _v - _in < _slack, (
                 f"{_label}: {_v - _in:.0f} mm3 of {_v:.0f} is outside the "
                 f"joint ({' + '.join(p.label for p in _own)}) — it exits a "
@@ -3582,6 +3848,17 @@ if FASTENERS_ON:
     print(f"OK  {_n_ang} vinkelbeslag: hver skrudd flik har tre bak seg i "
           f"skrueretningen. Ingen av dem sitter i platemekanismen - V3 tok "
           f"alle fire ut av den og lot lektene gjøre jobben")
+    assert len(TOE_SEAT_COVER) == sum(1 for _f in FASTENER_SPECS
+                                      if _f.get("toe")), \
+        "V4: en skråskrue slapp unna setekontrollen"
+    print(f"OK  V4 skråskruesete: alle {len(TOE_SEAT_COVER)} skråskruene "
+          f"(J8-B ×4, J10 ×4) står i et flatbunnet ⌀{TOE_SEAT_D:g} sete boret "
+          f"{TOE_SEAT_DEPTH:g} mm ned LANGS skruens egen akse. Minste tre "
+          f"over hodets høyeste punkt: "
+          f"{min(u for _l, u in TOE_SEAT_COVER):.2f} mm (krav "
+          f"{TOE_SEAT_MIN_COVER:g}), største {max(u for _l, u in TOE_SEAT_COVER):.2f}"
+          f" mm - målt på kroppene. Ingen TOE_HEAD_ALLOWANCE lenger: "
+          f"skråskruene er like fullt inneholdt som alle andre")
 else:
     print("(fasteners off - LOFTBED_FASTENERS=0)")
 
@@ -5004,6 +5281,107 @@ print("OK  D13/U2: walk-around beside the ladder - "
         f"over Y {PASSAGE_Y[0]}..{PASSAGE_Y[1]} and "
         f"Z {PASSAGE_Z[0]}..{PASSAGE_Z[1]}")
 
+# ---------------------------------------------------------------------------
+# F1 (V4): CAN THE LADDER FOOT BE TIED TO THE FRAME AT ALL? MEASURED.
+# ---------------------------------------------------------------------------
+# Vedlegg B, avvik 2 has carried an open point since V2: the panel is a one-way
+# strut, so the ladder foot cannot go BACKWARD, and forward it hangs on J3
+# alone. The obvious fix is the one the deviation itself names - "et eget bånd
+# fra stigefoten til rammen", a block or a brace from the foot to something
+# that is not the ladder - so this round went looking for somewhere to put it.
+#
+# THIS BLOCK IS THAT SEARCH, and it is a search over the model rather than over
+# an opinion: for each of the four horizontal directions out of the stile's
+# foot, find the NEAREST fixed member that is actually reachable in a straight
+# line (i.e. that overlaps the foot in the other two axes), and print how far
+# away it is. A tie is a piece of wood spanning that gap; if the gap is a
+# volume some other rule requires to be EMPTY, the tie cannot be built without
+# giving that rule up.
+#
+# The result, and it is the reason avvik 2 stays open:
+#   OUT  the nearest thing in the stile's own Y band is the FRONT CORNER POST,
+#        the whole length of the bench away. Between them lies the D13
+#        walk-around, required clear from the floor to Z 482.
+#   IN   the other stile, across the ladder opening, which EN 747 requires to
+#        stay >= 300 mm clear. Tying the two stiles together adds nothing in Y
+#        anyway - they move as one frame.
+#   BACK the back bench rail, three quarters of a metre away across the D11
+#        open bay, which is required clear to Z 259 - and above Z 186 the same
+#        column is the panel's own insertion shaft.
+#   FWD  NOTHING. There is no member in front of the ladder at all, and there
+#        cannot be: U3 fixes the front face at Y = 788 and asserts Y 788..800
+#        empty, and the overall depth is pinned at 836.
+# So every direction out of the foot is either a protected void or the room,
+# and the tie is not a detail this geometry can have as it stands. What it
+# would cost to have one anyway is written up in vedlegg B.
+FOOT_TIE_Z = (0, BENCH_RAIL_TOP)                 # 0..259, the foot proper
+
+
+def _nearest_fixed(box, axis, sign, exclude):
+    """(clear gap, label) to the nearest fixed part straight along `axis`.
+
+    'Straight along' means it overlaps `box` in the other two axes, so a piece
+    of wood spanning the gap would land on it square. inf when there is
+    nothing out that way at all.
+    """
+    best, who = math.inf, None
+    for p in parts:
+        if p in exclude:
+            continue
+        if any(min(box[j][1], p.extents[j][1])
+               - max(box[j][0], p.extents[j][0]) <= TOL
+               for j in range(3) if j != axis):
+            continue
+        gap = (p.extents[axis][0] - box[axis][1] if sign > 0
+               else box[axis][0] - p.extents[axis][1])
+        if gap < -TOL:
+            continue
+        if gap < best:
+            best, who = gap, p.label
+    return best, who
+
+
+# The LADDER itself is not an anchor: stiles, rungs and rung blocks are one
+# rigid frame and they all move together when the foot moves.
+_LADDER = [p for p in parts
+           if p.label.startswith(("Ladder", "Rung Block"))]
+# Directions are named from the LADDER, not from the axes, so the two sides
+# can be compared: "utover" is away from the ladder centreline on either side.
+FOOT_TIE_DIRS = ("utover", "innover", "bakover", "framover")
+FOOT_TIE_REACH = {}
+for _s, _u, _out in (("venstre", up[0], -1), ("høyre", up[1], 1)):
+    _box = (_u.extents[0], _u.extents[1], FOOT_TIE_Z)
+    for _lbl, _ax, _sg in ((FOOT_TIE_DIRS[0], 0, _out),
+                           (FOOT_TIE_DIRS[1], 0, -_out),
+                           (FOOT_TIE_DIRS[2], 1, -1),
+                           (FOOT_TIE_DIRS[3], 1, 1)):
+        FOOT_TIE_REACH[(_s, _lbl)] = _nearest_fixed(_box, _ax, _sg, _LADDER)
+# The two sides must see the same room - anything else means the bed is not
+# symmetric about the ladder any more and this finding would need re-reading.
+for _lbl in FOOT_TIE_DIRS:
+    _l, _r = FOOT_TIE_REACH[("venstre", _lbl)], FOOT_TIE_REACH[("høyre", _lbl)]
+    assert _l[0] == _r[0] or abs(_l[0] - _r[0]) < TOL, \
+        f"F1: {_lbl} reaches {_l[0]} on the left and {_r[0]} on the right"
+assert FOOT_TIE_REACH[("venstre", "framover")][0] == math.inf, \
+    "F1: something now stands in front of the ladder foot - re-read avvik 2"
+assert FOOT_TIE_REACH[("venstre", "utover")][0] > MIN_PASSAGE, \
+    "F1: the outboard gap no longer contains the whole walk-around"
+print("OK  F1 stigefot: nærmeste faste del å binde foten til, per retning - "
+      + "; ".join(
+          f"{_lbl} {FOOT_TIE_REACH[('venstre', _lbl)][0]:.0f} mm "
+          f"({FOOT_TIE_REACH[('venstre', _lbl)][1]})"
+          if FOOT_TIE_REACH[("venstre", _lbl)][0] != math.inf
+          else f"{_lbl} INGENTING"
+          for _lbl in FOOT_TIE_DIRS)
+      + f". Mellomrommene er ikke ledige: UTOVER er D13-gangpassasjen "
+        f"({MIN_PASSAGE}+ mm fri fra gulv til {PASSAGE_Z[1]}), BAKOVER er D11s "
+        f"åpne bod (fri til {BENCH_RAIL_TOP}, og over {BENCH_RAIL_BOTTOM} er "
+        f"det platens innsettingssjakt), INNOVER er stigeåpningen "
+        f"({LADDER_CLEAR} mm, krav {MIN_LADDER_CLEAR}) og FRAMOVER er rommet - U3 "
+        f"krever Y {FRONT_POST_Y1}..{FRONT_POST_Y1 + POST_THIN} tomt og "
+        f"dybden er låst til {OVERALL_DEPTH}. Avvik 2 forblir åpent, med pris "
+        f"på hver av utveiene i vedlegg B")
+
 # D8: an even ladder. Rung 1 shares its top with the bench rails and rung 2 with
 # the table-mode panel underside; every step of the climb proper has to be under
 # the comfort limit and the four of them within a few mm of each other.
@@ -5184,6 +5562,74 @@ assert FRONT_CANTILEVER == BATTEN_X[0] - PANEL_X0 == 116, FRONT_CANTILEVER
 assert NOSE_Y0 <= RUNG_Y0, \
     "M5: a cross batten that starts behind the rung face would have to " \
     "thread past the rung, and the whole assembly goes straight down"
+# V4: THE WEDGE, asked of the solid and of the screw seat.
+assert NOSE_TIP_H == PANEL_UPSCREW_PASS, \
+    "M5/V4: the wing's tip is the up-screw's own seat or it is a number " \
+    "somebody liked - it has to be PANEL_UPSCREW_PASS"
+_NOSE_TRAPEZOID = BATTEN_W * NOSE_LEN * (NOSE_ROOT_H + NOSE_TIP_H) / 2
+for _w in (b for b in battens_bed + battens_table
+           if b.label.startswith("Panel Front Batten")):
+    assert getattr(_w, "tapered", None) is not None, \
+        f"M5/V4: '{_w.label}' is still a box"
+    assert abs(abs(_w.volume) - _NOSE_TRAPEZOID) < 1.0, (
+        f"M5/V4: '{_w.label}' is {abs(_w.volume):.0f} mm3, and the wedge "
+        f"{NOSE_ROOT_H} -> {NOSE_TIP_H} over {NOSE_LEN} is "
+        f"{_NOSE_TRAPEZOID:.0f}")
+    # and it still meets the panel over the WHOLE of its top face: the cut is
+    # on the underside, which touches nothing.
+    assert abs(_w.extents[2][1] - _w.extents[2][0] - BATTEN_H) < TOL
+
+
+def _wing_height_at(wing, x):
+    """The wing's depth in Z at position `x`, off its own two numbers."""
+    (wx0, wx1), _y, _z = wing.extents
+    tip_dz, tip_at_x0 = wing.tapered
+    t = (x - wx0) / (wx1 - wx0) if tip_at_x0 else (wx1 - x) / (wx1 - wx0)
+    return tip_dz + (BATTEN_H - tip_dz) * t
+
+
+# THE SCREW SEAT ALONG THE TAPER. Every J13b head sits PANEL_UPSCREW_PASS below
+# the panel, which is a CONSTANT Z - so the counterbore simply gets shallower as
+# the wood does, and the one thing that must hold is that there is still
+# PANEL_UPSCREW_PASS of wood at every hole, measured at the WIDE edge of the
+# head, not on its centre line.
+if FASTENERS_ON:
+    _wings = {b.label: b for b in battens_bed
+              if b.label.startswith("Panel Front Batten")}
+    _seen_wing_screws = 0
+    for _f in FASTENER_SPECS:
+        if _f["jid"] != "J13b" or _f.get("solid") is None:
+            continue
+        _w = _wings[_f["through"].label]
+        _hr = SCREW_HEAD_D[int(round(_f["d"]))] / 2
+        _thin = min(_wing_height_at(_w, _f["anchor"][0] - _hr),
+                    _wing_height_at(_w, _f["anchor"][0] + _hr))
+        assert _thin >= PANEL_UPSCREW_PASS - TOL, (
+            f"{_f['solid'].label}: the wing is only {_thin:.1f} mm deep at "
+            f"the edge of this head and the up-screw needs "
+            f"{PANEL_UPSCREW_PASS} - the taper has run past its own screws")
+        _seen_wing_screws += 1
+    assert _seen_wing_screws == 6, \
+        f"M5/V4: {_seen_wing_screws} wing screws checked, want 6"
+    _NOSE_CB = [round(_wing_height_at(_wings[_f["through"].label],
+                                      _f["anchor"][0]) - PANEL_UPSCREW_PASS, 1)
+                for _f in FASTENER_SPECS if _f["jid"] == "J13b"]
+    print(f"OK  M5/V4 kile: begge vingene er skråkappet "
+          f"{NOSE_ROOT_H} → {NOSE_TIP_H} mm over {NOSE_LEN} mm "
+          f"({NOSE_TAPER_DEG:.1f}°), {_NOSE_TRAPEZOID:.0f} mm3 tre hver mot "
+          f"{BATTEN_W * NOSE_LEN * BATTEN_H} som en hel kloss - "
+          f"{100 * (1 - _NOSE_TRAPEZOID / (BATTEN_W * NOSE_LEN * BATTEN_H)):.0f}"
+          f" % mindre synlig masse under forkanten. Tuppen ER skrueseten "
+          f"({PANEL_UPSCREW_PASS} mm), så kontraboret bare grunner ut med "
+          f"treet: {sorted(set(_NOSE_CB))} mm på de tre hullene. Verste "
+          f"bøyesnitt ligger {NOSE_CRIT_X:.0f} mm fra tuppen (h = "
+          f"{NOSE_CRIT_H:.0f} mm), ikke ved roten: "
+          f"{6 * 1000 * NOSE_CRIT_X / (BATTEN_W * NOSE_CRIT_H ** 2):.2f} MPa "
+          f"mot 16,6 = utnyttelse "
+          f"{6 * 1000 * NOSE_CRIT_X / (BATTEN_W * NOSE_CRIT_H ** 2) / 16.6:.2f}"
+          f"; skjær i tuppen "
+          f"{1.5 * 1000 / (BATTEN_W * NOSE_TIP_H):.2f} MPa mot 2,77 = "
+          f"{1.5 * 1000 / (BATTEN_W * NOSE_TIP_H) / 2.77:.2f}")
 # X: OUTBOARD of both rung ends by the fit, and symmetric about the centreline.
 assert BATTEN_X[0] + BATTEN_W == LADDER_INNER_L - PANEL_FIT and \
     BATTEN_X[1] == LADDER_INNER_R + PANEL_FIT, \
@@ -5243,9 +5689,13 @@ print(f"OK  M4: panel utilisation at the 2 kN dynamic point ~1.4 -> ~0.26 - the 
 print(f"OK  M5: the front corner is carried on wood, not on sheet - a 1 kN "
       f"knee on the free corner of a bare 18 mm panel is 6P/t^2 = "
       f"{6 * 1000 / PANEL_T ** 2:.1f} MPa whatever the batten spacing, and "
-      f"the {NOSE_LEN} mm cross batten takes it as a cantilever off the guide "
-      f"batten: {1000 * NOSE_LEN / (BATTEN_W * BATTEN_H ** 2 / 6):.1f} MPa in "
-      f"C24, utilisation 0.16")
+      f"the {NOSE_LEN} mm wing takes it as a cantilever off the guide "
+      f"batten. The 18 mm PLYWOOD DOUBLER that would have replaced it is "
+      f"rejected on its own number: {6 * 1000 / (2 * PANEL_T) ** 2:.2f} MPa "
+      f"(utilisation 0.67) WITH full composite action across the glue line, "
+      f"{6 * 500 / PANEL_T ** 2:.2f} MPa (utilisation 1.33, a FAIL) without "
+      f"it - and no screw in this bed can back that glue line up without "
+      f"coming out of the table top")
 print(f"OK  V3 J13: the battens are GLUED and screwed from below - "
       f"{PANEL_UPSCREW_CBORE} mm counterbore, {PANEL_UPSCREW_PASS} mm of "
       f"batten left, {PANEL_UPSCREW_BITE} mm of thread in the {PANEL_T} mm "
@@ -5512,12 +5962,14 @@ if FASTENERS_ON:
         "front bench rail - the whole point of this lock point is that it "
         "does not exist in the other position")
     print(f"OK  V3 lås: låsepunktet er de to endeflatene i sideklaringen - "
-          f"tverrlekta ({sec(BATTEN_W, BATTEN_H)}) mot fremre benkevange, "
+          f"kilelekta ({sec(BATTEN_W, BATTEN_H)}) mot fremre benkevange, "
           f"{LOCK_GAP} mm fra hverandre, {_lap:g} mm overlapp i dybden og "
-          f"samme Z-bånd i SENGESTILLING. I bordstilling ligger tverrlekta "
+          f"samme Z-bånd i SENGESTILLING. I bordstilling ligger kilelekta "
           f"{_nose_t.extents[2][0] - _rail.extents[2][1]:.0f} mm over "
           f"vangen, så låsen har ingenting å ta i - den kan ikke stå på i "
-          f"feil stilling. Hvilken av de tre er fortsatt ikke valgt")
+          f"feil stilling. V4: INGEN lås monteres (akseptert avvik 4); "
+          f"treverket her er ettermonteringspunktet, og alle tre løsningene "
+          f"i laasvalg.png passer på det uendret")
     print(f"OK  V3 retning: X+ og X- stoppes av de to styrelektene mot "
           f"trinnenden ({PANEL_FIT} mm passing hver vei, {_spread_x:.0f} mm "
           f"fra hverandre, så en dreining om Z kiler den ene), i BEGGE "
@@ -5545,7 +5997,7 @@ PANEL_GAPS = {
     "styrelekt → trinnende": PANEL_FIT,
     # V3: and the one the lock lives in - the cross batten's end face against
     # the front bench rail's end face, in bed mode. Same side gap, same band.
-    "tverrlekt → fremre benkevange (sengestilling)": PANEL_X0 - BENCH_LEN,
+    "kilelekt → fremre benkevange (sengestilling)": PANEL_X0 - BENCH_LEN,
 }
 for _what, _g in PANEL_GAPS.items():
     assert _g <= EN_FINGER_FREE + TOL or \
@@ -5962,14 +6414,16 @@ print(f"Note (D10/M4/M5/V2): the panel rests straight on wood in both modes - "
       f"is in, front edge on a rung - and is stiffened by 2 x "
       f"{sec(BATTEN_W, BATTEN_H)} x {BATTEN_LEN} battens along Y (X "
       f"{BATTEN_X[0]}/{BATTEN_X[1]}) plus 2 x {sec(BATTEN_W, BATTEN_H)} x "
-      f"{NOSE_LEN} cross battens flush with the front edge, under the corners "
+      f"{NOSE_LEN} WEDGES (V4: {NOSE_ROOT_H} mm at the root, "
+      f"{NOSE_TIP_H} at the tip) flush with the front edge, under the corners "
       f"the {FRONT_CANTILEVER} mm of bare sheet outboard of the guide batten "
       f"would otherwise leave. THERE IS NO STEEL IN THE MECHANISM ANY MORE "
       f"(V3): the two long battens sit {PANEL_FIT} mm outboard of the rung "
       f"ends, in the {RUNG_T} x {RUNG_REST_LEDGE} mm shafts beside them, and "
       f"they are the whole of the X and the anti-rotation restraint in both "
-      f"modes. The only steel left on the shopping list for this panel is the "
-      f"bed-mode lock, and that is still a TBD.")
+      f"modes. And after the lock decision (V4) there is no steel on the "
+      f"shopping list for this panel either: NO bed-mode lock, an accepted "
+      f"deviation - see vedlegg B, avvik 4.")
 print(f"Note (D11/D13): the front bench rail is two {FRONT_BENCH_RAIL_SEG_LEN} mm "
       f"segments that stop at the sofa ends on their stub legs; only the back "
       f"one is a continuous member, and after W9 it is {BETWEEN_POSTS_LEN} mm, "
