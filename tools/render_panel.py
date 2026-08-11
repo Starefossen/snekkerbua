@@ -1,24 +1,26 @@
 """Steg 10 of the HANNA manual: the loose panel, drawn on its own.
 
 Every other step page is a view of the BED with the step's parts picked out in
-black. Steg 10 cannot be that page. What is built here - platen, the two
-avstivningslekter under it, the two krokplater and the two U-brakettene - is a
-680 x 800 sub-assembly inside a bed that is 2 m across, and drawn inside the
-frame it is a postage stamp with four badges crowded onto it. The reader gets
-no answer to the only questions the step asks: which way up do the lekter go,
-where along the plate do the beslag sit, and what holds what.
+black. Steg 10 cannot be that page. What is built here - platen and the four
+lektene under it - is a 652 x 798 sub-assembly inside a bed that is 2 m
+across, and drawn inside the frame it is a postage stamp with the badges
+crowded onto it. The reader gets no answer to the only questions the step
+asks: which way up do the lekter go, how far in from the plate's edges do they
+sit, and which way do the screws go.
 
 So this page throws the bed away and draws the panel assembly ALONE, EXPLODED:
 
   * platen stays where the model has it, drawn heavy and filled white so it is
     a solid plate and not a wireframe;
-  * the two lektene drop straight down out of it, so the reader sees they
+  * all four lektene drop straight down out of it, so the reader sees they
     stand ON EDGE (48 x 73, the tall way) and how far in from the plate edges
-    they sit;
-  * krokplatene fall away backwards-and-down, out past the plate's back edge -
-    the edge they hang in front of;
-  * U-brakettene fall away forwards-and-down, past the front edge - the edge
-    that grips the trinnet.
+    they sit - which after V3 is the dimension the whole mechanism turns on,
+    because the two long ones are what find the trinnenden.
+
+There is no steel on this page any more. V3 took all four vinkelbeslag out of
+the mechanism; what used to be drawn as glyphs falling away past the plate's
+edges is now two lekter with 2 mm of clearance on the trinnenden, and the only
+hardware left is eighteen wood screws.
 
 Each loose piece keeps a DASHED INSERTION LINE back to the spot it seats on,
 so the explosion is a movement and not a scatter. The lines are drawn first
@@ -28,16 +30,16 @@ it belongs to disappears under the plate.
 
 Platen and lektene are the model's own solids, projected through the same
 hidden-line machinery as every other page - the explosion is p.moved(), a
-displaced COPY, so nothing in the model is touched. The steel beslag have no
-solid in the model; they are the glyphs from docs/img/beslag, dropped in at
-the exploded positions at a size that keeps them reading as hardware.
+displaced COPY, so nothing in the model is touched.
 
-The fasteners are drawn where they are driven and pointing the way they are
-driven - straight down through the plate, in every case in this step - each
-with the step's own badge letter and, where one arrow stands for several
-screws, its count. Two thumbnails at the top say where the finished unit ends
-up: SENGESTILLING (back edge on the bakre benkevange, front edge on trinn 1)
-and BORDSTILLING (back edge on bordbærelekta, front edge on trinn 2).
+THE SCREWS GO UP. That is the point of the step and it is why the drilling
+pattern is drawn on the lekt's UNDERSIDE, in its exploded place, and not on
+the plate: the counterbores are read straight off the model's own fastener
+anchors, and every dotted line rises out of a hole towards the plate. Nothing
+is drawn on the plate's top face, because after V3 there is nothing there.
+Two thumbnails at the top say where the finished unit ends up: SENGESTILLING
+(back edge on the bakre benkevange, front edge on trinn 1) and BORDSTILLING
+(back edge on bordbærelekta, front edge on trinn 2).
 
 Called from render_lineart.render_all() with exactly the arguments
 render_step() takes, so the driver does not have to know this page is special.
@@ -49,31 +51,12 @@ import os
 # ---------------------------------------------------------------------------
 # THE EXPLOSION, IN MODEL MILLIMETRES
 # ---------------------------------------------------------------------------
-# One vector per loose piece, along the axis it comes off. Everything moves
-# DOWN, because everything in this assembly hangs under the plate; the beslag
-# also move out past the edge they grip so their dashed line does not have to
-# run through the lektene.
-# The distances are not free: at this camera the plate's own silhouette is
+# One vector, along the axis every loose piece comes off: DOWN, because
+# everything in this assembly hangs under the plate.
+# The distance is not free: at this camera the plate's own silhouette is
 # already ~380 mm tall on the page, so anything that drops less than that
-# lands ON the plate and reads as lying on top of it. The lekter therefore go
-# well past it, and the beslag past THEM, sideways along Y as well so they
-# come out beyond the very edge each one grips.
+# lands ON the plate and reads as lying on top of it.
 DROP_BATTEN = (0.0, 0.0, -1150.0)
-DROP_REAR = (0.0, -900.0, -1500.0)     # the two rear brackets, out past the
-                                       # back edge they seat beside
-DROP_FRONT = (0.0, 700.0, -1150.0)     # the two rung-end brackets, out past
-                                       # the front edge they stand at
-
-GLYPH_H = 165.0        # drawn height of a beslag glyph, model mm
-BRACKET_W = 30.0       # flattstål 30x4, the beslag's width across the plate
-
-# Where the beslag sit along the plate, as X centres. Krokplatene go clear of
-# the avstivningslektene (J13c's own note says so); U-brakettene have to land
-# within the trinnet's own X span, 835..1155, and equally clear of the lekter.
-HOOK_X = (760.0, 1230.0)
-U_X = (858.0, 1132.0)
-HOOK_HOLE_Y = (12.0, 34.0)     # the two M6 through the krokplate's flange
-U_HOLE_Y = (726.0, 746.0)      # the two M6 through the U-brakett's flanges
 
 PAGE_PAD = 90.0        # white around the exploded assembly, model mm
 COL_EXTRA = 130.0      # the left column is the inset panel plus this margin
@@ -149,8 +132,7 @@ def _insertion(page, RL, view, extents, off, ends=2, steel=False):
 
     Drawn from the TOP corners of the piece in its exploded place to the same
     corners in its home place, i.e. along the explosion vector, so the reader
-    reads a movement. `ends` picks how many corners carry a line: four for a
-    long lekt, one for a small beslag.
+    reads a movement. `ends` picks how many corners carry a line.
     """
     (x0, x1), (y0, y1), (_z0, z1) = extents
     if ends >= 2:
@@ -173,19 +155,12 @@ def _ghost(page, RL, view, xs, ys, z):
     Thin, grey, dashed: the drawing convention for something you cannot see.
     It is what turns a scatter of drilling marks into two rows on a lekt, and
     it is the only thing on the page that says how far in from the plate's
-    edges the lekter and the beslag actually sit.
+    edges the lekter actually sit.
     """
     ring = [(xs[0], ys[0]), (xs[1], ys[0]), (xs[1], ys[1]), (xs[0], ys[1])]
     pts = [view.xy((x, y, z)) for x, y in ring]
     for a, b in zip(pts, pts[1:] + pts[:1]):
         page.line(a, b, RL.GREY, RL.T.W_LEAD * 0.85, dash="16 12")
-
-
-def _glyph_box(view, seat, off, gw, gh):
-    """The rectangle a beslag glyph is drawn in, on its exploded seat."""
-    cx, cy = view.xy((seat[0] + off[0], seat[1] + off[1], seat[2] + off[2]))
-    w = GLYPH_H * gw / gh
-    return (cx - w / 2, cy - GLYPH_H / 2, w, GLYPH_H)
 
 
 # ---------------------------------------------------------------------------
@@ -238,9 +213,10 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # The step's own parts, out of the same universe every other page reads.
     new = [uni[label] for label in st["highlight"]]
     panel = next(p for p in new if p.label.startswith("Movable Panel"))
-    # V2: four lekter now - two along Y under the span, two across X under the
-    # front corners - and all four travel with the plate, so all four are in
-    # this picture and all four get their screw pattern drawn.
+    # V2/V3: four lekter - two along Y that both stiffen the plate and guide
+    # it past the trinnenden, two across X under the front corners - and all
+    # four travel with the plate, so all four are in this picture and all four
+    # get their screw pattern drawn.
     battens = [p for p in new if "Batten" in p.label]
 
     # A camera of this page's own: the step's angles, but looking at the
@@ -272,35 +248,20 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                 return name
         return prefix
 
-    n_wood = by_prefix("Treskrue 5×60")
-    n_m6 = by_prefix("Senkhodeskrue M6×30")
-    n_edge = by_prefix("Treskrue 4×16")
-    n_rear = by_prefix("Vinkelbeslag 20×20")
-    n_front = by_prefix("Vinkelbeslag 40×40")
+    n_wood = by_prefix("Treskrue 5×40")
 
-    # V2: THE BESLAG ARE READ OFF THE MODEL, NOT OFF THIS FILE. Every one of
-    # them is a solid now, so their seats and their outlines come from the
-    # same angle_boxes() the geometry is built from - this page cannot draw a
-    # bracket the bed does not have, or draw it somewhere else.
-    beslag = []
+    # V3: THE HOLES ARE READ OFF THE MODEL, NOT OFF THIS FILE. Every screw in
+    # this step is a solid with an anchor, and the anchor is the bottom of its
+    # counterbore - so the pattern drawn on the lekt's underside is the
+    # pattern the model drilled, and this page cannot invent one.
+    holes_by_batten = {}
     for f in G.FASTENER_SPECS:
-        if f["kind"] != "plate" or f["jid"] not in ("J13c", "J13d"):
+        if not f["jid"].startswith("J13") or f.get("solid") is None:
             continue
-        boxes = G.angle_boxes(f)
-        ext = tuple((min(min(lo[j], hi[j]) for lo, hi in boxes),
-                     max(max(lo[j], hi[j]) for lo, hi in boxes))
-                    for j in range(3))
-        rear = f["jid"] == "J13c"
-        beslag.append(dict(
-            name=n_rear if rear else n_front,
-            svg=("vinkelbeslag-20x20x40.svg" if rear
-                 else "vinkelbeslag-40x40x20.svg"),
-            seat=(sum(ext[0]) / 2, sum(ext[1]) / 2, panel.extents[2][0]),
-            off=DROP_REAR if rear else DROP_FRONT,
-            screw=(n_edge if rear else n_m6), per=(2 if rear else 1),
-            holes=(None if rear else (sum(ext[1]) / 2,)),
-            box3=ext))
-    beslag.sort(key=lambda b: (b["off"][1], b["seat"][0]))
+        holes_by_batten.setdefault(f["through"].label, []).append(
+            (f["anchor"][0], f["anchor"][1]))
+    for key in holes_by_batten:
+        holes_by_batten[key].sort()
     # --- the page rectangle -----------------------------------------------
     # Worked out from the exploded assembly's own bounds: the bed is not in
     # this picture, so the shared page box for this camera would leave the
@@ -309,21 +270,17 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     for pl in batten_lines:
         art += pl
     ax0, ay0, ax1, ay1 = RL.bounds(art)
-    for b in beslag:
-        gw, gh = RL.glyph_dims(os.path.join(glyph_dir, b["svg"]))
-        gx, gy, gwd, ghd = _glyph_box(view, b["seat"], b["off"], gw, gh)
-        ax0, ay0 = min(ax0, gx), min(ay0, gy)
-        ax1, ay1 = max(ax1, gx + gwd), max(ay1, gy + ghd)
 
     # The arrows are sized to the DRAWING, not to the page: the page is wide
     # because it carries a column of panels beside the drawing, and an arrow
     # scaled to that would be longer than the plate is deep. They stand ON the
     # bounds worked out above, so the room they and their badges need has to
-    # go back INTO those bounds before the page is cut - every arrow on this
-    # page rises out of the plate's top face.
+    # go back INTO those bounds before the page is cut - and after V3 every
+    # arrow on this page comes UP from under the lekt, so the room is at the
+    # bottom.
     arrow_len = max(ax1 - ax0, ay1 - ay0) * 0.115
-    ay1 += arrow_len + 2.8 * RL.T.BADGE_R
-    ay0 -= 2.6 * RL.T.BADGE_R
+    ay0 -= arrow_len + 2.8 * RL.T.BADGE_R
+    ay1 += 2.6 * RL.T.BADGE_R
     ax0 -= 1.6 * RL.T.BADGE_R
     ax1 += 3.2 * RL.T.BADGE_R
 
@@ -353,68 +310,48 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # line where the piece disappears under it.
     for ext in batten_ext:
         _insertion(page, RL, view, ext, DROP_BATTEN, ends=4)
-    for b in beslag:
-        _insertion(page, RL, view, b["box3"], b["off"], ends=1, steel=True)
 
     _draw_solid(page, RL, view, plate_lines, panel.extents, (0, 0, 0),
                 RL.T.W_NEW)
     for ext, pl in zip(batten_ext, batten_lines):
         _draw_solid(page, RL, view, pl, _shift(ext, DROP_BATTEN), (0, 0, 0),
                     RL.T.W_NEW)
-    for b in beslag:
-        gw, gh = RL.glyph_dims(os.path.join(glyph_dir, b["svg"]))
-        gx, gy, gwd, ghd = _glyph_box(view, b["seat"], b["off"], gw, gh)
-        b["glyph_box"] = (gx, gy, gwd, ghd)
-        page.embed_svg(os.path.join(glyph_dir, b["svg"]), gx, gy, gwd, ghd)
 
     # --- what is driven, where, and which way -----------------------------
-    # Every fastener in this step goes STRAIGHT DOWN through the plate: the
-    # 5x60 into the lekt's top edge, the M6 through the plate into the
-    # beslag's flange with the nut underneath.
+    # V3: every fastener in this step goes STRAIGHT UP, out of a counterbore
+    # in the lekt's underside and 13 mm into the plate. So the drilling
+    # pattern belongs on the LEKT, in its exploded place, and the plate's top
+    # face stays empty - which is the whole point of the step.
     top = panel.extents[2][1]
     marks = []
     for i, b_part in enumerate(battens):
-        (bx0, bx1), (by0, by1), _bz = b_part.extents
-        # The screw pattern itself, drawn on the plate's face: the holes
-        # evenly along the lekt under it, which is the answer to "where do I
-        # drill" that no arrow can give. The mark then points at ONE of them
-        # and says how many. V2: the two CROSS battens run the other way and
-        # take five screws, not six, so the row follows the lekt's own long
-        # axis instead of assuming Y.
-        cross = "Front Batten" in b_part.label
-        per = 5 if cross else 6
-        if cross:
-            holes = [((bx0 + (bx1 - bx0) * (k + 0.5) / per,
-                       (by0 + by1) / 2)) for k in range(per)]
-        else:
-            holes = [(((bx0 + bx1) / 2,
-                       by0 + (by1 - by0) * (k + 0.5) / per))
-                     for k in range(per)]
+        (bx0, bx1), (by0, by1), (bz0, _bz1) = b_part.extents
+        holes = holes_by_batten.get(b_part.label, [])
+        under = bz0 + DROP_BATTEN[2]
+        # The ghost outline stays on the PLATE - it is what says how far in
+        # from the plate's edges the lekt sits, and after V3 that number
+        # (116 mm to the side edge) is the mechanism.
         _ghost(page, RL, view, (bx0, bx1), (by0, by1), top)
         for hx, hy in holes:
-            page.circle(view.xy((hx, hy, top)), 9.0,
-                        stroke=RL.INK, width=RL.T.W_LEAD)
-        # The two long lekter stand only 178 mm apart in X, which is next to
-        # nothing across the page, so their marks are staggered ALONG the
-        # lekt - the one axis that has room here - and towards opposite ends,
-        # far enough that the two arrows do not stand on each other.
+            # DASHED, because the face they are in is the one turned away from
+            # this camera: the counterbores are drilled in the lekt's
+            # UNDERSIDE, and this page keeps the convention that a line you
+            # cannot see is dashed.
+            page.circle(view.xy((hx, hy, under)), 9.0,
+                        stroke=RL.INK, width=RL.T.W_LEAD, dash="9 7")
+        # The two long lekter stand 372 mm apart in X, but at this camera that
+        # is still little across the page, so their marks are staggered ALONG
+        # the lekt - the one axis that has room here - and towards opposite
+        # ends, far enough that the two arrows do not stand on each other.
+        if not holes:
+            continue
         pick = holes[0] if i % 2 else holes[-1]
         marks.append(dict(
-            name=n_wood, per=per, letter=letters.get(n_wood),
-            p3=(pick[0], pick[1], top),
+            name=n_wood, per=len(holes), letter=letters.get(n_wood),
+            p3=(pick[0], pick[1], under),
             parts=(panel, b_part)))
-    for b in beslag:
-        _ghost(page, RL, view, b["box3"][0], b["box3"][1], top)
-        if b["holes"]:
-            for hy in b["holes"]:
-                page.circle(view.xy((b["seat"][0], hy, top)), 6.5,
-                            stroke=RL.INK, width=RL.T.W_LEAD)
-        marks.append(dict(
-            name=b["screw"], per=b["per"], letter=letters.get(b["screw"]),
-            p3=(b["seat"][0], b["seat"][1], top),
-            parts=(panel,)))
 
-    dx, dy = view.dir_xy((0, 0, -1))
+    dx, dy = view.dir_xy((0, 0, 1))
     nrm = math.hypot(dx, dy) or 1.0
     dx, dy = dx / nrm, dy / nrm
     bx = x0 + (col_w - inset_w) / 2
@@ -453,21 +390,6 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     RL.assert_badges_anchored(page)
     RL.assert_marks_own_element(page, occ)
 
-    # The beslag themselves carry a badge each, beside the glyph: they ARE
-    # items in the step's table, not just something screws go through.
-    for b in beslag:
-        gx, gy, gwd, ghd = b["glyph_box"]
-        letter = letters.get(b["name"])
-        at = (gx + gwd / 2, gy - RL.T.BADGE_R * 1.35)
-        if letter:
-            # Under the glyph and touching it: R6 holds for every badge on
-            # this page too, and here the element is the beslag's own drawing.
-            RL.badge(page, at, letter, owner=(b["name"], gx, gy),
-                     body=((gx + gwd / 2, gy), (gx + gwd / 2, gy + ghd),
-                           gwd / 2))
-        marks.append(dict(name=b["name"], per=1, letter=letter,
-                          p3=b["seat"], parts=(panel,)))
-
     # --- where it lands ----------------------------------------------------
     thumb_view = RL.View(RL.camera_direction(az, elev), centre)
     tx = x0 + (col_w - cell_w) / 2
@@ -495,5 +417,6 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
             RL.PAGE_FILL_SCALES[n] = width / page.w
     print(f"  steg {n:2d}  eksplodert plate: {len(plate_lines)} + "
           f"{sum(len(p) for p in batten_lines)} kanter / "
-          f"{len(beslag)} beslag / {len(marks)} festepunkt -> {png}")
+          f"{sum(len(v) for v in holes_by_batten.values())} kontraborhull / "
+          f"{len(marks)} festepunkt -> {png}")
     return png

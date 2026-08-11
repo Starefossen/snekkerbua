@@ -1,7 +1,7 @@
-"""V2 proof sheets: the four brackets seated, and the three lock options.
+"""V3 proof sheets: the two guide battens seated, and the three lock options.
 
 Three pages, all drawn off the model through the same hidden-line machinery
-every manual page uses - so nothing here can show a bracket the bed does not
+every manual page uses - so nothing here can show a part the bed does not
 have, or show it anywhere but where the model puts it:
 
   docs/preview/mekanisme-v2-bed.png     the two corners in BED mode
@@ -9,13 +9,22 @@ have, or show it anywhere but where the model puts it:
   docs/preview/laasvalg.png             the three bed-mode lock options, all
                                         drawn at the corner each would live in
 
-The two mechanism sheets are CLOSE-UPS: one panel per corner, cropped to the
-bracket and the wood it sits on, with the measured clearances written on. The
-table-mode sheet is the same two crops 223 mm higher, which is the claim the
-whole design rests on - one bracket geometry, two seats.
+WHAT CHANGED IN V3, AND WHY THESE SHEETS STILL EXIST. They were drawn to prove
+a claim about four angle brackets: one bracket geometry, two seats. There are
+no brackets now. The claim they prove instead is stronger and it is made of
+wood: the two long battens run down the 48 x 37 mm free shafts beside the rung
+ends with 2 mm of clearance, and because rung 1 and rung 2 end at exactly the
+same X, the SAME two battens find the SAME two end faces at both heights. So
+the two mechanism sheets are still one page per corner and still the same two
+crops 223 mm apart - the left crop is the rear seat (wood on wood, nothing
+between the panel and the rail), the right crop is the guide in its shaft with
+the measured clearance written on it.
 
 The lock sheet is a comparison, not a decision. None of the three is wired
-into the model: the shopping list has a TBD line and the manual says so.
+into the model: the shopping list has a TBD line and the manual says so. V3
+moved the point they all act at onto WOOD - the front cross batten's end face
+against the front bench rail's end face, across the side gap - and that pair
+of faces only exists in bed mode, which is the argument for the location.
 """
 
 import math
@@ -28,25 +37,31 @@ sys.path.insert(0, os.path.join(ROOT, "tools"))
 
 OUT = os.path.join(ROOT, "docs", "preview")
 
-# The two corners each sheet shows, as (title, which bracket joint, side).
-CORNERS = [("BAKRE HJØRNE — beslaget hviler på opplegget", "J13c", -1.0),
-           ("TRINNENDEN — beslaget står 2 mm klar av treet", "J13d", -1.0)]
-
-CROP = 125.0          # model mm around the bracket centre, half-width
+CROP = 145.0          # model mm around the crop centre, half-width
 CAM = (318.0, 26.0)   # azimuth, elevation - the manual's own three-quarter
 
 
-def bracket_specs(G, jid, side):
-    return [f for f in G.FASTENER_SPECS
-            if f["jid"] == jid and f["kind"] == "plate"
-            and f.get("side") == side]
-
-
-def bracket_extents(G, f):
-    boxes = G.angle_boxes(f)
-    return tuple((min(min(lo[j], hi[j]) for lo, hi in boxes),
-                  max(max(lo[j], hi[j]) for lo, hi in boxes))
-                 for j in range(3))
+# ---------------------------------------------------------------------------
+# THE TWO CORNERS EACH SHEET SHOWS
+# ---------------------------------------------------------------------------
+# Each one is a point in the model, per mode, and a title. They are computed
+# off the parts, not typed: the rear crop is centred on the panel's rear left
+# corner where it sits on the support, the front crop on the left rung end -
+# the one place in this bed where 2 mm decides whether the panel goes in.
+def corners(G, mode):
+    panel = G.MODES[mode]
+    batts = G.PANEL_BATTENS[id(panel)]
+    guide = min((b for b in batts
+                 if abs((b.extents[1][1] - b.extents[1][0]) - G.BATTEN_LEN)
+                 < G.TOL), key=lambda b: b.extents[0][0])
+    seat_z = panel.extents[2][0]
+    return [
+        ("BAKRE HJØRNE — platen ligger rett på tre",
+         (G.PANEL_X0, (G.LEDGER_BACK_Y0 + G.BACK_RAIL_Y1) / 2, seat_z)),
+        ("TRINNENDEN — styrelekta 2 mm klar av endeveden",
+         (G.LADDER_INNER_L, (G.RUNG_Y0 + guide.extents[1][1]) / 2,
+          seat_z - G.RUNG_T / 2)),
+    ]
 
 
 def near_parts(G, panel, centre, reach):
@@ -64,78 +79,46 @@ def near_parts(G, panel, centre, reach):
     return out
 
 
-def solids_of(G, specs):
-    return [f["solid"] for f in specs if f.get("solid") is not None]
-
-
-def draw_corner(RL, G, page, box, mode, jid, side, title, extra=None):
-    """One cropped panel: the wood in grey, the steel in black, on `box`."""
+def draw_corner(RL, G, page, box, mode, centre, title, extra=None):
+    """One cropped panel: the fixed bed in grey, the panel unit in black."""
     panel = G.MODES[mode]
-    dz = (G.PANEL_MODE_LIFT if mode == "table_mode" else 0)
-    specs = bracket_specs(G, jid, side)
-    assert specs, f"{jid}: no bracket on side {side}"
-    ext = bracket_extents(G, specs[0])
-    centre = (sum(ext[0]) / 2, sum(ext[1]) / 2, sum(ext[2]) / 2 + dz)
     view = RL.View(RL.camera_direction(*CAM), centre)
 
     wood = near_parts(G, panel, centre, CROP * 1.9)
-    # Only the bracket and its own fasteners. The 22 wood screws that hold the
-    # lekter on are a different question and they would fill this crop.
-    steel = []
-    for f in G.FASTENER_SPECS:
-        if f.get("solid") is None or f["jid"] not in ("J13c", "J13d"):
-            continue
-        e = (bracket_extents(G, f) if f["kind"] == "plate"
-             else _solid_ext(f["solid"]))
-        c = tuple(sum(e[j]) / 2 for j in range(3))
-        c = (c[0], c[1], c[2] + dz)
-        if math.dist(c, centre) <= CROP * 1.6:
-            steel.append(f["solid"])
+    unit = set(id(p) for p in [panel] + list(G.PANEL_BATTENS[id(panel)]))
+    fixed = [p for p in wood if id(p) not in unit]
+    moving = [p for p in wood if id(p) in unit]
 
-    from build123d import Location
-    shift = Location((0, 0, dz))
-    wood_lines = RL.project(view, [("w", RL.comp(wood))])["w"]
-    steel_lines = RL.project(
-        view, [("s", RL.comp([s.moved(shift) for s in steel]))])["s"] \
-        if steel else []
+    fixed_lines = RL.project(view, [("w", RL.comp(fixed))])["w"] if fixed \
+        else []
+    move_lines = RL.project(view, [("m", RL.comp(moving))])["m"] if moving \
+        else []
 
-    # The crop window, in the view's own frame, centred on the bracket.
+    # The crop window, in the view's own frame, centred on the corner.
     cx, cy = view.xy(centre)
     k = min(box[2], box[3]) / (2 * CROP)
 
     def fit(plines):
-        out = []
-        for pl in plines:
-            seg = [((x - cx) * k + box[0] + box[2] / 2,
-                    (y - cy) * k + box[1] + box[3] / 2) for x, y in pl]
-            out.append(seg)
-        return out
+        return [[((x - cx) * k + box[0] + box[2] / 2,
+                  (y - cy) * k + box[1] + box[3] / 2) for x, y in pl]
+                for pl in plines]
 
     def at(p3):
-        x, y = view.xy((p3[0], p3[1], p3[2] + dz))
+        x, y = view.xy(p3)
         return ((x - cx) * k + box[0] + box[2] / 2,
                 (y - cy) * k + box[1] + box[3] / 2)
 
     page.rect(box[0], box[1], box[2], box[3], fill="#ffffff",
               stroke=RL.GREY, width=RL.T.W_PHANTOM)
     page.clip_rect_begin(box)
-    page.polylines(fit(wood_lines), RL.GREY, RL.T.W_NEW * 0.55)
-    page.polylines(fit(steel_lines), RL.INK, RL.T.W_NEW * 0.95)
+    page.polylines(fit(fixed_lines), RL.GREY, RL.T.W_NEW * 0.55)
+    page.polylines(fit(move_lines), RL.INK, RL.T.W_NEW * 0.95)
     if extra:
         extra(page, at, k)
     page.clip_rect_end()
     page.text((box[0] + box[2] / 2, box[1] - RL.T.BADGE_R * 1.1), title,
-              RL.T.BADGE_R * 0.95, anchor="middle", weight="bold")
-    return view, at, k, ext
-
-
-def _solid_ext(s):
-    bb = s.bounding_box()
-    return ((bb.min.X, bb.max.X), (bb.min.Y, bb.max.Y), (bb.min.Z, bb.max.Z))
-
-
-def note(page, RL, p, text, size=None):
-    page.text(p, text, size or RL.T.BADGE_R * 0.8)
+              RL.T.BADGE_R * 0.8, anchor="middle", weight="bold")
+    return view, at, k
 
 
 def sheet(RL, G, mode, path):
@@ -143,7 +126,7 @@ def sheet(RL, G, mode, path):
     pad = 60.0
     cell = 520.0
     w = pad * 3 + cell * 2
-    h = pad * 3.4 + cell
+    h = pad * 3.9 + cell
     page = RL.Page(0, 0, w, h)
     lift = G.PANEL_MODE_LIFT if mode == "table_mode" else 0
     seat = G.PANEL_UNDER_BED + lift
@@ -151,12 +134,17 @@ def sheet(RL, G, mode, path):
     page.text((pad, h - pad * 0.9),
               f"{head} — platens underside Z {seat:.0f}", RL.T.BADGE_R * 1.4,
               weight="bold")
-    page.text((pad, h - pad * 1.55),
-              "Samme fire beslag, samme sted på platen, i begge stillinger. "
-              "Grått = tre, svart = stål.", RL.T.BADGE_R * 0.85)
-    for i, (title, jid, side) in enumerate(CORNERS):
+    page.text((pad, h - pad * 1.45),
+              "Grått = fast del av sengen, svart = plateenheten.",
+              RL.T.BADGE_R * 0.8)
+    page.text((pad, h - pad * 1.9),
+              f"Ikke ett beslag: styringen er de to lange lektene mot "
+              f"trinnendene, {G.PANEL_FIT} mm hver vei, "
+              f"{G.BATTEN_GUIDE_ENGAGE_Z}×{G.BATTEN_GUIDE_ENGAGE_Y} mm tre "
+              f"mot endeved.", RL.T.BADGE_R * 0.8)
+    for i, (title, centre) in enumerate(corners(G, mode)):
         box = (pad + i * (cell + pad), pad * 1.6, cell, cell)
-        draw_corner(RL, G, page, box, mode, jid, side, title)
+        draw_corner(RL, G, page, box, mode, centre, title)
     page.write(path + ".svg", 1600)
     RL.to_png(path + ".svg", path + ".png", 1600)
     return path + ".png"
@@ -165,32 +153,42 @@ def sheet(RL, G, mode, path):
 # ---------------------------------------------------------------------------
 # THE THREE LOCK OPTIONS
 # ---------------------------------------------------------------------------
-# All three act at the SAME place: the hole in the rear bracket's horizontal
-# flange, straight down into the rear support. That is the only place on the
-# panel where steel already lies flat on the wood it has to be held against,
-# which is why the lock question and the bracket question have one answer
-# between them.
+# All three act at the SAME place, and after V3 that place is wood: the front
+# cross batten's outboard END FACE against the front bench rail's END FACE,
+# across the 24 mm side gap. The two faces are side by side, in one Z band and
+# one Y band, in BED mode - and 223 mm apart in table mode, where the lock
+# therefore has nothing to take hold of. A lock that cannot be left on in the
+# wrong position is a property of the geometry, not of the instructions.
 LOCKS = [
     ("i   SKRUE — verktøy kreves",
-     "To treskruer 5×40 ned gjennom flikens hull i vangen. EN 747 4.1.1: en "
-     "omstilling som krever verktøy er den konforme grunnlinjen. Koster en "
-     "skrutrekker hver gang platen skal flyttes."),
+     "Flattstål 60×24×3 lagt over spalten, to treskruer 5×40 i hver ende — "
+     "én ned i tverrlekta, én ned i vangeenden. EN 747 4.1.1: en omstilling "
+     "som krever verktøy er den konforme grunnlinjen. Koster en skrutrekker "
+     "hver gang platen skal flyttes."),
     ("ii  FINGERSKRUE — verktøyfri",
-     "Samme hull, men en riflet fingerskrue M6 i en gjengeinnsats i vangen. "
-     "Lifetime-sengene gjør nettopp dette. Verktøyfritt betyr at et barn òg "
-     "kan gjøre det: EN-messig et grensetilfelle, ikke en konform løsning."),
+     "Samme flattstål, men festet med en riflet fingerskrue M6 i en "
+     "gjengeinnsats i vangeenden. Lifetime-sengene gjør nettopp dette. "
+     "Verktøyfritt betyr at et barn òg kan gjøre det: EN-messig et "
+     "grensetilfelle, ikke en konform løsning."),
     ("iii OVERSENTERLÅS — trekker platen ned",
-     "Spennlås (Jula 012270-klassen) med bøylen i fliken og huset på vangen. "
-     "Den TREKKER platen ned mot opplegget, så klapringen forsvinner - men "
-     "den er også verktøyfri, og huset står 24 mm opp i sideklaringen."),
+     "Spennlås (Jula 012270-klassen) med huset på vangeenden og bøylen i "
+     "tverrlekta. Den TREKKER platen ned mot opplegget, så klapringen "
+     "forsvinner — men den er også verktøyfri, og huset står ut i "
+     "sideklaringen."),
 ]
 
 
-def lock_overlay(kind):
-    """The drawing each option adds at the rear bracket's flange hole."""
-    def draw(page, at, k, RL=None, G=None):
-        pass
-    return draw
+def lock_centre(G):
+    """The point all three lock options act at, read off the model."""
+    rail = next(p for p in G.parts
+                if p.label.startswith("Bench Rail Front")
+                and p.extents[0][1] <= G.PANEL_X0)
+    nose = next(b for b in G.PANEL_BATTENS[id(G.panel_bed)]
+                if abs(b.extents[0][0] - G.PANEL_X0) < G.TOL)
+    return ((rail.extents[0][1] + nose.extents[0][0]) / 2,
+            (max(rail.extents[1][0], nose.extents[1][0])
+             + min(rail.extents[1][1], nose.extents[1][1])) / 2,
+            nose.extents[2][1])
 
 
 def lock_sheet(RL, G, path):
@@ -202,23 +200,29 @@ def lock_sheet(RL, G, path):
     cap_h = RL.T.BADGE_R * (2.4 + 6 * 1.05)
     box_y = pad + cap_h
     w = pad * 4 + cell * 3
-    h = box_y + cell + pad * 2.6
+    h = box_y + cell + pad * 3.4
     page = RL.Page(0, 0, w, h)
+    centre = lock_centre(G)
     page.text((pad, h - pad * 0.9), "LÅS I SENGESTILLING — TRE VALG",
               RL.T.BADGE_R * 1.4, weight="bold")
-    page.text((pad, h - pad * 1.5),
-              "Alle tre virker i det samme hullet: den vannrette fliken på "
-              "det bakre vinkelbeslaget, rett ned i opplegget. Ingen av dem "
-              "er valgt — modellen har en TBD-linje i beslaglista.",
-              RL.T.BADGE_R * 0.85)
+    page.text((pad, h - pad * 1.4),
+              f"Alle tre virker på det samme stedet: tverrlektas endeved mot "
+              f"enden av den fremre benkevangen, tvers over de {G.LOCK_GAP} "
+              f"mm i sideklaringen.", RL.T.BADGE_R * 0.8)
+    page.text((pad, h - pad * 1.8),
+              f"I BORDSTILLING står tverrlekta {G.PANEL_MODE_LIFT} mm høyere "
+              f"og vangen er ikke der, så låsen kan ikke stå på i feil "
+              f"stilling — det følger av geometrien.", RL.T.BADGE_R * 0.8)
+    page.text((pad, h - pad * 2.2),
+              "Ingen av dem er valgt — modellen har en TBD-linje i "
+              "beslaglista.", RL.T.BADGE_R * 0.8)
     for i, (title, body) in enumerate(LOCKS):
         box = (pad + i * (cell + pad), box_y, cell, cell)
 
         def extra(page, at, k, i=i):
-            _lock_art(page, RL, G, at, k, i)
+            _lock_art(page, RL, G, at, k, i, centre)
 
-        draw_corner(RL, G, page, box, "bed_mode", "J13c", -1.0, title,
-                    extra=extra)
+        draw_corner(RL, G, page, box, "bed_mode", centre, title, extra=extra)
         y = box[1] - RL.T.BADGE_R * 2.4
         for line in _wrap(body, 52):
             page.text((box[0], y), line, RL.T.BADGE_R * 0.72)
@@ -241,29 +245,28 @@ def _wrap(text, n):
     return out
 
 
-def _lock_art(page, RL, G, at, k, which):
-    """The lock itself, drawn in the model's own space at the flange hole."""
-    f = bracket_specs(G, "J13c", -1.0)[0]
-    ext = bracket_extents(G, f)
-    # The hole: the middle of the horizontal flange, out in the side gap.
-    hx = (ext[0][0] + G.PANEL_X0) / 2 if ext[0][1] <= G.PANEL_X0 else \
-         (ext[0][1] + G.PANEL_X1) / 2
-    hy = sum(ext[1]) / 2
-    top = G.PANEL_UNDER_BED + G.BRACKETS["vinkel20"]["t"]
+def _lock_art(page, RL, G, at, k, which, centre):
+    """The lock itself, drawn in the model's own space across the side gap."""
+    hx, hy, top = centre
     w = RL.T.W_NEW * 0.95
-    if which == 0:                      # two wood screws, heads on the flange
-        for dy in (-9.0, 9.0):
-            head = at((hx, hy + dy, top))
-            tip = at((hx, hy + dy, top - 40.0))
-            page.line(head, tip, RL.INK, w)
-            page.dot(head, RL.T.BADGE_R * 0.32, colour=RL.INK)
-    elif which == 1:                    # knurled thumbscrew
-        head = at((hx, hy, top + 26.0))
-        neck = at((hx, hy, top))
-        tip = at((hx, hy, top - 30.0))
-        page.line(neck, tip, RL.INK, w)
+    half = G.LOCK_GAP / 2 + 18.0          # the strap laps 18 mm onto each end
+    if which == 0:                        # flat strap, two screws per end
+        page.line(at((hx - half, hy, top)), at((hx + half, hy, top)),
+                  RL.INK, w * 1.3)
+        for dx in (-half + 9.0, half - 9.0):
+            head = at((hx + dx, hy, top))
+            page.line(head, at((hx + dx, hy, top - 40.0)), RL.INK, w)
+            page.dot(head, RL.T.BADGE_R * 0.3, colour=RL.INK)
+    elif which == 1:                      # knurled thumbscrew, same strap
+        page.line(at((hx - half, hy, top)), at((hx + half, hy, top)),
+                  RL.INK, w * 1.3)
+        page.line(at((hx - half + 9.0, hy, top)),
+                  at((hx - half + 9.0, hy, top - 40.0)), RL.INK, w)
+        head = at((hx + half - 9.0, hy, top + 26.0))
+        neck = at((hx + half - 9.0, hy, top))
+        page.line(neck, at((hx + half - 9.0, hy, top - 30.0)), RL.INK, w)
         page.line(head, neck, RL.INK, w)
-        r = abs(at((hx + 13.0, hy, top + 26.0))[0] - head[0])
+        r = abs(at((hx + half - 9.0 + 13.0, hy, top + 26.0))[0] - head[0])
         page.circle(head, r, fill="#ffffff", stroke=RL.INK, width=w)
         for a in range(0, 360, 30):
             p0 = (head[0] + r * 0.62 * math.cos(math.radians(a)),
@@ -271,15 +274,15 @@ def _lock_art(page, RL, G, at, k, which):
             p1 = (head[0] + r * math.cos(math.radians(a)),
                   head[1] + r * math.sin(math.radians(a)))
             page.line(p0, p1, RL.INK, w * 0.5)
-    else:                               # over-centre latch
-        base = at((hx, hy + 22.0, top))
-        body = at((hx, hy + 22.0, top - 34.0))
-        arm = at((hx, hy - 26.0, top + 30.0))
-        hookl = at((hx, hy - 4.0, top + 4.0))
+    else:                                 # over-centre latch
+        base = at((hx - half, hy, top - 6.0))
+        body = at((hx - half, hy, top - 40.0))
+        arm = at((hx + half, hy, top + 30.0))
+        hook = at((hx + half - 6.0, hy, top + 2.0))
         page.line(base, body, RL.INK, w)
         page.line(base, arm, RL.INK, w * 1.1)
-        page.line(arm, hookl, RL.INK, w)
-        page.line(hookl, at((hx, hy - 4.0, top - 8.0)), RL.INK, w)
+        page.line(arm, hook, RL.INK, w)
+        page.line(hook, at((hx + half - 6.0, hy, top - 12.0)), RL.INK, w)
         page.dot(base, RL.T.BADGE_R * 0.3, colour=RL.INK)
         page.dot(arm, RL.T.BADGE_R * 0.26, colour=RL.INK)
 

@@ -1481,11 +1481,12 @@ class Page:
             f'<path d="{d}" fill="none" stroke="{colour}" '
             f'stroke-width="{_f(width)}"/>')
 
-    def circle(self, c, r, fill="none", stroke=INK, width=None):
+    def circle(self, c, r, fill="none", stroke=INK, width=None, dash=None):
         width = T.W_RULE if width is None else width
+        d = f' stroke-dasharray="{dash}"' if dash else ""
         self.body.append(
             f'<circle cx="{_f(c[0])}" cy="{_f(-c[1])}" r="{_f(r)}" '
-            f'fill="{fill}" stroke="{stroke}" stroke-width="{_f(width)}"/>')
+            f'fill="{fill}" stroke="{stroke}" stroke-width="{_f(width)}"{d}/>')
 
     def dot(self, c, r, colour=INK):
         self.body.append(
