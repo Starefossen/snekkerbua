@@ -77,7 +77,9 @@ of this repo is a story rather than a proof. The same gate runs on every push
 release.
 
 You also need `rsvg-convert` for the PNGs (`brew install librsvg`, or
-`apt install librsvg2-bin`); the workflow file is the exact list.
+`apt install librsvg2-bin`); the workflow file is the exact list. `mise run
+pdf` wants two more: a Chrome to print with and poppler to read the result back
+with.
 
 `git log --oneline` is the design journal — each commit is one decision, with
 the reasoning in the body.

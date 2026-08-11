@@ -135,7 +135,10 @@ it yourself: **[Verify it yourself](../../README.md#verify-it-yourself)**.
 
 Needs [`mise`](https://mise.jdx.dev/). Everything else is
 `pip install -r requirements.txt` (build123d, markdown) plus `rsvg-convert` for
-the PNGs and a headless Chrome for the PDF.
+the PNGs. The PDF additionally wants a headless Chrome to print with and
+poppler to read the result back with — the page numbers in the table of
+contents are looked up in the finished PDF, not guessed:
+`brew install librsvg poppler` (or `apt install librsvg2-bin poppler-utils`).
 
 The task file is `mise.toml` at the repo root and every task already runs in
 this directory, so these work unchanged from anywhere in the tree:

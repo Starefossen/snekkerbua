@@ -76,9 +76,10 @@ jobs:
             exit 1
           fi
 
-      # rsvg-convert rasterises the fastener glyphs during the build.
+      # rsvg-convert rasterises the fastener glyphs during the build; poppler
+      # is what reads the finished PDF back to number its table of contents.
       - name: System packages
-        run: brew install --quiet librsvg
+        run: brew install --quiet librsvg poppler
 
       # Same toolchain definition the check workflow uses: python 3.11 and
       # requirements.txt, both out of mise.toml.

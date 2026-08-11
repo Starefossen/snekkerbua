@@ -747,6 +747,18 @@ def main() -> None:
         )
     print(f"Utskriftsmotor: {chrome}")
 
+    # Innholdsfortegnelsen far sidetallene sine ved a LESE den ferdige PDF-en:
+    # pdfinfo teller sidene og pdftotext sier hvilken side hver merkelapp
+    # havnet pa. Uten poppler er det ingen andre runde, og det skal sies her -
+    # ikke som en FileNotFoundError midt i kjoringen.
+    poppler = [t for t in ("pdfinfo", "pdftotext") if not shutil.which(t)]
+    if poppler:
+        sys.exit(
+            f"Fant ikke {' og '.join(poppler)} (poppler). Sidetallene i "
+            "innholdsfortegnelsen leses ut av den ferdige PDF-en, sa den "
+            "trengs: `brew install poppler` / `apt install poppler-utils`."
+        )
+
     marks = PageMarks()
     doc = assemble_html(marks)
 
