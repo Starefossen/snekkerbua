@@ -9,20 +9,20 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 
 | Post | Behov | Kjøp |
 |---|---:|---|
-| Treskrue 5×60 forsenket Torx | 92 | 1 pk. à 100 stk. |
+| Treskrue 5×60 forsenket Torx | 102 | 1 pk. à 200 stk. |
 | Treskrue 5×40 forsenket Torx | 20 | 1 pk. à 20 stk. |
 | Treskrue 6×90 forsenket Torx | 18 | 1 pk. à 20 stk. |
 | Treskrue 6×80 forsenket Torx | 14 | 1 pk. à 20 stk. |
 | Treskrue 6×120 forsenket Torx | 12 | 1 pk. à 20 stk. |
 | Filtknott / møbeltapp ⌀40 | 8 | 1 pk. |
-| Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | 8 | 10 sett |
 | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | 6 | 6 stk. |
+| Treskrue 4×16 forsenket Torx | 4 | 1 pk. à 8 stk. |
 | Treskrue 5×70 forsenket Torx | 4 | 1 pk. à 8 stk. |
+| Vinkelbeslag 40×40×20 | 4 | 6 stk. |
 | Vinkelbeslag 90×90×40×2,5 varmforsinket | 4 | 6 stk. |
-| Krokplate, bøyd av flattstål 30×4 | 2 | kappes av flattstål 30×4 — én meter dekker alle stålbeslagene |
+| Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | 2 | 4 sett |
 | Treskrue 6×60 forsenket Torx | 2 | 1 pk. à 8 stk. |
-| U-brakett, bøyd av flattstål 30×4 | 2 | kappes av flattstål 30×4 — én meter dekker alle stålbeslagene |
-| Vinkelbeslag 40×40×20 | 2 | 4 stk. |
+| Vinkelbeslag 20×20×40 varmforsinket | 2 | 4 stk. |
 
 **Behov** er antallet sengen bruker; **Kjøp** er den minste pakken som finnes i butikk og dekker behovet. Treskruer selges i pakker à 8 / 20 / 25 / 50 / 100 / 200 stk. Står det samme tall i begge kolonnene, har du ingen reserve — ta en pakke opp. En skrue du mangler koster en kveld.
 
@@ -47,8 +47,9 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 | **J11** | Benkespile → benkevange (per spileende) | 20 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom spilen, forsenk hodet under flaten | Ovenfra, ned i benkevangen |
 | **J12** | Bordbærelekt → bakre hjørnestolpe (endeskjøt) | 2 | 1× Vinkelbeslag 40×40×20 + 2× Treskrue 5×40 forsenket Torx | ⌀3 i stolpen og i lekta — forboring er et krav, lekta er tynn | Beslaget på stolpens innerflate, med den vannrette fliken UNDER lektas ende, så lekta har noe å hvile på og ikke bare henger i skruer |
 | **J13a** | Avstivningslekt → løs plate | 2 | 6× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom platen, forsenk og propp | Ovenfra, ned i lektas overkant |
-| **J13b** | U-brakett → løs plate (omslutter trinnet) | 2 | 1× U-brakett, bøyd av flattstål 30×4 + 2× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | ⌀6,5 gjennom platen, forsenk ⌀13 i oversiden | Ovenfra gjennom platen; mutteren under |
-| **J13c** | Krokplate → løs plate (griper om benkevangens forkant) | 2 | 1× Krokplate, bøyd av flattstål 30×4 + 2× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | ⌀6,5 gjennom platen, forsenk ⌀13 i oversiden | Ovenfra gjennom platen; kroken henger ned foran vangen og vender innover under den. Plasseres i X klar av avstivningslektene |
+| **J13b** | Fremre tverrlekt → løs plate | 2 | 5× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom platen, forsenk og propp | Ovenfra, ned i tverrlektas overkant. Lekta ligger med forkanten 2 mm bak trinnet — det er innsettingsklaringen, ikke slark |
+| **J13c** | Vinkelbeslag → platens sidekant, bakre hjørne (hviler på bakre opplegg) | 2 | 1× Vinkelbeslag 20×20×40 varmforsinket + 2× Treskrue 4×16 forsenket Torx | ⌀3 i platens kant — forbor, 18 mm kant sprekker ellers | Beslaget står i sideklaringen mellom platen og benkespilen: den vannrette fliken ligger PÅ bakre benkevange (sengestilling) eller PÅ bordbærelekta (bordstilling), ved siden av platen og aldri under den, og den oppstående fliken skrus til platens sidekant. Hullet i den vannrette fliken er låsepunktet |
+| **J13d** | Vinkelbeslag → løs plate ved trinnenden (sidestopp i begge stillinger) | 2 | 1× Vinkelbeslag 40×40×20 + 1× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | ⌀6,5 gjennom platen, forsenk ⌀13 i oversiden | Beslaget skrus opp under platen like utenfor trinnenden, med den nedhengende fliken langs trinnets ENDEVED — 2 mm klar av den. Trinn 1 og trinn 2 ender på samme X, så samme beslag styrer platen i begge stillinger |
 | **J14** | Veggfeste — gjennom den bakre sidevangen inn i stenderne | 1 | 6× Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | ⌀8 gjennom vangen, forsenk for hodet; veggen etter festetype | Rett gjennom vangen inn i veggen. Vangen ligger flatt mot veggen i hele sin lengde, så festet trenger ingen kloss og ingen brakett |
 | **J15** | Filtknott under stolpe og stubbefot | 8 | 1× Filtknott / møbeltapp ⌀40 | — | Slås i endeveden før reisning |
 

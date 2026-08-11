@@ -33,7 +33,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 
 Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannrette deler i samme plan. Det laget er monteringsflaten mot veggen. Og det MÅ bygges som én ramme: den bakre benkevangen og bordbærelekta er kappet til å fylle nøyaktig mellom de to stolpene, så de lar seg ikke tre inn etterpå.
 
-**Deler:** 1× Benkevange, bak (gjennomgående) 48×73 × 1794 · 1× Bordbærelekt, bak 21×95 × 1794 · 2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1065 · 1× Sidevange, øvre 48×98 × 1984
+**Deler:** 1× Benkevange, bak (gjennomgående) 48×73 × 1794 · 1× Bordbærelekt, bak 48×73 × 1794 · 2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1065 · 1× Sidevange, øvre 48×98 × 1984
 
 **Festemidler:** 4× Treskrue 5×40 forsenket Torx · 4× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×90 forsenket Torx · 2× Vinkelbeslag 40×40×20
 
@@ -231,29 +231,31 @@ To bånd, hvert delt i to bord, med klatreåpningen i midten. Man klatrer GJENNO
 * Mål åpningene over madrassoverflaten mot tallene i nøkkelmålene. De er sikkerhetskravet i denne sengen.
 * Ta tak i toppbordet og dra. Det skal ikke gi seg.
 
-## Steg 10 — Løs plate med avstivningslekter og beslag
+## Steg 10 — Løs plate med lekter og fire vinkelbeslag
 
-Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke, og beslagene på den er konstruksjon — de holder platen nede OG avstiver stigen.
+Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke og senkes rett ned igjen — i begge stillinger. Lektene under den gjør den stiv; de fire vinkelbeslagene sier bare HVOR den skal ligge. Vekten hviler på tre, ikke på stål.
 
-**Deler:** 2× Avstivningslekt under plate 48×73 × 715 · 1× Løs plate 18 mm plate, 680 bred × 800
+**Deler:** 2× Avstivningslekt under plate 48×73 × 713 · 1× Løs plate 18 mm plate, 652 bred × 798 · 2× Tverrlekt under platens forkant 48×73 × 213
 
-**Festemidler:** 2× Krokplate, bøyd av flattstål 30×4 · 8× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 · 12× Treskrue 5×60 forsenket Torx · 2× U-brakett, bøyd av flattstål 30×4
+**Festemidler:** 2× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 · 4× Treskrue 4×16 forsenket Torx · 22× Treskrue 5×60 forsenket Torx · 2× Vinkelbeslag 20×20×40 varmforsinket · 2× Vinkelbeslag 40×40×20
 
-**Ledd:** J13a, J13b, J13c — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+**Ledd:** J13a, J13b, J13c, J13d — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
 **Slik gjør du:**
 
-1. Skru de to avstivningslektene under platen, på høykant, fra platens overside (J13a). Forsenk og propp hullene.
-1. Bøy eller kjøp de to U-brakettene og monter dem i platens forkant slik at de omslutter trinnet (J13b).
-1. Monter de to krokplatene under platen, like innenfor bakkanten (J13c). De skal henge ned foran den bakre benkevangen og gripe inn under den.
-1. Legg platen i sengestilling: bakkanten på den bakre benkevangen, forkanten på trinn 1. Krokplatene skal falle ned foran vangen og hake seg inn under den.
-1. Prøv bordstilling: bakkanten på bordbærelekta, forkanten på trinn 2. Samme plate, samme beslag. I denne stillingen henger krokplatene fritt like foran bordbærelekta og virker som stopp framover.
+1. Skru de to lange avstivningslektene under platen, på høykant, fra platens overside (J13a). Forsenk og propp hullene.
+1. Skru de to korte tverrlektene under platens forkant, én under hvert fremre hjørne, med enden mot den lange lekta (J13b). De bærer det hjørnet trinnet ikke rekker fram til.
+1. Skru et vinkelbeslag på hver sidekant av platen ved bakkanten (J13c), med den vannrette fliken utover. Den fliken skal ligge PÅ opplegget, ved siden av platen — aldri under den.
+1. Bolt et vinkelbeslag opp under platen ved hver trinnende (J13d), med den nedhengende fliken langs trinnets ende. Den skal stå 2 mm klar av treet: det er passingen som gjør at platen går ned, og samtidig stoppet som holder den på plass sidelengs.
+1. Legg platen i sengestilling: senk den rett ned mellom benkene, bakkanten på den bakre benkevangen, forkanten på trinn 1. Den skal falle på plass uten å tvinges.
+1. Prøv bordstilling: samme plate, samme beslag, rett ned på bordbærelekta og trinn 2. Trinn 1 og trinn 2 ender på samme sted i lengderetningen, så beslagene finner trinnenden i begge stillinger.
 
 **Sjekk før du går videre:**
 
-* Løft i platens forkant. Den skal ikke kunne vippes opp — U-brakettene låser den til trinnet.
+* Skyv platen sidelengs. Den skal bevege seg et par millimeter og så stoppe mot beslagene ved trinnenden — begge veier.
 * Platen skal ligge stødig på begge opplegg i begge stillinger, uten å vippe.
-* Rist i stigen sidelengs med platen i. Platen er stigens avstivning nedad — sitter den løst, gynger stigen.
+* Se etter at ingen av de bakre beslagfliken har kommet under platen. Kommer den under, hviler platen på stål og vipper.
+* Platen kan løftes rett opp. Det skal den kunne — låsen i sengestilling er en egen avgjørelse, ikke en del av dette steget.
 
 ## Steg 11 — Madrass og sluttsjekk
 

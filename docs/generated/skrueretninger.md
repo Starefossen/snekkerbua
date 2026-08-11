@@ -29,14 +29,15 @@ Hvilken vei hver skrue drives, og hvorfor akkurat den veien. Hvert festemiddel i
 | **J10** | 1× Vinkelbeslag 90×90×40×2,5 varmforsinket | **Vinkelbeslag 90×90×40×2,5 varmforsinket** ligger på stubbefot og bøyer om hjørnet til benkevange; skruene i fliken går mot høyre vegg (speilvendt i den andre enden) | fastsatt |
 | **J11** | 1× Treskrue 5×60 forsenket Torx | **Treskrue 5×60 forsenket Torx** gjennom benkespile (36×98) → inn i benkevange (48×73), rett ned | utledet av tykkelsene |
 | **J12** | 1× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom beslagfliken og mot venstre vegg inn i bakre hjørnestolpe (36×98) (speilvendt i den andre enden) | fastsatt |
-| **J12** | 1× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom beslagfliken og rett opp inn i bordbærelekt (21×95) | fastsatt |
+| **J12** | 1× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom beslagfliken og rett opp inn i bordbærelekt (48×73) | fastsatt |
 | **J12** | 1× Vinkelbeslag 40×40×20 | **Vinkelbeslag 40×40×20** ligger på bakre hjørnestolpe og bøyer om hjørnet til bordbærelekt; skruene i fliken går mot venstre vegg (speilvendt i den andre enden) | fastsatt |
-| **J13a** | 6× Treskrue 5×60 forsenket Torx | **Treskrue 5×60 forsenket Torx** gjennom løs plate (18 mm plate, 680 bred) → inn i avstivningslekt (48×73), rett ned | utledet av tykkelsene |
-| **J13b** | 2× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | **Senkhodeskrue M6×30 + skive M6 + låsemutter M6** rett ned gjennom løs plate (18 mm plate, 680 bred) og beslagets flik, mutter under — den klemmer beslaget til platen, den går ikke inn i rungetrinn | fastsatt — gjennomgående bolt i platen, mutter under |
-| **J13b** | 1× U-brakett, bøyd av flattstål 30×4 | **U-brakett, bøyd av flattstål 30×4** ligger under løs plate, bøyer ned forbi kanten og griper om rungetrinn | fastsatt |
-| **J13c** | 1× Krokplate, bøyd av flattstål 30×4 | **Krokplate, bøyd av flattstål 30×4** ligger under løs plate, bøyer ned forbi kanten og griper om bakre benkevange | fastsatt |
-| **J13c** | 2× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | **Senkhodeskrue M6×30 + skive M6 + låsemutter M6** rett ned gjennom løs plate (18 mm plate, 680 bred) og beslagets flik, mutter under — den klemmer beslaget til platen, den går ikke inn i bakre benkevange | fastsatt — gjennomgående bolt i platen, mutter under |
+| **J13a** | 6× Treskrue 5×60 forsenket Torx | **Treskrue 5×60 forsenket Torx** gjennom løs plate (18 mm plate, 652 bred) → inn i avstivningslekt (48×73), rett ned | utledet av tykkelsene |
+| **J13b** | 5× Treskrue 5×60 forsenket Torx | **Treskrue 5×60 forsenket Torx** gjennom løs plate (18 mm plate, 652 bred) → inn i fremre tverrlekt (48×73), rett ned | utledet av tykkelsene |
+| **J13c** | 2× Treskrue 4×16 forsenket Torx | **Treskrue 4×16 forsenket Torx** gjennom beslagfliken og mot høyre vegg inn i løs plate (18 mm plate, 652 bred) (speilvendt i den andre enden) | fastsatt |
+| **J13c** | 1× Vinkelbeslag 20×20×40 varmforsinket | **Vinkelbeslag 20×20×40 varmforsinket** ligger på løs plate og bøyer om hjørnet til bakre benkevange; skruene i fliken går mot høyre vegg (speilvendt i den andre enden) | fastsatt |
+| **J13d** | 1× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | **Senkhodeskrue M6×30 + skive M6 + låsemutter M6** rett ned gjennom løs plate (18 mm plate, 652 bred) og beslagets flik, mutter under — den klemmer beslaget til platen, den går ikke inn i rungetrinn | fastsatt — gjennomgående bolt i platen, mutter under |
+| **J13d** | 1× Vinkelbeslag 40×40×20 | **Vinkelbeslag 40×40×20** ligger på løs plate og bøyer om hjørnet til rungetrinn; skruene i fliken går rett opp | fastsatt |
 
-**8** av retningene er utledet av målene alene, **19** er fastsatt for hånd. Alle sammen kontrolleres ved hver bygging: skruekroppen må ha hodet i plan med flaten den drives fra, spissen inne i delen den tar tak i, og ingenting av seg selv i noen annen del.
+**9** av retningene er utledet av målene alene, **19** er fastsatt for hånd. Alle sammen kontrolleres ved hver bygging: skruekroppen må ha hodet i plan med flaten den drives fra, spissen inne i delen den tar tak i, og ingenting av seg selv i noen annen del.
 
 Veggfestet (J14) står ikke her — det går rett gjennom den bakre sidevangen og inn i veggen, og har ingen andre del å gå inn i.

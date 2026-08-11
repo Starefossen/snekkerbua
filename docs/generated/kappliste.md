@@ -7,8 +7,7 @@ Alle mål i mm. Alle kutt er 90°. Posisjonen er delens plass i modellen: X lang
 
 | Del | Dim. | Lengde | Ant. | X | Y | Z |
 |---|---|---:|---:|---|---|---|
-| Løs plate | 18 mm plate, 680 bred | **800** | 1 | 655..1335 | -48..752 | 259..277 |
-| Bordbærelekt, bak | 21×95 | **1794** | 1 | 98..1892 | -48..-27 | 387..482 |
+| Løs plate | 18 mm plate, 652 bred | **798** | 1 | 669..1321 | -48..750 | 259..277 |
 | Stigevange | 36×48 | **1700** | 2 | 787..1203 (fordelt) | 752..788 | 0..1700 |
 | Stigekloss | 36×48 | **73** | 8 | 835..1155 (fordelt) | 715..788 | 163..910 (fordelt) |
 | Bærekloss, benkevange (J9-B / J9-F) | 36×48 | **48** | 4 | 0..1990 (fordelt) | -48..752 (fordelt) | 138..186 (fordelt) |
@@ -19,17 +18,19 @@ Alle mål i mm. Alle kutt er 90°. Posisjonen er delens plass i modellen: X lang
 | Benkespile | 36×98 | **800** | 10 | 98..1892 (fordelt) | -48..752 | 259..295 |
 | Køyespile | 36×98 | **800** | 14 | 20..1970 (fordelt) | -48..752 | 1163..1199 |
 | Benkevange, bak (gjennomgående) | 48×73 | **1794** | 1 | 98..1892 | -48..0 | 186..259 |
-| Avstivningslekt under plate | 48×73 | **715** | 2 | 882..1108 (fordelt) | 0..715 | 186..259 |
+| Bordbærelekt, bak | 48×73 | **1794** | 1 | 98..1892 | -48..0 | 409..482 |
+| Avstivningslekt under plate | 48×73 | **713** | 2 | 882..1108 (fordelt) | 0..713 | 186..259 |
 | Benkevange, front (bit) | 48×73 | **642** | 2 | 3..1987 (fordelt) | 704..752 | 186..259 |
 | Rungetrinn | 48×73 | **320** | 4 | 835..1155 | 715..788 | 211..958 (fordelt) |
+| Tverrlekt under platens forkant | 48×73 | **213** | 2 | 669..1321 (fordelt) | 665..713 | 186..259 |
 | Stubbefot | 48×73 | **186** | 4 | 572..1418 (fordelt) | -48..752 (fordelt) | 0..186 |
 | Sidevange, øvre | 48×98 | **1984** | 2 | 3..1987 | -48..752 (fordelt) | 1065..1163 |
 | Endebjelke | 48×98 | **836** | 2 | 98..1892 (fordelt) | -48..788 | 967..1065 |
 
-**69 deler i alt.**
+**71 deler i alt.**
 
 «(fordelt)» betyr at delene i den raden står på flere posisjoner langs den aksen; kolonnen viser da hele området de dekker. Nøyaktige posisjoner står i [nøkkelmål](nokkelmal.md).
 
-Fordelt på dimensjon: **36×98** 32 stk. · **36×48** 18 stk. · **48×73** 13 stk. · **48×98** 4 stk. · **18 mm plate, 680 bred** 1 stk. · **21×95** 1 stk.
+Fordelt på dimensjon: **36×98** 32 stk. · **36×48** 18 stk. · **48×73** 16 stk. · **48×98** 4 stk. · **18 mm plate, 652 bred** 1 stk.
 
 Sagstopp for hovedbordet 36×98: **2 stk. à 1700** · **2 stk. à 1065** · **4 stk. à 832** · **24 stk. à 800** — 4 innstillinger på sagen, ikke én per del.

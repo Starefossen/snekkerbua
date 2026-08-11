@@ -607,21 +607,6 @@ def glyph_angle_bracket(a: float, c: float, b: float, t: float,
     return elems, _bbox(pts)
 
 
-def glyph_hook_plate(t: float = 4.0, width: float = 30.0):
-    """Krokplate: flens på oversiden av platen, ned foran vangen, inn under."""
-    cl = [(0.0, 2.0), (48.0, 2.0), (48.0, 46.0), (26.0, 46.0), (26.0, 37.0)]
-    return bent_bar(cl, t, width, outer_sign=-1.0,
-                    holes=[(0, 0.24, 3.3), (0, 0.68, 3.3)])
-
-
-def glyph_u_bracket(t: float = 4.0, width: float = 30.0):
-    """U-brakett: firkantet U som omslutter trinnet, flenser opp/ut."""
-    cl = [(0.0, 2.0), (13.0, 2.0), (13.0, 50.0), (55.0, 50.0),
-          (55.0, 2.0), (68.0, 2.0)]
-    return bent_bar(cl, t, width, outer_sign=-1.0,
-                    holes=[(0, 0.5, 3.3), (4, 0.5, 3.3)])
-
-
 def glyph_felt_pad(dia: float = 40.0):
     """Filtknott / møbeltapp: lav skive i oppriss med senterpinne opp."""
     r = dia / 2.0
@@ -687,16 +672,6 @@ def build_fastener(name: str):
         t = dims[3] if len(dims) > 3 else 2.0
         return glyph_angle_bracket(a, c, b, max(t, 2.0), rib=a >= 70.0)
 
-    if key.startswith("krokplate"):
-        t = dims[1] if len(dims) > 1 else 4.0
-        w = dims[0] if len(dims) > 0 else 30.0
-        return glyph_hook_plate(t, w)
-
-    if key.startswith("u-brakett") or key.startswith("u brakett"):
-        t = dims[1] if len(dims) > 1 else 4.0
-        w = dims[0] if len(dims) > 0 else 30.0
-        return glyph_u_bracket(t, w)
-
     if key.startswith("veggfeste"):
         d = dims[0] if len(dims) > 0 else 8.0
         L = dims[1] if len(dims) > 1 else 100.0
@@ -719,14 +694,12 @@ def build_fastener(name: str):
 def is_screw_glyph(name: str) -> bool:
     """Bærer denne glyfen en skruesilhuett fyllkoden kan legges i?
 
-    Beslagene gjør ikke. En vinkel eller en krokplate er allerede tegnet som
-    en heldekt plate i isometri, og et mønster oppå den ville lest som en
-    tredje slags flate - de beholder platelooken sin, slik snittene i
-    innsettpanelet også gjør.
+    Beslagene gjør ikke. En vinkel er allerede tegnet som en heldekt plate i
+    isometri, og et mønster oppå den ville lest som en tredje slags flate -
+    de beholder platelooken sin, slik snittene i innsettpanelet også gjør.
     """
     key = _ascii_fold(name)
-    return not (key.startswith("vinkelbeslag") or key.startswith("krokplate")
-                or key.startswith("u-brakett") or key.startswith("u brakett")
+    return not (key.startswith("vinkelbeslag")
                 or key.startswith("filtknott") or "mobeltapp" in key)
 
 
@@ -1432,6 +1405,7 @@ def emit_pictograms(out_dir: str) -> dict[str, str]:
 
 FASTENERS = [
     "Treskrue 5×40 forsenket Torx",
+    "Treskrue 4×16 forsenket Torx",
     "Treskrue 5×60 forsenket Torx",
     "Treskrue 5×70 forsenket Torx",
     "Treskrue 6×60 forsenket Torx",
@@ -1439,10 +1413,9 @@ FASTENERS = [
     "Treskrue 6×90 forsenket Torx",
     "Treskrue 6×120 forsenket Torx",
     "Senkhodeskrue M6×30 + skive M6 + låsemutter M6",
+    "Vinkelbeslag 20×20×40 varmforsinket",
     "Vinkelbeslag 40×40×20",
     "Vinkelbeslag 90×90×40×2,5 varmforsinket",
-    "Krokplate, bøyd av flattstål 30×4",
-    "U-brakett, bøyd av flattstål 30×4",
     "Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)",
     "Filtknott / møbeltapp ⌀40",
 ]

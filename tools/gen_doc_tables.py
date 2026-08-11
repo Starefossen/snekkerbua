@@ -529,38 +529,54 @@ def build_steps(G):
         ),
         dict(
             n=10,
-            title="Løs plate med avstivningslekter og beslag",
-            parts=["Movable Panel (bed mode)", "Panel Stiffener Batten *"],
+            title="Løs plate med lekter og fire vinkelbeslag",
+            parts=["Movable Panel (bed mode)", "Panel Stiffener Batten *",
+                   "Panel Front Batten *"],
             camera=(325, 30, 3.6),
             page="panel",
             intro="Platen er ikke et løst bord. Den er en liten enhet som "
-                  "løftes ut i ett stykke, og beslagene på den er "
-                  "konstruksjon — de holder platen nede OG avstiver stigen.",
+                  "løftes ut i ett stykke og senkes rett ned igjen — i begge "
+                  "stillinger. Lektene under den gjør den stiv; de fire "
+                  "vinkelbeslagene sier bare HVOR den skal ligge. Vekten "
+                  "hviler på tre, ikke på stål.",
             do=[
-                "Skru de to avstivningslektene under platen, på høykant, fra "
-                  "platens overside (J13a). Forsenk og propp hullene.",
-                "Bøy eller kjøp de to U-brakettene og monter dem i platens "
-                  "forkant slik at de omslutter trinnet (J13b).",
-                "Monter de to krokplatene under platen, like innenfor "
-                  "bakkanten (J13c). De skal henge ned foran den "
-                  "bakre benkevangen og gripe inn under den.",
-                "Legg platen i sengestilling: bakkanten på den bakre "
-                  "benkevangen, forkanten på trinn 1. Krokplatene skal falle "
-                  "ned foran vangen og hake seg inn under den.",
-                "Prøv bordstilling: bakkanten på bordbærelekta, forkanten på "
-                  "trinn 2. Samme plate, samme beslag. I denne stillingen "
-                  "henger krokplatene fritt like foran bordbærelekta og "
-                  "virker som stopp framover.",
+                "Skru de to lange avstivningslektene under platen, på "
+                  "høykant, fra platens overside (J13a). Forsenk og propp "
+                  "hullene.",
+                "Skru de to korte tverrlektene under platens forkant, én "
+                  "under hvert fremre hjørne, med enden mot den lange lekta "
+                  "(J13b). De bærer det hjørnet trinnet ikke rekker fram "
+                  "til.",
+                "Skru et vinkelbeslag på hver sidekant av platen ved "
+                  "bakkanten (J13c), med den vannrette fliken utover. Den "
+                  "fliken skal ligge PÅ opplegget, ved siden av platen — "
+                  "aldri under den.",
+                "Bolt et vinkelbeslag opp under platen ved hver trinnende "
+                  "(J13d), med den nedhengende fliken langs trinnets ende. "
+                  "Den skal stå 2 mm klar av treet: det er passingen som "
+                  "gjør at platen går ned, og samtidig stoppet som holder "
+                  "den på plass sidelengs.",
+                "Legg platen i sengestilling: senk den rett ned mellom "
+                  "benkene, bakkanten på den bakre benkevangen, forkanten på "
+                  "trinn 1. Den skal falle på plass uten å tvinges.",
+                "Prøv bordstilling: samme plate, samme beslag, rett ned på "
+                  "bordbærelekta og trinn 2. Trinn 1 og trinn 2 ender på "
+                  "samme sted i lengderetningen, så beslagene finner "
+                  "trinnenden i begge stillinger.",
             ],
             check=[
-                "Løft i platens forkant. Den skal ikke kunne vippes opp — "
-                  "U-brakettene låser den til trinnet.",
+                "Skyv platen sidelengs. Den skal bevege seg et par "
+                  "millimeter og så stoppe mot beslagene ved trinnenden — "
+                  "begge veier.",
                 "Platen skal ligge stødig på begge opplegg i begge "
                   "stillinger, uten å vippe.",
-                "Rist i stigen sidelengs med platen i. Platen er stigens "
-                  "avstivning nedad — sitter den løst, gynger stigen.",
+                "Se etter at ingen av de bakre beslagfliken har kommet under "
+                  "platen. Kommer den under, hviler platen på stål og vipper.",
+                "Platen kan løftes rett opp. Det skal den kunne — låsen i "
+                  "sengestilling er en egen avgjørelse, ikke en del av dette "
+                  "steget.",
             ],
-            joints={'J13a': 2, 'J13b': 2, 'J13c': 2},
+            joints={'J13a': 2, 'J13b': 2, 'J13c': 2, 'J13d': 2},
         ),
         dict(
             n=11,
@@ -690,6 +706,7 @@ NO_NAMES = {
     "Table ledger, back": "Bordbærelekt, bak",
     "Movable panel": "Løs plate",
     "Panel stiffener batten (M4)": "Avstivningslekt under plate",
+    "Panel front cross batten (M5)": "Tverrlekt under platens forkant",
 }
 
 
@@ -715,6 +732,7 @@ LABEL_TO_CUT = [
     ("Table Ledger Back", "Table ledger, back"),
     ("Movable Panel", "Movable panel"),
     ("Panel Stiffener Batten", "Panel stiffener batten (M4)"),
+    ("Panel Front Batten", "Panel front cross batten (M5)"),
 ]
 
 

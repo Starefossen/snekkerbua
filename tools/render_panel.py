@@ -59,8 +59,10 @@ import os
 # well past it, and the beslag past THEM, sideways along Y as well so they
 # come out beyond the very edge each one grips.
 DROP_BATTEN = (0.0, 0.0, -1150.0)
-DROP_HOOK = (0.0, -900.0, -1500.0)
-DROP_U = (0.0, 700.0, -1150.0)
+DROP_REAR = (0.0, -900.0, -1500.0)     # the two rear brackets, out past the
+                                       # back edge they seat beside
+DROP_FRONT = (0.0, 700.0, -1150.0)     # the two rung-end brackets, out past
+                                       # the front edge they stand at
 
 GLYPH_H = 165.0        # drawn height of a beslag glyph, model mm
 BRACKET_W = 30.0       # flattstål 30x4, the beslag's width across the plate
@@ -236,7 +238,10 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # The step's own parts, out of the same universe every other page reads.
     new = [uni[label] for label in st["highlight"]]
     panel = next(p for p in new if p.label.startswith("Movable Panel"))
-    battens = [p for p in new if "Stiffener Batten" in p.label]
+    # V2: four lekter now - two along Y under the span, two across X under the
+    # front corners - and all four travel with the plate, so all four are in
+    # this picture and all four get their screw pattern drawn.
+    battens = [p for p in new if "Batten" in p.label]
 
     # A camera of this page's own: the step's angles, but looking at the
     # panel instead of at the bed, and lifted a little so the reader sees
@@ -269,29 +274,33 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
 
     n_wood = by_prefix("Treskrue 5×60")
     n_m6 = by_prefix("Senkhodeskrue M6×30")
-    n_hook = by_prefix("Krokplate")
-    n_u = by_prefix("U-brakett")
+    n_edge = by_prefix("Treskrue 4×16")
+    n_rear = by_prefix("Vinkelbeslag 20×20")
+    n_front = by_prefix("Vinkelbeslag 40×40")
 
-    # The beslag: no solid in the model, so a glyph at the exploded seat.
-    # (glyph file, seat point on the plate's underside, explosion vector)
+    # V2: THE BESLAG ARE READ OFF THE MODEL, NOT OFF THIS FILE. Every one of
+    # them is a solid now, so their seats and their outlines come from the
+    # same angle_boxes() the geometry is built from - this page cannot draw a
+    # bracket the bed does not have, or draw it somewhere else.
     beslag = []
-    for x in HOOK_X:
-        beslag.append(dict(name=n_hook, svg="krokplate-30x4.svg",
-                           seat=(x, sum(HOOK_HOLE_Y) / 2, panel.extents[2][0]),
-                           off=DROP_HOOK, holes=HOOK_HOLE_Y,
-                           box3=((x - BRACKET_W / 2, x + BRACKET_W / 2),
-                                 (HOOK_HOLE_Y[0] - 12, HOOK_HOLE_Y[1] + 14),
-                                 (panel.extents[2][0] - 48,
-                                  panel.extents[2][0]))))
-    for x in U_X:
-        beslag.append(dict(name=n_u, svg="u-brakett-30x4.svg",
-                           seat=(x, sum(U_HOLE_Y) / 2, panel.extents[2][0]),
-                           off=DROP_U, holes=U_HOLE_Y,
-                           box3=((x - BRACKET_W / 2, x + BRACKET_W / 2),
-                                 (U_HOLE_Y[0] - 14, panel.extents[1][1]),
-                                 (panel.extents[2][0] - 48,
-                                  panel.extents[2][0]))))
-
+    for f in G.FASTENER_SPECS:
+        if f["kind"] != "plate" or f["jid"] not in ("J13c", "J13d"):
+            continue
+        boxes = G.angle_boxes(f)
+        ext = tuple((min(min(lo[j], hi[j]) for lo, hi in boxes),
+                     max(max(lo[j], hi[j]) for lo, hi in boxes))
+                    for j in range(3))
+        rear = f["jid"] == "J13c"
+        beslag.append(dict(
+            name=n_rear if rear else n_front,
+            svg=("vinkelbeslag-20x20x40.svg" if rear
+                 else "vinkelbeslag-40x40x20.svg"),
+            seat=(sum(ext[0]) / 2, sum(ext[1]) / 2, panel.extents[2][0]),
+            off=DROP_REAR if rear else DROP_FRONT,
+            screw=(n_edge if rear else n_m6), per=(2 if rear else 1),
+            holes=(None if rear else (sum(ext[1]) / 2,)),
+            box3=ext))
+    beslag.sort(key=lambda b: (b["off"][1], b["seat"][0]))
     # --- the page rectangle -----------------------------------------------
     # Worked out from the exploded assembly's own bounds: the bed is not in
     # this picture, so the shared page box for this camera would leave the
@@ -366,31 +375,42 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     marks = []
     for i, b_part in enumerate(battens):
         (bx0, bx1), (by0, by1), _bz = b_part.extents
-        # The screw pattern itself, drawn on the plate's face: six holes
+        # The screw pattern itself, drawn on the plate's face: the holes
         # evenly along the lekt under it, which is the answer to "where do I
         # drill" that no arrow can give. The mark then points at ONE of them
-        # and says 6x.
-        holes = [(by0 + (by1 - by0) * (k + 0.5) / 6) for k in range(6)]
+        # and says how many. V2: the two CROSS battens run the other way and
+        # take five screws, not six, so the row follows the lekt's own long
+        # axis instead of assuming Y.
+        cross = "Front Batten" in b_part.label
+        per = 5 if cross else 6
+        if cross:
+            holes = [((bx0 + (bx1 - bx0) * (k + 0.5) / per,
+                       (by0 + by1) / 2)) for k in range(per)]
+        else:
+            holes = [(((bx0 + bx1) / 2,
+                       by0 + (by1 - by0) * (k + 0.5) / per))
+                     for k in range(per)]
         _ghost(page, RL, view, (bx0, bx1), (by0, by1), top)
-        for hy in holes:
-            page.circle(view.xy(((bx0 + bx1) / 2, hy, top)), 9.0,
+        for hx, hy in holes:
+            page.circle(view.xy((hx, hy, top)), 9.0,
                         stroke=RL.INK, width=RL.T.W_LEAD)
-        # The two lekter stand only 178 mm apart in X, which is next to
+        # The two long lekter stand only 178 mm apart in X, which is next to
         # nothing across the page, so their marks are staggered ALONG the
         # lekt - the one axis that has room here - and towards opposite ends,
         # far enough that the two arrows do not stand on each other.
-        pick = holes[0] if i == 1 else holes[-1]
+        pick = holes[0] if i % 2 else holes[-1]
         marks.append(dict(
-            name=n_wood, per=6, letter=letters.get(n_wood),
-            p3=((bx0 + bx1) / 2, pick, top),
+            name=n_wood, per=per, letter=letters.get(n_wood),
+            p3=(pick[0], pick[1], top),
             parts=(panel, b_part)))
     for b in beslag:
         _ghost(page, RL, view, b["box3"][0], b["box3"][1], top)
-        for hy in b["holes"]:
-            page.circle(view.xy((b["seat"][0], hy, top)), 6.5,
-                        stroke=RL.INK, width=RL.T.W_LEAD)
+        if b["holes"]:
+            for hy in b["holes"]:
+                page.circle(view.xy((b["seat"][0], hy, top)), 6.5,
+                            stroke=RL.INK, width=RL.T.W_LEAD)
         marks.append(dict(
-            name=n_m6, per=2, letter=letters.get(n_m6),
+            name=b["screw"], per=b["per"], letter=letters.get(b["screw"]),
             p3=(b["seat"][0], b["seat"][1], top),
             parts=(panel,)))
 

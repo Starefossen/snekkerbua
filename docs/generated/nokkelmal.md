@@ -27,7 +27,7 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **259** | benkevangens overkant = trinn 1 = platens underside i sengestilling |
 | **277** | platens overside i sengestilling |
 | **295** | benkeoverflate (sittehøyde) |
-| **387** | bordbærelektas underkant |
+| **409** | bordbærelektas underkant |
 | **482** | bordbærelektas overkant = trinn 2 = platens underside i bordstilling |
 | **500** | bordplate |
 | **720** | trinn 3 |
@@ -76,7 +76,7 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | Åpent gulv mellom benkene | 645..1345 (700 mm) |
 | Gangpassasje ved siden av stigen | 142 mm på hver side |
 | Stubbeføtter | 572..645 og 1345..1418 |
-| Løs plate | 655..1335 (680 mm bred) |
+| Løs plate | 669..1321 (652 mm bred) |
 | Avstivningslekter | 882..930 og 1060..1108 |
 
 **Køyespiler:** 14 stk., første spile starter på X 20, deling 142,46 mm, siste spile slutter på X 1970. Åpning mellom spilene 44,46 mm.
@@ -106,7 +106,7 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 | Madrass, overkøye | **standard 80 × 200 cm.** Sengen er dimensjonert rundt den; liggeflaten er 1990 × 800 mm, så madrassen presses de siste 10 mm inn mellom veggene og fyller bredden nøyaktig |
 | Madrasstykkelse | **140–326 mm.** Tynnere enn 140 og åpningen opp til nedre rekkverksbånd blir større enn 75 mm; tykkere enn 326 og rekkverket står mindre enn 160 mm over madrassen. Modellen tegner 140 mm |
 | Madrassens sideveis vandring | ingen — madrassen fyller hele bredden mellom veggen og de fremre stolpene |
-| Puter i underetasjen, dybde | 800 mm |
+| Puter i underetasjen, dybde | 798 mm |
 | Pute over venstre benk | 645 mm bred |
 | Pute over platen (midten) | 700 mm bred |
 | Pute over høyre benk | 645 mm bred |

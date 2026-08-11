@@ -12,7 +12,7 @@
 |---:|---:|---:|
 | **1990 mm** | **836 mm** | **1700 mm** |
 
-69 deler · 12 steg (0–11) · 2 personer · passer standard madrass 80 × 200 cm
+71 deler · 12 steg (0–11) · 2 personer · passer standard madrass 80 × 200 cm
 
 Sengen står inntil bakveggen og inntil begge sidevegger, og skrus fast i bakveggen. **Bygg bakfra og utover.**
 
@@ -54,20 +54,20 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 
 | | |
 |:---:|---|
-| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **92x** | Treskrue 5×60 forsenket Torx |
+| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **102x** | Treskrue 5×60 forsenket Torx |
 | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="44"> **20x** | Treskrue 5×40 forsenket Torx |
 | <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="44"> **18x** | Treskrue 6×90 forsenket Torx |
 | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **14x** | Treskrue 6×80 forsenket Torx |
 | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="44"> **12x** | Treskrue 6×120 forsenket Torx |
 | <img src="img/beslag/filtknott-d40.svg" alt="Filtknott / møbeltapp ⌀40" height="44"> **8x** | Filtknott / møbeltapp ⌀40 |
-| <img src="img/beslag/senkhodeskrue-m6x30.svg" alt="Senkhodeskrue M6×30 + skive M6 + låsemutter M6" height="44"> **8x** | Senkhodeskrue M6×30 + skive M6 + låsemutter M6 |
 | <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="44"> **6x** | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) |
+| <img src="img/beslag/treskrue-4x16.svg" alt="Treskrue 4×16 forsenket Torx" height="44"> **4x** | Treskrue 4×16 forsenket Torx |
 | <img src="img/beslag/treskrue-5x70.svg" alt="Treskrue 5×70 forsenket Torx" height="44"> **4x** | Treskrue 5×70 forsenket Torx |
+| <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="84"> **4x** | Vinkelbeslag 40×40×20 |
 | <img src="img/beslag/vinkelbeslag-90x90x40.svg" alt="Vinkelbeslag 90×90×40×2,5 varmforsinket" height="179"> **4x** | Vinkelbeslag 90×90×40×2,5 varmforsinket |
-| <img src="img/beslag/krokplate-30x4.svg" alt="Krokplate, bøyd av flattstål 30×4" height="92"> **2x** | Krokplate, bøyd av flattstål 30×4 |
+| <img src="img/beslag/senkhodeskrue-m6x30.svg" alt="Senkhodeskrue M6×30 + skive M6 + låsemutter M6" height="44"> **2x** | Senkhodeskrue M6×30 + skive M6 + låsemutter M6 |
 | <img src="img/beslag/treskrue-6x60.svg" alt="Treskrue 6×60 forsenket Torx" height="44"> **2x** | Treskrue 6×60 forsenket Torx |
-| <img src="img/beslag/u-brakett-30x4.svg" alt="U-brakett, bøyd av flattstål 30×4" height="98"> **2x** | U-brakett, bøyd av flattstål 30×4 |
-| <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="84"> **2x** | Vinkelbeslag 40×40×20 |
+| <img src="img/beslag/vinkelbeslag-20x20x40.svg" alt="Vinkelbeslag 20×20×40 varmforsinket" height="47"> **2x** | Vinkelbeslag 20×20×40 varmforsinket |
 
 Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.md). Hvilken vei hver enkelt drives, og hvorfor: [skrueretninger](generated/skrueretninger.md).
 
@@ -77,8 +77,7 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 
 | Del | Dim. | Lengde | Ant. |
 |---|---|---:|---:|
-| Løs plate | 18 mm plate, 680 bred | 800 | **1** |
-| Bordbærelekt, bak | 21×95 | 1794 | **1** |
+| Løs plate | 18 mm plate, 652 bred | 798 | **1** |
 | Stigevange | 36×48 | 1700 | **2** |
 | Stigekloss | 36×48 | 73 | **8** |
 | Bærekloss, benkevange (J9-B / J9-F) | 36×48 | 48 | **4** |
@@ -89,14 +88,16 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Benkespile | 36×98 | 800 | **10** |
 | Køyespile | 36×98 | 800 | **14** |
 | Benkevange, bak (gjennomgående) | 48×73 | 1794 | **1** |
-| Avstivningslekt under plate | 48×73 | 715 | **2** |
+| Bordbærelekt, bak | 48×73 | 1794 | **1** |
+| Avstivningslekt under plate | 48×73 | 713 | **2** |
 | Benkevange, front (bit) | 48×73 | 642 | **2** |
 | Rungetrinn | 48×73 | 320 | **4** |
+| Tverrlekt under platens forkant | 48×73 | 213 | **2** |
 | Stubbefot | 48×73 | 186 | **4** |
 | Sidevange, øvre | 48×98 | 1984 | **2** |
 | Endebjelke | 48×98 | 836 | **2** |
 
-**69 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
+**71 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
 
 Posisjoner: [kappliste](generated/kappliste.md). Hva du skal kjøpe: [innkjøpsliste](generated/innkjopsliste.md).
 
@@ -129,7 +130,7 @@ Ledd **J15** → [beslagliste](generated/beslagliste.md)
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **1×** | Benkevange, bak (gjennomgående) | 48×73 | 1794 |
-| **1×** | Bordbærelekt, bak | 21×95 | 1794 |
+| **1×** | Bordbærelekt, bak | 48×73 | 1794 |
 | **2×** | Bærekloss, benkevange (J9-B / J9-F) | 36×48 | 48 |
 | **2×** | Hjørnestolpe, bak (veggside) | 36×98 | 1065 |
 | **1×** | Sidevange, øvre | 48×98 | 1984 |
@@ -343,29 +344,31 @@ Ledd **J7** → [beslagliste](generated/beslagliste.md)
 
 # 10
 
-## Løs plate med avstivningslekter og beslag
+## Løs plate med lekter og fire vinkelbeslag
 
 ![Steg 10](img/steg-10.png)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **2×** | Avstivningslekt under plate | 48×73 | 715 |
-| **1×** | Løs plate | 18 mm plate, 680 bred | 800 |
+| **2×** | Avstivningslekt under plate | 48×73 | 713 |
+| **1×** | Løs plate | 18 mm plate, 652 bred | 798 |
+| **2×** | Tverrlekt under platens forkant | 48×73 | 213 |
 
 | | | |
 |:---:|:---:|---|
-| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **12x** | Treskrue 5×60 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/senkhodeskrue-m6x30.svg" alt="Senkhodeskrue M6×30 + skive M6 + låsemutter M6" height="30"> **8x** | Senkhodeskrue M6×30 + skive + mutter |
-| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/krokplate-30x4.svg" alt="Krokplate, bøyd av flattstål 30×4" height="63"> **2x** | Krokplate |
-| <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/u-brakett-30x4.svg" alt="U-brakett, bøyd av flattstål 30×4" height="67"> **2x** | U-brakett |
+| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **22x** | Treskrue 5×60 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-4x16.svg" alt="Treskrue 4×16 forsenket Torx" height="30"> **4x** | Treskrue 4×16 |
+| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/senkhodeskrue-m6x30.svg" alt="Senkhodeskrue M6×30 + skive M6 + låsemutter M6" height="30"> **2x** | Senkhodeskrue M6×30 + skive + mutter |
+| <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/vinkelbeslag-20x20x40.svg" alt="Vinkelbeslag 20×20×40 varmforsinket" height="32"> **2x** | Vinkelbeslag 20×20×40 |
+| <img src="img/ikon/merke-e.svg" alt="E" height="20"> | <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="58"> **2x** | Vinkelbeslag 40×40×20 |
 
 Bokstavene viser hvor på tegningen hver type går.
 
-Ledd **J13a**, **J13b**, **J13c** → [beslagliste](generated/beslagliste.md)
+Ledd **J13a**, **J13b**, **J13c**, **J13d** → [beslagliste](generated/beslagliste.md)
 
-⚠️ Løft i platens forkant. Den skal ikke kunne vippes opp — U-brakettene låser den til trinnet.
+⚠️ Skyv platen sidelengs. Den skal bevege seg et par millimeter og så stoppe mot beslagene ved trinnenden — begge veier.
 
-[Steg 10 i ord](generated/byggesteg.md#steg-10--løs-plate-med-avstivningslekter-og-beslag)
+[Steg 10 i ord](generated/byggesteg.md#steg-10--løs-plate-med-lekter-og-fire-vinkelbeslag)
 
 ---
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 225.6 127.2" preserveAspectRatio="xMinYMid meet">
+  <title>Vinkelbeslag 20×20×40 varmforsinket</title>
+  <g fill="none" stroke="#111" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="scale(4) translate(13.4 23)" stroke-width="1.38">
+      <path d="M 40 0 L 40 -20 L 38.96 -19.42 L 38.96 0.58 Z" fill="#fff"/>
+      <path d="M 0 -20 L 40 -20 L 38.96 -19.42 L -1.04 -19.42 Z" fill="#fff"/>
+      <path d="M -1.04 0.58 L 38.96 0.58 L 38.96 -19.42 L -1.04 -19.42 Z" fill="#fff"/>
+      <path d="M 38.96 0.58 L 29.6 5.8 L 29.6 3.8 L 38.96 -1.42 Z" fill="#fff"/>
+      <path d="M -1.04 -1.42 L 38.96 -1.42 L 29.6 3.8 L -10.4 3.8 Z" fill="#fff"/>
+      <path d="M -10.4 5.8 L 29.6 5.8 L 29.6 3.8 L -10.4 3.8 Z" fill="#fff"/>
+      <circle cx="18.96" cy="-7.42" r="3.4" stroke-width="0.88"/>
+      <circle cx="18.96" cy="-14.22" r="3.4" stroke-width="0.88"/>
+      <ellipse cx="15.03" cy="0.77" rx="3.57" ry="1.7" stroke-width="0.88"/>
+      <ellipse cx="11.47" cy="2.76" rx="3.57" ry="1.7" stroke-width="0.88"/>
+    </g>
+  </g>
+</svg>
