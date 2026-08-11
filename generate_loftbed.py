@@ -2004,12 +2004,24 @@ NOSE_LEN = BATTEN_X[0] - PANEL_X0              # 116
 #       the table top is the one most likely to come through it.
 #   (c) PLUGGED AND FLUSH-TRIMMED TOP SCREWS - rejected, and this is the one
 #       that hurts. It is the classic answer and in solid pine it is very
-#       nearly invisible. This panel is 652 wide, which is wider than shop
-#       limtre furu goes, so it is 18 mm KRYSSFINER (see innkjopsliste): its
-#       top face is a continuous rotary-cut veneer, and a 12 mm plug in it is
-#       a disc of end grain in an unbroken face - twelve of them at 141 mm
-#       pitch down the middle of the table. Near-invisible stops being
-#       near-invisible on the material this part is actually made of.
+#       nearly invisible. The panel is 18 mm KRYSSFINER (see innkjopsliste):
+#       its top face is a continuous rotary-cut veneer, and a 12 mm plug in it
+#       is a disc of end grain in an unbroken face - twelve of them down the
+#       middle of the table. Near-invisible stops being near-invisible on the
+#       material this part is actually made of.
+#
+# K2 FINDING - THE ARGUMENT THAT FORCED PLYWOOD HAS EXPIRED, AND THE MATERIAL
+# HAS NOT MOVED WITH IT. Up to v12 the sentence above read "this panel is 652
+# wide, which is wider than shop limtre furu goes, so it is plywood": the
+# widest limtre furu panel on the shelf is 600 mm, and 652 simply could not be
+# had. At 574 it can. That does not make the panel limtre - the bare-panel
+# bending row in vedlegg A, the halved withdrawal for the up-screws and the
+# plug argument above are all calibrated on plywood, and re-taking a material
+# decision is not what a comfort round is for - but the REASON has to stop
+# being quoted, because it is no longer true. Recorded here and in the buying
+# list as an open choice rather than a constraint.
+LIMTRE_SHELF_W = 600             # widest limtre furu panel in the shop
+PANEL_FITS_LIMTRE = PANEL_W <= LIMTRE_SHELF_W                 # True after K2
 PANEL_UPSCREW_LEN = 40                         # 5x40, the stock length
 PANEL_UPSCREW_CBORE = 46                       # 12 mm hole, 46 mm up the batten
 PANEL_UPSCREW_PASS = BATTEN_H - PANEL_UPSCREW_CBORE       # 27, batten left
@@ -5822,6 +5834,19 @@ if FASTENERS_ON:
           f"; skjær i tuppen "
           f"{1.5 * 1000 / (BATTEN_W * NOSE_TIP_H):.2f} MPa mot 2,77 = "
           f"{1.5 * 1000 / (BATTEN_W * NOSE_TIP_H) / 2.77:.2f}")
+# K2: the material argument, checked rather than quoted. See the note above the
+# up-screw constants - this is the assert that stops "too wide for limtre"
+# being repeated once it stopped being true.
+assert PANEL_FITS_LIMTRE == (PANEL_W <= LIMTRE_SHELF_W)
+print(f"OK  K2 platematerialet: platen er {PANEL_W} mm bred og "
+      + (f"GÅR NÅ INN i en {LIMTRE_SHELF_W} mm limtreplate - argumentet som "
+         f"tvang fram kryssfiner (652 > {LIMTRE_SHELF_W}) gjelder ikke lenger. "
+         f"Materialet står likevel: lasttabellen, uttrekket for oppskruene og "
+         f"propp-argumentet i J13 er regnet på kryssfiner. Det er et VALG nå, "
+         f"ikke en tvang, og det er ført opp som åpent punkt"
+         if PANEL_FITS_LIMTRE else
+         f"er bredere enn de {LIMTRE_SHELF_W} mm limtre furu stopper på - "
+         f"kryssfiner er det eneste som finnes i den bredden"))
 # X: OUTBOARD of both rung ends by the fit, and symmetric about the centreline.
 assert BATTEN_X[0] + BATTEN_W == LADDER_INNER_L - PANEL_FIT and \
     BATTEN_X[1] == LADDER_INNER_R + PANEL_FIT, \

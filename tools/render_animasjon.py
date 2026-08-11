@@ -522,36 +522,43 @@ def film_turntable(work, width, render_width, want_mp4):
 # THE FIRST CUT OF THIS FILM WAS A LIE and it is worth writing down why. It
 # lifted the panel straight out of the bed seat, carried it forward out of the
 # bed and lowered it into the table seat - and it drove the sheet 166 mm
-# through both ladder uprights on the way, because a 652 mm panel cannot pass a
+# through both ladder uprights on the way, because the panel cannot pass a
 # 320 mm ladder opening and the wall is behind it. Nothing checked it.
 #
-# WHAT THE MODEL ACTUALLY SAYS, read off the solids:
-#   * straight up out of the bed seat: 109 mm, then the sheet meets the
-#     underside of a rung block (INSERT_CLEAR - the asserted sweep).
-#   * the slot the unit then sits in is 91 mm high (bench slat tops 295 to
-#     rung-block undersides 386) and the unit is 91 mm tall. Flat, it is a
-#     zero-clearance fit: the panel CANNOT be slid sideways level.
-#   * pitching it up on its long edge does not work either: the wall is at
-#     Y -48, the ladder uprights at Y 752, and the unit's rear-bottom to
-#     front-top diagonal turns inside that 800 mm only because the batten
-#     stops 48 mm short of the sheet - and the rear edge then sweeps straight
-#     through the table ledger on the way up.
-#   * the panel is 652 wide in a bay whose front openings beside the ladder
-#     are 142 mm. It never leaves the bed at all.
+# THE SECOND CUT WAS TRUE AND UNCOMFORTABLE. It found a path, and the path was
+# nine handgrips long and went through a slot with no clearance in it at all:
+# the unit is 91 mm tall and the corridor it had to cross was 91 mm high, so
+# the only way through was a 3 degree ROLL, held for two legs, over a bench,
+# above a child's head. The film proved the mode change was POSSIBLE. It also
+# proved, to anyone who watched it twice, that nobody would do it twice.
 #
-# THE PATH THAT DOES WORK, and that this film animates, is a small ROLL - tip
-# the far side up three degrees - and then a sideways move over the bench:
+# WHAT CHANGED IN THE WOOD (v13, and both of these are asserted in the model,
+# not assumed here):
+#   * K1 cut the rung blocks from 73 to 36 mm - the length of the upright face
+#     they are screwed to. The 37 mm that came off never touched anything;
+#     what it DID do was hang into this corridor and pull its ceiling down by
+#     the blocks' full 48 mm of height. The ceiling is now the back table
+#     ledger's underside at 409, and the slot is TRANSFER_SLOT = 114 mm from
+#     the bench slat tops at 295 - 23 mm of daylight round a 91 mm unit.
+#   * K2 narrowed the panel 652 -> 574, which does not touch this corridor at
+#     all (it is a height and a depth question) but does make the unit lighter
+#     and the sideways move 39 mm shorter at each end.
 #
-#   1  up          98 mm          within the asserted 109
-#   2  roll         3 deg         the far side up: this is what buys clearance
-#   3  slide      560 mm left     out from under the rung blocks, over the
-#                                 bench, rising 13 mm as it goes
-#   4  level       roll back      the unit is now clear of the ladder in X
-#   5  out          50 mm +Y      the rear edge off the table ledger's line
-#   6  up         198 mm          past the ledger and rung 2, in the open bay
-#   7  back         50 mm -Y      over the seat line again
-#   8  slide      560 mm right    back across, now ABOVE the rung 2 band
-#   9  down        99 mm          within the asserted 124, into the table seat
+# SO THE PATH IS RE-SEARCHED, AND IT IS FLAT. No roll, seven handgrips:
+#
+#   1  up         120 mm          into the middle of the slot, flat
+#   2  slide      599 mm left     out over the bench, level, 11 mm off the
+#                                 slat tops and 11 mm under the ledger
+#   3  out         50 mm +Y       the rear edge off the table ledger's line
+#   4  up        225 mm           past the ledger and rung 2, in the open bay
+#   5  back        50 mm -Y       over the seat line again
+#   6  slide      599 mm right    back across, now ABOVE the rung 2 band
+#   7  down       122 mm          within the asserted 172, into the table seat
+#
+# Legs 3 and 5 are the two that look like fussing and are not: the back table
+# ledger runs the whole width of the bed at Y -48..0, so the panel's rear edge
+# has to step off its line before it can rise past it, wherever in X you are
+# standing. Everything else is one lift, one carry, one carry back, one lower.
 #
 # EVERY FRAME IS CHECKED. mech_probe() puts the five moving boxes through a
 # separating-axis test against every fixed part in the bed and against the
@@ -559,13 +566,27 @@ def film_turntable(work, width, render_width, want_mp4):
 # tightest number on the whole path is +2.0 mm, and that is not a coincidence:
 # it is PANEL_FIT, the clearance the design was drawn with. So the film is not
 # an illustration of the mode change - it is the feasibility proof for it.
-MECH_ROLL = 3.0             # deg, found by search: the value that leaves the
-                            # whole slide standing on PANEL_FIT and nothing less
+#
+# THAT SENTENCE WAS TRUE OF THE DESIGN AND FALSE OF THE PROBE until this round.
+# What the probe actually reported was 0,00 mm on the back bench rail, because
+# the guide batten's rear face lies ON that rail's front face in the seat and
+# stays there for the first few millimetres of the lift. It was reading the
+# SEAT and calling it a near miss. mech_probe() now measures which pairs touch
+# in the two seats and leaves those out of the reported minimum - they are
+# still collision-checked like everything else - and with that fixed the
+# number the note has claimed all along is the number it prints.
+MECH_ROLL = 0.0             # deg. It was 3.0, found by search, and it was the
+                            # only thing that got a 91 mm unit through a 91 mm
+                            # slot. K1 made the slot 114, so the search comes
+                            # back with zero and the probe below is what says
+                            # so - the oriented-box machinery is kept exactly
+                            # because it is what can tell a flat path from a
+                            # lucky one.
 MECH_CLEAR = 11.0           # mm of daylight the film keeps off every measured
                             # limit it does not have to touch
 MECH_CAM = (330.0, 26.0, 4.3, (0.0, 0.50, 0.05))
-# frames per leg, leg 1..9
-MECH_LEG_FRAMES = [8, 5, 12, 5, 4, 8, 4, 12, 7]
+# frames per leg, leg 1..7
+MECH_LEG_FRAMES = [7, 14, 4, 9, 4, 14, 7]
 
 
 def _part(G, label):
@@ -573,42 +594,53 @@ def _part(G, label):
 
 
 def mech_keys(G):
-    """[(roll deg, (dx, dy, dz) mm)] - the ten poses the path runs through.
+    """[(roll deg, (dx, dy, dz) mm)] - the eight poses the path runs through.
 
-    Everything here is read off the model. The two numbers that are a CHOICE
-    are the roll angle and which way it goes round; the rest is arithmetic on
-    the parts."""
-    lift = G.INSERT_CLEAR["bed_mode"] - MECH_CLEAR          # 98
-    # Left until the panel's own left edge is MECH_CLEAR off the back corner
-    # post's inner face. That also takes its right edge to 761, well clear of
+    Everything here is read off the model. Nothing in it is a choice any more
+    except which side of the bed the panel comes out on; the roll that used to
+    be the one free parameter is zero, and the two cruise heights are simply
+    the middles of the two free bands the model measures."""
+    unit_h = G.PANEL_UNIT_H                                 # 91
+    # LEG 1 - up into the middle of the transfer slot. The slot's two walls
+    # are measured in the model (K1): bench slat tops to the ledger underside.
+    lift = (G.TRANSFER_FLOOR + G.TRANSFER_CLEAR / 2) - G.BATTEN_Z0_BED   # 120.5
+    assert lift <= G.INSERT_CLEAR["bed_mode"], (
+        f"the first lift is {lift:.0f} mm and the asserted free run out of "
+        f"the bed seat is only {G.INSERT_CLEAR['bed_mode']}")
+    assert G.TRANSFER_CLEAR / 2 >= MECH_CLEAR - 1, (
+        f"the flat carry has {G.TRANSFER_CLEAR / 2:.0f} mm above and below - "
+        f"under the {MECH_CLEAR:g} mm of daylight this film insists on, and "
+        f"the path would have to go back to a roll")
+    # LEG 2 - left until the panel's own left edge is MECH_CLEAR off the back
+    # corner post's inner face. That also takes its right edge well clear of
     # the rung ends at 835 - which is the point of the move.
-    side = -(G.PANEL_X0 - G.POST_W - MECH_CLEAR)            # -560
+    side = -(G.PANEL_X0 - G.POST_W - MECH_CLEAR)            # -599
     assert G.PANEL_X1 + side < _part(G, "Ladder Rung_1").extents[0][0], \
         "the sideways move does not take the panel clear of the rung ends"
-    # The free band between the top of rung 2 and the underside of the rung
-    # block above it, with the unit centred in it: this is the shelf the panel
-    # crosses the ladder on, on the way back.
-    band = (G.RUNG_TOPS[1], _part(G, "Rung Block Left_3").extents[2][0])
-    unit_h = G.PANEL_TOP_BED - G.BATTEN_Z0_BED              # 91
+    # LEG 3 - far enough forward that the panel's rear edge is off the table
+    # ledger's front face on the way up: the ledger is RAIL_T deep, plus fit.
+    out = G.RAIL_T + G.PANEL_FIT                            # 50
+    # LEG 4/6 - the free band between the top of rung 2 and the underside of
+    # rung 3, with the unit centred in it: this is the shelf the panel crosses
+    # the ladder on, on the way back. Before K1 the ceiling here was a rung
+    # BLOCK at 624; the blocks are out of the panel's depth band now, so it is
+    # the rung itself at 672 and the band is 190 mm instead of 142.
+    band = (G.RUNG_TOPS[1], _part(G, "Ladder Rung_3").extents[2][0])
     cruise = (band[0] + (band[1] - band[0] - unit_h) / 2) - G.BATTEN_Z0_BED
+    # LEG 7 - and down.
     drop = cruise - G.PANEL_MODE_LIFT
     assert drop <= G.INSERT_CLEAR["table_mode"], (
         f"the final descent is {drop:.0f} mm and the asserted free run into "
         f"the table seat is only {G.INSERT_CLEAR['table_mode']}")
-    # Far enough forward that the panel's rear edge is off the table ledger's
-    # front face on the way up: the ledger is RAIL_T deep, plus the fit.
-    out = G.RAIL_T + G.PANEL_FIT                            # 50
     return [
-        (0.0, (0.0, 0.0, 0.0)),                    # seated, bed mode
-        (0.0, (0.0, 0.0, lift)),                   # 1 up, inside the sweep
-        (MECH_ROLL, (0.0, 0.0, lift)),             # 2 tip the far side up
-        (MECH_ROLL, (side * 0.857, 0.0, lift + 13)),   # 3 slide, under the blocks
-        (0.0, (side, 0.0, lift + 26)),             # 4 clear of the ladder, level
-        (0.0, (side, out, lift + 26)),             # 5 rear edge off the ledger
-        (0.0, (side, out, cruise)),                # 6 up past ledger and rung 2
-        (0.0, (side, 0.0, cruise)),                # 7 back over the seat line
-        (0.0, (0.0, 0.0, cruise)),                 # 8 across, above rung 2
-        (0.0, (0.0, 0.0, G.PANEL_MODE_LIFT)),      # 9 down into the table seat
+        (MECH_ROLL, (0.0, 0.0, 0.0)),              # seated, bed mode
+        (MECH_ROLL, (0.0, 0.0, lift)),             # 1 up, into the slot
+        (MECH_ROLL, (side, 0.0, lift)),            # 2 across, flat, over the bench
+        (MECH_ROLL, (side, out, lift)),            # 3 rear edge off the ledger
+        (MECH_ROLL, (side, out, cruise)),          # 4 up past ledger and rung 2
+        (MECH_ROLL, (side, 0.0, cruise)),          # 5 back over the seat line
+        (MECH_ROLL, (0.0, 0.0, cruise)),           # 6 across, above rung 2
+        (MECH_ROLL, (0.0, 0.0, G.PANEL_MODE_LIFT)),   # 7 down into the table seat
     ]
 
 
@@ -675,24 +707,49 @@ def _moved_box(extents, pivot, roll, t):
 
 def mech_probe(G, path, tol=1e-6):
     """(worst gap, what, frame) over the whole path. Negative = the film would
-    show wood through wood, and that is a build failure."""
+    show wood through wood, and that is a build failure.
+
+    WHAT "WORST" MEANS, and this was wrong in the file for a whole round. The
+    number the film used to report as "the tightest pass, +2.0 mm = PANEL_FIT"
+    was not that at all: it measured 0,00 mm on the back bench rail, at frame
+    1, and it did so on the old path too. The zero is real and it is not a
+    near miss - the guide batten's rear face IS the back bench rail's front
+    face (M4: the battens stop ON that plane), so those two pieces of wood are
+    in contact in the seat and stay in contact for the first few millimetres
+    of the lift. Reporting that as the clearance of the manoeuvre says nothing
+    about the manoeuvre.
+
+    So the pairs that TOUCH IN EITHER SEAT are identified first and excluded
+    from the reported minimum - they are the seats, and a seat is supposed to
+    touch. They are still collision-checked on every frame like everything
+    else; what changes is only which number gets called "the tightest pass".
+    """
     unit = [G.panel_bed] + list(G.battens_bed)
     moving = {id(p) for p in unit}
     fixed = [(p.label, p.extents) for p in G.parts if id(p) not in moving]
     pivot = (G.WALL_SPAN / 2, 0.0, G.BATTEN_Z0_BED)
-    # The first and last frames are the two SEATS: the unit rests on wood
-    # there, so a zero gap is the design and not a near miss. The number worth
-    # reporting is the tightest pass on the way between them.
+
+    # The seat pairs: (moving part, fixed part) in contact in the bed seat or
+    # in the table seat, i.e. the wood the unit is designed to land on and lie
+    # against. Measured, not listed.
+    seat_pairs = set()
+    for k in (0, len(path) - 1):
+        roll, t = path[k]
+        for i, p in enumerate(unit):
+            A = _moved_box(p.extents, pivot, roll, t)
+            for j, (_label, ex) in enumerate(fixed):
+                if _sat_gap(A, _box(ex)) <= tol:
+                    seat_pairs.add((i, j))
+
     worst = (1e18, None, -1)
     wall = 1e18
     for k, (roll, t) in enumerate(path):
-        seated = k in (0, len(path) - 1)
-        for p in unit:
+        for i, p in enumerate(unit):
             A = _moved_box(p.extents, pivot, roll, t)
             ca, ha, aa = A
-            ymin = ca[1] - sum(ha[i] * abs(aa[i][1]) for i in range(3))
+            ymin = ca[1] - sum(ha[i2] * abs(aa[i2][1]) for i2 in range(3))
             wall = min(wall, ymin - G.WALL_Y)
-            for label, ex in fixed:
+            for j, (label, ex) in enumerate(fixed):
                 g = _sat_gap(A, _box(ex))
                 if g < -tol:
                     sys.exit(
@@ -701,7 +758,7 @@ def mech_probe(G, path, tol=1e-6):
                         f"in mech_keys() is not a path the panel can take. Fix "
                         f"the path - or, if the model changed, this is a "
                         f"design finding and the mode change no longer works.")
-                if g < worst[0] and not seated:
+                if g < worst[0] and (i, j) not in seat_pairs:
                     worst = (g, label, k)
     # The rear edge of the panel IS the wall plane - it lies on it in both
     # seats - so touching is the design and only going THROUGH it is a fault.
@@ -715,9 +772,17 @@ def film_mekanisme(work, width, render_width, want_mp4):
     G = model()
     path = mech_path(G)
     gap, who, frame = mech_probe(G, path)
-    print(f"  probe: {len(path)} frames, no part of the panel unit inside any "
-          f"part of the bed.\n         tightest pass {gap:+.2f} mm on "
-          f"'{who}' (frame {frame}) - the drawn fit is {G.PANEL_FIT} mm")
+    assert MECH_ROLL == 0.0, \
+        "the path is not flat any more - if a roll came back, say so in the " \
+        "note above and in ASSEMBLY J13, because it is a two-person move"
+    print(f"  probe: {len(path)} frames over {len(MECH_LEG_FRAMES)} legs, "
+          f"roll {MECH_ROLL:g} deg - a FLAT carry.\n"
+          f"         no part of the panel unit inside any part of the bed; "
+          f"tightest pass {gap:+.2f} mm on '{who}' (frame {frame}) - the "
+          f"drawn fit is {G.PANEL_FIT} mm.\n"
+          f"         the carry itself has {G.TRANSFER_CLEAR / 2:.1f} mm of "
+          f"daylight over and under it in a {G.TRANSFER_SLOT:g} mm slot "
+          f"({G.TRANSFER_FLOOR_WHO} → {G.TRANSFER_CEILING_WHO})")
 
     panel_unit = [G.panel_bed] + list(G.battens_bed) \
         + list(G.panel_fasteners(G.panel_bed))
