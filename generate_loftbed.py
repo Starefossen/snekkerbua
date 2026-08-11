@@ -454,13 +454,43 @@ M4  PANEL STIFFENER BATTENS + THE REAL PANEL CONNECTIONS. An 18 mm sheet on
     inset 11 mm inside the rung-block line, and they hang BELOW the panel:
     Z 186..259 in bed mode, 409..482 in table mode. They travel with the
     panel. Utilisation drops to ~0.27.
-    The steel is not modelled but it is not decorative either. At the FRONT,
-    load-bearing U-brackets wrap the rung (as on the Hoppekids original) and
-    clamp the panel to the ladder: that is the panel's anti-tip restraint AND,
-    through the panel, the brace that ties the ladder base back to the rear
-    bearing line - this design's answer to the ladder-restraint finding F1.
-    At the REAR, hook plates drop over the back bench rail (bed mode) or the
-    back table ledger (table mode).
+    v12/V2 REPLACES THE STEEL THIS ENTRY DESCRIBED. It used to be a pair of
+    U-brackets wrapping the rung and a pair of hook plates over the rear
+    support - see V2 below for why none of that could ever be lowered into
+    place - and the battens are 713 mm now, not 727, for the same reason.
+V2  THE PANEL BECOMES A DROP-IN ASSEMBLY. Four shop angle brackets, on the
+    sides of the assembly, over the edges they land on; the bespoke bent steel
+    is deleted. In the order the decisions bind:
+      * THE MOVE COMES FIRST. The panel has zero travel in Y - its rear edge
+        IS the wall plane and its front edge is at the ladder - so the only
+        move it has is straight down. Every piece of the old steel wrapped
+        the FAR side of a member, which is a move you can only make by
+        threading the panel in at an angle. The new rule is that nothing may
+        reach past a member it does not have to, and the assert family
+        `V2 innsetting` sweeps the whole assembly - sheet, four battens, four
+        brackets and their bolts - straight up out of both seats, on the
+        solids. It clears 109 mm in bed mode and 124 in table mode, and what
+        stops it in both is the LADDER (a rung block), which is the honest
+        ceiling of a two-height convertible: whatever carries the panel in
+        the upper seat is in the way on the trip down.
+      * THE SEAT IS WOOD, THE STEEL ONLY SAYS WHERE. The rear brackets lie
+        on the rear support BESIDE the panel, in the side gap - never under
+        it - so the panel still lands flat on 652 x 48 mm of wood in both
+        modes. The front pair hangs under the panel just outboard of the rung
+        ends and stands 2 mm clear of them: that pair is the whole of the X
+        and the rotation restraint, in both modes, because the rung ends are
+        at the same X at both heights.
+      * THE SIDE GAP IS AN EN 747 NUMBER. 10 mm was inside the band a
+        finger wedges in. The gap is 24 mm now and the panel 652 wide.
+      * THE FRONT CORNERS GET WOOD UNDER THEM (M5). 166 mm of the panel's
+        front edge outboard of each rung end was bare 18 mm sheet; two 213 mm
+        cross battens now carry it inboard to the M4 battens.
+      * THE REAR SUPPORT IS ONE PROFILE. The table ledger goes 21x95 to
+        48x73 at Y -48..0, the back bench rail's own section and plane, so
+        the rear seat is identical in both modes - and 21x95 leaves the bed.
+      * UPLIFT IS NOT BLOCKED, ON PURPOSE. The panel is meant to lift out.
+        The bed-mode lock is a separate decision, presented as three options
+        in docs/preview/laasvalg.png, and none of them is wired in here.
 D11 OPEN LADDER BAY. The FRONT bench rail is cut into two segments so nothing
     crosses the floor of the ladder bay below the benches any more - you can
     stand at the foot of the ladder with your toes under it. Both front stub
@@ -1493,20 +1523,41 @@ RAIL_BLOCK_BACK_X = [BETWEEN_POSTS_X0,                          # 98 .. 146
                      BETWEEN_POSTS_X1 - RAIL_BLOCK_BACK_DX]     # 1844 .. 1892
 RAIL_BLOCK_LEN = RAIL_BLOCK_FRONT_DX           # 48, one cut length for all four
 
-PANEL_X0 = 655                                 # 10 mm play against each bench
-PANEL_X1 = 1335
-PANEL_W = PANEL_X1 - PANEL_X0                  # 680
+# ---------------------------------------------------------------------------
+# V2: THE PANEL IS A DROP-IN ASSEMBLY, AND ITS OUTLINE IS SET BY TWO NUMBERS
+# ---------------------------------------------------------------------------
+# THE SIDE GAP IS AN EN 747 NUMBER, NOT A LEFTOVER. The panel used to be 680
+# wide in a 700 mm opening, i.e. 10 mm of play against each bench - and 10 mm
+# is inside the band a child's finger gets caught in. The rule the seated panel
+# has to obey on every accessible edge is a BAND, not a maximum: under 12 mm a
+# finger wedges, 12..25 mm it passes, and this design keeps every gap around
+# the loose panel inside that window. 24 mm is the working number: it is inside
+# the band with a millimetre of margin at the top, and it is exactly what the
+# rear bracket flange needs to sit in (20 mm of flange + 2 mm of steel + 2 mm
+# of clearance). The panel gets 28 mm narrower and the two numbers stay tied:
+# widen the gap and the panel narrows with it.
+PANEL_SIDE_GAP = 24                            # EN 747: inside the 12..25 band
+EN_GAP_BAND = (12.0, 25.0)                     # accessible gaps must land here
+PANEL_X0 = BENCH_LEN + PANEL_SIDE_GAP          # 669
+PANEL_X1 = WALL_SPAN - BENCH_LEN - PANEL_SIDE_GAP   # 1321
+PANEL_W = PANEL_X1 - PANEL_X0                  # 652  [was 680]
+# THE FIT. Nothing that has to be lowered into a hole may be drawn touching the
+# walls of the hole: a panel whose front edge is DRAWN on the ladder-upright
+# back plane is a panel that has to be forced past it. 2 mm on the front edge
+# is the insertion clearance, and the same 2 mm is what the rung-end brackets
+# below are held off the rung ends by, so the whole assembly has one fit number.
+PANEL_FIT = 2                                  # insertion clearance, mm
 # D10: the panel is as deep as a slat (D12: Y -48..752) because it has to REACH
 # the wood it rests on: the back bench rail lives at Y -48..0 and the back table
-# ledger at Y -48..-27. Its rear edge is therefore flush with the rear edge of
-# the bench slats (both -48), so in bed mode bench / panel / bench form one
-# unbroken 800 mm deep field. Its front edge stops in the ladder-upright plane:
-# the uprights stand at Y 752..800 and the panel's X range straddles both of
-# them, so 752 is a hard limit - which is precisely why the rungs had to move
-# back 25 mm to meet it.
+# ledger did too after V2 widened it. Its rear edge is flush with the rear edge
+# of the bench slats (both -48), so in bed mode bench / panel / bench form one
+# unbroken field. Its front edge stops PANEL_FIT short of the ladder-upright
+# plane: the uprights stand at Y 752..788 and the panel's X range straddles both
+# of them, so 752 is a hard limit - which is precisely why the rungs had to move
+# back 25 mm to meet it - and 750 is that limit with the fit taken off.
 PANEL_Y0 = BENCH_SLAT_Y0                       # -48, flush with the bench slats
-PANEL_Y1 = LADDER_Y0                           # 752, against the ladder uprights
-PANEL_LEN = PANEL_Y1 - PANEL_Y0                # 800, the slat dimension again
+PANEL_Y1 = LADDER_Y0 - PANEL_FIT               # 750, 2 mm off the uprights
+PANEL_LEN = PANEL_Y1 - PANEL_Y0                # 798  [was 800]
 
 # D10: NO HOOKS. The panel is a loose board that LIES on wood, and the geometry
 # below is what makes that true in both modes:
@@ -1529,24 +1580,40 @@ PANEL_LEN = PANEL_Y1 - PANEL_Y0                # 800, the slat dimension again
 # puts the bending utilisation at ~1.42 - a fail. M4 answers it with the two
 # stiffener battens below.
 #
-# THE PANEL CONNECTIONS (M4 / F1). The panel is not a loose board any more; it
-# is a small assembly that lifts out as one piece, and it is fixed at both ends:
+# THE PANEL CONNECTIONS (V2). The krokplate and the U-brakett are GONE. Both
+# were bespoke bent flat steel, both gripped the far side of a member, and both
+# made the panel something you thread onto the bed rather than something you
+# drop into it. What replaces them is four shop-bought angle brackets and one
+# principle: THE PANEL LIES ON WOOD, AND THE STEEL ONLY SAYS WHERE.
 #
-#   FRONT  load-bearing steel U-brackets that wrap the rung, exactly as on the
-#          Hoppekids original. They are screwed up into the panel and close
-#          around the tread, so the panel is clamped to the ladder. That does
-#          two jobs at once: it is the panel's anti-tip restraint (you cannot
-#          lever the front edge up off its 25 mm ledge), AND it braces the
-#          ladder base through the panel - the panel ties the two uprights back
-#          to the rear bearing line, which is this design's answer to the
-#          ladder-restraint finding F1 (D13 cut the uprights' lap onto the front
-#          bench rail and left the base unrestrained in Y).
-#   REAR   hook plates that drop over the back bench rail (bed mode) / the back
-#          table ledger (table mode) and hold the rear edge down on its ledge.
+#   WHAT HOLDS IT UP        wood. Rear edge on the back bench rail (bed) or on
+#                           the back table ledger (table) - both 48 mm deep at
+#                           Y -48..0 after V2 - and front edge on the rung.
+#   WHAT HOLDS IT IN Y      the room does. The rear edge IS the wall plane and
+#                           the front edge is PANEL_FIT off the ladder
+#                           uprights, so Y travel is 2 mm and needs no steel.
+#   WHAT HOLDS IT IN X      the two FRONT brackets. Each is an angle screwed up
+#                           under the panel just outboard of a rung end, with
+#                           its second flange standing down the rung's END FACE
+#                           PANEL_FIT clear of it. The rung ends are 320 apart
+#                           in BOTH modes (rung 1 at Z 259, rung 2 at Z 482,
+#                           same X), so one bracket geometry serves both.
+#   WHAT HOLDS IT IN Rz     the same two. Rotation about Z drives both front
+#                           brackets the same way in X, so one of the two jams
+#                           whichever way it turns.
+#   WHAT SEATS THE REAR     the two REAR brackets, in the side gaps. The flange
+#                           lies ON the rear support's top, beside the panel,
+#                           never under it - so the panel still lands flat on
+#                           wood - and the upstand is screwed to the panel's
+#                           edge. In bed mode the flange end also stops the
+#                           panel against the bench slat ends; in table mode
+#                           there is nothing out there and the front pair does
+#                           the work alone. The flange is where the bed-mode
+#                           LOCK goes: a screw straight down through it.
 #
-# Neither connection is drawn - they are sheet steel, not timber - but neither
-# is a mere locator: the front pair is a structural tie and is sized as one in
-# the docs round.
+# WHAT IS NOT BLOCKED, AND ON PURPOSE: uplift. The panel is meant to be lifted
+# out, in both modes, straight up. The bed-mode lock is the answer to that and
+# it is a decision, not a detail - see docs/preview/laasvalg.png.
 PANEL_UNDER_BED = BENCH_RAIL_TOP               # 259, rests on the rails/rung 1
 PANEL_TOP_BED = PANEL_UNDER_BED + PANEL_T      # 277
 PANEL_UNDER_TABLE = RUNG_TOPS[1]               # 482, rests on rung 2/the ledger
@@ -1587,13 +1654,49 @@ PANEL_TOP_TABLE = PANEL_UNDER_TABLE + PANEL_T  # 500
 BATTEN_W = BENCH_RAIL_T                        # 48, batten width (X)
 BATTEN_H = BENCH_RAIL_H                        # 73, batten depth (Z), on edge
 BATTEN_Y0 = BACK_RAIL_Y1                       # 0, clear of the back rail/ledger
-BATTEN_Y1 = RUNG_Y0                            # 715, clear of the rung ledge
-BATTEN_LEN = BATTEN_Y1 - BATTEN_Y0             # 715
+BATTEN_Y1 = RUNG_Y0 - PANEL_FIT                # 713, 2 mm off the rung face
+BATTEN_LEN = BATTEN_Y1 - BATTEN_Y0             # 713  [was 715]
 BATTEN_CLEAR_X = 11                            # inset from the rung-block line
 BATTEN_X = [RUNG_BLOCK_X[0] + RUNG_BLOCK_T + BATTEN_CLEAR_X,   # 882 .. 930
             RUNG_BLOCK_X[1] - BATTEN_CLEAR_X - BATTEN_W]       # 1060 .. 1108
 BATTEN_Z0_BED = PANEL_UNDER_BED - BATTEN_H     # 186 == BENCH_RAIL_BOTTOM
 BATTEN_Z0_TABLE = PANEL_UNDER_TABLE - BATTEN_H # 409
+
+# ---------------------------------------------------------------------------
+# V2/M5: THE TWO FRONT CROSS BATTENS - THE CANTILEVER THE OLD PANEL IGNORED
+# ---------------------------------------------------------------------------
+# THE DEFECT. The panel's front bearing is the RUNG, and the rung is only
+# 320 mm long (X 835..1155) in a panel that is 652 wide. Everything outboard of
+# the rung end - 166 mm at each front corner - was bare 18 mm sheet with a
+# 713 mm run back to the rear bearing and NOTHING under it. Kneel on that
+# corner (the documented case: a child climbing off the bench onto the panel)
+# and the sheet alone carries it: W = 18^2/6 per mm of width, and the two M4
+# battens are 213 mm inboard of the corner, so they carry none of it.
+# THE FIX, and why it is a CROSS batten and not a longer one. A batten laid
+# along Y at the panel's side edge would have no front support either - there
+# is no wood under X 669 at any height in front of the bench rail - so it would
+# only move the cantilever, not remove it. A batten laid along X does remove
+# it: it spans from the panel's side edge INBOARD to the M4 batten, which lands
+# on the rung, so the corner load has a stiff path to the one front bearing
+# that exists. 213 mm long, the same 48x73 on edge, screwed up into the panel.
+# GEOMETRY:
+#   Y  Y 665..713 - the batten's front face is PANEL_FIT clear of the rung's
+#      rear face (Y 715) exactly like the M4 battens, which is what lets the
+#      whole assembly go straight down past every rung. It is NOT at the very
+#      front edge: the last 37 mm of panel in front of it is a 37 mm cantilever
+#      in 18 mm sheet, which is nothing. It also has to stay clear of the FRONT
+#      BENCH RAIL (Y 704..752) - it does, in X: the rail stops at 645/1345 and
+#      the batten starts at the panel edge, 24 mm further in.
+#   X  from the panel's side edge to the M4 batten's near face, so the two
+#      meet end-on and the pair reads as one L-shaped stiffener under each
+#      front corner.
+#   Z  the same band as the M4 battens - top on the panel underside, 73 mm
+#      below it - so the walking zone is untouched.
+NOSE_Y1 = RUNG_Y0 - PANEL_FIT                  # 713, off the rung's rear face
+NOSE_Y0 = NOSE_Y1 - BATTEN_W                   # 665
+NOSE_X = [(PANEL_X0, BATTEN_X[0]),             # 669 .. 882
+          (BATTEN_X[1] + BATTEN_W, PANEL_X1)]  # 1108 .. 1321
+NOSE_LEN = BATTEN_X[0] - PANEL_X0              # 213
 # The walking zone under the ladder bay: floor to the bench rail underside. The
 # battens are not allowed into it in either mode.
 WALK_ZONE_Z = (0, BENCH_RAIL_BOTTOM)           # 0 .. 186
@@ -1620,9 +1723,33 @@ PANEL_BENCH_DIP = BENCH_TOP - PANEL_TOP_BED    # 18  [was 16, U1]
 # D9: the ledger moves up 16 mm, to Z 387..482, so its TOP is the table-mode
 # panel underside itself - level with rung 2, no hook step in between. Its
 # 21 mm width is the depth of the rear bearing.
+# V2: THE LEDGER BECOMES A BENCH-RAIL PROFILE, 48x73 AT Y -48..0. It was
+# 21x95 on edge at Y -48..-27, and three things paid for the change:
+#   1  THE REAR SEAT IS NOW THE SAME IN BOTH MODES. Bed mode seats the panel
+#      (and the two rear brackets' flanges) on the back bench rail, 48 mm deep
+#      at Y -48..0; table mode seated them on 21 mm at Y -48..-27, so a flange
+#      that landed square on the rail cantilevered 13 of its 20 mm off the
+#      ledger. One profile, one seat, one bracket geometry - which is the
+#      whole argument for a drop-in panel with four identical corners.
+#   2  IT STOPS BEING THE CEILING OF THE MOVE. The panel has to clear whatever
+#      hangs over it on the way down to the bench rail, and the 95 mm board on
+#      edge had its underside at 387 - one millimetre below the rung block at
+#      386, i.e. it was about to become the thing that governed the insertion
+#      path. At 409 it is 23 mm clear of the blocks, so the straight-down move
+#      is governed by the LADDER alone (109 mm, measured in the insertion-path
+#      block below) and the rear support is out of the argument for good.
+#   3  ONE FEWER PROFILE ON THE LIST. 21x95 was in this bed for the ledger and
+#      nothing else - one 1794 mm piece keeping a whole stock line alive. It is
+#      cut from the 48x73 board the bench rails, the rungs, the stub legs and
+#      every panel batten already come from.
+# It is also stronger where it matters: 48x73 on edge gives W = 42 632 mm3
+# against the 21x95's 31 587, on the same 1794 mm post-to-post span, and the
+# end fixing into the 36 mm post face goes 21x95 = 1995 mm2 to 36x73 = 2628.
+LEDGER_BACK_T = BENCH_RAIL_T                   # 48 (Y)  [was BOARD_T = 21]
+LEDGER_BACK_H = BENCH_RAIL_H                   # 73 (Z)  [was BOARD_W = 95]
 LEDGER_BACK_Z1 = PANEL_UNDER_TABLE             # 482
-LEDGER_BACK_Z0 = LEDGER_BACK_Z1 - BOARD_W      # 387
-LEDGER_BACK_Y0 = BACK_RAIL_Y0                  # -48 .. -27, on the wall plane
+LEDGER_BACK_Z0 = LEDGER_BACK_Z1 - LEDGER_BACK_H     # 409  [was 387]
+LEDGER_BACK_Y0 = BACK_RAIL_Y0                  # -48 .. 0, on the wall plane
 
 # ---------------------------------------------------------------------------
 # HELPERS
@@ -1886,10 +2013,10 @@ for i in range(len(BENCH_X)):
 # W9: post to post, X 48..1942, butting and screwed to the back posts' X-inner
 # faces - they stand in its Y band now.
 support_rail = block(BETWEEN_POSTS_X0, LEDGER_BACK_Y0, LEDGER_BACK_Z0,
-                     BETWEEN_POSTS_LEN, BOARD_T, BOARD_W,
+                     BETWEEN_POSTS_LEN, LEDGER_BACK_T, LEDGER_BACK_H,
                      "Table Ledger Back", "boards",
-                     ("Table ledger, back", sec(BOARD_T, BOARD_W),
-                      BETWEEN_POSTS_LEN))
+                     ("Table ledger, back",
+                      sec(LEDGER_BACK_T, LEDGER_BACK_H), BETWEEN_POSTS_LEN))
 parts.append(support_rail)
 
 # ---------------------------------------------------------------------------
@@ -1925,6 +2052,21 @@ for i, bx0 in enumerate(BATTEN_X):
     battens_table.append(block(bx0, BATTEN_Y0, BATTEN_Z0_TABLE,
                                BATTEN_W, BATTEN_LEN, BATTEN_H,
                                f"Panel Stiffener Batten {side} (table mode)",
+                               "panel"))
+
+# V2/M5: the two front cross battens, one under each front corner. Same stock,
+# same Z band, same trip: they are part of the panel assembly and are screwed
+# up into it, so they are built per mode alongside the panel they hang under.
+for i, (nx0, nx1) in enumerate(NOSE_X):
+    side = "Left" if i == 0 else "Right"
+    battens_bed.append(block(nx0, NOSE_Y0, BATTEN_Z0_BED,
+                             nx1 - nx0, BATTEN_W, BATTEN_H,
+                             f"Panel Front Batten {side} (bed mode)", "panel",
+                             ("Panel front cross batten (M5)",
+                              sec(BATTEN_W, BATTEN_H), nx1 - nx0)))
+    battens_table.append(block(nx0, NOSE_Y0, BATTEN_Z0_TABLE,
+                               nx1 - nx0, BATTEN_W, BATTEN_H,
+                               f"Panel Front Batten {side} (table mode)",
                                "panel"))
 
 # ---------------------------------------------------------------------------
@@ -2012,6 +2154,7 @@ _PART = {
     "bench_slat":  r"Bench Slat (?:Left|Right)_\d+",
     "panel":       r"Movable Panel \(bed mode\)",
     "batten":      r"Panel Stiffener Batten (?:Left|Right) \(bed mode\)",
+    "nose":        r"Panel Front Batten (?:Left|Right) \(bed mode\)",
 }
 
 # The Norwegian name of each family, for the captions the emitters print.
@@ -2029,6 +2172,7 @@ PART_NO = {
     "guard": "rekkverksbord", "guard_host": "hjørnestolpe / stigevange",
     "bed_slat": "køyespile", "bench_slat": "benkespile",
     "panel": "løs plate", "batten": "avstivningslekt",
+    "nose": "fremre tverrlekt",
 }
 
 
@@ -2119,16 +2263,20 @@ BRACKETS = {
     # it, and under a 21 mm ledger. 40 would stand 2 mm proud of both.
     "vinkel40": dict(name="Vinkelbeslag 40×40×20", leg=40.0, width=20.0,
                      t=2.0),
-    "u":        dict(name="U-brakett, bøyd av flattstål 30×4",
-                     leg=60.0, width=30.0, t=4.0, hook=73.0),
-    "krok":     dict(hook=44.0, name="Krokplate, bøyd av flattstål 30×4",
-                     leg=70.0, width=30.0, t=4.0),
+    # V2, THE PANEL'S REAR SEAT. Short legs and a wide flange, and both are
+    # forced: the leg has to fit in the 24 mm side gap beside the panel
+    # (20 + 2 mm of steel + 2 mm of fit), and the WIDTH is what carries the
+    # fixing - a 20 mm face takes one 3 mm screw and no more, a 40 mm one
+    # takes two 4 mm screws at 3d edge distance. It lies across the rear
+    # support, which is 48 mm deep in both modes.
+    "vinkel20": dict(name="Vinkelbeslag 20×20×40 varmforsinket", leg=20.0,
+                     width=40.0, t=2.0),
 }
 
 
 def drive(name, per, frm=None, into=None, axis=None, sign=None, row=None,
           row_sign=None, reach=None, toe=None, bracket=None, bears=None,
-          nut=False, exempt=None):
+          nut=False, exempt=None, standoff=0.0, row_start=None, stops=None):
     """One kind of fastener driven at one contact patch.
 
     `name`    the trade name, in full - the same string the shopping list uses.
@@ -2163,10 +2311,24 @@ def drive(name, per, frm=None, into=None, axis=None, sign=None, row=None,
     `exempt`  a Norwegian reason the through-screw fit rule does not decide
               this one: a toe screw, or a bolt that takes a nut. Anything
               without a reason has to obey.
+    `standoff` mm the flange corner is held OFF the joint edge it starts at,
+              along its own run. This is the fit: a plate drawn hard against
+              the member it locates cannot be lowered past it, and V2's whole
+              mechanism is a drop-in.
+    `stops`   this bracket's second flange is a STOP, not a fixing: it stands
+              free `standoff` mm off the named member and takes load only when
+              the assembly tries to move that way. It is checked as a stop -
+              it has to face the member, overlap it and keep its fit - and NOT
+              as a flange with wood behind its screws, because it has none.
+    `row_start` "lo" / "hi" forces which edge of the joint window the row
+              starts at, when that is not the edge the run direction implies.
+              The default (None) is the old rule: start at the far edge and
+              run out of the window.
     """
     return dict(name=name, per=per, frm=frm, into=into, axis=axis, sign=sign,
                 row=row, row_sign=row_sign, reach=reach, toe=toe,
-                bracket=bracket, bears=bears, nut=nut, exempt=exempt)
+                bracket=bracket, bears=bears, nut=nut, exempt=exempt,
+                standoff=standoff, row_start=row_start, stops=stops)
 
 
 # A toe screw is quoted by the face it enters, how far back from the joint it
@@ -2306,30 +2468,42 @@ JOINTS = [
          side="Ovenfra, ned i lektas overkant",
          contacts=[dict(a="panel", b="batten", axis=2, drives=[
              drive("Treskrue 5×60 forsenket Torx", 6, frm="panel")])]),
-    dict(id="J13b", title="U-brakett → løs plate (omslutter trinnet)", n=2,
-         drill="⌀6,5 gjennom platen, forsenk ⌀13 i oversiden",
-         side="Ovenfra gjennom platen; mutteren under",
-         spread=dict(axis=0, at=[-40.0, 40.0]),
-         contacts=[dict(a="panel", b="rung", axis=2, drives=[
-             drive(BRACKETS["u"]["name"], 1, frm="panel", bracket="u",
-                   row=1, row_sign=-1),
-             drive("Senkhodeskrue M6×30 + skive M6 + låsemutter M6", 2,
-                   frm="panel", row=1, row_sign=-1, nut=True,
-                   reach=BRACKETS["u"]["leg"],
-                   exempt="gjennomgående bolt i platen, mutter under")])]),
-    dict(id="J13c", title="Krokplate → løs plate (griper om benkevangens "
-                          "forkant)", n=2,
-         drill="⌀6,5 gjennom platen, forsenk ⌀13 i oversiden",
-         side="Ovenfra gjennom platen; kroken henger ned foran vangen og "
-              "vender innover under den. Plasseres i X klar av "
-              "avstivningslektene",
-         spread=dict(axis=0, at=[-40.0, 40.0]),
+    dict(id="J13b", title="Fremre tverrlekt → løs plate", n=2,
+         drill="⌀3,5 gjennom platen, forsenk og propp",
+         side="Ovenfra, ned i tverrlektas overkant. Lekta ligger med "
+              "forkanten 2 mm bak trinnet — det er innsettingsklaringen, "
+              "ikke slark",
+         contacts=[dict(a="panel", b="nose", axis=2, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 5, frm="panel")])]),
+    dict(id="J13c", title="Vinkelbeslag → platens sidekant, bakre hjørne "
+                          "(hviler på bakre opplegg)", n=2, mirror=True,
+         drill="⌀3 i platens kant — forbor, 18 mm kant sprekker ellers",
+         side="Beslaget står i sideklaringen mellom platen og benkespilen: "
+              "den vannrette fliken ligger PÅ bakre benkevange (sengestilling) "
+              "eller PÅ bordbærelekta (bordstilling), ved siden av platen og "
+              "aldri under den, og den oppstående fliken skrus til platens "
+              "sidekant. Hullet i den vannrette fliken er låsepunktet",
          contacts=[dict(a="panel", b="bench_back", axis=2, drives=[
-             drive(BRACKETS["krok"]["name"], 1, frm="panel", bracket="krok",
-                   row=1, row_sign=1),
-             drive("Senkhodeskrue M6×30 + skive M6 + låsemutter M6", 2,
-                   frm="panel", row=1, row_sign=1, nut=True,
-                   reach=BRACKETS["krok"]["leg"],
+             drive(BRACKETS["vinkel20"]["name"], 1, into="panel", axis=0,
+                   sign="inboard", row=2, row_sign=1, bracket="vinkel20"),
+             drive("Treskrue 4×16 forsenket Torx", 2, into="panel", axis=0,
+                   sign="inboard", row=1, row_sign=1, row_start="lo",
+                   standoff=4.0, reach=BRACKETS["vinkel20"]["width"])])]),
+    dict(id="J13d", title="Vinkelbeslag → løs plate ved trinnenden "
+                          "(sidestopp i begge stillinger)", n=2, mirror=True,
+         drill="⌀6,5 gjennom platen, forsenk ⌀13 i oversiden",
+         side="Beslaget skrus opp under platen like utenfor trinnenden, med "
+              "den nedhengende fliken langs trinnets ENDEVED — 2 mm klar av "
+              "den. Trinn 1 og trinn 2 ender på samme X, så samme beslag "
+              "styrer platen i begge stillinger",
+         contacts=[dict(a="panel", b="rung", axis=2, drives=[
+             drive(BRACKETS["vinkel40"]["name"], 1, into="panel", axis=2,
+                   sign=1, row=0, row_sign="outboard", standoff=PANEL_FIT,
+                   bracket="vinkel40", stops="rung"),
+             drive("Senkhodeskrue M6×30 + skive M6 + låsemutter M6", 1,
+                   frm="panel", row=0, row_sign="outboard",
+                   standoff=PANEL_FIT, nut=True,
+                   reach=BRACKETS["vinkel40"]["leg"],
                    exempt="gjennomgående bolt i platen, mutter under")])]),
     dict(id="J14", title="Veggfeste — gjennom den bakre sidevangen inn i "
                          "stenderne", n=1,
@@ -2503,19 +2677,25 @@ def _outboard_at(axis, value):
     return 1.0 if value > BED_CENTRE[axis] else -1.0
 
 
-def _resolve_sign(word, default, axis=None, at=None):
+def _resolve_sign(word, default, axis=None, at=None, side=None):
     """+1 / -1 out of a drive field. `outboard` / `inboard` are resolved
     against the middle of the bed at the point the joint actually happens, so
-    one row of table serves a joint and its mirror image."""
+    one row of table serves a joint and its mirror image.
+
+    `side` is that resolution handed down instead of measured: a MIRRORED
+    joint (see JOINTS `mirror`) is two fastenings on ONE contact patch - the
+    two ends of the same rung, the two side edges of the same panel - and the
+    patch centre cannot tell them apart, so the instance says which half of
+    the bed it is."""
     if word is None:
         return default
     if word in ("outboard", "inboard"):
-        out = _outboard_at(axis, at)
+        out = float(side) if side is not None else _outboard_at(axis, at)
         return out if word == "outboard" else -out
     return float(word)
 
 
-def drive_axis_sign(contact, crow, pa, pb, dr):
+def drive_axis_sign(contact, crow, pa, pb, dr, side=None):
     """(axis, sign, entry member or None, receiving member) for one drive.
 
     `into` puts the fastener along its own axis, entering the named member on
@@ -2528,7 +2708,7 @@ def drive_axis_sign(contact, crow, pa, pb, dr):
         axis = dr["axis"]
         member = _member(crow, dr["into"], pa, pb)
         sign = _resolve_sign(dr["sign"], _outboard(axis, member),
-                             axis, contact[0][axis])
+                             axis, contact[0][axis], side)
         return axis, sign, None, member
     axis = contact[1]
     entry = _member(crow, dr["frm"], pa, pb)
@@ -2548,22 +2728,30 @@ def drive_axis_sign(contact, crow, pa, pb, dr):
     return axis, sign, entry, target
 
 
-def flange(contact, dr, row, member, reach):
+def flange(contact, dr, row, member, reach, side=None):
     """(lo, hi, sign): the strip a bracket flange - or the row of screws that
     goes through one - occupies, running out of the joint corner.
 
     The corner is the contact plane where the flange lies along the joint
     normal, and the edge of the shared face where it runs across it. Which of
     the two ways it then runs is `row_sign`; the default is simply the side
-    the member it lies on has more of.
+    the member it lies on has more of. `standoff` then holds the corner off
+    that edge, along the run - the insertion fit - and `row_start` overrules
+    which edge it started from in the first place.
     """
     k = contact[1]
     win = patch_window(contact)
     lo_m, hi_m = member.extents[row]
     here = contact[0][row] if row == k else sum(win[row]) / 2
     default = 1.0 if (hi_m - here) >= (here - lo_m) else -1.0
-    sign = _resolve_sign(dr["row_sign"], default, row, contact[0][row])
-    start = contact[0][k] if row == k else win[row][1 if sign > 0 else 0]
+    sign = _resolve_sign(dr["row_sign"], default, row, contact[0][row], side)
+    if row == k:
+        start = contact[0][k]
+    elif dr.get("row_start") in ("lo", "hi"):
+        start = win[row][1 if dr["row_start"] == "hi" else 0]
+    else:
+        start = win[row][1 if sign > 0 else 0]
+    start += sign * dr.get("standoff", 0.0)
     lo, hi = sorted((start, start + sign * reach))
     return lo, hi, sign, start
 
@@ -2581,7 +2769,7 @@ def _unit(axis, sign):
 # ON THE FACE it is driven from), a unit drive vector and the two members it
 # ties. This is what the geometry block below turns into solids and what the
 # drawings hang their marks on. Nothing downstream re-derives a direction.
-def _place_drive(joint, crow, contact, pa, pb, dr, shift):
+def _place_drive(joint, crow, contact, pa, pb, dr, shift, side=None):
     """Every fastener one drive puts at one joint, as placement records."""
     kk = contact[1]
     cp = contact[0]
@@ -2594,12 +2782,14 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift):
 
     # --- a bracket flange, or the screws that go through one ---------------
     if dr["into"] is not None:
-        axis, sign, _entry, target = drive_axis_sign(contact, crow, pa, pb, dr)
+        axis, sign, _entry, target = drive_axis_sign(contact, crow, pa, pb, dr,
+                                                     side)
         face = (target.extents[axis][0] if sign > 0
                 else target.extents[axis][1])
         row = dr["row"]
         reach = dr["reach"] or BRACKETS[dr["bracket"]]["leg"]
-        lo, hi, rsign, corner = flange(contact, dr, row, target, reach)
+        lo, hi, rsign, corner = flange(contact, dr, row, target, reach,
+                                       side)
         cross = [j for j in range(3) if j not in (axis, row)][0]
         width = (BRACKETS[dr["bracket"]]["width"] if dr["bracket"]
                  else min_spacing(d))
@@ -2630,7 +2820,8 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift):
                             face=(axis, face), through=None, into=target))
         return out
 
-    axis, sign, entry, target = drive_axis_sign(contact, crow, pa, pb, dr)
+    axis, sign, entry, target = drive_axis_sign(contact, crow, pa, pb, dr,
+                                               side)
 
     # --- a toe screw -------------------------------------------------------
     if dr["toe"]:
@@ -2669,7 +2860,7 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift):
     reach = dr["reach"] or (BRACKETS[dr["bracket"]]["leg"] if dr["bracket"]
                             else None)
     if reach is not None:
-        lo, hi, rsign, corner = flange(contact, dr, row, entry, reach)
+        lo, hi, rsign, corner = flange(contact, dr, row, entry, reach, side)
     else:
         lo, hi, rsign = win[row][0], win[row][1], 1.0
         corner = sum(win[row]) / 2
@@ -2728,6 +2919,22 @@ def fastener_specs(all_parts):
         spread = j.get("spread")
         if rep == 1:
             offsets = [(0.0, 0.0, 0.0)]
+        elif j.get("mirror"):
+            # V2: a MIRRORED joint. Two fastenings on one contact patch, one
+            # in each half of the bed - the two ends of the same rung, the two
+            # side edges of the same panel. Nothing is offset: each instance
+            # derives its own place from the member it locates against, and
+            # all it is told is which side it is on.
+            assert rep == 2, f"{j['id']}: mirror is a pair, not {rep}"
+            for _side in (-1.0, 1.0):
+                for dr in crow["drives"]:
+                    for f in _place_drive(j, crow, c, pa, pb, dr,
+                                          (0.0, 0.0, 0.0), _side):
+                        f.update(jid=j["id"], name=dr["name"], drive=dr,
+                                 joint=j, crow=crow, contact=c, pa=pa, pb=pb,
+                                 side=_side)
+                        specs.append(f)
+            continue
         else:
             assert spread, (f"{j['id']}: {rep} of them on one contact patch "
                             f"and no `spread` to put them in")
@@ -2969,15 +3176,19 @@ def _axis_of(vec):
     return j, (1.0 if vec[j] > 0 else -1.0)
 
 
-def angle_bracket(spec, label):
-    """A bent flat bracket: two flanges at 90 degrees meeting at one corner.
+def angle_boxes(spec):
+    """The two flanges of a bent angle bracket, as (lo, hi) per axis.
+
+    ONE source of truth. The solid below is built from these boxes, and so is
+    the insertion sweep in the validation block - which is the whole point: a
+    bracket that the sweep clears but the solid does not would be a drawing
+    that lies about the only move this panel has to make.
 
     Flange A lies on the face the drive vector enters and runs out of the
     corner along `run`. Flange B is the OTHER one, and its geometry is not a
     second row of table - it falls out of the first: a right angle turns
     `run` into the second flange's screw direction and the drive vector into
-    the direction that flange runs. That is why the orientation assert below
-    can be written at all.
+    the direction that flange runs.
     """
     C = spec["anchor"]
     ax, sa = _axis_of(spec["direction"])
@@ -2994,52 +3205,13 @@ def angle_bracket(spec, label):
     b_lo, b_hi = list(lo), list(hi)
     b_hi[rx] = C[rx] + sr * t
     b_hi[ax] = C[ax] - sa * reach
+    return [(a_lo, a_hi), (b_lo, b_hi)]
+
+
+def angle_bracket(spec, label):
+    """A bent flat bracket: two flanges at 90 degrees meeting at one corner."""
+    (a_lo, a_hi), (b_lo, b_hi) = angle_boxes(spec)
     return _tag(_slab(a_lo, a_hi) + _slab(b_lo, b_hi), spec, label)
-
-
-def hook_bracket(spec, label):
-    """A hook: a flange under a panel, down past an edge, back under a member.
-
-    The two steel parts on the loose panel are the same shape with different
-    numbers - the U at the front wraps a ladder rung, the hook at the back
-    grips the bench rail's front edge - so they are one function. Every
-    dimension except the flange length and the hook depth is read off the
-    members the bracket is between.
-    """
-    C = spec["anchor"]
-    ax, sa = _axis_of(spec["direction"])          # down through the panel
-    rx, sr = _axis_of(spec["run"])                # along the flange
-    cx = [j for j in range(3) if j not in (ax, rx)][0]
-    t, w, reach = spec["t"], spec["width"], spec["reach"]
-    through, into = spec["through"], spec["into"]
-    thick = through.extents[ax][1] - through.extents[ax][0]
-    seat = C[ax] + sa * thick                     # the panel's far face
-    far = into.extents[ax][0] if sa < 0 else into.extents[ax][1]
-    bottom = far + sa * CLEAR_STEEL      # just clear of the member
-    lo = [0.0, 0.0, 0.0]
-    hi = [0.0, 0.0, 0.0]
-    for j in range(3):
-        lo[j] = hi[j] = C[j]
-    lo[cx], hi[cx] = C[cx] - w / 2, C[cx] + w / 2
-
-    flange = (list(lo), list(hi))
-    flange[0][ax], flange[1][ax] = seat, seat + sa * t
-    flange[0][rx], flange[1][rx] = C[rx], C[rx] + sr * reach
-
-    down = (list(lo), list(hi))
-    down[0][ax], down[1][ax] = seat, bottom
-    down[0][rx], down[1][rx] = C[rx], C[rx] + sr * t
-
-    back = (list(lo), list(hi))
-    back[0][ax], back[1][ax] = bottom, bottom - sa * t
-    back[0][rx] = C[rx] + sr * t
-    back[1][rx] = C[rx] - sr * spec["hook"]
-
-    solid = _slab(*flange) + _slab(*down) + _slab(*back)
-    return _tag(solid, spec, label)
-
-
-CLEAR_STEEL = 4.0        # air between a bracket and the wood it hooks round
 
 
 def build_fasteners():
@@ -3055,10 +3227,7 @@ def build_fasteners():
         n = seen[f["jid"]] = seen.get(f["jid"], 0) + 1
         label = f"{f['jid']} {f['name'].split(' forsenket')[0]}_{n}"
         if f["kind"] == "plate":
-            b = BRACKETS[f["bracket"]]
-            f.setdefault("hook", b.get("hook"))
-            solid = (hook_bracket(f, label) if b.get("hook")
-                     else angle_bracket(f, label))
+            solid = angle_bracket(f, label)
         else:
             solid = screw(f["anchor"], f["direction"], f["length"], f["d"],
                           spec=f, label=label)
@@ -3227,31 +3396,43 @@ if FASTENERS_ON:
     # 40x40x20 under the table ledger - if that one is on top of the ledger
     # instead of under it, the ledger hangs on two 5 mm screws in withdrawal
     # instead of standing on steel.
-    _n_ang = _n_hook = 0
+    _n_ang = _n_stop = 0
     for _f in FASTENER_SPECS:
         if _f["kind"] != "plate":
             continue
         _C = _f["anchor"]
         _ax, _sa = _axis_of(_f["direction"])
         _rx, _sr = _axis_of(_f["run"])
-        if BRACKETS[_f["bracket"]].get("hook"):
-            # A hook grips the far side of the member: its return leg has to
-            # be past that face, and it has to overlap the member it grips.
-            _into = _f["into"]
-            _far = _into.extents[_ax][0] if _sa < 0 else _into.extents[_ax][1]
-            _end = _C[_rx] - _sr * _f["hook"]
-            _lo, _hi = sorted((_C[_rx], _end))
-            _m0, _m1 = _into.extents[_rx]
-            _grip = min(_hi, _m1) - max(_lo, _m0)
-            assert _grip >= 20.0, (
-                f"{_f['jid']}: the return leg runs {_lo:g}..{_hi:g} on axis "
-                f"{'XYZ'[_rx]} and '{_into.label}' is {_m0:g}..{_m1:g} — "
-                f"{_grip:g} mm of grip, the hook does not get under the "
-                f"member it is supposed to hold")
-            # ...and it passes on the FAR side of it, not through it.
-            assert (_far - _sa * CLEAR_STEEL - _far) * -_sa > 0
-            _n_hook += 1
-            continue
+        _stop = _f["drive"].get("stops")
+        if _stop:
+            # V2 - THE STOP FLANGE. Flange B of the rung-end bracket is not
+            # screwed to anything: it stands down the rung's end grain a
+            # stated fit clear of it, and its whole job is to be in the way
+            # when the panel tries to walk sideways. So what is checked is
+            # what a stop has to be: it FACES the member across the fit, it
+            # OVERLAPS it enough to bear, and the fit is the fit - not zero
+            # (then the panel could not be lowered past it) and not slack.
+            _tgt = _member(_f["crow"], _stop, _f["pa"], _f["pb"])
+            _fit = _f["drive"].get("standoff", 0.0)
+            _near = (_tgt.extents[_rx][0] if _sr < 0
+                     else _tgt.extents[_rx][1])
+            _clear = abs(_near - _C[_rx])
+            assert abs(_clear - _fit) < FASTENER_TOL, (
+                f"{_f['jid']}: the stop flange stands {_clear:.1f} mm off "
+                f"'{_tgt.label}', and the fit it is drawn with is {_fit:g}")
+            assert (_near - _C[_rx]) * -_sr > 0, (
+                f"{_f['jid']}: the stop flange is on the wrong side of "
+                f"'{_tgt.label}' — it does not face it at all")
+            _lo = min(_C[_ax], _C[_ax] - _sa * _f["reach"])
+            _hi = max(_C[_ax], _C[_ax] - _sa * _f["reach"])
+            _m0, _m1 = _tgt.extents[_ax]
+            _lap = min(_hi, _m1) - max(_lo, _m0)
+            assert _lap >= 20.0, (
+                f"{_f['jid']}: the stop flange runs {_lo:g}..{_hi:g} on axis "
+                f"{'XYZ'[_ax]} and '{_tgt.label}' is {_m0:g}..{_m1:g} — "
+                f"{_lap:g} mm of overlap, it would slip past the member it "
+                f"is supposed to stop")
+            _n_stop += 1
         # Flange A: its screws go along `direction` into the member the
         # bracket is anchored on. Flange B: at right angles, screwed along
         # -run into the OTHER member. Both have to hit wood.
@@ -3278,7 +3459,7 @@ if FASTENERS_ON:
                 f"'{_borne.label}' has its underside at "
                 f"{_borne.extents[2][0]:g} — it is not UNDER the member it "
                 f"is supposed to hold up")
-        for _i, (_at, _dir) in enumerate(_legs):
+        for _i, (_at, _dir) in enumerate(_legs[:1] if _stop else _legs):
             _probe = tuple(a + d * 1.0 for a, d in zip(_at, _dir))
             _hit = next((p for p in _others["bed_mode"]
                          if _inside(_probe, p, -1e-6)), None)
@@ -3293,8 +3474,9 @@ if FASTENERS_ON:
           f"plan med flaten, spiss inne i delen den tar tak i (minst "
           f"{FASTENER_MIN_TIP_COVER:g} mm dekning), ingenting i noen annen "
           f"del i noen av de to stillingene")
-    print(f"OK  {_n_ang} vinkelbeslag og {_n_hook} krok-/U-braketter: hver flik "
-          f"har tre bak seg i skrueretningen")
+    print(f"OK  {_n_ang} vinkelbeslag: hver skrudd flik har tre bak seg i "
+          f"skrueretningen, og {_n_stop} stoppflik står klar av delen den "
+          f"stopper med akkurat sin egen passing")
 else:
     print("(fasteners off - LOFTBED_FASTENERS=0)")
 
@@ -3778,7 +3960,8 @@ assert BENCH_TOP == 295 and PANEL_TOP_BED == 277 and PANEL_UNDER_BED == 259
 assert PANEL_TOP_TABLE == 500 and PANEL_UNDER_TABLE == 482
 assert RUNG_TOPS == [259, 482, 720, 958] and POST_HEIGHT == 1700
 assert BACK_POST_HEIGHT == 1065, "W6: the back posts must stop at the rail underside"
-assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (387, 482)
+assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (409, 482), \
+    "V2: the ledger is a 48x73 now, so its underside is 409 (was 387)"
 assert STUB_LEG_H == 186, "W3: the stub legs keep their height"
 print(f"OK  invariant heights held: rail underside {RAIL_BOTTOM}, rail top "
       f"{RAIL_TOP}, no cleats, slats {SLAT_Z0}..{SLAT_Z1} (flush on the rails, "
@@ -3831,7 +4014,10 @@ for what, ((o0, o1), (n0, n1)) in BACK_PLANES_V9.items():
 BACK_PLANES_FIXED = {                    # unmoved since D12
     "back side rail": ((-48, 0), (BACK_RAIL_Y0, BACK_RAIL_Y1)),
     "back bench rail": ((-48, 0), (BENCH_RAIL_Y[0], BENCH_RAIL_Y[0] + BENCH_RAIL_T)),
-    "back table ledger": ((-48, -27), (LEDGER_BACK_Y0, LEDGER_BACK_Y0 + BOARD_T)),
+    # V2: the ledger is 48 deep now, so its ROOM-SIDE face moved -27 -> 0 -
+    # onto the back bench rail's own face, which is the point of the change.
+    "back table ledger": ((-48, 0),
+                          (LEDGER_BACK_Y0, LEDGER_BACK_Y0 + LEDGER_BACK_T)),
     "slats / bench slats / panel rear": ((-48, -48), (SLAT_Y0, PANEL_Y0)),
 }
 for what, (old, new) in BACK_PLANES_FIXED.items():
@@ -3871,7 +4057,12 @@ print(f"OK  W6: the back layer Y {VACATED_BACK_LAYER[0]}.."
 FRONT_PLANES_V7 = {                      # v7 value -> v8 value, all -106
     "front side rail": ((810, 858), (FRONT_RAIL_Y0, FRONT_RAIL_Y1)),
     "front bench rail": ((810, 858), (BENCH_RAIL_Y[1], BENCH_RAIL_Y[1] + BENCH_RAIL_T)),
-    "slats / bench slats / panel front": ((858, 858), (SLAT_Y1, PANEL_Y1)),
+    "slats / bench slats": ((858, 858), (SLAT_Y1, SLAT_Y1)),
+    # V2: the panel front edge is the one plane that is deliberately NOT on the
+    # D12 line any more. It stands PANEL_FIT back off it, because the panel has
+    # to be lowered between the uprights, not forced past them.
+    "panel front (less the fit)": ((858, 858),
+                                   (PANEL_Y1 + PANEL_FIT, PANEL_Y1 + PANEL_FIT)),
 }
 for what, ((o0, o1), (n0, n1)) in FRONT_PLANES_V7.items():
     assert (o0 - n0, o1 - n1) == (DEPTH_SHRINK, DEPTH_SHRINK), \
@@ -3918,7 +4109,12 @@ assert FRONT_GUARD_SHIFT == POST_T + GUARD_T == 72 and \
 assert 906 - FRONT_GUARD_Y0 == DEPTH_SHRINK + FRONT_GUARD_SHIFT + POST_THIN \
     == 190
 assert (SLAT_Y0, SLAT_Y1) == (-48, 752) and SLAT_LEN == PLATFORM_DEPTH == 800
-assert BENCH_SLAT_LEN == SLAT_LEN and PANEL_LEN == SLAT_LEN
+assert BENCH_SLAT_LEN == SLAT_LEN
+# V2: the panel is the ONE flat part that is no longer a slat length. It is
+# PANEL_FIT shorter, and that fit is what makes it a drop-in instead of a part
+# you have to spring into place between the wall and the ladder.
+assert PANEL_LEN == SLAT_LEN - PANEL_FIT == 798, \
+    f"V2: the panel is {PANEL_LEN} long, want {SLAT_LEN} - {PANEL_FIT}"
 # W8: ONE length. There is no extended slat any more and no constant left over
 # from the split - the name must be gone, not merely unused.
 assert "SLAT_LEN_EXT" not in globals() and "SLAT_Y0_EXT" not in globals(), \
@@ -4330,11 +4526,11 @@ assert back_bench_rails[0].extents[1] == (BACK_RAIL_Y0, BACK_RAIL_Y1)
 # contact. Measured against the real posts.
 # U2: the face that end fixing lands on is 36 mm deep in Y now, not 48, so the
 # contact is measured against the real post rather than assumed to be the
-# member's whole end. The rail is 48 deep and butts over 36 of it; the ledger is
-# 21 deep and butts over all of it.
+# member's whole end. Both members are 48 deep after V2, so both butt over 36
+# of it - one number for the pair.
 POST_TO_POST_ENDS = {
     "Bench Rail Back (continuous)": (back_bench_rails[0], BENCH_RAIL_H),
-    "Table Ledger Back": (support_rail, BOARD_W),
+    "Table Ledger Back": (support_rail, LEDGER_BACK_H),
 }
 end_fixings = {}
 for what, (member, height) in POST_TO_POST_ENDS.items():
@@ -4354,8 +4550,10 @@ for what, (member, height) in POST_TO_POST_ENDS.items():
     end_fixings[what] = areas[0]
 assert end_fixings["Bench Rail Back (continuous)"] == POST_T * BENCH_RAIL_H \
     == 2628, "U2: the back bench rail should butt 36 x 73 of post face"
-assert end_fixings["Table Ledger Back"] == BOARD_T * BOARD_W == 1995, \
-    "U2: the back ledger is only 21 deep, so it butts its whole end"
+# V2: the ledger is the bench rail's profile now, so it butts the same 36 x 73
+# of post face the bench rail does - 2628 mm2 instead of the 21x95's 1995.
+assert end_fixings["Table Ledger Back"] == POST_T * LEDGER_BACK_H == 2628, \
+    "V2: the back ledger is 48 deep now, so 36 of it butts the post face"
 assert BENCH_TOP == BENCH_RAIL_TOP + BENCH_SLAT_T == 295
 # D10/U1: the cushion recess. The bench slat got 2 mm thicker and the panel did
 # not (it is an 18 mm sheet on a rail top that has not moved), so the dip the
@@ -4735,25 +4933,29 @@ def bearing_area(upper, lower):
     return max(dx, 0.0) * max(dy, 0.0)
 
 
-# D13 recomputation. The rung bearing shrinks with the 420 -> 320 rung:
-#   bed   rung 1   320 x 25 =  8 000 mm2   (was 420 x 25 = 10 500)
-#         back bench rail 680 x 48 = 32 640 mm2   (unchanged)
-#         the two front bench rail segment ends are GONE (they used to add
-#         260 x 48 = 12 480 mm2) - the segments now stop at X 645 / 1345, well
-#         clear of the panel's X 655..1335.
-#   table rung 2   320 x 25 =  8 000 mm2   (was 10 500)
-#         back ledger 680 x 21 = 14 280 mm2   (unchanged)
+# V2 recomputation. Three numbers moved and each one is in the table below:
+#   the panel is 652 wide, not 680 (the EN 747 side gap);
+#   the panel stops PANEL_FIT short of the upright plane, so the rung ledge it
+#   lands on is 35 mm, not 37 - the fit comes off the bearing, as it must;
+#   the table ledger is 48 deep, not 21, so the rear bearing in TABLE mode goes
+#   680 x 21 = 14 280 -> 652 x 48 = 31 296 mm2. Table mode used to be the weak
+#   one; after V2 the two modes bear within 4% of each other.
+#   bed   rung 1          320 x 35 = 11 200 mm2
+#         back bench rail 652 x 48 = 31 296 mm2
+#   table rung 2          320 x 35 = 11 200 mm2
+#         back ledger     652 x 48 = 31 296 mm2
 # Every named support is still far above the 5 000 mm2 floor.
 MIN_BEARING = 5000               # mm2, per named support
 PANEL_SUPPORTS = {
     "bed_mode": ("Ladder Rung_1", "Bench Rail Back (continuous)"),
     "table_mode": ("Ladder Rung_2", "Table Ledger Back"),
 }
+PANEL_RUNG_LEDGE = RUNG_REST_LEDGE - PANEL_FIT      # 35, the fit taken off
 EXPECT_BEARING = {
-    "bed_mode": {"Ladder Rung_1": RUNG_LEN * RUNG_REST_LEDGE,
+    "bed_mode": {"Ladder Rung_1": RUNG_LEN * PANEL_RUNG_LEDGE,
                  "Bench Rail Back (continuous)": PANEL_W * BENCH_RAIL_T},
-    "table_mode": {"Ladder Rung_2": RUNG_LEN * RUNG_REST_LEDGE,
-                   "Table Ledger Back": PANEL_W * BOARD_T},
+    "table_mode": {"Ladder Rung_2": RUNG_LEN * PANEL_RUNG_LEDGE,
+                   "Table Ledger Back": PANEL_W * LEDGER_BACK_T},
 }
 for mode_name, panel in MODES.items():
     found = {p.label: bearing_area(panel, p) for p in parts
@@ -4783,9 +4985,9 @@ for mode_name, panel in MODES.items():
           f"{panel.extents[2][1]:.0f} rests on "
           + ", ".join(f"{lbl} ({a:.0f} mm2)" for lbl, a in sorted(found.items()))
           + f" = {sum(found.values()):.0f} mm2 total")
-assert PANEL_LEN == BENCH_SLAT_LEN == PLATFORM_DEPTH == 800, \
-    "D10: the panel has to be as deep as a slat to reach its rear bearings"
-assert PANEL_Y0 == BENCH_SLAT_Y0 and PANEL_Y1 == LADDER_Y0
+assert PANEL_LEN == BENCH_SLAT_LEN - PANEL_FIT == PLATFORM_DEPTH - PANEL_FIT, \
+    "D10/V2: the panel has to reach its rear bearing, less the front fit"
+assert PANEL_Y0 == BENCH_SLAT_Y0 and PANEL_Y1 == LADDER_Y0 - PANEL_FIT
 assert RUNG_Y1 == LADDER_Y1, "D10: the tread fronts must be flush with the uprights"
 assert LADDER_Y0 - RUNG_Y0 == RUNG_D - UPRIGHT_T == RUNG_REST_LEDGE == 37, \
     "D10/U2: the rungs must reach 37 mm behind the upright plane to catch the " \
@@ -4813,13 +5015,32 @@ print(f"OK  D10: no hooks - panel {PANEL_T} x {PANEL_W} x {PANEL_LEN} at Y "
 # bearing line did too and the battens are 715 mm instead of 727. They still run
 # bearing line to bearing line, so the panel's span is 12 mm shorter and its
 # utilisation a shade lower - the M4 numbers below are conservative now.
-assert BATTEN_LEN == BATTEN_Y1 - BATTEN_Y0 == 715
+assert BATTEN_LEN == BATTEN_Y1 - BATTEN_Y0 == 713
 assert BATTEN_Y0 == BACK_RAIL_Y1, \
     "M4: the battens must stop at the back rail face, not run past it"
-assert BATTEN_Y1 == RUNG_Y0, \
-    "M4: the battens must stop at the rung face, not run into the ledge"
-assert LEDGER_BACK_Y0 + BOARD_T <= BATTEN_Y0, \
+assert BATTEN_Y1 == RUNG_Y0 - PANEL_FIT, \
+    "M4/V2: the battens must stop the fit short of the rung face - they have " \
+    "to pass every rung on the way down, not butt the one they land beside"
+assert LEDGER_BACK_Y0 + LEDGER_BACK_T <= BATTEN_Y0, \
     "M4: the battens foul the back table ledger"
+# V2/M5: the two front cross battens - the same stock, the same Z band, and the
+# same two rules that keep the assembly droppable: PANEL_FIT off the rung face
+# in Y, and inside the panel outline in X.
+assert NOSE_Y1 == RUNG_Y0 - PANEL_FIT and NOSE_Y0 == NOSE_Y1 - BATTEN_W, \
+    f"M5: the front cross battens are at Y {NOSE_Y0}..{NOSE_Y1}"
+assert NOSE_X[0] == (PANEL_X0, BATTEN_X[0]) and \
+    NOSE_X[1] == (BATTEN_X[1] + BATTEN_W, PANEL_X1), \
+    "M5: each front cross batten must run from the panel edge to the M4 batten"
+assert NOSE_LEN == 213 and NOSE_X[0][1] - NOSE_X[0][0] == NOSE_LEN == \
+    NOSE_X[1][1] - NOSE_X[1][0], \
+    f"M5: the two front cross battens are {NOSE_LEN} mm and equal"
+# The cantilever they exist to remove, stated as the number it was: the panel's
+# front edge outboard of the rung end, in bare 18 mm sheet.
+FRONT_CANTILEVER = LADDER_INNER_L - PANEL_X0        # 166
+assert FRONT_CANTILEVER == 166, FRONT_CANTILEVER
+assert NOSE_LEN > FRONT_CANTILEVER, \
+    "M5: a cross batten that stops short of the rung end carries nothing " \
+    "inboard - it has to reach past the corner it stiffens, to the M4 batten"
 # X: clear of both rung-block lines, and symmetric about the ladder centreline.
 assert RUNG_BLOCK_X[0] + RUNG_BLOCK_T <= BATTEN_X[0] and \
     BATTEN_X[1] + BATTEN_W <= RUNG_BLOCK_X[1], \
@@ -4834,13 +5055,15 @@ for bx0 in BATTEN_X:
 WALK_ZONE = (OPEN_FLOOR_X, (BACK_RAIL_Y1, RUNG_Y0), WALK_ZONE_Z)
 for mode_name, panel in MODES.items():
     batts = PANEL_BATTENS[id(panel)]
-    assert len(batts) == 2
+    assert len(batts) == 4, "M4 + M5: two battens along Y, two across X"
     for b in batts:
         # attached: the batten top IS the panel underside, over its whole face
         area = bearing_area(panel, b)
-        assert abs(area - BATTEN_W * BATTEN_LEN) < TOL, \
-            f"M4: '{b.label}' only meets the panel over {area:.0f} mm2, want " \
-            f"{BATTEN_W * BATTEN_LEN}"
+        own = ((b.extents[0][1] - b.extents[0][0])
+               * (b.extents[1][1] - b.extents[1][0]))
+        assert abs(area - own) < TOL, \
+            f"M4/M5: '{b.label}' only meets the panel over {area:.0f} mm2, " \
+            f"want {own}"
         assert abs(b.distance(panel)) < TOL, f"M4: '{b.label}' is not on the panel"
         # clear: zero overlap with every other member of this mode. (The general
         # no-two-parts-overlap check below sees the battens too; this one names
@@ -4871,6 +5094,248 @@ print(f"OK  M4: panel utilisation at the 2 kN dynamic point 1.42 -> ~0.27 - the 
       f"battens turn an 18 mm sheet over a {BATTEN_LEN} mm span into two tee "
       f"sections (W = 2 x {BATTEN_W}*{BATTEN_H}^2/6 = "
       f"{2 * BATTEN_W * BATTEN_H ** 2 // 6} mm3 in the webs alone)")
+
+# ===========================================================================
+# V2: THE THREE THINGS THE OLD PANEL MECHANISM WAS NEVER ASKED
+# ===========================================================================
+# The krokplate and the U-brakett were not wrong in any drawing. They were
+# wrong in three questions nobody put to the model, and each of those questions
+# is now a family of asserts that runs on every build:
+#
+#   1  CAN IT GO IN?          the insertion sweep. A mechanism you cannot lower
+#                             into place is not a mechanism, and "it looks like
+#                             it fits" is what a hook that wraps a rung always
+#                             looks like.
+#   2  DOES EACH PIECE OF     the engagement directions. Steel that opposes a
+#      STEEL DO ANYTHING?     motion the wall already opposes is decoration,
+#                             and a direction nothing opposes is a rattle.
+#   3  ARE THE GAPS LEGAL?    the EN 747 bands, on the gaps a child can reach
+#                             around the seated panel - the check that caught
+#                             the 10 mm side gap this round started with.
+# ---------------------------------------------------------------------------
+PANEL_MODE_LIFT = PANEL_UNDER_TABLE - PANEL_UNDER_BED       # 223
+
+
+def _box_extents(shape):
+    bb = shape.bounding_box()
+    return ((bb.min.X, bb.max.X), (bb.min.Y, bb.max.Y), (bb.min.Z, bb.max.Z))
+
+
+def _raised(ext, dz):
+    return (ext[0], ext[1], (ext[2][0] + dz, ext[2][1] + dz))
+
+
+def panel_assembly_boxes(mode):
+    """[(label, extents), ...] - every solid that travels with the panel.
+
+    The panel, its four battens and the steel. The steel is modelled in bed
+    mode only, so table mode is the same steel raised by the mode lift: that
+    is not a convenience, it is the CLAIM - the four brackets sit at the same
+    place on the panel in both modes and meet the same geometry there - and
+    the asserts below are what test it.
+    """
+    panel = MODES[mode]
+    dz = PANEL_MODE_LIFT if mode == "table_mode" else 0
+    out = [(p.label, p.extents) for p in [panel] + PANEL_BATTENS[id(panel)]]
+    if not FASTENERS_ON:
+        return out
+    for f in FASTENER_SPECS:
+        if not f["jid"].startswith("J13") or f.get("solid") is None:
+            continue
+        if f["kind"] == "plate":
+            for i, (lo, hi) in enumerate(angle_boxes(f)):
+                ext = tuple((min(a, b), max(a, b)) for a, b in zip(lo, hi))
+                out.append((f"{f['solid'].label} flens {'AB'[i]}",
+                            _raised(ext, dz)))
+        else:
+            out.append((f["solid"].label,
+                        _raised(_box_extents(f["solid"]), dz)))
+    return out
+
+
+def _footprints_overlap(a, b):
+    return all(min(a[j][1], b[j][1]) - max(a[j][0], b[j][0]) > TOL
+               for j in (0, 1))
+
+
+def vertical_clear(mode):
+    """(mm, what stops it) - how far the whole assembly can rise, straight up,
+    before any part of it meets any part of the bed."""
+    moving = panel_assembly_boxes(mode)
+    fixed = [p for p in parts if p is not mattress]
+    best, who = math.inf, None
+    for label, m in moving:
+        for f in fixed:
+            if not _footprints_overlap(m, f.extents):
+                continue
+            gap = f.extents[2][0] - m[2][1]
+            if gap < -TOL:
+                continue                    # it is below us, not in the way
+            if gap < best:
+                best, who = gap, f"'{label}' under '{f.label}'"
+    return best, who
+
+
+# 1 - THE INSERTION SWEEP, AND THE THEOREM IT MEASURES AGAINST.
+# The panel does not slide: its rear edge IS the wall plane and its front edge
+# is PANEL_FIT off the ladder. So the ONLY move it has is straight up and
+# straight down, and every part of the assembly - sheet, battens, and all four
+# brackets with their bolts - has to make that move together.
+# THE LIMIT IS NOT A DESIGN CHOICE, IT IS GEOMETRY: a two-height convertible
+# whose upper seat lies over the lower one can never have an unbounded vertical
+# path into the LOWER position, because the thing that carries it up there is
+# in the way on the trip down. The rear support at table height is exactly that
+# member. What the design CAN do - and what V2 does - is make that ceiling as
+# high as it goes: the ledger became a 73 mm member instead of a 95 mm one, so
+# its underside rose 387 -> 409 and the clear run with it. What is asserted is
+# therefore the number, measured, in both modes, on the solids.
+INSERT_CLEAR_MIN = 100           # mm of straight-up travel, both modes
+INSERT_CLEAR = {}
+INSERT_STOPPER = {}
+for _mode in MODES:
+    _run, _who = vertical_clear(_mode)
+    INSERT_CLEAR[_mode] = _run
+    INSERT_STOPPER[_mode] = _who
+    assert _run >= INSERT_CLEAR_MIN, (
+        f"V2 innsetting: the {_mode} assembly can only rise {_run:.0f} mm "
+        f"before {_who} - it cannot be lifted clear of its own locators "
+        f"(the deepest of them engages {BRACKETS['vinkel40']['leg']:g} mm)")
+    assert _run > BRACKETS["vinkel40"]["leg"] * 2, (
+        f"V2 innsetting: {_run:.0f} mm of clear lift in {_mode} is less than "
+        f"twice the stop flange's engagement - there is no room to aim it")
+print(f"OK  V2 innsetting: the panel assembly - sheet, 4 lekter og 4 beslag - "
+      f"går rett ned i begge stillinger. Fri loddrett vei "
+      f"{INSERT_CLEAR['bed_mode']:.0f} mm i sengestilling "
+      f"({INSERT_STOPPER['bed_mode']}) og {INSERT_CLEAR['table_mode']:.0f} mm "
+      f"i bordstilling ({INSERT_STOPPER['table_mode']}). Ingenting i veien for "
+      f"noen av delene på veien ned")
+
+# 2 - EVERY DIRECTION HAS A BLOCKER, AND EVERY BRACKET BLOCKS SOMETHING.
+# The five ways a seated panel can move without leaving its seat, and what
+# stops each. This is read OFF THE MODEL, not asserted from the table: each
+# entry measures a real clearance between two real solids.
+def _stop_plates():
+    """The two rung-end stop flanges, as (side, plate extents, rung)."""
+    out = []
+    for f in FASTENER_SPECS:
+        if f["kind"] != "plate" or not f["drive"].get("stops"):
+            continue
+        (_a, _b) = angle_boxes(f)
+        ext = tuple((min(p, q), max(p, q)) for p, q in zip(*_b))
+        out.append((f["side"], ext,
+                    _member(f["crow"], f["drive"]["stops"], f["pa"], f["pb"])))
+    return out
+
+
+def _rear_flanges():
+    """The two rear bracket flanges that lie on the rear support."""
+    out = []
+    for f in FASTENER_SPECS:
+        if f["kind"] != "plate" or f["jid"] != "J13c":
+            continue
+        (_a, _b) = angle_boxes(f)
+        out.append((f["side"],
+                    tuple((min(p, q), max(p, q)) for p, q in zip(*_b))))
+    return out
+
+
+if FASTENERS_ON:
+    _stops = _stop_plates()
+    assert len(_stops) == 2, f"V2: {len(_stops)} stop flanges, want 2"
+    _sides = sorted(s for s, _e, _r in _stops)
+    assert _sides == [-1.0, 1.0], "V2: the two stops must be one per side"
+    # X, both ways: each stop faces its own rung end across the fit, and the
+    # two of them face OPPOSITE ways - one stops the panel walking left, the
+    # other right. Anything else and the panel is only stopped one way.
+    _faces = []
+    for _side, _ext, _rung in _stops:
+        _gap = (_rung.extents[0][0] - _ext[0][1] if _side < 0
+                else _ext[0][0] - _rung.extents[0][1])
+        assert abs(_gap - PANEL_FIT) < TOL, (
+            f"V2 retning: the {'left' if _side < 0 else 'right'} stop stands "
+            f"{_gap:.1f} mm off the rung end, and the fit is {PANEL_FIT}")
+        _faces.append(_side)
+    assert sorted(_faces) == [-1.0, 1.0]
+    # Rz: the two stops are in the SAME Y band and far apart in X, and they
+    # oppose opposite senses of X - which is exactly the condition that makes
+    # a turn about Z jam one of them, because a turn drives both the same way.
+    _y0 = max(e[1][0] for _s, e, _r in _stops)
+    _y1 = min(e[1][1] for _s, e, _r in _stops)
+    assert _y1 - _y0 > 0, "V2 retning: the two stops are not in one Y band"
+    _spread_x = abs(sum(_s * sum(e[0]) / 2 for _s, e, _r in _stops))
+    assert _spread_x >= RUNG_LEN - TOL, (
+        f"V2 retning: the two stops are only {_spread_x:.0f} mm apart in X - "
+        f"too close together to take a turn about Z")
+    # Y, both ways: the wall behind and the uprights in front. No steel.
+    assert PANEL_Y0 == WALL_Y, "V2 retning: the rear edge is not the wall plane"
+    assert LADDER_Y0 - PANEL_Y1 == PANEL_FIT, \
+        "V2 retning: the front edge does not meet the uprights across the fit"
+    # Z down: wood. Z up: NOTHING, and that is the decision the lock answers.
+    _rears = _rear_flanges()
+    assert len(_rears) == 2 and sorted(s for s, _e in _rears) == [-1.0, 1.0]
+    for _mode, _support in (("bed_mode", "Bench Rail Back (continuous)"),
+                            ("table_mode", "Table Ledger Back")):
+        _sup = next(p for p in parts if p.label == _support)
+        _dz = PANEL_MODE_LIFT if _mode == "table_mode" else 0
+        for _side, _ext in _rears:
+            # THE OVER-THE-EDGE CLAIM, MEASURED: the flange lies on the rear
+            # support's top in BOTH modes, over its whole footprint, and it
+            # lies BESIDE the panel - never under it, or the panel would be
+            # sitting on steel instead of on wood.
+            for _j in (0, 1):
+                assert _sup.extents[_j][0] - TOL <= _ext[_j][0] and \
+                    _ext[_j][1] <= _sup.extents[_j][1] + TOL, (
+                        f"V2 sete: in {_mode} the rear flange runs "
+                        f"{_ext[_j]} on axis {'XY'[_j]} and '{_support}' is "
+                        f"{_sup.extents[_j]}")
+            assert abs((_ext[2][0] + _dz) - _sup.extents[2][1]) < TOL, (
+                f"V2 sete: in {_mode} the rear flange underside is at "
+                f"{_ext[2][0] + _dz}, the support top at "
+                f"{_sup.extents[2][1]}")
+            assert _ext[0][1] <= PANEL_X0 + TOL or _ext[0][0] >= PANEL_X1 - TOL, \
+                "V2 sete: the rear flange reaches under the panel - the panel " \
+                "would land on steel, not on wood"
+    print(f"OK  V2 retning: X+ og X- stoppes av de to trinnende-beslagene "
+          f"({PANEL_FIT} mm passing hver vei, {_spread_x:.0f} mm fra hverandre, "
+          f"så en dreining om Z kiler den ene), Y- av veggplanet, Y+ av "
+          f"stigevangene ({PANEL_FIT} mm), Z ned av tre i begge stillinger - og "
+          f"Z OPP av ingenting, med vilje: platen skal kunne løftes ut. "
+          f"De to bakre beslagene ligger på opplegget i begge stillinger, "
+          f"{BRACKETS['vinkel20']['leg']:g} x {BRACKETS['vinkel20']['width']:g} "
+          f"mm ved siden av platen og aldri under den")
+
+# 3 - THE EN 747 GAP BANDS, ON THE GAPS AROUND THE SEATED PANEL.
+# The rule is a BAND, not a maximum, and it is the reason the panel got 28 mm
+# narrower this round. A gap a child can reach is safe if a finger cannot
+# enter it at all (up to 5 mm) or if it passes freely (12..25 mm); in between
+# it wedges. Above 25 the check is no longer this one - it is the limb and
+# head openings the guard rails are already held to at 60 and 75 mm.
+EN_FINGER_FREE = 5.0             # a finger does not enter below this
+PANEL_GAPS = {
+    "platekant → benkespile, venstre": PANEL_X0 - BENCH_LEN,
+    "platekant → benkespile, høyre": (WALL_SPAN - BENCH_LEN) - PANEL_X1,
+    "platens forkant → stigevange": LADDER_Y0 - PANEL_Y1,
+    "platens bakkant → vegg": PANEL_Y0 - WALL_Y,
+    "beslagflik → benkespile (sengestilling)":
+        (PANEL_X0 - BRACKETS["vinkel20"]["leg"]
+         - BRACKETS["vinkel20"]["t"]) - BENCH_LEN,
+}
+for _what, _g in PANEL_GAPS.items():
+    assert _g <= EN_FINGER_FREE + TOL or \
+        EN_GAP_BAND[0] - TOL <= _g <= EN_GAP_BAND[1] + TOL, (
+            f"EN 747: the gap '{_what}' is {_g:g} mm - a finger enters it and "
+            f"wedges. It has to be at most {EN_FINGER_FREE:g} or between "
+            f"{EN_GAP_BAND[0]:g} and {EN_GAP_BAND[1]:g}")
+assert PANEL_X0 - BENCH_LEN == PANEL_SIDE_GAP == 24 and \
+    (WALL_SPAN - BENCH_LEN) - PANEL_X1 == PANEL_SIDE_GAP, \
+    "EN 747: the two side gaps must be equal and must be the declared one"
+assert not (EN_GAP_BAND[0] <= 10 <= EN_GAP_BAND[1]), \
+    "EN 747: 10 mm - the gap this design used to have - must NOT be legal"
+print("OK  EN 747 klemfare: " + ", ".join(
+    f"{_w.split(' (')[0]} {_g:g}" for _w, _g in PANEL_GAPS.items())
+    + f" mm - hver enten under {EN_FINGER_FREE:g} (fingeren kommer ikke inn) "
+      f"eller i båndet {EN_GAP_BAND[0]:g}..{EN_GAP_BAND[1]:g} (fingeren går "
+      f"fritt). Sideklaringen var 10 mm, midt i klembåndet")
 
 # D5: FLUSH TOP. No cleats anywhere; every slat lies on top of the rails and
 # must bear on the FULL 48 mm width of BOTH of them, exactly like a bench slat.
@@ -5233,10 +5698,10 @@ print(f"  {'TOTAL':<12}{sum(by_section.values()):>4} pcs "
 EXPECTED_PROFILES = {
     sec(BOARD36_T, BOARD36_W),      # 36x98 - boards AND corner posts (U1/U2)
     sec(BLOCK_T, BLOCK_H),          # 36x48 - ladder uprights and every block
-    sec(BENCH_RAIL_T, BENCH_RAIL_H),  # 48x73 - bench rails, rungs, battens
-                                      #         AND the four stub legs (U5)
+    sec(BENCH_RAIL_T, BENCH_RAIL_H),  # 48x73 - bench rails, rungs, battens,
+                                      #         the four stub legs (U5) AND the
+                                      #         back table ledger (V2)
     sec(RAIL_T, RAIL_H),            # 48x98 - side rails and end beams
-    sec(BOARD_T, BOARD_W),          # 21x95 - the back table ledger, only
 }
 # U5: the stub legs are cut from the bench-rail profile now, so they add no
 # entry of their own - this is the assert that would have caught 48x48 coming
@@ -5247,24 +5712,36 @@ assert sec(LEG_T, LEG_W) == sec(BENCH_RAIL_T, BENCH_RAIL_H), \
 assert set(TIMBER_PROFILES) == EXPECTED_PROFILES, \
     f"the bed is built from {sorted(TIMBER_PROFILES)}, expected " \
     f"{sorted(EXPECTED_PROFILES)}"
-assert len(TIMBER_PROFILES) == 5, \
-    f"U1/U2/U5 aimed at 5 timber profiles, this is {len(TIMBER_PROFILES)}"
+# V2: 21x95 LEFT THE BED. It was the back table ledger and nothing else - one
+# 1794 mm piece keeping a whole stock line, a whole shopping line and a whole
+# pile on the floor alive - and the ledger is a 48x73 now for reasons that have
+# nothing to do with the list (see the LEDGER block). This is the assert that
+# says the saving is real and that 21x95 is not to come back quietly.
+assert sec(BOARD_T, BOARD_W) not in TIMBER_PROFILES, \
+    "V2: 21x95 is supposed to be gone from the bed entirely"
+assert len(TIMBER_PROFILES) == 4, \
+    f"U1/U2/U5 aimed at 5 timber profiles and V2 took one out; " \
+    f"this is {len(TIMBER_PROFILES)}"
 assert by_section[sec(BOARD36_T, BOARD36_W)] == 32 and \
     max(by_metres, key=by_metres.get) == sec(BOARD36_T, BOARD36_W), \
     "U1/U2: 36x98 must be both the most numerous and the longest profile"
 assert "34x98" not in by_section, \
     "U1: 34x98 is supposed to be gone from the bed entirely"
-print("\nNote: the movable panel and its two battens are listed once; they are "
-      "the same three parts in both modes.")
-print(f"Note (D10/M4): the panel rests straight on wood in both modes and is "
-      f"stiffened by 2 x {sec(BATTEN_W, BATTEN_H)} x {BATTEN_LEN} battens on "
-      f"edge screwed to its underside (X {BATTEN_X[0]}/{BATTEN_X[1]}, Y "
-      f"{BATTEN_Y0}..{BATTEN_Y1}), which take the 2 kN dynamic utilisation from "
-      f"1.42 to ~0.27. The steel is not modelled: at the FRONT, load-bearing "
-      f"U-brackets wrap the rung (as the Hoppekids original) and clamp the panel "
-      f"to the ladder - panel anti-tip AND, through the panel, the brace that "
-      f"restrains the ladder base (finding F1); at the REAR, hook plates over "
-      f"the back bench rail / back table ledger. No bolts or screws are drawn.")
+print("\nNote: the movable panel and its four battens are listed once; they "
+      "are the same five parts in both modes.")
+print(f"Note (D10/M4/M5/V2): the panel rests straight on wood in both modes - "
+      f"rear edge on a {sec(LEDGER_BACK_T, LEDGER_BACK_H)} member at Y "
+      f"{LEDGER_BACK_Y0}..{LEDGER_BACK_Y0 + LEDGER_BACK_T} whichever mode it "
+      f"is in, front edge on a rung - and is stiffened by 2 x "
+      f"{sec(BATTEN_W, BATTEN_H)} x {BATTEN_LEN} battens along Y (X "
+      f"{BATTEN_X[0]}/{BATTEN_X[1]}) plus 2 x {sec(BATTEN_W, BATTEN_H)} x "
+      f"{NOSE_LEN} cross battens under the front corners, which is where the "
+      f"{FRONT_CANTILEVER} mm of bare sheet outboard of the rung end used to "
+      f"be. The steel is FOUR SHOP ANGLE BRACKETS and it carries no vertical "
+      f"load at all: two at the rear seat the panel's side edges on the rear "
+      f"support and take the lock screw, two stand down the rung ENDS "
+      f"{PANEL_FIT} mm clear and are the only thing holding the assembly in X "
+      f"and against turning. Every one of them is drawn.")
 print(f"Note (D11/D13): the front bench rail is two {FRONT_BENCH_RAIL_SEG_LEN} mm "
       f"segments that stop at the sofa ends on their stub legs; only the back "
       f"one is a continuous member, and after W9 it is {BETWEEN_POSTS_LEN} mm, "
@@ -5424,12 +5901,13 @@ print(f"Note (D5/D7/U1/U2): {sec(BOARD36_T, BOARD36_W)} is the stock of this "
       f"piece), then {len(FRONT_GUARD_SEGMENTS) * len(GUARD_BAND_Z0)} guards at "
       f"{FRONT_GUARD_SEG_LEN} and the posts at {BACK_POST_HEIGHT} / "
       f"{POST_HEIGHT}. Four saw stops for the biggest pile in the bed.")
-print(f"Note (D7/U5): 21x95 appears exactly once in the whole bed - the back "
-      f"table ledger, {BETWEEN_POSTS_LEN} mm - and is now the ONLY profile in "
-      f"that position. 48x48 used to be the other one (the four "
-      f"{STUB_LEG_H} mm bench stub legs, after U2 took the corner posts off "
-      f"it); U5 has ripped them out of the {sec(BENCH_RAIL_T, BENCH_RAIL_H)} "
-      f"bench-rail board instead and 48x48 is off the shopping list.")
+print(f"Note (D7/U5/V2): the one-piece-profiles are gone, both of them. 48x48 "
+      f"was the four {STUB_LEG_H} mm bench stub legs and U5 ripped them out of "
+      f"the {sec(BENCH_RAIL_T, BENCH_RAIL_H)} bench-rail board; 21x95 was the "
+      f"back table ledger, {BETWEEN_POSTS_LEN} mm and nothing else, and V2 "
+      f"makes that a {sec(LEDGER_BACK_T, LEDGER_BACK_H)} too - for the rear "
+      f"seat, not for the list, but the list is {len(TIMBER_PROFILES)} "
+      f"profiles now.")
 print("Note (D5): the slat cleats are gone; the upper slats are screwed "
       "straight down onto the side rails, one 5x60 per end.")
 
