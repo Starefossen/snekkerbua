@@ -488,6 +488,17 @@ V2  THE PANEL BECOMES A DROP-IN ASSEMBLY. Four shop angle brackets, on the
       * THE REAR SUPPORT IS ONE PROFILE. The table ledger goes 21x95 to
         48x73 at Y -48..0, the back bench rail's own section and plane, so
         the rear seat is identical in both modes - and 21x95 leaves the bed.
+      * WHAT V2 GIVES UP, SAID OUT LOUD: the U-bracket wrapped the rung, so
+        it tied the panel to the ladder in TENSION and that tie was this
+        design's answer to the ladder-base restraint finding F1. A bracket
+        that grips the far side of a member cannot be lowered into place, so
+        the tie is gone. What is left is a STRUT: the panel fills the clear
+        between the wall plane and the uprights with PANEL_FIT to spare, so
+        the ladder foot cannot move BACKWARD. Forward it is held only by J3
+        into the front side rail. That is a one-way brace where there used to
+        be a two-way tie, it is written into docs/ASSEMBLY.md as an open
+        point, and if it has to become a requirement the answer is a brace
+        from the ladder foot to the frame - not a bracket on the panel.
       * UPLIFT IS NOT BLOCKED, ON PURPOSE. The panel is meant to lift out.
         The bed-mode lock is a separate decision, presented as three options
         in docs/preview/laasvalg.png, and none of them is wired in here.
@@ -604,9 +615,11 @@ one is two 642 mm segments that stop at the sofa ends on their stub legs,
 leaving the whole front floor between the benches open (D11/D13). The two
 benches are the slatted zones at each end: 36x98 slats (C3) laid on the
 rails, so the bench top is at Z = 295. Between the benches an 18 mm pine
-panel, stiffened by two 48x73 battens on edge underneath it (M4), RESTS on
-wood (D10) - it is held down by steel U-brackets round the rung at the front
-and hook plates at the back, but every gram of vertical load goes into wood:
+panel, stiffened by two 48x73 battens on edge along it (M4) and two more
+across its front corners (M5), RESTS on wood (D10). Four shop angle brackets
+locate it and nothing else - two on the rear seat, two at the rung ends (V2) -
+so it is LOWERED into either seat, and every gram of vertical load goes into
+wood:
   * TABLE MODE  - on the back table ledger (top Z 482) and on ladder rung 2
                   (top Z 482); panel top Z = 500.
   * BED MODE    - on the back bench rail (top Z 259) and on ladder rung 1

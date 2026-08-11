@@ -65,4 +65,4 @@ Platen løftes rett opp i begge stillinger. Ingenting holder den ned, og i senge
 | **ii** | fingerskrue M6 i gjengeinnsats i vangen | nei | grensetilfelle — verktøyfritt betyr at et barn òg kan gjøre det |
 | **iii** | oversenterlås som trekker platen ned | nei | samme innvending som ii, men fjerner klapringen |
 
-Tegnet side ved side i [docs/preview/laasvalg.png](../preview/laasvalg.png). Antallet er 2 uansett valg — ett per bakre beslag.
+Tegnet side ved side i [docs/preview/laasvalg.png](../preview/laasvalg.png) — gjennomgangsmateriell, lages med `mise run mekanisme`. Antallet er 2 uansett valg — ett per bakre beslag.

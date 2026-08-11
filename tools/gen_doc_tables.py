@@ -1758,7 +1758,8 @@ def emit_beslagliste(out_dir, steps):
              "| **iii** | oversenterlås som trekker platen ned | nei | "
              "samme innvending som ii, men fjerner klapringen |\n\n"
              "Tegnet side ved side i "
-             "[docs/preview/laasvalg.png](../preview/laasvalg.png). "
+             "[docs/preview/laasvalg.png](../preview/laasvalg.png) — "
+             "gjennomgangsmateriell, lages med `mise run mekanisme`. "
              "Antallet er 2 uansett valg — ett per bakre beslag.\n")
     write(os.path.join(out_dir, "beslagliste.md"), "".join(L))
 

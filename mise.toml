@@ -68,6 +68,11 @@ echo "OK  $(wc -l < "$work/sum-1" | tr -d ' ') artefakter byte-identiske over to
 """
 depends = ["install"]
 
+[tasks.mekanisme]
+description = "Bevisark for platemekanismen: de to hjørnene i begge stillinger, og de tre låsevalgene (docs/preview/)"
+depends = ["build"]
+run = "python tools/render_mekanisme.py"
+
 [tasks.montering-skyggelagt]
 description = "The shaded USD renders of the same steps, for reference (macOS: usdrecord + swift)"
 depends = ["build"]

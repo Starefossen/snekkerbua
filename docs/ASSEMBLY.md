@@ -49,7 +49,6 @@ fra kapplista og nøkkelmålene.
 | Vater, minst 600 mm | Endebjelker og vanger |
 | Tommestokk og målebånd | |
 | To skrutvinger, minst 300 mm | Holder deler mens du borer gjennom begge samtidig |
-| Skrustikke eller ambolt + hammer | Bøying av U-brakettene og krokplatene |
 | Blyant og syl | Merking av borsentre |
 | To personer | Endrammene skal reises, og de øvre vangene skal opp i høyden |
 
@@ -104,7 +103,7 @@ ned under en monteringsflate — ingen forsenkte boltehoder, ingen store
 forsenkingshull, og ingen deler som må boltes ferdig før de får møte veggen.
 
 Stål brukes bare fire steder: vinkelbeslagene under stubbeføttene,
-vinkelbeslagene under bordbærelektas ender, og U-brakettene og krokplatene på
+vinkelbeslagene under bordbærelektas ender, og de fire vinkelbeslagene på
 den løse platen. Bare de to siste er konstruksjon — resten er bånd og opplegg.
 
 ## 3. Byggerekkefølgen — og hvorfor den er som den er
@@ -385,36 +384,64 @@ beslag og uten kile.
 
 ### J13 — Den løse platen
 
-Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke, og
-beslagene på den er konstruksjon.
+Platen er ikke et løst bord. Den er en liten enhet som **senkes rett ned** i den
+stillingen den skal stå i, og løftes rett opp igjen. Alt annet i dette avsnittet
+følger av den ene setningen: platen har null vandring i dybderetningen —
+bakkanten *er* veggplanet og forkanten står 2 mm fra stigevangene — så den
+eneste bevegelsen den har, er loddrett.
+
+Vekten hviler på **tre**, ikke på stål: bakkanten på den bakre benkevangen
+(sengestilling) eller på bordbærelekta (bordstilling), forkanten på trinnet. De
+fire vinkelbeslagene sier bare hvor.
 
 **J13a — avstivningslekter.** To lekter på høykant, skrudd under platen fra
-oversiden. De går fra det bakre opplegget helt fram til trinnet. Uten dem holder
-ikke platen når noen setter seg på den. Med dem er platen to T-bjelker. Se
-lasttabellen i vedlegg A.
+oversiden, fra det bakre opplegget og fram til 2 mm foran trinnet. Uten dem
+holder ikke platen når noen setter seg på den. Med dem er platen to T-bjelker.
+Se lasttabellen i vedlegg A.
 
-**J13b — U-brakettene foran.** To braketter som **omslutter trinnet** og klemmer
-platen fast til stigen. De gjør to jobber samtidig:
+**J13b — tverrlekter under forkanten.** Trinnet er 320 mm langt og platen 652
+bred, så 166 mm av forkanten i hvert hjørne har ingenting under seg. To korte
+tverrlekter bærer det hjørnet innover til avstivningslekta, som lander på
+trinnet. Dette er hjørnet et barn kneler på når det klatrer opp fra benken.
 
-* de er platens vippesikring — du får ikke løftet forkanten av hylla;
-* og de er stigens avstivning nedad. Stigefoten er ikke bundet til noe annet i
-  dybderetningen, og det er gjennom platen den er bundet tilbake til den bakre
-  bærelinjen.
+**J13c — vinkelbeslag på sidekanten, bak.** Ett på hver sidekant. Den vannrette
+fliken ligger **på** opplegget — *ved siden av* platen, i sideklaringen, aldri
+under den. Ligger den under, hviler platen på stål og vipper. Fliken er 20 mm
+lang og sideklaringen 24, så den har 2 mm å gå på hver vei; i sengestilling
+stopper den også mot enden av benkespilen.
 
-Dette er grunnen til at platen alltid skal ligge i, i en av de to stillingene.
+Grunnen til at beslaget står i klaringen og ikke bak platen: baksiden av vangen
+ligger i veggplanet, **den flaten er veggen**, og der er det ingen plass til et
+beslag. Ingenting av mekanismen kommer på veggsiden.
 
-**J13c — krokplatene bak.** To plater som holder bakkanten nede. De henger ned
-**foran** den bakre benkevangen og haker seg inn **under** den. Grunnen til at
-de griper forfra: baksiden av vangen ligger i veggplanet, **den flaten er
-veggen**, og der er det ingen plass til et beslag. Ingenting av krokplatene
-kommer på veggsiden.
+Hullet i den vannrette fliken er **låsepunktet** — se «Lås i sengestilling» i
+[beslaglista](generated/beslagliste.md).
 
-I bordstilling henger de samme platene fritt like foran bordbærelekta og virker
-der som stopp framover. Bakkanten holdes ikke nede i bordstilling — det trengs
-ikke, for et bord belastes nedover, og forkanten er uansett låst til trinnet av
-U-brakettene.
+**J13d — vinkelbeslag ved trinnenden.** Ett på hver side, boltet opp under
+platen like utenfor trinnenden, med den nedhengende fliken langs trinnets
+endeved og **2 mm klar av den**. Disse to er hele sidestyringen:
 
-Sett platene i X der de går klar av avstivningslektene.
+* de stopper platen sidelengs begge veier (den ene mot venstre trinnende, den
+  andre mot høyre);
+* og de stopper den i å vri seg, fordi en vridning drar begge to samme vei i
+  lengderetningen, så den ene kiler seg uansett hvilken vei den vris.
+
+Trinn 1 og trinn 2 ender på nøyaktig samme sted i lengderetningen, så det samme
+paret finner trinnenden i begge stillinger. De 2 millimeterne er ikke slark —
+det er passingen som gjør at platen kan senkes ned i det hele tatt.
+
+**Det som IKKE er låst: platen kan løftes rett opp.** Det er meningen — det er
+slik den skifter stilling. I sengestilling er det et valg som må tas før sengen
+brukes, og de tre alternativene står i beslaglista og er tegnet side ved side i
+`docs/preview/laasvalg.png` (`mise run mekanisme`).
+
+**Innsettingsveien er målt, ikke antatt.** Modellen sveiper hele enheten — plate,
+fire lekter, fire beslag og boltene — rett opp fra begge seter og krever at
+ingenting treffer noe: 109 mm fri vei i sengestilling og 124 mm i bordstilling.
+Taket er stigen (en stigekloss) i begge tilfeller. Mer enn det er det ikke å få:
+i en seng med to setehøyder over hverandre står det som bærer platen i den
+øverste stillingen i veien på vei ned til den nederste. Skal platen helt ut av
+sengen, vippes den ut etter at den er løftet fri.
 
 ### J14 — Veggfeste (obligatorisk)
 
@@ -540,9 +567,10 @@ ligger der. Se avsnitt 5 og nøkkelmålene.
 spiler og alt er greit. Uten madrass, med full dynamisk last rett på én spile,
 er spilen overbelastet. Legg madrassen på før noen går opp.
 
-**7.5 Den løse platen skal alltid ligge i.** Den er stigens avstivning nedad
-(J13b). Skal du ha den ut, ta stigen med i vurderingen — og ikke la noen klatre
-mens platen er ute.
+**7.5 Den løse platen skal alltid ligge i.** Den står som en stiver mellom
+veggen og stigevangene: med platen i kan ikke stigefoten gå bakover. Skal du ha
+den ut, ta stigen med i vurderingen — og ikke la noen klatre mens platen er
+ute.
 
 **7.6 Ikke sett deg på platens kant, og ikke bruk den som trinn.** Den er
 sikret mot å vippe, men den er ikke en avsats.
@@ -636,7 +664,7 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 |---|---|---|---|---:|---|
 | Plate 18 mm, **bar** | Bøyning over to opplegg | 715 mm | 2 kN dynamisk | **1,40** | ✗ Holder ikke alene |
 | Plate 18 mm **med to avstivningslekter 48×73 på høykant** | To T-bjelker med platen som flens | 715 mm | 2 kN dynamisk | **0,26** | ✓ Dette er hele grunnen til at lektene finnes |
-| Plate → U-brakett | M6 i skjær | ≈ 3 kN per bolt | 0,13 kN | 0,04 | ✓ |
+| Plate → vinkelbeslag ved trinnenden | M6 i skjær | ≈ 3 kN per bolt | 0,13 kN | 0,04 | ✓ |
 | Bordbærelekt 21×95 **på høykant** | Bøyning om sterk akse | 1794 mm | 0,55 kN bordlast | **0,17** | ✓ Flatt lagt faller kapasiteten med faktor 20 |
 | Bordbærelekt → stolpe | Skruskjær, 1 × 5 mm per beslagflik — 40 mm flik tar ikke to | 1,5 kN | 0,13 kN | 0,09 | ✓ Lekta ligger dessuten PÅ den vannrette fliken; skruen holder den bare nede |
 | Rekkverksbord 36×98 | Bøyning om svak akse, vannrett last | ≈ 760 mm | 0,5 kN | **0,13** | ✓ |
@@ -700,9 +728,17 @@ det er den bakre sidevangen som deler lasten med veggskruene.
 **Avvik 2 — stigefoten er ikke bundet i dybderetningen.**
 Gulvet foran stigen er med vilje helt fritt, og den fremre benkevangen krysser
 det ikke. Prisen er at stigevangene ikke har noe hold i dybderetningen nede ved
-gulvet. *Det som erstatter det:* den løse platen. U-brakettene (J13b) omslutter
-trinnet og klemmer platen til stigen, og platen binder stigen tilbake til den
-bakre bærelinjen. Veggfestet (J14) holder resten av rammen i ro.
+gulvet. *Det som erstatter det:* den løse platen, som en **stiver** — den fyller
+klaringen mellom veggplanet og stigevangenes bakside med 2 mm til overs, så
+stigefoten ikke kan gå bakover. Veggfestet (J14) holder resten av rammen i ro.
+
+*Åpent punkt etter V2:* dette er en énveis stivning. Den gamle U-braketten
+omsluttet trinnet og bandt platen til stigen i **strekk**, altså begge veier;
+den er borte, fordi et beslag som griper om baksiden av en del ikke lar seg
+senke ned — se J13. Stigefoten er dermed bare holdt framover av skruene opp i
+den fremre sidevangen (J3). Det skal regnes på i en egen runde; øker det til et
+krav, er svaret et eget bånd fra stigefoten til rammen, ikke et beslag på
+platen.
 *Betingelse:* platen **skal** alltid ligge i, i en av de to stillingene. Se 7.5.
 
 **Avvik 3 — bar spilebunn tåler ikke dynamisk last.**
@@ -721,4 +757,4 @@ på før noen går opp. Se 7.4.
 | [end-elevation.svg](schematics/end-elevation.svg) | Kortsiden, med veggen inntegnet. Her ser du at sengen er usymmetrisk: bakre stolpe stopper i sengeflaten, fremre går helt opp til rekkverket |
 | [ladder-detail.svg](schematics/ladder-detail.svg) | Stigen: vanger, klosser, trinn, J3-skruene, og hylla bak trinnet som platen hviler på |
 | [bench-detail.svg](schematics/bench-detail.svg) | Benken: bærekloss mot hjørnestolpen, vangebiten som ender på stubbefoten, benkespilene og platekanten |
-| [panel-detail.svg](schematics/panel-detail.svg) | Den løse platen i begge stillinger, med avstivningslekter, U-braketter og krokplater |
+| [panel-detail.svg](schematics/panel-detail.svg) | Den løse platen i begge stillinger, med avstivningslekter (skjemaet er fra før V2 og viser den gamle stålløsningen) |
