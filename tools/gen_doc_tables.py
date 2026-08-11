@@ -1165,7 +1165,7 @@ def emit_nokkelmal(G, out_dir, rows):
     L.append("## Dybdeplan (Y)\n\n| Y | Hva |\n|---:|---|\n")
     planes = [
         (G.WALL_Y, "BAKVEGGEN — monteringsflaten. Bakre stolper, "
-                   "endebjelkeender og bakre bæreklosser ligger i dette "
+                   "endebjelkeender og bakre stubbeføtter ligger i dette "
                    "planet. Ingenting får stikke bak det."),
         (G.BACK_RAIL_Y0, "bakre sidevange, benkevange, bordbærelekt og "
                          "spilebunn — bakkant; bakre stolpes forside"),

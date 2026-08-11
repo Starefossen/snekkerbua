@@ -49,7 +49,7 @@ Stigningen fra gulv til spilebunn: 259 + 223 + 238 + 238 + 241 mm. Første stign
 
 | Y | Hva |
 |---:|---|
-| **-48** | BAKVEGGEN — monteringsflaten. Bakre stolper, endebjelkeender og bakre bæreklosser ligger i dette planet. Ingenting får stikke bak det.; bakre sidevange, benkevange, bordbærelekt og spilebunn — bakkant; bakre stolpes forside |
+| **-48** | BAKVEGGEN — monteringsflaten. Bakre stolper, endebjelkeender og bakre stubbeføtter ligger i dette planet. Ingenting får stikke bak det.; bakre sidevange, benkevange, bordbærelekt og spilebunn — bakkant; bakre stolpes forside |
 | **-27** | bordbærelektas forside |
 | **0** | bakre sidevanges og benkevanges forside; avstivningslektenes bakkant |
 | **704** | fremre sidevange og benkevange — bakkant |

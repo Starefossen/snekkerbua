@@ -119,6 +119,12 @@ som 48 + 36, og spissdekningen er 4 mm uansett vei), så det er utseendet som
 avgjør, og modellen har en assert som sier det: ingen festemiddelhoder på en
 romvendt flate. Rekkverksbordene har vært skrudd slik hele tiden.
 
+**Og du kommer til.** Bak hvert eneste av de hodene står det over 700 mm åpen
+luft — inn i den tomme sengerammen for J2 og J3, inn i det åpne benkerommet
+for J8 — på det tidspunktet i rekkefølgen leddet skrus, og faktisk også i den
+ferdige sengen. Alle tre skrus før spilene går på. En drill med bits er en
+kvart meter.
+
 **Én konsekvens til, og den er god:** ingenting i rammen festes lenger fra en
 flate som ender mot vegg. Da finnes det heller ingen skruehoder som må senkes
 ned under en monteringsflate — ingen forsenkte boltehoder, ingen store

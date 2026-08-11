@@ -62,8 +62,6 @@
   <rect x="1333.04" y="459.7" width="60.76" height="660.3" class="pst"/>
   <rect x="220.76" y="821.16" width="1112.28" height="58.9" class="brd"/>
   <rect x="220.76" y="959.42" width="1112.28" height="45.26" class="rai"/>
-  <rect x="220.76" y="1004.68" width="29.76" height="22.32" class="blk"/>
-  <rect x="1303.28" y="1004.68" width="29.76" height="22.32" class="blk"/>
   <rect x="530.14" y="1004.68" width="29.76" height="115.32" class="gho"/>
   <rect x="994" y="1004.68" width="29.76" height="115.32" class="gho"/>
   <line x1="120" y1="1120" x2="1440" y2="1120" class="grd"/>
@@ -98,8 +96,8 @@
   <text x="262" y="600" class="sml" text-anchor="start">J14 (steg 2): 6 veggfester rett gjennom vangen inn i stenderne – prikkene på vangen.</text>
   <text x="262" y="660" class="lbl" text-anchor="start">Hjørnestolpe, bak (veggside) 36×98 × 1065 – bakflaten ER veggflaten.</text>
   <text x="262" y="720" class="lbl" text-anchor="start">Bordbærelekt, bak 48×73 × 1794 – på høykant, J12 vinkelbeslag i hver ende.</text>
-  <text x="262" y="756" class="lbl" text-anchor="start">Benkevange, bak 48×73 × 1794 – hviler på bæreklossene J9-B; J8-B skråskrues.</text>
-  <text x="262" y="792" class="sml" text-anchor="start">Bærekloss, benkevange (J9-B) 36×48, 48 lang – overkant nøyaktig i vangens underkant, Z 186.</text>
+  <text x="262" y="756" class="lbl" text-anchor="start">Benkevange, bak 48×73 × 1794 – J8-B: 2 skrå 6×90 i hver ende, og det er hele festet.</text>
+  <text x="262" y="792" class="sml" text-anchor="start">Ingen bærekloss under enden. Hullene fra steg 0 er jiggen: vangen har én høyde der de møtes.</text>
   <text x="262" y="1090" class="sml" text-anchor="start">Stubbeføtter: steg 5 (stiplet)</text>
 
   <line x1="160" y1="1120" x2="160" y2="1270" class="ext"/>
@@ -198,8 +196,8 @@
 
   <circle cx="1520" cy="968" r="19" class="bal"/><text x="1520" y="977" class="baln" text-anchor="middle">1</text>
   <text x="1560" y="976" class="st" text-anchor="start">Bakrammen – bygg den flatt på gulvet</text>
-  <text x="1560" y="1010" class="sml" text-anchor="start">2 stolper 36×98×1065 · sidevange 48×98×1984 · benkevange 48×73×1794 · bordbærelekt 48×73×1794 · 2 bæreklosser J9-B.</text>
-  <text x="1560" y="1040" class="sml" text-anchor="start">Ledd: J2-B, J8-B, J9-B, J12.  Mål diagonalene, og kjenn over hele baksiden: ingenting får stikke ut.</text>
+  <text x="1560" y="1010" class="sml" text-anchor="start">2 stolper 36×98×1065 · sidevange 48×98×1984 · benkevange 48×73×1794 · bordbærelekt 48×73×1794.</text>
+  <text x="1560" y="1040" class="sml" text-anchor="start">Ledd: J2-B, J8-B, J12.  Mål diagonalene, og kjenn over hele baksiden: ingenting får stikke ut.</text>
 
   <circle cx="1520" cy="1086" r="19" class="bal"/><text x="1520" y="1095" class="baln" text-anchor="middle">2</text>
   <text x="1560" y="1094" class="st" text-anchor="start">Reis bakrammen og skru den fast i veggen</text>
@@ -207,11 +205,11 @@
 
   <circle cx="1520" cy="1204" r="19" class="bal"/><text x="1520" y="1213" class="baln" text-anchor="middle">3</text>
   <text x="1560" y="1212" class="st" text-anchor="start">Endebjelkene og de fremre stolpene</text>
-  <text x="1560" y="1246" class="sml" text-anchor="start">2 endebjelker 48×98×836 · 2 stolper 36×98×1700 · 4 bæreklosser J1-B · 2 J9-F.  Ledd: J1 (Z 994 og 1038), J1-B, J9-F.</text>
+  <text x="1560" y="1246" class="sml" text-anchor="start">2 endebjelker 48×98×836 · 2 stolper 36×98×1700. Ledd: J1 (Z 994 og 1038) – to 6×90 per hjørne, ingen kloss under.</text>
 
   <circle cx="1520" cy="1322" r="19" class="bal"/><text x="1520" y="1331" class="baln" text-anchor="middle">4</text>
   <text x="1560" y="1330" class="st" text-anchor="start">Fremre sidevange</text>
-  <text x="1560" y="1364" class="sml" text-anchor="start">48×98×1984 opp på begge endebjelker, festet til de fremre stolpene.  Ledd: J2 (Z 1092 og 1136).</text>
+  <text x="1560" y="1364" class="sml" text-anchor="start">48×98×1984 opp på begge endebjelker, festet til de fremre stolpene.  Ledd: J2 (Z 1092 og 1136) – skrudd innenfra og ut.</text>
 
   <circle cx="1520" cy="1440" r="19" class="bal"/><text x="1520" y="1449" class="baln" text-anchor="middle">5</text>
   <text x="1560" y="1448" class="st" text-anchor="start">Fremre benkevanger og alle fire stubbeføtter</text>
@@ -242,7 +240,7 @@
   <text x="1560" y="2190" class="sml" text-anchor="start">Madrass 1990×800, tykkelse 140–326 mm · tre puter i underetasjen · ettertrekk alt som kan ettertrekkes.</text>
 
   <!-- ==================================================== legend -->
-  <rect x="90" y="2200" width="1330" height="150" class="legbox"/>
+  <rect x="90" y="2200" width="1330" height="166" class="legbox"/>
   <text x="114" y="2238" class="leg" text-anchor="start">TEGNFORKLARING</text>
   <rect x="114" y="2256" width="46" height="24" class="pst"/>
   <text x="176" y="2276" class="sml" text-anchor="start">Stolpe / stubbefot</text>
@@ -250,12 +248,11 @@
   <text x="176" y="2312" class="sml" text-anchor="start">Vange / bjelke</text>
   <rect x="114" y="2328" width="46" height="24" class="brd"/>
   <text x="176" y="2348" class="sml" text-anchor="start">Bord: spile, trinn, rekkverksbord, lekt</text>
-  <rect x="560" y="2256" width="46" height="24" class="blk"/>
-  <text x="622" y="2276" class="sml" text-anchor="start">Bærekloss</text>
-  <rect x="560" y="2292" width="46" height="24" class="gho"/>
-  <text x="622" y="2312" class="sml" text-anchor="start">Del som kommer i et senere steg</text>
-  <circle cx="578" cy="2340" r="14" class="bal"/><text x="578" y="2348" class="baln2" text-anchor="middle">n</text>
-  <text x="622" y="2348" class="sml" text-anchor="start">Ballongnummer = steg i lista til høyre</text>
+  <rect x="560" y="2256" width="46" height="24" class="gho"/>
+  <text x="622" y="2276" class="sml" text-anchor="start">Del som kommer i et senere steg</text>
+  <circle cx="578" cy="2304" r="14" class="bal"/><text x="578" y="2312" class="baln2" text-anchor="middle">n</text>
+  <text x="622" y="2312" class="sml" text-anchor="start">Ballongnummer = steg i lista til høyre</text>
+  <text x="622" y="2348" class="sml" text-anchor="start">Ingen bæreklosser noe sted</text>
   <text x="1010" y="2276" class="sml" text-anchor="start">Skjematisk. Målene som står her er</text>
   <text x="1010" y="2312" class="sml" text-anchor="start">virkelige; alle andre mål slås opp i de</text>
   <text x="1010" y="2348" class="sml" text-anchor="start">fem andre arkene og i nøkkelmål.</text>
