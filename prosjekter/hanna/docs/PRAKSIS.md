@@ -1,18 +1,22 @@
-# PRAKSIS — hvordan dette repoet er bygd
+# PRAKSIS — hvordan HANNA er bygd
 
 Dette er ikke en del av manualen. `docs/hanna.pdf` settes sammen av en
 eksplisitt liste i `tools/build_pdf.py` (`REF_DOCS`), og denne filen står ikke
 i den. Den er skrevet for den som skal endre modellen eller tegningene, og den
 sier hvilke regler som gjelder og hvorfor de er som de er.
 
+De **felles** reglene i snekkerbua — én kilde, assertfilosofien, regler framfor
+tilfeller, de allmenne tegnekonvensjonene, filmene og determinismen — står i
+[PRAKSIS.md](../../../PRAKSIS.md) på rota. Her står bare det som er HANNAs
+eget: delene, leddene, invariantene denne modellen hviler på, og billedspråket
+i denne manualen.
+
 ---
 
-## 1. Én kilde, og bare én
+## 1. Kjeden
 
-**Ethvert tall som står i dokumentasjonen kommer fra `generate_loftbed.py`.**
-Ikke «er kopiert fra» — kommer fra. Verktøyene i `tools/` importerer modellen,
-leser modulglobalene og skriver ut. Ingen av dem definerer geometri, og ingen
-av dem utleder noe modellen allerede vet.
+Fellesregelen står i [PRAKSIS §1](../../../PRAKSIS.md#1-én-kilde-og-bare-én).
+Kilden her er `generate_loftbed.py`, og dette er veien ut av den:
 
     generate_loftbed.py          modellen: mål, deler, festemidler, asserter
       ├─ tools/gen_doc_tables.py leser modellen → docs/generated/*.md,
@@ -31,30 +35,21 @@ fragment allerede bærer — den lenker til fragmentet i stedet.
 og forboring i `gen_doc_tables.py`, retning og medlemspar i
 `render_lineart.py`. Ingenting bandt dem sammen bortsett fra en setning i hver.
 Nå ligger hele `JOINTS` i modellen med maskinfelter, og begge verktøyene leser
-den. Det er den regelen som gjelder: **hvis to filer må være enige om et tall,
-er tallet på feil sted.**
+den. Det er felles-PRAKSIS §1, funnet på den harde måten: **hvis to filer må
+være enige om et tall, er tallet på feil sted.**
 
 ---
 
-## 2. Assertfilosofien
+## 2. De fire assertfamiliene
 
-Modellen har over hundre `assert`. Nesten ingen av dem sjekker at et tall er
-det tallet som står der. De sjekker **forhold mellom ting**, og de er utledet
-av fysikk, ikke av en mening.
+Hva som gjør en assert verdt å skrive står i
+[PRAKSIS §2](../../../PRAKSIS.md#2-assertfilosofien). Modellen har over hundre
+av dem, og de faller i fire familier som følger av hva sengen er laget av: tre,
+stål og en flate å skru i.
 
-En god assert her har tre kjennetegn:
-
-1. **Den er relasjonell.** `assert POST_W == 98` er verdiløs — den sier bare at
-   98 er 98. `assert rail.extents[2][0] == post_top` sier at vangen faktisk
-   hviler på stolpen, og den ryker i det øyeblikket noen flytter en av dem.
-2. **Den er utledet av noe utenfor tegningen.** EC5 sier 3d kantavstand og 4d
-   avstand mellom skruer. EN 747 sier 75 mm åpning og 160 mm rekkverk over
-   madrassen. De tallene er inndata; alt som følger av dem er utregnet.
-3. **Den forklarer seg selv når den ryker.** Meldingen skal si hvilket tall som
-   ikke gikk opp, hva grensen var, og hvor man retter det. En assert man må
-   lese kildekoden for å forstå er en assert man kommenterer bort.
-
-### De fire familiene
+Inndataene er standardene. EC5 gir 3d kantavstand og 4d avstand mellom skruer;
+EN 747 gir 75 mm åpning og 160 mm rekkverk over madrassen. Alt som følger av
+dem er utregnet.
 
 **Skruelengderegelen.** En gjennomgående treskrue må gå klar gjennom delen den
 drives fra og ende inne i den andre:
@@ -179,40 +174,23 @@ trekantene uansett avvik, så treet blir byte-identisk uansett.
 
 ---
 
-## 4. Tegnekonvensjoner
+## 4. Billedspråket i denne manualen
 
-De som er hentet fra Agrawala/Heer/Klingner sitt arbeid med
-monteringsanvisninger, og som denne manualen har tatt i bruk bevisst:
+De allmenne konvensjonene — prikket linje mot pil, eksplodert langs
+innsettingsaksen, stiplet for skjult, svart mot grått, ett steg per side, og
+den ene pennen — står i
+[PRAKSIS §4](../../../PRAKSIS.md#4-tegnekonvensjoner-som-holder-på-tvers).
+Denne manualen har tatt dem i bruk bevisst. Pennen er `tools/layout.py`
+(`RATIOS`), `Theme` deler den ut, og tallet er sengens egen bbox-diagonal delt
+på 400, så alle tolv sidene følger den.
 
-* **Prikket linje = festemiddel. Pil = tredel.** De to blandes aldri på samme
-  side. En prikket linje er alltid en skrues vei inn i hullet sitt; en pil er
-  alltid en tredel som skal føres på plass.
-* **Eksplodert langs innsettingsaksen.** Et festemiddel som skal settes i,
-  tegnes trukket rett ut langs sin egen akse — ikke ved siden av, ikke i
-  margen. Leseren skal kunne følge linjen. Et beslag har ingen egen akse og
-  følger sine egne skruer ut, med samme sprang som dem: «Kjeden i et
-  beslaghjørne» nedenfor.
-* **Stiplet = skjult, men virkelig.** Fantomlinjen er den eneste ærlige måten å
-  vise en skrue som er helt inne i to stykker tre.
-* **Svart = det du gjør nå, grått = det som allerede står.** Den nye delen
-  tegnes hel selv der rammen dekker den, med den skjulte strekningen stiplet.
-* **Ett steg = én operasjon = én side.**
+Ett tillegg til eksplosjonsregelen er HANNAs eget: **et beslag har ingen egen
+akse og følger sine egne skruer ut**, med samme sprang som dem — «Kjeden i et
+beslaghjørne» nedenfor.
 
 ### Skala
 
-**Én penn.** Hver strekbredde, radius, marg og punktstørrelse på en stegside er
-et multiplum av ett eneste mål:
-
-    penn = diagonalen i tegningsobjektets egen bbox / 400
-
-Tallet er sengens, ikke sidens, så hele pennsettet følger det som tegnes.
-Tabellen står i `tools/layout.py` (`RATIOS`), og `Theme` deler den ut. Sidenære
-størrelser — innsettpanelets bredde, eksplosjonens sprang, den hvite margen —
-er fortsatt brøkdeler av SIDEN, for det er det de er. Regelen er den samme som
-ellers i repoet: skal en strek bli tykkere, endres forholdstallet ett sted, og
-alle tolv sidene følger etter.
-
-Én frihet er tatt utover det, og det er den samme enhver beslagtegning tar:
+Én frihet er tatt utover pennen, og det er den samme enhver beslagtegning tar:
 **diameteren er overdrevet**, med faktor `SCREW_FATTEN` — som står i
 `tools/layout.py` sammen med pennen, fordi det er én knapp for hvor stort et
 festemiddel tegnes. En 6 mm skrue på en to meter bred side er tynnere enn
@@ -618,11 +596,11 @@ mise run render-validate    de fem designvalideringsbildene
 
 ### Filmene
 
-De tre `docs/img/hanna-*.gif` er utledet på samme måte som alt annet: rammene
-kommer av modellen og `byggesteg.json`, rammenummeret driver kamera, forskyvning
-og innfading, og ingenting leser en klokke — så to kjøringer gir byte-identiske
-filer og `git diff` på dem er konsekvensanalysen, akkurat som på tegningene.
-Selve rammene er skrap og skrives utenfor repoet (`$TMPDIR/loftbed_film`).
+De tre `docs/img/hanna-*.gif` er utledet av modellen og `byggesteg.json` som alt
+annet her, og de er voktet av `docs/img/hanna-filmer.stamp` —
+[PRAKSIS §5](../../../PRAKSIS.md#5-filmene-er-utledet-som-alt-annet) sier
+hvorfor. Selve rammene er skrap og skrives utenfor repoet
+(`$TMPDIR/loftbed_film`).
 
 ```
 mise run film               alle tre
@@ -637,12 +615,9 @@ Arbeidsgangen når modellen eller et byggesteg endres er derfor
 `mise run build` → `mise run film` (eller bare den deloppgaven som er berørt)
 → `git diff`; er filmen uendret, er den byte-identisk og diff-en taus.
 
-At de ikke rendres automatisk er nettopp hvorfor de må voktes: hver film
-skriver sha256 av kildene sine i `docs/img/hanna-filmer.stamp`, og
-`film-check` — som er en del av `mise run check` — hasher de samme filene på
-nytt og feiler hvis en film er eldre enn modellen den påstår å vise.
 Dreieskiva og mekanismen er funksjoner av `parts.tsv` alene, oppbyggingen også
 av `byggesteg.json`, så en ren tekstendring i et steg krever bare `film-bygg`.
+Stempelet vet det: `film-check` hasher nøyaktig de kildene hver enkelt film har.
 
 **Mekanismefilmen er dessuten en assert.** Den viser platen fra sengesete til
 bordsete, og hver eneste ramme legges gjennom en separerende-akse-prøve mot
@@ -650,7 +625,8 @@ hver faste del i sengen; kolliderer noe, nekter verktøyet å lage filmen. Førs
 utgave gjorde nettopp det — den kjørte platen 166 mm gjennom begge stigevangene
 — og den feilen er grunnen til at prøven finnes.
 
-**Og så en fjerde familie som ikke sto her før: asserten som måler feil ting.**
+**Og så saken som ble til fellesregelen om asserten som måler feil ting**
+([PRAKSIS §2](../../../PRAKSIS.md#asserten-som-måler-feil-ting)).
 Prøven over har hele tiden også *rapportert* et tall — «den trangeste
 passeringen på hele veien» — og notatet ved siden av har sagt at tallet er
 2,0 mm = `PANEL_FIT`. Det stemte ikke. Det den målte var 0,00 mm mot den bakre
@@ -664,9 +640,7 @@ Lærdommen er ikke «se bedre etter». Den er at et **rapportert** tall må ha e
 definisjon som er like presis som en assert sin, og at definisjonen må stå i
 koden og ikke i kommentaren over den. `mech_probe()` måler nå selv hvilke par
 av deler som berører hverandre i de to setene, og holder dem utenfor
-minimumet — de kollisjonsprøves fortsatt som alt annet. Regelen for resten av
-filen: *hvis en kommentar sier hva et tall betyr, og koden ikke gjør det, er
-kommentaren en påstand og tallet er pynt.*
+minimumet — de kollisjonsprøves fortsatt som alt annet.
 
 ### Hva slags side et steg får
 
@@ -674,9 +648,9 @@ Står i `tools/gen_doc_tables.build_steps()`, sammen med alt annet som
 definerer et byggesteg, og følger med ut i `byggesteg.json`:
 `page` («cutpage»/«panel»), `half_view`, `thumbnails`, `crop_to_subject`,
 `no_fasteners`, `info_panel`, `avoid_top_left`. `render_lineart.py` slår dem
-opp; den har ingen `if n == 0` og ingen navnematch på «Mattress» igjen.
-Grunnen er den samme som i §1: hvilken side et steg får er en egenskap ved
-STEGET, og et steg er definert ett sted.
+opp; den har ingen `if n == 0` og ingen navnematch på «Mattress» igjen. Det er
+[PRAKSIS §3](../../../PRAKSIS.md#3-regler-ikke-tilfeller) i praksis: hvilken
+side et steg får er en egenskap ved STEGET, og et steg er definert ett sted.
 
 `fill_code` står i den samme lista og leses på samme måte, men er ikke skrevet
 for hånd: den **regnes ut** av stegets eget sett festemidler
@@ -688,23 +662,14 @@ dagen et ledd bytter lengde — og ingen skal kunne skru den av.
 der starter med en kommentar som sier det (`byggesteg.json` kan ikke bære en,
 JSON har ingen kommentarer). Skal et tall endres, endres det i modellen.
 
-**Alt er sjekket inn** — også `.png`-ene, `.svg`-ene og `parts.tsv` — slik at
-en diff viser hva en endring i modellen faktisk gjorde med tegningene. Det er
-poenget med å ha dem i git: `git diff --stat` etter `mise run build` er
-konsekvensanalysen.
+### Determinismen
 
-Den avlesningen er verdiløs hvis kjeden selv kan gi to svar på samme spørsmål,
-så determinismen er ikke en forventning — den er en assert:
-
-```
-mise run check        kjør hele kjeden to ganger, krev byte-identiske artefakter
-```
-
-`check` kjører `build` + `montering` to fulle ganger og sammenligner sjekksummen
-av hver innsjekkede, utledede fil (`docs/generated/`, `docs/MONTERING.md`,
-`docs/img/`, `parts.tsv`). Ryker den, er det **ikke** en modellendring: det er
-en usortert `dict`, et tidsstempel, en `id()`-sortering eller en flyttallssum
-som avhenger av rekkefølgen. Rett årsaken, ikke artefaktet.
+Alt utledet er sjekket inn — også `.png`-ene, `.svg`-ene og `parts.tsv` —
+og `mise run check` kjører `build` + `montering` to fulle ganger og krever at
+`docs/generated/`, `docs/MONTERING.md`, `docs/img/` og `parts.tsv` kommer ut
+byte-identisk begge ganger. Hvorfor det er en assert og ikke en forventning,
+og hva et brudd betyr, står i
+[PRAKSIS §6](../../../PRAKSIS.md#6-determinismen-er-en-assert).
 
 ---
 

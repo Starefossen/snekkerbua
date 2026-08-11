@@ -1,9 +1,8 @@
 # Utstyr — verktøypark og kjøpsplan
 
-Levende oversikt over hva verkstedet har og hva som står for tur. Repoet er
-tenkt som hjem for flere DIY-prosjekter; denne fila er felles for alle.
-Oppdateres ved kjøp. (Reorganisering av repoet til fler-prosjekt-struktur er
-planlagt — da flytter denne til rot/felles-nivå.)
+Levende oversikt over hva verkstedet har og hva som står for tur. Verktøyparken
+er én, uansett hvor mange prosjekter som står i bua, så denne fila ligger på
+rota og er felles for alle. Oppdateres ved kjøp.
 
 ## Batterisystem
 
