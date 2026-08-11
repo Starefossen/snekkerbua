@@ -650,6 +650,24 @@ hver faste del i sengen; kolliderer noe, nekter verktøyet å lage filmen. Førs
 utgave gjorde nettopp det — den kjørte platen 166 mm gjennom begge stigevangene
 — og den feilen er grunnen til at prøven finnes.
 
+**Og så en fjerde familie som ikke sto her før: asserten som måler feil ting.**
+Prøven over har hele tiden også *rapportert* et tall — «den trangeste
+passeringen på hele veien» — og notatet ved siden av har sagt at tallet er
+2,0 mm = `PANEL_FIT`. Det stemte ikke. Det den målte var 0,00 mm mot den bakre
+benkevangen, på ramme 1, og den hadde målt det i to runder uten at noen så det,
+nettopp fordi tallet så *riktig ut* i forhold til en påstand ingen hadde
+kontrollert. Nullen var ekte: styrelektas bakflate **er** benkevangens forflate,
+så de to trebitene ligger inntil hverandre i setet og blir liggende de første
+millimeterne av løftet. Prøven leste setet og kalte det en nestenulykke.
+
+Lærdommen er ikke «se bedre etter». Den er at et **rapportert** tall må ha en
+definisjon som er like presis som en assert sin, og at definisjonen må stå i
+koden og ikke i kommentaren over den. `mech_probe()` måler nå selv hvilke par
+av deler som berører hverandre i de to setene, og holder dem utenfor
+minimumet — de kollisjonsprøves fortsatt som alt annet. Regelen for resten av
+filen: *hvis en kommentar sier hva et tall betyr, og koden ikke gjør det, er
+kommentaren en påstand og tallet er pynt.*
+
 ### Hva slags side et steg får
 
 Står i `tools/gen_doc_tables.build_steps()`, sammen med alt annet som

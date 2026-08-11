@@ -81,6 +81,20 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | Kilelekter under forkanten | 708..785 og 1205..1282 |
 | Klaring lekt → trinnende | 2 mm hver vei (trinnendene står på X 835 og 1155 i begge stillinger) |
 
+### Platebredden er kvantisert — lovlige vinduer
+
+Åpningen mellom benkene er fast, **700 mm**, så sideklaringen er `(700 − bredde) / 2` på hver side. EN 747 gjør bare tre klaringsbånd lovlige — under 5 mm kommer ikke fingeren inn, 12–25 mm går den fritt gjennom, 60–75 mm går hele lemmet fritt og åpningen er fortsatt under EN 747s egen 75 mm-grense — og mellom båndene kiler fingeren seg. Bredden er derfor ikke en skrue man vrir på: den lander i ett av tre vinduer, eller så er den ulovlig.
+
+| Klaringsbånd | Lovlig platebredde | |
+|---|---|---|
+| 60–75 mm | 550–580 mm | **valgt — 574 mm, 63 mm klaring** |
+| 12–25 mm | 650–676 mm | tidligere vindu (652 mm) |
+| 0–5 mm | 690–700 mm | upraktisk — spiser opp de 2 mm innsettingsklaring |
+| — | **581–649 mm** | **forbudt** — klaringer 25,5–59,5 mm, midt i klembåndet |
+| — | **677–689 mm** | **forbudt** — klaringer 5,5–11,5 mm, midt i klembåndet |
+
+Bredden deltar **ikke** i begrensningene på stillingsbyttet — det er høyden og dybden på plateenheten som møter overføringssjakten (114 mm fri høyde mot en 91 mm høy enhet). Å smalne platen gir mer slingring ved innsettingen og mindre bordflate, ingenting annet. Modellen asserter vinduene: en «bare litt smalere»-endring stopper byggeporten med akkurat denne tabellen.
+
 **Køyespiler:** 14 stk., første spile starter på X 20, deling 142,46 mm, siste spile slutter på X 1970. Åpning mellom spilene 44,46 mm.
 
 **Benkespiler:** 5 per benk, deling 112,25 mm fra ytterveggen og innover.
@@ -110,7 +124,7 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 | Madrassens sideveis vandring | ingen — madrassen fyller hele bredden mellom veggen og de fremre stolpene |
 | Puter i underetasjen, dybde | 798 mm |
 | Pute over venstre benk | 645 mm bred |
-| Pute over platen (midten) | 700 mm bred |
+| Pute over platen (midten) | 700 mm bred — **måles etter sonen, ikke etter platen**: platen er 574 mm, så puten bygger ut en 63 mm åpen stripe på hver side (K2) |
 | Pute over høyre benk | 645 mm bred |
 | Midtputen er tykkere enn benkeputene med | 18 mm — platen ligger så mye lavere enn benkeflaten, og det er nettopp plassen putene skal folde seg ned i |
 

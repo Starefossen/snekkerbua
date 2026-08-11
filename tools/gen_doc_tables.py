@@ -253,7 +253,7 @@ def build_steps(G):
                 "Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring "
                   "— med to navngitte unntak, og begge står i kapplista: de "
                   "to kilelektene under platens forkant, og vinkelklossen.",
-                "Skråkapp de to kilelektene. De er 48×73 × 116 mm og skal "
+                f"Skråkapp de to kilelektene. De er 48×73 × {G.NOSE_LEN} mm og skal "
                   "sages ned i ett rett snitt fra full høyde i den ene enden "
                   f"til {G.NOSE_TIP_H} mm i den andre ("
                   + f"{G.NOSE_TAPER_DEG:.1f}".replace(".", ",")
@@ -603,7 +603,7 @@ def build_steps(G):
                   f"platen uansett, med {G.PANEL_UPSCREW_COVER} mm plate "
                   "igjen over spissen.",
                 "Legg platen med undersiden opp. Merk av de to lange "
-                  "avstivningslektene 116 mm inn fra hver sidekant — det er "
+                  f"avstivningslektene {G.NOSE_LEN} mm inn fra hver sidekant — det er "
                   "målet som gjør at de treffer utsiden av trinnenden.",
                 "Lim (D3) hele lektas overkant, legg den på plass og skru "
                   "opp fra undersiden (J13a). Skruene er tvinger: de "
@@ -1093,9 +1093,20 @@ def emit_innkjopsliste(G, out_dir):
              f"«klasse 1 lekt/rekke — ikke-bærende», så spør i skranken: "
              f"stigevangene, rungetrinnene og stubbeføttene er alle bærende, "
              f"og lasttabellen regner C24.\n")
-    L.append(f"* Platen er **{G.PANEL_W} mm bred**. Limtre furu i "
-             f"butikkhylla stopper på 600 mm, så platen skal kappes av "
-             f"**18 mm kryssfiner**.\n")
+    L.append(f"* Platen er **{G.PANEL_W} mm bred** og kappes av **18 mm "
+             f"kryssfiner**. "
+             + (f"Merk at *begrunnelsen* er en annen enn før: fram til K2 var "
+                f"platen 652 mm bred, altså bredere enn de "
+                f"{G.LIMTRE_SHELF_W} mm limtre furu stopper på i hylla, og "
+                f"kryssfiner var det eneste som fantes i den bredden. "
+                f"{G.PANEL_W} går inn i en {G.LIMTRE_SHELF_W} mm limtreplate. "
+                f"Materialet står likevel — lasttabellen, uttrekket for "
+                f"oppskruene og propp-argumentet i J13 er alle regnet på "
+                f"kryssfiner — men det er et **valg** nå og ikke en tvang. "
+                f"Ført opp som åpent punkt, ikke stilltiende endret.\n"
+                if G.PANEL_FITS_LIMTRE else
+                f"Limtre furu i butikkhylla stopper på "
+                f"{G.LIMTRE_SHELF_W} mm.\n"))
     L.append(f"* Vil du kunne bygge om til frittstående seng senere, trengs "
              f"to rekkverksbord til i samme dimensjon som de fremre, og to "
              f"bakre stolper i full høyde ({G.POST_HEIGHT} mm, som de "
@@ -1229,6 +1240,47 @@ def emit_nokkelmal(G, out_dir, rows):
              f"(trinnendene står på X {G.LADDER_INNER_L} og "
              f"{G.LADDER_INNER_R} i begge stillinger) |\n\n")
 
+    # K2: the width windows. This is the one number in the bed that looks like
+    # a free choice and is not, so the table is emitted from the same lists the
+    # assert uses - it cannot say something the build would let through.
+    L.append("### Platebredden er kvantisert — lovlige vinduer\n\n")
+    L.append(f"Åpningen mellom benkene er fast, **{G.PANEL_OPENING} mm**, så "
+             f"sideklaringen er `({G.PANEL_OPENING} − bredde) / 2` på hver "
+             f"side. EN 747 gjør bare tre klaringsbånd lovlige — under "
+             f"{_fmt(G.EN_FINGER_FREE)} mm kommer ikke fingeren inn, "
+             f"{_fmt(G.EN_GAP_BAND[0])}–{_fmt(G.EN_GAP_BAND[1])} mm går den "
+             f"fritt gjennom, {_fmt(G.EN_LIMB_BAND[0])}–"
+             f"{_fmt(G.EN_LIMB_BAND[1])} mm går hele lemmet fritt og "
+             f"åpningen er fortsatt under EN 747s egen 75 mm-grense — og "
+             f"mellom båndene kiler fingeren seg. Bredden er derfor ikke en "
+             f"skrue man vrir på: den lander i ett av tre vinduer, eller så "
+             f"er den ulovlig.\n\n")
+    L.append("| Klaringsbånd | Lovlig platebredde | |\n|---|---|---|\n")
+    _rowsw = sorted(zip(G.PANEL_WIDTH_WINDOWS,
+                        sorted(G.EN_LEGAL_GAP_BANDS, reverse=True)))
+    for (wlo, whi), (glo, ghi) in _rowsw:
+        if wlo <= G.PANEL_W <= whi:
+            note = f"**valgt — {G.PANEL_W} mm, {G.PANEL_SIDE_GAP} mm klaring**"
+        elif wlo <= 652 <= whi:
+            note = "tidligere vindu (652 mm)"
+        elif glo == 0:
+            note = f"upraktisk — spiser opp de {G.PANEL_FIT} mm innsettingsklaring"
+        else:
+            note = ""
+        L.append(f"| {_fmt(glo)}–{_fmt(ghi)} mm | "
+                 f"{_fmt(wlo)}–{_fmt(whi)} mm | {note} |\n")
+    for flo, fhi in G.PANEL_WIDTH_FORBIDDEN:
+        L.append(f"| — | **{_fmt(flo)}–{_fmt(fhi)} mm** | **forbudt** — "
+                 f"klaringer {_fmt((G.PANEL_OPENING - fhi) / 2)}–"
+                 f"{_fmt((G.PANEL_OPENING - flo) / 2)} mm, midt i klembåndet |\n")
+    L.append(f"\nBredden deltar **ikke** i begrensningene på stillingsbyttet — "
+             f"det er høyden og dybden på plateenheten som møter "
+             f"overføringssjakten ({G.TRANSFER_SLOT} mm fri høyde mot en "
+             f"{G.PANEL_UNIT_H} mm høy enhet). Å smalne platen gir mer slingring "
+             f"ved innsettingen og mindre bordflate, ingenting annet. "
+             f"Modellen asserter vinduene: en «bare litt smalere»-endring "
+             f"stopper byggeporten med akkurat denne tabellen.\n\n")
+
     slat_pitch = (G.SLAT_X_END - G.SLAT_X_START - G.BED_SLAT_W) / (G.SLAT_COUNT - 1)
     L.append(f"**Køyespiler:** {G.SLAT_COUNT} stk., første spile starter på "
              f"X {G.SLAT_X_START}, deling {_fmt(slat_pitch)} mm, siste spile "
@@ -1298,7 +1350,10 @@ def emit_nokkelmal(G, out_dir, rows):
     L.append(f"| Puter i underetasjen, dybde | {G.PANEL_LEN} mm |\n")
     L.append(f"| Pute over venstre benk | {G.BENCH_LEN} mm bred |\n")
     L.append(f"| Pute over platen (midten) | "
-             f"{G.OPEN_FLOOR_X[1] - G.OPEN_FLOOR_X[0]} mm bred |\n")
+             f"{G.OPEN_FLOOR_X[1] - G.OPEN_FLOOR_X[0]} mm bred — **måles "
+             f"etter sonen, ikke etter platen**: platen er {G.PANEL_W} mm, "
+             f"så puten bygger ut en {G.PANEL_SIDE_GAP} mm åpen stripe på "
+             f"hver side (K2) |\n")
     L.append(f"| Pute over høyre benk | {G.BENCH_LEN} mm bred |\n")
     L.append(f"| Midtputen er tykkere enn benkeputene med | "
              f"{G.PANEL_BENCH_DIP} mm — platen ligger så mye lavere enn "

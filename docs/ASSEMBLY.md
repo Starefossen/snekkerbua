@@ -348,11 +348,26 @@ Trinnene stikker **bakover**, ikke framover: forkanten ligger i flukt med
 stigevangens forkant, og det som blir liggende bak vangeplanet er hylla den løse
 platen hviler på.
 
+**Klossen følger ikke trinnet bakover.** Den er 36 mm dyp — nøyaktig så dyp som
+stigevangen — og står i vangens eget dybdebånd, ikke i trinnets. Klossen har
+aldri rørt mer av vangen enn de 36 millimeterne, så de 37 som er kappet vekk
+(K1) bar ingenting; de sto derimot rett i veien for den løse platen når den
+skal bæres fra det ene setet til det andre. Se J13. Det betyr også at trinnets
+bakre 37 mm står **fritt** ved endene: det er en 48 mm tykk kloss tre som
+stikker 37 mm ut, ikke et spenn.
+
 ### J5 — Stigekloss → stigevange
 
 Én skrue per kloss, inn i vangens innside. Klossen dekker bare 36 × 48 mm av
 stigevangen, og to 5 mm skruer trenger 50 mm av de 48. Klosshøyden er
 trinnhøyden. Mål to ganger.
+
+**K1 endret ingenting i dette leddet.** Klossen ble kappet 73 → 36 mm, men de
+36 × 48 millimeterne mot vangen er de samme — det var alt klossen noen gang
+rørte, siden vangen bare er 36 mm dyp. Det ene som ble bedre er hvor skruen
+lander: før satt den på Y 751,5, altså en halv millimeter **utenfor** vangens
+bakplan, fordi den ble sentrert i en 73 mm lang kloss. Nå sitter den på Y 770,
+midt i vangen.
 
 Klossen er ikke overlatt til den ene skruen: trinnet ligger på klossen og er
 skrudd ned i den ovenfra (J4), og trinnenden er i tillegg skrudd til
@@ -505,7 +520,7 @@ forkant (750 mm). To ting på én gang:
 
 * **de gjør platen stiv.** Uten dem holder ikke den 18 mm plata når noen setter
   seg på den; med dem er platen to T-bjelker. Se lasttabellen i vedlegg A.
-* **de er hele sidestyringen.** De ligger 116 mm inn fra hver sidekant, som er
+* **de er hele sidestyringen.** De ligger 77 mm inn fra hver sidekant, som er
   nøyaktig **2 mm utenfor trinnenden**. De siste 35 mm av hver lekt står i den
   frie sjakten ved siden av trinnet — 48 mm høy og 37 mm dyp, den biten av
   trinnet som stikker bak stigevangen — så det er 48 × 35 mm tre mot endeved
@@ -518,8 +533,8 @@ veier (den ene mot venstre trinnende, den andre mot høyre), og de stopper den i
 uansett hvilken vei den vris. De 2 millimeterne er ikke slark: det er passingen
 som gjør at platen kan senkes ned i det hele tatt.
 
-**J13b — kilelektene under forkanten.** Trinnet er 320 mm langt og platen 652
-bred, så 116 mm av forkanten utenfor hver styrelekt har ingenting under seg. To
+**J13b — kilelektene under forkanten.** Trinnet er 320 mm langt og platen 574
+bred, så 77 mm av forkanten utenfor hver styrelekt har ingenting under seg. To
 korte kilelekter i flukt med forkanten bærer det hjørnet innover til
 styrelekta.
 
@@ -541,17 +556,19 @@ har hodet 27 mm under platens underside — det er nøyaktig det «⌀12 kontrab
 skrue går gjennom den. På akkurat 27 er kontraboret gått i null, og hodet ligger
 i flukt med kilens egen underside. Boreregelen er derfor **den samme for alle
 fire delene** og leses slik: *bor ⌀12 opp til det står 27 mm igjen.* I styrelekta
-er det de 46 millimeterne; i kilen er det 37, 23 og 9 mm ved de tre hullene,
-dypest ved roten.
+er det de 46 millimeterne; i kilen er det 34,9, 23,0 og 11,1 mm ved de tre
+hullene, dypest ved roten.
 
-**Tallene.** Kilen er 278 400 mm³ mot 406 464 for den hele klossen — 32 % mindre
+**Tallene.** Kilen er 184 800 mm³ mot 269 808 for den hele klossen — 32 % mindre
 tre, og hele det lave ytterhjørnet vekk. Det verste bøyesnittet er **ikke**
-roten: når h(x) smalner mot spissen, topper σ seg 68 mm fra spissen, der
-h = 54 mm. Der er den 2,92 MPa mot f<sub>m,d</sub> = 16,6 for C24, altså
-utnyttelse **0,18**; roten selv ligger på 2,72 MPa og 0,16. Skjæret sitter i den
+roten: når h(x) smalner mot spissen, topper σ seg 45 mm fra spissen, der
+h = 54 mm. Der er den 1,94 MPa mot f<sub>m,d</sub> = 16,6 for C24, altså
+utnyttelse **0,12**; roten selv ligger på 1,81 MPa og 0,11. Skjæret sitter i den
 andre enden: i 27 mm-spissen er τ = 1,16 MPa mot f<sub>v,d</sub> = 2,77, altså
 **0,42**. Det er det høyeste tallet på delen, og det er det tallet som sier at
-spissen ikke skal bli tynnere.
+spissen ikke skal bli tynnere. *K2 gjorde kilen kortere (116 → 77 mm) da platen
+ble smalere, og bøyningen falt med den; skjæret i spissen er uendret, og det er
+fortsatt det som styrer.*
 
 *Den elegante løsningen tapte på et tall:* **18 mm kryssfinér-doblere** limt
 under hvert forkanthjørne — ingenting som henger ned, usynlig, og
@@ -559,9 +576,10 @@ innsettingsveien merker dem ikke engang. Med **fullt samvirke** over limfugen er
 det en 36 mm laminat: 6·1000/36² = 4,63 MPa, utnyttelse 0,67. Den går. **Uten
 samvirke** deler de to 18 mm platene lasten hver for seg: 6·500/18² = 9,26 MPa,
 utnyttelse **1,33**. Den stryker. Limfugen selv er ikke problemet — den ligger i
-nøytralaksen, der langsgående skjær er størst, og der er τ = 1,5·1000/(116·36) =
-0,36 MPa, godt under både D3-limet og finérens egen rullskjær (~0,6–0,8 MPa
-design). Det som avgjør er at **ingenting kan sikre den limfugen**. Hver eneste
+nøytralaksen, der langsgående skjær er størst, og der er τ = 1,5·1000/(77·36) =
+0,54 MPa. Det er under D3-limet med god margin, men bare så vidt under finérens
+egen rullskjær (~0,6–0,8 MPa design) — kortere dobler, samme last, høyere skjær;
+K2 gjorde den avviste løsningen dårligere, ikke bedre. Det som avgjør er at **ingenting kan sikre den limfugen**. Hver eneste
 andre limte fuge i denne platen har skruer som klemmer; her finnes det ingen
 skrue som passer. 18 mm dobler under 18 mm plate er 36 mm materiale, og den
 korteste skruen i denne sengen er en 5×40 — 4 mm av den ville kommet ut gjennom
@@ -573,7 +591,7 @@ et barns kne.
 *Slankere lekter, 48×48, ble veid og lagt bort:* utnyttelsen blir 0,37, som er
 helt greit. Men 48×48 er en profil sengen brukte to revisjoner (W3 og U5) på å
 bli kvitt, og hvert eneste kutt i denne sengen er 90° på kappsag. Et kløyvkutt
-for to 116 mm biter er ikke verdt en foreldreløs profil.
+for to 77 mm biter er ikke verdt en foreldreløs profil.
 
 **Ingen skruer i bordplata.** Platen er bordplate halve livet, og tolv
 skruehoder — eller tolv propper — midt i den er tolv merker. Lektene **limes**
@@ -586,28 +604,37 @@ kilene, bare i tykkere tre: bor opp til det står 27 mm igjen. Se J13b.
 
 I bruk står fugen uansett i trykk: platen *hviler* på lektas overkant, så
 2 kN-lasten går aldri gjennom et festemiddel. Skruene har én lastsituasjon —
-at enheten løftes etter et hjørne — og der er 70 N egenvekt (7,1 kg,
+at enheten løftes etter et hjørne — og der er 64 N egenvekt (6,5 kg,
 regnet av kroppene) mot 18 skruer.
 
 *De to alternativene, og hvorfor de tapte:* skråskruer gjennom lektas side
 treffer bare 18/cos30 = 21 mm plate før spissen bryter ut i overflaten. Hodet
 kunne fått et flatbunnet sete, slik J8-B og J10 nå får, men et sete gjør
 ingenting med de 21 millimeterne. Proppede topskruer er det
-klassiske svaret og nesten usynlig i massiv furu — men denne plata er 652 mm
-bred, bredere enn limtreplatene i hylla, så den er **kryssfiner**, og en propp
-i et finérdekke er en skive endeved i en ubrutt flate.
+klassiske svaret og nesten usynlig i massiv furu — men denne plata er
+**kryssfiner**, og en propp i et finérdekke er en skive endeved i en ubrutt
+flate.
+
+*Og her har K2 tatt fra oss et argument uten å gi oss et nytt.* Fram til v12 var
+platen 652 mm bred — bredere enn de 600 mm limtre furu stopper på i hylla — og
+kryssfiner var rett og slett det eneste som fantes i den bredden. 574 går inn i
+en 600 mm limtreplate. Materialet står likevel: lasttabellen, uttrekket for
+oppskruene og propp-argumentet over er alle regnet på kryssfiner, og et
+materialvalg tas ikke om i en komfortrunde. Men det er et **valg** nå, ikke en
+tvang, og det er ført opp som åpent punkt i innkjøpslista i stedet for å bli
+stilltiende stående på en begrunnelse som er utløpt.
 
 **Det som IKKE er låst: platen kan løftes rett opp.** Det er meningen — det er
 slik den skifter stilling. **Valget er tatt, og det er ingen lås.** Begrunnelsen
 står i vedlegg B, avvik 4, og den skal leses før noen bygger dette.
 
 Treverket en lås ville tatt tak i, står der det sto: **tre mot tre** —
-kilelektas endeved mot enden av den fremre benkevangen, tvers over de 24 mm i
+kilelektas endeved mot enden av den fremre benkevangen, tvers over de 63 mm i
 sideklaringen. De to flatene ligger side om side i sengestilling og i samme
 høydebånd; i bordstilling står kilelekta 223 mm høyere, så en lås ville ikke
 hatt noe å ta i. Den kan altså ikke stå på i feil stilling, og det følger av
 geometrien og ikke av en instruks. Alle tre alternativene i
-`docs/preview/laasvalg.png` virker over nettopp de 24 millimeterne og passer det
+`docs/preview/laasvalg.png` virker over nettopp de 63 millimeterne og passer det
 treet uendret, så dette er et **ettermonteringspunkt**: skulle låsen komme, er
 det en skrue som dukker opp, ikke en trebit som endres. Det arket er historikk,
 ikke en bestilling — det lages for hånd med `mise run mekanisme` og er ikke med
@@ -615,12 +642,13 @@ i byggeporten.
 
 **Innsettingsveien er målt, ikke antatt.** Modellen sveiper hele enheten — plate,
 to styrelekter, to kiler og atten skruer — rett opp fra begge seter og krever at
-ingenting treffer noe: 109 mm fri vei i sengestilling og 124 mm i bordstilling.
-Det skal 48 mm til for å løfte styrelektene fri av trinnenden, så det er over
-dobbelt så mye vei som mekanismen trenger.
-Taket er stigen (en stigekloss) i begge tilfeller. Mer enn det er det ikke å få:
-i en seng med to setehøyder over hverandre står det som bærer platen i den
-øverste stillingen i veien på vei ned til den nederste.
+ingenting treffer noe: **132 mm** fri vei i sengestilling og **172 mm** i
+bordstilling. Det skal 48 mm til for å løfte styrelektene fri av trinnenden, så
+det er nesten tre ganger så mye vei som mekanismen trenger. Taket er
+bordbærelekta i sengestilling og trinn 3 i bordstilling — begge deler er tre som
+*må* være der. (Fram til K1 var det en stigekloss i begge tilfeller, med 109 og
+124 mm; de klossene var 37 mm for lange og hang inn i veien uten å gjøre noen
+nytte. Se K1 i modellen.)
 
 **Men stillingsbyttet er ikke ett langt loddrett løft — og det er verdt å lese
 før du prøver.** De to fri veiene over gjelder *setet*: hvordan platen kommer
@@ -629,30 +657,42 @@ over sengesetet er det stigen som er taket. Veien er målt på solidene, ramme f
 ramme (`mise run film-mekanisme`), og filmen under **er** den prøven — ikke en
 tegning av den:
 
-1. **Løft rett opp** til styrelektene står fri av trinnenden.
-2. **Vipp den ene langsiden noen få grader opp.**
-3. **Skyv platen sidelengs** inn over benken, til den er klar av stigen.
-   Vannrett går den ikke: spalten mellom benkespilenes overkant og undersiden
-   av stigeklossen over er nøyaktig like høy som plateenheten selv. Vippen er
-   hele klaringen.
-4. **Legg den vannrett igjen.**
-5. **Trekk den litt fram**, så bakkanten står av bordbærelekta.
-6. **Løft den opp** forbi lekta og trinn 2 — der er banen fri.
-7. **Skyv den inn igjen** til bakkanten står over setelinjen.
-8. **Skyv den sidelengs tilbake** over stigen, nå i båndet over trinn 2.
-9. **Senk den ned** i bordsetet.
+1. **Løft rett opp**, ca. 12 cm, til enheten står midt i overføringssjakten.
+2. **Skyv platen sidelengs** inn over benken, til den er klar av stigen —
+   **vannrett hele veien**. Sjakten mellom benkespilenes overkant (295) og
+   undersiden av bordbærelekta (409) er 114 mm høy og enheten er 91: det står
+   11,5 mm luft over og under den under hele bæringen.
+3. **Trekk den litt fram**, så bakkanten står av bordbærelekta.
+4. **Løft den opp** forbi lekta og trinn 2 — der er banen fri.
+5. **Skyv den inn igjen** til bakkanten står over setelinjen.
+6. **Skyv den sidelengs tilbake** over stigen, nå i båndet over trinn 2.
+7. **Senk den ned** i bordsetet.
 
-Veien tilbake er den samme baklengs. Den trangeste passeringen på hele veien er
-**2 mm** — nøyaktig den passingen platen er tegnet med. Og platen kommer aldri
-*ut* av sengen: den er bredere enn åpningene ved siden av stigen, så den blir i
-underetasjen hele veien. Skal den helt ut, må den ut på høykant gjennom fronten.
+Veien tilbake er den samme baklengs.
+
+**Etappe 3 og 5 ser ut som fikling, og er det ikke.** Bordbærelekta går tvers
+gjennom hele sengen på Y −48…0, altså akkurat der platens bakkant ligger, så
+bakkanten *må* av linja dens før den kan gå opp — uansett hvor i lengden du
+står. Alt det andre er ett løft, én bæring bort, én bæring tilbake og én
+nedsenking.
+
+*Slik var det ikke før.* Fram til K1 var sjakten 91 mm høy for en 91 mm høy
+enhet — null klaring — og den eneste veien gjennom var å **vippe** den ene
+langsiden tre grader opp og holde vippen gjennom hele bæringen, over en benk,
+over hodehøyde. Det var ni grep og et to-personers løft. De 37 millimeterne som
+ble kappet av hver stigekloss er hele forskjellen.
+
+Den trangeste passeringen på hele veien er **2 mm** — nøyaktig den passingen
+platen er tegnet med, mot stigevangen. Og platen kommer aldri *ut* av sengen:
+den er bredere enn åpningene ved siden av stigen, så den blir i underetasjen
+hele veien. Skal den helt ut, må den ut på høykant gjennom fronten.
 
 ![Platen fra sengesete til bordsete](img/hanna-mekanisme.gif)
 
-*Stillingsbyttet, ni etapper. Ingen ramme i filmen har tre inne i tre — det er
-en assert, ikke en påstand: `tools/render_animasjon.py` legger hver stilling
-gjennom en separerende-akse-prøve mot hver eneste faste del i sengen og nekter
-å lage filmen hvis noe kolliderer.*
+*Stillingsbyttet, sju etapper, flatt. Ingen ramme i filmen har tre inne i tre —
+det er en assert, ikke en påstand: `tools/render_animasjon.py` legger hver
+stilling gjennom en separerende-akse-prøve mot hver eneste faste del i sengen og
+nekter å lage filmen hvis noe kolliderer.*
 
 ### J14 — Veggfeste (obligatorisk)
 
@@ -712,6 +752,20 @@ Platen ligger med vilje litt lavere enn benkeflaten. Midtputen skal være
 tilsvarende tykkere, slik at de tre putene ender i samme høyde og
 sofaputene har et spor å folde seg ned i.
 
+**Midtsonen er 700 mm bred, men platen er 574.** Etter K2 står det derfor en
+**63 mm åpen stripe** langs hver side av platen, hele 798 mm fra veggen og fram
+til stigen — samme forsenkning, bare 18 mm dypere, og åpen ned mot den bakre
+benkevangen bakerst og gangsonen ellers. **Midtputen skal måles etter SONEN, 700
+mm, ikke etter platen**, så den bygger stripene ut sammen med forsenkningen.
+Skum bygger 63 mm ut uten videre — sengens egen spilebunn over ligger på 44,5
+mm mellom spilene, og benkene på 14,25.
+
+Stripene er der med hensikt og ikke ved uhell: 63 mm ligger i EN 747-båndet
+60–75 mm, der hele lemmet går fritt, og de er prisen for at platen skal kunne
+senkes ned i bordstillingen uten å treffe blindt. Se tabellen over lovlige
+platebredder i [nøkkelmål](generated/nokkelmal.md#platebredden-er-kvantisert--lovlige-vinduer)
+— bredden er kvantisert, ikke en skrue man vrir på.
+
 ### Tre måter å skaffe dem på — valget er åpent
 
 | | Hva | Ca. pris | Merknad |
@@ -743,8 +797,10 @@ sklir de fra hverandre den første natta noen sover der.
   — ikke-bærende». Spør i skranken: stigevangene (36×48), rungetrinnene og
   stubbeføttene (48×73) er alle bærende, og lasttabellen i vedlegg A regner
   C24.
-* **Platen må kappes av kryssfiner.** Den er bredere enn limtreplatene i
-  furuhylla rekker. Kjøp 18 mm kryssfiner og kapp.
+* **Platen kappes av 18 mm kryssfiner.** Etter K2 er den 574 mm bred og ville
+  gått inn i en 600 mm limtreplate — men lasttabellen, uttrekket for
+  oppskruene og propp-argumentet i J13 er alle regnet på kryssfiner, så
+  materialet står. Det er et valg nå, ikke en tvang; se innkjøpslista.
 * **Vil du kunne bygge om til frittstående seng senere?** Da trenger du to
   rekkverksbord til på baksiden og to bakre stolper i full høyde. Kjøp dem gjerne
   nå, og — viktigst — **forbor de bakre stolpene for rekkverket mens de ligger på
@@ -781,8 +837,10 @@ er spilen overbelastet. Legg madrassen på før noen går opp.
 **7.5 Den løse platen skal alltid ligge i.** Den står som en stiver mellom
 veggen og stigevangene: med platen i kan ikke stigefoten gå bakover. Skal du ha
 den ut, ta stigen med i vurderingen — og ikke la noen klatre mens platen er
-ute. **Byttet mellom de to stillingene er ni håndgrep, ikke ett loddrett løft**
-— rekkefølgen og hvorfor den er slik står i J13, med film.
+ute. **Byttet mellom de to stillingene er sju håndgrep, ikke ett loddrett
+løft** — men det er sju *flate* håndgrep etter K1: enheten bæres vannrett, med
+11,5 mm luft over og under, og skal ikke vippes. Rekkefølgen og hvorfor den er
+slik står i J13, med film.
 
 **7.6 Ikke sett deg på platens kant, og ikke bruk den som trinn.** Den er
 sikret mot å vippe, men den er ikke en avsats.
@@ -850,7 +908,7 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Ledd | Bæremåte | Spenn / flate | Last | Utn. | Dom |
 |---|---|---|---|---:|---|
 | Rungetrinn 48×73 | Bøyning | 320 mm | 1 kN | **0,17** | ✓ σ ≈ 2,9 MPa. Trinnet kjennes helt stivt |
-| Trinn → stigekloss | **Trelagring** 36 × 73 | 2628 mm² → 6,1 kN | 0,5 kN | 0,08 | ✓ |
+| Trinn → stigekloss | **Trelagring** 36 × 36 | 1296 mm² → 3,2 kN | 0,5 kN | 0,15 | ✓ K1 kappet klossen 73 → 36 mm; flaten halveres, tallet fordobles og ligger fortsatt lavt |
 | Stigekloss → stigevange | Skruskjær, 1 × 5 mm — klossflaten 36 × 48 mm tar ikke to | 1,5 kN | 0,5 kN | **0,33** | ✓ |
 | Samme hjørne, **kombinert skjærvei** | Klossens skrue + trinnendens 6×120 gjennom stigevangen | 3,5 kN | 0,5 kN | 0,14 | ✓ Trinnet låser også klossen mot å rotere om sin ene skrue |
 | Skrue i trinnenden | Bærer ingen vertikal last | — | ≈ 0 | — | ✓ Riktig utformet |
@@ -879,10 +937,10 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Plate 18 mm, **bar** | Bøyning over to opplegg | 750 mm | 2 kN dynamisk | **1,40** | ✗ Holder ikke alene. Denne raden er kalibrert på f<sub>m,d</sub> ≈ **6,95 MPa** for plata, og alle plateradene under bruker samme tall |
 | Plate 18 mm **med to avstivningslekter 48×73 på høykant** | To T-bjelker med platen som flens, 1 kN på hver | 750 mm | 2 kN dynamisk | **0,26** | ✓ σ ≈ 4,4 MPa i C24. Dette er hele grunnen til at lektene finnes |
 | **Styrelektas forende → trinnet, gjennom plata** (V3) | Lekta står 2 mm utenfor trinnenden, så forenden har ikke opplegg under seg: reaksjonen går 26 mm sideveis gjennom plata (lektas senterlinje X 809 → trinnets opplegskant X 835) | 26 mm arm, 100 mm effektiv bredde (konservativt) | 1 kN | **0,69** | ✓ σ ≈ 4,8 MPa. Dette er platas dimensjonerende rad nå — prisen for å legge styringen der styringen må skje |
-| **Fritt platehjørne, bar 18 mm plate** (V3, kontrollregning) | Punktlast på et fritt hjørne: utkraget stripe med effektiv bredde = egen lengde, så σ = P·a/(a·t²/6) = **6P/t²** og lengden faller ut | uavhengig av avstand | 1 kN kne | **2,66** | ✗ σ = 18,5 MPa. Gjelder like fullt om lekta står 213 eller 116 mm unna — **derfor ble kilelektene ikke fjernet** |
-| **Kilelekt (vinge) under hjørnet, bøyning** (M5/V4, 116 mm, 73 → 27 mm) | Utkraging fra styrelekta, med lasten på kilen selv. Med h(x) avtakende topper σ seg der h = 2 × spissen, altså 68 mm fra spissen — inne i delen, ikke ved roten | 116 mm, kritisk snitt h = 54 mm | 1 kN kne | **0,18** | ✓ σ = 2,92 MPa i C24. Roten selv: 2,72 MPa, 0,16 — det tallet den hele klossen hadde |
+| **Fritt platehjørne, bar 18 mm plate** (V3, kontrollregning) | Punktlast på et fritt hjørne: utkraget stripe med effektiv bredde = egen lengde, så σ = P·a/(a·t²/6) = **6P/t²** og lengden faller ut | uavhengig av avstand | 1 kN kne | **2,66** | ✗ σ = 18,5 MPa. Gjelder like fullt om lekta står 213, 116 eller 77 mm unna — **derfor ble kilelektene ikke fjernet** |
+| **Kilelekt (vinge) under hjørnet, bøyning** (M5/V4/K2, 77 mm, 73 → 27 mm) | Utkraging fra styrelekta, med lasten på kilen selv. Med h(x) avtakende topper σ seg der h = 2 × spissen, altså 45 mm fra spissen — inne i delen, ikke ved roten | 77 mm, kritisk snitt h = 54 mm | 1 kN kne | **0,12** | ✓ σ = 1,94 MPa i C24. Roten selv: 1,81 MPa, 0,11. K2 gjorde vingen kortere og tallet falt med den (var 0,18 på 116 mm) |
 | **Kilelekt (vinge), skjær i spissen** (M5/V4) | Tverrskjær i delens tynneste snitt, 48 × 27 mm: τ = 1,5·1000/(48·27) | 27 mm spisshøyde | 1 kN kne | **0,42** | ✓ 1,16 MPa mot f<sub>v,d</sub> = 2,77. Delens dimensjonerende tall, og det som sier at spissen ikke skal bli tynnere |
-| Lekt → plate (J13a/J13b) | Limt fuge 48 × 750 mm + 6 skruer 5×40 opp fra kontrabor, 13 mm gjenge i plata | uttrekk ≈ 0,27 kN per skrue (halvert for kryssfiner) | 0,14 kN, enheten (7,1 kg) løftet etter ett hjørne med faktor 2 | **< 0,05** | ✓ I bruk står fugen i trykk — platen hviler på lekta, lasten går ikke gjennom et festemiddel |
+| Lekt → plate (J13a/J13b) | Limt fuge 48 × 750 mm + 6 skruer 5×40 opp fra kontrabor, 13 mm gjenge i plata | uttrekk ≈ 0,27 kN per skrue (halvert for kryssfiner) | 0,13 kN, enheten (6,5 kg) løftet etter ett hjørne med faktor 2 | **< 0,05** | ✓ I bruk står fugen i trykk — platen hviler på lekta, lasten går ikke gjennom et festemiddel |
 | Bordbærelekt 48×73 **på høykant** | Bøyning om sterk akse | 1794 mm | 0,55 kN bordlast | **0,13** | ✓ W = 42 632 mm³ etter V2 (var 21×95 = 31 587) |
 | Bordbærelekt → stolpe | Skruskjær, 1 × 5 mm per beslagflik — 40 mm flik tar ikke to | 1,5 kN | 0,13 kN | 0,09 | ✓ Lekta ligger dessuten PÅ den vannrette fliken; skruen holder den bare nede |
 | Rekkverksbord 36×98 | Bøyning om svak akse, vannrett last | ≈ 760 mm | 0,5 kN | **0,13** | ✓ |
@@ -920,7 +978,7 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Alle andre ledd | ≤ 0,13 |
 
 **Kilelekta under platehjørnet er den ene delen i sengen der skjær, ikke bøyning, er
-dimensjonerende:** 0,42 i spissen mot 0,18 i det verste bøyesnittet. Det er
+dimensjonerende:** 0,42 i spissen mot 0,12 i det verste bøyesnittet. Det er
 skjærtallet som holder spissen på 27 mm, ikke utseendet.
 
 **Den høyeste skrueraden i sengen er nå stigeklossens ene 5 mm skrue, 0,33** —
@@ -1039,7 +1097,7 @@ det står ingen lås i beslaglista, og det skal det ikke gjøre.
   barnet ligger på.
 * **Dette er underetasjen.** Fallhøyden fra platens overside (277 mm) til gulvet
   er ~26 cm. Det er ikke fra køyehøyde.
-* **Platen er en enhet på 7,1 kg** (4,7 kg plate + 2,4 kg lekt, regnet av
+* **Platen er en enhet på 6,5 kg** (4,1 kg plate + 2,4 kg lekt, regnet av
   kroppene i modellen, ikke sitert), og styrelektene tar alle sidelengs
   frihetsgrader. Den kan bare gå rett opp, og den går ikke rett opp av seg selv.
 
@@ -1060,7 +1118,7 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | [panel-detail.svg](schematics/panel-detail.svg) | Plateenheten i begge stillinger: plate, to avstivningslekter, to kilelekter, glidesjakten ved trinnenden og skruen nedenfra ut av kontraboret. Ingen ståldel |
 
 **Alle seks arkene er tegnet om mot den ferdige geometrien.** De viser
-652×798-platen, 750 mm avstivningslekter, de to skråkappede kilelektene,
+574×798-platen, 750 mm avstivningslekter, de to skråkappede kilelektene,
 bordbærelekta som 48×73 på høykant (Z 409–482), navnene
 sengestilling/bordstilling — og ingen bæreklosser, ingen U-brakett, ingen
 krokplate og ikke én M6, fordi ingen av delene finnes. J2, J3 og J8 er tegnet

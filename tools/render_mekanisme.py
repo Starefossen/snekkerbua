@@ -162,27 +162,40 @@ def sheet(RL, G, mode, path):
 # ---------------------------------------------------------------------------
 # All three act at the SAME place, and after V3 that place is wood: the front
 # cross batten's outboard END FACE against the front bench rail's END FACE,
-# across the 24 mm side gap. The two faces are side by side, in one Z band and
+# across the side gap (24 mm up to v12, 63 after K2). The two faces are side
+# by side, in one Z band and
 # one Y band, in BED mode - and 223 mm apart in table mode, where the lock
 # therefore has nothing to take hold of. A lock that cannot be left on in the
 # wrong position is a property of the geometry, not of the instructions.
-LOCKS = [
-    ("i   SKRUE — verktøy kreves",
-     "Flattstål 60×24×3 lagt over spalten, to treskruer 5×40 i hver ende — "
-     "én ned i tverrlekta, én ned i vangeenden. EN 747 4.1.1: en omstilling "
-     "som krever verktøy er den konforme grunnlinjen. Koster en skrutrekker "
-     "hver gang platen skal flyttes."),
-    ("ii  FINGERSKRUE — verktøyfri",
-     "Samme flattstål, men festet med en riflet fingerskrue M6 i en "
-     "gjengeinnsats i vangeenden. Lifetime-sengene gjør nettopp dette. "
-     "Verktøyfritt betyr at et barn òg kan gjøre det: EN-messig et "
-     "grensetilfelle, ikke en konform løsning."),
-    ("iii OVERSENTERLÅS — trekker platen ned",
-     "Spennlås (Jula 012270-klassen) med huset på vangeenden og bøylen i "
-     "tverrlekta. Den TREKKER platen ned mot opplegget, så klapringen "
-     "forsvinner — men den er også verktøyfri, og huset står ut i "
-     "sideklaringen."),
-]
+# How far the strap has to lap onto each of the two end faces to have
+# something to screw into. The strap's LENGTH is therefore the side gap plus
+# two of these - it is not a stock number to be quoted, which is exactly the
+# mistake K2 caught: the sheet said "flattstål 60x24x3" over a 24 mm gap, and
+# the gap is 63 mm now, so a 60 mm strap would not reach across it at all.
+LOCK_STRAP_LAP = 18.0
+
+
+def locks(G):
+    """The three options, with every dimension that depends on the side gap
+    taken off the model."""
+    strap = G.LOCK_GAP + 2 * LOCK_STRAP_LAP        # 99 mm after K2 (was 60)
+    return [
+        ("i   SKRUE — verktøy kreves",
+         f"Flattstål {strap:g}×24×3 lagt over spalten, to treskruer 5×40 i "
+         f"hver ende — én ned i tverrlekta, én ned i vangeenden. EN 747 "
+         f"4.1.1: en omstilling som krever verktøy er den konforme "
+         f"grunnlinjen. Koster en skrutrekker hver gang platen skal flyttes."),
+        ("ii  FINGERSKRUE — verktøyfri",
+         "Samme flattstål, men festet med en riflet fingerskrue M6 i en "
+         "gjengeinnsats i vangeenden. Lifetime-sengene gjør nettopp dette. "
+         "Verktøyfritt betyr at et barn òg kan gjøre det: EN-messig et "
+         "grensetilfelle, ikke en konform løsning."),
+        ("iii OVERSENTERLÅS — trekker platen ned",
+         "Spennlås (Jula 012270-klassen) med huset på vangeenden og bøylen i "
+         "tverrlekta. Den TREKKER platen ned mot opplegget, så klapringen "
+         "forsvinner — men den er også verktøyfri, og huset står ut i "
+         "sideklaringen."),
+    ]
 
 
 def lock_centre(G):
@@ -224,7 +237,7 @@ def lock_sheet(RL, G, path):
               "INGEN av dem monteres. Låsen er valgt bort (akseptert avvik "
               "4); dette arket er ettermonteringsgrunnlaget, ikke en "
               "bestilling.", RL.T.BADGE_R * 0.8)
-    for i, (title, body) in enumerate(LOCKS):
+    for i, (title, body) in enumerate(locks(G)):
         box = (pad + i * (cell + pad), box_y, cell, cell)
 
         def extra(page, at, k, i=i):
@@ -257,7 +270,7 @@ def _lock_art(page, RL, G, at, k, which, centre):
     """The lock itself, drawn in the model's own space across the side gap."""
     hx, hy, top = centre
     w = RL.T.W_NEW * 0.95
-    half = G.LOCK_GAP / 2 + 18.0          # the strap laps 18 mm onto each end
+    half = G.LOCK_GAP / 2 + LOCK_STRAP_LAP   # the strap laps onto each end
     if which == 0:                        # flat strap, two screws per end
         page.line(at((hx - half, hy, top)), at((hx + half, hy, top)),
                   RL.INK, w * 1.3)

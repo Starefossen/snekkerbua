@@ -18,7 +18,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 **Slik gjør du:**
 
 1. Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring — med to navngitte unntak, og begge står i kapplista: de to kilelektene under platens forkant, og vinkelklossen.
-1. Skråkapp de to kilelektene. De er 48×73 × 116 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (30,9°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.
+1. Skråkapp de to kilelektene. De er 48×73 × 77 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (30,9°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.
 1. Kapp vinkelklossen, borjiggen til de to skråskruene (J8-B og J10). Én bit 48×73 av restene, 160 mm lang, med en rampe i hver ende: 25° i den ene (J8-B) og 30° i den andre (J10). Kappsag med bladet vippet. Den skal ikke bygges inn i sengen — den er verktøy.
 1. Merk hver del med blyant på en flate som blir skjult.
 1. **Bryt alle kanter et barn kan nå, nå — mens delene er løse.** Kravet er brutt kant, ikke en bestemt metode: 45° fas eller avrunding, du velger. Fres med V-spor eller avrundingsfres om du har fres; ellers gjør en blokkhøvel eller en pussekloss med 120-korn nøyaktig samme nytte. Viktigst: plateenhetens underside — begge styrelektenes nedre kanter og begge kilene — for det er der et kne møter treet når noen sitter ved bordet. Deretter platens fire egne kanter, og så stolper, rekkverksbord, trinn og stigevangenes kanter. Modellen tegner alle deler skarpe; kantbrytningen er en instruks og flytter ingen mål.
@@ -245,7 +245,7 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke 
 **Slik gjør du:**
 
 1. Bor hullene i lektene FØR noe limes. Regelen er den samme for alle fire delene, og den er lettest å huske slik: bor ⌀12 opp i undersiden TIL DET STÅR 27 mm igjen opp til plata, og ⌀3,5 videre gjennom de siste 27 mm. På de to lange styrelektene, som er 73 mm hele veien, blir det 46 mm kontrabor. På de to skråkappede kilene blir det dypest ved roten og null ved tuppen — tuppen ER 27 mm, så der ligger hodet i flukt med kilens egen underside. Skruen tar 13 mm i den 18 mm tykke platen uansett, med 5 mm plate igjen over spissen.
-1. Legg platen med undersiden opp. Merk av de to lange avstivningslektene 116 mm inn fra hver sidekant — det er målet som gjør at de treffer utsiden av trinnenden.
+1. Legg platen med undersiden opp. Merk av de to lange avstivningslektene 77 mm inn fra hver sidekant — det er målet som gjør at de treffer utsiden av trinnenden.
 1. Lim (D3) hele lektas overkant, legg den på plass og skru opp fra undersiden (J13a). Skruene er tvinger: de trekker limfugen sammen og blir sittende.
 1. Samme sak for de to kilelektene, i flukt med platens forkant og med den HØYE enden mot den lange lekta (J13b) — den skråkappede tuppen peker ut mot platekanten. De bærer hjørnet trinnet ikke rekker fram til.
 1. Ingenting går gjennom platens overside. Har du et hull der, har du boret feil vei.

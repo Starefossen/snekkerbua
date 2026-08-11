@@ -2,7 +2,7 @@
 
 Every other step page is a view of the BED with the step's parts picked out in
 black. Steg 10 cannot be that page. What is built here - platen and the four
-lektene under it - is a 652 x 798 sub-assembly inside a bed that is 2 m
+lektene under it - is a 574 x 798 sub-assembly inside a bed that is 2 m
 across, and drawn inside the frame it is a postage stamp with the badges
 crowded onto it. The reader gets no answer to the only questions the step
 asks: which way up do the lekter go, how far in from the plate's edges do they
@@ -499,7 +499,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         under = bz0 + DROP_BATTEN[2]
         # The ghost outline stays on the PLATE - it is what says how far in
         # from the plate's edges the lekt sits, and after V3 that number
-        # (116 mm to the side edge) is the mechanism.
+        # (NOSE_LEN to the side edge - 77 mm after K2) is the mechanism.
         _ghost(page, RL, view, (bx0, bx1), (by0, by1), top,
                panel.extents[:2])
         for hx, hy in holes:

@@ -33,7 +33,7 @@ fastener it names.*
 | **Envelope** | 1990 × 836 × 1700 mm — a wall-to-wall fit in a 1990 mm alcove. Through-running parts are cut 1984 mm, because a 1990 mm board will not swing into a 1990 mm opening |
 | **Timber** | **63 pieces** in **4 timber profiles** plus one 18 mm plywood sheet — 47.1 running metres. 32 of the 63 pieces come off a single profile (36×98) in four saw settings |
 | **Steel** | **180 fasteners laid out across 17 joints**, **166 of them modelled as solid bodies** — head, countersink, shank and point, each with its own drive vector. **Not one head sits on a room-facing face**, and that is an assert |
-| **Checks** | **347 asserts in the model** and 43 more in the tools, all build-failing. Screw directions are derived from physics (5 of 21 are forced by the thicknesses alone); screw counts must fit the face they stand on; every part must touch the assembly and clash with nothing |
+| **Checks** | **385 asserts in the model** and 57 more in the tools, all build-failing. Screw directions are derived from physics (5 of 21 are forced by the thicknesses alone); screw counts must fit the face they stand on; every part must touch the assembly and clash with nothing |
 | **Determinism** | `mise run check` runs the whole chain twice and demands **108 byte-identical artefacts** — the three films included, plus a hash stamp that fails the gate if they are older than the model they show. Determinism is an assert, not an expectation |
 | **Output** | A **65-page print-ready PDF** in one command, plus a picture-only manual, a written build guide, six schematics, and STEP / STL / GLB / USDZ exports |
 | **Standards** | Clearances, guard heights and the mattress thickness window come out of EN 747; edge distances and screw spacing out of Eurocode 5 |
@@ -48,7 +48,7 @@ all of the documentation here are original.
 ## How it works
 
 ```
-generate_loftbed.py           the model: geometry, parts, fasteners, 347 asserts
+generate_loftbed.py           the model: geometry, parts, fasteners, 385 asserts
   ├─ tools/gen_doc_tables.py  → docs/generated/*.md, docs/MONTERING.md, byggesteg.json
   ├─ tools/render_lineart.py  → docs/img/steg-NN.svg/.png   (+ check_coverage)
   │    ├─ tools/render_cutpage.py   step 0, the cutting plan
