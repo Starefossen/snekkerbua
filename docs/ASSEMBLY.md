@@ -40,19 +40,18 @@ fra kapplista og nøkkelmålene.
 |---|---|
 | Batteridrill, 18 V eller mer | Rammen er skrudd, ikke boltet — men det er mange 6 mm skruer i heltre, og de vil ha moment |
 | Trebor ⌀6 og ⌀4 | Rammeskruene: gjennomgangshull i den ene delen, styrehull i den andre. Se forboringskolonnen i [beslaglista](generated/beslagliste.md) |
-| Trebor i flere små diametre til forboring | Se forboringskolonnen i beslaglista. Forbor **alltid** i den tynne bordbærelekta, i bordene og i all endeved |
-| Forsenker (kjeglesenker) | Alle skruehoder i flater man tar på: benkespiler, køyespiler, plate |
-| Forstnerbor ⌀18 | Setet under hvert skråskruehode (J8-B og J10). Vinkelklossen styrer vinkelen — se J8-B |
+| Trebor i flere små diametre til forboring | Se forboringskolonnen i beslaglista. Forbor **alltid** i bordbærelekta, i bordene og i all endeved |
+| Forsenker (kjeglesenker) | Alle skruehoder i flater man tar på: benkespiler, køyespiler, trinn |
+| Forstnerbor ⌀18 og ⌀12 | ⌀18: setet under hvert skråskruehode (J8-B og J10) — vinkelklossen styrer vinkelen, se J8-B. ⌀12: kontraborene i lektene og kilene under platen (J13a/J13b) |
 | Fres med V-spor eller avrundingsfres — eller høvel, blokkhøvel, pussekloss | Kantbrytningen, avsnitt 3. Ingenting her krever fres |
 | Bits Torx T20 / T25 / T30 | Etter skruestørrelse |
-| Fastnøkkel 10 mm | Låsemutrene på M6 (platebeslagene) |
 | Sirkelsag eller håndsag + anlegg | Alle kutt er 90°, med ett unntak: de to kilelektene sages på skrå i ett langsgående snitt (J13b). Ingen gjæring i hele sengen |
-| Vinkelhake, minst 300 mm | Endrammene |
+| Vinkelhake, minst 300 mm | Rett vinkel i bakrammen og i sengeflaten — mål diagonalene |
 | Vater, minst 600 mm | Endebjelker og vanger |
 | Tommestokk og målebånd | |
 | To skrutvinger, minst 300 mm | Holder deler mens du borer gjennom begge samtidig |
 | Blyant og syl | Merking av borsentre |
-| To personer | Endrammene skal reises, og de øvre vangene skal opp i høyden |
+| To personer | Bakrammen skal reises, og de øvre vangene skal opp i høyden |
 
 ---
 
@@ -105,8 +104,8 @@ ned under en monteringsflate — ingen forsenkte boltehoder, ingen store
 forsenkingshull, og ingen deler som må boltes ferdig før de får møte veggen.
 
 Stål brukes bare to steder: vinkelbeslagene under stubbeføttene og
-vinkelbeslagene under bordbærelektas ender. Den løse platen hadde fire til;
-V3 tok dem ut og lot lektene gjøre jobben, så platemekanismen er ren tre.
+vinkelbeslagene under bordbærelektas ender. Platemekanismen er ren tre —
+lektene gjør hele jobben, se J13.
 
 **Det står ingen lås i beslaglista, og det er ikke en glipp.** Låsen i
 sengestilling var det siste åpne valget i platemekanismen. Valget er tatt: det
@@ -212,7 +211,7 @@ skruerad endrer seg av at en kant er brutt.
 
 * **Bor gjennomgående hull gjennom begge deler samtidig**, med delene tvunget
   sammen. Bores de hver for seg, treffer de ikke.
-* **Forbor hver eneste treskrue.** Ingen unntak i den tynne bordbærelekta, i
+* **Forbor hver eneste treskrue.** Ingen unntak i bordbærelekta, i
   bordene og i endeved.
 * **Ingenting i rammen er boltet.** Hele rammen er skrudd, med forborede
   6 mm treskruer. Se J1, J2, J3 og J8.
@@ -224,7 +223,7 @@ skruerad endrer seg av at en kant er brutt.
 ## 4. J — leddene
 
 Antall, skruetype, forboring og hvilken side du driver fra står i
-[beslaglista](generated/beslagliste.md). Boltradenes høyder står i
+[beslaglista](generated/beslagliste.md). Skrueradenes høyder står i
 [nøkkelmål](generated/nokkelmal.md). Her står hva leddet er og hva som er
 poenget med det.
 
@@ -364,8 +363,7 @@ plan er et **flatbunnet sete boret langs skruens egen akse**: ⌀18 forstner,
 vinkelrett på hodet, så hodet legger seg flatt og ender **helt under treet** —
 2,3 mm tre over hodets høyeste punkt her, 4,9 mm på J10. Begge tallene er målt
 på kroppene i modellen. En skråskrue er nå like fullt inne i treet som hver
-eneste andre skrue i sengen; den gamle slingringsmonnen som lot en tidel av en
-skråskrue stå utenfor treet, er borte.
+eneste andre skrue i sengen — ingenting av den står utenfor treet.
 
 Setet koster lengde: 18 mm av skruen går med i lomma, så J8-Bs 6×90 begraver
 72 mm og J10s 5×70 begraver 52. Begge er kjørt gjennom de vanlige
@@ -430,20 +428,20 @@ stikke ut forbi foten i det hele tatt — den ender på den.
 ### J12 — Bordbærelekt → bakre hjørnestolpe
 
 Lekta går fra stolpe til stolpe og støter mot stolpenes sideflater med endene,
-akkurat som den bakre benkevangen. Den er for tynn til å skrus i enden, så hver
-ende får et lite vinkelbeslag å hvile på. Beslaget står med den loddrette
+akkurat som den bakre benkevangen. Men den har ingen bærekloss under seg, så
+hver ende får et lite vinkelbeslag å hvile på. Beslaget står med den loddrette
 fliken på stolpens innerflate og den vannrette fliken **under lektas ende** —
 det er den veien rundt, og bare den veien: snudd andre veien ville den
 vannrette fliken pekt ut i lufta over lekta og ikke båret noe som helst. Lekta
 henger ikke i skruer — den ligger på beslaget.
 
-Beslaget er 20 mm bredt, ikke 40. Stolpeflaten det ligger på er 36 mm og
-lekta er 21 mm tykk; et 40 mm bredt beslag ville stukket ut av begge, og på
-stolpen ville det stukket ut i **veggplanet**, som skal være helt flatt. Én
-skrue i hver flik — en 40 mm flik har ikke lovlig plass til to 5 mm skruer.
+Beslaget er 20 mm bredt, ikke 40. Stolpeflaten det ligger på er bare 36 mm
+dyp; et 40 mm bredt beslag ville stukket ut av den — ut i **veggplanet**, som
+skal være helt flatt. Én skrue i hver flik — en 40 mm flik har ikke lovlig
+plass til to 5 mm skruer.
 
-Lekta står **på høykant**. Legger du den flatt, faller bæreevnen med faktor 20
-og bordplaten svikter. Forbor — lekta er tynn.
+Lekta står **på høykant**. Legger du den flatt, ender overkanten 25 mm for
+lavt, og platen når ikke det bakre opplegget sitt i bordstilling. Forbor.
 
 Lekta må inn mens bakrammen ligger flat, av samme grunn som benkevangen: den er
 kappet til å fylle nøyaktig mellom stolpene.
@@ -463,11 +461,9 @@ eneste bevegelsen den har, er loddrett.
 Vekten hviler på **tre**, ikke på stål: bakkanten på den bakre benkevangen
 (sengestilling) eller på bordbærelekta (bordstilling), forkanten på trinnet.
 
-**Og styringen er også tre.** Det er ikke ett vinkelbeslag igjen i denne
-mekanismen. De fire som sto her før — to på sidekanten bak, to ved trinnenden —
-er tatt ut, og jobben deres er overtatt av de to lange lektene. Låsen i
-sengestilling var det siste stålet som sto åpent, og den er avgjort: det blir
-ingen. Da er det ikke én ståldel igjen i den.
+**Og styringen er også tre.** Det står ikke ett vinkelbeslag i denne
+mekanismen — den jobben gjør de to lange lektene — og det står ingen lås i den
+(vedlegg B, avvik 4). Ikke én ståldel.
 
 **J13a — avstivningslekter, som også er styrelekter.** To 48×73-lekter på
 høykant under platen, fra det bakre opplegget og helt fram til platens egen
@@ -725,7 +721,7 @@ ute.
 **7.6 Ikke sett deg på platens kant, og ikke bruk den som trinn.** Den er
 sikret mot å vippe, men den er ikke en avsats.
 
-**7.7 Ettertrekk.** Alle låsemuttere ettertrekkes etter fire uker og deretter en
+**7.7 Ettertrekk.** Ettertrekk rammeskruene etter fire uker og deretter en
 gang i året. Sengen vibrerer hver gang noen snur seg.
 
 **7.8 Aldersgrense.** Loftsenger og overkøyer anbefales ikke til barn under
@@ -757,8 +753,8 @@ MPa. γ<sub>M</sub> = 1,3. Bøyningen regnes med k<sub>mod</sub> = 0,9
 tvers av fiberretningen med k<sub>c,90</sub> = 1,5 gir **2,31 MPa**.
 
 **Festemidler**, konservative erfaringstall: treskrue 5 mm i skjær ≈ **1,5 kN**,
-6 mm ≈ **2,0 kN**. Det går ingen bolt inn i en stolpe i denne sengen; M6-bolten
-i platebeslagene er det eneste gjengede festet igjen.
+6 mm ≈ **2,0 kN**. Det finnes ikke en bolt i denne sengen — alt er forborede
+treskruer og to slags vinkelbeslag.
 
 **Designlaster:** overkøye 100 kg + madrass, dynamisk faktor 2 → **2 kN**
 punktlast. Trinn **1 kN**. Benk **1 kN**. Plate **2 kN** dynamisk (noen setter
@@ -823,7 +819,7 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | **Kilelekt (vinge) under hjørnet, bøyning** (M5/V4, 116 mm, 73 → 27 mm) | Utkraging fra styrelekta, med lasten på kilen selv. Med h(x) avtakende topper σ seg der h = 2 × spissen, altså 68 mm fra spissen — inne i delen, ikke ved roten | 116 mm, kritisk snitt h = 54 mm | 1 kN kne | **0,18** | ✓ σ = 2,92 MPa i C24. Roten selv: 2,72 MPa, 0,16 — det tallet den hele klossen hadde |
 | **Kilelekt (vinge), skjær i spissen** (M5/V4) | Tverrskjær i delens tynneste snitt, 48 × 27 mm: τ = 1,5·1000/(48·27) | 27 mm spisshøyde | 1 kN kne | **0,42** | ✓ 1,16 MPa mot f<sub>v,d</sub> = 2,77. Delens dimensjonerende tall, og det som sier at spissen ikke skal bli tynnere |
 | Lekt → plate (J13a/J13b) | Limt fuge 48 × 750 mm + 6 skruer 5×40 opp fra kontrabor, 13 mm gjenge i plata | uttrekk ≈ 0,27 kN per skrue (halvert for kryssfiner) | 0,14 kN, enheten (7,1 kg) løftet etter ett hjørne med faktor 2 | **< 0,05** | ✓ I bruk står fugen i trykk — platen hviler på lekta, lasten går ikke gjennom et festemiddel |
-| Bordbærelekt 48×73 **på høykant** | Bøyning om sterk akse | 1794 mm | 0,55 kN bordlast | **0,13** | ✓ W = 42 632 mm³ etter V2 (var 21×95 = 31 587). Flatt lagt faller kapasiteten med faktor 20 |
+| Bordbærelekt 48×73 **på høykant** | Bøyning om sterk akse | 1794 mm | 0,55 kN bordlast | **0,13** | ✓ W = 42 632 mm³ etter V2 (var 21×95 = 31 587) |
 | Bordbærelekt → stolpe | Skruskjær, 1 × 5 mm per beslagflik — 40 mm flik tar ikke to | 1,5 kN | 0,13 kN | 0,09 | ✓ Lekta ligger dessuten PÅ den vannrette fliken; skruen holder den bare nede |
 | Rekkverksbord 36×98 | Bøyning om svak akse, vannrett last | ≈ 760 mm | 0,5 kN | **0,13** | ✓ |
 | Rekkverksbord → stolpe | Skruskjær, 2 × 5 mm per omlegg | 3,0 kN | 0,25 kN | 0,08 | ✓ |
@@ -854,19 +850,19 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Kilelekt under platehjørnet, bøyning i det kritiske snittet | 0,18 |
 | Stigevange → fremre sidevange (J3) | 0,17 |
 | Rungetrinn, bøyning | 0,17 |
-| Bordbærelekt på høykant (48×73 etter V2) | 0,13 |
 | Stigevange, knekking ut av planet | 0,15 |
 | Bakre benkevange over åpningen mellom stubbeføttene | 0,14 |
+| Bordbærelekt på høykant (48×73 etter V2) | 0,13 |
 | Alle andre ledd | ≤ 0,13 |
 
 **Kilelekta under platehjørnet er den ene delen i sengen der skjær, ikke bøyning, er
 dimensjonerende:** 0,42 i spissen mot 0,18 i det verste bøyesnittet. Det er
 skjærtallet som holder spissen på 27 mm, ikke utseendet.
 
-De to øverste skrueradene er de eneste stedene i sengen der en loddrett
-reaksjon går gjennom stål i det hele tatt, og begge er regnet **uten** hjelp
-fra nabofestene i det samme hjørnet. Med den kombinerte skjærveien er de 0,17
-og 0,14 — se avsnitt 2.
+De to øverste skrueradene er klossenes — det er der en loddrett reaksjon går
+gjennom stål (se avsnitt 2) — og begge er regnet **uten** hjelp fra
+nabofestene i det samme hjørnet. Med den kombinerte skjærveien er de 0,17
+og 0,14.
 
 Ingen ledd i den ferdige sengen har utnyttelse over 1,0. De to tilfellene som
 gjør det, er begge dekket av bruksreglene: bar spilebunn under hopping (7.4) og
@@ -992,3 +988,12 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | [ladder-detail.svg](schematics/ladder-detail.svg) | Stigen: vanger, klosser, trinn, J3-skruene, og hylla bak trinnet som platen hviler på |
 | [bench-detail.svg](schematics/bench-detail.svg) | Benken: bærekloss mot hjørnestolpen, vangebiten som ender på stubbefoten, benkespilene og platekanten |
 | [panel-detail.svg](schematics/panel-detail.svg) | Den løse platen i begge stillinger, med avstivningslekter (skjemaet er fra før V2: det viser den gamle stålløsningen, og de to fremre tverrstykkene er skråkappede kilelekter fra og med V4 — se J13b. Gjeldende mekanisme er tegnet i `docs/preview/mekanisme-v2-*.png`) |
+
+**NB — detaljarkene er ikke tegnet om etter mekanismerunden.** Rammen, stigen
+og benkene stemmer, men alt om den løse platen på ladder-detail, panel-detail,
+bench-detail, side-elevation og end-elevation er foreldet: 680×800-plate,
+715-lekter, U-braketter, krokplater, «J13c», M6-skruer og navnene
+«sengemodus/bordmodus». Det samme gjelder bordbærelektas gamle profil 21×95
+(underkant Z 387). Gjeldende geometri står i [kapplista](generated/kappliste.md)
+og [nøkkelmålene](generated/nokkelmal.md); gjeldende ledd er J13a/J13b. Det
+finnes ingen U-brakett, ingen krokplate og ikke én M6 i sengen.

@@ -4,7 +4,7 @@
 
 A parametric loft bed in [build123d](https://github.com/gumyr/build123d) /
 OpenCascade, built for one 199 cm alcove between two walls. The model is the
-only source of truth: **every drawing, every table and all 62 pages of the
+only source of truth: **every drawing, every table and all 65 pages of the
 printed assembly manual are generated from the solids and machine-checked
 before they are allowed to exist.** Nothing is hand-drawn and no number is
 hand-transcribed.
@@ -25,11 +25,11 @@ fastener it names.*
 | | |
 |---|---|
 | **Envelope** | 1990 × 836 × 1700 mm — a wall-to-wall fit in a 1990 mm alcove. Through-running parts are cut 1984 mm, because a 1990 mm board will not swing into a 1990 mm opening |
-| **Timber** | **69 wooden parts** in **5 timber profiles** plus one 18 mm plywood sheet — 47.1 running metres. 32 of the 69 pieces come off a single profile (36×98) in four saw settings |
-| **Steel** | **186 fasteners laid out across 21 joints**, **180 of them modelled as solid bodies** — head, countersink, shank and point, each with its own drive vector |
-| **Checks** | **317 asserts in the model** and 30 more in the drawing tools, all build-failing. Screw directions are derived from physics (8 of 27 are forced by the thicknesses alone); screw counts must fit the face they stand on; every part must touch the assembly and clash with nothing |
-| **Determinism** | `mise run check` runs the whole chain twice and demands **121 byte-identical artefacts**. Determinism is an assert, not an expectation |
-| **Output** | A **62-page print-ready PDF** in one command, plus a picture-only manual, a written build guide, six schematics, and STEP / STL / GLB / USDZ exports |
+| **Timber** | **71 pieces** in **4 timber profiles** plus one 18 mm plywood sheet — 47.4 running metres. 32 of the 71 pieces come off a single profile (36×98) in four saw settings |
+| **Steel** | **188 fasteners laid out across 20 joints**, **174 of them modelled as solid bodies** — head, countersink, shank and point, each with its own drive vector |
+| **Checks** | **357 asserts in the model** and 43 more in the tools, all build-failing. Screw directions are derived from physics (7 of 24 are forced by the thicknesses alone); screw counts must fit the face they stand on; every part must touch the assembly and clash with nothing |
+| **Determinism** | `mise run check` runs the whole chain twice and demands **101 byte-identical artefacts**. Determinism is an assert, not an expectation |
+| **Output** | A **65-page print-ready PDF** in one command, plus a picture-only manual, a written build guide, six schematics, and STEP / STL / GLB / USDZ exports |
 | **Standards** | Clearances, guard heights and the mattress thickness window come out of EN 747; edge distances and screw spacing out of Eurocode 5 |
 
 The bed's *functional* design — a loft platform over a bench/table/spare-bed
@@ -115,7 +115,7 @@ the PNGs and a headless Chrome for the PDF.
 mise run build      # model + all generated tables + docs/MONTERING.md
 mise run montering  # re-draw the line art in docs/img/
 mise run check      # run the whole chain twice, demand byte-identical output
-mise run pdf        # docs/hanna.pdf, 62 pages, print-ready
+mise run pdf        # docs/hanna.pdf, 65 pages, print-ready
 ```
 
 | Task | What it does |
@@ -123,7 +123,7 @@ mise run pdf        # docs/hanna.pdf, 62 pages, print-ready
 | `build` | Builds and validates the model, exports it, writes every fragment in `docs/generated/` and `docs/MONTERING.md` |
 | `build-full` | Same plus the slow deliverables: `.glb` and the whole-model hidden-line `.svg` projections |
 | `montering` | Draws the cover and one line-art page per build step into `docs/img/` |
-| `check` | Determinism assert: two full runs, 121 artefacts, byte-identical or fail |
+| `check` | Determinism assert: two full runs, 101 artefacts, byte-identical or fail |
 | `pdf` | Assembles `docs/hanna.pdf` from the checked-in documents (no build123d needed) |
 | `schematics` | Renders `docs/schematics/*.svg` to PNG for proofreading |
 | `usdz` | Converts the meshes to `.usdz` for Quick Look / Xcode / AR, one material per colour group |
@@ -141,7 +141,7 @@ mise run pdf        # docs/hanna.pdf, 62 pages, print-ready
 | `tools/` | Everything that reads the model: doc tables, line art, cut page, panel page, glyphs, PDF, USD helpers |
 | `docs/generated/` | Machine-written, never edited by hand: cut list, buying list, key dimensions, hardware list, screw directions, step text, `byggesteg.json` |
 | `docs/img/`, `docs/schematics/` | The committed drawings — so the manual is readable and printable on a machine with none of this toolchain |
-| `docs/hanna.pdf` | The 62-page print manual. Deliberately untracked — the tooling is in git, the binary is one `mise run pdf` away |
+| `docs/hanna.pdf` | The 65-page print manual. Deliberately untracked — the tooling is in git, the binary is one `mise run pdf` away |
 | `parts.tsv` | Tracked regression snapshot: label, colour group and bounding box of every part, both panel modes. A diff on it is the diff on the model |
 | `v1/` | The first alcove bunk-bed frame, kept for history |
 
