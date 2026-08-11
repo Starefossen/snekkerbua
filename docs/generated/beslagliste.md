@@ -9,22 +9,21 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 
 | Post | Behov | Kjøp |
 |---|---:|---|
-| Treskrue 5×60 forsenket Torx | 102 | 1 pk. à 200 stk. |
-| Treskrue 5×40 forsenket Torx | 20 | 1 pk. à 20 stk. |
+| Treskrue 5×60 forsenket Torx | 80 | 1 pk. à 100 stk. |
+| Treskrue 5×40 forsenket Torx | 38 | 1 pk. à 50 stk. |
 | Treskrue 6×90 forsenket Torx | 18 | 1 pk. à 20 stk. |
 | Treskrue 6×80 forsenket Torx | 14 | 1 pk. à 20 stk. |
 | Treskrue 6×120 forsenket Torx | 12 | 1 pk. à 20 stk. |
 | Filtknott / møbeltapp ⌀40 | 8 | 1 pk. |
 | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | 6 | 6 stk. |
-| Treskrue 4×16 forsenket Torx | 4 | 1 pk. à 8 stk. |
 | Treskrue 5×70 forsenket Torx | 4 | 1 pk. à 8 stk. |
-| Vinkelbeslag 40×40×20 | 4 | 6 stk. |
 | Vinkelbeslag 90×90×40×2,5 varmforsinket | 4 | 6 stk. |
-| Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | 2 | 4 sett |
 | Treskrue 6×60 forsenket Torx | 2 | 1 pk. à 8 stk. |
-| Vinkelbeslag 20×20×40 varmforsinket | 2 | 4 stk. |
+| Vinkelbeslag 40×40×20 | 2 | 4 stk. |
 
 **Behov** er antallet sengen bruker; **Kjøp** er den minste pakken som finnes i butikk og dekker behovet. Treskruer selges i pakker à 8 / 20 / 25 / 50 / 100 / 200 stk. Står det samme tall i begge kolonnene, har du ingen reserve — ta en pakke opp. En skrue du mangler koster en kveld.
+
+I tillegg trengs **D3 trelim**, én liten flaske. Den er ikke en post i tabellen fordi den ikke telles i stykk, men den er ikke valgfri: J13a og J13b er limte fuger, og skruene der er tvinger som blir sittende.
 
 ## Hvor det går — ledd for ledd
 
@@ -46,10 +45,8 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 | **J10** | Benkevange → stubbefot | 4 | 1× Vinkelbeslag 90×90×40×2,5 varmforsinket + 4× Treskrue 5×40 forsenket Torx + 1× Treskrue 5×70 forsenket Torx | ⌀3 i foten og i vangen; skråskruene forbores ⌀3,5 | Vinkelbeslaget sitter i hjørnet mellom fotens utside og vangens underside, med den ene fliken opp i vangen og den andre inn i foten; den ene 5×70 er en skråskrue nedenfra og opp i vangen |
 | **J11** | Benkespile → benkevange (per spileende) | 20 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom spilen, forsenk hodet under flaten | Ovenfra, ned i benkevangen |
 | **J12** | Bordbærelekt → bakre hjørnestolpe (endeskjøt) | 2 | 1× Vinkelbeslag 40×40×20 + 2× Treskrue 5×40 forsenket Torx | ⌀3 i stolpen og i lekta — forboring er et krav, lekta er tynn | Beslaget på stolpens innerflate, med den vannrette fliken UNDER lektas ende, så lekta har noe å hvile på og ikke bare henger i skruer |
-| **J13a** | Avstivningslekt → løs plate | 2 | 6× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom platen, forsenk og propp | Ovenfra, ned i lektas overkant |
-| **J13b** | Fremre tverrlekt → løs plate | 2 | 5× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom platen, forsenk og propp | Ovenfra, ned i tverrlektas overkant. Lekta ligger med forkanten 2 mm bak trinnet — det er innsettingsklaringen, ikke slark |
-| **J13c** | Vinkelbeslag → platens sidekant, bakre hjørne (hviler på bakre opplegg) | 2 | 1× Vinkelbeslag 20×20×40 varmforsinket + 2× Treskrue 4×16 forsenket Torx | ⌀3 i platens kant — forbor, 18 mm kant sprekker ellers | Beslaget står i sideklaringen mellom platen og benkespilen: den vannrette fliken ligger PÅ bakre benkevange (sengestilling) eller PÅ bordbærelekta (bordstilling), ved siden av platen og aldri under den, og den oppstående fliken skrus til platens sidekant. Hullet i den vannrette fliken er låsepunktet |
-| **J13d** | Vinkelbeslag → løs plate ved trinnenden (sidestopp i begge stillinger) | 2 | 1× Vinkelbeslag 40×40×20 + 1× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | ⌀6,5 gjennom platen, forsenk ⌀13 i oversiden | Beslaget skrus opp under platen like utenfor trinnenden, med den nedhengende fliken langs trinnets ENDEVED — 2 mm klar av den. Trinn 1 og trinn 2 ender på samme X, så samme beslag styrer platen i begge stillinger |
+| **J13a** | Avstivningslekt → løs plate (limt, skrudd nedenfra) | 2 | 6× Treskrue 5×40 forsenket Torx | ⌀12 kontrabor 46 mm opp i lektas underside, ⌀3,5 videre gjennom resten av lekta. Ingenting gjennom platens overside | Nedenfra, opp gjennom lekta og 13 mm inn i den 18 mm platen. Limes med D3 trelim på hele lektas overkant først — skruene er tvinger som blir sittende |
+| **J13b** | Fremre tverrlekt → løs plate (limt, skrudd nedenfra) | 2 | 3× Treskrue 5×40 forsenket Torx | ⌀12 kontrabor 46 mm opp i lektas underside, ⌀3,5 videre gjennom resten av lekta. Ingenting gjennom platens overside | Nedenfra, som J13a. Lekta ligger med forkanten i flukt med platens forkant, med enden mot avstivningslekta |
 | **J14** | Veggfeste — gjennom den bakre sidevangen inn i stenderne | 1 | 6× Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | ⌀8 gjennom vangen, forsenk for hodet; veggen etter festetype | Rett gjennom vangen inn i veggen. Vangen ligger flatt mot veggen i hele sin lengde, så festet trenger ingen kloss og ingen brakett |
 | **J15** | Filtknott under stolpe og stubbefot | 8 | 1× Filtknott / møbeltapp ⌀40 | — | Slås i endeveden før reisning |
 
@@ -57,12 +54,14 @@ Forklaringen til hvert ledd står i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene).
 
 ## Lås i sengestilling — IKKE VALGT
 
-Platen løftes rett opp i begge stillinger. Ingenting holder den ned, og i sengestilling er det et valg som må tas før sengen brukes. Alle tre virker i det samme hullet — den vannrette fliken på det bakre vinkelbeslaget (J13c), rett ned i opplegget:
+Platen løftes rett opp i begge stillinger. Ingenting holder den ned, og i sengestilling er det et valg som må tas før sengen brukes. Dette er den ENESTE posten med stål igjen i platemekanismen — de fire vinkelbeslagene er ute, lektene gjør jobben deres.
+
+Alle tre virker på det samme stedet: **tverrlektas endeved mot enden av den fremre benkevangen**, tvers over de 24 mm i sideklaringen. De to flatene ligger side om side i sengestilling og i samme høydebånd; i bordstilling står tverrlekta 150 mm høyere og har ingenting å ta i. Låsen kan altså ikke stå på i feil stilling — det følger av geometrien, ikke av en instruks.
 
 | Valg | Hva | Verktøy | EN 747 |
 |---|---|---|---|
-| **i** | 2× treskrue 5×40 gjennom fliken ned i vangen | ja | konform grunnlinje (4.1.1: omstilling skal kreve verktøy) |
-| **ii** | fingerskrue M6 i gjengeinnsats i vangen | nei | grensetilfelle — verktøyfritt betyr at et barn òg kan gjøre det |
-| **iii** | oversenterlås som trekker platen ned | nei | samme innvending som ii, men fjerner klapringen |
+| **i** | flattstål 60×24×3 over spalten, 2× treskrue 5×40 i hver ende | ja | konform grunnlinje (4.1.1: omstilling skal kreve verktøy) |
+| **ii** | fingerskrue M6 gjennom samme flattstål, i gjengeinnsats i vangeenden | nei | grensetilfelle — verktøyfritt betyr at et barn òg kan gjøre det |
+| **iii** | oversenterlås, hus på vangeenden og bøyle i tverrlekta | nei | samme innvending som ii, men trekker platen ned og fjerner klapringen |
 
-Tegnet side ved side i [docs/preview/laasvalg.png](../preview/laasvalg.png) — gjennomgangsmateriell, lages med `mise run mekanisme`. Antallet er 2 uansett valg — ett per bakre beslag.
+Tegnet side ved side i [docs/preview/laasvalg.png](../preview/laasvalg.png) — gjennomgangsmateriell, lages med `mise run mekanisme`. Antallet er 2 uansett valg — ett i hvert fremre hjørne.

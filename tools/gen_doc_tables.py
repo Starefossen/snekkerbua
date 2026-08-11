@@ -529,54 +529,59 @@ def build_steps(G):
         ),
         dict(
             n=10,
-            title="Løs plate med lekter og fire vinkelbeslag",
+            title="Løs plate med fire lekter — og ingen beslag",
             parts=["Movable Panel (bed mode)", "Panel Stiffener Batten *",
                    "Panel Front Batten *"],
             camera=(325, 30, 3.6),
             page="panel",
             intro="Platen er ikke et løst bord. Den er en liten enhet som "
                   "løftes ut i ett stykke og senkes rett ned igjen — i begge "
-                  "stillinger. Lektene under den gjør den stiv; de fire "
-                  "vinkelbeslagene sier bare HVOR den skal ligge. Vekten "
-                  "hviler på tre, ikke på stål.",
+                  "stillinger. Lektene under den gjør to jobber: de gjør "
+                  "platen stiv, OG de er styringen. De to lange går ned på "
+                  "hver side av trinnenden med 2 mm klaring, så de finner "
+                  "plassen selv. Det er ikke ett beslag i denne mekanismen, "
+                  "og det skal ikke være én skrue synlig oppå platen.",
             do=[
-                "Skru de to lange avstivningslektene under platen, på "
-                  "høykant, fra platens overside (J13a). Forsenk og propp "
-                  "hullene.",
-                "Skru de to korte tverrlektene under platens forkant, én "
-                  "under hvert fremre hjørne, med enden mot den lange lekta "
-                  "(J13b). De bærer det hjørnet trinnet ikke rekker fram "
-                  "til.",
-                "Skru et vinkelbeslag på hver sidekant av platen ved "
-                  "bakkanten (J13c), med den vannrette fliken utover. Den "
-                  "fliken skal ligge PÅ opplegget, ved siden av platen — "
-                  "aldri under den.",
-                "Bolt et vinkelbeslag opp under platen ved hver trinnende "
-                  "(J13d), med den nedhengende fliken langs trinnets ende. "
-                  "Den skal stå 2 mm klar av treet: det er passingen som "
-                  "gjør at platen går ned, og samtidig stoppet som holder "
-                  "den på plass sidelengs.",
+                "Bor hullene i lektene FØR noe limes: ⌀12 kontrabor 46 mm "
+                  "opp i lektas underside, og ⌀3,5 videre gjennom resten. "
+                  "Da står skruehodet 46 mm inne i lekta og skruen tar "
+                  "13 mm i den 18 mm tykke platen.",
+                "Legg platen med undersiden opp. Merk av de to lange "
+                  "avstivningslektene 116 mm inn fra hver sidekant — det er "
+                  "målet som gjør at de treffer utsiden av trinnenden.",
+                "Lim (D3) hele lektas overkant, legg den på plass og skru "
+                  "opp fra undersiden (J13a). Skruene er tvinger: de "
+                  "trekker limfugen sammen og blir sittende.",
+                "Samme sak for de to korte tverrlektene, i flukt med "
+                  "platens forkant og med enden mot den lange lekta (J13b). "
+                  "De bærer hjørnet trinnet ikke rekker fram til.",
+                "Ingenting går gjennom platens overside. Har du et hull "
+                  "der, har du boret feil vei.",
                 "Legg platen i sengestilling: senk den rett ned mellom "
                   "benkene, bakkanten på den bakre benkevangen, forkanten på "
-                  "trinn 1. Den skal falle på plass uten å tvinges.",
-                "Prøv bordstilling: samme plate, samme beslag, rett ned på "
+                  "trinn 1. De to lange lektene skal gli ned på hver side av "
+                  "trinnenden uten å tvinges.",
+                "Prøv bordstilling: samme plate, samme lekter, rett ned på "
                   "bordbærelekta og trinn 2. Trinn 1 og trinn 2 ender på "
-                  "samme sted i lengderetningen, så beslagene finner "
+                  "samme sted i lengderetningen, så lektene finner "
                   "trinnenden i begge stillinger.",
             ],
             check=[
                 "Skyv platen sidelengs. Den skal bevege seg et par "
-                  "millimeter og så stoppe mot beslagene ved trinnenden — "
-                  "begge veier.",
+                  "millimeter og så stoppe mot trinnenden — begge veier, i "
+                  "begge stillinger.",
+                "Vri på platen. Den skal kile seg med én gang: en vridning "
+                  "drar begge lektene samme vei, og den ene tar imot.",
                 "Platen skal ligge stødig på begge opplegg i begge "
-                  "stillinger, uten å vippe.",
-                "Se etter at ingen av de bakre beslagfliken har kommet under "
-                  "platen. Kommer den under, hviler platen på stål og vipper.",
+                  "stillinger, uten å vippe. Den ligger på tre i hele "
+                  "bredden bak og på trinnet foran.",
+                "Se over platens overside i motlys. Ingen skruehoder, ingen "
+                  "propper, ingen hull.",
                 "Platen kan løftes rett opp. Det skal den kunne — låsen i "
                   "sengestilling er en egen avgjørelse, ikke en del av dette "
                   "steget.",
             ],
-            joints={'J13a': 2, 'J13b': 2, 'J13c': 2, 'J13d': 2},
+            joints={'J13a': 2, 'J13b': 2},
         ),
         dict(
             n=11,
@@ -1122,8 +1127,14 @@ def emit_nokkelmal(G, out_dir, rows):
              f" og {_rng(G.STUB_LEG_X[1], G.STUB_LEG_X[1] + G.LEG_W)} |\n")
     L.append(f"| Løs plate | {_rng(G.PANEL_X0, G.PANEL_X1)} "
              f"({G.PANEL_W} mm bred) |\n")
-    L.append(f"| Avstivningslekter | {_rng(G.BATTEN_X[0], G.BATTEN_X[0] + G.BATTEN_W)}"
-             f" og {_rng(G.BATTEN_X[1], G.BATTEN_X[1] + G.BATTEN_W)} |\n\n")
+    L.append(f"| Avstivningslekter (styrer platen) | "
+             f"{_rng(G.BATTEN_X[0], G.BATTEN_X[0] + G.BATTEN_W)}"
+             f" og {_rng(G.BATTEN_X[1], G.BATTEN_X[1] + G.BATTEN_W)} |\n")
+    L.append(f"| Tverrlekter under forkanten | "
+             f"{_rng(*G.NOSE_X[0])} og {_rng(*G.NOSE_X[1])} |\n")
+    L.append(f"| Klaring lekt → trinnende | {G.PANEL_FIT} mm hver vei "
+             f"(trinnendene står på X {G.LADDER_INNER_L} og "
+             f"{G.LADDER_INNER_R} i begge stillinger) |\n\n")
 
     slat_pitch = (G.SLAT_X_END - G.SLAT_X_START - G.BED_SLAT_W) / (G.SLAT_COUNT - 1)
     L.append(f"**Køyespiler:** {G.SLAT_COUNT} stk., første spile starter på "
@@ -1675,13 +1686,6 @@ def emit_skrueretninger(G, out_dir, idx):
             else:
                 what = (f"**{f['name']}** ligger på {host} og bøyer om "
                         f"hjørnet til {other}; skruene i fliken går {way}")
-        elif f.get("nut"):
-            e_no = KIND_NO[kind_of(crow, f["through"], pa, pb)]
-            t_no = KIND_NO[kind_of(crow, f["grips"], pa, pb)]
-            what = (f"**{f['name']}** {way} gjennom {e_no} "
-                    f"({dims(f['through'])}) og beslagets flik, mutter under "
-                    f"— den klemmer beslaget til platen, den går ikke inn i "
-                    f"{t_no}")
         elif f["through"] is None:
             t_no = KIND_NO[kind_of(crow, f["into"], pa, pb)]
             what = (f"**{f['name']}** gjennom beslagfliken og {way} inn i "
@@ -1691,6 +1695,15 @@ def emit_skrueretninger(G, out_dir, idx):
             t_no = KIND_NO[kind_of(crow, f["into"], pa, pb)]
             what = (f"**{f['name']}** gjennom {e_no} ({dims(f['through'])}) "
                     f"→ inn i {t_no} ({dims(f['into'])}), {way}")
+            if dr["counterbore"]:
+                _ax = max(range(3), key=lambda j: abs(f["direction"][j]))
+                _t = (f["through"].extents[_ax][1]
+                      - f["through"].extents[_ax][0])
+                _bite = f["length"] - (_t - dr["counterbore"])
+                what += (f" — hodet står {dr['counterbore']:g} mm inne i "
+                         f"{e_no}, i bunnen av kontraboret, så skruen tar "
+                         f"{_bite:g} mm i {t_no} og ingenting går gjennom "
+                         f"den andre siden")
         if mirrored:
             what += " (speilvendt i den andre enden)"
         basis = BASIS[status]
@@ -1730,6 +1743,10 @@ def emit_beslagliste(out_dir, steps):
              + " stk. Står det samme tall i begge kolonnene, har du ingen "
                "reserve — ta en pakke opp. En skrue du mangler koster en "
                "kveld.\n")
+    L.append("\nI tillegg trengs **D3 trelim**, én liten flaske. Den er ikke "
+             "en post i tabellen fordi den ikke telles i stykk, men den er "
+             "ikke valgfri: J13a og J13b er limte fuger, og skruene der er "
+             "tvinger som blir sittende.\n")
     L.append("\n## Hvor det går — ledd for ledd\n\n")
     L.append("| Ledd | Hva | Antall ledd | Per ledd | Forboring | "
              "Drives fra |\n|---|---|---:|---|---|---|\n")
@@ -1746,21 +1763,30 @@ def emit_beslagliste(out_dir, steps):
     L.append("\n## Lås i sengestilling — IKKE VALGT\n\n"
              "Platen løftes rett opp i begge stillinger. Ingenting holder den "
              "ned, og i sengestilling er det et valg som må tas før sengen "
-             "brukes. Alle tre virker i det samme hullet — den vannrette "
-             "fliken på det bakre vinkelbeslaget (J13c), rett ned i "
-             "opplegget:\n\n"
+             "brukes. Dette er den ENESTE posten med stål igjen i "
+             "platemekanismen — de fire vinkelbeslagene er ute, lektene gjør "
+             "jobben deres.\n\n"
+             "Alle tre virker på det samme stedet: **tverrlektas endeved mot "
+             "enden av den fremre benkevangen**, tvers over de "
+             f"{_MODEL.LOCK_GAP} mm i sideklaringen. De to flatene ligger side om "
+             "side i sengestilling og i samme høydebånd; i bordstilling står "
+             "tverrlekta 150 mm høyere og har ingenting å ta i. Låsen kan "
+             "altså ikke stå på i feil stilling — det følger av geometrien, "
+             "ikke av en instruks.\n\n"
              "| Valg | Hva | Verktøy | EN 747 |\n|---|---|---|---|\n"
-             "| **i** | 2× treskrue 5×40 gjennom fliken ned i vangen | ja | "
-             "konform grunnlinje (4.1.1: omstilling skal kreve verktøy) |\n"
-             "| **ii** | fingerskrue M6 i gjengeinnsats i vangen | nei | "
-             "grensetilfelle — verktøyfritt betyr at et barn òg kan gjøre "
-             "det |\n"
-             "| **iii** | oversenterlås som trekker platen ned | nei | "
-             "samme innvending som ii, men fjerner klapringen |\n\n"
+             "| **i** | flattstål 60×24×3 over spalten, 2× treskrue 5×40 i "
+             "hver ende | ja | konform grunnlinje (4.1.1: omstilling skal "
+             "kreve verktøy) |\n"
+             "| **ii** | fingerskrue M6 gjennom samme flattstål, i "
+             "gjengeinnsats i vangeenden | nei | grensetilfelle — "
+             "verktøyfritt betyr at et barn òg kan gjøre det |\n"
+             "| **iii** | oversenterlås, hus på vangeenden og bøyle i "
+             "tverrlekta | nei | samme innvending som ii, men trekker "
+             "platen ned og fjerner klapringen |\n\n"
              "Tegnet side ved side i "
              "[docs/preview/laasvalg.png](../preview/laasvalg.png) — "
              "gjennomgangsmateriell, lages med `mise run mekanisme`. "
-             "Antallet er 2 uansett valg — ett per bakre beslag.\n")
+             "Antallet er 2 uansett valg — ett i hvert fremre hjørne.\n")
     write(os.path.join(out_dir, "beslagliste.md"), "".join(L))
 
 

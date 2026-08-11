@@ -77,7 +77,9 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | Gangpassasje ved siden av stigen | 142 mm på hver side |
 | Stubbeføtter | 572..645 og 1345..1418 |
 | Løs plate | 669..1321 (652 mm bred) |
-| Avstivningslekter | 882..930 og 1060..1108 |
+| Avstivningslekter (styrer platen) | 785..833 og 1157..1205 |
+| Tverrlekter under forkanten | 669..785 og 1205..1321 |
+| Klaring lekt → trinnende | 2 mm hver vei (trinnendene står på X 835 og 1155 i begge stillinger) |
 
 **Køyespiler:** 14 stk., første spile starter på X 20, deling 142,46 mm, siste spile slutter på X 1970. Åpning mellom spilene 44,46 mm.
 

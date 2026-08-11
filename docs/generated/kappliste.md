@@ -19,11 +19,11 @@ Alle mål i mm. Alle kutt er 90°. Posisjonen er delens plass i modellen: X lang
 | Køyespile | 36×98 | **800** | 14 | 20..1970 (fordelt) | -48..752 | 1163..1199 |
 | Benkevange, bak (gjennomgående) | 48×73 | **1794** | 1 | 98..1892 | -48..0 | 186..259 |
 | Bordbærelekt, bak | 48×73 | **1794** | 1 | 98..1892 | -48..0 | 409..482 |
-| Avstivningslekt under plate | 48×73 | **713** | 2 | 882..1108 (fordelt) | 0..713 | 186..259 |
+| Avstivningslekt under plate | 48×73 | **750** | 2 | 785..1205 (fordelt) | 0..750 | 186..259 |
 | Benkevange, front (bit) | 48×73 | **642** | 2 | 3..1987 (fordelt) | 704..752 | 186..259 |
 | Rungetrinn | 48×73 | **320** | 4 | 835..1155 | 715..788 | 211..958 (fordelt) |
-| Tverrlekt under platens forkant | 48×73 | **213** | 2 | 669..1321 (fordelt) | 665..713 | 186..259 |
 | Stubbefot | 48×73 | **186** | 4 | 572..1418 (fordelt) | -48..752 (fordelt) | 0..186 |
+| Tverrlekt under platens forkant | 48×73 | **116** | 2 | 669..1321 (fordelt) | 702..750 | 186..259 |
 | Sidevange, øvre | 48×98 | **1984** | 2 | 3..1987 | -48..752 (fordelt) | 1065..1163 |
 | Endebjelke | 48×98 | **836** | 2 | 98..1892 (fordelt) | -48..788 | 967..1065 |
 

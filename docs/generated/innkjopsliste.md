@@ -12,7 +12,7 @@ Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regne
 | **18 mm plate, 652 bred** | 1 plate 18 mm kryssfiner furu, minst 652 × 798 mm | — |
 | **36×48** | **1 stk. 4,8 m** | 10 % |
 | **36×98** | **7 stk. 4,8 m** | 16 % |
-| **48×73** | **1 stk. 4,8 m** + **1 stk. 4,2 m** | 3 % |
+| **48×73** | **1 stk. 4,8 m** + **1 stk. 4,2 m** | 4 % |
 | **48×98** | **1 stk. 4,2 m** + **1 stk. 2,4 m** | 15 % |
 
 ## Kappeplan, bord for bord
@@ -45,12 +45,12 @@ Kjøpt 33,60 m, brukt 28,06 m, svinn 16 %.
 
 ### 48×73
 
-Kjøpt 9,00 m, brukt 8,75 m, svinn 3 %.
+Kjøpt 9,00 m, brukt 8,63 m, svinn 4 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 1 × 713 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 320 (Rungetrinn) | 167 |
-| 2 | 4200 | 1 × 713 (Avstivningslekt under plate) + 2 × 642 (Benkevange, front (bit)) + 3 × 320 (Rungetrinn) + 4 × 186 (Stubbefot) + 2 × 213 (Tverrlekt under platens forkant) | 29 |
+| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 320 (Rungetrinn) + 1 × 116 (Tverrlekt under platens forkant) | 10 |
+| 2 | 4200 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 (Benkevange, front (bit)) + 3 × 320 (Rungetrinn) + 4 × 186 (Stubbefot) + 1 × 116 (Tverrlekt under platens forkant) | 306 |
 
 ### 48×98
 

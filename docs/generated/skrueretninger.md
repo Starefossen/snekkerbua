@@ -31,13 +31,9 @@ Hvilken vei hver skrue drives, og hvorfor akkurat den veien. Hvert festemiddel i
 | **J12** | 1× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom beslagfliken og mot venstre vegg inn i bakre hjørnestolpe (36×98) (speilvendt i den andre enden) | fastsatt |
 | **J12** | 1× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom beslagfliken og rett opp inn i bordbærelekt (48×73) | fastsatt |
 | **J12** | 1× Vinkelbeslag 40×40×20 | **Vinkelbeslag 40×40×20** ligger på bakre hjørnestolpe og bøyer om hjørnet til bordbærelekt; skruene i fliken går mot venstre vegg (speilvendt i den andre enden) | fastsatt |
-| **J13a** | 6× Treskrue 5×60 forsenket Torx | **Treskrue 5×60 forsenket Torx** gjennom løs plate (18 mm plate, 652 bred) → inn i avstivningslekt (48×73), rett ned | utledet av tykkelsene |
-| **J13b** | 5× Treskrue 5×60 forsenket Torx | **Treskrue 5×60 forsenket Torx** gjennom løs plate (18 mm plate, 652 bred) → inn i fremre tverrlekt (48×73), rett ned | utledet av tykkelsene |
-| **J13c** | 2× Treskrue 4×16 forsenket Torx | **Treskrue 4×16 forsenket Torx** gjennom beslagfliken og mot høyre vegg inn i løs plate (18 mm plate, 652 bred) (speilvendt i den andre enden) | fastsatt |
-| **J13c** | 1× Vinkelbeslag 20×20×40 varmforsinket | **Vinkelbeslag 20×20×40 varmforsinket** ligger på løs plate og bøyer om hjørnet til bakre benkevange; skruene i fliken går mot høyre vegg (speilvendt i den andre enden) | fastsatt |
-| **J13d** | 1× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 | **Senkhodeskrue M6×30 + skive M6 + låsemutter M6** rett ned gjennom løs plate (18 mm plate, 652 bred) og beslagets flik, mutter under — den klemmer beslaget til platen, den går ikke inn i rungetrinn | fastsatt — gjennomgående bolt i platen, mutter under |
-| **J13d** | 1× Vinkelbeslag 40×40×20 | **Vinkelbeslag 40×40×20** ligger på løs plate og bøyer om hjørnet til rungetrinn; skruene i fliken går rett opp | fastsatt |
+| **J13a** | 6× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom avstivningslekt (48×73) → inn i løs plate (18 mm plate, 652 bred), rett opp — hodet står 46 mm inne i avstivningslekt, i bunnen av kontraboret, så skruen tar 13 mm i løs plate og ingenting går gjennom den andre siden | fastsatt — begge veier holder målene |
+| **J13b** | 3× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom fremre tverrlekt (48×73) → inn i løs plate (18 mm plate, 652 bred), rett opp — hodet står 46 mm inne i fremre tverrlekt, i bunnen av kontraboret, så skruen tar 13 mm i løs plate og ingenting går gjennom den andre siden | fastsatt — begge veier holder målene |
 
-**9** av retningene er utledet av målene alene, **19** er fastsatt for hånd. Alle sammen kontrolleres ved hver bygging: skruekroppen må ha hodet i plan med flaten den drives fra, spissen inne i delen den tar tak i, og ingenting av seg selv i noen annen del.
+**7** av retningene er utledet av målene alene, **17** er fastsatt for hånd. Alle sammen kontrolleres ved hver bygging: skruekroppen må ha hodet i plan med flaten den drives fra, spissen inne i delen den tar tak i, og ingenting av seg selv i noen annen del.
 
 Veggfestet (J14) står ikke her — det går rett gjennom den bakre sidevangen og inn i veggen, og har ingen andre del å gå inn i.

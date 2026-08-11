@@ -231,30 +231,32 @@ To bånd, hvert delt i to bord, med klatreåpningen i midten. Man klatrer GJENNO
 * Mål åpningene over madrassoverflaten mot tallene i nøkkelmålene. De er sikkerhetskravet i denne sengen.
 * Ta tak i toppbordet og dra. Det skal ikke gi seg.
 
-## Steg 10 — Løs plate med lekter og fire vinkelbeslag
+## Steg 10 — Løs plate med fire lekter — og ingen beslag
 
-Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke og senkes rett ned igjen — i begge stillinger. Lektene under den gjør den stiv; de fire vinkelbeslagene sier bare HVOR den skal ligge. Vekten hviler på tre, ikke på stål.
+Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke og senkes rett ned igjen — i begge stillinger. Lektene under den gjør to jobber: de gjør platen stiv, OG de er styringen. De to lange går ned på hver side av trinnenden med 2 mm klaring, så de finner plassen selv. Det er ikke ett beslag i denne mekanismen, og det skal ikke være én skrue synlig oppå platen.
 
-**Deler:** 2× Avstivningslekt under plate 48×73 × 713 · 1× Løs plate 18 mm plate, 652 bred × 798 · 2× Tverrlekt under platens forkant 48×73 × 213
+**Deler:** 2× Avstivningslekt under plate 48×73 × 750 · 1× Løs plate 18 mm plate, 652 bred × 798 · 2× Tverrlekt under platens forkant 48×73 × 116
 
-**Festemidler:** 2× Senkhodeskrue M6×30 + skive M6 + låsemutter M6 · 4× Treskrue 4×16 forsenket Torx · 22× Treskrue 5×60 forsenket Torx · 2× Vinkelbeslag 20×20×40 varmforsinket · 2× Vinkelbeslag 40×40×20
+**Festemidler:** 18× Treskrue 5×40 forsenket Torx
 
-**Ledd:** J13a, J13b, J13c, J13d — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+**Ledd:** J13a, J13b — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
 **Slik gjør du:**
 
-1. Skru de to lange avstivningslektene under platen, på høykant, fra platens overside (J13a). Forsenk og propp hullene.
-1. Skru de to korte tverrlektene under platens forkant, én under hvert fremre hjørne, med enden mot den lange lekta (J13b). De bærer det hjørnet trinnet ikke rekker fram til.
-1. Skru et vinkelbeslag på hver sidekant av platen ved bakkanten (J13c), med den vannrette fliken utover. Den fliken skal ligge PÅ opplegget, ved siden av platen — aldri under den.
-1. Bolt et vinkelbeslag opp under platen ved hver trinnende (J13d), med den nedhengende fliken langs trinnets ende. Den skal stå 2 mm klar av treet: det er passingen som gjør at platen går ned, og samtidig stoppet som holder den på plass sidelengs.
-1. Legg platen i sengestilling: senk den rett ned mellom benkene, bakkanten på den bakre benkevangen, forkanten på trinn 1. Den skal falle på plass uten å tvinges.
-1. Prøv bordstilling: samme plate, samme beslag, rett ned på bordbærelekta og trinn 2. Trinn 1 og trinn 2 ender på samme sted i lengderetningen, så beslagene finner trinnenden i begge stillinger.
+1. Bor hullene i lektene FØR noe limes: ⌀12 kontrabor 46 mm opp i lektas underside, og ⌀3,5 videre gjennom resten. Da står skruehodet 46 mm inne i lekta og skruen tar 13 mm i den 18 mm tykke platen.
+1. Legg platen med undersiden opp. Merk av de to lange avstivningslektene 116 mm inn fra hver sidekant — det er målet som gjør at de treffer utsiden av trinnenden.
+1. Lim (D3) hele lektas overkant, legg den på plass og skru opp fra undersiden (J13a). Skruene er tvinger: de trekker limfugen sammen og blir sittende.
+1. Samme sak for de to korte tverrlektene, i flukt med platens forkant og med enden mot den lange lekta (J13b). De bærer hjørnet trinnet ikke rekker fram til.
+1. Ingenting går gjennom platens overside. Har du et hull der, har du boret feil vei.
+1. Legg platen i sengestilling: senk den rett ned mellom benkene, bakkanten på den bakre benkevangen, forkanten på trinn 1. De to lange lektene skal gli ned på hver side av trinnenden uten å tvinges.
+1. Prøv bordstilling: samme plate, samme lekter, rett ned på bordbærelekta og trinn 2. Trinn 1 og trinn 2 ender på samme sted i lengderetningen, så lektene finner trinnenden i begge stillinger.
 
 **Sjekk før du går videre:**
 
-* Skyv platen sidelengs. Den skal bevege seg et par millimeter og så stoppe mot beslagene ved trinnenden — begge veier.
-* Platen skal ligge stødig på begge opplegg i begge stillinger, uten å vippe.
-* Se etter at ingen av de bakre beslagfliken har kommet under platen. Kommer den under, hviler platen på stål og vipper.
+* Skyv platen sidelengs. Den skal bevege seg et par millimeter og så stoppe mot trinnenden — begge veier, i begge stillinger.
+* Vri på platen. Den skal kile seg med én gang: en vridning drar begge lektene samme vei, og den ene tar imot.
+* Platen skal ligge stødig på begge opplegg i begge stillinger, uten å vippe. Den ligger på tre i hele bredden bak og på trinnet foran.
+* Se over platens overside i motlys. Ingen skruehoder, ingen propper, ingen hull.
 * Platen kan løftes rett opp. Det skal den kunne — låsen i sengestilling er en egen avgjørelse, ikke en del av dette steget.
 
 ## Steg 11 — Madrass og sluttsjekk
