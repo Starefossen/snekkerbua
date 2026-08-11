@@ -50,7 +50,7 @@ Rangert etter hva som låser opp mest per krone, gitt eksisterende park:
 | # | Verktøy | Hvorfor / hva det låser opp | Merknad |
 |---|---|---|---|
 | 1 | **Eksentersliper** (ONE+: R18ROS) | Finish-kvalitet på alt; HANNA: 69 deler skal slipes før maling | Kjøp før malejobben |
-| 2 | **Sirkelsag med styreskinne** | Platekutt (HANNA-platen!) og kløyving — kapasitetsgapet i parken | ONE+-sirkelsag finnes; skinnekompatibilitet er svakheten i Ryobi-økosystemet — vurder ledningsbasert skinnesag hvis platearbeid blir hyppig |
+| 2 | **Skinnesag** | Platekutt (HANNA-platen!) og kløyving — kapasitetsgapet i parken | **Ryobi RPLS18X-0** (ONE+ HP dykksag, 2×70 cm skinner inkl., ~3 750 kr uten batteri) er platform-svaret og erstatter både sirkelsag og skinne. Budsjettalternativ: Scheppach PL55 m/ledning og skinner ~1 880 kr. Nullkostnad: DIY styrebrett av platerest. ⚠️ Felle: Ryobis RAK03SR-«skinne» er en klemlist og passer IKKE R18CS-0 tross butikkbeskrivelser |
 | 3 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Billigst per nytte på hele lista |
 | 4 | **Overfres — Ryobi RTR18-0** (ONE+) + bit-sett + **12 mm rettfres** | Avrundede kanter (barnesikkert + pent), flush-lommer for innfelte beslag, labank-hakk, flush-trim av plate | Kantfres-klasse: innstikk (plunge) mangler — våre jobber er kant-entré, så OK. 6/6,35 mm tange; Ryobi-bitsettet (RAKRBS5) passer, men suppler med skikkelig 12 mm rettfres |
 | 5 | **Japansk sag (ryoba) + stemjern-sett** | Rene hakk og presisjonsarbeid for hånd; billigste vei til skjult treskjøt | ~200–400 kr samlet |
