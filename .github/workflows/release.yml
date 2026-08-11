@@ -124,6 +124,10 @@ jobs:
           exit $rc
 
       - name: Release notes
+        env:
+          # A release body is rendered on /releases/tag/..., so a relative link
+          # into the tree does not resolve. Spell the URLs out.
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
         run: |
           notes="$RUNNER_TEMP/notes.md"
           # An annotated tag already carries the message its author meant, so
@@ -134,12 +138,12 @@ jobs:
           echo "${subject:-$TAG}" > "$RUNNER_TEMP/title.txt"
           {
             if [ -n "$body" ]; then printf '%s\n\n' "$body"; fi
-            echo "Built by [\`.github/workflows/release.yml\`](../blob/$TAG/.github/workflows/release.yml) off the tag itself: the manual and the 3D models come out of the same model as everything in the repo."
+            echo "Built by [\`.github/workflows/release.yml\`]($REPO_URL/blob/$TAG/.github/workflows/release.yml) off the tag itself: the manual and the 3D models come out of the same model as everything in the repo."
             echo
             echo "* \`hanna.pdf\` - the print-ready assembly manual."
             echo "* \`loftbed_*.step\` / \`.stl\` / \`.glb\` / \`.usdz\` - both panel positions, for CAD, slicing, the web and Quick Look / AR."
             echo
-            echo "The sources, the drawings and \`mise run check\` are in the repo: [README](../blob/$TAG/README.md)."
+            echo "The sources, the drawings and \`mise run check\` are in the repo: [README]($REPO_URL/blob/$TAG/README.md)."
           } > "$notes"
           cat "$notes"
 
