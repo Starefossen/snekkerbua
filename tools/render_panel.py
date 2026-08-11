@@ -35,8 +35,20 @@ displaced COPY, so nothing in the model is touched.
 THE SCREWS GO UP. That is the point of the step and it is why the drilling
 pattern is drawn on the lekt's UNDERSIDE, in its exploded place, and not on
 the plate: the counterbores are read straight off the model's own fastener
-anchors, and every dotted line rises out of a hole towards the plate. Nothing
-is drawn on the plate's top face, because after V3 there is nothing there.
+anchors, and every dotted line rises out of a hole towards the plate. No
+FASTENER is drawn on the plate's top face, because after V3 there is nothing
+there.
+
+What IS on the plate's top face is the only two things a reader with the four
+lekter in one hand and the plate in the other still has to be told. FOUR
+FOOTPRINTS, each a dashed grey ring on the faintest of tints, say where the
+lekter go and how far in from the plate's edges they sit; they are pulled a
+few millimetres in off any plate edge they run out to, because a footprint
+drawn underneath the plate's own heavy outline is a footprint the reader never
+sees - which is exactly how two of the four used to be lost. And TWO WORDS,
+VEGG and FORAN, say which way round the plate goes, because the assembly is
+asymmetric in Y and the drawing of it is a rectangle.
+
 Two thumbnails at the top say where the finished unit ends up: SENGESTILLING
 (back edge on the bakre benkevange, front edge on trinn 1) and BORDSTILLING
 (back edge on bordbærelekta, front edge on trinn 2).
@@ -63,12 +75,24 @@ COL_EXTRA = 130.0      # the left column is the inset panel plus this margin
 THUMB_FRAC = 0.62      # thumbnail width, of the left column - they are
                        # CONTEXT, so they stay smaller than the fastener panel
 
+# The footprints on the plate, in model millimetres. GHOST_EDGE is how far a
+# ghost is pulled in off a plate edge it would otherwise be drawn ON; GHOST_GAP
+# is the hair it is pulled in off everything else, so that two lekter which
+# butt each other still read as two rectangles. See _ring().
+GHOST_EDGE = 15.0
+GHOST_GAP = 5.0
+# A whisper of grey inside the dashed ring. A footprint is an AREA - this much
+# of the plate is covered by wood you cannot see - and an area is what the
+# reader has to be able to count four of. It is deliberately far too light to
+# compete with any line on the page: the ring is still what carries the shape.
+GHOST_TINT = "#e0e0e0"
+
 
 # ---------------------------------------------------------------------------
 # GEOMETRY HELPERS
 # ---------------------------------------------------------------------------
 def _hull(pts):
-    """Convex hull (monotone chain) - the silhouette of a projected box."""
+    """Convex hull (monotone chain) of a set of projected points."""
     pts = sorted(set((round(p[0], 4), round(p[1], 4)) for p in pts))
     if len(pts) <= 2:
         return pts
@@ -88,14 +112,25 @@ def _hull(pts):
     return half(pts)[:-1] + half(reversed(pts))[:-1]
 
 
-def _corners(extents, off=(0.0, 0.0, 0.0)):
-    (x0, x1), (y0, y1), (z0, z1) = extents
-    return [(x + off[0], y + off[1], z + off[2])
-            for x in (x0, x1) for y in (y0, y1) for z in (z0, z1)]
+def _silhouette(plines):
+    """The outline to knock white, taken from the piece's OWN LINE WORK.
 
+    It used to be the hull of the eight projected corners of the piece's
+    `extents`, and for a box that is exactly right, because the box IS the
+    piece. V4 put the first non-box in the model: the two front wings are
+    planed away underneath, 73 mm at the root down to 27 at the tip, and their
+    `extents` is deliberately still the box they were sawn out of - every
+    clearance assert in the model reads it and is meant to stay conservative.
+    Filled from that box, a wing knocks out half again its own area: it eats
+    the dashed lines running past under it, and on the page it reads as the
+    block it is not.
 
-def _silhouette(view, extents, off=(0.0, 0.0, 0.0)):
-    return _hull([view.xy(p) for p in _corners(extents, off)])
+    Every piece on this page is CONVEX and the hidden-line run hands back all
+    of a convex body's visible edges, so the hull of the projected line work
+    IS the silhouette. For a box that is the same answer as before; for a
+    wedge it is the triangle.
+    """
+    return _hull([p for pl in plines for p in pl])
 
 
 def _moved(part, off):
@@ -103,23 +138,17 @@ def _moved(part, off):
     return part.moved(Location(off))
 
 
-def _shift(extents, off):
-    return tuple((lo + off[k], hi + off[k])
-                 for k, (lo, hi) in enumerate(extents))
-
-
 # ---------------------------------------------------------------------------
 # THE EXPLODED ASSEMBLY
 # ---------------------------------------------------------------------------
-def _draw_solid(page, RL, view, plines, extents, off, width):
+def _draw_solid(page, RL, plines, width):
     """One projected piece: white silhouette first, then its own line work.
 
     The fill is what makes the drawing read as an assembly of SOLIDS - a
     dashed insertion line stops at the piece it runs into instead of crossing
     it, and a lekt below the plate does not show through the plate.
     """
-    page.poly(_silhouette(view, extents, off), fill="#ffffff", stroke="none",
-              width=0)
+    page.poly(_silhouette(plines), fill="#ffffff", stroke="none", width=0)
     page.polylines(plines, RL.INK, width)
 
 
@@ -133,6 +162,9 @@ def _insertion(page, RL, view, extents, off, ends=2, steel=False):
     Drawn from the TOP corners of the piece in its exploded place to the same
     corners in its home place, i.e. along the explosion vector, so the reader
     reads a movement. `ends` picks how many corners carry a line.
+
+    Returns the segments it drew, as polylines, so the page can tell a later
+    annotation what paper is already spoken for.
     """
     (x0, x1), (y0, y1), (_z0, z1) = extents
     if ends >= 2:
@@ -141,26 +173,149 @@ def _insertion(page, RL, view, extents, off, ends=2, steel=False):
         tops = [(x0, y0, z1), (x1, y1, z1)]
     else:
         tops = [((x0 + x1) / 2, (y0 + y1) / 2, z1)]
+    drawn = []
     for p in tops:
         a = view.xy((p[0] + off[0], p[1] + off[1], p[2] + off[2]))
         b = view.xy(p)
         page.line(a, b, RL.GREY,
                   RL.T.W_PHANTOM if steel else RL.T.W_LEAD,
                   dash=RL.DASH_INSERT if steel else "20 16")
+        drawn.append([a, b])
+    return drawn
 
 
-def _ghost(page, RL, view, xs, ys, z):
+def _ring(xs, ys, panel_xy):
+    """The four corners a footprint is DRAWN as, in model X/Y.
+
+    Not the footprint itself, and on purpose. All four lekter run right out to
+    the plate's own front edge, and the two wings run out to its side edges as
+    well - so a ring drawn on the true footprint lays its outer side down
+    underneath the plate's heavy black outline, where for the reader it is
+    simply not there. That is why this page showed two long footprints and, at
+    best, a hint of a third: the two wings were 48 mm deep with their long
+    side swallowed by the silhouette.
+
+    Every side is therefore pulled in - GHOST_EDGE off a plate edge, which is
+    enough to clear the black line running along it, and GHOST_GAP off
+    everything else, so that a wing and the guide lekt it butts still read as
+    two rectangles and not as one L. The footprint stops being dimensionally
+    exact and starts being countable, which is the job it is on the page to
+    do; the dimensions themselves are the cut list's and the spec's.
+    """
+    out = []
+    for (lo, hi), (plo, phi) in zip((xs, ys), panel_xy):
+        lo += GHOST_EDGE if abs(lo - plo) < 0.5 else GHOST_GAP
+        hi -= GHOST_EDGE if abs(hi - phi) < 0.5 else GHOST_GAP
+        out.append((lo, hi))
+    (x0, x1), (y0, y1) = out
+    return [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
+
+
+def _ghost(page, RL, view, xs, ys, z, panel_xy):
     """The outline of a piece that is UNDER the plate, drawn on the plate.
 
-    Thin, grey, dashed: the drawing convention for something you cannot see.
-    It is what turns a scatter of drilling marks into two rows on a lekt, and
-    it is the only thing on the page that says how far in from the plate's
-    edges the lekter actually sit.
+    Thin, grey, dashed on the faintest of tints: the drawing convention for
+    something you cannot see, plus the one thing that convention was missing
+    here. It is what turns a scatter of drilling marks into two rows on a
+    lekt, and it is the only thing on the page that says how far in from the
+    plate's edges the lekter actually sit.
     """
-    ring = [(xs[0], ys[0]), (xs[1], ys[0]), (xs[1], ys[1]), (xs[0], ys[1])]
-    pts = [view.xy((x, y, z)) for x, y in ring]
+    pts = [view.xy((x, y, z)) for x, y in _ring(xs, ys, panel_xy)]
+    page.poly(pts, fill=GHOST_TINT, stroke="none", width=0)
     for a, b in zip(pts, pts[1:] + pts[:1]):
         page.line(a, b, RL.GREY, RL.T.W_LEAD * 0.85, dash="16 12")
+
+
+# ---------------------------------------------------------------------------
+# WHICH WAY ROUND THE PLATE GOES
+# ---------------------------------------------------------------------------
+# Everything this step builds is asymmetric in Y: the two wings sit on the
+# FRONT edge and nowhere else, and the guide lekter stop 48 mm short of the
+# wall edge. Turn the plate end for end and none of it fits. But what the page
+# draws is a rectangle with some ghosts on it, and a rectangle has no front -
+# so up to now the reader had no way at all of telling one long edge from the
+# other. Two words fix it, one per long edge, in the drawing's own type.
+#
+# (word, which end of the panel's Y extent, which way it faces)
+EDGE_WORDS = (("VEGG", 0, -1.0), ("FORAN", 1, 1.0))
+
+
+def _edge_word_plan(RL, view, panel):
+    """Where the two orientation words MAY stand, before the page exists.
+
+    A chicken and egg: the page rectangle has to be big enough to hold
+    whichever position wins, so every candidate must be known before the page
+    is cut - but the choice itself cannot be made until the rest of the
+    drawing is down and there is something to dodge. So the plan is drawn up
+    here, folded into the page bounds by the caller, and spent later.
+
+    Each candidate carries the point on the plate edge it is a label FOR, so
+    that a word which has stepped sideways to find white paper still leads
+    back to the edge under itself rather than to the middle of it.
+    """
+    (px0, px1), ys, (_z0, z1) = panel.extents
+    size = RL.T.S_DIM
+    step = (px1 - px0) * 0.17
+    plan = []
+    for word, i, sign in EDGE_WORDS:
+        dx, dy = view.dir_xy((0.0, sign, 0.0))
+        n = math.hypot(dx, dy) or 1.0
+        ux, uy = dx / n, dy / n
+        w, h = size * 0.74 * len(word), size * 1.3
+        # How far out the word's own box reaches along the direction it
+        # stands off in. The candidates are measured from there rather than
+        # from the edge, so that the leader is a LEADER at every one of them
+        # and not a tick swallowed by the word it is supposed to lead to: the
+        # word box is five characters wide and the direction is diagonal, so
+        # measuring to the centre buys nothing at all at the near candidates.
+        pad = RL.T.BADGE_R * 0.35
+        reach = min((w / 2 + pad) / abs(ux) if abs(ux) > 1e-9 else 1e9,
+                    (h / 2 + pad) / abs(uy) if abs(uy) > 1e-9 else 1e9)
+        mid = view.xy(((px0 + px1) / 2, ys[i], z1))
+        cands = []
+        # Straight out from the middle of the edge first, and only then
+        # sideways: the order is the placer's tie-break, so a page with room
+        # everywhere always puts the word where it belongs.
+        for side in (0.0, 1.0, -1.0):
+            root = view.xy(((px0 + px1) / 2 + side * step, ys[i], z1))
+            for k in (1.8, 2.7, 3.7, 1.0):
+                d = reach + RL.T.BADGE_R * k
+                cands.append(((root[0] + ux * d, root[1] + uy * d), root))
+        plan.append(dict(word=word, mid=mid, u=(ux, uy), foot=(w, h),
+                         size=size, reach=reach, cands=cands))
+    return plan
+
+
+def _draw_edge_words(page, RL, layout, plan, field):
+    """Place and draw the two words. Returns the paper they took.
+
+    `field` is an occupancy holding the line work they have to stay off; the
+    scoring is by CLEARANCE rather than by cost, because everything on this
+    part of the page is a straight two-point polyline and a box that counts
+    vertices would see nothing at all in the middle of a 700 mm edge.
+    """
+    boxes = []
+    for pl in plan:
+        w, h = pl["foot"]
+        cap = h * 1.15
+        centres = [c for c, _root in pl["cands"]]
+
+        def clear(c, field=field, cap=cap):
+            return (cap - field.clearance(c, cap)) * 0.30
+
+        c = layout.place(centres, (w, h), field, tether=pl["mid"], pull=0.05,
+                         extra=clear)
+        root = next(r for q, r in pl["cands"] if q == c)
+        ux, uy = pl["u"]
+        # The leader stops on the near face of the word's own box, so the
+        # word is never struck through by its own tether.
+        reach = pl["reach"]
+        page.line(root, (c[0] - ux * reach, c[1] - uy * reach), RL.GREY,
+                  RL.T.W_LEAD)
+        page.text((c[0], c[1] - pl["size"] * 0.36), pl["word"], pl["size"],
+                  anchor="middle", weight="bold")
+        boxes.append((c[0] - w / 2, c[1] - h / 2, w, h))
+    return boxes
 
 
 # ---------------------------------------------------------------------------
@@ -233,6 +388,7 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         moved = _moved(b, DROP_BATTEN)
         batten_lines.append(RL.project(view, [("b", RL.comp([moved]))])["b"])
         batten_ext.append(b.extents)
+    word_plan = _edge_word_plan(RL, view, panel)
 
     letters = {name: letter for name, _q, _s, letter in fasteners if letter}
     # The panel page follows the same rule as every other page: it codes its
@@ -284,6 +440,20 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     ax0 -= 1.6 * RL.T.BADGE_R
     ax1 += 3.2 * RL.T.BADGE_R
 
+    # The two edge words stand OUTSIDE the plate, on the axis they name, so
+    # every position one of them might take has to be inside the page before
+    # the page is cut. All of them go in, not just the preferred one: which
+    # candidate wins is not known until the drawing is down, and a page that
+    # changed size with that choice would be a page whose scale depended on
+    # how crowded it turned out to be.
+    for wp in word_plan:
+        w_w, w_h = wp["foot"]
+        for c, _root in wp["cands"]:
+            ax0 = min(ax0, c[0] - w_w / 2)
+            ax1 = max(ax1, c[0] + w_w / 2)
+            ay0 = min(ay0, c[1] - w_h / 2)
+            ay1 = max(ay1, c[1] + w_h / 2)
+
     # The left column is exactly as wide as the inset panel, whose width is a
     # fixed fraction of the PAGE - so the page width is what falls out of
     # "the drawing, plus a column the inset fits in".
@@ -308,14 +478,13 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # --- the exploded assembly --------------------------------------------
     # Dashed first, solids on top: the plate's white fill is what swallows the
     # line where the piece disappears under it.
+    insert_lines = []
     for ext in batten_ext:
-        _insertion(page, RL, view, ext, DROP_BATTEN, ends=4)
+        insert_lines += _insertion(page, RL, view, ext, DROP_BATTEN, ends=4)
 
-    _draw_solid(page, RL, view, plate_lines, panel.extents, (0, 0, 0),
-                RL.T.W_NEW)
-    for ext, pl in zip(batten_ext, batten_lines):
-        _draw_solid(page, RL, view, pl, _shift(ext, DROP_BATTEN), (0, 0, 0),
-                    RL.T.W_NEW)
+    _draw_solid(page, RL, plate_lines, RL.T.W_NEW)
+    for pl in batten_lines:
+        _draw_solid(page, RL, pl, RL.T.W_NEW)
 
     # --- what is driven, where, and which way -----------------------------
     # V3: every fastener in this step goes STRAIGHT UP, out of a counterbore
@@ -331,7 +500,8 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         # The ghost outline stays on the PLATE - it is what says how far in
         # from the plate's edges the lekt sits, and after V3 that number
         # (116 mm to the side edge) is the mechanism.
-        _ghost(page, RL, view, (bx0, bx1), (by0, by1), top)
+        _ghost(page, RL, view, (bx0, bx1), (by0, by1), top,
+               panel.extents[:2])
         for hx, hy in holes:
             # DASHED, because the face they are in is the one turned away from
             # this camera: the counterbores are drilled in the lekt's
@@ -359,15 +529,34 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     if rows:
         RL.draw_inset(page, box, [], rows, glyph_dir, codes)
 
+    import layout
+
+    # --- which edge is which ----------------------------------------------
+    # Placed against a field of its own, holding the line work the words have
+    # to keep off: the plate, the four lekter and the dashed insertion lines
+    # that come down between them. It is not the badges' field - a word on the
+    # plate's edge and a badge on a screw two feet below it are never in each
+    # other's way - but the boxes the words end up taking do go into that
+    # field afterwards, because R5's placer is entitled to know about every
+    # last thing already on the paper.
+    field = layout.Occupancy()
+    field.add_lines(plate_lines)
+    for pl in batten_lines:
+        field.add_lines(pl)
+    field.add_lines(insert_lines, weight=0.6, tag="ghost")
+    field.add_box(box, weight=RL.CAP_PANEL)
+    word_boxes = _draw_edge_words(page, RL, layout, word_plan, field)
+
     # Dotted, not an arrow: on this page as on every other, a dotted line is a
     # fastener going into its hole and an arrow is a wooden part being brought
     # into place. The captions go through the same placer and the same
     # occupancy field as every other page's - this page has its own geometry,
     # not its own rules - so R5 holds here too: a badge may not land nearer a
     # fastener it does not name than its own.
-    import layout
     occ = layout.Occupancy()
     occ.add_box(box, weight=RL.CAP_PANEL)
+    for rect in word_boxes:
+        occ.add_box(rect, weight=RL.CAP_PANEL)
     placed_marks = []
     for m in sorted(marks, key=lambda q: (-q["p3"][1], q["p3"][0])):
         p2 = view.xy(m["p3"])
