@@ -1,0 +1,7 @@
+# Hvilken modell filmene i docs/img/ faktisk viser.
+# Skrevet av tools/render_animasjon.py, lest av `mise run film-check`.
+# En linje per film: <film> <kilde>=<sha256> ...  Endres en kilde uten at
+# filmen kjøres på nytt, feiler film-check - se docs/PRAKSIS.md punkt 5.
+turntable  parts=1247367931ebc9e81e4da74bc5e1fe0cb4888462c506967dddf65ea88b090b53
+mekanisme  parts=1247367931ebc9e81e4da74bc5e1fe0cb4888462c506967dddf65ea88b090b53
+bygg  parts=1247367931ebc9e81e4da74bc5e1fe0cb4888462c506967dddf65ea88b090b53  steg=2802e34591a32ffdd02d865c52a56eee47febdcb14becb89f804a3c505cf8256
