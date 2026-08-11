@@ -157,7 +157,7 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 
 **Slik gjør du:**
 
-1. Skru stigeklossene på innsiden av hver stigevange (J5). Klosshøyden er trinnhøyden — mål to ganger.
+1. Skru stigeklossene på innsiden av hver stigevange (J5). Klossen er 36 mm lang — nøyaktig så dyp som stigevangen — og skal ligge i flukt med vangens for- og bakkant, ikke stikke bakover slik trinnet gjør. Klosshøyden er trinnhøyden — mål to ganger.
 1. Legg trinnene på klossene og fest dem (J4).
 1. Reis stigen mot den fremre sidevangen. Trinnenes forkant skal ligge i flukt med stigevangenes forkant — trinnene stikker BAKOVER, ikke framover. Det som stikker bakover er hylla den løse platen skal hvile på.
 1. Skru stigen fast til vangen etter J3 — **innenfra**, gjennom sidevangen og inn i stigevangen, så stigevangens forside blir uten skruehoder. Klem stigen fast mot vangen først; du står på den andre siden når du skrur. Gjennomgangshullene er boret i steg 0.

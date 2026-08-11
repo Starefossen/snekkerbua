@@ -484,8 +484,11 @@ def build_steps(G):
             intro="Bygg hele stigen ferdig liggende på gulvet, og skru den så "
                   "på den fremre sidevangen.",
             do=[
-                "Skru stigeklossene på innsiden av hver stigevange (J5). "
-                  "Klosshøyden er trinnhøyden — mål to ganger.",
+                f"Skru stigeklossene på innsiden av hver stigevange (J5). "
+                  f"Klossen er {G.RUNG_BLOCK_LEN} mm lang — nøyaktig så dyp "
+                  f"som stigevangen — og skal ligge i flukt med vangens "
+                  f"for- og bakkant, ikke stikke bakover slik trinnet gjør. "
+                  f"Klosshøyden er trinnhøyden — mål to ganger.",
                 "Legg trinnene på klossene og fest dem (J4).",
                 "Reis stigen mot den fremre sidevangen. Trinnenes forkant "
                   "skal ligge i flukt med stigevangenes forkant — trinnene "
