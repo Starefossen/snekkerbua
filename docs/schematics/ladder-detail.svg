@@ -350,12 +350,10 @@
   <!-- J13a / J13b: 5x40 nedenfra opp i platen, ut av kontrabor -->
   <circle cx="2073.8" cy="2094.1" r="11" class="scrg"/>
   <circle cx="2892.2" cy="2094.1" r="11" class="scrg"/>
-  <circle cx="1892.3" cy="2091.8" r="11" class="scrg"/>
-  <circle cx="1936.3" cy="2091.8" r="11" class="scrg"/>
-  <circle cx="1980.3" cy="2091.8" r="11" class="scrg"/>
-  <circle cx="2985.7" cy="2091.8" r="11" class="scrg"/>
-  <circle cx="3029.7" cy="2091.8" r="11" class="scrg"/>
-  <circle cx="3073.7" cy="2091.8" r="11" class="scrg"/>
+  <circle cx="1901.1" cy="2091.8" r="11" class="scrg"/>
+  <circle cx="1971.5" cy="2091.8" r="11" class="scrg"/>
+  <circle cx="2994.5" cy="2091.8" r="11" class="scrg"/>
+  <circle cx="3064.9" cy="2091.8" r="11" class="scrg"/>
   <polyline points="1851.6,2014 1909.0,1998 1966.4,2014 2023.8,1998 2081.2,2014 2138.6,1998 2196.0,2014 2253.4,1998 2310.8,2014 2368.2,1998 2425.6,2014 2483.0,1998 2540.4,2014 2597.8,1998 2655.2,2014 2712.6,1998 2770.0,2014 2827.4,1998 2884.8,2014 2942.2,1998 2999.6,2014 3057.0,1998 3114.4,2014" class="brk"/>
   <text x="2028" y="2058" class="jl" text-anchor="start">J13a</text>
   <text x="1862" y="2130" class="jl" text-anchor="start">J13b</text>
@@ -408,7 +406,7 @@
   <text x="1690" y="2470" class="sml" text-anchor="start">J13b kilelekt 48×73 × 77: X 708–785 og 1205–1282, Y 702–750 – skråkappet 73 → 27 mm ut mot platens ytterkant</text>
   <text x="1690" y="2500" class="sml" text-anchor="start">De siste 35 mm av hver avstivningslekt (Y 715–750) flankerer trinnenden. 48 × 35 mm tre mot endeved er hele sidestyringen.</text>
   <text x="1690" y="2530" class="sml" text-anchor="start">Platen krysser BEGGE stigevangene (de går fra gulv til Z 1700), så platekanten kan ikke gå fram til Y 788. Derfor er trinnet</text>
-  <text x="1690" y="2560" class="sml" text-anchor="start">trukket 37 mm bakover, til Y 715. Åpne sirkler: 6 × 5×40 fra hver avstivningslekt og 3 × 5×40 fra hver kilelekt, nedenfra.</text>
+  <text x="1690" y="2560" class="sml" text-anchor="start">trukket 37 mm bakover, til Y 715. Åpne sirkler: 6 × 5×40 fra hver avstivningslekt og 2 × 5×40 fra hver kilelekt, nedenfra.</text>
 
   <!-- ==================================================== legend -->
   <rect x="90" y="2650" width="3270" height="210" class="legbox"/>
