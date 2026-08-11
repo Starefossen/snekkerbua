@@ -19,7 +19,7 @@ jobs:
       MISE_TRUSTED_CONFIG_PATHS: ${{ github.workspace }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # rsvg-convert rasterises every SVG the manual shows as a PNG.
       # libgl/libx* are what the OpenCascade wheel behind build123d links
@@ -31,7 +31,7 @@ jobs:
             librsvg2-bin libgl1 libglu1-mesa libxrender1 libxext6
 
       # Python 3.11 and requirements.txt, both pinned by mise.toml.
-      - uses: jdx/mise-action@v2
+      - uses: jdx/mise-action@v4
 
       - name: build - model, tables, docs/MONTERING.md
         run: mise run build
