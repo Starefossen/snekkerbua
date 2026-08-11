@@ -2024,6 +2024,18 @@ LIMTRE_SHELF_W = 600             # widest limtre furu panel in the shop
 PANEL_FITS_LIMTRE = PANEL_W <= LIMTRE_SHELF_W                 # True after K2
 PANEL_UPSCREW_LEN = 40                         # 5x40, the stock length
 PANEL_UPSCREW_CBORE = 46                       # 12 mm hole, 46 mm up the batten
+# K2 FINDING - THE FITS-THE-FACE RULE SIZES THE SCREW, NOT THE HOLE IT SITS IN.
+# These screws do not stand in the wood on their own: each one sits at the
+# bottom of a 12 mm clearance bore, and the rule that spaces a row - 4d between
+# 5 mm screws, i.e. 20 mm - was written for the SHANK. Twenty millimetres
+# between two 12 mm holes leaves eight millimetres of wood, and on the 116 mm
+# wing that never came up because the row had 35,5 mm to spread into. K2's
+# 77 mm wing collapsed it onto the 4d minimum and the drawing showed three
+# bores nearly touching. So the bore gets its own rule, stated the only way a
+# hole can be stated: how much wood has to be left between two of them.
+PANEL_UPSCREW_CBORE_D = 12                     # the clearance bore
+MIN_CBORE_WEB = PANEL_UPSCREW_CBORE_D          # 12, a bore's worth of wood
+MIN_CBORE_PITCH = PANEL_UPSCREW_CBORE_D + MIN_CBORE_WEB       # 24 mm centres
 PANEL_UPSCREW_PASS = BATTEN_H - PANEL_UPSCREW_CBORE       # 27, batten left
 PANEL_UPSCREW_BITE = PANEL_UPSCREW_LEN - PANEL_UPSCREW_PASS   # 13, into the ply
 PANEL_UPSCREW_COVER = PANEL_T - PANEL_UPSCREW_BITE            # 5, ply over it
@@ -3039,8 +3051,15 @@ JOINTS = [
          side="Nedenfra, som J13a. Vingen ligger med forkanten i flukt med "
               "platens forkant, full høyde mot avstivningslekta og "
               "skråkappet ut mot platekanten",
+         # K2: TWO, not three. The 116 mm wing carried three 5x40 with 35,5 mm
+         # between them; the 77 mm wing would put the same three on the bare
+         # 4d minimum, 20 mm, and three 12 mm counterbores at 20 mm centres
+         # leave 8 mm of wood between adjacent holes. Two open back up to
+         # 32 mm centres - 20 mm of wood - and the load case has room to
+         # spare either way: the up-screws are clamps for a glue line and
+         # the whole 18-screw group was under 0.05 utilised.
          contacts=[dict(a="panel", b="nose", axis=2, drives=[
-             drive("Treskrue 5×40 forsenket Torx", 3, frm="nose",
+             drive("Treskrue 5×40 forsenket Torx", 2, frm="nose",
                    counterbore=PANEL_UPSCREW_CBORE)])]),
     dict(id="J14", title="Veggfeste — gjennom den bakre sidevangen inn i "
                          "stenderne", n=1,
@@ -3601,6 +3620,38 @@ for _j in JOINTS:
     print(f"    {_j['id']:<5} n={_j['n']:<3} {len(_mine):>3} stk  {_what}")
 for _name, _qty in sorted(HARDWARE_TOTAL.items(), key=lambda kv: -kv[1]):
     print(f"    {_qty:>4} x {_name}")
+
+# K2: THE COUNTERBORE'S OWN SPACING RULE. See MIN_CBORE_PITCH. The fits-the-
+# face rule above spaces SHANKS; every screw driven out of a counterbore is
+# also a 12 mm hole, and two holes that close on each other are a split
+# waiting for a knee. Measured on the placed fasteners, per member, so it
+# reads the same geometry the drawing does.
+_CBORED = {}
+for _f in FASTENER_SPECS:
+    if (_f.get("drive") or {}).get("counterbore"):
+        _CBORED.setdefault((_f["jid"], _f["through"].label), []).append(_f)
+CBORE_PITCH_MIN = 1e18
+CBORE_PITCH_WHO = None
+for (_jid, _), _group in sorted(_CBORED.items(), key=lambda kv: kv[0][0]):
+    # The row runs along whichever axis the member does, so the distance is
+    # measured in space and not on a guessed axis.
+    for _i, _a in enumerate(_group):
+        for _b in _group[_i + 1:]:
+            _d = math.dist(_a["anchor"], _b["anchor"])
+            if _d < CBORE_PITCH_MIN:
+                CBORE_PITCH_MIN, CBORE_PITCH_WHO = _d, _jid
+assert CBORE_PITCH_MIN >= MIN_CBORE_PITCH - FIT_TOL, (
+    f"K2: {CBORE_PITCH_WHO} puts two ⌀{PANEL_UPSCREW_CBORE_D} mm "
+    f"counterbores {CBORE_PITCH_MIN:g} mm apart, which leaves "
+    f"{CBORE_PITCH_MIN - PANEL_UPSCREW_CBORE_D:g} mm of wood between them. "
+    f"The (n-1)x4d + 2x3d rule sizes the SCREW; the hole it sits in needs "
+    f"{MIN_CBORE_PITCH:g} mm centres. Take a screw out of the row - the "
+    f"up-screws are clamps for a glue line, not the load path")
+print(f"OK  K2 kontraborene: nærmeste to ⌀{PANEL_UPSCREW_CBORE_D} mm "
+      f"kontrabor står {CBORE_PITCH_MIN:g} mm fra hverandre "
+      f"({CBORE_PITCH_WHO}) = {CBORE_PITCH_MIN - PANEL_UPSCREW_CBORE_D:g} mm "
+      f"tre imellom, krav {MIN_CBORE_PITCH:g} mm senteravstand. "
+      f"Passer-på-flaten måler skruen; hullet den sitter i har sin egen regel")
 
 
 
@@ -5770,7 +5821,8 @@ print(f"OK  plateenheten veier {PANEL_UNIT_MASS:.1f} kg "
       f"{abs(panel_bed.volume) * PLY_DENSITY:.1f} kg plate + "
       f"{sum(abs(b.volume) for b in battens_bed) * C24_DENSITY:.1f} kg lekt, "
       f"regnet av kroppene og ikke sitert. Løftet etter ett hjørne med "
-      f"faktor 2 er {2 * PANEL_UNIT_WEIGHT:.0f} N mot 18 skruer i J13")
+      f"faktor 2 er {2 * PANEL_UNIT_WEIGHT:.0f} N mot "
+      f"{sum(1 for f in FASTENER_SPECS if f['jid'].startswith('J13'))} skruer i J13")
 for _w in (b for b in battens_bed + battens_table
            if b.label.startswith("Panel Front Batten")):
     assert getattr(_w, "tapered", None) is not None, \
@@ -5813,8 +5865,12 @@ if FASTENERS_ON:
             f"the edge of this head and the up-screw needs "
             f"{PANEL_UPSCREW_PASS} - the taper has run past its own screws")
         _seen_wing_screws += 1
-    assert _seen_wing_screws == 6, \
-        f"M5/V4: {_seen_wing_screws} wing screws checked, want 6"
+    # Every J13b screw has to have been sat on the taper - a spec that never
+    # reached this loop is a screw nobody checked the wing depth under.
+    _want_wing_screws = len([f for f in FASTENER_SPECS if f["jid"] == "J13b"])
+    assert _seen_wing_screws == _want_wing_screws == 2 * JOINT["J13b"]["n"], \
+        f"M5/V4: {_seen_wing_screws} wing screws checked of "\
+        f"{_want_wing_screws} placed - one of them never met the taper"
     _NOSE_CB = [round(_wing_height_at(_wings[_f["through"].label],
                                       _f["anchor"][0]) - PANEL_UPSCREW_PASS, 1)
                 for _f in FASTENER_SPECS if _f["jid"] == "J13b"]
@@ -5825,7 +5881,8 @@ if FASTENERS_ON:
           f"{100 * (1 - _NOSE_TRAPEZOID / (BATTEN_W * NOSE_LEN * BATTEN_H)):.0f}"
           f" % mindre synlig masse under forkanten. Tuppen ER skrueseten "
           f"({PANEL_UPSCREW_PASS} mm), så kontraboret bare grunner ut med "
-          f"treet: {sorted(set(_NOSE_CB))} mm på de tre hullene. Verste "
+          f"treet: {sorted(set(_NOSE_CB))} mm på de "
+          f"{len(_NOSE_CB) // 2} hullene. Verste "
           f"bøyesnitt ligger {NOSE_CRIT_X:.0f} mm fra tuppen (h = "
           f"{NOSE_CRIT_H:.0f} mm), ikke ved roten: "
           f"{6 * 1000 * NOSE_CRIT_X / (BATTEN_W * NOSE_CRIT_H ** 2):.2f} MPa "

@@ -238,7 +238,7 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke 
 
 **Deler:** 2× Avstivningslekt under plate 48×73 × 750 · 2× Kilelekt under platens forkant (skråkappet) 48×73 × 77 · 1× Løs plate 18 mm plate, 574 bred × 798
 
-**Festemidler:** 18× Treskrue 5×40 forsenket Torx
+**Festemidler:** 16× Treskrue 5×40 forsenket Torx
 
 **Ledd:** J13a, J13b — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 

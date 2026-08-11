@@ -550,13 +550,25 @@ ved **spissen**, ute på platens egen ytterkant. Det lave ytterhjørnet — hele
 du så nedenfra — er borte, og det som står igjen følger momentet: en utkraging
 har momentet sitt ved roten og ingenting ved spissen.
 
+**Og kilen har TO skruer, ikke tre.** Det er K2 som gjorde det nødvendig, og
+det er verdt å skjønne hvorfor, for det er ikke skruen som er problemet — det er
+hullet den sitter i. Passer-på-flaten-regelen (`(n−1)·4d + 2·3d`) måler
+**skaftet**: tre 5 mm skruer trenger 20 mm mellom seg og får plass på 77 mm. Men
+hver av dem sitter i bunnen av et **⌀12 kontrabor**, og tre 12 mm hull med 20 mm
+senteravstand står igjen med 8 mm tre imellom. På den gamle 116 mm-vingen kom
+det aldri opp, fordi raden hadde 35,5 mm å spre seg på; på 77 mm faller den ned
+på 4d-minimum og hullene møtes nesten. To skruer åpner den til 32 mm — 20 mm
+tre — og lastsiden merker det ikke: oppskruene er tvinger for en limfuge, og
+hele gruppa lå under 0,05. Modellen asserter det nå: **et kontrabor har sin egen
+senteravstand, 24 mm, uavhengig av hva skaftet trenger.**
+
 **27 er ikke et tall noen likte.** Det er oppskruens eget sete. Hver J13-skrue
 har hodet 27 mm under platens underside — det er nøyaktig det «⌀12 kontrabor
 46 mm opp i en 73 mm lekt» betyr — så vingen må være minst så dyp overalt der en
 skrue går gjennom den. På akkurat 27 er kontraboret gått i null, og hodet ligger
 i flukt med kilens egen underside. Boreregelen er derfor **den samme for alle
 fire delene** og leses slik: *bor ⌀12 opp til det står 27 mm igjen.* I styrelekta
-er det de 46 millimeterne; i kilen er det 35, 23 og 11 mm ved de tre hullene,
+er det de 46 millimeterne; i kilen er det 33 og 13 mm ved de to hullene,
 dypest ved roten.
 
 **Tallene.** Kilen er 184 800 mm³ mot 269 808 for den hele klossen — 32 % mindre
@@ -605,7 +617,7 @@ kilene, bare i tykkere tre: bor opp til det står 27 mm igjen. Se J13b.
 I bruk står fugen uansett i trykk: platen *hviler* på lektas overkant, så
 2 kN-lasten går aldri gjennom et festemiddel. Skruene har én lastsituasjon —
 at enheten løftes etter et hjørne — og der er 64 N egenvekt (6,5 kg,
-regnet av kroppene) mot 18 skruer.
+regnet av kroppene) mot 16 skruer.
 
 *De to alternativene, og hvorfor de tapte:* skråskruer gjennom lektas side
 treffer bare 18/cos30 = 21 mm plate før spissen bryter ut i overflaten. Hodet
@@ -641,7 +653,7 @@ ikke en bestilling — det lages for hånd med `mise run mekanisme` og er ikke m
 i byggeporten.
 
 **Innsettingsveien er målt, ikke antatt.** Modellen sveiper hele enheten — plate,
-to styrelekter, to kiler og atten skruer — rett opp fra begge seter og krever at
+to styrelekter, to kiler og seksten skruer — rett opp fra begge seter og krever at
 ingenting treffer noe: **132 mm** fri vei i sengestilling og **172 mm** i
 bordstilling. Det skal 48 mm til for å løfte styrelektene fri av trinnenden, så
 det er nesten tre ganger så mye vei som mekanismen trenger. Taket er
@@ -940,7 +952,7 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | **Fritt platehjørne, bar 18 mm plate** (V3, kontrollregning) | Punktlast på et fritt hjørne: utkraget stripe med effektiv bredde = egen lengde, så σ = P·a/(a·t²/6) = **6P/t²** og lengden faller ut | uavhengig av avstand | 1 kN kne | **2,66** | ✗ σ = 18,5 MPa. Gjelder like fullt om lekta står 213, 116 eller 77 mm unna — **derfor ble kilelektene ikke fjernet** |
 | **Kilelekt (vinge) under hjørnet, bøyning** (M5/V4/K2, 77 mm, 73 → 27 mm) | Utkraging fra styrelekta, med lasten på kilen selv. Med h(x) avtakende topper σ seg der h = 2 × spissen, altså 45 mm fra spissen — inne i delen, ikke ved roten | 77 mm, kritisk snitt h = 54 mm | 1 kN kne | **0,12** | ✓ σ = 1,94 MPa i C24. Roten selv: 1,81 MPa, 0,11. K2 gjorde vingen kortere og tallet falt med den (var 0,18 på 116 mm) |
 | **Kilelekt (vinge), skjær i spissen** (M5/V4) | Tverrskjær i delens tynneste snitt, 48 × 27 mm: τ = 1,5·1000/(48·27) | 27 mm spisshøyde | 1 kN kne | **0,42** | ✓ 1,16 MPa mot f<sub>v,d</sub> = 2,77. Delens dimensjonerende tall, og det som sier at spissen ikke skal bli tynnere |
-| Lekt → plate (J13a/J13b) | Limt fuge 48 × 750 mm + 6 skruer 5×40 opp fra kontrabor, 13 mm gjenge i plata | uttrekk ≈ 0,27 kN per skrue (halvert for kryssfiner) | 0,13 kN, enheten (6,5 kg) løftet etter ett hjørne med faktor 2 | **< 0,05** | ✓ I bruk står fugen i trykk — platen hviler på lekta, lasten går ikke gjennom et festemiddel |
+| Lekt → plate (J13a/J13b) | Limt fuge 48 × 750 mm + 6 skruer 5×40 opp fra kontrabor i hver styrelekt, 2 i hver kile, 13 mm gjenge i plata | uttrekk ≈ 0,27 kN per skrue (halvert for kryssfiner) | 0,13 kN, enheten (6,5 kg) løftet etter ett hjørne med faktor 2 | **< 0,05** | ✓ I bruk står fugen i trykk — platen hviler på lekta, lasten går ikke gjennom et festemiddel |
 | Bordbærelekt 48×73 **på høykant** | Bøyning om sterk akse | 1794 mm | 0,55 kN bordlast | **0,13** | ✓ W = 42 632 mm³ etter V2 (var 21×95 = 31 587) |
 | Bordbærelekt → stolpe | Skruskjær, 1 × 5 mm per beslagflik — 40 mm flik tar ikke to | 1,5 kN | 0,13 kN | 0,09 | ✓ Lekta ligger dessuten PÅ den vannrette fliken; skruen holder den bare nede |
 | Rekkverksbord 36×98 | Bøyning om svak akse, vannrett last | ≈ 760 mm | 0,5 kN | **0,13** | ✓ |
