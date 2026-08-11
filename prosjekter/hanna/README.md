@@ -1,5 +1,7 @@
 # HANNA — a loft bed whose manual is compiled, not written
 
+[![check](https://github.com/Starefossen/snekkerbua/actions/workflows/check.yml/badge.svg)](https://github.com/Starefossen/snekkerbua/actions/workflows/check.yml)
+
 *The first project in [snekkerbua](../../README.md). Shared practices:
 [PRAKSIS.md](../../PRAKSIS.md) · workshop inventory:
 [UTSTYR.md](../../UTSTYR.md).*
@@ -121,6 +123,11 @@ after a build *is* the impact analysis — the chain itself has to be
 reproducible. `mise run check` runs it twice and compares checksums. A failure
 there is never a model change: it is an unsorted `dict`, a timestamp, an
 `id()`-ordering or an order-dependent float sum.
+
+That same gate runs on every push to `main` — the badge at the top is
+[`.github/workflows/check.yml`](../../.github/workflows/check.yml), which is
+`build`, `montering` and `check` on a machine that starts with nothing. To run
+it yourself: **[Verify it yourself](../../README.md#verify-it-yourself)**.
 
 ---
 

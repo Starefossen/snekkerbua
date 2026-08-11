@@ -1,5 +1,7 @@
 # snekkerbua
 
+[![check](https://github.com/Starefossen/snekkerbua/actions/workflows/check.yml/badge.svg)](https://github.com/Starefossen/snekkerbua/actions/workflows/check.yml)
+
 *der Hans gjør ting han (ennå) ikke kan*
 
 A workshop repo, one directory per project. Every project here is built the same
@@ -51,3 +53,27 @@ mise run pdf        # the print-ready manual
 The full round for HANNA is `mise run build && montering && check && pdf &&
 usdz && film-check`. Per-project prerequisites and the rest of the tasks are in
 the project's own README.
+
+## Verify it yourself
+
+Don't take the badge's word for it — three commands, from nothing:
+
+```bash
+git clone https://github.com/Starefossen/snekkerbua.git && cd snekkerbua
+mise trust && mise run install   # python 3.11 + requirements.txt
+mise run build && mise run montering && mise run check
+```
+
+`check` builds the whole chain twice and compares SHA-256 of every committed
+derived file — the tables, `docs/MONTERING.md`, every drawing, `parts.tsv`.
+*Byte-identical* here means exactly that: not "looks the same", not "same
+numbers", the same bytes. If a run can produce two answers to the same
+question, then a diff on the drawings is not evidence of anything, and the rest
+of this repo is a story rather than a proof. The same gate runs on every push
+— [`.github/workflows/check.yml`](.github/workflows/check.yml).
+
+You also need `rsvg-convert` for the PNGs (`brew install librsvg`, or
+`apt install librsvg2-bin`); the workflow file is the exact list.
+
+`git log --oneline` is the design journal — each commit is one decision, with
+the reasoning in the body.
