@@ -44,6 +44,16 @@ description = "Determinismesjekk: kjør hele kjeden to ganger og krev byte-ident
 # kjeden selv kan gi to svar på samme spørsmål, så dette er den asserten:
 # kjør den to ganger og krev samme bytes. Ryker den, er det en usortert dict,
 # en tidsstempel eller en id()-sortering et sted - ikke en modellendring.
+#
+# HVORFOR `usdz` IKKE ER MED I DENNE KJEDEN. Den ble glemt i en runde og
+# oppdaget først da noen åpnet modellen i Quick Look, så spørsmålet er stilt og
+# svaret skrives ned her: `check` er en determinismesjekk på de INNSJEKKEDE
+# artefaktene, og .usdz-filene er i .gitignore - det er ingenting å
+# diff-e dem mot. Dessuten trenger `usdz` swift, usdcat, usdzip og usdchecker,
+# altså macOS med USD-verktøyene installert, mens `check` skal kunne kjøres av
+# hvem som helst med Python. Den hører derfor hjemme i RUNDENS port, ikke i
+# denne: `mise run build && montering && check && pdf && usdz`, og usdz er den
+# eneste av dem som faktisk validerer eksporten (usdchecker --arkit).
 run = """
 set -e
 work="$(mktemp -d)"
