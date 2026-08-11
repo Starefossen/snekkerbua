@@ -75,6 +75,12 @@ if ! diff -u "$work/sum-1" "$work/sum-2" > "$work/delta"; then
   exit 1
 fi
 echo "OK  $(wc -l < "$work/sum-1" | tr -d ' ') artefakter byte-identiske over to fulle kjøringer"
+# Filmene er utledet av den samme modellen, men de rendres ikke her - de er
+# for dyre. Det som ER gratis er å spørre om de er bygget av DENNE modellen,
+# og det spørsmålet hører hjemme i samme port: en innsjekket film som viser en
+# eldre seng er akkurat den slags stille avviket resten av kjeden er bygget
+# for å hindre. Hashing, ingen rendring, millisekunder.
+python tools/render_animasjon.py --check
 """
 depends = ["install"]
 
@@ -87,6 +93,30 @@ run = "python tools/render_mekanisme.py"
 description = "The shaded USD renders of the same steps, for reference (macOS: usdrecord + swift)"
 depends = ["build"]
 run = "python tools/render_steps.py --width 1400"
+
+[tasks.film]
+description = "Alle tre filmene (docs/img/hanna-*.gif): dreieskive, mekanisme og oppbygging"
+depends = ["build"]
+run = "python tools/render_animasjon.py all"
+
+[tasks.film-turntable]
+description = "Bare dreieskiva - den ferdige sengen 360 grader (docs/img/hanna-turntable.gif)"
+depends = ["build"]
+run = "python tools/render_animasjon.py turntable"
+
+[tasks.film-mekanisme]
+description = "Bare mekanismefilmen - platen fra sengesete til bordsete, med kollisjonsprøve på hver frame"
+depends = ["build"]
+run = "python tools/render_animasjon.py mekanisme"
+
+[tasks.film-bygg]
+description = "Bare oppbyggingsfilmen - steg 1-11 fra byggesteg.json (den dyre, kjør den alene når stegdata endres)"
+depends = ["build"]
+run = "python tools/render_animasjon.py bygg"
+
+[tasks.film-check]
+description = "Er filmene bygget fra DENNE modellen? Hasher parts.tsv og byggesteg.json mot docs/img/hanna-filmer.stamp - tar millisekunder, rendrer ingenting"
+run = "python tools/render_animasjon.py --check"
 
 [tasks.schematics]
 description = "Render docs/schematics/*.svg to PNG for proofreading"
