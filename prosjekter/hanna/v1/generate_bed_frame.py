@@ -1,3 +1,5 @@
+import os
+
 from build123d import *
 
 # Create individual parts
@@ -68,12 +70,15 @@ bed_frame = Compound(children=[
     part_a, part_b_left, part_b_right, part_c, part_d, *slats
 ])
 
+# Ut ved siden av skriptet selv - ingen absolutte stier i repoet.
+OUT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Export to STEP (Standard Z-up CAD format)
-export_step(bed_frame, "/Users/hans/go/src/github.com/starefossen/loftbed/bed_frame.step")
+export_step(bed_frame, os.path.join(OUT_DIR, "bed_frame.step"))
 
 # Export to SVG for a clear visual preview without coordinate system issues
 try:
-    export_svg(bed_frame, "/Users/hans/go/src/github.com/starefossen/loftbed/bed_frame.svg", direction=(1, -1, 1))
+    export_svg(bed_frame, os.path.join(OUT_DIR, "bed_frame.svg"), direction=(1, -1, 1))
 except Exception as e:
     print("SVG export failed:", e)
 
