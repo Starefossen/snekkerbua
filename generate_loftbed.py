@@ -2857,7 +2857,8 @@ JOINTS = [
              drive("Treskrue 5×60 forsenket Torx", 1, frm="bench_slat")])]),
     dict(id="J12", title="Bordbærelekt → bakre hjørnestolpe (endeskjøt)",
          n=2,
-         drill="⌀3 i stolpen og i lekta — forboring er et krav, lekta er tynn",
+         drill="⌀3 i stolpen og i lekta — forboring er et krav: begge skruene "
+               "står nær en ende, og lekta (48×73) tas i endeveden",
          side="Beslaget på stolpens innerflate, med den vannrette fliken "
               "UNDER lektas ende, så lekta har noe å hvile på og ikke bare "
               "henger i skruer",

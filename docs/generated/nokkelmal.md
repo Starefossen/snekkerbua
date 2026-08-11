@@ -53,9 +53,10 @@ Stigningen fra gulv til spilebunn: 259 + 223 + 238 + 238 + 241 mm. Første stign
 | **-27** | bordbærelektas forside |
 | **0** | bakre sidevanges og benkevanges forside; avstivningslektenes bakkant |
 | **704** | fremre sidevange og benkevange — bakkant |
-| **715** | trinnenes bakkant (hylla platen hviler på); avstivningslektenes forkant |
+| **715** | trinnenes bakkant (hylla platen hviler på) |
 | **716** | rekkverksbordenes bakkant |
-| **752** | fremre sidevanges forside = fremre stolpers og stigevangers bakside = spilebunnens og platens forkant; rekkverksbordenes forkant |
+| **750** | platens forkant; avstivningslektenes og kilelektenes forkant |
+| **752** | fremre sidevanges forside = fremre stolpers og stigevangers bakside = spilebunnens forkant; rekkverksbordenes forkant |
 | **788** | fremre stolpers og stigevangers forside = trinnenes forkant; sengens forkant — det ytterste planet |
 
 Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: **800** — nøyaktig madrassbredden.
@@ -77,7 +78,7 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | Stubbeføtter | 572..645 og 1345..1418 |
 | Løs plate | 669..1321 (652 mm bred) |
 | Avstivningslekter (styrer platen) | 785..833 og 1157..1205 |
-| Tverrlekter under forkanten | 669..785 og 1205..1321 |
+| Kilelekter under forkanten | 669..785 og 1205..1321 |
 | Klaring lekt → trinnende | 2 mm hver vei (trinnendene står på X 835 og 1155 i begge stillinger) |
 
 **Køyespiler:** 14 stk., første spile starter på X 20, deling 142,46 mm, siste spile slutter på X 1970. Åpning mellom spilene 44,46 mm.

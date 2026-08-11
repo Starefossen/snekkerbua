@@ -1046,9 +1046,11 @@ PICTOGRAMS: dict[str, tuple[str, object]] = {
     "dra-nei": ("Ikke dra delene over gulvet", "hanna/dra-nei"),
     "sorter": ("Sorter delene før du starter", "hanna/sorter"),
     "les": ("Les veiledningen først", "lucide/book-open"),
-    "verktoy": ("Verktøy: drill, torxbits, fastnøkkel, tommestokk, vater, "
-                "vinkelhake",
-                ["lucide/drill", "hanna/torx-driver", "lucide/wrench",
+    # V5: the spanner is gone with the last threaded fastener - there is
+    # nothing in this bed to put a 10 mm nut on, and a tool panel that shows
+    # one is a tool panel that sends somebody looking for it.
+    "verktoy": ("Verktøy: drill, torxbits, tommestokk, vater, vinkelhake",
+                ["lucide/drill", "hanna/torx-driver",
                  "hanna/tape-measure", "hanna/spirit-level",
                  "hanna/try-square"]),
     "forbor": ("Forbor før du skrur", "hanna/forbor"),

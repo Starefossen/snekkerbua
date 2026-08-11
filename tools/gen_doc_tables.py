@@ -285,9 +285,8 @@ def build_steps(G):
                   "tvunget sammen.",
                 "Forsenk hodene på alle festemidler som ender i en veggvendt "
                   "flate. Beslaglista sier hvilke ledd det gjelder.",
-                "Forbor alle treskruer etter beslaglista. I bordene, i den "
-                  "tynne bordbærelekta og i all endeved er forboring et krav, "
-                  "ikke et råd.",
+                "Forbor alle treskruer etter beslaglista. I bordene og i "
+                  "all endeved er forboring et krav, ikke et råd.",
                 "Slå filtknotter under alle fire hjørnestolper og alle fire "
                   "stubbeføtter.",
             ],
@@ -1173,12 +1172,12 @@ def emit_nokkelmal(G, out_dir, rows):
         (G.LEDGER_BACK_Y0 + G.BOARD_T, "bordbærelektas forside"),
         (G.BACK_RAIL_Y1, "bakre sidevanges og benkevanges forside; "
                          "avstivningslektenes bakkant"),
-        (G.RUNG_Y0, "trinnenes bakkant (hylla platen hviler på); "
-                    "avstivningslektenes forkant"),
+        (G.RUNG_Y0, "trinnenes bakkant (hylla platen hviler på)"),
+        (G.BATTEN_Y1, "platens forkant; avstivningslektenes og kilelektenes "
+                      "forkant"),
         (G.FRONT_RAIL_Y0, "fremre sidevange og benkevange — bakkant"),
         (G.FRONT_RAIL_Y1, "fremre sidevanges forside = fremre stolpers og "
-                          "stigevangers bakside = spilebunnens og platens "
-                          "forkant"),
+                          "stigevangers bakside = spilebunnens forkant"),
         (G.FRONT_POST_Y1, "fremre stolpers og stigevangers forside = "
                           "trinnenes forkant"),
         (G.FRONT_GUARD_Y0, "rekkverksbordenes bakkant"),
@@ -1224,7 +1223,7 @@ def emit_nokkelmal(G, out_dir, rows):
     L.append(f"| Avstivningslekter (styrer platen) | "
              f"{_rng(G.BATTEN_X[0], G.BATTEN_X[0] + G.BATTEN_W)}"
              f" og {_rng(G.BATTEN_X[1], G.BATTEN_X[1] + G.BATTEN_W)} |\n")
-    L.append(f"| Tverrlekter under forkanten | "
+    L.append(f"| Kilelekter under forkanten | "
              f"{_rng(*G.NOSE_X[0])} og {_rng(*G.NOSE_X[1])} |\n")
     L.append(f"| Klaring lekt → trinnende | {G.PANEL_FIT} mm hver vei "
              f"(trinnendene står på X {G.LADDER_INNER_L} og "
@@ -1388,11 +1387,10 @@ PREP = [
     ("les", None,
      "**Les steg 0 først.** All saging og all boring skjer før noe reises."),
     ("verktoy", None,
-     "**Verktøy:** drill med bor, torxbits, fastnøkkel 10 mm, tommestokk, "
-     "vater og vinkelhake."),
+     "**Verktøy:** drill med bor, torxbits, tommestokk, vater og "
+     "vinkelhake."),
     ("forbor", None,
-     "**Forbor.** I bord, i den tynne bordbærelekta og i all endeved er "
-     "forboring et krav."),
+     "**Forbor.** I bordene og i all endeved er forboring et krav."),
     ("veggfeste-ja", "fritt-staaende-nei",
      "**Sengen skal skrus fast i veggen.** Den er ikke beregnet på å stå "
      "fritt — veggen er sperren på baksiden."),
@@ -1895,7 +1893,8 @@ def emit_beslagliste(out_dir, steps):
              "[ASSEMBLY, vedlegg B, avvik 4](../ASSEMBLY.md#vedlegg-b--aksepterte-avvik). "
              "Kort: madrassen ligger *oppå* platen og må fjernes før platen "
              "kan løftes, dette er underetasjen med ~26 cm fallhøyde, og "
-             "platen veier ~9 kg.\n\n"
+             "plateenheten veier "
+             f"{_fmt(round(_MODEL.PANEL_UNIT_MASS, 1))} kg.\n\n"
              "Trevirket for en ettermontert lås står likevel der det sto: "
              "**kilelektas endeved mot enden av den fremre benkevangen**, "
              f"tvers over de {_MODEL.LOCK_GAP} mm i sideklaringen, i samme "

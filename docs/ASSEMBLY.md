@@ -972,13 +972,14 @@ snuble i tvers over en passasje. Den koster bredde i en åpning som allerede er
 valg som kan tas med ett ord.
 
 **Valget er tatt (aug. 2026): (iii) — åpent, med plan.** Ingen av treklossene
-bygges. I stedet er dette merket som *mekanismens v2-punkt*: den riktige
+bygges. I stedet er dette merket som *krokpunktet*: den riktige
 løsningen er en **metallkrok ved stigefoten som låser i fremover-retningen** —
 en del som griper uten å okkupere noen av de fire fredede volumene, senkes på
 plass sammen med platen, og gir stigefoten toveis hold uten terskler eller
 smalere åpninger. Den bygges inn den dagen riktig beslag er funnet (kravene:
 låser +Y, monterbar ovenfra, bryter ikke platens innsettingsbane — se J13 og
-V2-loggen i modellen). Frem til da: platen som énveis stiver, J3 framover,
+V2-loggen i modellen; *krokpunktet* er navnet på stedet, ikke en
+revisjonskode). Frem til da: platen som énveis stiver, J3 framover,
 veggfestet for rammen — som målt over.
 
 *Betingelse:* platen **skal** alltid ligge i, i en av de to stillingene. Se 7.5.

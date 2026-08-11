@@ -24,7 +24,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 1. **Bryt alle kanter et barn kan nå, nå — mens delene er løse.** Kravet er brutt kant, ikke en bestemt metode: 45° fas eller avrunding, du velger. Fres med V-spor eller avrundingsfres om du har fres; ellers gjør en blokkhøvel eller en pussekloss med 120-korn nøyaktig samme nytte. Viktigst: plateenhetens underside — begge styrelektenes nedre kanter og begge kilene — for det er der et kne møter treet når noen sitter ved bordet. Deretter platens fire egne kanter, og så stolper, rekkverksbord, trinn og stigevangenes kanter. Modellen tegner alle deler skarpe; kantbrytningen er en instruks og flytter ingen mål.
 1. Bor alle gjennomgående hull i stolper, vanger, endebjelker og benkevanger — diameter etter forboringskolonnen i beslaglista. Bor gjennom begge deler samtidig, med delene tvunget sammen.
 1. Forsenk hodene på alle festemidler som ender i en veggvendt flate. Beslaglista sier hvilke ledd det gjelder.
-1. Forbor alle treskruer etter beslaglista. I bordene, i den tynne bordbærelekta og i all endeved er forboring et krav, ikke et råd.
+1. Forbor alle treskruer etter beslaglista. I bordene og i all endeved er forboring et krav, ikke et råd.
 1. Slå filtknotter under alle fire hjørnestolper og alle fire stubbeføtter.
 
 **Sjekk før du går videre:**

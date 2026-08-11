@@ -38,8 +38,8 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 | <img src="img/ikon/underlag.svg" alt="underlag" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/dra-nei.svg" alt="dra-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Mykt underlag.** Bygg rammene flatt på papp eller teppe. Ikke dra delene over gulvet. |
 | <img src="img/ikon/sorter.svg" alt="sorter" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Sorter delene** etter kapplista, og merk hver del på en flate som blir skjult. |
 | <img src="img/ikon/les.svg" alt="les" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Les steg 0 først.** All saging og all boring skjer før noe reises. |
-| <img src="img/ikon/verktoy.svg" alt="verktoy" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Verktøy:** drill med bor, torxbits, fastnøkkel 10 mm, tommestokk, vater og vinkelhake. |
-| <img src="img/ikon/forbor.svg" alt="forbor" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Forbor.** I bord, i den tynne bordbærelekta og i all endeved er forboring et krav. |
+| <img src="img/ikon/verktoy.svg" alt="verktoy" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Verktøy:** drill med bor, torxbits, tommestokk, vater og vinkelhake. |
+| <img src="img/ikon/forbor.svg" alt="forbor" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Forbor.** I bordene og i all endeved er forboring et krav. |
 | <img src="img/ikon/veggfeste-ja.svg" alt="veggfeste-ja" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/fritt-staaende-nei.svg" alt="fritt-staaende-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Sengen skal skrus fast i veggen.** Den er ikke beregnet på å stå fritt — veggen er sperren på baksiden. |
 
 ---
