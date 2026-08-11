@@ -1,0 +1,55 @@
+# The gate every push has to pass: build the model, draw the line art, then
+# run the whole chain a second time and demand byte-identical artefacts.
+# Nothing here is CI-only - it is the same `mise run` chain the README asks a
+# visitor to type, on a machine that starts with nothing.
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      # mise refuses to run a config it has not been told to trust. The
+      # checkout is the config, so trust the workspace.
+      MISE_TRUSTED_CONFIG_PATHS: ${{ github.workspace }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # rsvg-convert rasterises every SVG the manual shows as a PNG.
+      # libgl/libx* are what the OpenCascade wheel behind build123d links
+      # against, even though nothing here ever opens a window.
+      - name: System packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            librsvg2-bin libgl1 libglu1-mesa libxrender1 libxext6
+
+      # Python 3.11 and requirements.txt, both pinned by mise.toml.
+      - uses: jdx/mise-action@v2
+
+      - name: build - model, tables, docs/MONTERING.md
+        run: mise run build
+
+      - name: montering - the line art
+        run: mise run montering
+
+      # Two full runs, same bytes, or the build fails. `check` ends by hashing
+      # parts.tsv and byggesteg.json against docs/img/hanna-filmer.stamp, so
+      # the committed films are proven to come from THIS model - no rendering.
+      - name: check - determinism + film stamp
+        run: mise run check
+
+# NOT run here, on purpose:
+#   usdz, render, render-validate, montering-skyggelagt, film*  - these need
+#     swift, usdcat, usdzip, usdchecker and usdrecord, i.e. macOS with the USD
+#     tools. Their output is also untracked (.gitignore), so there would be
+#     nothing to compare against. `film-check` IS covered - it is the last line
+#     of `check` above.
+#   pdf - needs a headless Chrome to print with, and it only re-assembles
+#     documents this workflow has already verified.
