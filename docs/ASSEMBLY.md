@@ -1022,15 +1022,13 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | [byggerekkefolge.svg](schematics/byggerekkefolge.svg) | Oversikt over byggerekkefølgen, med samme nummer som byggesteg og MONTERING |
 | [side-elevation.svg](schematics/side-elevation.svg) | Langsiden sett forfra: stolper, stigevanger og trinn, sidevange, begge rekkverksbånd med klatreåpningen, benkevanger, stubbeføtter og benkespiler, med alle skrueposisjoner |
 | [end-elevation.svg](schematics/end-elevation.svg) | Kortsiden, med veggen inntegnet. Her ser du at sengen er usymmetrisk: bakre stolpe stopper i sengeflaten, fremre går helt opp til rekkverket |
-| [ladder-detail.svg](schematics/ladder-detail.svg) | Stigen: vanger, klosser, trinn, J3-skruene, og hylla bak trinnet som platen hviler på |
-| [bench-detail.svg](schematics/bench-detail.svg) | Benken: bærekloss mot hjørnestolpen, vangebiten som ender på stubbefoten, benkespilene og platekanten |
-| [panel-detail.svg](schematics/panel-detail.svg) | Den løse platen i begge stillinger, med avstivningslekter (skjemaet er fra før V2: det viser den gamle stålløsningen, og de to fremre tverrstykkene er skråkappede kilelekter fra og med V4 — se J13b. Gjeldende mekanisme er tegnet i `docs/preview/mekanisme-v2-*.png`) |
+| [ladder-detail.svg](schematics/ladder-detail.svg) | Stigen: vanger, klosser, trinn, J3-skruene, hylla bak trinnet som platen hviler på, og sjaktene ved siden av trinnendene der avstivningslektene løper |
+| [bench-detail.svg](schematics/bench-detail.svg) | Benken: vangeenden mot hjørnestolpen uten kloss, vangebiten som ender på stubbefoten, benkespilene og platekanten. Egen plan gjennom J8-Bs sete og skruevinkel |
+| [panel-detail.svg](schematics/panel-detail.svg) | Plateenheten i begge stillinger: plate, to avstivningslekter, to kilelekter, glidesjakten ved trinnenden og skruen nedenfra ut av kontraboret. Ingen ståldel |
 
-**NB — detaljarkene er ikke tegnet om etter mekanismerunden.** Rammen, stigen
-og benkene stemmer, men alt om den løse platen på ladder-detail, panel-detail,
-bench-detail, side-elevation og end-elevation er foreldet: 680×800-plate,
-715-lekter, U-braketter, krokplater, «J13c», M6-skruer og navnene
-«sengemodus/bordmodus». Det samme gjelder bordbærelektas gamle profil 21×95
-(underkant Z 387). Gjeldende geometri står i [kapplista](generated/kappliste.md)
-og [nøkkelmålene](generated/nokkelmal.md); gjeldende ledd er J13a/J13b. Det
-finnes ingen U-brakett, ingen krokplate og ikke én M6 i sengen.
+**Alle seks arkene er tegnet om mot den ferdige geometrien.** De viser
+652×798-platen, 750 mm avstivningslekter, de to skråkappede kilelektene,
+bordbærelekta som 48×73 på høykant (Z 409–482), navnene
+sengestilling/bordstilling — og ingen bæreklosser, ingen U-brakett, ingen
+krokplate og ikke én M6, fordi ingen av delene finnes. J2, J3 og J8 er tegnet
+med hodet på vangens innside, slik de skrus.

@@ -53,17 +53,8 @@
   <text x="-940" y="-314" class="sub">Sett fra rommet mot veggen. Bakre langside står mot vegg (Y = −48) og er bare 1065 høy – se end-elevation.svg.</text>
 
   <!-- ================= SKJULTE DELER ================= -->
-  <!-- Bordbærelekt bak, X 98..1892, Z 387..482 -->
-  <rect x="98" y="1218" width="1794" height="95" class="gho"/>
-  <!-- Bærekloss J9-F, X 0..48 / 1942..1990, Z 138..186 -->
-  <rect x="0" y="1514" width="48" height="48" class="gho"/>
-  <rect x="1942" y="1514" width="48" height="48" class="gho"/>
-  <!-- Bærekloss J9-B bak, X 98..146 / 1844..1892, Z 150..186 -->
-  <rect x="98" y="1514" width="48" height="36" class="gho"/>
-  <rect x="1844" y="1514" width="48" height="36" class="gho"/>
-  <!-- Avstivningslekter under platen, X 882..930 / 1060..1108, Z 186..259 -->
-  <rect x="882" y="1441" width="48" height="73" class="gho"/>
-  <rect x="1060" y="1441" width="48" height="73" class="gho"/>
+  <!-- Bordbærelekt bak 48x73, X 98..1892, Z 409..482 -->
+  <rect x="98" y="1218" width="1794" height="73" class="gho"/>
 
   <!-- ================= MADRASS ================= -->
   <rect x="0" y="361" width="1990" height="140" class="mat"/>
@@ -96,8 +87,8 @@
   <rect x="1457.25" y="1405" width="98" height="36" class="brd"/>
   <rect x="1345" y="1405" width="98" height="36" class="brd"/>
 
-  <!-- ================= LØS PLATE, sengemodus Z 259..277 ================= -->
-  <rect x="655" y="1423" width="680" height="18" class="pnl"/>
+  <!-- ================= LØS PLATE 652 x 798, sengestilling Z 259..277 ================= -->
+  <rect x="669" y="1423" width="652" height="18" class="pnl"/>
 
   <!-- ================= REKKVERKSBORD (bak stolpene) ================= -->
   <rect x="3" y="188" width="832" height="98" class="brd"/>
@@ -119,9 +110,7 @@
   <rect x="1119" y="790" width="36" height="48" class="blk"/>
   <rect x="835" y="742" width="320" height="48" class="brd"/>
 
-  <!-- ================= ENDEBJELKER + J1-B, X 98..146 / 1844..1892 ================= -->
-  <rect x="98" y="733" width="48" height="36" class="blk"/>
-  <rect x="1844" y="733" width="48" height="36" class="blk"/>
+  <!-- ================= ENDEBJELKER, X 98..146 / 1844..1892, Z 967..1065 ================= -->
   <rect x="98" y="635" width="48" height="98" class="rai"/>
   <rect x="1844" y="635" width="48" height="98" class="rai"/>
 
@@ -137,6 +126,11 @@
   <rect x="1155" y="0" width="48" height="1700" class="pst"/>
   <rect x="572" y="1514" width="73" height="186" class="pst"/>
   <rect x="1345" y="1514" width="73" height="186" class="pst"/>
+
+  <!-- ==== AVSTIVNINGSLEKTER under platen, 48x73 x 750, X 785..833 / 1157..1205,
+       Z 186..259 – skjult bak stigevangene, derfor stiplet oppå dem ==== -->
+  <rect x="785" y="1441" width="48" height="73" class="gho"/>
+  <rect x="1157" y="1441" width="48" height="73" class="gho"/>
 
   <!-- ================= GULV ================= -->
   <line x1="-880" y1="1700" x2="2200" y2="1700" class="grd"/>
@@ -202,25 +196,22 @@
   <circle cx="1844" cy="706" r="9" class="scr"/>
   <line x1="1844" y1="662" x2="1934" y2="662" class="scrl"/>
   <circle cx="1844" cy="662" r="9" class="scr"/>
-  <!-- J1-B: 1 x 6x90 fra klossens frie ende inn i stolpen (Z 949) -->
-  <line x1="146" y1="751" x2="60" y2="751" class="scrl"/>
-  <circle cx="146" cy="751" r="9" class="scr"/>
-  <line x1="1844" y1="751" x2="1930" y2="751" class="scrl"/>
-  <circle cx="1844" cy="751" r="9" class="scr"/>
-  <!-- J2: 2 x 6x80 gjennom stolpen inn i fremre sidevange - langs Y, ut av planet.
+  <!-- J2: 2 x 6x80 gjennom fremre sidevange inn i stolpen - langs +Y, INNENFRA.
+       Hodet ligger på vangens innside (Y 704), altså bak tegningsplanet.
        X 50,5 fra hver vegg, Z 1092 og 1136 -->
-  <circle cx="50.5" cy="608" r="11" class="scrg"/>
-  <circle cx="50.5" cy="564" r="11" class="scrg"/>
-  <circle cx="1939.5" cy="608" r="11" class="scrg"/>
-  <circle cx="1939.5" cy="564" r="11" class="scrg"/>
-  <!-- J3: 3 x 6x80 gjennom stigevangen inn i sidevangen - langs Y.
+  <circle cx="50.5" cy="608" r="11" class="scrg"/><circle cx="50.5" cy="608" r="4" class="scr"/>
+  <circle cx="50.5" cy="564" r="11" class="scrg"/><circle cx="50.5" cy="564" r="4" class="scr"/>
+  <circle cx="1939.5" cy="608" r="11" class="scrg"/><circle cx="1939.5" cy="608" r="4" class="scr"/>
+  <circle cx="1939.5" cy="564" r="11" class="scrg"/><circle cx="1939.5" cy="564" r="4" class="scr"/>
+  <!-- J3: 3 x 6x80 gjennom sidevangen inn i stigevangen - langs +Y, INNENFRA.
+       Hodet ligger på vangens innside (Y 704), altså bak tegningsplanet.
        X 811 / 1179 (stigevangens midtlinje), Z 1090 / 1114 / 1138 -->
-  <circle cx="811" cy="610" r="11" class="scrg"/>
-  <circle cx="811" cy="586" r="11" class="scrg"/>
-  <circle cx="811" cy="562" r="11" class="scrg"/>
-  <circle cx="1179" cy="610" r="11" class="scrg"/>
-  <circle cx="1179" cy="586" r="11" class="scrg"/>
-  <circle cx="1179" cy="562" r="11" class="scrg"/>
+  <circle cx="811" cy="610" r="11" class="scrg"/><circle cx="811" cy="610" r="4" class="scr"/>
+  <circle cx="811" cy="586" r="11" class="scrg"/><circle cx="811" cy="586" r="4" class="scr"/>
+  <circle cx="811" cy="562" r="11" class="scrg"/><circle cx="811" cy="562" r="4" class="scr"/>
+  <circle cx="1179" cy="610" r="11" class="scrg"/><circle cx="1179" cy="610" r="4" class="scr"/>
+  <circle cx="1179" cy="586" r="11" class="scrg"/><circle cx="1179" cy="586" r="4" class="scr"/>
+  <circle cx="1179" cy="562" r="11" class="scrg"/><circle cx="1179" cy="562" r="4" class="scr"/>
   <!-- J4 + J5, alle fire trinn -->
   <g>
     <line x1="787" y1="1465" x2="890" y2="1465" class="scrl"/><circle cx="787" cy="1465" r="9" class="scr"/>
@@ -269,42 +260,36 @@
   <line x1="1636.1" y1="501" x2="1636.1" y2="548" class="scrl"/><circle cx="1636.1" cy="501" r="9" class="scr"/>
   <line x1="1778.5" y1="501" x2="1778.5" y2="548" class="scrl"/><circle cx="1778.5" cy="501" r="9" class="scr"/>
   <line x1="1921" y1="501" x2="1921" y2="548" class="scrl"/><circle cx="1921" cy="501" r="9" class="scr"/>
-  <!-- J7: 2 x 5x60 pr. omlegg, fra sengesiden - langs Y -->
-  <circle cx="50" cy="262" r="11" class="scrg"/>
-  <circle cx="50" cy="212" r="11" class="scrg"/>
-  <circle cx="811" cy="262" r="11" class="scrg"/>
-  <circle cx="811" cy="212" r="11" class="scrg"/>
-  <circle cx="1179" cy="262" r="11" class="scrg"/>
-  <circle cx="1179" cy="212" r="11" class="scrg"/>
-  <circle cx="1940" cy="262" r="11" class="scrg"/>
-  <circle cx="1940" cy="212" r="11" class="scrg"/>
-  <circle cx="50" cy="89" r="11" class="scrg"/>
-  <circle cx="50" cy="39" r="11" class="scrg"/>
-  <circle cx="811" cy="89" r="11" class="scrg"/>
-  <circle cx="811" cy="39" r="11" class="scrg"/>
-  <circle cx="1179" cy="89" r="11" class="scrg"/>
-  <circle cx="1179" cy="39" r="11" class="scrg"/>
-  <circle cx="1940" cy="89" r="11" class="scrg"/>
-  <circle cx="1940" cy="39" r="11" class="scrg"/>
-  <!-- J8: 2 x 6x80 gjennom fremre stolpe inn i benkevangen - langs Y.
-       X 50,5 fra hver vegg, Z 210,5 og 234,5 -->
-  <circle cx="50.5" cy="1489.5" r="11" class="scrg"/>
-  <circle cx="50.5" cy="1465.5" r="11" class="scrg"/>
-  <circle cx="1939.5" cy="1489.5" r="11" class="scrg"/>
-  <circle cx="1939.5" cy="1465.5" r="11" class="scrg"/>
-  <!-- J8-B og J9-B: bak, skjult. J8-B er 2 skråskruer per ende (X 132 / 1858,
-       Z 210,5 og 234,5), J9-B er én per kloss (X 146 / 1844, Z 168) -->
+  <!-- J7: 2 x 5x60 pr. omlegg, drevet INNENFRA (hodet på Y 716, bak planet) -->
+  <circle cx="50" cy="262" r="11" class="scrg"/><circle cx="50" cy="262" r="4" class="scr"/>
+  <circle cx="50" cy="212" r="11" class="scrg"/><circle cx="50" cy="212" r="4" class="scr"/>
+  <circle cx="811" cy="262" r="11" class="scrg"/><circle cx="811" cy="262" r="4" class="scr"/>
+  <circle cx="811" cy="212" r="11" class="scrg"/><circle cx="811" cy="212" r="4" class="scr"/>
+  <circle cx="1179" cy="262" r="11" class="scrg"/><circle cx="1179" cy="262" r="4" class="scr"/>
+  <circle cx="1179" cy="212" r="11" class="scrg"/><circle cx="1179" cy="212" r="4" class="scr"/>
+  <circle cx="1940" cy="262" r="11" class="scrg"/><circle cx="1940" cy="262" r="4" class="scr"/>
+  <circle cx="1940" cy="212" r="11" class="scrg"/><circle cx="1940" cy="212" r="4" class="scr"/>
+  <circle cx="50" cy="89" r="11" class="scrg"/><circle cx="50" cy="89" r="4" class="scr"/>
+  <circle cx="50" cy="39" r="11" class="scrg"/><circle cx="50" cy="39" r="4" class="scr"/>
+  <circle cx="811" cy="89" r="11" class="scrg"/><circle cx="811" cy="89" r="4" class="scr"/>
+  <circle cx="811" cy="39" r="11" class="scrg"/><circle cx="811" cy="39" r="4" class="scr"/>
+  <circle cx="1179" cy="89" r="11" class="scrg"/><circle cx="1179" cy="89" r="4" class="scr"/>
+  <circle cx="1179" cy="39" r="11" class="scrg"/><circle cx="1179" cy="39" r="4" class="scr"/>
+  <circle cx="1940" cy="89" r="11" class="scrg"/><circle cx="1940" cy="89" r="4" class="scr"/>
+  <circle cx="1940" cy="39" r="11" class="scrg"/><circle cx="1940" cy="39" r="4" class="scr"/>
+  <!-- J8: 2 x 6x80 gjennom fremre benkevange inn i stolpen - langs +Y, INNENFRA.
+       Hodet ligger på vangens innside (Y 704). X 50,5 fra hver vegg, Z 210,5 og 234,5 -->
+  <circle cx="50.5" cy="1489.5" r="11" class="scrg"/><circle cx="50.5" cy="1489.5" r="4" class="scr"/>
+  <circle cx="50.5" cy="1465.5" r="11" class="scrg"/><circle cx="50.5" cy="1465.5" r="4" class="scr"/>
+  <circle cx="1939.5" cy="1489.5" r="11" class="scrg"/><circle cx="1939.5" cy="1489.5" r="4" class="scr"/>
+  <circle cx="1939.5" cy="1465.5" r="11" class="scrg"/><circle cx="1939.5" cy="1465.5" r="4" class="scr"/>
+  <!-- J8-B: bak, skjult - 2 skråskruer 6x90 per ende (X 132 / 1858, Z 210,5 og 234,5) -->
   <line x1="98" y1="1477.5" x2="180" y2="1477.5" class="ghol2"/>
   <circle cx="132" cy="1489.5" r="11" class="scrg"/>
   <circle cx="132" cy="1465.5" r="11" class="scrg"/>
   <line x1="1892" y1="1477.5" x2="1810" y2="1477.5" class="ghol2"/>
   <circle cx="1858" cy="1489.5" r="11" class="scrg"/>
   <circle cx="1858" cy="1465.5" r="11" class="scrg"/>
-  <circle cx="122" cy="1532" r="11" class="scrg"/>
-  <circle cx="1868" cy="1532" r="11" class="scrg"/>
-  <!-- J9-F: skjult bak fremre stolpe - 1 x 6x60 per kloss, Z 162 -->
-  <circle cx="24" cy="1538" r="11" class="scrg"/>
-  <circle cx="1966" cy="1538" r="11" class="scrg"/>
   <!-- J10: vinkelbeslag + skråskruer ved stubbeføttene.
        Den loddrette fliken ligger på stubbefotens ytterflate (X 572 / 1418),
        den vannrette i vangens underkant (Z 186). -->
@@ -325,11 +310,11 @@
   <line x1="1618.5" y1="1405" x2="1618.5" y2="1458" class="scrl"/><circle cx="1618.5" cy="1405" r="9" class="scr"/>
   <line x1="1506.3" y1="1405" x2="1506.3" y2="1458" class="scrl"/><circle cx="1506.3" cy="1405" r="9" class="scr"/>
   <line x1="1394" y1="1405" x2="1394" y2="1458" class="scrl"/><circle cx="1394" cy="1405" r="9" class="scr"/>
-  <!-- J12: vinkelbeslag under bordbærelektas ender, skjult -->
-  <circle cx="110" cy="1290" r="11" class="scrg"/>
-  <line x1="98" y1="1290" x2="180" y2="1290" class="ghol2"/>
-  <circle cx="1880" cy="1290" r="11" class="scrg"/>
-  <line x1="1892" y1="1290" x2="1810" y2="1290" class="ghol2"/>
+  <!-- J12: vinkelbeslag under bordbærelektas ender (uk Z 409), skjult -->
+  <circle cx="110" cy="1291" r="11" class="scrg"/>
+  <line x1="98" y1="1291" x2="180" y2="1291" class="ghol2"/>
+  <circle cx="1880" cy="1291" r="11" class="scrg"/>
+  <line x1="1892" y1="1291" x2="1810" y2="1291" class="ghol2"/>
 
   <!-- ================= MÅLKJEDE Z (venstre) ================= -->
   <line x1="0" y1="1700" x2="-700" y2="1700" class="ext"/>
@@ -342,12 +327,12 @@
   <line x1="0" y1="1405" x2="-700" y2="1405" class="ext"/>
   <line x1="-680" y1="1441" x2="-680" y2="1405" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="-692" y="1431" class="dm" text-anchor="end">36</text>
-  <line x1="0" y1="1313" x2="-700" y2="1313" class="ext"/>
-  <line x1="-680" y1="1405" x2="-680" y2="1313" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="-692" y="1367" class="dm" text-anchor="end">92</text>
+  <line x1="0" y1="1291" x2="-700" y2="1291" class="ext"/>
+  <line x1="-680" y1="1405" x2="-680" y2="1291" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="-692" y="1355" class="dm" text-anchor="end">114</text>
   <line x1="0" y1="1218" x2="-700" y2="1218" class="ext"/>
-  <line x1="-680" y1="1313" x2="-680" y2="1218" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="-692" y="1274" class="dm" text-anchor="end">95</text>
+  <line x1="-680" y1="1291" x2="-680" y2="1218" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="-692" y="1263" class="dm" text-anchor="end">73</text>
   <line x1="0" y1="733" x2="-700" y2="733" class="ext"/>
   <line x1="-680" y1="1218" x2="-680" y2="733" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="-692" y="983" class="dm" text-anchor="end">485</text>
@@ -387,8 +372,8 @@
   <text x="-180" y="1433" class="sml" text-anchor="end">259  ok benkevange / trinn 1</text>
   <line x1="0" y1="1405" x2="-170" y2="1405" class="ext"/>
   <text x="-180" y="1397" class="sml" text-anchor="end">295  benketopp</text>
-  <line x1="0" y1="1313" x2="-170" y2="1313" class="ext"/>
-  <text x="-180" y="1305" class="sml" text-anchor="end">387  uk bordbærelekt</text>
+  <line x1="0" y1="1291" x2="-170" y2="1291" class="ext"/>
+  <text x="-180" y="1283" class="sml" text-anchor="end">409  uk bordbærelekt</text>
   <line x1="0" y1="1218" x2="-170" y2="1218" class="ext"/>
   <text x="-180" y="1210" class="sml" text-anchor="end">482  ok lekt / trinn 2</text>
   <line x1="0" y1="733" x2="-170" y2="733" class="ext"/>
@@ -534,39 +519,33 @@
   <!-- == blokk mellom venstre stolpe og stigen == -->
   <polyline points="146,690 160,784" class="ldr" marker-start="url(#aE)"/>
   <text x="170" y="790" class="sml" text-anchor="start">Endebjelke 48×98 × 836 (Y −48…788), X 98–146</text>
-  <polyline points="146,751 160,820" class="ldr" marker-start="url(#aE)"/>
-  <text x="170" y="826" class="sml" text-anchor="start">Bærekloss J1-B 36×48, 36 lang – ok Z 967</text>
-  <polyline points="330,1250 160,884" class="ldr" marker-start="url(#aE)"/>
-  <text x="170" y="890" class="sml" text-anchor="start">Bordbærelekt, bak 21×95 × 1794 (X 98–1892) – skjult</text>
-  <polyline points="430,1470 160,948" class="ldr" marker-start="url(#aE)"/>
-  <text x="170" y="954" class="sml" text-anchor="start">Benkevange, front (bit) 48×73 × 642 (X 3–645)</text>
-  <polyline points="48,1538 160,1012" class="ldr" marker-start="url(#aE)"/>
-  <text x="170" y="1018" class="sml" text-anchor="start">Bæreklosser: J9-F foran 48×36×48 (ok Z 186),</text>
-  <text x="170" y="1054" class="sml" text-anchor="start">J9-B bak 48×48×36 (Z 150–186) – begge skjult</text>
-  <polyline points="906,1480 160,1112" class="ldr" marker-start="url(#aE)"/>
-  <text x="170" y="1118" class="sml" text-anchor="start">Avstivningslekt under plate 48×73 × 715 – skjult</text>
-  <polyline points="300,1420 160,1176" class="ldr" marker-start="url(#aE)"/>
-  <text x="170" y="1182" class="sml" text-anchor="start">Benkespile 36×98 × 800, overkant Z 295</text>
+  <polyline points="380,1254 160,838" class="ldr" marker-start="url(#aE)"/>
+  <text x="170" y="844" class="sml" text-anchor="start">Bordbærelekt, bak 48×73 × 1794 – skjult</text>
+  <polyline points="430,1470 160,892" class="ldr" marker-start="url(#aE)"/>
+  <text x="170" y="898" class="sml" text-anchor="start">Benkevange, front (bit) 48×73 × 642 (X 3–645)</text>
+  <polyline points="300,1420 160,946" class="ldr" marker-start="url(#aE)"/>
+  <text x="170" y="952" class="sml" text-anchor="start">Benkespile 36×98 × 800, overkant Z 295</text>
   <polyline points="608,1620 500,1660" class="ldr" marker-start="url(#aE)"/>
   <text x="490" y="1654" class="lbl" text-anchor="end">Stubbefot 48×73 × 186</text>
 
   <!-- == blokk mellom stigen og høyre benk == -->
   <polyline points="1203,700 1280,784" class="ldr" marker-start="url(#aE)"/>
-  <text x="1290" y="790" class="sml" text-anchor="start">Stigevange – skrus til øvre sidevange (J3: 3× 6×80)</text>
-  <polyline points="1155,766 1280,838" class="ldr" marker-start="url(#aE)"/>
-  <text x="1290" y="844" class="sml" text-anchor="start">Rungetrinn 48×73 × 320, ok 259 / 482 / 720 / 958</text>
-  <polyline points="1137,814 1280,892" class="ldr" marker-start="url(#aE)"/>
-  <text x="1290" y="898" class="sml" text-anchor="start">Stigekloss 36×48 × 73 (36 i X, inn i stigeåpningen)</text>
-  <polyline points="1335,1430 1290,946" class="ldr" marker-start="url(#aE)"/>
-  <text x="1290" y="952" class="sml" text-anchor="start">Løs plate 18 mm, 680 × 800 – sengemodus Z 259–277,</text>
-  <text x="1290" y="988" class="sml" text-anchor="start">hviler på bakre benkevange og på trinn 1</text>
-  <text x="1290" y="1042" class="sml" text-anchor="start">J4 / J5 – typisk for alle fire rungetrinn</text>
-  <text x="1290" y="1096" class="sml" text-anchor="start">J7 – 2× 5×60 i hvert omlegg, 2 omlegg per bord</text>
-  <text x="1290" y="1150" class="sml" text-anchor="start">Detaljer: ladder-detail.svg og panel-detail.svg</text>
+  <text x="1290" y="790" class="sml" text-anchor="start">Stigevange – J3: 3 × 6×80 gjennom sidevangen inn i</text>
+  <text x="1290" y="826" class="sml" text-anchor="start">stigevangen, innenfra (hodene ligger på Y 704)</text>
+  <polyline points="1155,766 1280,874" class="ldr" marker-start="url(#aE)"/>
+  <text x="1290" y="880" class="sml" text-anchor="start">Rungetrinn 48×73 × 320, ok 259 / 482 / 720 / 958</text>
+  <polyline points="1137,814 1280,928" class="ldr" marker-start="url(#aE)"/>
+  <text x="1290" y="934" class="sml" text-anchor="start">Stigekloss 36×48 × 73 (36 i X, inn i stigeåpningen)</text>
+  <polyline points="1316,1430 1290,982" class="ldr" marker-start="url(#aE)"/>
+  <text x="1290" y="988" class="sml" text-anchor="start">Løs plate 18 mm, 652 × 798 – sengestilling Z 259–277,</text>
+  <text x="1290" y="1024" class="sml" text-anchor="start">hviler på bakre benkevange og på trinn 1</text>
+  <text x="1290" y="1060" class="sml" text-anchor="start">Avstivningslekt under plate 48×73 × 750, X 785–833 /</text>
+  <text x="1290" y="1096" class="sml" text-anchor="start">1157–1205 – skjult bak stigevangene, stiplet</text>
+  <text x="1290" y="1150" class="sml" text-anchor="start">J4 / J5 typisk for alle fire trinn</text>
+  <text x="1290" y="1186" class="sml" text-anchor="start">Detaljer: ladder-detail.svg og panel-detail.svg</text>
 
   <!-- ================= J-MERKER ================= -->
   <text x="56" y="690" class="jl" text-anchor="start">J1</text>
-  <text x="56" y="806" class="jl" text-anchor="start">J1-B</text>
   <text x="56" y="548" class="jl" text-anchor="start">J2</text>
   <text x="740" y="640" class="jl" text-anchor="start">J3</text>
   <text x="700" y="760" class="jl" text-anchor="start">J4</text>
@@ -575,17 +554,20 @@
   <text x="70" y="80" class="jl" text-anchor="start">J7</text>
   <text x="70" y="1450" class="jl" text-anchor="start">J8</text>
   <text x="190" y="1462" class="jl" text-anchor="start">J8-B</text>
-  <text x="70" y="1592" class="jl" text-anchor="start">J9-F</text>
-  <text x="190" y="1548" class="jl" text-anchor="start">J9-B</text>
   <text x="608" y="1600" class="jl" text-anchor="start">J10</text>
   <text x="240" y="1385" class="jl" text-anchor="start">J11</text>
-  <text x="190" y="1282" class="jl" text-anchor="start">J12</text>
+  <text x="190" y="1283" class="jl" text-anchor="start">J12</text>
 
   <!-- ================= NOTAT ================= -->
-  <rect x="1420" y="1240" width="1180" height="165" class="notebox"/>
-  <text x="1444" y="1284" class="leg" text-anchor="start">INGEN BOLTER I DENNE SENGEN</text>
-  <text x="1444" y="1328" class="sml" text-anchor="start">Alle rammeledd er forborede 6 mm treskruer. En 36 mm stolpe gir en M8 bare 18 mm kantavstand</text>
-  <text x="1444" y="1364" class="sml" text-anchor="start">mot kravet 24 mm (3d); en 6 mm treskrue trenger 18. Ingen forsenkte boltehoder noe sted.</text>
+  <rect x="2000" y="1230" width="620" height="320" class="notebox"/>
+  <text x="2024" y="1272" class="leg" text-anchor="start">INGEN BOLTER – INGEN HODER FORAN</text>
+  <text x="2024" y="1310" class="sml" text-anchor="start">Alle rammeledd er forborede 6 mm treskruer. En</text>
+  <text x="2024" y="1344" class="sml" text-anchor="start">36 mm stolpe gir en M8 bare 18 mm kantavstand</text>
+  <text x="2024" y="1378" class="sml" text-anchor="start">mot kravet 24 mm (3d); en 6 mm treskrue trenger</text>
+  <text x="2024" y="1412" class="sml" text-anchor="start">18. Ingen forsenkte boltehoder noe sted.</text>
+  <text x="2024" y="1446" class="sml" text-anchor="start">Og ingen skruehoder på sengens front: alt fra</text>
+  <text x="2024" y="1480" class="sml" text-anchor="start">Y = 752 og framover drives innenfra – J2, J3, J7</text>
+  <text x="2024" y="1514" class="sml" text-anchor="start">og J8. Begge deler er assert i modellen.</text>
 
   <!-- ================= TEGNFORKLARING ================= -->
   <rect x="-900" y="2140" width="3520" height="420" class="legbox"/>
@@ -597,7 +579,7 @@
   <rect x="-876" y="2314" width="54" height="30" class="brd"/>
   <text x="-806" y="2308" class="sml" text-anchor="start">Bord: spile, rungetrinn, rekkverksbord  (36×98, 48×73)</text>
   <rect x="-876" y="2358" width="54" height="30" class="blk"/>
-  <text x="-806" y="2352" class="sml" text-anchor="start">Bærekloss / stigekloss  (36×48)</text>
+  <text x="-806" y="2352" class="sml" text-anchor="start">Stigekloss  36×48 × 73  (ingen bæreklosser i denne sengen)</text>
   <rect x="-876" y="2402" width="54" height="30" class="pnl"/>
   <text x="-806" y="2396" class="sml" text-anchor="start">Løs plate 18 mm</text>
   <rect x="-876" y="2446" width="54" height="30" class="mat"/>
@@ -607,14 +589,17 @@
   <text x="500" y="2234" class="sml" text-anchor="start">Treskrue i tegningsplanet: prikk = hode, strek = skaftretning</text>
   <circle cx="420" cy="2284" r="11" class="scrg"/>
   <text x="500" y="2278" class="sml" text-anchor="start">Treskrue ut av tegningsplanet (langs Y) eller skjult feste</text>
-  <polyline points="404,2350 404,2322 448,2322" class="brk"/>
-  <text x="500" y="2322" class="sml" text-anchor="start">Stålvinkel (J10 benkevange→stubbefot, J12 bordbærelekt→stolpe)</text>
-  <rect x="406" y="2354" width="54" height="26" class="gho"/>
-  <text x="500" y="2366" class="sml" text-anchor="start">Skjult del, stiplet</text>
-  <text x="500" y="2410" class="sml" text-anchor="start">J-nr = sammenføyning, se docs/generated/beslagliste.md</text>
+  <circle cx="420" cy="2328" r="11" class="scrg"/><circle cx="420" cy="2328" r="4" class="scr"/>
+  <text x="500" y="2322" class="sml" text-anchor="start">Åpen sirkel med prikk: hodet står på den andre siden – skruen drives innenfra</text>
+  <polyline points="404,2394 404,2366 448,2366" class="brk"/>
+  <text x="500" y="2366" class="sml" text-anchor="start">Stålvinkel (J10 benkevange→stubbefot, J12 bordbærelekt→stolpe)</text>
+  <rect x="406" y="2398" width="54" height="26" class="gho"/>
+  <text x="500" y="2410" class="sml" text-anchor="start">Skjult del, stiplet</text>
+  <text x="500" y="2454" class="sml" text-anchor="start">J-nr = sammenføyning, se docs/generated/beslagliste.md</text>
   <text x="1720" y="2234" class="sml" text-anchor="start">Alle mål i mm.</text>
   <text x="1720" y="2278" class="sml" text-anchor="start">Forbor hver eneste treskrue – diameter per ledd står i beslaglista.</text>
   <text x="1720" y="2322" class="sml" text-anchor="start">Ingen bolter og ingen forsenkte boltehoder – bare forborede treskruer.</text>
   <text x="1720" y="2366" class="sml" text-anchor="start">De to bakre hjørnestolpene ligger nøyaktig bak de fremre i denne visningen.</text>
+  <text x="1720" y="2410" class="sml" text-anchor="start">Ingen skruehoder på sengens front (Y ≥ 752): J2, J3, J7 og J8 drives innenfra.</text>
   <text x="-876" y="2506" class="sml" text-anchor="start">Bakre langside står mot vegg (Y = −48): ingen rekkverksbord bak; bakre hjørnestolper (36×98) står I bakre vangeplan og er kappet i Z 1065, så bakre sidevange bærer rett ned på dem. Se end-elevation.svg.</text>
 </svg>
