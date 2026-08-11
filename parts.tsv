@@ -14,10 +14,6 @@ Bed Slat_7	boards	874.769	972.769	-48	752	1163	1199
 Bed Slat_8	boards	1017.23	1115.23	-48	752	1163	1199
 Bed Slat_9	boards	1159.69	1257.69	-48	752	1163	1199
 Bench Rail Back (continuous)	rails	98	1892	-48	0	186	259
-Bench Rail Bearing Block Back Left	boards	98	146	-48	0	150	186
-Bench Rail Bearing Block Back Right	boards	1844	1892	-48	0	150	186
-Bench Rail Bearing Block Front Left	boards	0	48	716	752	138	186
-Bench Rail Bearing Block Front Right	boards	1942	1990	716	752	138	186
 Bench Rail Front Left (segment)	rails	3	645	704	752	186	259
 Bench Rail Front Right (segment)	rails	1345	1987	704	752	186	259
 Bench Slat Left_1	boards	98	196	-48	752	259	295
@@ -38,10 +34,6 @@ Corner Post Back Left	posts	0	98	-48	-12	0	1065
 Corner Post Back Right	posts	1892	1990	-48	-12	0	1065
 Corner Post Front Left	posts	0	98	752	788	0	1700
 Corner Post Front Right	posts	1892	1990	752	788	0	1700
-End Beam Bearing Block Left Back	boards	98	146	-48	-12	931	967
-End Beam Bearing Block Left Front	boards	98	146	752	788	931	967
-End Beam Bearing Block Right Back	boards	1844	1892	-48	-12	931	967
-End Beam Bearing Block Right Front	boards	1844	1892	752	788	931	967
 End Beam Left	rails	98	146	-48	788	967	1065
 End Beam Right	rails	1844	1892	-48	788	967	1065
 Guard Rail Front Left_1	boards	3	835	716	752	1414	1512

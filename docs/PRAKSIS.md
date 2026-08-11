@@ -74,7 +74,10 @@ produktive asserten i filen, fordi antallet skruer i et ledd er akkurat den
 typen tall som blir skrevet ned én gang og aldri kontrollert mot treet. Da den
 ble slått på, strøk den fire tall som hadde stått uimotsagt: bæreklossene
 (36 × 36 mm flate tar én 6 mm skrue, ikke to), stigeklossen, stigevangens
-omlegg og beslagflikene.
+omlegg og beslagflikene. Bæreklossene er siden tatt helt ut av sengen — se
+`ASSEMBLY.md` avsnitt 2 — men det var denne asserten som først målte flaten
+deres, og det var det ene tallet, 1 skrue og ikke 2, som til slutt gjorde det
+tydelig at klossen halverte stålet i stedet for å ta det bort.
 
 Når et antall må ned, er svaret **ikke** å myke opp regelen. Svaret er å
 skrive ned den reelle lastveien og regne på den — se den kombinerte
@@ -225,9 +228,9 @@ målt, hver tegnet kropp mot sitt eget tegnede hode:
 
 | Hoder lang | Hvem |
 |---|---|
-| 1,81 | 5×40, J10 (steg 5) og J12 (steg 1) — de korteste i boka |
-| 1,85 | 6×60, J9-F (steg 3) — den korteste GULVET selv lager |
-| 2,2–3,3 | alt annet |
+| 1,81–1,82 | 5×40, J10 (steg 5) og J12 (steg 1) — de korteste i boka |
+| 2,22 | 5×60, J7 (steg 9) — den korteste GULVET selv lager |
+| 2,3–5,1 | alt annet |
 
 Svaret er nei, og målingen er hvorfor. De stubbete kroppene er ikke gulvet i
 det hele tatt: en 5×40 projiseres i denne vinkelen til 35,6 av sine 40 mm, godt
@@ -528,9 +531,10 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   sted: de to stubbefotbeslagene på steg 5 ligger 437 mm fra hverandre i én og
   samme klynge, og uten kuttet ville det andre hjørnets vinkel stått uten
   bokstav med sin egen Ⓓ en halv side unna.
-* **KROPPER slås aldri sammen på tvers av ledd.** På steg 3 møtes endebjelkens
-  to 6×90 og bæreklossens ene i det samme hjørnet, og «3×» der ville sendt
-  byggeren til feil hull. To ledd, to kropper. Regelen er ett flagg i
+* **KROPPER slås aldri sammen på tvers av ledd.** Regelen ble skrevet på steg
+  3, der endebjelkens to 6×90 og bæreklossens ene møttes i det samme hjørnet
+  og «3×» ville sendt byggeren til feil hull. Klossen er borte nå, men
+  regelen står: to ledd i samme hjørne er to kropper. Regelen er ett flagg i
   `render_lineart.py` (`MERGE_ACROSS_JOINTS`), så den er en linje å snu og
   ikke en antakelse å lete etter — men den står av, og tegningene er tegnet
   med den av.

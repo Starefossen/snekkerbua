@@ -31,7 +31,6 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **482** | bordbærelektas overkant = trinn 2 = platens underside i bordstilling |
 | **500** | bordplate |
 | **720** | trinn 3 |
-| **931** | bæreklossen J1-B, underkant |
 | **958** | trinn 4 |
 | **967** | endebjelkens underkant |
 | **1065** | endebjelkens overkant = sidevangens underkant (fri høyde under sengen) |

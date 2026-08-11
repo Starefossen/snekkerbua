@@ -304,8 +304,7 @@ def build_steps(G):
             n=1,
             title="Bakrammen — bygg den flatt på gulvet",
             parts=["Corner Post Back *", "Upper Side Rail Back",
-                   "Bench Rail Back (continuous)", "Table Ledger Back",
-                   "Bench Rail Bearing Block Back *"],
+                   "Bench Rail Back (continuous)", "Table Ledger Back"],
             camera=(330, 24, 3.4),
             half_view=True,
             intro="Hele baksiden av sengen er ett eneste flatt lag: to korte "
@@ -320,12 +319,14 @@ def build_steps(G):
                 "Legg den bakre sidevangen oppå stolpetoppene. Den skal "
                   "hvile på endeveden, ikke henge på siden av stolpen. Fest "
                   "etter J2-B.",
-                "Skru bæreklossene J9-B på innsiden av begge stolper. "
-                  "Klossene er det den bakre benkevangen skal hvile på.",
-                "Legg den bakre benkevangen ned mellom stolpene, på "
-                  "klossene, og fest den etter J8-B. Vangen er kappet "
-                  "nøyaktig så den fyller mellom de to stolpene — den kan "
-                  "ikke tres inn senere.",
+                "Legg den bakre benkevangen ned mellom stolpene og fest den "
+                  "etter J8-B. Det står ingen kloss under vangeenden — "
+                  "**hullene du boret i steg 0 er jiggen**: vangen har "
+                  "nøyaktig én høyde der hullene i vangen og hullene i "
+                  "stolpen står over hverandre. Legg en list eller en tvinge "
+                  "under vangen mens du skrur hvis du er alene. Vangen er "
+                  "kappet nøyaktig så den fyller mellom de to stolpene — den "
+                  "kan ikke tres inn senere.",
                 "J8-B er skråskruer, og de skal ha SETE først: klem "
                   "vinkelklossen fra steg 0 mot vangens forside med "
                   f"{G.TOE_JIG_ANGLES['J8-B']:g}°-rampa over merket, bor "
@@ -344,7 +345,7 @@ def build_steps(G):
                   "ligge helt flatt mot veggen.",
                 "Legg vinkelhaken på begge hjørner.",
             ],
-            joints={'J2-B': 2, 'J8-B': 2, 'J9-B': 2, 'J12': 2},
+            joints={'J2-B': 2, 'J8-B': 2, 'J12': 2},
         ),
         dict(
             n=2,
@@ -384,27 +385,21 @@ def build_steps(G):
         dict(
             n=3,
             title="Endebjelkene og de fremre stolpene",
-            parts=["Corner Post Front *", "End Beam Left", "End Beam Right",
-                   "End Beam Bearing Block *",
-                   "Bench Rail Bearing Block Front *"],
+            parts=["Corner Post Front *", "End Beam Left", "End Beam Right"],
             camera=(325, 22, 3.4),
             half_view=True,
             intro="Nå bygges de to endene ut fra bakrammen. Endebjelken går "
                   "fra den bakre stolpen til den fremre og bærer begge "
                   "sidevanger.",
             do=[
-                "Skru bæreklossene J1-B fast på innsiden av begge stolper — "
-                  "også på den bakre, som allerede står. De skrus fra "
-                  "klossens frie ende, inne fra sengen, så du kommer til når "
-                  "som helst.",
-                "Skru bæreklossen J9-F på baksiden av den fremre stolpen "
-                  "mens den ennå ligger på gulvet. Merk deg at denne "
-                  "klossen tar en kortere skrue enn de andre — det er bare "
-                  "36 mm stolpe bak den.",
                 "Reis den fremre stolpen på plass mot sideveggen.",
-                "Legg endebjelken opp på de to bæreklossene J1-B og fest den "
-                  "til begge stolper etter J1. Bjelken hviler på klossene — "
-                  "den henger ikke i festemidlene.",
+                "Legg endebjelken opp mellom de to stolpene og fest den til "
+                  "begge etter J1. **Det er ingen bærekloss under "
+                  "bjelkeenden, og hullene fra steg 0 er jiggen:** bjelken "
+                  "har nøyaktig én høyde der hullene i bjelken og hullene i "
+                  "stolpen møtes, så du kan ikke sette den skjevt. Klem en "
+                  "list på stolpens innside i høyde med bjelkens underkant "
+                  "hvis du bygger alene — den listen tas av igjen.",
                 "Gjenta i den andre enden.",
             ],
             check=[
@@ -416,7 +411,7 @@ def build_steps(G):
                   "fremre vangen samme høyde som den bakre.",
                 "Kjenn etter at ingenting stikker ut mot sideveggene.",
             ],
-            joints={'J1': 4, 'J1-B': 4, 'J9-F': 2},
+            joints={'J1': 4},
         ),
         dict(
             n=4,
@@ -427,7 +422,12 @@ def build_steps(G):
                   "på begge endebjelker og festes til de fremre stolpene.",
             do=[
                 "Løft vangen opp på endebjelkene, på utsiden av dem.",
-                "Fest den til begge fremre stolper etter J2.",
+                "Fest den til begge fremre stolper etter J2. **Skruene "
+                  "drives innenfra:** du står inne i sengerammen — den er "
+                  "tom, spilene kommer først i steg 8 — og skrur gjennom "
+                  "vangens innside og inn i stolpen. Da blir stolpens "
+                  "forside, som er den flaten rommet ser, helt uten "
+                  "skruehoder.",
             ],
             check=[
                 "Mål avstanden mellom de to sidevangene i begge ender og på "
@@ -448,8 +448,12 @@ def build_steps(G):
             intro="Den fremre benkevangen er delt i to. Midtpartiet er med "
                   "vilje åpent, slik at gulvet foran stigen er helt fritt.",
             do=[
-                "Fest hver vangebit til sin fremre hjørnestolpe etter J8, på "
-                  "bæreklossen J9-F — den du satte på i steg 3.",
+                "Fest hver vangebit til sin fremre hjørnestolpe etter J8. "
+                  "**Skruene drives innenfra**, fra vangens innside og inn i "
+                  "stolpen, så stolpens forside blir stående uten "
+                  "skruehoder. Du kommer til ovenfra: benken er åpen til "
+                  "spilene går på i steg 7. Ingen kloss under enden — "
+                  "hullene fra steg 0 holder vangen i riktig høyde.",
                 "Sett en stubbefot under den innerste enden av hver "
                   "vangebit. Vangebiten skal slutte akkurat der foten står — "
                   "ingen utstikk forbi foten.",
@@ -488,8 +492,11 @@ def build_steps(G):
                   "skal ligge i flukt med stigevangenes forkant — trinnene "
                   "stikker BAKOVER, ikke framover. Det som stikker bakover er "
                   "hylla den løse platen skal hvile på.",
-                "Skru stigen fast til vangen etter J3. Forbor tvers gjennom "
-                  "stigevangen.",
+                "Skru stigen fast til vangen etter J3 — **innenfra**, "
+                  "gjennom sidevangen og inn i stigevangen, så stigevangens "
+                  "forside blir uten skruehoder. Klem stigen fast mot vangen "
+                  "først; du står på den andre siden når du skrur. "
+                  "Gjennomgangshullene er boret i steg 0.",
             ],
             check=[
                 "Mål lysåpningen mellom stigevangene øverst og nederst — den "
@@ -745,11 +752,6 @@ NO_NAMES = {
     "Ladder upright (D13)": "Stigevange",
     "Ladder rung (tread)": "Rungetrinn",
     "Ladder rung block": "Stigekloss",
-    "Bearing block, end beam (C2)": "Bærekloss, endebjelke (J1-B)",
-    # All four are the same piece off the same stick; the back pair is the
-    # J9-B joint (6x90 into the back post) and the front pair J9-F (6x60 -
-    # only 36 mm of post behind it), so the label has to name both.
-    "Bearing block, bench rail (C2)": "Bærekloss, benkevange (J9-B / J9-F)",
     "Bench rail, back (C5)": "Benkevange, bak (gjennomgående)",
     "Bench rail, front segment (D13)": "Benkevange, front (bit)",
     "Bench stub leg (W3)": "Stubbefot",
@@ -772,14 +774,12 @@ NO_NAMES = {
 # renames a part, the assert in `part_cut_keys` fires.
 LABEL_TO_CUT = [
     ("Upper Side Rail", "Upper side rail"),
-    ("End Beam Bearing Block", "Bearing block, end beam (C2)"),
     ("End Beam", "End beam"),
     ("Corner Post Back", "Corner post, back (W2, wall side)"),
     ("Corner Post Front", "Corner post, front"),
     ("Ladder Upright", "Ladder upright (D13)"),
     ("Rung Block", "Ladder rung block"),
     ("Ladder Rung_", "Ladder rung (tread)"),
-    ("Bench Rail Bearing Block", "Bearing block, bench rail (C2)"),
     ("Bench Rail Back", "Bench rail, back (C5)"),
     ("Bench Rail Front", "Bench rail, front segment (D13)"),
     ("Bench Stub Leg", "Bench stub leg (W3)"),
@@ -1137,7 +1137,6 @@ def emit_nokkelmal(G, out_dir, rows):
         (G.PANEL_TOP_TABLE, "bordplate"),
         (G.RUNG_TOPS[2], "trinn 3"),
         (G.RUNG_TOPS[3], "trinn 4"),
-        (G.BEAM_BLOCK_Z0, "bæreklossen J1-B, underkant"),
         (G.END_BEAM_Z0, "endebjelkens underkant"),
         (G.RAIL_BOTTOM, "endebjelkens overkant = sidevangens underkant "
                         "(fri høyde under sengen)"),
@@ -1739,6 +1738,12 @@ def emit_skrueretninger(G, out_dir, idx):
          "gjennomgående bolt, beslagflik) — da er retningen den som står i "
          "leddtabellen, og den er satt for hånd og kontrollert mot "
          "geometrien.\n\n",
+         "**Der begge veier holder målene, avgjør fronten.** Sengens front "
+         "— alt fra vangenes ytterflate og fram til stolpeplanet — er den "
+         "eneste flaten noen ser på, og det skal ikke stå et skruehode i "
+         "den. Ledd som griper i en del i det laget skrus derfor innenfra og "
+         "ut, og linjene under sier det. Modellen asserter det: ingen "
+         "festemiddelhoder på en romvendt flate.\n\n",
          "| Ledd | Festemiddel | Retning | Grunnlag |\n",
          "|---|---|---|---|\n"]
 
@@ -1817,6 +1822,16 @@ def emit_skrueretninger(G, out_dir, idx):
         basis = BASIS[status]
         if dr["exempt"]:
             basis += f" — {dr['exempt']}"
+        # V5: where the fit rule cannot decide, the visible front does. Read
+        # off the same geometry the model asserts on, not off a list of joint
+        # ids: the screw runs OUT of the room-front (+Y) into a member that
+        # reaches the visible layer, so the other direction would have put
+        # its head on a face the room looks at.
+        elif (status == "tvetydig" and f["kind"] == "screw"
+              and f["through"] is not None and f["direction"][1] > 1e-9
+              and f["into"].extents[1][1] >= G.VISIBLE_FRONT_Y - 1e-6):
+            basis += (" — skrudd innenfra og ut, så hodet ikke havner på "
+                      "den romvendte forflaten")
         if status == "utledet":
             n_derived += 1
         else:

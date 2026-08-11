@@ -36,18 +36,17 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 
 Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannrette deler i samme plan. Det laget er monteringsflaten mot veggen. Og det MÅ bygges som én ramme: den bakre benkevangen og bordbærelekta er kappet til å fylle nøyaktig mellom de to stolpene, så de lar seg ikke tre inn etterpå.
 
-**Deler:** 1× Benkevange, bak (gjennomgående) 48×73 × 1794 · 1× Bordbærelekt, bak 48×73 × 1794 · 2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1065 · 1× Sidevange, øvre 48×98 × 1984
+**Deler:** 1× Benkevange, bak (gjennomgående) 48×73 × 1794 · 1× Bordbærelekt, bak 48×73 × 1794 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1065 · 1× Sidevange, øvre 48×98 × 1984
 
-**Festemidler:** 4× Treskrue 5×40 forsenket Torx · 4× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×90 forsenket Torx · 2× Vinkelbeslag 40×40×20
+**Festemidler:** 4× Treskrue 5×40 forsenket Torx · 4× Treskrue 6×120 forsenket Torx · 4× Treskrue 6×90 forsenket Torx · 2× Vinkelbeslag 40×40×20
 
-**Ledd:** J2-B, J8-B, J9-B, J12 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+**Ledd:** J2-B, J8-B, J12 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
 **Slik gjør du:**
 
 1. Legg de to bakre stolpene ut i riktig avstand. De er de korte — de stopper under sidevangen.
 1. Legg den bakre sidevangen oppå stolpetoppene. Den skal hvile på endeveden, ikke henge på siden av stolpen. Fest etter J2-B.
-1. Skru bæreklossene J9-B på innsiden av begge stolper. Klossene er det den bakre benkevangen skal hvile på.
-1. Legg den bakre benkevangen ned mellom stolpene, på klossene, og fest den etter J8-B. Vangen er kappet nøyaktig så den fyller mellom de to stolpene — den kan ikke tres inn senere.
+1. Legg den bakre benkevangen ned mellom stolpene og fest den etter J8-B. Det står ingen kloss under vangeenden — **hullene du boret i steg 0 er jiggen**: vangen har nøyaktig én høyde der hullene i vangen og hullene i stolpen står over hverandre. Legg en list eller en tvinge under vangen mens du skrur hvis du er alene. Vangen er kappet nøyaktig så den fyller mellom de to stolpene — den kan ikke tres inn senere.
 1. J8-B er skråskruer, og de skal ha SETE først: klem vinkelklossen fra steg 0 mot vangens forside med 25°-rampa over merket, bor ⌀18 forstner 18 mm ned LANGS rampa, og forbor videre i samme spor. Da ligger skruehodet flatt i bunnen av lommen og helt under treet.
 1. Sett vinkelbeslagene til bordbærelekta på stolpenes innsider, legg lekta på høykant mellom stolpene og fest etter J12.
 
@@ -83,18 +82,16 @@ Sengen festes til veggen gjennom den bakre sidevangen. Vangen ligger flatt mot v
 
 Nå bygges de to endene ut fra bakrammen. Endebjelken går fra den bakre stolpen til den fremre og bærer begge sidevanger.
 
-**Deler:** 2× Bærekloss, benkevange (J9-B / J9-F) 36×48 × 48 · 4× Bærekloss, endebjelke (J1-B) 36×48 × 36 · 2× Endebjelke 48×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
+**Deler:** 2× Endebjelke 48×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
 
-**Festemidler:** 2× Treskrue 6×60 forsenket Torx · 12× Treskrue 6×90 forsenket Torx
+**Festemidler:** 8× Treskrue 6×90 forsenket Torx
 
-**Ledd:** J1, J1-B, J9-F — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+**Ledd:** J1 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
 **Slik gjør du:**
 
-1. Skru bæreklossene J1-B fast på innsiden av begge stolper — også på den bakre, som allerede står. De skrus fra klossens frie ende, inne fra sengen, så du kommer til når som helst.
-1. Skru bæreklossen J9-F på baksiden av den fremre stolpen mens den ennå ligger på gulvet. Merk deg at denne klossen tar en kortere skrue enn de andre — det er bare 36 mm stolpe bak den.
 1. Reis den fremre stolpen på plass mot sideveggen.
-1. Legg endebjelken opp på de to bæreklossene J1-B og fest den til begge stolper etter J1. Bjelken hviler på klossene — den henger ikke i festemidlene.
+1. Legg endebjelken opp mellom de to stolpene og fest den til begge etter J1. **Det er ingen bærekloss under bjelkeenden, og hullene fra steg 0 er jiggen:** bjelken har nøyaktig én høyde der hullene i bjelken og hullene i stolpen møtes, så du kan ikke sette den skjevt. Klem en list på stolpens innside i høyde med bjelkens underkant hvis du bygger alene — den listen tas av igjen.
 1. Gjenta i den andre enden.
 
 **Sjekk før du går videre:**
@@ -117,7 +114,7 @@ Den fremre vangen lukker rammen i overetasjen. Den hviler på begge endebjelker 
 **Slik gjør du:**
 
 1. Løft vangen opp på endebjelkene, på utsiden av dem.
-1. Fest den til begge fremre stolper etter J2.
+1. Fest den til begge fremre stolper etter J2. **Skruene drives innenfra:** du står inne i sengerammen — den er tom, spilene kommer først i steg 8 — og skrur gjennom vangens innside og inn i stolpen. Da blir stolpens forside, som er den flaten rommet ser, helt uten skruehoder.
 
 **Sjekk før du går videre:**
 
@@ -137,7 +134,7 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 
 **Slik gjør du:**
 
-1. Fest hver vangebit til sin fremre hjørnestolpe etter J8, på bæreklossen J9-F — den du satte på i steg 3.
+1. Fest hver vangebit til sin fremre hjørnestolpe etter J8. **Skruene drives innenfra**, fra vangens innside og inn i stolpen, så stolpens forside blir stående uten skruehoder. Du kommer til ovenfra: benken er åpen til spilene går på i steg 7. Ingen kloss under enden — hullene fra steg 0 holder vangen i riktig høyde.
 1. Sett en stubbefot under den innerste enden av hver vangebit. Vangebiten skal slutte akkurat der foten står — ingen utstikk forbi foten.
 1. Sett de to bakre stubbeføttene under den bakre benkevangen, rett under de samme punktene.
 1. Fest alle fire føtter etter J10. Den ene 5×70 per fot er en skråskrue og skal ha SETE først — vinkelklossen fra steg 0, 30°-rampa mot fotens innerside, ⌀18 forstner 18 mm ned langs rampa, så forboret i samme spor.
@@ -163,7 +160,7 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 1. Skru stigeklossene på innsiden av hver stigevange (J5). Klosshøyden er trinnhøyden — mål to ganger.
 1. Legg trinnene på klossene og fest dem (J4).
 1. Reis stigen mot den fremre sidevangen. Trinnenes forkant skal ligge i flukt med stigevangenes forkant — trinnene stikker BAKOVER, ikke framover. Det som stikker bakover er hylla den løse platen skal hvile på.
-1. Skru stigen fast til vangen etter J3. Forbor tvers gjennom stigevangen.
+1. Skru stigen fast til vangen etter J3 — **innenfra**, gjennom sidevangen og inn i stigevangen, så stigevangens forside blir uten skruehoder. Klem stigen fast mot vangen først; du står på den andre siden når du skrur. Gjennomgangshullene er boret i steg 0.
 
 **Sjekk før du går videre:**
 

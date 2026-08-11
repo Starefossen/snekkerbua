@@ -10,7 +10,7 @@ Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regne
 | Dimensjon | Kjøp | Svinn |
 |---|---|---:|
 | **18 mm plate, 652 bred** | 1 plate 18 mm kryssfiner furu, minst 652 × 798 mm | — |
-| **36×48** | **1 stk. 4,8 m** | 10 % |
+| **36×48** | **1 stk. 4,2 m** | 5 % |
 | **36×98** | **7 stk. 4,8 m** | 16 % |
 | **48×73** | **1 stk. 4,8 m** + **1 stk. 4,2 m** | 4 % |
 | **48×98** | **1 stk. 4,2 m** + **1 stk. 2,4 m** | 15 % |
@@ -23,11 +23,11 @@ Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regne
 
 ### 36×48
 
-Kjøpt 4,80 m, brukt 4,32 m, svinn 10 %.
+Kjøpt 4,20 m, brukt 3,98 m, svinn 5 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 4 × 48 (Bærekloss, benkevange (J9-B / J9-F)) + 4 × 36 (Bærekloss, endebjelke (J1-B)) + 8 × 73 (Stigekloss) + 2 × 1700 (Stigevange) | 412 |
+| 1 | 4200 | 8 × 73 (Stigekloss) + 2 × 1700 (Stigevange) | 180 |
 
 ### 36×98
 

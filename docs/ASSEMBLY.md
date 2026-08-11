@@ -71,32 +71,53 @@ er derfor **forborede treskruer i 6 mm** — det samme mønsteret som stigevange
 bruker. For en 6 mm skrue er kravet til kantavstand nøyaktig det en
 stolpetykkelse gir på midtlinjen.
 
-Det er ikke en nødløsning. **Tre bærer på tre overalt — bortsett fra i
-bæreklossene, og der er skruen lasten.** Hver eneste lange del hviler på noe:
-sidevangene på endebjelkene, den bakre sidevangen rett på stolpetoppene,
-endebjelken på bæreklossene J1-B, benkevangene på klossene J9-B/J9-F og på
-stubbeføttene. Ingen av *de* skruene er opplegg.
+Det er ikke en nødløsning. **Tre bærer på tre der tre kan bære på tre.** Hver
+eneste lange del hviler på noe: sidevangene på endebjelkene, den bakre
+sidevangen rett på stolpetoppene, benkevangene på stubbeføttene. Ingen av *de*
+skruene er opplegg.
 
-Men klossen selv står ikke på noe. Den henger på stolpen i skruene sine, og de
-skruene står i **skjær** — det er den eneste plassen i rammen der en loddrett
-reaksjon går gjennom stål. Det er verdt å si rett ut, for det er også den
-plassen hvor antallet skruer betyr noe:
+Tre hjørner har ikke noe å hvile på, og der går den loddrette reaksjonen
+gjennom stål. Det står her, rett ut, fordi det er der antallet skruer betyr
+noe:
 
-* **J1-B**, under endebjelken: klossflaten mot stolpen er 36 × 36 mm, og der
-  er det bare plass til **én** 6 mm skrue med lovlig kantavstand. Én 6 mm
-  skrue i skjær ≈ 2,0 kN mot ≤ 1 kN hjørnereaksjon — utnyttelse 0,50.
-* **J9-B / J9-F**, under benkevangene: samme flate, samme svar, men lasten er
-  halvparten — utnyttelse 0,25.
-* **Ingen av dem står alene.** I det samme hjørnet er den bårne delen selv
-  skrudd til den samme stolpen — endebjelken med to 6×90 (J1), den bakre
-  benkevangen med to skrå 6×90 (J8-B), den fremre med to 6×80 (J8) — og de
-  skruene tar skjær i nøyaktig samme snitt. Regnet som den kombinerte
-  skjærveien den er, blir hjørnet 3 × 6 mm = 6,0 kN mot 1 kN, altså **0,17**.
-  Klossen er der for å ta bruddformen bort fra bjelkeenden, ikke for å være
-  det eneste som holder.
+* **J1**, endebjelken mot stolpen: to 6×90 i skjær ≈ 4,0 kN mot ≤ 1 kN
+  hjørnereaksjon — utnyttelse **0,25**.
+* **J8**, den fremre benkevangebiten mot stolpen: to 6×80 ≈ 4,0 kN mot
+  0,5 kN — **0,13**.
+* **J8-B**, den bakre benkevangen mot stolpen: to skrå 6×90 ≈ 4,0 kN mot
+  0,5 kN — **0,13**. Skruene står skrått i planet, men lasten står loddrett
+  på dem uansett, så skråstillingen koster ingenting.
+
+**Her sto det åtte bæreklosser før, og de er tatt bort.** Argumentet for dem
+var at delen skulle *bære på tre* i stedet for å henge i skruer. Følg det ett
+skritt til, og det spiser seg selv: klossen står ikke på noe heller. Den
+henger på stolpen i **én** 6 mm skrue — 2,0 kN mot inntil 1 kN, utnyttelse
+0,50, den høyeste skrueraden i hele sengen. Klossen tok ikke lasten ut av
+stålet; den halverte stålet leddet ellers hadde hatt.
+
+Sprekkfaren klossen ble kjøpt mot er også målt nå. Skruene i bjelkeenden står
+18 mm (3 × skruediameteren) fra bjelkens ende langs fiberretningen og 27 mm
+(4,5 ×) fra kanten i den retningen lasten virker, i 48 × 98 mm C24. Det er et
+helt vanlig omlegg, med bedre kantavstand enn regelen krever — ikke en sprø
+endeskjøt.
+
+**Det klossen egentlig var, var en jigg:** en hylle å legge delen på mens du
+skrudde den fast. Den jobben gjør nå hullene. Alle gjennomgangshull bores i
+steg 0, gjennom begge deler samtidig med delene tvunget sammen, og et
+hullmønster har nøyaktig én stilling der det står over seg selv. Delen kan
+ikke settes i feil høyde.
 
 Alt dette står i lasttabellen i vedlegg A, rad for rad. Bolten er fortsatt
 borte, og det er fortsatt riktig.
+
+**Og én ting til, som ikke er statikk:** ingen skruehoder står på sengens
+front. Alt fra vangenes ytterflate og fram til stolpeplanet er den eneste
+flaten noen ser på, og J2, J3 og J8 skrus derfor **innenfra og ut** — gjennom
+den 48 mm tykke vangen og inn i den 36 mm tykke stolpen eller stigevangen, i
+stedet for omvendt. Begge veier holder målene like godt (36 + 48 er det samme
+som 48 + 36, og spissdekningen er 4 mm uansett vei), så det er utseendet som
+avgjør, og modellen har en assert som sier det: ingen festemiddelhoder på en
+romvendt flate. Rekkverksbordene har vært skrudd slik hele tiden.
 
 **Én konsekvens til, og den er god:** ingenting i rammen festes lenger fra en
 flate som ender mot vegg. Da finnes det heller ingen skruehoder som må senkes
@@ -149,8 +170,8 @@ Derfor:
    vannrette bakre delene, som ikke kan settes inn senere.
 2. **Bakrammen reises og skrus fast i veggen.** Nå står baksiden, i lodd og i
    vater, og resten bygges framover fra den.
-3. **Endene bygges ut:** bæreklosser, fremre stolpe, endebjelke. Én ende av
-   gangen.
+3. **Endene bygges ut:** fremre stolpe, så endebjelke. Én ende av gangen.
+   Det står ingen kloss under bjelkeenden — de forborede hullene er jiggen.
 4. **Fronten lukkes:** fremre sidevange, så de to fremre benkevangene og alle
    fire stubbeføtter.
 5. **Resten kommer forfra og ovenfra:** stige, benkespiler, køyespiler,
@@ -233,36 +254,40 @@ Endebjelken støter mot stolpens innside og skrus gjennom bjelken og inn i
 stolpen. Skruene går på tvers av fiberretningen i begge deler, ikke inn i
 endeved.
 
-**Bjelken henger ikke i skruene.** Den står på en kloss — se J1-B. Skruene er
-bånd som holder rammen sammen.
+**De to skruene er hele festet.** Det står ingen kloss under bjelkeenden — den
+sto der til denne runden, og den er tatt bort, fordi en kloss som selv henger i
+én skrue gir leddet halvparten så mye stål som bjelkens egne to. Se avsnitt 2
+og lasttabellen: 4,0 kN mot en hjørnereaksjon på høyst 1 kN, utnyttelse 0,25.
+
+Skruene står 18 mm fra bjelkens ende og 27 mm fra over- og underkant. Begge er
+over minstekravet for en 6 mm skrue, og den som betyr mest her — kantavstanden
+i lastretningen — har halvannen gang så mye.
+
+**Hullene er jiggen.** Gjennomgangshullene i bjelken og styrehullene i stolpen
+bores i steg 0, gjennom begge deler samtidig. Da har bjelken nøyaktig én høyde
+der hullene står over hverandre, og du kan ikke montere den skjevt. Bygger du
+alene: klem en list på stolpens innside i høyde med bjelkens underkant, legg
+bjelken på den, skru, og ta listen av igjen.
 
 Skruene drives inne fra sengen. Du kommer til dem når som helst, både under
 byggingen og når du skal ettertrekke.
 
-### J1-B — Bærekloss under endebjelken
-
-En kort kloss skrudd på stolpens innside, rett under bjelkeenden. Bjelken hviler
-på klossen. Uten den ville hele lasten hengt i to skruer nær enden av bjelken —
-og bruddformen der er sprø oppflising av veden.
-
-Skruen drives fra klossens frie ende og inn i stolpen — inne fra sengen. Det er
-**én** skrue, ikke to: klossens flate mot stolpen er 36 × 36 mm, og to 6 mm
-skruer trenger 60 mm av den flaten (4d mellom dem og 3d til hver kant). Klossen
-er liten, så forbor gjennom den; en kloss som sprekker under skruen bærer ikke.
-
-Den ene skruen står i skjær og bærer hjørnereaksjonen sammen med endebjelkens
-egne to — se lasttabellen og avsnitt 2.
-
 ### J2 — Fremre sidevange → fremre hjørnestolpe
 
-Vangen ligger flatt mot stolpen. Skruene drives fra stolpens forside, gjennom
-stolpen og inn i vangen, og du kommer til dem når som helst.
+Vangen ligger flatt mot stolpen. **Skruene drives innenfra og ut:** du står
+inne i sengerammen — den er tom, spilene kommer flere steg senere — og skrur
+gjennom vangens innside, gjennom vangen og inn i stolpen.
+
+Det er en utseendebeslutning, og den er tatt bevisst. Stolpens forside er en
+av de flatene rommet faktisk ser, og der skal det ikke stå skruehoder. Begge
+retninger holder målene like godt: 48 mm vange pluss 36 mm stolpe er det
+samme stykket tre som 36 pluss 48, og spissen har 4 mm tre bak seg uansett vei
+— så det er ikke statikken som velger. Se avsnitt 2.
 
 Vangen bærer ikke i skruene — den ligger på begge endebjelker.
 
-Merk skruelengden: her går skruen gjennom en tynn stolpe og inn i en tykk vange,
-og den skal **ikke** komme ut på baksiden av vangen. Bruk lengden som står i
-beslaglista, ikke den lengste du har i esken.
+Merk skruelengden: skruen skal **ikke** komme ut på stolpens forside. Bruk
+lengden som står i beslaglista, ikke den lengste du har i esken.
 
 ### J2-B — Bakre sidevange → bakre hjørnestolpe
 
@@ -286,16 +311,20 @@ tre, og veggfestet sitter i den samme vangen noen centimeter unna.
 
 ### J3 — Stigevange → fremre sidevange
 
-Tre kraftige treskruer gjennom stigevangen og inn i sidevangen. Leddet er
+Tre kraftige treskruer gjennom sidevangen og inn i stigevangen. Leddet er
 skrudd, ikke boltet — samme mønster som resten av rammen bruker, se J1, J2
 og J8. Tre og ikke fire: omlegget er 48 × 98 mm, og fire 6 mm skruer i én rad
 ville krevd 108 mm der det er 98. Fire i to par ville krevd 60 mm på tvers der
 det er 48.
 
-Stigevangen står med den tynne siden mot rommet, så skruene treffer vangen på
+**Retningen er innenfra og ut**, som J2 og av samme grunn: stigevangens
+forside står i sengens front, og der skal det ikke stå skruehoder. Klem stigen
+fast mot sidevangen først — du står på den andre siden når du skrur.
+
+Stigevangen står med den tynne siden mot rommet, så skruene treffer den på
 midtlinjen med akkurat den kantavstanden en 6 mm skrue skal ha.
 
-Forbor gjennomgående i stigevangen, og forbor i sidevangen også. Skruene sitter
+Forbor gjennomgående i sidevangen, og forbor i stigevangen også. Skruene sitter
 i én loddrett rad, én over og én under vangens midtlinje med den tredje midt
 imellom, slik at leddet tar moment.
 
@@ -348,8 +377,14 @@ Det er ikke rekkverk på baksiden. Se sikkerhetsavsnittet.
 
 To ulike ledd, ett foran og ett bak.
 
-**J8, foran:** vangebiten ligger flatt mot stolpen, og skruene kommer fra
-stolpens forside — samme detalj som J2.
+**J8, foran:** vangebiten ligger flatt mot stolpen, og skruene drives
+**innenfra og ut**, fra vangens innside og inn i stolpen — samme detalj som
+J2, og av samme grunn: stolpens forside skal stå uten skruehoder. Du kommer
+til ovenfra så lenge benken er åpen, altså før benkespilene går på.
+
+De to skruene er hele endefestet: 4,0 kN i skjær mot en endereaksjon på
+0,5 kN. Det sto en bærekloss under denne enden til denne runden; se avsnitt 2
+for hvorfor den er borte.
 
 **J8-B, bak:** den bakre benkevangen går fra stolpe til stolpe og støter mot
 stolpens sideflate med enden. Her går skruene **skrått** fra vangens forside inn
@@ -378,22 +413,13 @@ ligger **på** rampa, både forstnerboret og forboret etterpå. Da får hullet d
 vinkelen leddet er regnet på. Klossen kappes i steg 0 og er et
 verkstedhjelpemiddel, ikke en del av sengen — den skal ikke bygges inn noe sted.
 
-I begge tilfeller hviler vangen på en bærekloss (J9-B / J9-F). Skruene er bånd,
-ikke opplegg.
+I begge tilfeller er de to skruene hele endefestet. Det står ingen kloss under
+noen av dem — de to skruene i hver ende tar reaksjonen i skjær med utnyttelse
+0,13, og hullene fra steg 0 holder vangen i riktig høyde mens du skrur. Legg
+gjerne en list eller en tvinge under enden hvis du er alene.
 
-### J9-B og J9-F — Bæreklosser under benkevangene
-
-Samme prinsipp som J1-B: vangeenden står på tre. Uten klossen ville et par
-skruer alene være et hengsel, og benkeenden ville vippe.
-
-De to bakre klossene (J9-B) sitter på de bakre stolpenes innsider og monteres
-mens bakrammen ligger flat. De to fremre (J9-F) sitter på de fremre stolpenes
-baksider. **Én skrue per kloss**, av samme grunn som ved J1-B: flaten mot
-stolpen er 36 × 36 / 48 × 48 mm, og det er ikke lovlig plass til to.
-
-**J9-F tar en kortere skrue enn alle de andre klossene.** Det står bare en
-stolpetykkelse bak den, og en for lang skrue kommer ut på stolpens forside.
-Sjekk lengden i beslaglista før du skrur.
+Vangen vipper ikke av at klossen er borte: den er festet i to punkter i hver
+ende, over 73 mm høyde, og den andre enden står på en stubbefot.
 
 ### J10 — Benkevange → stubbefot
 
@@ -428,8 +454,9 @@ stikke ut forbi foten i det hele tatt — den ender på den.
 ### J12 — Bordbærelekt → bakre hjørnestolpe
 
 Lekta går fra stolpe til stolpe og støter mot stolpenes sideflater med endene,
-akkurat som den bakre benkevangen. Men den har ingen bærekloss under seg, så
-hver ende får et lite vinkelbeslag å hvile på. Beslaget står med den loddrette
+akkurat som den bakre benkevangen. Men den bærer et bord, ikke bare seg selv,
+og den skal kunne belastes rett ned uten å hvile på skruer i uttrekk — så hver
+ende får et lite vinkelbeslag å hvile på. Beslaget står med den loddrette
 fliken på stolpens innerflate og den vannrette fliken **under lektas ende** —
 det er den veien rundt, og bare den veien: snudd andre veien ville den
 vannrette fliken pekt ut i lufta over lekta og ikke båret noe som helst. Lekta
@@ -773,10 +800,8 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Vange → endebjelke | **Trelagring** | ≈ 5,3 kN | ≤ 1 kN | 0,19 | ✓ Vangen hviler, den henger ikke |
 | Bakre vange → bakre stolpetopp | **Trelagring** på stolpens endeved, 95 × 36 mm | ≈ 7,9 kN | < 1 kN | 0,13 | ✓ Ingen festemidler i lastens vei. Hele stolpetoppens endeved er opplegg |
 | Endebjelke 48×98 | Bøyning | 836 mm | 2 kN | **0,26** | ✓ |
-| Endebjelke → bærekloss J1-B | **Trelagring** 48 × 36 | 1728 mm² → 4,0 kN | ≤ 1 kN | 0,25 | ✓ |
-| Bærekloss → stolpe (J1-B), klossen alene | Skruskjær, 1 × 6 mm — klossflaten 36 × 36 mm tar ikke to | 2,0 kN | 1 kN | **0,50** | ✓ Dette er den eneste loddrette lasten i rammen som går gjennom stål |
-| Samme hjørne, **kombinert skjærvei** | Klossens skrue + endebjelkens egne to 6×90 inn i den samme stolpen, i samme snitt | 6,0 kN | 1 kN | 0,17 | ✓ Klossen tar bruddformen bort fra bjelkeenden; den er ikke alene om lasten |
-| *Uten bærekloss — ikke en tillatt byggemåte* | Kun skruer nær bjelkeenden | — | 2 kN | — | ✗ Sprø oppflising av veden. **Derfor er klossen der** |
+| Endebjelke → hjørnestolpe (J1) | Skruskjær, 2 × 6 mm — hele endefestet, det står ingen kloss under | 4,0 kN | ≤ 1 kN | **0,25** | ✓ Med hele designlasten stående rett over hjørnet: 0,50 |
+| Samme ledd, **kantavstander** | 18 mm (3d) til bjelkens ende langs fiberretningen, 27 mm (4,5d) til kanten i lastretningen, i 48 × 98 C24 | krav 3d = 18 mm | — | — | ✓ Et vanlig omlegg, ikke en sprø endeskjøt. Målt på modellen |
 | Fremre hjørnestolpe 36×98 | Knekking om svak akse, verste frie lengde 708 mm | N<sub>c,Rd</sub> ≈ **26,4 kN** | ≈ 1 kN | **0,05** | ✓ Svak akse er dimensjonerende, og margin er likevel svært god |
 | Bakre hjørnestolpe 36×98 | Knekking, kortere stolpe, avstivet av benkevange og bordbærelekt | ≫ 26 kN | ≈ 1 kN | < 0,05 | ✓ |
 | Stolpe → gulv | Endeved mot gulv | 45 kN i treet | 1 kN | 0,02 | ✓ |
@@ -804,8 +829,8 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Bakre benkevange 48×73 | Bøyning over åpningen mellom stubbeføttene | 700 mm | 0,5 kN | **0,14** | ✓ Ved 1 kN: 0,28 |
 | Fremre benkevangebit 48×73 | Bøyning, to opplegg, ingen utkraging | 584 mm | 0,5 kN | < 0,14 | ✓ Innerenden lander helt på stubbefoten — rent endeopplegg, null utkraging |
 | Benkevange → stubbefot | **Trelagring** 48 × 73 | 3504 mm² → 8,0 kN | 0,5 kN | 0,06 | ✓ |
-| Benkevange → bærekloss J9-B | **Trelagring** 48 × 48 | 2304 mm² → 5,3 kN | 0,5 kN | 0,09 | ✓ |
-| Bærekloss → stolpe (J9-B / J9-F) | Skruskjær, 1 × 6 mm | 2,0 kN | 0,5 kN | 0,25 | ✓ Samme sak som J1-B, halv last |
+| Bakre benkevange → bakre stolpe (J8-B) | Skruskjær, 2 × 6 mm skråskruer — hele endefestet. Skruene står skrått i planet, lasten står loddrett på dem uansett | 4,0 kN | 0,5 kN | **0,13** | ✓ Ytre spenn stolpe → stubbefot ≈ 510 mm. Med hele kilonewtonen rett over hjørnet: 0,25 |
+| Fremre benkevangebit → fremre stolpe (J8) | Skruskjær, 2 × 6 mm — hele endefestet | 4,0 kN | 0,5 kN | **0,13** | ✓ Samme sak, og med samme verste tall 0,25 |
 | Stubbefot 48×73 | Knekking over 186 mm | λ ≈ 13 | 0,5 kN | ≈ 0 | ✓ Ikke en søyle, et opplegg |
 
 ### A.4 Plate og rekkverk
@@ -840,18 +865,18 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 | Bakre sidevange regnet uten veggfestet | 0,73 |
 | Plate, styrelektas forende gjennom plata inn i trinnet (V3) | **0,69** |
 | Køyespile og benkespile, 1 kN på én spile | **0,57** |
-| Bærekloss J1-B → stolpe, klossens ene skrue regnet alene | **0,50** |
 | Kilelekt under platehjørnet, skjær i 27 mm-spissen | **0,42** |
 | Stigekloss → stigevange, klossens ene skrue regnet alene | 0,33 |
 | Endebjelke | 0,26 |
 | Plate med avstivningslekter | 0,26 |
-| Endebjelke → bærekloss (trelagring), bærekloss J9-B/J9-F → stolpe | 0,25 |
+| Endebjelke → hjørnestolpe (J1), to skruer i skjær | **0,25** |
 | Vange → endebjelke (trelagring) | 0,19 |
 | Kilelekt under platehjørnet, bøyning i det kritiske snittet | 0,18 |
 | Stigevange → fremre sidevange (J3) | 0,17 |
 | Rungetrinn, bøyning | 0,17 |
 | Stigevange, knekking ut av planet | 0,15 |
 | Bakre benkevange over åpningen mellom stubbeføttene | 0,14 |
+| Benkevangeendene → stolpe (J8, J8-B), to skruer i skjær | 0,13 |
 | Bordbærelekt på høykant (48×73 etter V2) | 0,13 |
 | Alle andre ledd | ≤ 0,13 |
 
@@ -859,10 +884,15 @@ seg eller kneler på den). Rekkverk **0,5 kN** vannrett.
 dimensjonerende:** 0,42 i spissen mot 0,18 i det verste bøyesnittet. Det er
 skjærtallet som holder spissen på 27 mm, ikke utseendet.
 
-De to øverste skrueradene er klossenes — det er der en loddrett reaksjon går
-gjennom stål (se avsnitt 2) — og begge er regnet **uten** hjelp fra
-nabofestene i det samme hjørnet. Med den kombinerte skjærveien er de 0,17
-og 0,14.
+**Den høyeste skrueraden i sengen er nå stigeklossens ene 5 mm skrue, 0,33** —
+og den er regnet uten hjelp fra trinnet som ligger på klossen og er skrudd ned
+i den, og uten hjelp fra trinnendens egen 6×120 gjennom stigevangen. Med den
+kombinerte skjærveien er den 0,14.
+
+Forrige utgave hadde 0,50 øverst blant skrueradene: bæreklossen J1-B, som
+hang på én 6 mm skrue. De åtte bæreklossene er borte, og de tre hjørnene de
+sto i tar reaksjonen på delenes egne endefester i stedet — 0,25 og to ganger
+0,13. Å fjerne klossene senket altså den høyeste skrueutnyttelsen i sengen.
 
 Ingen ledd i den ferdige sengen har utnyttelse over 1,0. De to tilfellene som
 gjør det, er begge dekket av bruksreglene: bar spilebunn under hopping (7.4) og

@@ -11,14 +11,13 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 |---|---:|---|
 | Treskrue 5×60 forsenket Torx | 80 | 1 pk. à 100 stk. |
 | Treskrue 5×40 forsenket Torx | 38 | 1 pk. à 50 stk. |
-| Treskrue 6×90 forsenket Torx | 18 | 1 pk. à 20 stk. |
 | Treskrue 6×80 forsenket Torx | 14 | 1 pk. à 20 stk. |
 | Treskrue 6×120 forsenket Torx | 12 | 1 pk. à 20 stk. |
+| Treskrue 6×90 forsenket Torx | 12 | 1 pk. à 20 stk. |
 | Filtknott / møbeltapp ⌀40 | 8 | 1 pk. |
 | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | 6 | 6 stk. |
 | Treskrue 5×70 forsenket Torx | 4 | 1 pk. à 8 stk. |
 | Vinkelbeslag 90×90×40×2,5 varmforsinket | 4 | 6 stk. |
-| Treskrue 6×60 forsenket Torx | 2 | 1 pk. à 8 stk. |
 | Vinkelbeslag 40×40×20 | 2 | 4 stk. |
 
 **Behov** er antallet sengen bruker; **Kjøp** er den minste pakken som finnes i butikk og dekker behovet. Treskruer selges i pakker à 8 / 20 / 25 / 50 / 100 / 200 stk. Står det samme tall i begge kolonnene, har du ingen reserve — ta en pakke opp. En skrue du mangler koster en kveld.
@@ -29,19 +28,16 @@ I tillegg trengs **D3 trelim**, én liten flaske. Den er ikke en post i tabellen
 
 | Ledd | Hva | Antall ledd | Per ledd | Forboring | Drives fra |
 |---|---|---:|---|---|---|
-| **J1** | Endebjelke → hjørnestolpe | 4 | 2× Treskrue 6×90 forsenket Torx | ⌀6 gjennom bjelken, ⌀4 i stolpen | Fra bjelkens utside, inn mot stolpen — helt inne i sengen, tilgjengelig hele veien |
-| **J1-B** | Bærekloss under endebjelke → hjørnestolpe | 4 | 1× Treskrue 6×90 forsenket Torx | ⌀6 gjennom klossen, ⌀4 i stolpen | Fra klossens frie ende, inn i stolpen |
-| **J2** | Fremre sidevange → fremre hjørnestolpe | 2 | 2× Treskrue 6×80 forsenket Torx | ⌀6 gjennom stolpen, ⌀4 i vangen | Fra stolpens forside, gjennom stolpen inn i vangen |
+| **J1** | Endebjelke → hjørnestolpe | 4 | 2× Treskrue 6×90 forsenket Torx | ⌀6 gjennom bjelken, ⌀4 i stolpen | Fra bjelkens utside, inn mot stolpen — helt inne i sengen, tilgjengelig hele veien. Disse to skruene er HELE festet: det står ingen kloss under bjelkeenden |
+| **J2** | Fremre sidevange → fremre hjørnestolpe | 2 | 2× Treskrue 6×80 forsenket Torx | ⌀6 gjennom vangen, ⌀4 i stolpen | Fra vangens innside — inne fra sengen — gjennom vangen og inn i stolpen. Stolpens forside er urørt |
 | **J2-B** | Bakre sidevange → bakre hjørnestolpe (vangen hviler på stolpetoppen) | 2 | 2× Treskrue 6×120 forsenket Torx | ⌀6 gjennom vangen, ⌀4 i stolpens endeved; forsenk hodet godt under vangens overkant så køyespilene ligger flatt | Rett ned gjennom vangen i stolpetoppen, mens bakrammen ligger flatt på gulvet. Ingenting på veggsiden, og ingen kloss: vangen står 12 mm proud av den tynnere stolpen, så et rett beslag ville uansett ikke ligget an mot begge |
-| **J3** | Stigevange → fremre sidevange | 2 | 3× Treskrue 6×80 forsenket Torx | ⌀6 gjennom stigevangen, ⌀4 i sidevangen | Fra stigevangens forside, inn i vangen |
+| **J3** | Stigevange → fremre sidevange | 2 | 3× Treskrue 6×80 forsenket Torx | ⌀6 gjennom sidevangen, ⌀4 i stigevangen | Fra sidevangens innside — inne fra sengen — gjennom vangen og inn i stigevangen. Stigevangens forside er urørt |
 | **J4** | Rungetrinn → stigekloss og stigevange (per trinnende) | 8 | 1× Treskrue 6×120 forsenket Torx + 1× Treskrue 5×60 forsenket Torx | ⌀6 gjennom stigevangen inn i trinnenden; ⌀3,5 ned gjennom trinnet i klossen | 6×120 fra utsiden av stigevangen; 5×60 ovenfra ned i klossen |
 | **J5** | Stigekloss → stigevange | 8 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom klossen, ⌀3 i vangen | Fra stigeåpningen, inn i vangens innside |
 | **J6** | Køyespile → sidevange (per spileende) | 28 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom spilen, forsenk hodet under flaten | Ovenfra, ned i vangen |
 | **J7** | Rekkverksbord → hjørnestolpe / stigevange (per omlegg) | 8 | 2× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom bordet, ⌀3 i stolpen | Fra sengesiden, inn i stolpens/stigevangens innside |
-| **J8** | Fremre benkevange → fremre hjørnestolpe | 2 | 2× Treskrue 6×80 forsenket Torx | ⌀6 gjennom stolpen, ⌀4 i vangen | Fra stolpens forside, gjennom stolpen inn i vangen |
-| **J8-B** | Bakre benkevange → bakre hjørnestolpe (endeskjøt) | 2 | 2× Treskrue 6×90 forsenket Torx | Først sete: ⌀18 forstner 18 mm ned LANGS skruens akse, med vinkelklossen som styring. Så ⌀6 skrått videre gjennom vangen og ⌀4 i stolpen — forbor hele veien, dette er en skråskrue nær en ende | Skrått fra vangens forside inn i stolpen, ut av et flatbunnet sete så hodet ligger helt under treet. Vangen ligger fast mellom de to stolpene, så skruene er bånd, ikke opplegg |
-| **J9-B** | Bærekloss under bakre benkevange → bakre stolpe | 2 | 1× Treskrue 6×90 forsenket Torx | ⌀6 gjennom klossen, ⌀4 i stolpen | Fra klossens frie ende, inn i stolpen |
-| **J9-F** | Bærekloss under fremre benkevange → fremre stolpe | 2 | 1× Treskrue 6×60 forsenket Torx | ⌀6 gjennom klossen, ⌀4 i stolpen | Fra klossens bakside, inn i stolpen. Kortere skrue enn de andre klossene — her er det bare 36 mm stolpe bak klossen |
+| **J8** | Fremre benkevange → fremre hjørnestolpe | 2 | 2× Treskrue 6×80 forsenket Torx | ⌀6 gjennom vangen, ⌀4 i stolpen | Fra vangens innside — inne fra benkerommet — gjennom vangen og inn i stolpen. Stolpens forside er urørt |
+| **J8-B** | Bakre benkevange → bakre hjørnestolpe (endeskjøt) | 2 | 2× Treskrue 6×90 forsenket Torx | Først sete: ⌀18 forstner 18 mm ned LANGS skruens akse, med vinkelklossen som styring. Så ⌀6 skrått videre gjennom vangen og ⌀4 i stolpen — forbor hele veien, dette er en skråskrue nær en ende | Skrått fra vangens forside inn i stolpen, ut av et flatbunnet sete så hodet ligger helt under treet. Vangen ligger fast mellom de to stolpene, og disse to skruene er HELE festet i enden — det står ingen kloss under den |
 | **J10** | Benkevange → stubbefot | 4 | 1× Vinkelbeslag 90×90×40×2,5 varmforsinket + 4× Treskrue 5×40 forsenket Torx + 1× Treskrue 5×70 forsenket Torx | ⌀3 i foten og i vangen. Skråskruen får først sete: ⌀18 forstner 18 mm ned langs skruens akse, med vinkelklossen som styring, så ⌀3,5 videre | Vinkelbeslaget sitter i hjørnet mellom fotens utside og vangens underside, med den ene fliken opp i vangen og den andre inn i foten; den ene 5×70 er en skråskrue nedenfra og opp i vangen, ut av et flatbunnet sete så hodet ligger helt under treet |
 | **J11** | Benkespile → benkevange (per spileende) | 20 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom spilen, forsenk hodet under flaten | Ovenfra, ned i benkevangen |
 | **J12** | Bordbærelekt → bakre hjørnestolpe (endeskjøt) | 2 | 1× Vinkelbeslag 40×40×20 + 2× Treskrue 5×40 forsenket Torx | ⌀3 i stolpen og i lekta — forboring er et krav, lekta er tynn | Beslaget på stolpens innerflate, med den vannrette fliken UNDER lektas ende, så lekta har noe å hvile på og ikke bare henger i skruer |

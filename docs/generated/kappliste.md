@@ -10,8 +10,6 @@ Alle mål i mm. Alle kutt er 90° på to nær — se merknaden under tabellen. P
 | Løs plate | 18 mm plate, 652 bred | **798** | 1 | 669..1321 | -48..750 | 259..277 |
 | Stigevange | 36×48 | **1700** | 2 | 787..1203 (fordelt) | 752..788 | 0..1700 |
 | Stigekloss | 36×48 | **73** | 8 | 835..1155 (fordelt) | 715..788 | 163..910 (fordelt) |
-| Bærekloss, benkevange (J9-B / J9-F) | 36×48 | **48** | 4 | 0..1990 (fordelt) | -48..752 (fordelt) | 138..186 (fordelt) |
-| Bærekloss, endebjelke (J1-B) | 36×48 | **36** | 4 | 98..1892 (fordelt) | -48..788 (fordelt) | 931..967 |
 | Hjørnestolpe, front | 36×98 | **1700** | 2 | 0..1990 (fordelt) | 752..788 | 0..1700 |
 | Hjørnestolpe, bak (veggside) | 36×98 | **1065** | 2 | 0..1990 (fordelt) | -48..-12 | 0..1065 |
 | Rekkverksbord, front | 36×98 | **832** | 4 | 3..1987 (fordelt) | 716..752 | 1414..1685 (fordelt) |
@@ -27,7 +25,7 @@ Alle mål i mm. Alle kutt er 90° på to nær — se merknaden under tabellen. P
 | Sidevange, øvre | 48×98 | **1984** | 2 | 3..1987 | -48..752 (fordelt) | 1065..1163 |
 | Endebjelke | 48×98 | **836** | 2 | 98..1892 (fordelt) | -48..788 | 967..1065 |
 
-**71 deler i alt.**
+**63 deler i alt.**
 
 «(fordelt)» betyr at delene i den raden står på flere posisjoner langs den aksen; kolonnen viser da hele området de dekker. Nøyaktige posisjoner står i [nøkkelmål](nokkelmal.md).
 
@@ -39,8 +37,8 @@ Alle mål i mm. Alle kutt er 90° på to nær — se merknaden under tabellen. P
 |---|---|---:|---:|---|---|
 | Vinkelkloss (borjigg for skråskruene) | 48×73 | **160** | 1 | kappsag med bladet vippet, rampe målt FRA FLATEN: 25° i den ene enden (J8-B, dvs. 65° fra flatens normal) og 30° i den andre (J10, dvs. 60°) | klemmes flatt mot flaten med rampa over merket; ⌀18 forstnerbor og deretter forboret hviler PÅ rampa, så hullet får den vinkelen leddet er regnet på. Brukes i J8-B og J10 |
 
-Disse er ikke med i de 71 delene over og ikke i innkjøpslista — de kappes av restene i steg 0.
+Disse er ikke med i de 63 delene over og ikke i innkjøpslista — de kappes av restene i steg 0.
 
-Fordelt på dimensjon: **36×98** 32 stk. · **36×48** 18 stk. · **48×73** 16 stk. · **48×98** 4 stk. · **18 mm plate, 652 bred** 1 stk.
+Fordelt på dimensjon: **36×98** 32 stk. · **48×73** 16 stk. · **36×48** 10 stk. · **48×98** 4 stk. · **18 mm plate, 652 bred** 1 stk.
 
 Sagstopp for hovedbordet 36×98: **2 stk. à 1700** · **2 stk. à 1065** · **4 stk. à 832** · **24 stk. à 800** — 4 innstillinger på sagen, ikke én per del.

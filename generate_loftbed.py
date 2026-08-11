@@ -22,9 +22,10 @@ which is what lets v9 delete the two back guard boards and v10 tuck the two
 back corner posts into the back rail plane. Consequences you cannot ignore:
   * the plane Y = -48 is a FLAT MOUNTING FACE and must sit flat against the
     wall. After v10/W6 it is made by the back side rail, the two back corner
-    posts, the two end beams and their back bearing blocks, the back bench
-    rail, the back table ledger and the rear ends of all 24 slats - every one
-    of them coplanar. Nothing is allowed to stand proud of it;
+    posts, the two end beams, the back bench rail with its two stub legs, the
+    back table ledger and the rear ends of all 24 slats - every one of them
+    coplanar (v12/V5 took the four bearing blocks off that list). Nothing is
+    allowed to stand proud of it;
   * the FIXING is the back rail itself. It lies flat against the wall over
     its full 1984 x 98 mm face, so the bed is screwed to the studs straight
     through the rail. Those screws also mid-support the rail, which is why
@@ -542,6 +543,49 @@ V3  THE MECHANISM BECOMES WOOD, AND THE TABLE TOP BECOMES UNBROKEN. V2 had
         stood 223 mm up and its own screws stayed down at bed height. They
         travel with the panel now, and an assert compares every panel-assembly
         fastener's position RELATIVE TO THE PANEL across the two modes.
+V5  THE FRONT SHOWS NO STEEL, AND THE EIGHT BEARING BLOCKS GO.
+    Two decisions, taken together because they are the same decision twice:
+    stop believing a detail because it has always been there, and go and
+    measure it.
+      * NO FASTENER HEAD ON A ROOM-FACING FACE. Three of the bed's four wall
+        sides are wall; the fourth is the front, Y 752..788, and it is the
+        only surface anyone looks at. The four guard boards have been screwed
+        from inside the bed since D14. J2 (front side rail -> front post),
+        J3 (ladder upright -> front side rail) and J8 (front bench rail ->
+        front post) were not, and their heads sat on the two posts' and two
+        uprights' forside. All three are now driven from INSIDE the bed
+        outward - through 48 mm of rail into 36 mm of post or upright, a
+        6x80 either way round, which the fit rule calls 'tvetydig' and hands
+        to the table. Tip cover is unchanged at 4 mm; it has simply moved
+        from the rail to the post. VISIBLE_FRONT_Y and an assert make it a
+        rule instead of a habit, and the assert says out loud that it is an
+        AESTHETIC one.
+      * THE EIGHT BEARING BLOCKS ARE DELETED - 4 x J1-B under the end beams,
+        2 x J9-B and 2 x J9-F under the bench-rail ends. The argument for
+        them was "the member bears on wood instead of hanging in screw
+        shear". Follow it one step: the block does not stand on anything
+        either. It hangs on ONE 6 mm screw, 2.0 kN against up to 1 kN of
+        corner reaction - the 0.50 that topped vedlegg A's screw rows and the
+        only 0.50 in the bed. The block did not take the reaction out of
+        steel; it halved the steel the joint would otherwise have had.
+        Re-derived honestly before deleting anything, per vedlegg A's method:
+          J1   endebjelke -> stolpe   2 x 6x90 = 4.0 kN vs <= 1 kN   0.25
+          J8   fremre benkevange     2 x 6x80 = 4.0 kN vs 0.5 kN     0.13
+          J8-B bakre benkevange      2 x 6x90 = 4.0 kN vs 0.5 kN     0.13
+        and 0.50 / 0.25 / 0.25 with the whole design load stood directly over
+        the corner. The gate was 0.8. The J1 pair has 3d of end distance
+        along the beam's grain and 4.5d of edge distance in the direction the
+        load acts, in 48 x 98 of C24 - an ordinary lap fixing, not the
+        brittle end-split the block was bought against. All five numbers are
+        asserted off the model rather than quoted.
+        WHAT THE BLOCK REALLY WAS is a shelf to rest the member on while you
+        drove its end screws. The pre-drilled holes are that shelf: steg 0
+        bores each pattern through both members clamped together, and a hole
+        pattern has exactly one position it lines up in. The jig was already
+        in the bed; the blocks were a second copy of it in wood.
+        Cost: 71 -> 63 pieces, 36x48 18 -> 10 pieces, 4 x 6x90 and 2 x 6x60
+        off the beslagliste, and the 6x60 length off the shopping list
+        entirely.
 D11 OPEN LADDER BAY. The FRONT bench rail is cut into two segments so nothing
     crosses the floor of the ladder bay below the benches any more - you can
     stand at the foot of the ladder with your toes under it. Both front stub
@@ -635,10 +679,11 @@ two ends are OPEN above the mattress -
 there are no end boards at guard-rail height, because they cut into the
 sleeping area. Instead each end has a single 48x98 END BEAM screwed to the
 inner faces of the corner posts, its top flush with the underside of the
-side rails so both rails bear on it. Under each end of each end beam sits a
-36x48 BEARING BLOCK (C2, joint J1-B) screwed to the post, so the vertical
-load is wood-on-wood bearing and the fasteners are pure ties (M8 through-bolts
-until v11/U4; 6x90 screws now that the post is 36 mm stock).
+side rails so both rails bear on it. Nothing sits under the beam ends: v12/V5
+deleted the four 36x48 bearing blocks that used to, because a block that hangs
+on one screw halves the shear the joint would otherwise have. The beam end is
+held by its own two 6x90 (J1), 4.0 kN against a corner reaction of at most
+1 kN.
 
 The ladder is mounted directly on the front of the bed: its 36x48 uprights
 share the Y 752..788 plane with the front corner posts (v11/U2 turned them so
@@ -648,8 +693,10 @@ of the front rail and are screwed through it. The rungs are 48x73 treads,
 uprights.
 
 Lower level: a convertible sofa / table / bed. The 48x73 bench rails sit at
-Z 186..259, carried by the corner posts (via 36x48 J9-B bearing blocks, C2)
-and by four 48x73 stub legs (v9/W3, v11/U5). The BACK rail is one continuous 1794 mm
+Z 186..259, carried at their ends by the corner posts (on their own end
+screws, J8-B behind and J8 in front - v12/V5 deleted the four bearing blocks
+that used to hang under them) and in between by four 48x73 stub legs (v9/W3,
+v11/U5). The BACK rail is one continuous 1794 mm
 member butting the two back posts, X 98..1892 (C5, v10/W9, v11/U2); the FRONT
 one is two 642 mm segments that stop at the sofa ends on their stub legs,
 leaving the whole front floor between the benches open (D11/D13). The two
@@ -1057,6 +1104,31 @@ FRONT_POST_Y1 = FRONT_POST_Y0 + POST_T   # 788  [was 800, U2]
 POST_THIN = RAIL_T - POST_T              # 12, U2: the post depth 48 -> 36
 CORNER_POST_X = [0, WALL_SPAN - POST_W]  # 0..98 and 1892..1990 (walls untouched)
 
+# ---------------------------------------------------------------------------
+# THE VISIBLE FRONT (V5) - the only faces of this bed anyone looks at
+# ---------------------------------------------------------------------------
+# Three sides of this bed are wall (X 0, X 1990, Y -48), the top is under a
+# mattress and the underside is floor. What is left is the FRONT: everything
+# from the front rails' outer plane forward to the post plane U3 pins the
+# envelope on. That layer - and nothing else - is on display.
+#
+# The four front guard boards have hung their two 5x60 per lap from INSIDE the
+# bed since D14, for exactly this reason. V5 stops treating that as a habit of
+# one joint and makes it the rule of the whole front:
+#
+#       NO FASTENER HEAD ON A ROOM-FACING FACE.
+#
+# A head is on one when the face it is driven from looks out of the front:
+# the fastener travels in -Y and its head sits at or in front of
+# VISIBLE_FRONT_Y. The assert is in the fastener block and it is an AESTHETIC
+# assert - it says so, and nothing about it is structural. It is the whole
+# reason J2, J3 and J8 are driven from inside the bed outward, through 48 mm
+# of rail into 36 mm of post or upright, instead of the other way round.
+# Both directions fit the through-screw rule at all three (a 6x80 crosses 36
+# into 48 and 48 into 36 alike), so the fit rule calls them 'tvetydig' and
+# hands the choice to the table - and this is what the table chooses on.
+VISIBLE_FRONT_Y = FRONT_RAIL_Y1          # 752, the front rails' outer face
+
 # W1/S2/W7: the wall plane. It is the back rail's outer face, and after W6 the
 # back posts, the end-beam back ends, the back bench rail, the back ledger and
 # every slat end lie in it too. It is the flat face the frame is bolted to - the
@@ -1073,8 +1145,9 @@ BACK_RAIL_ON_POST_Z = RAIL_BOTTOM        # 1065, post top == rail underside
 # The rail is set in 3 mm at each wall (C9), so of the post's 98 x 36 top face
 # the rail covers 95 x 36 = 3420 mm2 (U2; it was 45 x 48 = 2160 on the 48x48
 # post). Against f_c90,d ~ 1.53 MPa with k_c90 = 1.5 that is ~7.9 kN of bearing
-# under a corner reaction of well under 1 kN - the same order as every other C2
-# bearing in the bed (the J9-B block offers 45 x 36 = 1620 mm2 and is fine).
+# under a corner reaction of well under 1 kN. It is the ONE corner in this bed
+# where the vertical reaction never touches a fastener at all: rail -> post
+# end grain -> floor.
 # The rail is 48 deep in Y and the post only 36, so the rail overhangs the post
 # by 12 mm on the ROOM side of the joint - i.e. the whole post top is covered
 # and the bearing is limited by the post, not by the rail.
@@ -1133,38 +1206,35 @@ END_BEAM_Z0 = END_BEAM_Z1 - RAIL_H             # 967
 # bearing on each, asserted in the validation block.
 END_BEAM_X = [POST_W, WALL_SPAN - POST_W - RAIL_T]   # 98..146 and 1844..1892
 
-# C2 / joint J1-B: a 36x48 offcut under each end of each end beam, screwed to the
-# inner face of the corner post with 2x 5x80. 48 mm in X (right under the beam),
-# 48 mm in Y (the full post depth), 36 mm in Z, top flush with the beam underside.
-# The end beam then BEARS on wood (48x48 = 2304 mm2, 5.3 kN) instead of hanging in
-# bolt shear with only 24 mm end distance.
+# V5: THE FOUR J1-B BEARING BLOCKS ARE GONE, AND SO IS THE ARGUMENT FOR THEM.
+# A 36x48 offcut used to sit under each beam end, screwed to the post face, so
+# the beam "bore on wood instead of hanging in screw shear". Follow that one
+# step further and it eats itself: the block does not stand on anything. It
+# hangs on ONE 6 mm screw in shear - 2.0 kN against a corner reaction of up to
+# 1 kN, utilisation 0.50, the highest screw row in the whole bed and the only
+# 0.50 in vedlegg A. The block did not take the reaction out of steel; it put
+# it into HALF the steel it would otherwise have had.
 #
-# W6: THE BACK BLOCK TRAVELS WITH ITS POST. It is defined off BACK_POST_Y0, so
-# it follows the post wherever the post goes: X right under the beam, Z 931..967
-# flush under it, one face on the post's X-inner plane.
+# What the beam end actually has without it, measured off this file:
+#   * two 6x90 through the beam into the post (J1), 2 x 2.0 = 4.0 kN in shear
+#     against <= 1 kN of corner reaction - utilisation 0.25, half the block's;
+#   * 18 mm (3d) of end distance along the grain to the beam's own end, which
+#     is the MIN_EDGE this file enforces everywhere else, and 27 mm (4.5d) of
+#     edge distance in the direction the load acts (Z 994/1038 in a beam that
+#     runs Z 967..1065). The perpendicular-to-grain loaded EDGE is what
+#     governs a screw pair like this, and it has 4.5d.
+# So the splitting story the block was bought to prevent is a 3d/4.5d lap
+# fixing in 48 x 98 mm of C24, in the ordinary pattern the rest of the frame
+# uses - not a defect.
 #
-# U2: the block is defined off POST_T, so it thins with the post - 48 -> 36 in Y,
-# the post's own footprint. What that costs and what it does not:
-#   * bearing under the beam 48 x 48 = 2304 -> 48 x 36 = 1728 mm2, i.e. ~4.0 kN
-#     against f_c90,d x k_c90 - a corner of the platform is well under 1 kN, so
-#     utilisation goes ~0.09 -> ~0.12. Still the same argument as every other C2
-#     block: the beam BEARS on wood and no fastener is in the load path;
-#   * screwed contact to the post face 36 (Y) x 36 (Z) = 1296 mm2. That is a
-#     TIE, not a bearing - the block is held up by the screws only until the
-#     beam is on it - and U4 puts 6x90s through the post into the block, which
-#     the 36 mm post face takes on its centre line at 3d.
-# The beam ends are at Y -48..-12 and 752..788, exactly over their blocks.
-BEAM_BLOCK_DX = RAIL_T                         # 48 (X), matches the beam
-BEAM_BLOCK_DY = POST_T                         # 36 (Y), matches the post depth
-BEAM_BLOCK_DZ = BLOCK_T                        # 36 (Z)
-BEAM_BLOCK_Z1 = END_BEAM_Z0                    # 967, flush with the beam underside
-BEAM_BLOCK_Z0 = BEAM_BLOCK_Z1 - BEAM_BLOCK_DZ  # 931
-# The stock is 36x48 (BLOCK_T x BLOCK_H) and the block is 48 (X) x 36 (Y) x
-# 36 (Z): the 48 and one of the 36s ARE the stock section, so what is left to
-# saw is the other 36. Reading the cut length off DX would sell a 48 mm piece
-# and, worse, imply a block 48 deep in Y - which would stand in the Y 788..800
-# layer the U3 assert requires to be empty.
-BEAM_BLOCK_LEN = BEAM_BLOCK_DY                 # 36, cut length off 36x48 stock
+# AND THE JIG IT REALLY WAS. What the block genuinely did was hold the beam at
+# the right height while you drove the two J1 screws. That job now belongs to
+# the holes: steg 0 bores the J1 pattern through beam and post clamped
+# together, so at assembly the beam has exactly one height where the holes
+# line up. The pre-drilled holes ARE the assembly jig.
+#
+# Deleted with it: 4 pieces off the 36x48 line, 4 x 6x90, one joint (J1-B) and
+# the two vedlegg A rows that carried a 0.50.
 
 # ---------------------------------------------------------------------------
 # LADDER
@@ -1512,8 +1582,9 @@ STUB_LEG_H = BENCH_RAIL_BOTTOM                 # 186, floor to bench rail unders
 # leg was 48 wide; 572/1418 is where W3 found them).
 STUB_LEG_X = [BENCH_LEN - LEG_W,               # 572..645
               WALL_SPAN - BENCH_LEN]           # 1345..1418
-# W3: the minimum end bearing in X of a bench rail on a stub leg. 40 mm is the
-# same floor the C2 bearing blocks are held to; the 73 mm leg clears it easily.
+# W3: the minimum end bearing in X of a bench rail on a stub leg. 40 mm was the
+# floor the deleted C2 bearing blocks were held to as well; the 73 mm leg
+# clears it easily.
 MIN_LEG_BEARING = 40
 # U5: leg-on-rail contact area and its compression-perpendicular utilisation.
 # 48 x 73 = 3504 mm2; at f_c90,d ~ 1.53 MPa with k_c90 = 1.5 that is ~8.0 kN
@@ -1530,51 +1601,29 @@ OPEN_FLOOR_X = (BENCH_LEN, WALL_SPAN - BENCH_LEN)                  # 645 .. 1345
 # sofa end and the upright outer face. Nominally 799 - 645 = 154 mm each.
 MIN_PASSAGE = 140                # clear walk-around beside the ladder
 
-# C2 / joint J9-B: a 36x48 offcut under each end of each bench rail, screwed to
-# a corner post with 3x 5x70, top flush with the rail underside at Z 186, so the
-# rail end BEARS on wood and the single M8 bolt stays a pure tie.
+# V5: THE FOUR J9-B / J9-F BENCH-RAIL BEARING BLOCKS ARE GONE TOO, for the
+# same reason as the J1-B blocks under the end beams (see the note up in END
+# BEAMS): a block that hangs on one 6 mm screw does not take the reaction out
+# of steel, it halves the steel the joint would otherwise have had.
 #
-# W9: THE TWO PLANES NEED DIFFERENT BLOCKS NOW, because the rail ends are in
-# different places.
-#   FRONT (unchanged) - the rail segment runs on past the post to X 3, so the
-#     block goes UNDER it inside the post footprint: 48 in X (the cut length),
-#     36 in Y off the post's INNER Y face, 48 in Z. Bearing over the rail
-#     footprint X 3..48 is 45 x 36 = 1620 mm2 -> ~3.7 kN.
-#   BACK (W9) - the rail now STOPS at the post's X-inner face, so there is no
-#     rail over the post footprint to put a block under. The block turns 90 deg
-#     and stands ON that face instead, exactly like the J1-B block under the end
-#     beam: 48 in X (cut length, out from the post face), 48 in Y (the full rail
-#     depth), 36 in Z. The rail end then bears 48 x 48 = 2304 mm2 (~5.3 kN) and
-#     the block is screwed to the post over 36 x 36 = 1296 mm2 (U2: the post is
-#     36 deep, so 36 of the block's 48 mm of Y is against it). The bearing is
-#     still better than the front block's, which is the one that was already
-#     fine; the screwed face is a tie, not a bearing.
-# NOTE (deviation): the doc gives the front block as 24 mm deep - it also calls
-# it "36 mm i Y". 36 mm off the post face is what is drawn here.
-# U2 NOTE - THE FRONT BLOCK IS NOT THE POST WIDTH ANY MORE. It used to be
-# defined as POST_W long in X because the post was 48 wide and 48 was also the
-# right cut length; the post is 98 wide now and a 98 mm block would (a) be a
-# second cut length in a cut-list line that has to stay one line and (b) buy
-# nothing, since what limits the bearing is the rail's own 3 mm C9 setback, not
-# the block. It is pinned to the rail thickness instead - 48, the same single
-# cut length as the other three blocks - and it sits at the WALL end of the post
-# footprint so both ends of the bed are the same 45 x 36 = 1620 mm2 of bearing.
-RAIL_BLOCK_Z1 = BENCH_RAIL_BOTTOM              # 186, flush under the rail
-RAIL_BLOCK_FRONT_DX = BENCH_RAIL_T             # 48 (X), cut length off 36x48
-RAIL_BLOCK_FRONT_DY = BLOCK_T                  # 36 (Y), off the post face
-RAIL_BLOCK_FRONT_DZ = BLOCK_H                  # 48 (Z)
-RAIL_BLOCK_FRONT_Z0 = RAIL_BLOCK_Z1 - RAIL_BLOCK_FRONT_DZ      # 138
-RAIL_BLOCK_FRONT_Y0 = FRONT_RAIL_Y1 - RAIL_BLOCK_FRONT_DY      # 716 .. 752
-RAIL_BLOCK_FRONT_X = [CORNER_POST_X[0],                        # 0..48
-                      WALL_SPAN - RAIL_BLOCK_FRONT_DX]         # 1942..1990
-RAIL_BLOCK_BACK_DX = BENCH_RAIL_T              # 48 (X), cut length off 36x48
-RAIL_BLOCK_BACK_DY = BENCH_RAIL_T              # 48 (Y), the full rail depth
-RAIL_BLOCK_BACK_DZ = BLOCK_T                   # 36 (Z), stock thickness
-RAIL_BLOCK_BACK_Z0 = RAIL_BLOCK_Z1 - RAIL_BLOCK_BACK_DZ        # 150
-RAIL_BLOCK_BACK_Y0 = BACK_RAIL_Y0              # -48 .. 0, the rail's own plane
-RAIL_BLOCK_BACK_X = [BETWEEN_POSTS_X0,                          # 98 .. 146
-                     BETWEEN_POSTS_X1 - RAIL_BLOCK_BACK_DX]     # 1844 .. 1892
-RAIL_BLOCK_LEN = RAIL_BLOCK_FRONT_DX           # 48, one cut length for all four
+# What each bench-rail end has instead, measured off this file:
+#   BACK  - two 6x90 skew screws into the post's X-inner face (J8-B),
+#           2 x 2.0 = 4.0 kN in shear. The screws lie in the XY plane and the
+#           reaction is Z, so both of them are square to the load and neither
+#           loses anything to the skew. Outer span post 98 -> stub leg centre
+#           608.5, i.e. ~510 mm; 1 kN of bench load at its midpoint puts
+#           0.5 kN on this end - utilisation 0.13, and 0.25 if you stand the
+#           whole kilonewton directly over the post.
+#   FRONT - two 6x80 through the rail segment into the post (J8), the same
+#           4.0 kN, the same 0.13 / 0.25. The segment is a two-support member
+#           with no cantilever: post at one end, stub leg at the other.
+# Neither number is anywhere near the 0.8 that would have stopped this change,
+# and both are BELOW the 0.50 the block's own single screw used to carry.
+#
+# The blocks were the shelf you rested a rail on while you drove its end
+# screws. The pre-drilled holes are that shelf now: steg 0 bores J8 and J8-B
+# through both members clamped together, and a hole pattern has exactly one
+# position it lines up in.
 
 # ---------------------------------------------------------------------------
 # V2: THE PANEL IS A DROP-IN ASSEMBLY, AND ITS OUTLINE IS SET BY TWO NUMBERS
@@ -2192,13 +2241,8 @@ for i, x0 in enumerate(END_BEAM_X):
     parts.append(block(x0, END_BEAM_Y0, END_BEAM_Z0, RAIL_T, END_BEAM_LEN, RAIL_H,
                        f"End Beam {side}", "rails",
                        ("End beam", sec(RAIL_T, RAIL_H), END_BEAM_LEN)))
-    # C2 / J1-B: bearing block under each end of the beam, on the post face.
-    for name, by0 in (("Back", BACK_POST_Y0), ("Front", FRONT_POST_Y0)):
-        parts.append(block(x0, by0, BEAM_BLOCK_Z0,
-                           BEAM_BLOCK_DX, BEAM_BLOCK_DY, BEAM_BLOCK_DZ,
-                           f"End Beam Bearing Block {side} {name}", "boards",
-                           ("Bearing block, end beam (C2)",
-                            sec(BLOCK_T, BLOCK_H), BEAM_BLOCK_LEN)))
+    # V5: no bearing block under the beam ends any more - the two 6x90 of J1
+    # are the whole fixing, at half the utilisation the block's own screw had.
 
 # ---------------------------------------------------------------------------
 # LADDER
@@ -2255,17 +2299,16 @@ for i, z0 in enumerate(GUARD_BAND_Z0):
 # LOWER SECTION: BENCHES
 # ---------------------------------------------------------------------------
 # C5: 48x73 bench rails at Z 186..259, one per Y plane, each carried at its ends
-# by a corner post (via the J9-B bearing block) and in between by two stub legs.
+# by a corner post - on its own end screws since V5, J8-B behind and J8 in
+# front - and in between by two stub legs.
 # They give the loose panel an edge to rest on in bed mode and give the ladder
 # uprights a low fixing point.
 # D11/D13: the BACK rail is the continuous member; the FRONT one is two
 # 642 mm segments that stop at the sofa ends on their stub legs, so the whole
 # front floor between the benches is open.
-# W9: the back rail is 1894 mm at X 48..1942 - it butts the two back corner posts
-# (which now stand in its Y band) and is screwed to their X-inner faces. Its
-# bearing block turns with it: it stands ON that same post face, at X 48..96 /
-# 1894..1942 and Y -48..0, instead of sitting under the rail inside the post
-# footprint the way the FRONT block still does.
+# W9: the back rail is 1794 mm at X 98..1892 - it butts the two back corner posts
+# (which now stand in its Y band) and is screwed to their X-inner faces with the
+# two 6x90 skew screws of J8-B. That pair is the WHOLE end fixing after V5.
 for i, ry0 in enumerate(BENCH_RAIL_Y):
     name = "Back" if i == 0 else "Front"
     if i == 0:
@@ -2282,23 +2325,8 @@ for i, ry0 in enumerate(BENCH_RAIL_Y):
                                f"Bench Rail Front {side} (segment)", "rails",
                                ("Bench rail, front segment (D13)",
                                 sec(BENCH_RAIL_T, BENCH_RAIL_H), sx1 - sx0)))
-    # C2 / J9-B: bearing block under each rail end. FRONT - under the rail inside
-    # the post footprint; BACK (W9) - on the post's X-inner face, beyond it.
-    if i == 0:
-        block_x, by0, bz0 = RAIL_BLOCK_BACK_X, RAIL_BLOCK_BACK_Y0, RAIL_BLOCK_BACK_Z0
-        bdx, bdy, bdz = (RAIL_BLOCK_BACK_DX, RAIL_BLOCK_BACK_DY,
-                         RAIL_BLOCK_BACK_DZ)
-    else:
-        block_x, by0, bz0 = (RAIL_BLOCK_FRONT_X, RAIL_BLOCK_FRONT_Y0,
-                             RAIL_BLOCK_FRONT_Z0)
-        bdx, bdy, bdz = (RAIL_BLOCK_FRONT_DX, RAIL_BLOCK_FRONT_DY,
-                         RAIL_BLOCK_FRONT_DZ)
-    for j, bx0 in enumerate(block_x):
-        side = "Left" if j == 0 else "Right"
-        parts.append(block(bx0, by0, bz0, bdx, bdy, bdz,
-                           f"Bench Rail Bearing Block {name} {side}", "boards",
-                           ("Bearing block, bench rail (C2)",
-                            sec(BLOCK_T, BLOCK_H), RAIL_BLOCK_LEN)))
+    # V5: no bearing blocks under the rail ends either - J8-B behind and J8 in
+    # front are the whole end fixing. See the note in the datum block above.
     # Stub legs at the inner end of each bench (the outer ends sit on the posts).
     for j, lx0 in enumerate(STUB_LEG_X):
         side = "Left" if j == 0 else "Right"
@@ -2466,11 +2494,8 @@ _PART = {
                    r"|Front (?:Left|Right) \(segment\))",
     "bench_back":  r"Bench Rail Back \(continuous\)",
     "bench_front": r"Bench Rail Front (?:Left|Right) \(segment\)",
-    "bench_blk_b": r"Bench Rail Bearing Block Back (?:Left|Right)",
-    "bench_blk_f": r"Bench Rail Bearing Block Front (?:Left|Right)",
     "ledger":      r"Table Ledger Back",
     "beam":        r"End Beam (?:Left|Right)",
-    "beam_blk":    r"End Beam Bearing Block (?:Left|Right) (?:Back|Front)",
     "stub":        r"Bench Stub Leg (?:Back|Front) (?:Left|Right)",
     "upright":     r"Ladder Upright (?:Left|Right)",
     "rung":        r"Ladder Rung_\d+",
@@ -2491,10 +2516,7 @@ PART_NO = {
     "rail_back": "bakre sidevange", "rail_front": "fremre sidevange",
     "bench_rail": "benkevange", "bench_back": "bakre benkevange",
     "bench_front": "fremre benkevange",
-    "bench_blk_b": "bærekloss under bakre benkevange",
-    "bench_blk_f": "bærekloss under fremre benkevange",
-    "ledger": "bordbærelekt", "beam": "endebjelke",
-    "beam_blk": "bærekloss under endebjelke", "stub": "stubbefot",
+    "ledger": "bordbærelekt", "beam": "endebjelke", "stub": "stubbefot",
     "upright": "stigevange", "rung": "rungetrinn", "rung_blk": "stigekloss",
     "guard": "rekkverksbord", "guard_host": "hjørnestolpe / stigevange",
     "bed_slat": "køyespile", "bench_slat": "benkespile",
@@ -2519,8 +2541,8 @@ def _is_part(kind, label):
 # That is the FITS-THE-FACE rule, and it is the single most useful assert in
 # this file, because the count in a joint table is exactly the kind of number
 # that gets written down once and never checked against the wood. Two screws
-# of 6 mm want 60 mm of face. A 36 x 48 bearing block offers 48. So a bearing
-# block takes ONE screw, not two - see the load note at J1-B.
+# of 6 mm want 60 mm of face. A ladder rung block offers 48 mm of upright to
+# lie on. So a rung block takes ONE screw, not two - see J5.
 SCREW_D = 6                       # the frame screw
 MIN_EDGE = 3 * SCREW_D            # 18 mm - the number quoted in the docs
 MIN_SPACING_GRAIN = 5 * SCREW_D   # 30 mm - two screws stacked along the grain
@@ -2722,19 +2744,20 @@ JOINTS = [
     dict(id="J1", title="Endebjelke → hjørnestolpe", n=4,
          drill="⌀6 gjennom bjelken, ⌀4 i stolpen",
          side="Fra bjelkens utside, inn mot stolpen — helt inne i sengen, "
-              "tilgjengelig hele veien",
+              "tilgjengelig hele veien. Disse to skruene er HELE festet: "
+              "det står ingen kloss under bjelkeenden",
          contacts=[dict(a="post", b="beam", axis=0, drives=[
              drive("Treskrue 6×90 forsenket Torx", 2, frm="beam", row=2)])]),
-    dict(id="J1-B", title="Bærekloss under endebjelke → hjørnestolpe", n=4,
-         drill="⌀6 gjennom klossen, ⌀4 i stolpen",
-         side="Fra klossens frie ende, inn i stolpen",
-         contacts=[dict(a="beam_blk", b="post", axis=0, drives=[
-             drive("Treskrue 6×90 forsenket Torx", 1, frm="beam_blk")])]),
+    # V5: DRIVEN FROM INSIDE THE BED. Both directions fit (a 6x80 crosses 36
+    # into 48 and 48 into 36 alike), so the rule calls it 'tvetydig' and the
+    # table decides - and the table decides on the front face: a head on the
+    # post's forside would be the first thing anyone in the room sees.
     dict(id="J2", title="Fremre sidevange → fremre hjørnestolpe", n=2,
-         drill="⌀6 gjennom stolpen, ⌀4 i vangen",
-         side="Fra stolpens forside, gjennom stolpen inn i vangen",
+         drill="⌀6 gjennom vangen, ⌀4 i stolpen",
+         side="Fra vangens innside — inne fra sengen — gjennom vangen og inn "
+              "i stolpen. Stolpens forside er urørt",
          contacts=[dict(a="post_front", b="rail_front", axis=1, drives=[
-             drive("Treskrue 6×80 forsenket Torx", 2, frm="post_front")])]),
+             drive("Treskrue 6×80 forsenket Torx", 2, frm="rail_front")])]),
     dict(id="J2-B", title="Bakre sidevange → bakre hjørnestolpe "
                           "(vangen hviler på stolpetoppen)", n=2,
          drill="⌀6 gjennom vangen, ⌀4 i stolpens endeved; forsenk hodet godt "
@@ -2745,11 +2768,13 @@ JOINTS = [
               "beslag ville uansett ikke ligget an mot begge",
          contacts=[dict(a="post_back", b="rail_back", axis=2, drives=[
              drive("Treskrue 6×120 forsenket Torx", 2, frm="rail_back")])]),
+    # V5: same flip as J2. The stigevange's forside is in the front plane.
     dict(id="J3", title="Stigevange → fremre sidevange", n=2,
-         drill="⌀6 gjennom stigevangen, ⌀4 i sidevangen",
-         side="Fra stigevangens forside, inn i vangen",
+         drill="⌀6 gjennom sidevangen, ⌀4 i stigevangen",
+         side="Fra sidevangens innside — inne fra sengen — gjennom vangen og "
+              "inn i stigevangen. Stigevangens forside er urørt",
          contacts=[dict(a="upright", b="rail_front", axis=1, drives=[
-             drive("Treskrue 6×80 forsenket Torx", 3, frm="upright")])]),
+             drive("Treskrue 6×80 forsenket Torx", 3, frm="rail_front")])]),
     dict(id="J4", title="Rungetrinn → stigekloss og stigevange "
                         "(per trinnende)", n=8,
          drill="⌀6 gjennom stigevangen inn i trinnenden; ⌀3,5 ned gjennom "
@@ -2776,15 +2801,20 @@ JOINTS = [
          side="Fra sengesiden, inn i stolpens/stigevangens innside",
          contacts=[dict(a="guard", b="guard_host", axis=1, drives=[
              drive("Treskrue 5×60 forsenket Torx", 2, frm="guard")])]),
+    # V5: same flip as J2 and J3, and here it does a second job - the two
+    # screws are now the whole end fixing of the rail segment (the J9-F block
+    # is gone, see the C2 note), so they are driven from the side you can
+    # actually reach into with a drill while the bench is still open.
     dict(id="J8", title="Fremre benkevange → fremre hjørnestolpe", n=2,
-         drill="⌀6 gjennom stolpen, ⌀4 i vangen",
-         side="Fra stolpens forside, gjennom stolpen inn i vangen",
+         drill="⌀6 gjennom vangen, ⌀4 i stolpen",
+         side="Fra vangens innside — inne fra benkerommet — gjennom vangen og "
+              "inn i stolpen. Stolpens forside er urørt",
          # row=2: the face is 95 wide and 73 tall, so the automatic choice
          # would stack the pair along the RAIL. They belong stacked up the
          # POST, the same pattern as J2 - that is the direction the joint
          # takes moment in.
          contacts=[dict(a="bench_front", b="post_front", axis=1, drives=[
-             drive("Treskrue 6×80 forsenket Torx", 2, frm="post_front",
+             drive("Treskrue 6×80 forsenket Torx", 2, frm="bench_front",
                    row=2)])]),
     dict(id="J8-B", title="Bakre benkevange → bakre hjørnestolpe "
                           "(endeskjøt)", n=2,
@@ -2794,24 +2824,12 @@ JOINTS = [
                "skråskrue nær en ende",
          side="Skrått fra vangens forside inn i stolpen, ut av et flatbunnet "
               "sete så hodet ligger helt under treet. Vangen ligger fast "
-              "mellom de to stolpene, så skruene er bånd, ikke opplegg",
+              "mellom de to stolpene, og disse to skruene er HELE festet i "
+              "enden — det står ingen kloss under den",
          contacts=[dict(a="bench_back", b="post_back", axis=0, drives=[
              drive("Treskrue 6×90 forsenket Torx", 2, frm="bench_back",
                    toe=TOE_BENCH_POST,
                    exempt="skråskrue gjennom vangens forside nær enden")])]),
-    dict(id="J9-B", title="Bærekloss under bakre benkevange → bakre stolpe",
-         n=2,
-         drill="⌀6 gjennom klossen, ⌀4 i stolpen",
-         side="Fra klossens frie ende, inn i stolpen",
-         contacts=[dict(a="bench_blk_b", b="post_back", axis=0, drives=[
-             drive("Treskrue 6×90 forsenket Torx", 1, frm="bench_blk_b")])]),
-    dict(id="J9-F", title="Bærekloss under fremre benkevange → fremre stolpe",
-         n=2,
-         drill="⌀6 gjennom klossen, ⌀4 i stolpen",
-         side="Fra klossens bakside, inn i stolpen. Kortere skrue enn de "
-              "andre klossene — her er det bare 36 mm stolpe bak klossen",
-         contacts=[dict(a="bench_blk_f", b="post_front", axis=1, drives=[
-             drive("Treskrue 6×60 forsenket Torx", 1, frm="bench_blk_f")])]),
     dict(id="J10", title="Benkevange → stubbefot", n=4,
          drill="⌀3 i foten og i vangen. Skråskruen får først sete: ⌀18 "
                "forstner 18 mm ned langs skruens akse, med vinkelklossen som "
@@ -3614,12 +3632,13 @@ FASTENERS = build_fasteners() if FASTENERS_ON else []
 # THE ASSERTS - asked of the SHAPES
 # ---------------------------------------------------------------------------
 FASTENER_TOL = 0.15
-# The tightest tip cover in the bed is the 6x80 pattern into a side or bench
-# rail (J2, J3, J8): through 36 mm of post or upright, 44 mm left in a 48 mm
-# rail, so 4 mm of wood stands behind the point. J9-F used to set this number
-# and set it at 2 mm - a 6x70 through the 36 mm bearing block left 34 mm in a
-# 36 mm post - but that screw is a 6x60 now: 24 mm into the post, 12 mm of
-# cover, three times the margin and one length fewer to buy.
+# The tightest tip cover in the bed is the 6x80 pattern of J2, J3 and J8, and
+# V5 turned all three of them round: through 48 mm of side or bench rail,
+# 32 mm left in a 36 mm post or upright, so 4 mm of wood stands behind the
+# point. It is the same 4 mm the old direction had - the pattern is symmetric,
+# 36 + 48 = 48 + 36 - it has simply moved from the rail to the post, and the
+# head has moved off the room-facing face (V5). The number was set at 2 mm
+# once, by the deleted J9-F block; nothing in the bed is that tight now.
 FASTENER_MIN_TIP_COVER = 4.0
 FASTENER_VOL_TOL = 2.0           # mm3 - OCC boolean noise on a tangent face
 # TOE_HEAD_ALLOWANCE is GONE (V4). It used to let a tenth of a skew screw's
@@ -3677,6 +3696,20 @@ def _inside(point, member, grow=0.0):
 PANEL_JOINT = "J13"          # every joint id in the panel sub-assembly
 _FIXED_IDS = frozenset(id(p) for p in parts)
 TOE_SEAT_COVER = []          # (label, mm of wood over the head) per toe screw
+
+
+def on_visible_front(f):
+    """True when this fastener's head is on a room-facing face (V5).
+
+    The head is on the face the fastener is driven from, so that face looks
+    out of the front exactly when the fastener travels in -Y; and it is a
+    face of the VISIBLE FRONT when it sits at or in front of
+    VISIBLE_FRONT_Y. See the V5 note up in the POSTS section - this is an
+    aesthetic rule, not a structural one, and the reason J2, J3 and J8 are
+    driven from inside the bed outward.
+    """
+    return (f["direction"][1] < -1e-9
+            and f["anchor"][1] >= VISIBLE_FRONT_Y - FASTENER_TOL)
 
 if FASTENERS_ON:
     _others = {}
@@ -3789,6 +3822,31 @@ if FASTENERS_ON:
                 assert _hit < FASTENER_VOL_TOL, (
                     f"{_mode}: {_label} runs {_hit:.0f} mm3 into "
                     f"'{_p.label}'")
+
+    # --- V5: NOT ONE HEAD ON THE VISIBLE FRONT -----------------------------
+    # An AESTHETIC assert, and the only one in this file. Nothing about it is
+    # structural: every joint it governs is 'tvetydig' under the through-screw
+    # rule, i.e. the physics is happy either way round and the choice was
+    # always the table's. What it buys is a front face - two posts, two ladder
+    # uprights, the front side rail, the two front bench-rail segments and the
+    # four guard boards - with no steel showing anywhere on it.
+    _showing = [(_f["jid"], _f["name"],
+                 tuple(round(v, 1) for v in _f["anchor"]))
+                for _f in FASTENER_SPECS if on_visible_front(_f)]
+    assert not _showing, (
+        "V5: festemiddelhoder på en romvendt flate (Y >= "
+        f"{VISIBLE_FRONT_Y}, drevet innover i -Y): "
+        + "; ".join(f"{j} {n} @ {a}" for j, n, a in _showing)
+        + " — snu skruen så den drives innenfra og ut")
+    _front_count = sum(1 for _f in FASTENER_SPECS
+                       if _f["kind"] == "screw" and _f["direction"][1] > 1e-9
+                       and _f["into"] is not None
+                       and _f["into"].extents[1][1] >= VISIBLE_FRONT_Y
+                       - FASTENER_TOL)
+    print(f"OK  V5 synlig front: ingen av de {len(FASTENER_SPECS)} "
+          f"festemidlene har hodet på en flate fra Y {VISIBLE_FRONT_Y:g} og "
+          f"framover. De {_front_count} som tar tak i en del i det laget "
+          f"(J2, J3, J7, J8) er alle skrudd innenfra og ut")
 
     # --- the brackets stand the right way round ----------------------------
     # The bug this kills is the upside-down bracket: a flange screwed to a
@@ -3919,8 +3977,8 @@ print("\n=== VALIDATION ===")
 
 # D12/W1/W7: the depth envelope. The BACK face is THE WALL PLANE itself - after
 # W6 that is the back rail's outer face Y = -48, shared by the two back corner
-# posts, the two end beams and their back bearing blocks, the back bench rail and
-# its blocks, the back table ledger and the rear end of every slat. That plane is
+# posts, the two end beams, the back bench rail, the back table ledger and the
+# rear end of every slat (V5 took the four bearing blocks out of that plane). That plane is
 # a mounting face, so the assert below is not just an envelope check: nothing
 # whatsoever may poke out behind it, or the bed will not sit flat against the
 # wall. (The two BACK stub legs are in that plane too - they always were, they
@@ -4007,16 +4065,15 @@ print(f"OK  D14: the old front guard plane Y {OLD_GUARD_PLANE[0]}.."
 # wall" is a statement about a bounding box rather than about a face you can
 # bolt. After W6 the wall plane is the back rail's outer face Y = -48, and it is
 # a much bigger face than it was: the rail itself, the two back posts tucked into
-# its plane, the end beams and their back blocks, the back bench rail with its
-# blocks and its two stub legs, the back table ledger, and the rear end of all
-# 24 slats.
+# its plane, the two end beams, the back bench rail and its two stub legs, the
+# back table ledger, and the rear end of all 24 slats. (V5 took the four
+# bearing blocks out of this list; they were the only parts on it that were
+# there to hold something up rather than to be part of the bed.)
 bench_slat_parts = [p for p in parts if p.label.startswith("Bench Slat")]
 WALL_FACE = (
     {"Upper Side Rail Back", "Bench Rail Back (continuous)", "Table Ledger Back"}
     | {f"Corner Post Back {s}" for s in ("Left", "Right")}
     | {f"End Beam {s}" for s in ("Left", "Right")}
-    | {f"End Beam Bearing Block {s} Back" for s in ("Left", "Right")}
-    | {f"Bench Rail Bearing Block Back {s}" for s in ("Left", "Right")}
     | {f"Bench Stub Leg Back {s}" for s in ("Left", "Right")}
     | {s.label for s in bed_slats}
     | {s.label for s in bench_slat_parts}
@@ -4216,7 +4273,7 @@ assert SLAT_Z1 - BACK_POST_HEIGHT == RAIL_H + BED_SLAT_T == 134, \
     f"underside, expected one rail + one slat = {RAIL_H + BED_SLAT_T}"
 # (b) the rail actually BEARS on both post tops, over the full post depth in Y.
 # The rail is set in 3 mm at each wall by C9, so it covers 45 of the post's 48 mm
-# in X - the same 45 mm the J9-B block has always been sized on.
+# in X.
 for bp in back_posts:
     (px0, px1), (py0, py1), (_, ptop) = bp.extents
     (rx0, rx1), (ry0, ry1), (rz0, _) = back_rail.extents
@@ -4256,15 +4313,16 @@ for p in parts:
                 f"back side rail bearing on it"
             break
 assert back_post_neighbours, "W2: the back posts touch nothing at all"
-# 11: per post, the end beam + its back bearing block, the bench-rail bearing
-# block, the back bench rail, the back table ledger, the back side rail and the
-# outermost bench slat - x2, minus the three continuous members counted once.
-# (Was 13 in v9, when the end slats butted the posts; after W6 the upper slats
-# are 98 mm above the post tops and touch nothing there, and the bench slats
-# butt the post's X-inner face instead of clearing it in Y.)
-assert len(back_post_neighbours) == 11, \
+# 7: per post, the end beam, the back bench rail, the back table ledger, the
+# back side rail and the outermost bench slat - x2, minus the three continuous
+# members counted once.
+# (Was 13 in v9, when the end slats butted the posts; 11 until V5 deleted the
+# end-beam and bench-rail bearing blocks that hung on these two faces. After W6
+# the upper slats are 98 mm above the post tops and touch nothing there, and
+# the bench slats butt the post's X-inner face instead of clearing it in Y.)
+assert len(back_post_neighbours) == 7, \
     f"W2/W6: the back posts touch {len(back_post_neighbours)} parts, expected " \
-    f"11: {sorted(p.label for p in back_post_neighbours)}"
+    f"7: {sorted(p.label for p in back_post_neighbours)}"
 highest = max(back_post_neighbours, key=lambda p: p.extents[2][1])
 assert highest is back_rail and highest.extents[2][1] == RAIL_TOP, \
     f"W6: the highest WOOD on a back post is '{highest.label}' at " \
@@ -4563,99 +4621,78 @@ print(f"OK  end beams {sec(RAIL_T, RAIL_H)} x {END_BEAM_LEN} at Z "
       f"{END_BEAM_Z0}..{RAIL_BOTTOM} carry both side rails "
       f"(full {RAIL_T} mm bearing in X, beams at X {END_BEAM_X[0]} / {END_BEAM_X[1]})")
 
-# C2: every end-beam end and every bench-rail end must sit on a bearing block,
-# so the vertical load is wood-on-wood and the M8 bolts are pure ties.
-beam_blocks = [p for p in parts if "End Beam Bearing Block" in p.label]
-rail_blocks = [p for p in parts if "Bench Rail Bearing Block" in p.label]
-assert len(beam_blocks) == 4 and len(rail_blocks) == 4, "missing C2 bearing blocks"
-# J1-B / W6: the back blocks travelled with their post from Y -96..-48 to
-# -48..0 and nothing else about them changed. Each one must still be (a) flush
-# under the beam, (b) inside the beam's Y range so the beam has wood on it, (c)
-# hard against the X-inner face of the post it is screwed to, and (d) under an
-# END of the beam, not somewhere in the middle - the whole point of J1-B is that
-# the beam bears near both ends.
-end_beams = [p for p in parts if p.label.startswith("End Beam ")
-             and "Block" not in p.label]
-beam_of = {b.extents[0][0]: b for b in end_beams}
-beam_block_report = []
-for b in beam_blocks:
-    (bx0, bx1), (by0, by1), (bz0, bz1) = b.extents
-    assert abs(bz1 - END_BEAM_Z0) < TOL, "J1-B block top not at the beam underside"
-    beam = beam_of[bx0]
-    assert (bx0, bx1) == beam.extents[0], \
-        f"J1-B: '{b.label}' is not directly under its beam in X"
-    assert beam.extents[1][0] - TOL <= by0 and by1 <= beam.extents[1][1] + TOL, \
-        f"J1-B: '{b.label}' is not under the beam in Y"
-    # against a post face, and at one END of the beam
-    at_back = by0 == BACK_POST_Y0
-    post_y = (BACK_POST_Y0, BACK_POST_Y1) if at_back else (FRONT_POST_Y0,
-                                                           FRONT_POST_Y1)
-    assert (by0, by1) == post_y, \
-        f"J1-B: '{b.label}' at Y {by0}..{by1} is not on the post band {post_y}"
-    end_dist = (by0 - beam.extents[1][0]) if at_back else (beam.extents[1][1] - by1)
-    assert abs(end_dist) < TOL, \
-        f"J1-B: '{b.label}' sits {end_dist} mm in from the beam end"
-    beam_block_report.append((b.label, (by1 - by0) * (bx1 - bx0)))
-assert {round(a) for _, a in beam_block_report} == {BEAM_BLOCK_DX * BEAM_BLOCK_DY}, \
-    f"J1-B: bearing areas are {sorted(beam_block_report)}"
-rail_x_spans = [p.extents[0] for p in parts
-                if "Bench Rail" in p.label and "Block" not in p.label]
-rail_pieces_by_plane = {p.extents[1][0]: p for p in parts
-                        if "Bench Rail" in p.label and "Block" not in p.label
-                        and p.label.startswith("Bench Rail Back")}
-rail_bearings = []
-rail_block_areas = []
-for b in rail_blocks:
-    (bx0, bx1), (by0, by1), (bz0, bz1) = b.extents
-    assert abs(bz1 - BENCH_RAIL_BOTTOM) < TOL, \
-        "J9-B block top not at the bench rail underside"
-    # D13 ripple: the front rail is two SHORT segments now, so this can no
-    # longer be checked against the through span - it has to be checked against
-    # the actual rail piece that lands on this block.
-    bear = max(min(rx1, bx1) - max(rx0, bx0) for rx0, rx1 in rail_x_spans)
-    assert bear >= MIN_LEG_BEARING, \
-        f"bench rail only bears {bear:.0f} mm on '{b.label}'"
-    rail_bearings.append(bear)
-    # W9: the BACK blocks are the reoriented ones - 48 in X out from the post's
-    # X-inner face, 48 in Y (the whole rail depth), 36 in Z - and the rail end
-    # lands square on the whole 48 x 48. The FRONT ones are unchanged: 48 in X
-    # inside the post footprint, 36 in Y off the post's inner Y face, so the rail
-    # covers 45 x 36 of them.
-    if "Back" in b.label:
-        assert (bx1 - bx0, by1 - by0, bz1 - bz0) == \
-            (RAIL_BLOCK_BACK_DX, RAIL_BLOCK_BACK_DY, RAIL_BLOCK_BACK_DZ), \
-            f"W9: '{b.label}' is {bx1 - bx0}x{by1 - by0}x{bz1 - bz0}"
-        assert (by0, by1) == (BACK_RAIL_Y0, BACK_RAIL_Y1), \
-            f"W9: '{b.label}' is not in the back rail plane"
-        assert bx0 in (BETWEEN_POSTS_X0, BETWEEN_POSTS_X1 - RAIL_BLOCK_BACK_DX), \
-            f"W9: '{b.label}' does not stand on a back post's X-inner face"
-        rail = rail_pieces_by_plane[BACK_RAIL_Y0]
-        area = (min(rail.extents[0][1], bx1) - max(rail.extents[0][0], bx0)) * \
-               (min(rail.extents[1][1], by1) - max(rail.extents[1][0], by0))
-        assert abs(area - RAIL_BLOCK_BACK_DX * RAIL_BLOCK_BACK_DY) < TOL, \
-            f"W9: the back bench rail bears {area} mm2 on '{b.label}', want " \
-            f"{RAIL_BLOCK_BACK_DX * RAIL_BLOCK_BACK_DY}"
-        rail_block_areas.append(area)
-    else:
-        assert (bx1 - bx0, by1 - by0, bz1 - bz0) == \
-            (RAIL_BLOCK_FRONT_DX, RAIL_BLOCK_FRONT_DY, RAIL_BLOCK_FRONT_DZ), \
-            f"C2: '{b.label}' is {bx1 - bx0}x{by1 - by0}x{bz1 - bz0}"
-        # U2: the post is 98 wide and the block 48, so "inside the post
-        # footprint" is no longer the same statement as "at the post's X0".
-        # Checked as containment against the real post extents instead.
-        assert any(px0 - TOL <= bx0 and bx1 <= px1 + TOL
-                   for px0, px1 in ((x, x + POST_W) for x in CORNER_POST_X)), \
-            f"C2: '{b.label}' (X {bx0}..{bx1}) is not inside a corner post's " \
-            f"footprint"
-print(f"OK  C2/W6/W9: 4 J1-B blocks under the END BEAMS at both ends of each "
-      f"beam (top Z={END_BEAM_Z0}, {BEAM_BLOCK_DX} x {BEAM_BLOCK_DY} = "
-      f"{BEAM_BLOCK_DX * BEAM_BLOCK_DY} mm2 each; the BACK pair travelled with "
-      f"its post to Y {BACK_POST_Y0}..{BACK_POST_Y1} and is unchanged in every "
-      f"other respect) and 4 J9-B blocks under the bench rails (top "
-      f"Z={BENCH_RAIL_BOTTOM}, {min(rail_bearings):.0f}..{max(rail_bearings):.0f}"
-      f" mm bearing in X against the real rail piece; the BACK pair turned onto "
-      f"the post's X-inner face, {int(rail_block_areas[0])} mm2 of bearing "
-      f"instead of 1620)")
+# V5: THE BEARING BLOCKS ARE GONE - AND THIS IS WHAT STANDS IN THEIR PLACE.
+# Eight 36x48 offcuts used to hang off the post faces under the end beams and
+# the bench rails, and the argument for them was "the member bears on wood
+# instead of hanging in screw shear". It did not survive being followed to the
+# end: the block itself hangs on ONE 6 mm screw (2.0 kN against up to 1 kN, the
+# 0.50 that topped vedlegg A's screw rows), so it did not take the reaction out
+# of steel, it halved the steel. The three corners now carry it on the members'
+# OWN end fixings, which were always there, and this block is the arithmetic.
+assert not [p for p in parts if "Bearing Block" in p.label], \
+    "V5: a bearing block is back in the model"
+
+# Conservative field values, the same ones vedlegg A quotes.
+SCREW_SHEAR_KN = {5: 1.5, 6: 2.0}
+# (joint, what it is, the vertical reaction ONE instance of it takes, kN)
+# J1  - an end beam spans 836 mm between its two posts and sees the 2 kN
+#       dynamic bed load, so a corner takes <= 1 kN.
+# J8  - a front bench-rail segment is a two-support member (post, stub leg) of
+#       ~584 mm with no cantilever; 1 kN of bench load at midspan puts 0.5 kN
+#       on the post end.
+# J8-B- the back rail's outer span is post X 98 -> stub leg centre 608.5,
+#       ~510 mm, and the same 1 kN at its midpoint puts 0.5 kN on the post.
+#       The two screws are skew in the XY plane and the reaction is Z, so both
+#       are square to the load and neither loses anything to the skew.
+BLOCKLESS_CORNERS = [
+    ("J1", "endebjelkeende → hjørnestolpe", 1.0),
+    ("J8", "fremre benkevangeende → fremre stolpe", 0.5),
+    ("J8-B", "bakre benkevangeende → bakre stolpe", 0.5),
+]
+# The gate this change had to pass: no row over 0.8 even with the whole design
+# load stood directly over the corner, i.e. at TWICE the reaction above.
+MAX_BLOCKLESS_UTIL = 0.8
+BLOCKLESS_REPORT = []
+for _jid, _what, _reaction in BLOCKLESS_CORNERS:
+    _screws = [f for f in FASTENER_SPECS
+               if f["jid"] == _jid and f["kind"] == "screw"]
+    _per = len(_screws) // JOINT[_jid]["n"]
+    assert _per * JOINT[_jid]["n"] == len(_screws) and _per >= 2, \
+        f"V5: {_jid} has {len(_screws)} screws over {JOINT[_jid]['n']} " \
+        f"instances - a block-less corner needs a whole number of them, and " \
+        f"at least two"
+    _cap = sum(SCREW_SHEAR_KN[int(round(f["d"]))] for f in _screws[:_per])
+    _util = _reaction / _cap
+    _worst = 2 * _reaction / _cap
+    assert _worst <= MAX_BLOCKLESS_UTIL, \
+        f"V5: {_jid} ({_what}) is {_worst:.2f} utilised with the whole " \
+        f"design load over the corner - over the {MAX_BLOCKLESS_UTIL} gate. " \
+        f"Put the bearing block back and re-open the question"
+    BLOCKLESS_REPORT.append((_jid, _what, _per, _cap, _reaction, _util, _worst))
+print("OK  V5 klossløse hjørner - reaksjonen går gjennom leddets egne skruer:")
+for _jid, _what, _per, _cap, _reaction, _util, _worst in BLOCKLESS_REPORT:
+    print(f"      {_jid:5s} {_what:38s} {_per}x i skjær = {_cap:.1f} kN mot "
+          f"{_reaction:.1f} kN → {_util:.2f} (verste plassering "
+          f"{_worst:.2f}, grense {MAX_BLOCKLESS_UTIL:g})")
+
+# And the geometry that says the beam end is an ordinary lap fixing and not the
+# brittle end-split the blocks were bought against: the J1 pair has 3d of end
+# distance along the beam's own grain and 4.5d of edge distance in the
+# direction the load acts. MIN_EDGE (3d) is the rule this file enforces on
+# every other joint; the LOADED edge, which is the one that governs a
+# perpendicular-to-grain pair, has half as much again.
+_j1 = [f for f in FASTENER_SPECS if f["jid"] == "J1"]
+_j1_end = min(min(abs(f["anchor"][1] - e) for e in f["through"].extents[1])
+              for f in _j1)
+_j1_edge = min(min(abs(f["anchor"][2] - e) for e in f["through"].extents[2])
+               for f in _j1)
+assert _j1_end >= MIN_EDGE - TOL and _j1_edge >= MIN_EDGE - TOL, \
+    f"J1: {_j1_end:g} mm to the beam end and {_j1_edge:g} mm to its loaded " \
+    f"edge, want at least {MIN_EDGE} (3d) of both"
+print(f"OK  V5 J1 i bjelkeenden: {_j1_end:g} mm ({_j1_end / SCREW_D:g}d) "
+      f"endeavstand langs fiberretningen og {_j1_edge:g} mm "
+      f"({_j1_edge / SCREW_D:g}d) kantavstand i lastretningen, i "
+      f"{sec(RAIL_T, RAIL_H)} C24 - krav {MIN_EDGE} (3d)")
 
 # W1/W5/W7: THE BACK BARRIER IS THE WALL. There are no back guard boards, so
 # what has to be checked on that side is the mattress/wall entrapment gap.
@@ -4964,7 +5001,8 @@ print(f"OK  C5/W9/U2: back bench rail {sec(BENCH_RAIL_T, BENCH_RAIL_H)} x "
       f"{BENCH_RAIL_TOP} - butting both back posts over "
       f"{int(end_fixings['Bench Rail Back (continuous)'])} mm2 of their "
       f"{POST_T} mm X-inner faces (was 48 x 73 = 3504 on a 48 mm post) and "
-      f"screwed to them, borne on their J9-B blocks, propped by 2 stub legs")
+      f"screwed to them (2 x 6x90 skråskruer per ende, J8-B - no bearing "
+      f"block since V5), propped by 2 stub legs")
 print(f"OK  C3: bench slats {sec(BENCH_SLAT_T, BENCH_SLAT_W)}, bench top Z="
       f"{BENCH_TOP}, bed-mode panel {PANEL_UNDER_BED}..{PANEL_TOP_BED} "
       f"({PANEL_BENCH_DIP} mm below the bench tops - the cushion recess, D10)")
@@ -6492,12 +6530,10 @@ print(f"Note (W9): the back bench rail and the back table ledger run POST TO "
       f"POST, {BETWEEN_POSTS_LEN} mm at X {BETWEEN_POSTS_X0}.."
       f"{BETWEEN_POSTS_X1} (was {THROUGH_LEN} at {THROUGH_X0}..{THROUGH_X1}) - "
       f"the back posts moved into their Y band, so they butt them and are "
-      f"screwed to their X-inner faces, an end fixing neither had before. The "
-      f"two back bench-rail bearing blocks turn with them onto that same face "
-      f"(X {RAIL_BLOCK_BACK_X[0]}..{RAIL_BLOCK_BACK_X[0] + RAIL_BLOCK_BACK_DX} / "
-      f"{RAIL_BLOCK_BACK_X[1]}..{RAIL_BLOCK_BACK_X[1] + RAIL_BLOCK_BACK_DX}), "
-      f"giving {RAIL_BLOCK_BACK_DX * RAIL_BLOCK_BACK_DY} mm2 of bearing instead "
-      f"of 1620. The bench slats are re-pitched to start at the post inner face: "
+      f"screwed to their X-inner faces, an end fixing neither had before - and "
+      f"since V5 deleted the two bearing blocks that hung under those ends, it "
+      f"is the WHOLE end fixing: 2 x 6x90 skew screws per end, 4.0 kN in shear "
+      f"against 0.5. The bench slats are re-pitched to start at the post inner face: "
       f"X {BENCH_SLAT_X_START}..{BENCH_LEN}, pitch {BENCH_SLAT_PITCH:g} (124.75 "
       f"in v10, 137.5 before that), gap {BENCH_SLAT_PITCH - BENCH_SLAT_W:g} mm "
       f"(26.75, 39.5) - same five pieces per bench, closer together each time "
@@ -6568,12 +6604,13 @@ print(f"Note (U4): NO M8 GOES INTO A POST ANY MORE. An M8 needs 3d = 24 mm of "
       f"pattern the ladder uprights already use (J3): 6 mm wants 3d = 18, which "
       f"is exactly what a {POST_T} mm face gives, and 6x90 through a {RAIL_T} mm "
       f"rail leaves 42 mm in the post. Stacked along the post grain as the ties "
-      f"were. The load path does not change at all - the C2 bearing blocks and "
-      f"the W6 post-top bearing still carry everything and every fastener into "
-      f"a post is still a pure TIE. Affected: J1 (end beam -> post), J2 (front "
-      f"side rail -> post), J8 (bench rail -> post) and the W9 end fixings of "
-      f"the back bench rail and the back table ledger. Exact counts per joint "
-      f"are the docs round's to set.")
+      f"were. Affected: J1 (end beam -> post), J2 (front side rail -> post), "
+      f"J8 (bench rail -> post) and the W9 end fixings of the back bench rail "
+      f"and the back table ledger. U4 said the load path did not change "
+      f"because the C2 bearing blocks carried every vertical reaction; V5 has "
+      f"since deleted those blocks, so J1, J8 and J8-B DO carry their corner "
+      f"reactions in screw shear now - 4.0 kN against 1.0 / 0.5 / 0.5, "
+      f"asserted above.")
 print(f"Note (D5/D7/U1/U2): {sec(BOARD36_T, BOARD36_W)} is the stock of this "
       f"bed - {SLAT_COUNT} upper bed slats + {BENCH_SLAT_COUNT * len(BENCH_X)} "
       f"bench slats + {len(FRONT_GUARD_SEGMENTS) * len(GUARD_BAND_Z0)} front "

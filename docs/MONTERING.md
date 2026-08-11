@@ -12,7 +12,7 @@
 |---:|---:|---:|
 | **1990 mm** | **836 mm** | **1700 mm** |
 
-71 deler · 12 steg (0–11) · 2 personer · passer standard madrass 80 × 200 cm
+63 deler · 12 steg (0–11) · 2 personer · passer standard madrass 80 × 200 cm
 
 Sengen står inntil bakveggen og inntil begge sidevegger, og skrus fast i bakveggen. **Bygg bakfra og utover.**
 
@@ -56,14 +56,13 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 |:---:|---|
 | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **80x** | Treskrue 5×60 forsenket Torx |
 | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="44"> **38x** | Treskrue 5×40 forsenket Torx |
-| <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="44"> **18x** | Treskrue 6×90 forsenket Torx |
 | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **14x** | Treskrue 6×80 forsenket Torx |
 | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="44"> **12x** | Treskrue 6×120 forsenket Torx |
+| <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="44"> **12x** | Treskrue 6×90 forsenket Torx |
 | <img src="img/beslag/filtknott-d40.svg" alt="Filtknott / møbeltapp ⌀40" height="44"> **8x** | Filtknott / møbeltapp ⌀40 |
 | <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="44"> **6x** | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) |
 | <img src="img/beslag/treskrue-5x70.svg" alt="Treskrue 5×70 forsenket Torx" height="44"> **4x** | Treskrue 5×70 forsenket Torx |
 | <img src="img/beslag/vinkelbeslag-90x90x40.svg" alt="Vinkelbeslag 90×90×40×2,5 varmforsinket" height="179"> **4x** | Vinkelbeslag 90×90×40×2,5 varmforsinket |
-| <img src="img/beslag/treskrue-6x60.svg" alt="Treskrue 6×60 forsenket Torx" height="44"> **2x** | Treskrue 6×60 forsenket Torx |
 | <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="84"> **2x** | Vinkelbeslag 40×40×20 |
 
 Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.md). Hvilken vei hver enkelt drives, og hvorfor: [skrueretninger](generated/skrueretninger.md).
@@ -77,8 +76,6 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Løs plate | 18 mm plate, 652 bred | 798 | **1** |
 | Stigevange | 36×48 | 1700 | **2** |
 | Stigekloss | 36×48 | 73 | **8** |
-| Bærekloss, benkevange (J9-B / J9-F) | 36×48 | 48 | **4** |
-| Bærekloss, endebjelke (J1-B) | 36×48 | 36 | **4** |
 | Hjørnestolpe, front | 36×98 | 1700 | **2** |
 | Hjørnestolpe, bak (veggside) | 36×98 | 1065 | **2** |
 | Rekkverksbord, front | 36×98 | 832 | **4** |
@@ -94,7 +91,7 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Sidevange, øvre | 48×98 | 1984 | **2** |
 | Endebjelke | 48×98 | 836 | **2** |
 
-**71 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
+**63 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
 
 Posisjoner: [kappliste](generated/kappliste.md). Hva du skal kjøpe: [innkjøpsliste](generated/innkjopsliste.md).
 
@@ -128,20 +125,19 @@ Ledd **J15** → [beslagliste](generated/beslagliste.md)
 |---:|---|---|---:|
 | **1×** | Benkevange, bak (gjennomgående) | 48×73 | 1794 |
 | **1×** | Bordbærelekt, bak | 48×73 | 1794 |
-| **2×** | Bærekloss, benkevange (J9-B / J9-F) | 36×48 | 48 |
 | **2×** | Hjørnestolpe, bak (veggside) | 36×98 | 1065 |
 | **1×** | Sidevange, øvre | 48×98 | 1984 |
 
 | | | |
 |:---:|:---:|---|
-| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="30"> **6x** | Treskrue 6×90 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="30"> **4x** | Treskrue 5×40 |
-| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **4x** | Treskrue 6×120 |
+| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="30"> **4x** | Treskrue 5×40 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **4x** | Treskrue 6×120 |
+| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="30"> **4x** | Treskrue 6×90 |
 | <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="58"> **2x** | Vinkelbeslag 40×40×20 |
 
 Bokstavene viser hvor på tegningen hver type går.
 
-Ledd **J2-B**, **J8-B**, **J9-B**, **J12** → [beslagliste](generated/beslagliste.md)
+Ledd **J2-B**, **J8-B**, **J12** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Mål diagonalene i rammen — de skal være like.
 
@@ -175,19 +171,14 @@ Ledd **J14** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **2×** | Bærekloss, benkevange (J9-B / J9-F) | 36×48 | 48 |
-| **4×** | Bærekloss, endebjelke (J1-B) | 36×48 | 36 |
 | **2×** | Endebjelke | 48×98 | 836 |
 | **2×** | Hjørnestolpe, front | 36×98 | 1700 |
 
-| | | |
-|:---:|:---:|---|
-| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="30"> **12x** | Treskrue 6×90 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x60.svg" alt="Treskrue 6×60 forsenket Torx" height="30"> **2x** | Treskrue 6×60 |
+| | |
+|:---:|---|
+| <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="30"> **8x** | Treskrue 6×90 |
 
-Bokstavene viser hvor på tegningen hver type går.
-
-Ledd **J1**, **J1-B**, **J9-F** → [beslagliste](generated/beslagliste.md)
+Ledd **J1** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Vater på begge endebjelker, og kontroller at de ligger i nøyaktig samme høyde.
 
