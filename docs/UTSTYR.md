@@ -7,10 +7,14 @@ planlagt — da flytter denne til rot/felles-nivå.)
 
 ## Batterisystem
 
-**Ryobi ONE+ 18V** — batterier og lader i hus. Fremtidige verktøykjøp
-favoriserer ONE+ der kvaliteten holder (null batterikostnad, ett system);
-ledningsverktøy vurderes der klassen krever mer krutt eller presisjon enn
-batteriklassen leverer.
+**Ryobi ONE+ 18V** — batterier og lader i hus.
+
+**Kjøpsstrategi (besluttet aug. 2026):** hold deg til ONE+ så langt det er
+mulig, og velg **børsteløs motor (HP-serien)** der den finnes. Unntak
+aksepteres kun der (a) klassen ikke finnes som HP og lasten er lett/
+intermitterende (multiverktøy-logikken), eller (b) ONE+ mangler verktøyklassen
+helt. Verifiser alltid at modellnummeret faktisk er HP/børsteløs ved kjøp —
+Ryobi selger ofte begge varianter side om side.
 
 ## Eid utstyr
 
@@ -47,16 +51,20 @@ Torx-bits, fastnøkkel 10 mm, blyant/syl, skrustikke.
 
 Rangert etter hva som låser opp mest per krone, gitt eksisterende park:
 
-| # | Verktøy | Hvorfor / hva det låser opp | Merknad |
+| # | Verktøy | Hvorfor / hva det låser opp | Merknad (ONE+/HP-status) |
 |---|---|---|---|
-| 1 | **Eksentersliper** (ONE+: R18ROS) | Finish-kvalitet på alt; HANNA: 69 deler skal slipes før maling | Kjøp før malejobben |
-| 2 | **Skinnesag** | Platekutt (HANNA-platen!) og kløyving — kapasitetsgapet i parken | **Ryobi RPLS18X-0** (ONE+ HP dykksag, 2×70 cm skinner inkl., ~3 750 kr uten batteri) er platform-svaret og erstatter både sirkelsag og skinne. Budsjettalternativ: Scheppach PL55 m/ledning og skinner ~1 880 kr. Nullkostnad: DIY styrebrett av platerest. ⚠️ Felle: Ryobis RAK03SR-«skinne» er en klemlist og passer IKKE R18CS-0 tross butikkbeskrivelser |
-| 3 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Billigst per nytte på hele lista |
-| 4 | **Overfres — Ryobi RTR18-0** (ONE+) + bit-sett + **12 mm rettfres** | Avrundede kanter (barnesikkert + pent), flush-lommer for innfelte beslag, labank-hakk, flush-trim av plate | Kantfres-klasse: innstikk (plunge) mangler — våre jobber er kant-entré, så OK. 6/6,35 mm tange; Ryobi-bitsettet (RAKRBS5) passer, men suppler med skikkelig 12 mm rettfres |
-| 5 | **Japansk sag (ryoba) + stemjern-sett** | Rene hakk og presisjonsarbeid for hånd; billigste vei til skjult treskjøt | ~200–400 kr samlet |
-| 6 | **Multiverktøy** (ONE+: R18MT) | Flush-kutt av lister, justering på plass (HANNA står i nisje med gulvlister), ettermontering | |
-| 7 | **Forstnerbor-sett** | Flatbunnede hull: magneter, plugger, eksenterbeslag | Drives av drillen |
+| 1 | **Eksentersliper — ONE+ HP-variant** | Finish-kvalitet på alt; HANNA: 69 deler skal slipes før maling | Kjøp før malejobben. HP børsteløs-utgave finnes i sortimentet — verifiser modellnr. (ikke ta brushed R18ROS hvis HP står ved siden av) |
+| 2 | **Skinnesag — Ryobi RPLS18X-0** ✅ HP | Platekutt (HANNA-platen!) og kløyving — kapasitetsgapet i parken | ONE+ HP børsteløs dykksag, 2×70 cm skinner inkl., ~3 750 kr uten batteri. Bekreftet HP → **planens valg**; erstatter sirkelsag + skinne i ett. ⚠️ Felle: RAK03SR-«skinnen» er en klemlist og passer IKKE R18CS-0 |
+| 3 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Batteriuavhengig; billigst per nytte på lista |
+| 4 | **Overfres — Ryobi RTR18-0** (ONE+) + bit-sett + **12 mm rettfres** | Avrundede kanter (barnesikkert + pent), flush-lommer for beslag, labank-hakk, flush-trim | **HP-unntak:** kantfres-klassen finnes p.t. ikke børsteløs hos Ryobi — lett/intermitterende last gjør standardmotor akseptabel per strategien. Innstikk (plunge) mangler; våre jobber er kant-entré. 6/6,35 mm tange; suppler bitsettet med 12 mm rettfres |
+| 5 | **Japansk sag (ryoba) + stemjern-sett** | Rene hakk og presisjon for hånd; billigste vei til skjult treskjøt | Batteriuavhengig, ~200–400 kr |
+| 6 | **Multiverktøy — ONE+** | Flush-kutt av lister, justering på plass (HANNA i nisje med gulvlister) | Sjekk om HP-variant finnes ved kjøp; hvis ikke er brushed R18MT-0 akseptabelt unntak (intermitterende last) |
+| 7 | **Forstnerbor-sett** | Flatbunnede hull: magneter, plugger, eksenterbeslag | Drives av drillen (13 mm chuck ✓) |
 | 8 | Dyvel-jig, lommehullsjig | Skjulte skjøter i fremtidige synlige møbler | Ved behov |
+
+**Avmeldt etter strategivalget:** R18CS-0 (brushed sirkelsag, skinneinkompatibel),
+RCK183G-0-pakken (inneholder brushed sirkelsag + stikksag vi ikke trenger ennå),
+stikksag generelt (venter på et prosjekt med kurver — velg da HP-variant om den finnes).
 
 ## Forbruk/småting å ha liggende
 
