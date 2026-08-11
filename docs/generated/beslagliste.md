@@ -54,3 +54,15 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 | **J15** | Filtknott under stolpe og stubbefot | 8 | 1× Filtknott / møbeltapp ⌀40 | — | Slås i endeveden før reisning |
 
 Forklaringen til hvert ledd står i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene).
+
+## Lås i sengestilling — IKKE VALGT
+
+Platen løftes rett opp i begge stillinger. Ingenting holder den ned, og i sengestilling er det et valg som må tas før sengen brukes. Alle tre virker i det samme hullet — den vannrette fliken på det bakre vinkelbeslaget (J13c), rett ned i opplegget:
+
+| Valg | Hva | Verktøy | EN 747 |
+|---|---|---|---|
+| **i** | 2× treskrue 5×40 gjennom fliken ned i vangen | ja | konform grunnlinje (4.1.1: omstilling skal kreve verktøy) |
+| **ii** | fingerskrue M6 i gjengeinnsats i vangen | nei | grensetilfelle — verktøyfritt betyr at et barn òg kan gjøre det |
+| **iii** | oversenterlås som trekker platen ned | nei | samme innvending som ii, men fjerner klapringen |
+
+Tegnet side ved side i [docs/preview/laasvalg.png](../preview/laasvalg.png). Antallet er 2 uansett valg — ett per bakre beslag.

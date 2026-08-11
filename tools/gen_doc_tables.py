@@ -1739,6 +1739,27 @@ def emit_beslagliste(out_dir, steps):
                  f"{j['drill']} | {j['side']} |\n")
     L.append("\nForklaringen til hvert ledd står i "
              "[ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene).\n")
+    # V2: THE ONE OPEN LINE. The panel is a drop-in unit and nothing holds it
+    # DOWN - that is deliberate, and it is the only decision this manual
+    # leaves to the builder. It is written here, in the shopping list, because
+    # that is where an unbought part belongs.
+    L.append("\n## Lås i sengestilling — IKKE VALGT\n\n"
+             "Platen løftes rett opp i begge stillinger. Ingenting holder den "
+             "ned, og i sengestilling er det et valg som må tas før sengen "
+             "brukes. Alle tre virker i det samme hullet — den vannrette "
+             "fliken på det bakre vinkelbeslaget (J13c), rett ned i "
+             "opplegget:\n\n"
+             "| Valg | Hva | Verktøy | EN 747 |\n|---|---|---|---|\n"
+             "| **i** | 2× treskrue 5×40 gjennom fliken ned i vangen | ja | "
+             "konform grunnlinje (4.1.1: omstilling skal kreve verktøy) |\n"
+             "| **ii** | fingerskrue M6 i gjengeinnsats i vangen | nei | "
+             "grensetilfelle — verktøyfritt betyr at et barn òg kan gjøre "
+             "det |\n"
+             "| **iii** | oversenterlås som trekker platen ned | nei | "
+             "samme innvending som ii, men fjerner klapringen |\n\n"
+             "Tegnet side ved side i "
+             "[docs/preview/laasvalg.png](../preview/laasvalg.png). "
+             "Antallet er 2 uansett valg — ett per bakre beslag.\n")
     write(os.path.join(out_dir, "beslagliste.md"), "".join(L))
 
 

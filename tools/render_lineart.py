@@ -1445,6 +1445,20 @@ class Page:
             f'cy="{_f(-centre[1])}" r="{_f(r)}"/></clipPath></defs>'
             f'<g clip-path="url(#{cid})">')
 
+    def clip_rect_begin(self, box):
+        """Everything until clip_rect_end() is cut to a rectangle - the crop
+        panels the V2 mechanism sheets are made of."""
+        self._clips = getattr(self, "_clips", 0) + 1
+        cid = f"crop{self._clips}"
+        x, y, w, h = box
+        self.body.append(
+            f'<defs><clipPath id="{cid}"><rect x="{_f(x)}" '
+            f'y="{_f(-(y + h))}" width="{_f(w)}" height="{_f(h)}"/>'
+            f'</clipPath></defs><g clip-path="url(#{cid})">')
+
+    def clip_rect_end(self):
+        self.body.append("</g>")
+
     def clip_end(self):
         self.body.append("</g>")
 
