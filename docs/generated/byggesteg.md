@@ -18,7 +18,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 **Slik gjør du:**
 
 1. Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring — med to navngitte unntak, og begge står i kapplista: de to kilelektene under platens forkant, og vinkelklossen.
-1. Skråkapp de to kilelektene. De er 48×73 × 116 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (21,6°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.
+1. Skråkapp de to kilelektene. De er 48×73 × 116 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (30,9°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.
 1. Kapp vinkelklossen, borjiggen til de to skråskruene (J8-B og J10). Én bit 48×73 av restene, 160 mm lang, med en rampe i hver ende: 25° i den ene (J8-B) og 30° i den andre (J10). Kappsag med bladet vippet. Den skal ikke bygges inn i sengen — den er verktøy.
 1. Merk hver del med blyant på en flate som blir skjult.
 1. **Bryt alle kanter et barn kan nå, nå — mens delene er løse.** Kravet er brutt kant, ikke en bestemt metode: 45° fas eller avrunding, du velger. Fres med V-spor eller avrundingsfres om du har fres; ellers gjør en blokkhøvel eller en pussekloss med 120-korn nøyaktig samme nytte. Viktigst: plateenhetens underside — begge styrelektenes nedre kanter og begge kilene — for det er der et kne møter treet når noen sitter ved bordet. Deretter platens fire egne kanter, og så stolper, rekkverksbord, trinn og stigevangenes kanter. Modellen tegner alle deler skarpe; kantbrytningen er en instruks og flytter ingen mål.
@@ -149,7 +149,7 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 
 Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre sidevangen.
 
-**Deler:** 4× Rungetrinn 48×73 × 320 · 8× Stigekloss 36×48 × 73 · 2× Stigevange 36×48 × 1700
+**Deler:** 4× Rungetrinn 48×73 × 320 · 8× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 1700
 
 **Festemidler:** 16× Treskrue 5×60 forsenket Torx · 8× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×80 forsenket Torx
 
@@ -236,7 +236,7 @@ To bånd, hvert delt i to bord, med klatreåpningen i midten. Man klatrer GJENNO
 
 Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke og senkes rett ned igjen — i begge stillinger. Lektene under den gjør to jobber: de gjør platen stiv, OG de er styringen. De to lange går ned på hver side av trinnenden med 2 mm klaring, så de finner plassen selv. Det er ikke ett beslag i denne mekanismen, og det skal ikke være én skrue synlig oppå platen.
 
-**Deler:** 2× Avstivningslekt under plate 48×73 × 750 · 2× Kilelekt under platens forkant (skråkappet) 48×73 × 116 · 1× Løs plate 18 mm plate, 652 bred × 798
+**Deler:** 2× Avstivningslekt under plate 48×73 × 750 · 2× Kilelekt under platens forkant (skråkappet) 48×73 × 77 · 1× Løs plate 18 mm plate, 574 bred × 798
 
 **Festemidler:** 18× Treskrue 5×40 forsenket Torx
 

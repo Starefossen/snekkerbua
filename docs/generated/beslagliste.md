@@ -52,6 +52,6 @@ Forklaringen til hvert ledd står i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene).
 
 **Det står ingen lås i denne lista, og det er ikke en glipp.** Platen løftes rett opp i begge stillinger, og etter denne runden er det ingen ståldel igjen i platemekanismen i det hele tatt — verken beslag eller lås.
 
-Begrunnelsen står i sin helhet i [ASSEMBLY, vedlegg B, avvik 4](../ASSEMBLY.md#vedlegg-b--aksepterte-avvik). Kort: madrassen ligger *oppå* platen og må fjernes før platen kan løftes, dette er underetasjen med ~26 cm fallhøyde, og plateenheten veier 7,1 kg.
+Begrunnelsen står i sin helhet i [ASSEMBLY, vedlegg B, avvik 4](../ASSEMBLY.md#vedlegg-b--aksepterte-avvik). Kort: madrassen ligger *oppå* platen og må fjernes før platen kan løftes, dette er underetasjen med ~26 cm fallhøyde, og plateenheten veier 6,5 kg.
 
-Trevirket for en ettermontert lås står likevel der det sto: **kilelektas endeved mot enden av den fremre benkevangen**, tvers over de 24 mm i sideklaringen, i samme høydebånd i sengestilling og 223 mm fra hverandre i bordstilling. Geometrien er målt og asserted i modellen, så alle tre løsningene i [docs/preview/laasvalg.png](../preview/laasvalg.png) kan monteres senere uten at noe tre må endres. Det arket er historikk nå, ikke en bestilling.
+Trevirket for en ettermontert lås står likevel der det sto: **kilelektas endeved mot enden av den fremre benkevangen**, tvers over de 63 mm i sideklaringen, i samme høydebånd i sengestilling og 223 mm fra hverandre i bordstilling. Geometrien er målt og asserted i modellen, så alle tre løsningene i [docs/preview/laasvalg.png](../preview/laasvalg.png) kan monteres senere uten at noe tre må endres. Det arket er historikk nå, ikke en bestilling.

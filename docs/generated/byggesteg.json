@@ -11,7 +11,7 @@
       "intro": "Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du ikke til med drillen på de flatene som vender mot vegg.",
       "do": [
         "Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring — med to navngitte unntak, og begge står i kapplista: de to kilelektene under platens forkant, og vinkelklossen.",
-        "Skråkapp de to kilelektene. De er 48×73 × 116 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (21,6°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.",
+        "Skråkapp de to kilelektene. De er 48×73 × 116 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (30,9°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.",
         "Kapp vinkelklossen, borjiggen til de to skråskruene (J8-B og J10). Én bit 48×73 av restene, 160 mm lang, med en rampe i hver ende: 25° i den ene (J8-B) og 30° i den andre (J10). Kappsag med bladet vippet. Den skal ikke bygges inn i sengen — den er verktøy.",
         "Merk hver del med blyant på en flate som blir skjult.",
         "**Bryt alle kanter et barn kan nå, nå — mens delene er løse.** Kravet er brutt kant, ikke en bestemt metode: 45° fas eller avrunding, du velger. Fres med V-spor eller avrundingsfres om du har fres; ellers gjør en blokkhøvel eller en pussekloss med 120-korn nøyaktig samme nytte. Viktigst: plateenhetens underside — begge styrelektenes nedre kanter og begge kilene — for det er der et kne møter treet når noen sitter ved bordet. Deretter platens fire egne kanter, og så stolper, rekkverksbord, trinn og stigevangenes kanter. Modellen tegner alle deler skarpe; kantbrytningen er en instruks og flytter ingen mål.",
@@ -364,7 +364,7 @@
       },
       "parts": [
         "4× Rungetrinn 48×73 × 320",
-        "8× Stigekloss 36×48 × 73",
+        "8× Stigekloss 36×48 × 36",
         "2× Stigevange 36×48 × 1700"
       ],
       "fill_code": false,
@@ -605,8 +605,8 @@
       },
       "parts": [
         "2× Avstivningslekt under plate 48×73 × 750",
-        "2× Kilelekt under platens forkant (skråkappet) 48×73 × 116",
-        "1× Løs plate 18 mm plate, 652 bred × 798"
+        "2× Kilelekt under platens forkant (skråkappet) 48×73 × 77",
+        "1× Løs plate 18 mm plate, 574 bred × 798"
       ],
       "fill_code": false,
       "half_view": false,

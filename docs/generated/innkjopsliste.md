@@ -9,25 +9,25 @@ Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regne
 
 | Dimensjon | Kjøp | Svinn |
 |---|---|---:|
-| **18 mm plate, 652 bred** | 1 plate 18 mm kryssfiner furu, minst 652 × 798 mm | — |
-| **36×48** | **1 stk. 4,2 m** | 5 % |
+| **18 mm plate, 574 bred** | 1 plate 18 mm kryssfiner furu, minst 574 × 798 mm | — |
+| **36×48** | **1 stk. 4,2 m** | 12 % |
 | **36×98** | **7 stk. 4,8 m** | 16 % |
-| **48×73** | **1 stk. 4,8 m** + **1 stk. 4,2 m** | 4 % |
+| **48×73** | **1 stk. 4,8 m** + **1 stk. 4,2 m** | 5 % |
 | **48×98** | **1 stk. 4,2 m** + **1 stk. 2,4 m** | 15 % |
 
 ## Kappeplan, bord for bord
 
-### 18 mm plate, 652 bred
+### 18 mm plate, 574 bred
 
 Én plate. 1 del(er) kappes av den.
 
 ### 36×48
 
-Kjøpt 4,20 m, brukt 3,98 m, svinn 5 %.
+Kjøpt 4,20 m, brukt 3,69 m, svinn 12 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4200 | 8 × 73 (Stigekloss) + 2 × 1700 (Stigevange) | 180 |
+| 1 | 4200 | 8 × 36 (Stigekloss) + 2 × 1700 (Stigevange) | 476 |
 
 ### 36×98
 
@@ -45,14 +45,14 @@ Kjøpt 33,60 m, brukt 28,06 m, svinn 16 %.
 
 ### 48×73
 
-Kjøpt 9,00 m, brukt 8,63 m, svinn 4 %.
+Kjøpt 9,00 m, brukt 8,55 m, svinn 5 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 116 (Kilelekt under platens forkant (skråkappet)) + 1 × 320 (Rungetrinn) | 10 |
-| 2 | 4200 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 (Benkevange, front (bit)) + 1 × 116 (Kilelekt under platens forkant (skråkappet)) + 3 × 320 (Rungetrinn) + 4 × 186 (Stubbefot) | 306 |
+| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 1 × 320 (Rungetrinn) | 49 |
+| 2 | 4200 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 (Benkevange, front (bit)) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 3 × 320 (Rungetrinn) + 4 × 186 (Stubbefot) | 345 |
 
-Vinkelklossen (160 mm, se [kapplista](kappliste.md)) kappes av resten over — den lengste er 306 mm.
+Vinkelklossen (160 mm, se [kapplista](kappliste.md)) kappes av resten over — den lengste er 345 mm.
 
 ### 48×98
 
@@ -68,5 +68,5 @@ Kjøpt 6,60 m, brukt 5,64 m, svinn 15 %.
 * **36×98** er hovedbordet i denne sengen — det aller meste av delelista er kappet av det. Ring og bestill før du drar; butikken har sjelden nok av én dimensjon på lager. Får du ikke akkurat 36×98, kan modellen kjøres om på en nabodimensjon — det er én konstant i `generate_loftbed.py` — men da må hele kapplista og alle nøkkelmål regnes på nytt. Ikke improviser på sagbenken.
 * Salgslengder: **36×98** finnes bare i 4,8 m. Kappeplanen over er derfor lagt på den lengden alene — de kortere salgslengdene finnes ikke i denne dimensjonen, og et bord du ikke kan kjøpe er ingen plan.
 * **Alt konstruksjonsvirke kjøpes som C24** (styrkesortert), også lektdimensjonene 36×48 og 48×73. Står de i hylla bare som «klasse 1 lekt/rekke — ikke-bærende», så spør i skranken: stigevangene, rungetrinnene og stubbeføttene er alle bærende, og lasttabellen regner C24.
-* Platen er **652 mm bred**. Limtre furu i butikkhylla stopper på 600 mm, så platen skal kappes av **18 mm kryssfiner**.
+* Platen er **574 mm bred**. Limtre furu i butikkhylla stopper på 600 mm, så platen skal kappes av **18 mm kryssfiner**.
 * Vil du kunne bygge om til frittstående seng senere, trengs to rekkverksbord til i samme dimensjon som de fremre, og to bakre stolper i full høyde (1700 mm, som de fremre). Kjøp dem gjerne nå, og forbor de bakre stolpene for rekkverket mens de ligger på bukken.

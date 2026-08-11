@@ -46,6 +46,54 @@ back corner posts into the back rail plane. Consequences you cannot ignore:
     (1700), which costs the 48 mm of depth v10 just won - and, on a 36 mm
     post, 36 rather than 48 of it. Flagged for the docs round.
 
+DESIGN INTENT (v13 - "the mode change is a flat carry")
+--------------------------------------------------------------------------
+The mechanism film (v12) was built as a feasibility proof and it proved the
+wrong thing: the path existed, but only as a 3 degree roll through a
+zero-clearance slot, nine handgrips long, because the panel unit is 91 mm
+tall and the slot it had to cross was 91 mm high. This round makes the move
+comfortable instead of merely possible. Two changes, and neither of them
+touches a load path.
+K1  THE RUNG BLOCK IS CUT TO THE DEPTH OF THE FACE IT IS SCREWED TO, 73 -> 36.
+    U2 turned the ladder uprights and left 36 mm of upright behind a 73 mm
+    block, so the block's rear 37 mm has touched nothing since - not the
+    upright, not the load path, not the J5 screw's face. What it DID touch
+    was the panel's transfer slot: the panel runs to Y 750 and the block ran
+    back to Y 715, so 35 mm of unattached offcut was the ceiling of the whole
+    manoeuvre and it pulled that ceiling down by the full 48 mm of block
+    height. Cut to 36 and set in the upright's own Y band the blocks leave
+    the corridor entirely, the ceiling becomes the back table ledger's
+    underside (a member that has to be there), and the slot goes 91 -> 114 mm
+    against a 91 mm unit: 23 mm of daylight, and a flat carry. J5 is
+    unchanged to the millimetre - same 1728 mm2 face, same one 5x60 - and the
+    screw actually improves, from Y 751,5 (half a millimetre outside the
+    upright's back plane) to Y 770, dead centre. The straight-up insertion
+    sweeps grow with it: 109 -> 132 mm in bed mode, 124 -> 172 in table mode.
+K2  THE PANEL IS 574 WIDE, NOT 652 - AND THE WIDTH IS QUANTIZED. The reason is
+    table-mode insertion: the unit is lowered into its seat by hand, above
+    head height for a child, and nothing aims it until the guide battens drop
+    past the rung ends. Everything before that is the sheet arriving between
+    two bench ends, and the side gap is exactly how much of a miss that
+    survives. But the gap cannot be dialled: the opening is 700 mm, the gap
+    is (700 - width)/2, and EN 747 makes only three gap bands legal - up to 5
+    (a finger does not enter), 12..25 (it passes freely) and 60..75 (the limb
+    passes, and 75 is EN 747's own opening limit). So the panel has exactly
+    three legal width windows, 690..700 / 650..676 / 550..580, and the whole
+    581..649 span is forbidden wood. v12 sat at 652, the bottom of the middle
+    window; v13 takes the top of the next one down with the saw's tolerance
+    kept at the dangerous wall: 574 mm, 63 mm gaps, 3 mm to the 60 mm edge
+    and 12 to the 75. It costs 12% of the table (0,520 -> 0,458 m2) and it
+    makes the two front wings shorter (116 -> 77 mm) and less stressed
+    (utilisation 0,18 -> 0,12). In bed mode the two 63 mm strips beside the
+    panel are open to the bench rail below and the seat cushion bridges them
+    - see the K2 note under PANEL_BENCH_DIP.
+K3  THE MODE CHANGE IS SEVEN HANDGRIPS AND NO ROLL. What the two changes above
+    buy is re-searched, not asserted: tools/render_animasjon.py runs the path
+    through a separating-axis probe on every frame, and the path it lands on
+    now lifts the unit flat into the slot, carries it out over the bench,
+    up the open bay and back in over rung 2. The roll is gone, two legs with
+    it, and the tightest pass on the whole trip is still PANEL_FIT.
+
 DESIGN INTENT (v11 - "one profile: 36x98")
 --------------------------------------------------------------------------
 U1  THE BOARD IS 36x98, NOT 34x98. 34x98 came off a drawing; 36x98 is what the
@@ -385,7 +433,9 @@ D13 FRONT FLOOR CLEARED + SLIM 320 LADDER. Two moves that belong together,
         guard bands and at floor level. The rung blocks are unchanged 36x48
         x 73 offcuts - their 36 mm is stock thickness, not upright width, and
         the 48 x 48 face they present to the upright inner face is unaffected
-        by the upright getting narrower in X.
+        by the upright getting narrower in X. (v13/K1 has since cut them to
+        36 mm: after U2 turned the upright, only 36 of those 73 ever touched
+        it, and the other 37 stood in the panel's transfer slot.)
     The pair of them opens a walk-around passage on each side of the ladder,
     between the sofa end and the upright outer face, 151 mm clear and empty
     from the floor to 482.
@@ -1337,9 +1387,38 @@ MAX_CLIMB_SPREAD = 20            # how uneven the climb proper may be
 # its rear 25 mm did before. The block is not the load path either way: the
 # tread is screwed through the upright into its end grain as well (J4), and the
 # block is what stops the joint rotating. No adjustment needed.
+#
+# K1 - THE BLOCK IS AS LONG AS THE UPRIGHT IS DEEP, 73 -> 36. This is the
+# comfort round's one geometry change on the ladder, and it is a change that
+# takes wood AWAY without touching a single load number. Read the U2 note
+# above again: the block is 73 deep in Y and the upright only 36, so its rear
+# 37 mm (Y 715..752) hangs behind the upright's back plane and TOUCHES
+# NOTHING. It is not in the load path, it is not in the J5 screw's face, it
+# is not even in contact with the piece it is screwed to. What it IS in is
+# the bed-to-table transfer slot: the movable panel runs to Y 750 (PANEL_FIT
+# off the uprights), so that unattached rear 35 mm of block is the ONLY thing
+# that stood in the panel's ceiling under rung 2 - and it lowered that
+# ceiling by the whole 48 mm of block height.
+#
+# So the block is cut to 36 and set at Y 752..788, the upright's own Y band:
+#   * IDENTICAL contact face against the upright, 36 (Y) x 48 (Z) = 1728 mm2,
+#     because that was already all the face it had. J5 does not move;
+#   * the J5 screw now lands at Y 770 - the MIDDLE of the upright - instead
+#     of at Y 751,5, which was half a millimetre outside its back plane;
+#   * the rung bears on 36 x 36 = 1296 mm2 per end instead of 36 x 73. At the
+#     0,5 kN a rung end takes that is 0,39 N/mm2 against 2,5 for C24 across
+#     the grain, utilisation 0,16 - see the K1 row in the validation block;
+#   * the rung's rear 37 mm is unsupported over 36 mm of its 320 mm length.
+#     It is a 48 mm thick tread; this is not a span, it is a corner;
+#   * the transfer slot's ceiling stops being the block and becomes the back
+#     table ledger's underside, 386 -> 409. See TRANSFER_SLOT below.
+# Everything else about the piece is unchanged: same 36x48 stock, same X,
+# same height, same one 5x60. The kappliste loses 8 x 37 mm of offcut.
 RUNG_BLOCK_T = BLOCK_T                   # 36 (X), stock thickness
 RUNG_BLOCK_H = BLOCK_H                   # 48 (Z)
-RUNG_BLOCK_LEN = RUNG_D                  # 73 (Y), same depth as the tread
+RUNG_BLOCK_LEN = UPRIGHT_T               # 36 (Y), as deep as the upright  [K1: was 73]
+RUNG_BLOCK_Y0 = LADDER_Y0                # 752, the upright's own back plane
+RUNG_BLOCK_Y1 = RUNG_BLOCK_Y0 + RUNG_BLOCK_LEN            # 788
 RUNG_BLOCK_X = [LADDER_INNER_L,                          # 835 .. 871
                 LADDER_INNER_R - RUNG_BLOCK_T]           # 1119 .. 1155
 
@@ -1631,18 +1710,54 @@ MIN_PASSAGE = 140                # clear walk-around beside the ladder
 # THE SIDE GAP IS AN EN 747 NUMBER, NOT A LEFTOVER. The panel used to be 680
 # wide in a 700 mm opening, i.e. 10 mm of play against each bench - and 10 mm
 # is inside the band a child's finger gets caught in. The rule the seated panel
-# has to obey on every accessible edge is a BAND, not a maximum: under 12 mm a
-# finger wedges, 12..25 mm it passes, and this design keeps every gap around
-# the loose panel inside that window. 24 mm is the working number: it is inside
-# the band with a millimetre of margin at the top, and it is exactly what the
-# rear bracket flange needs to sit in (20 mm of flange + 2 mm of steel + 2 mm
-# of clearance). The panel gets 28 mm narrower and the two numbers stay tied:
-# widen the gap and the panel narrows with it.
-PANEL_SIDE_GAP = 24                            # EN 747: inside the 12..25 band
-EN_GAP_BAND = (12.0, 25.0)                     # accessible gaps must land here
-PANEL_X0 = BENCH_LEN + PANEL_SIDE_GAP          # 669
-PANEL_X1 = WALL_SPAN - BENCH_LEN - PANEL_SIDE_GAP   # 1321
-PANEL_W = PANEL_X1 - PANEL_X0                  # 652  [was 680]
+# has to obey on every accessible edge is a BAND, not a maximum: under 5 mm a
+# finger does not enter at all, 12..25 mm it passes freely, 60..75 mm the whole
+# limb passes and the gap is back under the EN 747 opening limit - and in
+# between it wedges. v12 read that as "24 mm" and got a 652 mm panel.
+#
+# K2 - THE PANEL WIDTH IS QUANTIZED, AND THIS ROUND PICKS THE NEXT WINDOW DOWN.
+# The opening is fixed at PANEL_OPENING = 700 mm between the two benches and
+# the gap is (700 - width)/2 on each side, so the width is not a dial: it is
+# whatever the legal gap bands allow it to be. Written out (see
+# PANEL_WIDTH_WINDOWS below, which is this table computed, not typed):
+#
+#     gap band        width window     note
+#     0 .. 5          690 .. 700       impractical - eats PANEL_FIT itself
+#     12 .. 25        650 .. 676       where v12 sat (652)
+#     60 .. 75        550 .. 580       CHOSEN, K2
+#     anything else   581 .. 649       FORBIDDEN - gaps 25,5..59,5 wedge
+#
+# WHY MOVE. The reason is table-mode insertion, and it is an ergonomic one,
+# not a structural one: the panel is lowered into the table seat by hand, over
+# its head, and the only thing that aims it is the two guide battens dropping
+# past the rung ends. Before they engage, the whole 574 mm of sheet has to
+# arrive between two bench ends. 24 mm of side gap is 24 mm of forgiveness;
+# 63 mm is 63. That is the entire argument, and it costs table area.
+#
+# WHY 63 AND NOT 60 OR 75. Maximum width inside the band is minimum gap, so
+# the pull is downwards towards 60 - but 60 is the DANGEROUS wall: a gap that
+# comes out under it lands in the 25,5..59,5 wedge zone. A sheet cut 2 mm wide
+# takes 1 mm off each gap, so the margin at that wall has to survive the saw.
+# 63 keeps 3 mm there and 12 mm at the harmless wall, and it is the widest
+# panel that does. Panel: 574 x 798 (was 652 x 798), table area 0,458 m2
+# (was 0,520) - a 12% loss, stated where anyone can see it.
+PANEL_OPENING = WALL_SPAN - 2 * BENCH_LEN      # 700, bench end to bench end
+PANEL_SIDE_GAP = 63                            # EN 747: inside the 60..75 band
+EN_GAP_BAND = (12.0, 25.0)                     # a finger passes freely
+EN_LIMB_BAND = (60.0, 75.0)                    # a limb passes; EN 747's own limit
+PANEL_X0 = BENCH_LEN + PANEL_SIDE_GAP          # 708  [was 669]
+PANEL_X1 = WALL_SPAN - BENCH_LEN - PANEL_SIDE_GAP   # 1282  [was 1321]
+PANEL_W = PANEL_X1 - PANEL_X0                  # 574  [was 652, 680]
+EN_FINGER_FREE = 5.0                           # a finger does not enter below this
+# The three legal gap bands, low to high, and the panel-width window each one
+# implies through gap = (PANEL_OPENING - width)/2. This list is what makes the
+# quantization a MACHINE fact rather than a paragraph: a future "just take a
+# few millimetres off the panel" edit lands between two windows and the build
+# stops with the table above printed at it.
+EN_LEGAL_GAP_BANDS = ((0.0, EN_FINGER_FREE), EN_GAP_BAND, EN_LIMB_BAND)
+PANEL_WIDTH_WINDOWS = tuple(
+    sorted((PANEL_OPENING - 2 * _hi, PANEL_OPENING - 2 * _lo)
+           for _lo, _hi in EN_LEGAL_GAP_BANDS))   # (550,580) (650,676) (690,700)
 # THE FIT. Nothing that has to be lowered into a hole may be drawn touching the
 # walls of the hole: a panel whose front edge is DRAWN on the ladder-upright
 # back plane is a panel that has to be forced past it. 2 mm on the front edge
@@ -2015,7 +2130,25 @@ WALK_ZONE_Z = (0, BENCH_RAIL_BOTTOM)           # 0 .. 186
 # fold-out seat cushions are what turn the three zones into one sleeping
 # surface, and this is the recess they fold down into - a panel flush with the
 # bench slats would leave the cushions standing proud of it instead.
+#
+# K2 - AND WHAT THE WIDER SIDE GAP DOES TO THE SLEEPING SURFACE, said plainly.
+# The panel is 574 wide in a 700 mm opening, so in BED MODE the middle zone is
+# 574 mm of panel with a 63 mm open strip down each side, running the full
+# 798 mm from the wall to the ladder. The strips are not holes in the platform
+# - they are the same recess, 18 mm deeper - but they are open: the back
+# 48 mm of each one looks down onto the back bench rail's top at 259, and the
+# rest of it onto the walk zone and the floor. What closes them is the seat
+# cushion, which is what closes the recess in the first place. A cushion that
+# spans a 700 mm zone bridges a 63 mm strip at its edge the way any foam
+# mattress bridges a slat gap; the bed's own upper platform runs on 44,5 mm
+# gaps between slats and the benches on 14,25.
+# The strips are legal because 63 mm is in the EN 747 60..75 band (K2) - a
+# limb passes, nothing wedges - and they are the price of the insertion
+# comfort the round was opened for. THIS IS A REAL CHANGE TO WHAT THE BED
+# FEELS LIKE with the cushions off, and it belongs in the manual, not in a
+# footnote: see docs/ASSEMBLY.md, the K2 note in the mode-change section.
 PANEL_BENCH_DIP = BENCH_TOP - PANEL_TOP_BED    # 18  [was 16, U1]
+PANEL_SIDE_STRIP_LEN = PANEL_LEN               # 798, the strip runs the depth
 
 # BACK TABLE LEDGER (21x95), permanently mounted in both modes.
 # NOTE (deviation, back ledger): the original spec placed it at Y 0..21, but
@@ -2260,7 +2393,7 @@ for name, x0 in (("Left", LADDER_LEFT_X), ("Right", LADDER_RIGHT_X)):
 # them, and the blocks are screwed to the inner face of each upright.
 for i, top in enumerate(RUNG_TOPS):
     for j, bx0 in enumerate(RUNG_BLOCK_X):
-        parts.append(block(bx0, RUNG_Y0, top - RUNG_T - RUNG_BLOCK_H,
+        parts.append(block(bx0, RUNG_BLOCK_Y0, top - RUNG_T - RUNG_BLOCK_H,
                            RUNG_BLOCK_T, RUNG_BLOCK_LEN, RUNG_BLOCK_H,
                            f"Rung Block {'Left' if j == 0 else 'Right'}_{i + 1}",
                            "boards",
@@ -5043,6 +5176,20 @@ assert max(bench_slat_gaps) <= MAX_BENCH_SLAT_GAP + TOL, \
     f"C3: the widest bench slat gap is {max(bench_slat_gaps)}, limit " \
     f"{MAX_BENCH_SLAT_GAP}"
 assert abs(max(bench_slat_gaps) - (BENCH_SLAT_PITCH - BENCH_SLAT_W)) < TOL
+# K2: and the two strips the narrower panel leaves beside itself in bed mode,
+# stated against the thing this same bed already asks a mattress to bridge.
+assert PANEL_SIDE_GAP > slat_gap, \
+    "K2: if the side strip is narrower than the platform's own slat gap, " \
+    "this note is over-explaining an ordinary number"
+print(f"OK  K2 sengestillingen: platen dekker {PANEL_W} av de "
+      f"{PANEL_OPENING} mm mellom benkene, så det står en {PANEL_SIDE_GAP} mm "
+      f"åpen stripe langs hver side, {PANEL_SIDE_STRIP_LEN} mm dyp, ned mot "
+      f"bakre benkevange ({BENCH_RAIL_TOP}) bakerst og gangsonen ellers. "
+      f"Setebrikken bygger den ut, slik den bygger ut hele "
+      f"{PANEL_BENCH_DIP} mm-forsenkningen; til sammenligning ligger sengens "
+      f"eget spilefelt på {slat_gap:.1f} mm og benkene på "
+      f"{max(bench_slat_gaps):.2f} mm. {PANEL_SIDE_GAP} mm er i EN 747-båndet "
+      f"{EN_LIMB_BAND[0]:g}..{EN_LIMB_BAND[1]:g} - hele lemmet går fritt")
 print(f"OK  C3/W9/U2: {BENCH_SLAT_COUNT} bench slats per bench, X "
       f"{BENCH_SLAT_X_START}..{BENCH_LEN} (mirrored {WALL_SPAN - BENCH_LEN}.."
       f"{WALL_SPAN - BENCH_SLAT_X_START}), pitch {BENCH_SLAT_PITCH:g} (was "
@@ -5414,7 +5561,12 @@ for b in rung_blocks:
     top = b.extents[2][1] + RUNG_T
     assert top in RUNG_TOPS, f"'{b.label}' does not sit under a rung"
     assert b.extents[2] == (top - RUNG_T - RUNG_BLOCK_H, top - RUNG_T)
-    assert b.extents[1] == (RUNG_Y0, RUNG_Y1)
+    # K1: the block lives in the UPRIGHT's Y band, not the rung's. That is
+    # the whole of the change: it is exactly as long as the face it is
+    # screwed to, so nothing of it hangs behind the upright into the panel's
+    # transfer slot.
+    assert b.extents[1] == (RUNG_BLOCK_Y0, RUNG_BLOCK_Y1) == (LADDER_Y0, LADDER_Y1), \
+        f"K1: '{b.label}' is not in the upright's own Y band"
 climb = [0] + RUNG_TOPS + [SLAT_Z1]
 steps = [b - a for a, b in zip(climb, climb[1:])]
 first_rise, climb_steps = steps[0], steps[1:]
@@ -5566,14 +5718,16 @@ assert NOSE_Y1 == PANEL_Y1 and NOSE_Y0 == NOSE_Y1 - BATTEN_W, \
 assert NOSE_X[0] == (PANEL_X0, BATTEN_X[0]) and \
     NOSE_X[1] == (BATTEN_X[1] + BATTEN_W, PANEL_X1), \
     "M5: each front cross batten must run from the panel edge to the M4 batten"
-assert NOSE_LEN == 116 and NOSE_X[0][1] - NOSE_X[0][0] == NOSE_LEN == \
+assert NOSE_LEN == 77 and NOSE_X[0][1] - NOSE_X[0][0] == NOSE_LEN == \
     NOSE_X[1][1] - NOSE_X[1][0], \
     f"M5: the two front cross battens are {NOSE_LEN} mm and equal"
 # The corner they exist for, stated as the number it is: the panel's front edge
-# outboard of the M4 batten, in bare 18 mm sheet. V3 shrank it 213 -> 116, and
-# the note above is why that is not enough to delete them.
-FRONT_CANTILEVER = NOSE_LEN                         # 116  [was 213]
-assert FRONT_CANTILEVER == BATTEN_X[0] - PANEL_X0 == 116, FRONT_CANTILEVER
+# outboard of the M4 batten, in bare 18 mm sheet. V3 shrank it 213 -> 116 and
+# K2's narrower panel takes it to 77 - and the note above is still why that is
+# not enough to delete them: the free-corner stress does not depend on the
+# overhang length at all.
+FRONT_CANTILEVER = NOSE_LEN                         # 77  [was 116, 213]
+assert FRONT_CANTILEVER == BATTEN_X[0] - PANEL_X0 == 77, FRONT_CANTILEVER
 assert NOSE_Y0 <= RUNG_Y0, \
     "M5: a cross batten that starts behind the rung face would have to " \
     "thread past the rung, and the whole assembly goes straight down"
@@ -5882,6 +6036,113 @@ print(f"OK  V2 innsetting: the panel assembly - sheet, 4 lekter og "
       f"{BATTEN_GUIDE_ENGAGE_Z} mm som skal til for å løfte styrelektene fri "
       f"av trinnenden. Ingenting i veien for noen av delene på veien ned")
 
+# ---------------------------------------------------------------------------
+# K1 - THE TRANSFER SLOT, MEASURED
+# ---------------------------------------------------------------------------
+# The panel does not go from the bed seat to the table seat straight up: the
+# thing that carries it at table height is in the way on the trip down, so it
+# has to travel SIDEWAYS out of the ladder bay, over a bench, and back. The
+# corridor it crosses on that trip is a horizontal slot, and the slot is the
+# number that decides whether the move is a flat carry or a wrestle.
+#
+# Both walls of it are read off the solids here, not typed:
+#   FLOOR   the highest thing the assembly passes OVER on its way across -
+#           the bench slat tops, 295;
+#   CEILING the lowest thing it passes UNDER - and this is what K1 changed.
+#           It used to be the rung blocks' undersides at 386, because 37 mm of
+#           every block hung behind its upright, unattached, straight into the
+#           corridor. With the block cut to the upright's own depth the blocks
+#           are not in the corridor at all and the ceiling is the back table
+#           ledger's underside at 409, which is a member that has to be there.
+# 91 -> 114 mm against a 91 mm unit: from a zero-clearance fit that could only
+# be got through on a 3 degree roll, to 23 mm of daylight and a flat carry.
+TRANSFER_CORRIDOR_X = (POST_W, WALL_SPAN - POST_W)         # 98 .. 1892
+
+
+def _in_transfer_corridor(p):
+    """Does this part stand in the band the travelling panel unit crosses?"""
+    (x0, x1), (y0, y1), _z = p.extents
+    return (x1 > TRANSFER_CORRIDOR_X[0] + TOL
+            and x0 < TRANSFER_CORRIDOR_X[1] - TOL
+            and y1 > PANEL_Y0 + TOL and y0 < PANEL_Y1 - TOL)
+
+
+_corridor = [p for p in parts if _in_transfer_corridor(p)]
+TRANSFER_CEILING, TRANSFER_CEILING_WHO = min(
+    (p.extents[2][0], p.label) for p in _corridor
+    if p.extents[2][0] >= PANEL_TOP_BED - TOL)
+TRANSFER_FLOOR, TRANSFER_FLOOR_WHO = max(
+    (p.extents[2][1], p.label) for p in _corridor
+    if p.extents[2][1] <= TRANSFER_CEILING + TOL)
+TRANSFER_SLOT = TRANSFER_CEILING - TRANSFER_FLOOR          # 114
+PANEL_UNIT_H = PANEL_TOP_BED - BATTEN_Z0_BED               # 91
+TRANSFER_CLEAR = TRANSFER_SLOT - PANEL_UNIT_H              # 23
+# The gate. Under 15 mm the unit has to be tipped to get through, and a tipped
+# unit is a two-person move over a bench - that is what the comfort round was
+# opened to get rid of.
+TRANSFER_CLEAR_MIN = 15
+assert TRANSFER_CLEAR >= TRANSFER_CLEAR_MIN, (
+    f"K1: the transfer slot is {TRANSFER_SLOT:g} mm ({TRANSFER_FLOOR_WHO} "
+    f"{TRANSFER_FLOOR:g} to {TRANSFER_CEILING_WHO} {TRANSFER_CEILING:g}) and "
+    f"the panel unit is {PANEL_UNIT_H:g} mm tall, so it passes with "
+    f"{TRANSFER_CLEAR:g} mm - under the {TRANSFER_CLEAR_MIN} mm that makes "
+    f"the mode change a flat carry. Raise the ceiling or lower the unit")
+assert "Rung Block" not in TRANSFER_CEILING_WHO, \
+    "K1: a rung block is back in the transfer corridor - the whole point of " \
+    "cutting it to the upright's depth was to get it out of there"
+print(f"OK  K1 overføringssjakten: {TRANSFER_SLOT:g} mm fri høyde "
+      f"({TRANSFER_FLOOR_WHO} {TRANSFER_FLOOR:g} → {TRANSFER_CEILING_WHO} "
+      f"{TRANSFER_CEILING:g}) for en {PANEL_UNIT_H:g} mm høy plateenhet = "
+      f"{TRANSFER_CLEAR:g} mm klaring, krav {TRANSFER_CLEAR_MIN}. Taket var "
+      f"stigeklossenes underkant på 386 så lenge 37 mm av hver kloss hang bak "
+      f"vangen sin; nå er det bordskinnas underkant, som må være der")
+
+# K1 - AND WHAT THE SHORTER BLOCK COSTS THE JOINT. Two rows, both re-derived:
+#   J5, the block on the upright - UNCHANGED, because the block never touched
+#       more of the upright than the upright's own 36 mm of depth. Same face,
+#       same one 5x60, and the screw now lands in the MIDDLE of that face
+#       instead of half a millimetre outside its back plane.
+#   the rung ON the block - compression across the grain on 36 x 36 instead of
+#       36 x 73. A rung carries the 1 kN climber over two ends.
+RUNG_BLOCK_FACE = UPRIGHT_T * RUNG_BLOCK_H           # 1728 mm2 on the upright
+RUNG_BLOCK_BEARING = RUNG_BLOCK_T * RUNG_BLOCK_LEN   # 1296 mm2 under the rung
+CLIMBER_KN = 1.0
+RUNG_END_KN = CLIMBER_KN / 2
+FC90_D = 2.5                     # N/mm2, C24 across the grain, k_c,90 = 1
+_j5 = [f for f in FASTENER_SPECS if f["jid"] == "J5"]
+assert len(_j5) == 2 * len(RUNG_TOPS) and {int(round(f["d"])) for f in _j5} == {5}
+RUNG_BLOCK_BEAR_UTIL = RUNG_END_KN * 1000 / RUNG_BLOCK_BEARING / FC90_D
+RUNG_BLOCK_SCREW_UTIL = RUNG_END_KN / SCREW_SHEAR_KN[5]
+assert RUNG_BLOCK_FACE == UPRIGHT_T * BLOCK_H, \
+    "K1: the block's face on the upright is supposed to be unchanged - the " \
+    "upright's own depth by the block's own height, which is what it always was"
+assert 2 * RUNG_BLOCK_SCREW_UTIL <= MAX_BLOCKLESS_UTIL, (
+    f"K1: J5's single 5 mm screw is {2 * RUNG_BLOCK_SCREW_UTIL:.2f} utilised "
+    f"with the whole climber over one rung end - over the "
+    f"{MAX_BLOCKLESS_UTIL:g} gate the block-less corners are held to")
+assert RUNG_BLOCK_BEAR_UTIL <= 0.5, (
+    f"K1: the rung bears on {RUNG_BLOCK_BEARING} mm2 of block at "
+    f"{RUNG_BLOCK_BEAR_UTIL:.2f} of f_c,90,d - cut the block shorter than the "
+    f"upright is deep and this is the row that goes first")
+# The one thing the shorter block does change is that the rung's rear
+# RUNG_REST_LEDGE hangs over nothing. It is a 48 mm thick tread and the
+# overhang is 37 mm; the check is that it is an overhang and not a span.
+assert RUNG_REST_LEDGE <= RUNG_T, (
+    f"K1: the rung's rest ledge is {RUNG_REST_LEDGE} mm of unsupported tread "
+    f"behind a {RUNG_T} mm block - past the tread's own thickness that stops "
+    f"being a corner and starts being a cantilever")
+print(f"OK  K1 stigeklossen 36x48 x {RUNG_BLOCK_LEN} (var {RUNG_D}): flate mot "
+      f"vangen {RUNG_BLOCK_FACE} mm² UENDRET (klossen nådde aldri lenger inn "
+      f"enn vangens egne {UPRIGHT_T} mm), J5 fremdeles 1 x 5x60 = "
+      f"{SCREW_SHEAR_KN[5]:.1f} kN mot {RUNG_END_KN:.1f} → "
+      f"{RUNG_BLOCK_SCREW_UTIL:.2f} (verste plassering "
+      f"{2 * RUNG_BLOCK_SCREW_UTIL:.2f}, grense {MAX_BLOCKLESS_UTIL:g}); "
+      f"trinnet ligger på {RUNG_BLOCK_BEARING} mm² (var "
+      f"{RUNG_BLOCK_T * RUNG_D}) = {RUNG_END_KN * 1000 / RUNG_BLOCK_BEARING:.2f} "
+      f"MPa mot {FC90_D:g} på tvers av fiberretningen → "
+      f"{RUNG_BLOCK_BEAR_UTIL:.2f}; skruen sitter nå på Y {RUNG_BLOCK_Y0 + RUNG_BLOCK_LEN / 2:g}, "
+      f"midt i vangen")
+
 # 2 - EVERY DIRECTION HAS A BLOCKER, AND THE BLOCKER IS WOOD NOW.
 # The five ways a seated panel can move without leaving its seat, and what
 # stops each. This is read OFF THE MODEL, not asserted from the table: each
@@ -6019,12 +6280,12 @@ if FASTENERS_ON:
           f"beslag igjen i mekanismen")
 
 # 3 - THE EN 747 GAP BANDS, ON THE GAPS AROUND THE SEATED PANEL.
-# The rule is a BAND, not a maximum, and it is the reason the panel got 28 mm
-# narrower this round. A gap a child can reach is safe if a finger cannot
-# enter it at all (up to 5 mm) or if it passes freely (12..25 mm); in between
-# it wedges. Above 25 the check is no longer this one - it is the limb and
-# head openings the guard rails are already held to at 60 and 75 mm.
-EN_FINGER_FREE = 5.0             # a finger does not enter below this
+# The rule is a BAND, not a maximum, and it is the reason the panel is not a
+# free dimension. A gap a child can reach is safe if a finger cannot enter it
+# at all (up to 5 mm), if it passes freely (12..25 mm), or if the whole limb
+# passes and the opening is still inside EN 747's own 75 mm limit (60..75 mm);
+# in between it wedges. K2 moves the panel's two side gaps from the middle
+# band to the top one - see PANEL_WIDTH_WINDOWS.
 PANEL_GAPS = {
     "platekant → benkespile, venstre": PANEL_X0 - BENCH_LEN,
     "platekant → benkespile, høyre": (WALL_SPAN - BENCH_LEN) - PANEL_X1,
@@ -6037,22 +6298,59 @@ PANEL_GAPS = {
     # the front bench rail's end face, in bed mode. Same side gap, same band.
     "kilelekt → fremre benkevange (sengestilling)": PANEL_X0 - BENCH_LEN,
 }
+def _en_gap_legal(g):
+    return any(lo - TOL <= g <= hi + TOL for lo, hi in EN_LEGAL_GAP_BANDS)
+
+
+_BANDS_TEXT = " / ".join(f"{lo:g}..{hi:g}" for lo, hi in EN_LEGAL_GAP_BANDS)
 for _what, _g in PANEL_GAPS.items():
-    assert _g <= EN_FINGER_FREE + TOL or \
-        EN_GAP_BAND[0] - TOL <= _g <= EN_GAP_BAND[1] + TOL, (
-            f"EN 747: the gap '{_what}' is {_g:g} mm - a finger enters it and "
-            f"wedges. It has to be at most {EN_FINGER_FREE:g} or between "
-            f"{EN_GAP_BAND[0]:g} and {EN_GAP_BAND[1]:g}")
-assert PANEL_X0 - BENCH_LEN == PANEL_SIDE_GAP == 24 and \
+    assert _en_gap_legal(_g), (
+        f"EN 747: the gap '{_what}' is {_g:g} mm - a finger enters it and "
+        f"wedges. It has to land in one of the bands {_BANDS_TEXT} mm")
+assert PANEL_X0 - BENCH_LEN == PANEL_SIDE_GAP == 63 and \
     (WALL_SPAN - BENCH_LEN) - PANEL_X1 == PANEL_SIDE_GAP, \
     "EN 747: the two side gaps must be equal and must be the declared one"
-assert not (EN_GAP_BAND[0] <= 10 <= EN_GAP_BAND[1]), \
+assert not _en_gap_legal(10), \
     "EN 747: 10 mm - the gap this design used to have - must NOT be legal"
+assert not _en_gap_legal(40), \
+    "EN 747: 40 mm is squarely in the wedge zone and must NOT be legal"
+
+# K2 - THE WIDTH IS QUANTIZED. The panel's width and its two side gaps are one
+# number seen twice: gap = (PANEL_OPENING - width)/2. So the legal gap bands
+# become legal WIDTH WINDOWS, and everything between two windows is forbidden
+# wood. This is the assert that a future "the panel only needs to be a bit
+# narrower" edit runs into, and the message is the table.
+PANEL_WIDTH_WINDOW = next(
+    (w for w in PANEL_WIDTH_WINDOWS if w[0] - TOL <= PANEL_W <= w[1] + TOL),
+    None)
+assert PANEL_WIDTH_WINDOW is not None, (
+    f"EN 747 / K2: a {PANEL_W:g} mm panel in a {PANEL_OPENING:g} mm opening "
+    f"leaves {(PANEL_OPENING - PANEL_W) / 2:g} mm at each side, which is in "
+    f"none of the legal gap bands {_BANDS_TEXT} mm. THE WIDTH IS NOT A DIAL: "
+    f"the only legal widths are "
+    + ", ".join(f"{lo:g}..{hi:g}" for lo, hi in PANEL_WIDTH_WINDOWS)
+    + " mm, and everything between two of those windows puts a child's finger "
+      "in a gap it wedges in. Pick a window, do not split the difference.")
+# The forbidden spans, computed the same way, so the print below is the table
+# and not a copy of it.
+PANEL_WIDTH_FORBIDDEN = tuple(
+    (a[1] + 1, b[0] - 1) for a, b in zip(PANEL_WIDTH_WINDOWS,
+                                         PANEL_WIDTH_WINDOWS[1:]))
+assert any(lo <= 652 <= hi for lo, hi in PANEL_WIDTH_WINDOWS), \
+    "K2: 652 - the width this design used to have - was legal and must stay " \
+    "legal in the table; it is a window that was left, not a mistake"
 print("OK  EN 747 klemfare: " + ", ".join(
     f"{_w.split(' (')[0]} {_g:g}" for _w, _g in PANEL_GAPS.items())
-    + f" mm - hver enten under {EN_FINGER_FREE:g} (fingeren kommer ikke inn) "
-      f"eller i båndet {EN_GAP_BAND[0]:g}..{EN_GAP_BAND[1]:g} (fingeren går "
-      f"fritt). Sideklaringen var 10 mm, midt i klembåndet")
+    + f" mm - hver i ett av båndene {_BANDS_TEXT} mm (fingeren kommer ikke "
+      f"inn / fingeren går fritt / hele lemmet går fritt). Sideklaringen var "
+      f"10 mm, midt i klembåndet")
+print(f"OK  K2 platebredden er kvantisert: {PANEL_W:g} mm i en åpning på "
+      f"{PANEL_OPENING:g} gir {PANEL_SIDE_GAP:g} mm sideklaring, i vinduet "
+      f"{PANEL_WIDTH_WINDOW[0]:g}..{PANEL_WIDTH_WINDOW[1]:g}. Lovlige vinduer "
+      + ", ".join(f"{lo:g}..{hi:g}" for lo, hi in PANEL_WIDTH_WINDOWS)
+      + " mm; forbudt " + ", ".join(f"{lo:g}..{hi:g}"
+                                    for lo, hi in PANEL_WIDTH_FORBIDDEN)
+      + " mm")
 
 # D5: FLUSH TOP. No cleats anywhere; every slat lies on top of the rails and
 # must bear on the FULL 48 mm width of BOTH of them, exactly like a bench slat.
@@ -6562,8 +6860,10 @@ print(f"Note (U5): the four bench stub legs are {sec(LEG_T, LEG_W)} x "
 print(f"Note (D13): the ladder is {LADDER_CLEAR} mm clear (was 420) on "
       f"{sec(UPRIGHT_T, UPRIGHT_W)} uprights (was 48x48), so the rungs are "
       f"{RUNG_LEN} mm and the front guard segments {FRONT_GUARD_SEG_LEN} mm. "
-      f"The {sec(RUNG_BLOCK_T, RUNG_BLOCK_H)}x{RUNG_BLOCK_LEN} rung blocks are "
-      f"unchanged - their 36 mm is stock thickness, not upright width.")
+      f"The rung blocks are {sec(RUNG_BLOCK_T, RUNG_BLOCK_H)}x"
+      f"{RUNG_BLOCK_LEN} - their 36 mm is stock thickness, not upright width, "
+      f"and K1 has since cut the length {RUNG_D} -> {RUNG_BLOCK_LEN} so the "
+      f"piece is exactly as long as the {UPRIGHT_T} mm face it is screwed to.")
 print(f"Note (U1): the board profile is {sec(BOARD36_T, BOARD36_W)}, not 34x98. "
       f"34x98 was a drawing dimension; {sec(BOARD36_T, BOARD36_W)} is the shelf "
       f"item. The board is 2 mm thicker and nothing else about it changes - same "

@@ -73,9 +73,9 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 
 | Del | Dim. | Lengde | Ant. |
 |---|---|---:|---:|
-| Løs plate | 18 mm plate, 652 bred | 798 | **1** |
+| Løs plate | 18 mm plate, 574 bred | 798 | **1** |
 | Stigevange | 36×48 | 1700 | **2** |
-| Stigekloss | 36×48 | 73 | **8** |
+| Stigekloss | 36×48 | 36 | **8** |
 | Hjørnestolpe, front | 36×98 | 1700 | **2** |
 | Hjørnestolpe, bak (veggside) | 36×98 | 1065 | **2** |
 | Rekkverksbord, front | 36×98 | 832 | **4** |
@@ -87,7 +87,7 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Benkevange, front (bit) | 48×73 | 642 | **2** |
 | Rungetrinn | 48×73 | 320 | **4** |
 | Stubbefot | 48×73 | 186 | **4** |
-| Kilelekt under platens forkant (skråkappet) | 48×73 | 116 | **2** |
+| Kilelekt under platens forkant (skråkappet) | 48×73 | 77 | **2** |
 | Sidevange, øvre | 48×98 | 1984 | **2** |
 | Endebjelke | 48×98 | 836 | **2** |
 
@@ -245,7 +245,7 @@ Ledd **J8**, **J10** → [beslagliste](generated/beslagliste.md)
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **4×** | Rungetrinn | 48×73 | 320 |
-| **8×** | Stigekloss | 36×48 | 73 |
+| **8×** | Stigekloss | 36×48 | 36 |
 | **2×** | Stigevange | 36×48 | 1700 |
 
 | | | |
@@ -339,8 +339,8 @@ Ledd **J7** → [beslagliste](generated/beslagliste.md)
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **2×** | Avstivningslekt under plate | 48×73 | 750 |
-| **2×** | Kilelekt under platens forkant (skråkappet) | 48×73 | 116 |
-| **1×** | Løs plate | 18 mm plate, 652 bred | 798 |
+| **2×** | Kilelekt under platens forkant (skråkappet) | 48×73 | 77 |
+| **1×** | Løs plate | 18 mm plate, 574 bred | 798 |
 
 | | |
 |:---:|---|
