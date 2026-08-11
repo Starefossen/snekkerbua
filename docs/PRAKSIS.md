@@ -616,6 +616,40 @@ mise run usdz               .usdz for Quick Look (macOS)
 mise run render-validate    de fem designvalideringsbildene
 ```
 
+### Filmene
+
+De tre `docs/img/hanna-*.gif` er utledet på samme måte som alt annet: rammene
+kommer av modellen og `byggesteg.json`, rammenummeret driver kamera, forskyvning
+og innfading, og ingenting leser en klokke — så to kjøringer gir byte-identiske
+filer og `git diff` på dem er konsekvensanalysen, akkurat som på tegningene.
+Selve rammene er skrap og skrives utenfor repoet (`$TMPDIR/loftbed_film`).
+
+```
+mise run film               alle tre
+mise run film-turntable     bare dreieskiva
+mise run film-mekanisme     bare stillingsbyttet (kollisjonsprøve på hver ramme)
+mise run film-bygg          bare oppbyggingen - den dyre
+mise run film-check         er de innsjekkede filmene bygget av DENNE modellen?
+```
+
+De rendres **ikke** av `build`: de tar minutter og trenger macOS-verktøyene.
+Arbeidsgangen når modellen eller et byggesteg endres er derfor
+`mise run build` → `mise run film` (eller bare den deloppgaven som er berørt)
+→ `git diff`; er filmen uendret, er den byte-identisk og diff-en taus.
+
+At de ikke rendres automatisk er nettopp hvorfor de må voktes: hver film
+skriver sha256 av kildene sine i `docs/img/hanna-filmer.stamp`, og
+`film-check` — som er en del av `mise run check` — hasher de samme filene på
+nytt og feiler hvis en film er eldre enn modellen den påstår å vise.
+Dreieskiva og mekanismen er funksjoner av `parts.tsv` alene, oppbyggingen også
+av `byggesteg.json`, så en ren tekstendring i et steg krever bare `film-bygg`.
+
+**Mekanismefilmen er dessuten en assert.** Den viser platen fra sengesete til
+bordsete, og hver eneste ramme legges gjennom en separerende-akse-prøve mot
+hver faste del i sengen; kolliderer noe, nekter verktøyet å lage filmen. Første
+utgave gjorde nettopp det — den kjørte platen 166 mm gjennom begge stigevangene
+— og den feilen er grunnen til at prøven finnes.
+
 ### Hva slags side et steg får
 
 Står i `tools/gen_doc_tables.build_steps()`, sammen med alt annet som

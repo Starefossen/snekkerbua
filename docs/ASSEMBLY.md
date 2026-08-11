@@ -489,7 +489,8 @@ Platen er ikke et løst bord. Den er en liten enhet som **senkes rett ned** i de
 stillingen den skal stå i, og løftes rett opp igjen. Alt annet i dette avsnittet
 følger av den ene setningen: platen har null vandring i dybderetningen —
 bakkanten *er* veggplanet og forkanten står 2 mm fra stigevangene — så den
-eneste bevegelsen den har, er loddrett.
+eneste bevegelsen den har, er loddrett. Det gjelder platen **i setet**. Selve
+byttet mellom de to setene er en annen sak, og den står nederst i avsnittet.
 
 Vekten hviler på **tre**, ikke på stål: bakkanten på den bakre benkevangen
 (sengestilling) eller på bordbærelekta (bordstilling), forkanten på trinnet.
@@ -619,8 +620,39 @@ Det skal 48 mm til for å løfte styrelektene fri av trinnenden, så det er over
 dobbelt så mye vei som mekanismen trenger.
 Taket er stigen (en stigekloss) i begge tilfeller. Mer enn det er det ikke å få:
 i en seng med to setehøyder over hverandre står det som bærer platen i den
-øverste stillingen i veien på vei ned til den nederste. Skal platen helt ut av
-sengen, vippes den ut etter at den er løftet fri.
+øverste stillingen i veien på vei ned til den nederste.
+
+**Men stillingsbyttet er ikke ett langt loddrett løft — og det er verdt å lese
+før du prøver.** De to fri veiene over gjelder *setet*: hvordan platen kommer
+ned i det og opp av det. Selve byttet mellom de to setene må utenom stigen, for
+over sengesetet er det stigen som er taket. Veien er målt på solidene, ramme for
+ramme (`mise run film-mekanisme`), og filmen under **er** den prøven — ikke en
+tegning av den:
+
+1. **Løft rett opp** til styrelektene står fri av trinnenden.
+2. **Vipp den ene langsiden noen få grader opp.**
+3. **Skyv platen sidelengs** inn over benken, til den er klar av stigen.
+   Vannrett går den ikke: spalten mellom benkespilenes overkant og undersiden
+   av stigeklossen over er nøyaktig like høy som plateenheten selv. Vippen er
+   hele klaringen.
+4. **Legg den vannrett igjen.**
+5. **Trekk den litt fram**, så bakkanten står av bordbærelekta.
+6. **Løft den opp** forbi lekta og trinn 2 — der er banen fri.
+7. **Skyv den inn igjen** til bakkanten står over setelinjen.
+8. **Skyv den sidelengs tilbake** over stigen, nå i båndet over trinn 2.
+9. **Senk den ned** i bordsetet.
+
+Veien tilbake er den samme baklengs. Den trangeste passeringen på hele veien er
+**2 mm** — nøyaktig den passingen platen er tegnet med. Og platen kommer aldri
+*ut* av sengen: den er bredere enn åpningene ved siden av stigen, så den blir i
+underetasjen hele veien. Skal den helt ut, må den ut på høykant gjennom fronten.
+
+![Platen fra sengesete til bordsete](img/hanna-mekanisme.gif)
+
+*Stillingsbyttet, ni etapper. Ingen ramme i filmen har tre inne i tre — det er
+en assert, ikke en påstand: `tools/render_animasjon.py` legger hver stilling
+gjennom en separerende-akse-prøve mot hver eneste faste del i sengen og nekter
+å lage filmen hvis noe kolliderer.*
 
 ### J14 — Veggfeste (obligatorisk)
 
@@ -749,7 +781,8 @@ er spilen overbelastet. Legg madrassen på før noen går opp.
 **7.5 Den løse platen skal alltid ligge i.** Den står som en stiver mellom
 veggen og stigevangene: med platen i kan ikke stigefoten gå bakover. Skal du ha
 den ut, ta stigen med i vurderingen — og ikke la noen klatre mens platen er
-ute.
+ute. **Byttet mellom de to stillingene er ni håndgrep, ikke ett loddrett løft**
+— rekkefølgen og hvorfor den er slik står i J13, med film.
 
 **7.6 Ikke sett deg på platens kant, og ikke bruk den som trinn.** Den er
 sikret mot å vippe, men den er ikke en avsats.

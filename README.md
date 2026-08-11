@@ -2,6 +2,12 @@
 
 ![HANNA](docs/img/hanna-hero.png)
 
+<img src="docs/img/hanna-turntable.gif" alt="The finished bed, one revolution" width="440">
+
+*48 frames off the solids, shot with `usdrecord` and assembled by
+`tools/render_animasjon.py`. Deterministic: the frame index drives the camera,
+so the same model gives the same bytes.*
+
 A parametric loft bed in [build123d](https://github.com/gumyr/build123d) /
 OpenCascade, built for one 199 cm alcove between two walls. The model is the
 only source of truth: **every drawing, every table and all 65 pages of the
@@ -28,7 +34,7 @@ fastener it names.*
 | **Timber** | **63 pieces** in **4 timber profiles** plus one 18 mm plywood sheet — 47.1 running metres. 32 of the 63 pieces come off a single profile (36×98) in four saw settings |
 | **Steel** | **180 fasteners laid out across 17 joints**, **166 of them modelled as solid bodies** — head, countersink, shank and point, each with its own drive vector. **Not one head sits on a room-facing face**, and that is an assert |
 | **Checks** | **347 asserts in the model** and 43 more in the tools, all build-failing. Screw directions are derived from physics (5 of 21 are forced by the thicknesses alone); screw counts must fit the face they stand on; every part must touch the assembly and clash with nothing |
-| **Determinism** | `mise run check` runs the whole chain twice and demands **101 byte-identical artefacts**. Determinism is an assert, not an expectation |
+| **Determinism** | `mise run check` runs the whole chain twice and demands **108 byte-identical artefacts** — the three films included, plus a hash stamp that fails the gate if they are older than the model they show. Determinism is an assert, not an expectation |
 | **Output** | A **65-page print-ready PDF** in one command, plus a picture-only manual, a written build guide, six schematics, and STEP / STL / GLB / USDZ exports |
 | **Standards** | Clearances, guard heights and the mattress thickness window come out of EN 747; edge distances and screw spacing out of Eurocode 5 |
 
@@ -48,8 +54,17 @@ generate_loftbed.py           the model: geometry, parts, fasteners, 347 asserts
   │    ├─ tools/render_cutpage.py   step 0, the cutting plan
   │    └─ tools/render_panel.py     step 10, the loose panel
   ├─ tools/gen_glyphs.py      → fastener glyphs and pictograms
+  ├─ tools/render_animasjon.py → docs/img/hanna-*.gif  (the three films)
   └─ tools/build_pdf.py       → docs/hanna.pdf
 ```
+
+<img src="docs/img/hanna-bygg.gif" alt="The bed assembling itself, steps 1-11" width="560">
+
+*The same eleven steps the manual is paginated from, read straight out of
+`docs/generated/byggesteg.json`: each step's parts fly in along the direction
+that step's text has you moving them, its screws appear once the wood has
+landed, and the corner numeral is the number on the printed page. Nothing here
+is a second description of the build — it is the build description, animated.*
 
 **One source.** Any number that appears in the documentation *comes from* the
 model — not "was copied from". The tools import `generate_loftbed.py`, read its
