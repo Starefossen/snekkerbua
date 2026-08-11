@@ -1,6 +1,15 @@
 [tools]
 python = "3.11"
 
+# Snekkerbua har flere prosjekter, men bare én oppgavefil - den ligger her, på
+# rota, slik at `mise run build` fortsatt er `mise run build` uansett hvor i
+# treet du står. Hver oppgave kjøres i prosjektkatalogen sin, så alle stiene
+# under er de samme relative stiene de alltid har vært (docs/, tools/,
+# parts.tsv). Kommer prosjekt nummer to, får det sine egne oppgaver her med
+# `dir` satt på oppgaven - eller en egen mise.toml i prosjektet sitt.
+[task_config]
+dir = "{{config_root}}/prosjekter/hanna"
+
 [tasks.install]
 description = "Install Python dependencies"
 run = "pip install -r requirements.txt"
