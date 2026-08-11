@@ -1957,7 +1957,6 @@ NOSE_CRIT_H = NOSE_TIP_H * 2                                          # 54
 # across that 24 mm; the geometry of all three stays valid whether or not one
 # is ever fitted, which is exactly why the numbers below are still asserted.
 LOCK_GAP = PANEL_SIDE_GAP                      # 24, the side gap itself
-LOCK_FACE_Y = (NOSE_Y0, NOSE_Y1)               # 702..750, the cross batten
 
 # The walking zone under the ladder bay: floor to the bench rail underside. The
 # battens are not allowed into it in either mode.
@@ -3862,30 +3861,6 @@ if FASTENERS_ON:
           f"skråskruene er like fullt inneholdt som alle andre")
 else:
     print("(fasteners off - LOFTBED_FASTENERS=0)")
-
-
-# The exploded twins the assembly drawings use: the same solid, backed out
-# along its own axis. Not exported - the line-art renderer asks for them.
-EXPLODE_MM = 110
-
-
-def exploded_fasteners(distance=EXPLODE_MM, only=None):
-    """The same fasteners, backed `distance` out along their own drive axis.
-
-    A drawing transform: nothing in the model moves. `only` is a set of joint
-    ids, because a step explodes the fasteners it is about and no others.
-    """
-    out = []
-    for s in FASTENERS:
-        f = s.spec
-        if only is not None and f["jid"] not in only:
-            continue
-        shift = tuple(-c * distance for c in f["direction"])
-        e = Location(shift) * s
-        _tag(e, f, s.label)
-        e.shift = shift
-        out.append(e)
-    return out
 
 
 # ---------------------------------------------------------------------------
@@ -6215,7 +6190,13 @@ print("OK  no two wooden parts overlap in either mode")
 # --- CONNECTIVITY: every wooden part must touch at least one other part -----
 # Regression guard: the v2 ladder floated 48 mm in front of the rail and was
 # attached to nothing at all.
-CONTACT_TOL = 0.5
+# NOTE: this is NOT the contact-detection tolerance. It used to be spelled
+# CONTACT_TOL as well, which silently REBOUND the module global the joint
+# machinery documents as 0.51 - harmless only because contacts() has already
+# run by this line, but any later caller (or a tool importing this module)
+# would have read 0.5 where the docs say 0.51. Its own name, its own job:
+# the solid-to-solid distance below which a part counts as attached.
+CONNECT_TOL = 0.5
 
 
 def aabb_distance(a, b):
@@ -6252,7 +6233,7 @@ for mode_name, panel in MODES.items():
         near = min(others, key=lambda q: aabb_distance(p.extents, q.extents))
         # confirm the analytic result with OCC's real solid-to-solid distance
         d = p.distance(near)
-        assert d < CONTACT_TOL, (
+        assert d < CONNECT_TOL, (
             f"{mode_name}: '{p.label}' is floating - nearest part "
             f"'{near.label}' is {d:.2f} mm away")
         if d > worst[1]:

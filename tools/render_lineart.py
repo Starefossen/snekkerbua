@@ -3889,6 +3889,15 @@ def step_fastener_glyphs(st, glyph_dir):
         qty, name = line.split("× ", 1)
         rows.append((name, int(qty.strip())))
     rows.sort(key=lambda r: (-r[1], r[0]))
+    # The inset panel draws at most FOUR fastener rows (draw_inset), and the
+    # panel is the page's whole key: a fifth kind would silently fall off it.
+    # No step has ever needed five; the day one does, the panel has to grow -
+    # not the row quietly disappear.
+    assert len(rows) <= 4, (
+        f"steg {st['n']} driver {len(rows)} slags festemidler - innsettpanelet "
+        f"har plass til 4 rader, og en rad som faller utenfor er en deletype "
+        f"leseren aldri får nøkkelen til. Utvid draw_inset() før steget får "
+        f"en femte type.")
     letters = gen_glyphs.BADGE_ALPHABET if len(rows) > 1 else [None] * len(rows)
     coded = bool(st.get("fill_code"))
 
@@ -3903,8 +3912,15 @@ def step_fastener_glyphs(st, glyph_dir):
         svg = gen_glyphs.coded_slug(name, code) + ".svg"
         if not os.path.exists(os.path.join(glyph_dir, svg)):
             svg = gen_glyphs.slug(name) + ".svg"
-        if os.path.exists(os.path.join(glyph_dir, svg)):
-            out.append((name, qty, svg, letter))
+        # A missing glyph must STOP the build, not thin the page: this list is
+        # also what check_coverage() counts against, so a silently dropped row
+        # was a fastener kind exempted from the completeness check as well as
+        # from the panel.
+        assert os.path.exists(os.path.join(glyph_dir, svg)), (
+            f"steg {st['n']}: ingen glyf for '{name}' ({svg} finnes ikke i "
+            f"{glyph_dir}) - kjør `mise run build` så gen_doc_tables/"
+            f"gen_glyphs skriver den, eller legg navnet inn i glyphmaskineriet")
+        out.append((name, qty, svg, letter))
     return out
 
 
