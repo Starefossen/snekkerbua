@@ -70,7 +70,11 @@ derived file — the tables, `docs/MONTERING.md`, every drawing, `parts.tsv`.
 numbers", the same bytes. If a run can produce two answers to the same
 question, then a diff on the drawings is not evidence of anything, and the rest
 of this repo is a story rather than a proof. The same gate runs on every push
-— [`.github/workflows/check.yml`](.github/workflows/check.yml).
+— [`.github/workflows/check.yml`](.github/workflows/check.yml). Pushing a
+`<prosjekt>-v*` tag runs a second one,
+[`release.yml`](.github/workflows/release.yml), which builds the manual and the
+3D models on macOS (the `.usdz` chain is Xcode-only) and hangs them off the
+release.
 
 You also need `rsvg-convert` for the PNGs (`brew install librsvg`, or
 `apt install librsvg2-bin`); the workflow file is the exact list.

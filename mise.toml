@@ -154,7 +154,14 @@ for mode in bed_mode table_mode; do
   usdcat -o "$work/loftbed_$mode.usdc" "$work/loftbed_$mode.usda"
   rm -f "$out/loftbed_$mode.usdz"
   (cd "$work" && usdzip "$out/loftbed_$mode.usdz" "loftbed_$mode.usdc")
-  usdchecker "$out/loftbed_$mode.usdz" --arkit
+  # usdchecker validerer, den produserer ikke. Mangler den, er .usdz-filene
+  # like riktige - de er bare ikke kontrollert mot ARKit-profilen, og da skal
+  # det stå her og ikke oppdages senere.
+  if command -v usdchecker > /dev/null 2>&1; then
+    usdchecker "$out/loftbed_$mode.usdz" --arkit
+  else
+    echo "ADVARSEL: usdchecker mangler - loftbed_$mode.usdz er bygget, men IKKE validert mot --arkit."
+  fi
 done
 ls -l "$out"/loftbed_*.usdz
 """

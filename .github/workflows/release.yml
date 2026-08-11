@@ -1,0 +1,174 @@
+# Cuts a release from a tag. The check workflow proves the repo is consistent;
+# this one builds the things a reader actually downloads - the printed manual
+# and the 3D models - from that same model, and attaches them to the tag.
+#
+# Tags are project-prefixed: hanna-v1.1, and whatever the next project calls
+# its own. One workflow, one project per tag.
+name: release
+
+on:
+  push:
+    tags: ["*-v*"]
+  # For rehearsals: pick a tag, leave dry_run on, and everything is built and
+  # uploaded as a run artefact without touching the release.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to build, e.g. hanna-v1.0"
+        required: true
+      dry_run:
+        description: "Build everything, but do not create or update the release"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    # macOS is not a preference here, it is the toolchain. The .usdz export
+    # runs tools/mesh_to_usda.swift through swift, then usdcat, usdzip and
+    # usdchecker - all of them Xcode/OpenUSD tools that exist on macOS only.
+    # That is also why `usdz` is not part of the check workflow.
+    runs-on: macos-latest
+
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ inputs.tag || github.ref_name }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+          # The release notes fall back to the tag's own annotation, and that
+          # object only exists locally if the tags came along.
+          fetch-depth: 0
+
+      # Fail here, before the twenty minutes of geometry, rather than at the
+      # last step. Everything this job needs is named once, out loud.
+      - name: Preflight - the macOS-only toolchain
+        run: |
+          missing=""
+          for tool in swift usdcat usdzip; do
+            if command -v "$tool" >/dev/null 2>&1; then
+              echo "ok   $tool -> $(command -v "$tool")"
+            else
+              echo "MISSING  $tool"
+              missing="$missing $tool"
+            fi
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::The runner image has no$missing. The .usdz chain cannot run without them; see the usdz task in mise.toml."
+            exit 1
+          fi
+          # usdchecker is the ARKit validator, not a producer. If the image
+          # ever drops it, the .usdz files are still correct exports - they are
+          # just unvalidated, and the usdz task says so out loud.
+          if command -v usdchecker >/dev/null 2>&1; then
+            echo "ok   usdchecker -> $(command -v usdchecker)"
+          else
+            echo "::warning::usdchecker is missing - the .usdz files will be built but not validated against the ARKit profile."
+          fi
+          if [ -x "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ]; then
+            echo "ok   Google Chrome (tools/build_pdf.py prints with it)"
+          else
+            echo "::error::No Google Chrome at /Applications - tools/build_pdf.py has nothing to print docs/hanna.pdf with."
+            exit 1
+          fi
+
+      # rsvg-convert rasterises the fastener glyphs during the build.
+      - name: System packages
+        run: brew install --quiet librsvg
+
+      # Same toolchain definition the check workflow uses: python 3.11 and
+      # requirements.txt, both out of mise.toml.
+      - uses: jdx/mise-action@v4
+        env:
+          MISE_TRUSTED_CONFIG_PATHS: ${{ github.workspace }}
+
+      # build-full is `build` plus the slow deliverables (.glb and the
+      # hidden-line .svg projections), so it stands in for both. `usdz` re-runs
+      # `build` as its dependency - that is where the per-colour-group STL
+      # manifests it converts come from. `pdf` only reads committed documents.
+      - name: Build the deliverables
+        env:
+          MISE_TRUSTED_CONFIG_PATHS: ${{ github.workspace }}
+        run: |
+          mise run build-full
+          mise run usdz
+          mise run pdf
+
+      # The release is a promise about what is in it. Check the list before
+      # making it, not after.
+      - name: Collect the assets
+        run: |
+          cd prosjekter/hanna
+          {
+            echo docs/hanna.pdf
+            for mode in bed_mode table_mode; do
+              for ext in step stl glb usdz; do
+                echo "loftbed_$mode.$ext"
+              done
+            done
+          } > "$RUNNER_TEMP/assets.txt"
+          rc=0
+          while read -r f; do
+            if [ -s "$f" ]; then
+              printf 'ok   %-28s %s\n' "$f" "$(du -h "$f" | cut -f1)"
+            else
+              echo "::error::$f was not produced by the build"
+              rc=1
+            fi
+          done < "$RUNNER_TEMP/assets.txt"
+          exit $rc
+
+      - name: Release notes
+        run: |
+          notes="$RUNNER_TEMP/notes.md"
+          # An annotated tag already carries the message its author meant, so
+          # use it when there is one. `contents:subject`/`:body` leave any
+          # signature out by themselves.
+          subject="$(git tag -l --format='%(contents:subject)' "$TAG")"
+          body="$(git tag -l --format='%(contents:body)' "$TAG")"
+          echo "${subject:-$TAG}" > "$RUNNER_TEMP/title.txt"
+          {
+            if [ -n "$body" ]; then printf '%s\n\n' "$body"; fi
+            echo "Built by [\`.github/workflows/release.yml\`](../blob/$TAG/.github/workflows/release.yml) off the tag itself: the manual and the 3D models come out of the same model as everything in the repo."
+            echo
+            echo "* \`hanna.pdf\` - the print-ready assembly manual."
+            echo "* \`loftbed_*.step\` / \`.stl\` / \`.glb\` / \`.usdz\` - both panel positions, for CAD, slicing, the web and Quick Look / AR."
+            echo
+            echo "The sources, the drawings and \`mise run check\` are in the repo: [README](../blob/$TAG/README.md)."
+          } > "$notes"
+          cat "$notes"
+
+      # A dry run stops here, with everything it built hanging off the run so
+      # it can be opened and looked at.
+      - uses: actions/upload-artifact@v4
+        if: ${{ github.event_name != 'push' }}
+        with:
+          name: ${{ env.TAG }}-deliverables
+          retention-days: 7
+          path: |
+            prosjekter/hanna/docs/hanna.pdf
+            prosjekter/hanna/loftbed_*.step
+            prosjekter/hanna/loftbed_*.stl
+            prosjekter/hanna/loftbed_*.glb
+            prosjekter/hanna/loftbed_*.usdz
+
+      - name: Publish
+        if: ${{ github.event_name == 'push' || !inputs.dry_run }}
+        run: |
+          cd prosjekter/hanna
+          assets=()
+          while IFS= read -r line; do assets+=("$line"); done < "$RUNNER_TEMP/assets.txt"
+          # A tag can already have a release - one written by hand, or an
+          # earlier run of this workflow. Replace the assets rather than fail.
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "$TAG already has a release - replacing the assets."
+            gh release upload "$TAG" "${assets[@]}" --clobber
+          else
+            gh release create "$TAG" --title "$(cat "$RUNNER_TEMP/title.txt")" \
+              --notes-file "$RUNNER_TEMP/notes.md" "${assets[@]}"
+          fi
+          gh release view "$TAG" --json assets --jq '.assets[].name'
