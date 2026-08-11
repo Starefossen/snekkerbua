@@ -96,7 +96,7 @@
   <rect x="716" y="188" width="36" height="98" class="brd"/>
   <rect x="716" y="15" width="36" height="98" class="brd"/>
 
-  <!-- ============ LØS PLATE 652 x 798, BEGGE STILLINGER (ghost - X 669..1321) ============ -->
+  <!-- ============ LØS PLATE 574 x 798, BEGGE STILLINGER (ghost - X 708..1282) ============ -->
   <!-- sengestilling: plate Z 259..277, avstivningslekt 48x73 x 750 (Y 0..750) Z 186..259 -->
   <rect x="-48" y="1423" width="798" height="18" class="pnlb"/>
   <rect x="0" y="1441" width="750" height="73" class="pnlg"/>
@@ -389,7 +389,7 @@
   <text x="880" y="1624" class="sml" text-anchor="start">innenfra og ut), den bakre i J8-B (2× skrå 6×90): 4,0 kN mot 0,5 kN, 0,13.</text>
 
   <polyline points="200,1432 200,1610 862,1672" class="ldr" marker-start="url(#aE)"/>
-  <text x="880" y="1668" class="lbl" text-anchor="start">Løs plate 18 mm, 652 × 798  (X 669–1321, Y −48 … 750)</text>
+  <text x="880" y="1668" class="lbl" text-anchor="start">Løs plate 18 mm, 574 × 798  (X 708–1282, Y −48 … 750)</text>
   <text x="880" y="1710" class="sml" text-anchor="start">sengestilling Z 259–277 (kraftig stiplet), bordstilling Z 482–500 (fint stiplet),</text>
   <text x="880" y="1746" class="sml" text-anchor="start">med avstivningslekt 48×73 × 750 (Y 0–750) under. Ligger IKKE i dette snittet.</text>
 

@@ -556,8 +556,8 @@ har hodet 27 mm under platens underside — det er nøyaktig det «⌀12 kontrab
 skrue går gjennom den. På akkurat 27 er kontraboret gått i null, og hodet ligger
 i flukt med kilens egen underside. Boreregelen er derfor **den samme for alle
 fire delene** og leses slik: *bor ⌀12 opp til det står 27 mm igjen.* I styrelekta
-er det de 46 millimeterne; i kilen er det 34,9, 23,0 og 11,1 mm ved de tre
-hullene, dypest ved roten.
+er det de 46 millimeterne; i kilen er det 35, 23 og 11 mm ved de tre hullene,
+dypest ved roten.
 
 **Tallene.** Kilen er 184 800 mm³ mot 269 808 for den hele klossen — 32 % mindre
 tre, og hele det lave ytterhjørnet vekk. Det verste bøyesnittet er **ikke**

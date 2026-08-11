@@ -65,8 +65,8 @@
   <rect x="903.75" y="537.5" width="147" height="54" class="brd"/>
   <rect x="1072.125" y="537.5" width="147" height="54" class="brd"/>
   <rect x="1240.5" y="537.5" width="147" height="54" class="brd"/>
-  <!-- løs plate, X 669.., Z 259..277 (sengestilling) -->
-  <rect x="1423.5" y="564.5" width="346.5" height="27" class="pnl"/>
+  <!-- løs plate, X 708.., Z 259..277 (sengestilling) -->
+  <rect x="1482" y="564.5" width="288" height="27" class="pnl"/>
   <!-- fremre hjørnestolpe X 0..98 -->
   <rect x="420" y="455" width="147" height="525" class="pst"/>
   <polyline points="417,476 441,452 465,485 495,458 519,485 543,452 567,476" class="brk"/>
@@ -148,6 +148,9 @@
   <text x="493" y="1060" class="dm" text-anchor="middle">98  stolpe</text>
   <line x1="1278" y1="1032" x2="1387.5" y2="1032" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="1332.8" y="1060" class="dm" text-anchor="middle">73</text>
+  <line x1="1482" y1="980" x2="1482" y2="1122" class="ext"/>
+  <line x1="1387.5" y1="1032" x2="1482" y2="1032" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1434.8" y="1060" class="dm" text-anchor="middle">63  klaring</text>
   <line x1="420" y1="1108" x2="1387.5" y2="1108" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="903.8" y="1134" class="dm" text-anchor="middle">645  benkelengde</text>
   <line x1="1387.5" y1="1108" x2="1770" y2="1108" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
@@ -183,9 +186,9 @@
   <polyline points="950,560 1838,562" class="ldr" marker-start="url(#aE)"/>
   <text x="1850" y="570" class="lbl" text-anchor="start">Benkespile 36×98 × 800 – 5 stk. per benk, X 98–645, s/s 112,25</text>
   <text x="1850" y="600" class="sml" text-anchor="start">J11: 1 × treskrue 5×60 ned i vangen i hver ende. Forsenk – sitteflate.</text>
-  <polyline points="1470,578 1838,662" class="ldr" marker-start="url(#aE)"/>
-  <text x="1850" y="670" class="lbl" text-anchor="start">Løs plate 652 × 798 × 18, X 669–1321 – overkant Z 277 i sengestilling,</text>
-  <text x="1850" y="700" class="sml" text-anchor="start">18 mm UNDER benketoppen. 24 mm klaring mot benkespilene (X 645 → 669).</text>
+  <polyline points="1520,578 1838,662" class="ldr" marker-start="url(#aE)"/>
+  <text x="1850" y="670" class="lbl" text-anchor="start">Løs plate 574 × 798 × 18, X 708–1282 – overkant Z 277 i sengestilling,</text>
+  <text x="1850" y="700" class="sml" text-anchor="start">18 mm UNDER benketoppen. 63 mm klaring mot benkespilene (X 645 → 708).</text>
   <polyline points="1000,647 1838,762" class="ldr" marker-start="url(#aE)"/>
   <text x="1850" y="770" class="lbl" text-anchor="start">Benkevange, front (bit) 48×73 × 642, X 3–645.</text>
   <text x="1850" y="800" class="sml" text-anchor="start">Ingen utkraging: den indre enden slutter rett over stubbefoten.</text>
@@ -304,7 +307,7 @@
   <text x="1560" y="2480" class="lbl" text-anchor="start">Stubbefot 48×73 × 186 – én under hvert vangeplan, X 572–645.</text>
   <text x="1560" y="2510" class="sml" text-anchor="start">Vangebiten bærer på hele 48 × 73 mm av foten, uten utkraging.</text>
   <polyline points="1253,1852 1548,2552" class="ldr" marker-start="url(#aE)"/>
-  <text x="1560" y="2560" class="lbl" text-anchor="start">Løs plate 652 × 798 (X 669–1321, Y −48 … 750) – i sengestilling</text>
+  <text x="1560" y="2560" class="lbl" text-anchor="start">Løs plate 574 × 798 (X 708–1282, Y −48 … 750) – i sengestilling</text>
   <text x="1560" y="2590" class="sml" text-anchor="start">ligger den 18 mm lavere enn benketoppen, ok Z 277.</text>
 
   <!-- ============================================================ C -->
