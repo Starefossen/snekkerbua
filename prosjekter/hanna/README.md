@@ -1,5 +1,9 @@
 # HANNA — a loft bed whose manual is compiled, not written
 
+*The first project in [snekkerbua](../../README.md). Shared practices:
+[PRAKSIS.md](../../PRAKSIS.md) · workshop inventory:
+[UTSTYR.md](../../UTSTYR.md).*
+
 ![HANNA](docs/img/hanna-hero.png)
 
 <img src="docs/img/hanna-turntable.gif" alt="The finished bed, one revolution" width="440">
@@ -10,7 +14,7 @@ so the same model gives the same bytes.*
 
 A parametric loft bed in [build123d](https://github.com/gumyr/build123d) /
 OpenCascade, built for one 199 cm alcove between two walls. The model is the
-only source of truth: **every drawing, every table and all 65 pages of the
+only source of truth: **every drawing, every table and all 68 pages of the
 printed assembly manual are generated from the solids and machine-checked
 before they are allowed to exist.** Nothing is hand-drawn and no number is
 hand-transcribed.
@@ -35,7 +39,7 @@ fastener it names.*
 | **Steel** | **180 fasteners laid out across 17 joints**, **166 of them modelled as solid bodies** — head, countersink, shank and point, each with its own drive vector. **Not one head sits on a room-facing face**, and that is an assert |
 | **Checks** | **385 asserts in the model** and 57 more in the tools, all build-failing. Screw directions are derived from physics (5 of 21 are forced by the thicknesses alone); screw counts must fit the face they stand on; every part must touch the assembly and clash with nothing |
 | **Determinism** | `mise run check` runs the whole chain twice and demands **108 byte-identical artefacts** — the three films included, plus a hash stamp that fails the gate if they are older than the model they show. Determinism is an assert, not an expectation |
-| **Output** | A **65-page print-ready PDF** in one command, plus a picture-only manual, a written build guide, six schematics, and STEP / STL / GLB / USDZ exports |
+| **Output** | A **68-page print-ready PDF** in one command, plus a picture-only manual, a written build guide, six schematics, and STEP / STL / GLB / USDZ exports |
 | **Standards** | Clearances, guard heights and the mattress thickness window come out of EN 747; edge distances and screw spacing out of Eurocode 5 |
 
 The bed's *functional* design — a loft platform over a bench/table/spare-bed
@@ -126,11 +130,14 @@ Needs [`mise`](https://mise.jdx.dev/). Everything else is
 `pip install -r requirements.txt` (build123d, markdown) plus `rsvg-convert` for
 the PNGs and a headless Chrome for the PDF.
 
+The task file is `mise.toml` at the repo root and every task already runs in
+this directory, so these work unchanged from anywhere in the tree:
+
 ```bash
 mise run build      # model + all generated tables + docs/MONTERING.md
 mise run montering  # re-draw the line art in docs/img/
 mise run check      # run the whole chain twice, demand byte-identical output
-mise run pdf        # docs/hanna.pdf, 65 pages, print-ready
+mise run pdf        # docs/hanna.pdf, 68 pages, print-ready
 ```
 
 | Task | What it does |
@@ -138,7 +145,7 @@ mise run pdf        # docs/hanna.pdf, 65 pages, print-ready
 | `build` | Builds and validates the model, exports it, writes every fragment in `docs/generated/` and `docs/MONTERING.md` |
 | `build-full` | Same plus the slow deliverables: `.glb` and the whole-model hidden-line `.svg` projections |
 | `montering` | Draws the cover and one line-art page per build step into `docs/img/` |
-| `check` | Determinism assert: two full runs, 101 artefacts, byte-identical or fail |
+| `check` | Determinism assert: two full runs, 108 artefacts, byte-identical or fail |
 | `pdf` | Assembles `docs/hanna.pdf` from the checked-in documents (no build123d needed) |
 | `schematics` | Renders `docs/schematics/*.svg` to PNG for proofreading |
 | `usdz` | Converts the meshes to `.usdz` for Quick Look / Xcode / AR, one material per colour group |
@@ -148,7 +155,9 @@ mise run pdf        # docs/hanna.pdf, 65 pages, print-ready
 
 ---
 
-## Repo map
+## Project map
+
+Everything below lives in `prosjekter/hanna/` and every path is relative to it.
 
 | Path | |
 |---|---|
@@ -156,7 +165,7 @@ mise run pdf        # docs/hanna.pdf, 65 pages, print-ready
 | `tools/` | Everything that reads the model: doc tables, line art, cut page, panel page, glyphs, PDF, USD helpers |
 | `docs/generated/` | Machine-written, never edited by hand: cut list, buying list, key dimensions, hardware list, screw directions, step text, `byggesteg.json` |
 | `docs/img/`, `docs/schematics/` | The committed drawings — so the manual is readable and printable on a machine with none of this toolchain |
-| `docs/hanna.pdf` | The 65-page print manual. Deliberately untracked — the tooling is in git, the binary is one `mise run pdf` away |
+| `docs/hanna.pdf` | The 68-page print manual. Deliberately untracked — the tooling is in git, the binary is one `mise run pdf` away |
 | `parts.tsv` | Tracked regression snapshot: label, colour group and bounding box of every part, both panel modes. A diff on it is the diff on the model |
 | `v1/` | The first alcove bunk-bed frame, kept for history |
 
@@ -181,11 +190,18 @@ reads.
 
 ## For whoever changes the model
 
-**[docs/PRAKSIS.md](docs/PRAKSIS.md)** is the practices deep-dive (in
-Norwegian): the single-source rule, what makes an assert worth writing here,
-where the boundary between steel and timber runs, every drawing convention and
-the reason behind it, and how to regenerate the lot. Deliberately not part of
-the printed manual.
+Two files, both in Norwegian, neither part of the printed manual.
+
+* **[../../PRAKSIS.md](../../PRAKSIS.md)** — the shared practices of the
+  workshop: the single-source rule, what makes an assert worth writing, rules
+  instead of cases, the drawing conventions that hold across projects, and why
+  determinism is an assert.
+* **[docs/PRAKSIS.md](docs/PRAKSIS.md)** — HANNA's own: the chain out of
+  `generate_loftbed.py`, the four assert families and the standards they come
+  from, the box invariant and its one wedge-shaped exception, where the
+  boundary between steel and timber runs, and every convention in this
+  manual's picture language — fill codes, badge rules, the bracket chain, the
+  icon spec — with the reason behind each.
 
 ## Limits
 
