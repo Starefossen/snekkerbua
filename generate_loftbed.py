@@ -1824,9 +1824,10 @@ NOSE_LEN = BATTEN_X[0] - PANEL_X0              # 116
 #       f_ax,k = 0.52 * 5^-0.5 * 13^-0.1 * 350^0.8 = 18.9 N/mm2, so
 #       F_ax,Rk = 18.9 * 5 * 13 * k_d(0.625) = 768 N and F_ax,Rd = 532 N at
 #       k_mod 0.9 / gamma_M 1.3. Halve it again for withdrawal into plywood
-#       rather than solid softwood and call it 265 N per screw. The assembly
-#       weighs 4.7 kg of sheet plus 2.5 kg of batten = 71 N; picked up by one
-#       corner with a factor 2 that is 142 N, against 18 screws. ONE of them
+#       rather than solid softwood and call it 265 N per screw. The assembly's
+#       own weight is computed below (PANEL_UNIT_MASS) rather than quoted:
+#       ~4.7 kg of sheet plus ~2.4 kg of lekt, about 70 N. Picked up by one
+#       corner with a factor 2 that is ~140 N, against 18 screws. ONE of them
 #       covers the whole panel twice over; utilisation on the worst-loaded
 #       group is under 0.05. The glue (D3, 48 x 750 = 36 000 mm2 per long
 #       batten) is not in that sum - it is what stops the sheet drumming on
@@ -5567,6 +5568,29 @@ assert NOSE_TIP_H == PANEL_UPSCREW_PASS, \
     "M5/V4: the wing's tip is the up-screw's own seat or it is a number " \
     "somebody liked - it has to be PANEL_UPSCREW_PASS"
 _NOSE_TRAPEZOID = BATTEN_W * NOSE_LEN * (NOSE_ROOT_H + NOSE_TIP_H) / 2
+
+# WHAT THE PANEL UNIT WEIGHS, off its own solids. It used to be a number in a
+# comment - "4.7 kg of sheet plus 2.5 kg of batten" - and a number in a comment
+# goes stale the moment the geometry moves, which is exactly what V4 did to it
+# by planing 128 064 mm3 of wood off the two wings. Two densities and the real
+# volumes instead. It matters in three places: the J13a up-screw check (the
+# only load case those screws have is the unit being picked up by one corner),
+# the lock decision in vedlegg B avvik 4, and what a parent is told to lift.
+PLY_DENSITY = 500e-9             # kg/mm3, 18 mm gran kryssfiner
+C24_DENSITY = 420e-9             # kg/mm3, rho_mean for C24
+PANEL_UNIT_MASS = (abs(panel_bed.volume) * PLY_DENSITY
+                   + sum(abs(b.volume) for b in battens_bed) * C24_DENSITY)
+PANEL_UNIT_WEIGHT = PANEL_UNIT_MASS * 9.81                    # N
+assert 6.0 < PANEL_UNIT_MASS < 8.5, (
+    f"the panel unit is {PANEL_UNIT_MASS:.1f} kg - if that is right the "
+    f"lifting argument in vedlegg B avvik 4 has to be re-read, and so has "
+    f"the J13a up-screw case")
+print(f"OK  plateenheten veier {PANEL_UNIT_MASS:.1f} kg "
+      f"({PANEL_UNIT_WEIGHT:.0f} N) - "
+      f"{abs(panel_bed.volume) * PLY_DENSITY:.1f} kg plate + "
+      f"{sum(abs(b.volume) for b in battens_bed) * C24_DENSITY:.1f} kg lekt, "
+      f"regnet av kroppene og ikke sitert. Løftet etter ett hjørne med "
+      f"faktor 2 er {2 * PANEL_UNIT_WEIGHT:.0f} N mot 18 skruer i J13")
 for _w in (b for b in battens_bed + battens_table
            if b.label.startswith("Panel Front Batten")):
     assert getattr(_w, "tapered", None) is not None, \

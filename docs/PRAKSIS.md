@@ -102,6 +102,32 @@ på stål. Derfor to asserter, ikke én:
 * et beslag som **bærer** noe (`bears=`) må ha den vannrette fliken skrudd rett
   opp, i undersiden av delen det bærer.
 
+### Unntaket: delen som ikke er en boks
+
+Modellen har hatt én invariant siden første linje: **hver tredel er en
+akseparallell boks.** Det er den som gjør `.extents` til hele sannheten om en
+del, og det er den «alt treverk er bokser» i §3 hviler på. V4 bryter den
+nøyaktig én gang: de to fremre kilelektene under platen — vingene, M5 — er
+skråkappet, 73 mm dype ved roten og 27 ved spissen.
+
+Det er trygt, og grunnen er at **paringsflatene fortsatt er rektangler**. Vingen
+møter platen over hele sin 116 × 48 mm toppflate, og den møter ingenting annet.
+Flaten som ble kappet, er undersiden, og den berører ingen del i noen av de to
+stillingene. `contacts()`, `patch_window()` og `bearing_area()` ser derfor
+nøyaktig det de så før.
+
+Delens `.extents` er med vilje fortsatt hele den omskrevne boksen. Da er hver
+eneste klarings-, sveip- og overlappassert som leser `extents` fremdeles sann —
+og den er nå **konservativ**, fordi den virkelige kroppen ligger strengt
+innenfor den boksen assertene rydder plass til.
+
+Det som **ikke** er konservativt, er alt som leser VOLUM eller tegner
+SILHUETT. Begge deler leser soliden, ikke boksen, og skal fortsette å gjøre det.
+
+Regelen videre: **en del som ikke er en boks er tillatt bare når paringsflatene
+forblir rektangulære og den omskrevne boksen er den konservative konvolutten.**
+Alt annet går tilbake til bokser.
+
 ---
 
 ## 3. Festemidlene som geometri
@@ -144,8 +170,9 @@ eksporteres derfor på 0,15 mm.
 **Rekkefølgen er ikke likegyldig.** OCC bufrer en triangulering på formen og
 bytter den bare ut når det blir bedt om en *finere*. Gruppe-eksporten må derfor
 kjøre **før** enkeltmesh-eksporten, ellers blir toleransen stilltiende ignorert.
-Alt treverk er bokser, og en plan flate trianguleres til de samme to trekantene
-uansett avvik, så treet blir byte-identisk uansett.
+Alt treverk er bokser — med det ene unntaket i §2, de to kilene, som ikke er
+bokser, men som er like plane — og en plan flate trianguleres til de samme to
+trekantene uansett avvik, så treet blir byte-identisk uansett.
 
 ---
 
