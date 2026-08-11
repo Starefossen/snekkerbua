@@ -57,14 +57,14 @@ Ladder Upright Right	posts	1155	1203	752	788	0	1700
 Mattress 200x80 (reference)	mattress	0	1990	-48	752	1199	1339
 Movable Panel (bed mode)	panel	669	1321	-48	750	259	277
 Movable Panel (table mode)	panel	669	1321	-48	750	482	500
-Panel Front Batten Left (bed mode)	panel	669	882	665	713	186	259
-Panel Front Batten Left (table mode)	panel	669	882	665	713	409	482
-Panel Front Batten Right (bed mode)	panel	1108	1321	665	713	186	259
-Panel Front Batten Right (table mode)	panel	1108	1321	665	713	409	482
-Panel Stiffener Batten Left (bed mode)	panel	882	930	0	713	186	259
-Panel Stiffener Batten Left (table mode)	panel	882	930	0	713	409	482
-Panel Stiffener Batten Right (bed mode)	panel	1060	1108	0	713	186	259
-Panel Stiffener Batten Right (table mode)	panel	1060	1108	0	713	409	482
+Panel Front Batten Left (bed mode)	panel	669	785	702	750	186	259
+Panel Front Batten Left (table mode)	panel	669	785	702	750	409	482
+Panel Front Batten Right (bed mode)	panel	1205	1321	702	750	186	259
+Panel Front Batten Right (table mode)	panel	1205	1321	702	750	409	482
+Panel Stiffener Batten Left (bed mode)	panel	785	833	0	750	186	259
+Panel Stiffener Batten Left (table mode)	panel	785	833	0	750	409	482
+Panel Stiffener Batten Right (bed mode)	panel	1157	1205	0	750	186	259
+Panel Stiffener Batten Right (table mode)	panel	1157	1205	0	750	409	482
 Rung Block Left_1	boards	835	871	715	788	163	211
 Rung Block Left_2	boards	835	871	715	788	386	434
 Rung Block Left_3	boards	835	871	715	788	624	672
