@@ -41,6 +41,19 @@ platekutt, kløyving/langsgående kutt (→ se kjøpsplan).
 
 **Dekker:** boring tre/stål/mur, all skruing, forboring/forsenking.
 
+### Overfres — Ryobi ONE+ HP RTR18C-0 (kjøpt aug. 2026)
+
+| Egenskap | Verdi | Betyr i praksis |
+|---|---|---|
+| Klasse | Kantfres (trimfres), uten innstikk | Kant-entré-jobber: avrunding, flush-trim, noter fra kanten |
+| Tange | 6 / 6,35 mm | Suppler med **8–10 mm rettfres på 6 mm skaft** ved behov — 12 mm på 6 mm skaft er mangelvare |
+| Motor | Børsteløs (HP) | |
+
+**Dekker:** avrundede kanter (barnesikkert + pent), flush-lommer for beslag,
+flush-trim. **Dekker ikke:** innstikk midt på flaten (ingen dykk-funksjon) —
+runde sete-forsenkninger tas fortsatt med **forstnerbor i drillen**, og
+skråskruene bores gjennom den hjemmelagde vinkelklossen (se kapplista).
+
 ### Håndverktøy (fra HANNA-byggelista, antatt i hus)
 
 Vater, vinkelhake, tommestokk/målebånd, skrutvinger ×2, sag (hånd),
@@ -55,7 +68,6 @@ Rangert etter hva som låser opp mest per krone, gitt eksisterende park:
 | 1 | **Eksentersliper — ONE+ HP-variant** | Finish-kvalitet på alt; HANNA: 71 deler skal slipes før maling | Kjøp før malejobben. HP børsteløs-utgave finnes i sortimentet — verifiser modellnr. (ikke ta brushed R18ROS hvis HP står ved siden av) |
 | 2 | **Skinnesag — Ryobi RPLS18X-0** ✅ HP | Platekutt (HANNA-platen!) og kløyving — kapasitetsgapet i parken | ONE+ HP børsteløs dykksag, 2×70 cm skinner inkl. **3 895 kr (Obs Bygg Midtun, verifisert aug. 2026)**. **Planens valg**; erstatter sirkelsag + skinne i ett. ⚠️ Felle: RAK03SR-«skinnen» er en klemlist og passer IKKE R18CS-0 |
 | 3 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Batteriuavhengig; billigst per nytte på lista |
-| 4 | **Overfres — Ryobi ONE+ HP RTR18C-0** ✅ HP + bit-sett + **12 mm rettfres** | Avrundede kanter (barnesikkert + pent), flush-lommer for beslag, labank-hakk, flush-trim | **2 495 kr (Midtun)** — HP finnes likevel; standardutgaven RTR18-0 (1 595 kr) er strategi-avviket hvis budsjettet presser (lett last = minst skadelige unntak). Kantfres-klasse uten innstikk; våre jobber er kant-entré. 6/6,35 mm tange; suppler bitsettet med **8–10 mm rettfres på 6 mm skaft** (vanlig vare — 12 mm på 6 mm skaft er mangelvare; trengs større, søk «¼ inch shank» og bruk 6,35-hylsen). Runde sete-forsenkninger tas med **forstnerbor i drillen**, ikke fresen. Skråskruer bores gjennom hjemmelaget vinkelkloss — én bit 48×73 av restene med en rampe i hver ende, kappet på kappsaga: 25° fra flaten for J8-B og 30° for J10 (se kapplista, «Hjelpedeler») — lommehullsjigg utsatt til et prosjekt med volum |
 | 5 | **Japansk sag (ryoba) + stemjern-sett** | Rene hakk og presisjon for hånd; billigste vei til skjult treskjøt | Batteriuavhengig, ~200–400 kr |
 | 6 | **Multiverktøy — Ryobi ONE+ HP RMT18X-0** ✅ HP | Flush-kutt av lister, justering på plass (HANNA i nisje med gulvlister) | **1 995 kr (Midtun)**; brushed-variantene R18MT-0 (1 495) / RMT18-0 (1 095) er avvikene om budsjettet presser. NB: «RCT18C-0 Compact multikutter» (76 mm blad) er en annen verktøyklasse — ikke forveksle |
 | 7 | **Forstnerbor-sett** | Flatbunnede hull: magneter, plugger, eksenterbeslag | Drives av drillen (13 mm chuck ✓) |
