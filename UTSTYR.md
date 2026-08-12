@@ -52,7 +52,8 @@ platekutt, kløyving/langsgående kutt (→ se kjøpsplan).
 **Dekker:** avrundede kanter (barnesikkert + pent), flush-lommer for beslag,
 flush-trim. **Dekker ikke:** innstikk midt på flaten (ingen dykk-funksjon) —
 runde sete-forsenkninger tas fortsatt med **forstnerbor i drillen**, og
-skråskruene bores gjennom den hjemmelagde vinkelklossen (se kapplista).
+skråskruene bores NED I hullet i de to hjemmelagde vinkelklossene
+(se kapplista) — én kloss per vinkel, og hver av dem trenger to tvinger.
 
 ### Skinnesag — Ryobi ONE+ HP RPLS18X-0 (kjøpt aug. 2026)
 

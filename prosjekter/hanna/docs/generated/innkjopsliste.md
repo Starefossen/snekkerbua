@@ -61,7 +61,7 @@ Kjøpt 9,60 m, brukt 8,57 m, svinn 11 %.
 | 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 (Benkevange, front (bit)) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 3 × 320 (Rungetrinn) + 4 × 191 (Stubbefot) | 925 |
 | 2 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 1 × 320 (Rungetrinn) | 49 |
 
-Vinkelklossen (160 mm, se [kapplista](kappliste.md)) kappes av resten over — den lengste er 925 mm.
+Hjelpedelene på denne dimensjonen — 2 × 200 mm (Vinkelkloss 25° (J8-B)) + 2 × 200 mm (Vinkelkloss 30° (J10)), til sammen 812 mm med sagsnitt — kappes av resten over. Den lengste er 925 mm, så det går av rest og du trenger ikke kjøpe bord til dem. Se [kapplista](kappliste.md).
 
 ### 48×98
 

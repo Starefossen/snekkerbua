@@ -42,7 +42,7 @@ fra kapplista og nøkkelmålene.
 | Trebor ⌀6 og ⌀4 | Rammeskruene: gjennomgangshull i den ene delen, styrehull i den andre. Se forboringskolonnen i [beslaglista](generated/beslagliste.md) |
 | Trebor i flere små diametre til forboring | Se forboringskolonnen i beslaglista. Forbor **alltid** i bordbærelekta, i bordene og i all endeved |
 | Forsenker (kjeglesenker) | Alle skruehoder i flater man tar på: benkespiler, køyespiler, trinn |
-| Forstnerbor ⌀18 og ⌀12 | ⌀18: setet under hvert skråskruehode (J8-B og J10) — vinkelklossen styrer vinkelen, se J8-B. ⌀12: kontraborene i lektene og kilene under platen (J13a/J13b) |
+| Forstnerbor ⌀18 og ⌀12 | ⌀18: setet under hvert skråskruehode (J8-B og J10) — boret går ned i hullet i vinkelklossen, som er det som holder vinkelen; se J8-B og [setedetalj.svg](schematics/setedetalj.svg). ⌀12: kontraborene i lektene og kilene under platen (J13a/J13b) |
 | Fres med V-spor eller avrundingsfres — eller høvel, blokkhøvel, pussekloss | Kantbrytningen, avsnitt 3. Ingenting her krever fres |
 | Bits Torx T20 / T25 / T30 | Etter skruestørrelse |
 | Sirkelsag eller håndsag + anlegg | Alle kutt er 90°, med ett unntak: de to kilelektene sages på skrå i ett langsgående snitt (J13b). Ingen gjæring i hele sengen |
@@ -80,11 +80,11 @@ Tre hjørner har ikke noe å hvile på, og der går den loddrette reaksjonen
 gjennom stål. Det står her, rett ut, fordi det er der antallet skruer betyr
 noe:
 
-* **J1**, endebjelken mot stolpen: to 6×90 i skjær ≈ 4,0 kN mot ≤ 1 kN
+* **J1**, endebjelken mot stolpen: to 6×80 i skjær ≈ 4,0 kN mot ≤ 1 kN
   hjørnereaksjon — utnyttelse **0,25**.
 * **J8**, den fremre benkevangebiten mot stolpen: to 6×80 ≈ 4,0 kN mot
   0,5 kN — **0,13**.
-* **J8-B**, den bakre benkevangen mot stolpen: to skrå 6×90 ≈ 4,0 kN mot
+* **J8-B**, den bakre benkevangen mot stolpen: to skrå 6×80 ≈ 4,0 kN mot
   0,5 kN — **0,13**. Skruene står skrått i planet, men lasten står loddrett
   på dem uansett, så skråstillingen koster ingenting.
 
@@ -414,25 +414,64 @@ sprekke en vange på.
 
 **Hver skråskrue får et sete, og setet bores først.** Et 90° forsenk som møter
 flaten i 25–30° kan ikke ligge i plan, og har aldri kunnet det. Det som ligger i
-plan er et **flatbunnet sete boret langs skruens egen akse**: ⌀18 forstner,
-18 mm dypt målt langs aksen. Bunnen står vinkelrett på skruen, og dermed
-vinkelrett på hodet, så hodet legger seg flatt og ender **helt under treet** —
-2,3 mm tre over hodets høyeste punkt her, 4,9 mm på J10. Begge tallene er målt
-på kroppene i modellen. En skråskrue er nå like fullt inne i treet som hver
-eneste andre skrue i sengen — ingenting av den står utenfor treet.
+plan er et **flatbunnet sete boret langs skruens egen akse**: ⌀18 forstner.
+Bunnen står vinkelrett på skruen, og dermed vinkelrett på hodet, så hodet legger
+seg flatt og ender **helt under treet**. Alt om setene er tegnet opp på
+[schematics/setedetalj.svg](schematics/setedetalj.svg) — snitt langs aksen,
+munningen ovenfra, borjiggen og bruken av den.
 
-Setet koster lengde: 18 mm av skruen går med i lomma, så J8-Bs 6×90 begraver
-72 mm og J10s 5×70 begraver 52. Begge er kjørt gjennom de vanlige
-spiss-inne- og spissdekningsasertene på nytt.
+**Dybden er 20 mm på J8-B og 18 mm på J10, og forskjellen har en grunn.** Et
+forsenket hode i en flat bunn har to steder å lande. Det ene er bunnen. Det
+andre er **kanten av forborhullet**: konusen går fra ⌀11,8 ned til ⌀6, og står
+den på den kanten i stedet, ligger hodet 2,9 mm høyere enn tegningen sier. På en
+skrue som står 25° på flaten spiser de 2,9 mm 1,23 mm av tredekket. Med 18 mm
+sete ble regnestykket på J8-B:
 
-**Vinkelklossen — borjiggen.** Et skrått hull startet på frihånd vandrer, og det
-vandrer verst akkurat her: nær en ende, i en flate som boret møter på skrå. Jiggen
-er en avkapp av sengens egen 48×68, 160 mm lang, med en rampe saget i hver ende
-på kappsagen med bladet vippet — **25° i den ene enden (J8-B) og 30° i den
-andre (J10)**. Den klemmes flatt mot flaten med rampa over merket, og boret
-ligger **på** rampa, både forstnerboret og forboret etterpå. Da får hullet den
-vinkelen leddet er regnet på. Klossen kappes i steg 0 og er et
-verkstedhjelpemiddel, ikke en del av sengen — den skal ikke bygges inn noe sted.
+| | hodet på bunnen | konusen på forborkanten |
+|---|---:|---:|
+| J8-B, 18 mm (før) | 2,26 mm | **1,03 mm** |
+| J8-B, 20 mm (nå) | 3,11 mm | 1,88 mm |
+| J10, 18 mm | 4,89 mm | 3,76 mm |
+
+Kravet er 1,0 mm. En margin som forutsetter at skruen finner bunnen av sin egen
+lomme er ingen margin, så J8-B er boret 2 mm dypere. J10 er ikke i nærheten og
+står uendret. Alle tallene er målt på kroppene i modellen, og begge tilfellene
+— hodet på bunnen og konusen på kanten — er egne asserter nå.
+
+De 2 mm koster to ting og ingen av dem gjør vondt. Lommebunnen flytter seg
+1,8 mm nærmere endeveden, fra 13,9 til 12,1 mm — men munningens egen nærmeste
+kant har hele tiden ligget 12,7 mm fra enden og flytter seg ikke, så det er
+bare hvem av dem som er nærmest som bytter plass. Og 20 mm av skruen går med i
+lomma i stedet for 18, så J8-Bs 6×80 begraver 60 mm gjenger og J10s 5×60
+begraver 42. Begge er kjørt gjennom de vanlige spiss-inne- og
+spissdekningsasertene på nytt.
+
+**Og treet MELLOM de to lommene er målt nå.** De to skråskruene i hver ende står
+24 mm fra hverandre, som er rekkeregelen for en 6 mm skrue, men rekkeregelen
+måler skruen og ikke hullet den ligger i: to ⌀18-lommer på 24 mm senteravstand
+har 6 mm tre imellom. Det er nok her, og gulvet er skrevet ned til én
+skruediameter slik at en senere endring ikke spiser det ubemerket.
+
+**Vinkelklossen — borjiggen. To klosser, én per vinkel.** Et skrått hull startet
+på frihånd vandrer, og det vandrer verst akkurat her: nær en ende, i en flate som
+boret møter på skrå. Jiggen er derfor ikke en rampe boret hviler *på*, men et
+hull det går *ned i*. Hver kloss er to biter av sengens egen 48×68, 200 mm
+lange, skrudd flate mot flate. **⌀18 bores vinkelrett gjennom begge mens klossen
+ennå er firkantet** — det er hele trikset — og først deretter kappes sålen av
+under hullet på kappsag med bladet vippet **25° (J8-B)** hhv. **30° (J10)**.
+
+Merk deg at vippen og flaten er komplementvinkler: 25° vipp gir en såle som står
+**65°** på den borede flaten, og dermed 25° på hullaksen. Det er den vinkelen
+leddet er regnet på. Kontrollmålet er munningen hullet etterlater i den ferdige
+sålen — en ellipse på **42,6 × 18 mm** på 25°-klossen og **36 × 18 mm** på
+30°-klossen. Mål den med tommestokken før klossen får røre sengen; er den for
+kort, ble vippen satt på feil vinkel.
+
+I bruk: klemt mot flaten med to tvinger, hullet over merket, offerkloss mot
+endeveden, drill i gir 1 med slaget av. Både forstnerboret og forboret etterpå
+går ned i det samme hullet. Klossene lages i steg 0 og er verkstedhjelpemidler,
+ikke deler av sengen — de skal ikke bygges inn noe sted, og de går av restene
+på 48×68-bordet.
 
 I begge tilfeller er de to skruene hele endefestet. Det står ingen kloss under
 noen av dem — de to skruene i hver ende tar reaksjonen i skjær med utnyttelse
@@ -440,7 +479,7 @@ noen av dem — de to skruene i hver ende tar reaksjonen i skjær med utnyttelse
 gjerne en list eller en tvinge under enden hvis du er alene.
 
 Vangen vipper ikke av at klossen er borte: den er festet i to punkter i hver
-ende, over 73 mm høyde, og den andre enden står på en stubbefot.
+ende, over 68 mm høyde, og den andre enden står på en stubbefot.
 
 ### J10 — Benkevange → stubbefot
 
@@ -459,11 +498,14 @@ den fotsiden som vender inn mot benkeåpningen. Én og ikke to: foten er 48 mm
 dyp — like dyp som vangen den bærer — og to 5 mm skråskruer ved siden av
 hverandre trenger 50.
 
-Skråskruen får **samme sete som J8-B**: ⌀18 forstner, 18 mm langs skruens egen
-akse, boret med vinkelklossen — den andre enden av den, den som er saget 30°.
-Hodet ligger flatt i en flat bunn og står 4,9 mm under treet. Setet spiser
-18 mm av lengden, så 5×70-skruen begraver 52 mm. Se J8-B for hele detaljen; den
-står bare ett sted.
+Skråskruen får **samme slags sete som J8-B**: ⌀18 forstner, 18 mm langs skruens
+egen akse, boret med 30°-vinkelklossen. Hodet ligger flatt i en flat bunn og
+står 4,89 mm under treet — 3,76 mm selv om konusen skulle stå på kanten av
+forborhullet. Setet spiser 18 mm av lengden, så 5×60-skruen begraver 42 mm.
+J10 er ikke i nærheten av grensen og er derfor ikke boret dypere slik J8-B er.
+Se J8-B for hele detaljen og
+[schematics/setedetalj.svg](schematics/setedetalj.svg) for tegningen; de står
+bare ett sted.
 
 De **fremre** føttene står akkurat der vangebiten slutter. Vangebiten skal ikke
 stikke ut forbi foten i det hele tatt — den ender på den.
@@ -1286,6 +1328,7 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | [end-elevation.svg](schematics/end-elevation.svg) | Kortsiden, med veggen inntegnet. Her ser du at sengen er usymmetrisk: bakre stolpe stopper i sengeflaten, fremre går helt opp til rekkverket |
 | [ladder-detail.svg](schematics/ladder-detail.svg) | Stigen: vanger, klosser, trinn, J3-skruene, hylla bak trinnet som platen hviler på, og sjaktene ved siden av trinnendene der avstivningslektene løper |
 | [bench-detail.svg](schematics/bench-detail.svg) | Benken: vangeenden mot hjørnestolpen uten kloss, vangebiten som ender på stubbefoten, benkespilene og platekanten. Egen plan gjennom J8-Bs sete og skruevinkel |
+| [setedetalj.svg](schematics/setedetalj.svg) | Skråskruesetene: snitt langs skrueaksen for begge vinkler, munningen ovenfra med veggen mellom lommene, vinkelklossen eksplodert og klossen i bruk |
 | [panel-detail.svg](schematics/panel-detail.svg) | Plateenheten i begge stillinger: plate, to avstivningslekter, to kilelekter, glidesjakten ved trinnenden og skruen nedenfra ut av kontraboret. Ingen ståldel |
 
 **Alle seks arkene er tegnet om mot den ferdige geometrien.** De viser

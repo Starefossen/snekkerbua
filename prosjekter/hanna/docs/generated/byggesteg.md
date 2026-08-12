@@ -17,14 +17,19 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 
 **Slik gjør du:**
 
-1. Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring — med to navngitte unntak, og begge står i kapplista: de to kilelektene under platens forkant, og vinkelklossen.
-1. Skråkapp de to kilelektene. De er 48×73 × 77 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (28,0°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.
-1. Kapp vinkelklossen, borjiggen til de to skråskruene (J8-B og J10). Én bit 48×73 av restene, 160 mm lang, med en rampe i hver ende: 25° i den ene (J8-B) og 30° i den andre (J10). Kappsag med bladet vippet. Den skal ikke bygges inn i sengen — den er verktøy.
+1. Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring — med to navngitte unntak, og begge står i kapplista: de to kilelektene under platens forkant, og de to vinkelklossene.
+1. Skråkapp de to kilelektene. De er 48×68 × 77 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (28,0°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.
+1. Lag de to vinkelklossene, borjiggene til skråskruene — én til J8-B og én til J10. Hver kloss er 2 biter 48×68 × 200 mm av restene, skrudd FLATE MOT FLATE. Bor ⌀18 VINKELRETT gjennom begge mens klossen ennå er firkantet — det er hullet som styrer boret siden, ikke en rampe. Kapp så sålen av under hullet på kappsag med bladet vippet 25° (J8-B) hhv. 30° (J10).
+1. **Vippen og flaten er komplementvinkler.** 25° vipp gir en såle som står 65° på den borede flaten — og dermed 25° på hullaksen, som er det leddet er regnet på. Kontroller med tommestokken før klossen får røre sengen: hullets munning i sålen skal måle 42,6 × 18 mm på 25°-klossen og 36 × 18 mm på 30°-klossen. Er ellipsen for kort, ble vippen satt på feil vinkel. Klossene bygges ikke inn i sengen — de er verktøy.
 1. Merk hver del med blyant på en flate som blir skjult.
 1. **Bryt alle kanter et barn kan nå, nå — mens delene er løse.** Kravet er brutt kant, ikke en bestemt metode: 45° fas eller avrunding, du velger. Fres med V-spor eller avrundingsfres om du har fres; ellers gjør en blokkhøvel eller en pussekloss med 120-korn nøyaktig samme nytte. Viktigst: plateenhetens underside — begge styrelektenes nedre kanter og begge kilene — for det er der et kne møter treet når noen sitter ved bordet. Deretter platens fire egne kanter, og så stolper, rekkverksbord, trinn og stigevangenes kanter. Modellen tegner alle deler skarpe; kantbrytningen er en instruks og flytter ingen mål.
 1. Bor alle gjennomgående hull i stolper, vanger, endebjelker og benkevanger — diameter etter forboringskolonnen i beslaglista. Bor gjennom begge deler samtidig, med delene tvunget sammen.
 1. Forsenk hodene på alle festemidler som ender i en veggvendt flate. Beslaglista sier hvilke ledd det gjelder.
 1. Forbor alle treskruer etter beslaglista. I bordene og i all endeved er forboring et krav, ikke et råd.
+1. **Bor setene til de åtte skråskruene nå** — mens delene er løse og ligger flatt på benken. Fire i den bakre benkevangens forside (J8-B) og fire i stubbeføttenes innersider (J10). Reist seng kommer du ikke til med hverken kloss eller tvinger. Alt om setene og klossene er tegnet opp på [setedetalj.svg](../schematics/setedetalj.svg).
+1. Slik bores et sete: klem vinkelklossen mot flaten med TO tvinger, hullet rett over merket, og legg en offerkloss mot endeveden. Drillen i **gir 1 og slag AV** — et forstnerbor i slagmodus brenner og vandrer. Trekk boret helt ut 2–3 ganger per lomme og børst sponet ut; et fullt forstnerbor skjærer ikke, det gnisser. Dybden er merket du satte på boret da du lagde klossen: 20 mm langs aksen på J8-B, 18 mm på J10.
+1. På den bakre benkevangen står to lommer ved siden av hverandre i hver ende, 24 mm fra senter til senter. **Bor den som ligger nærmest kanten først** — da har klossen hel flate å stå på. Når den andre skal bores, hviler klossen delvis over den ferdige lomma; legg en tynn list under den enden så den ikke vipper.
+1. Forbor for skruen med det samme, mens delen ligger som den ligger: **lommebunnen er forborets egen jigg.** Bunnen står vinkelrett på skrueaksen, så et brad-point-bor satt i senter av den flate bunnen (⌀6 på J8-B, ⌀3,5 på J10) retter seg selv inn i riktig vinkel. Ikke prøv å sikte den på frihånd.
 1. Slå filtknotter under alle fire hjørnestolper og alle fire stubbeføtter.
 
 **Sjekk før du går videre:**
@@ -47,7 +52,7 @@ Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannret
 1. Legg de to bakre stolpene ut i riktig avstand. De er de korte — de stopper under sidevangen.
 1. Legg den bakre sidevangen oppå stolpetoppene. Den skal hvile på endeveden, ikke henge på siden av stolpen. Fest etter J2-B.
 1. Legg den bakre benkevangen ned mellom stolpene og fest den etter J8-B. Det står ingen kloss under vangeenden — **hullene du boret i steg 0 er jiggen**: vangen har nøyaktig én høyde der hullene i vangen og hullene i stolpen står over hverandre. Legg en list eller en tvinge under vangen mens du skrur hvis du er alene. Vangen er kappet nøyaktig så den fyller mellom de to stolpene — den kan ikke tres inn senere.
-1. J8-B er skråskruer, og de skal ha SETE først: klem vinkelklossen fra steg 0 mot vangens forside med 25°-rampa over merket, bor ⌀18 forstner 18 mm ned LANGS rampa, og forbor videre i samme spor. Da ligger skruehodet flatt i bunnen av lommen og helt under treet.
+1. J8-B er skråskruer, og setene deres er boret i steg 0 — ⌀18 flatbunnet lomme 20 mm ned langs skruens egen akse, 25° på flaten. Her skal du bare skru. Skruen finner lomma selv gjennom forboret; kjenn etter at hodet lander flatt på bunnen og ikke stopper høyt. Stopper det høyt, står konusen på kanten av forboret — skru ut, rens lomma for spon og ta den om igjen.
 1. Sett vinkelbeslagene til bordbærelekta på stolpenes innsider, legg lekta på høykant mellom stolpene og fest etter J12.
 
 **Sjekk før du går videre:**
@@ -137,7 +142,7 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 1. Fest hver vangebit til sin fremre hjørnestolpe etter J8. **Skruene drives innenfra**, fra vangens innside og inn i stolpen, så stolpens forside blir stående uten skruehoder. Du kommer til ovenfra: benken er åpen til spilene går på i steg 7. Ingen kloss under enden — hullene fra steg 0 holder vangen i riktig høyde.
 1. Sett en stubbefot under den innerste enden av hver vangebit. Vangebiten skal slutte akkurat der foten står — ingen utstikk forbi foten.
 1. Sett de to bakre stubbeføttene under den bakre benkevangen, rett under de samme punktene.
-1. Fest alle fire føtter etter J10. Den ene 5×70 per fot er en skråskrue og skal ha SETE først — vinkelklossen fra steg 0, 30°-rampa mot fotens innerside, ⌀18 forstner 18 mm ned langs rampa, så forboret i samme spor.
+1. Fest alle fire føtter etter J10. Den ene 5×60 per fot er en skråskrue nedenfra og opp i vangen, og setet er boret i steg 0 — ⌀18 flatbunnet lomme 18 mm ned langs aksen, 30° på fotens innerside. Skru beslaget først, skråskruen sist.
 
 **Sjekk før du går videre:**
 

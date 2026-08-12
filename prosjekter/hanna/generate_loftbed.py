@@ -93,6 +93,27 @@ K3  THE MODE CHANGE IS SEVEN HANDGRIPS AND NO ROLL. What the two changes above
     now lifts the unit flat into the slot, carries it out over the bench,
     up the open bay and back in over rung 2. The roll is gone, two legs with
     it, and the tightest pass on the whole trip is still PANEL_FIT.
+K4  THE J8-B SEAT IS 20 MM DEEP, BECAUSE A COUNTERSUNK HEAD HAS TWO PLACES TO
+    SIT. V4 bored every skew screw a flat-bottomed pocket 18 mm deep along its
+    own axis and measured 2,26 mm of wood over the head at J8-B. That number
+    assumes the head lies ON the flat bottom. It has a second rest: the 90 deg
+    cone can bear on the RIM OF THE PILOT HOLE, 2,9 mm higher, and 2,9 mm along
+    a 65 deg screw eats 1,23 mm of the cover - 1,03 mm left against a 1,0 mm
+    limit. J8-B goes to 20 mm (3,11 mm on the bottom, 1,88 on the rim), J10
+    stays at 18 (4,89 / 3,76). Same screw, same bit, one more turn of the depth
+    stop. And the wood BETWEEN the two J8-B pockets - 6 mm, and nothing was
+    watching it - gets an assert of its own, TOE_SEAT_MIN_WEB.
+K5  THE VINKELKLOSS IS A BORED BLOCK, NOT A SAWN RAMP. V4's jig was one 160 mm
+    offcut with a ramp sawn on each end and the drill asked to lie on the ramp.
+    A bit lying on a ramp is a bit with nothing round it, and the recipe had the
+    angle backwards as well - a mitre saw tilted 25 deg leaves a face at 65 deg
+    to the one on the table, not 25. The jig is now TWO blocks, one per angle,
+    each of two 48x68 x 200 screwed face to face with a ⌀18 hole bored SQUARE
+    through both BEFORE the sole is cut off under it at the tilt. The hole is
+    then a sleeve the bit runs in, its angle is the saw's and not the hand's,
+    and the ellipse it leaves in the sole - 42,6 x 18 at J8-B, 36 x 18 at J10 -
+    is a control measure you can read with a ruler before the jig ever touches
+    the bed.
 
 DESIGN INTENT (v11 - "one profile: 36x98")
 --------------------------------------------------------------------------
@@ -172,33 +193,38 @@ U4  M8 IS OUT OF EVERY POST JOINT. D4's argument for a single central M8 was
     tie. Affected joints: J1 (end beam), J2 (front side rail), J8 (bench
     rail), plus the W9 end fixings of the back bench rail and the back ledger.
     The exact screw counts per joint are the docs round's to set.
-U5  THE BENCH STUB LEGS GO BACK TO 48x73 AND 48x48 LEAVES THE BED. v9/W3 had
-    squared the four legs off, 48x73 -> 48x48, for exactly one reason: 48x48
-    was the corner-post section then, so it consolidated two profiles into
-    one. U2 above moved the posts to 36x98 and that reason is gone. What was
-    left was an ORPHAN profile: 48x48 bought for four 186 mm pieces and
-    nothing else - 744 mm of wood off a 2,4 m board, 69% waste, its own line
-    in the shopping list and its own pile on the floor. So the legs revert to
-    48x73, which is the BENCH RAIL'S OWN profile - the very member each leg
-    bears under - and they are cut from the rest the four rungs leave on the
-    2,4 m 48x73 board. The purchase is unchanged (1 x 4,8 m + 1 x 2,4 m of
-    48x73), one board and one profile leave the list, and the bed is down to
-    FIVE timber profiles plus the plywood sheet.
+U5  THE BENCH STUB LEGS GO BACK ON THE BENCH RAIL'S OWN PROFILE AND 48x48
+    LEAVES THE BED. v9/W3 had squared the four legs off, rail profile -> 48x48,
+    for exactly one reason: 48x48 was the corner-post section then, so it
+    consolidated two profiles into one. U2 above moved the posts to 36x98 and
+    that reason is gone. What was left was an ORPHAN profile: 48x48 bought for
+    four legs and nothing else - 744 mm of wood off a 2,4 m board, 69% waste,
+    its own line in the shopping list and its own pile on the floor. So the
+    legs revert to the BENCH RAIL'S OWN profile - the very member each leg
+    bears under - and are cut from the rest the four rungs leave on that board.
+    One board and one profile leave the list, and the bed is down to FIVE
+    timber profiles plus the plywood sheet.
+    NB - THE PROFILE IS 48x68, NOT THE 48x73 THIS ENTRY WAS WRITTEN ON. U5 was
+    argued on a 48x73 bench rail, and 48x73 turned out not to be a thing you
+    can buy: the shop stocks 48x68. The whole rail family went 73 -> 68 and the
+    legs went with it. The ARGUMENT is untouched - it was never about 73, it
+    was about the leg sharing the rail's section - and every number below is
+    the 68 one.
     The Y dimension - the binding one - never moves: 48, the bench rail's own
     depth, so the leg is flush in Y as it always was. All the change is in X,
     where there is a whole rail to sit under. Consequences:
-      leg-on-rail bearing  48 x 48 = 2304 -> 48 x 73 = 3504 mm2, i.e. ~8,0 kN
+      leg-on-rail bearing  48 x 48 = 2304 -> 48 x 68 = 3264 mm2, i.e. ~7,4 kN
                            against the ~0,5 kN a leg sees; utilisation
                            0.09 -> 0.06
       X positions          the RULE is unchanged (inner face on the inner end
                            of its own bench, X 645 / 1345, leg running
                            outward from there, fully under its rail segment),
-                           so only the outer faces move: 597..645 -> 572..645
-                           and 1345..1393 -> 1345..1418
+                           so only the outer faces move: 597..645 -> 577..645
+                           and 1345..1393 -> 1345..1413
       J10                  the bracket and its screws re-derive against a
-                           73 mm leg face instead of 48 - see the joint
-    Unchanged: the leg height (186), the bench rail segments, the open front
-    floor X 645..1345, the walk-around, and every other profile in the bed.
+                           68 mm leg face instead of 48 - see the joint
+    Unchanged: the leg height, the bench rail segments, the open front floor
+    X 645..1345, the walk-around, and every other profile in the bed.
 
 DESIGN INTENT (v10 - "the back posts tuck under the bunk")
 --------------------------------------------------------------------------
@@ -870,43 +896,57 @@ POST_W = 98          # corner posts, wide dim (X)  [was 48, 73]
 UPRIGHT_W = 48       # ladder uprights, X  [was 36 - the upright turned, U2]
 UPRIGHT_T = 36       # ladder uprights, Y  [was 48] - the 36 mm front-plane depth
 
-# U5: THE FOUR BENCH STUB LEGS GO BACK TO 48x73 - THE BENCH RAIL'S OWN PROFILE.
+# U5: THE FOUR BENCH STUB LEGS GO BACK ON THE BENCH RAIL'S OWN PROFILE.
 # The leg is an END BEARING under a bench rail, not a column. What it has to do
 # is (a) present enough face to the rail underside and (b) not buckle over its
 # own 186 mm. Buckling is a non-question at 186 mm (lambda ~13), so the section
 # is decided by the bearing and by the cut list.
-# HISTORY. v9/W3 took the leg 48x73 -> 48x48 for one reason only: 48x48 was the
-# corner-post section at the time, so the change CONSOLIDATED two profiles into
-# one. v11/U2 then took the corner posts to 36x98 and that argument evaporated -
-# 48x48 was left as an ORPHAN profile carrying four 186 mm pieces and nothing
-# else, i.e. a whole 2.4 m board bought for 744 mm of wood: 69% waste, an extra
-# line in the shopping list and an extra pile on the floor. U5 reverses W3. The
-# leg is 48x73 again, which is the bench rail's own profile - the very member it
-# bears under - so the four legs are cut from the 48x73 board that already has
-# 1108 mm of rest on it after the four rungs. One fewer profile, one fewer
-# board, no new stock.
+# HISTORY. v9/W3 took the leg from the rail profile to 48x48 for one reason
+# only: 48x48 was the corner-post section at the time, so the change
+# CONSOLIDATED two profiles into one. v11/U2 then took the corner posts to
+# 36x98 and that argument evaporated - 48x48 was left as an ORPHAN profile
+# carrying four legs and nothing else, i.e. a whole 2.4 m board bought for
+# 744 mm of wood: 69% waste, an extra line in the shopping list and an extra
+# pile on the floor. U5 reverses W3. The leg is on the bench rail's own profile
+# again - the very member it bears under - so the four legs are cut from the
+# rest that board has after the four rungs. One fewer profile, one fewer board,
+# no new stock.
+# THE PROFILE IS 48x68. U5 was written on 48x73 and 48x73 is not a shop item -
+# the rail family is 48x68 and the leg follows it. The argument never depended
+# on the 73; it depended on the leg and the rail being the same board.
 # The Y DIMENSION IS THE CONSTRAINT AND IT DOES NOT MOVE: 48, exactly the bench
 # rail's depth, so the leg is flush in Y and neither hangs out of the rail nor
 # leaves a lip. All the change is in X, where there is a whole rail to sit
-# under. At 48x73 the leg-on-rail contact is 48 x 73 = 3504 mm2 (was 2304);
-# against f_c90,d with k_c90 = 1.5 that is ~8.0 kN, i.e. utilisation ~0.06 at
+# under. At 48x68 the leg-on-rail contact is 48 x 68 = 3264 mm2 (was 2304);
+# against f_c90,d with k_c90 = 1.5 that is ~7.4 kN, i.e. utilisation ~0.06 at
 # the ~0.5 kN a leg actually sees.
 # The X POSITION rule is unchanged and is what the validation block enforces:
 # the leg's INNER face lands on the inner end of its bench-rail segment
 # (X 645 / 1345), so the rail still has zero cantilever past it, and the whole
-# leg stays under that segment. Only the OUTER face moves back out, 597 -> 572
-# and 1393 -> 1418 (the pre-W3 positions).
+# leg stays under that segment. Only the OUTER face moves back out, 597 -> 577
+# and 1393 -> 1413.
 LEG_T = 48           # bench stub legs, thin dim (Y)   - unchanged stock
-LEG_W = 68           # bench stub legs, wide dim (X)   [48 in W3..U4; 73 again, U5]
+LEG_W = 68           # bench stub legs, wide dim (X)   [48 in W3..U4; back on
+                     # the bench rail's own profile, U5 - which is 48x68, not
+                     # the 48x73 U5 was written on; the shop has no 48x73]
 
 RAIL_T = 48          # upper bed side rails and end beams, thickness
 RAIL_H = 98          # upper bed side rails and end beams, height  [was 123]
 
+# 48x68 IS THE SHOP'S NUMBER AND 48x73 WAS NOT. Bench rails, ladder rungs,
+# stub legs, stiffener battens, wedges and the back table ledger are all one
+# profile and it is 48x68. The whole family was drawn 48x73 until the buying
+# round went to the shop and found that 48x73 is not a thing you can put in a
+# trolley. Nothing in any argument depended on the five millimetres - the
+# constants below and every number derived from them are the 68 ones, and the
+# asserts measure those - but PROSE WRITTEN BEFORE THAT ROUND STILL SAYS 73 in
+# places, and it is left standing rather than rewritten under its own authors:
+# where a comment and a constant disagree, the constant is the bed.
 BENCH_RAIL_T = 48    # continuous bench rails, thickness (Y) - unchanged stock
-BENCH_RAIL_H = 68    # continuous bench rails, height (Z)    - unchanged stock
+BENCH_RAIL_H = 68    # continuous bench rails, height (Z)    [drawn 73]
 
 TREAD_T = 48         # ladder rung (tread) thickness (Z) - unchanged stock
-TREAD_D = 68         # ladder rung (tread) depth (Y)     - unchanged stock
+TREAD_D = 68         # ladder rung (tread) depth (Y)     [drawn 73]
 
 BOARD_T = 21         # 21x95 board, thickness  - D7: the back table ledger ONLY
 BOARD_W = 95         # 21x95 board, width      - D7: the back table ledger ONLY
@@ -2881,63 +2921,150 @@ def drive(name, per, frm=None, into=None, axis=None, sign=None, row=None,
 #   TOE_SEAT_D       18 mm, the Forstner size. The 6 mm screw's head is 11.8
 #                    across, so 18 leaves 3 mm all round for the head and room
 #                    for the bit to enter at the angle.
-#   TOE_SEAT_DEPTH   18 mm, measured ALONG THE SCREW, from the mouth of the
-#                    pocket to its flat bottom - i.e. exactly how far the head
-#                    is moved into the wood. It is one number for both joints
-#                    (one setting on the depth stop), and it is set by the
-#                    steeper of the two: the head is a disc of radius r_h in a
-#                    plane square to the screw, so its highest point stands
+#   TOE_SEAT_DEPTH   measured ALONG THE SCREW, from the mouth of the pocket to
+#                    its flat bottom - i.e. exactly how far the head is moved
+#                    into the wood. The head is a disc of radius r_h in a plane
+#                    square to the screw, so its highest point stands
 #                    r_h*sin(deg) above the head centre measured along the face
 #                    normal, and the centre is seat*cos(deg) below the face.
 #                    Head fully under the wood therefore wants
 #                    seat > r_h*tan(deg), which at J8-B's 65 deg and an 11.8 mm
-#                    head is 12.7 mm. 18 - the same number as the bit, one
-#                    thing to remember - leaves 2.3 mm of wood over the highest
-#                    point of the head at J8-B and 4.9 at J10, and the assert
-#                    below measures both on the solid rather than trusting this
-#                    note.
-# What it costs is length: 18 mm of the screw is spent in the pocket, so J8-B's
-# 6x90 buries 72 mm of thread and J10's 5x70 buries 52. Both are re-checked by
-# the ordinary tip-inside / tip-cover asserts, which know nothing about seats.
+#                    head is 12.7 mm.
+#
+# K4 - AND THE HEAD DOES NOT ALWAYS FIND THE BOTTOM. V4 set 18 for both joints,
+# one setting on the depth stop, and measured 2.26 mm of wood over the head at
+# J8-B. That is the number for a head lying ON the flat bottom, and a
+# countersunk head in a flat-bottomed pocket has a SECOND place it can come to
+# rest: the 90 degree cone can bear on the RIM OF THE PILOT HOLE. The head is
+# 11.8 across, the pilot under it is 6, and a 90 degree cone between the two
+# stands (11.8 - 6)/2 = 2.9 mm off the bottom. Along a 65 degree screw that is
+# 2.9*cos(65) = 1.23 mm of the cover, so the honest J8-B number was not 2.26 but
+#
+#       2.26 - 1.23 = 1.03 mm  against a 1.0 mm limit.
+#
+# A joint whose margin depends on the screw finding the bottom of its own pocket
+# has no margin. J8-B gets its own depth, 20 mm; J10 is not close and keeps 18:
+#
+#                    head on the bottom   cone on the pilot rim
+#     J8-B  20 mm      3.11 mm              1.88 mm      (6x80, 11.8 head)
+#     J10   18 mm      4.89 mm              3.76 mm      (5x60,  9.5 head)
+#
+# The two millimetres buy a second thing nobody asked for. The flat bottom is a
+# ⌀18 disc standing at `deg` to the face, so it reaches 9*sin(deg) above and
+# below its own centre measured on the face normal while its centre lies
+# seat*cos(deg) down: the disc is a COMPLETE circle inside the wood only from
+# seat >= 9*tan(deg) - 19.30 mm at J8-B, 15.59 at J10. At 18 mm the J8-B pocket
+# was 1.3 mm short of that and the shallow rim of its own bottom broke out at
+# the face. The head never noticed (it is 11.8 across, and its rim wants only
+# 5.9*tan(65) = 12.65), but the bottom the drawing shows was not the bottom the
+# wood had. At 20 it is, with 0.3 mm to spare. J10 has been clear all along.
+#
+# The price of the two millimetres is paid twice and neither payment hurts. The
+# pocket bottom moves 2*sin(65) = 1.81 mm nearer the rail's end grain, its near
+# edge 13.9 -> 12.1 mm from the end - but the MOUTH's near edge has been sitting
+# at 34 - 9/sin(25) = 12.7 mm the whole time and does not move, so the governing
+# edge changes hands rather than collapsing. And 20 mm of the screw is spent in
+# the pocket instead of 18, so J8-B's 6x80 buries 60 mm of thread and J10's 5x60
+# buries 42. Both are re-checked by the ordinary tip-inside / tip-cover asserts,
+# which know nothing about seats.
 TOE_SEAT_D = 18.0                # Forstner diameter for the seat
 TOE_SEAT_DEPTH = 18.0            # along the screw axis, mouth to flat bottom
+TOE_SEAT_DEPTH_BENCH = 20.0      # K4: J8-B's own, 2 mm deeper - see above
 TOE_SEAT_MIN_COVER = 1.0         # mm of wood over the highest point of the head
-TOE_BENCH_POST = dict(face=1, face_sign=1, deg=65.0, back=34.0)
+# K4 - THE WALL BETWEEN TWO SEATS. J8-B puts two of these pockets in one face,
+# and the row rule that spaces them knows only about SHANKS: 4d = 24 mm centres
+# for a 6 mm screw, which between two ⌀18 pockets leaves 24 - 18 = 6 mm of wood.
+# Six millimetres is enough here and it is not enough anywhere much thinner, so
+# it is written down rather than left to arithmetic nobody is doing. The floor
+# is ONE SHANK DIAMETER of wood: a Forstner cutting the second pocket has to
+# have a rim of solid wood to cut against for its whole circle, and d - the same
+# unit the edge and spacing rules are already written in - is the least that
+# reads as wood rather than as a fin. K2 asks a bore's worth (12 mm) between two
+# ⌀12 counterbores, but those sit at the free edge of a 77 mm wing with short
+# grain on both sides; these two sit mid-face in a 68 mm rail with the full
+# 48 mm of its depth behind them, which is why the floor is d and not D.
+TOE_SEAT_MIN_WEB = 6.0           # mm of wood between two seats in one face
+TOE_BENCH_POST = dict(face=1, face_sign=1, deg=65.0, back=34.0,
+                      seat=TOE_SEAT_DEPTH_BENCH)
 TOE_STUB_RAIL = dict(face=0, face_sign="inboard", deg=60.0, back=35.0)
 
 # THE DRILL-GUIDE BLOCK - "vinkelkloss". A skew hole started freehand walks,
 # and it walks worst exactly where these two are: near an end, in a face the
-# bit meets at 25 or 30 degrees. The jig is an offcut of the bed's own 48x73
-# with a ramp sawn on each end at the angle the drill has to keep - one end for
-# each joint - clamped flat to the face with its ramp over the mark. It is NOT
-# part of the bed, so it is not in `parts` and not in the cut list proper; it
-# is a shop aid and it is listed as one (SHOP_AIDS below), cut in steg 0 on the
-# mitre saw with the blade tilted.
+# bit meets at 25 or 30 degrees. It is NOT part of the bed, so it is not in
+# `parts` and not in the cut list proper; it is a shop aid and it is listed as
+# one (SHOP_AIDS below), made in steg 0 off the offcut pile.
 #
-#     ramp angle off the face = 90 - deg, i.e. the drill's own angle to the
-#     face, because the bit lies ON the ramp.
-TOE_JIG_LEN = 160                # one offcut, a ramp on each end
+# K5 - IT IS A BORED BLOCK, AND THERE ARE TWO OF THEM. V4 wrote it as one 160 mm
+# offcut with a ramp sawn on each end, the bit asked to LIE ON the ramp. Three
+# things were wrong with that:
+#
+#   * a bit lying on a ramp is guided on one side only. Nothing stops it
+#     rolling off the mark, which is the exact failure the jig exists for;
+#   * "25° målt fra flaten" on a mitre saw is the complement of what you set.
+#     Tilt the blade 25 degrees and the face it leaves stands at 65 degrees to
+#     the one on the table, not 25. The old recipe therefore produced a ramp
+#     for the wrong joint;
+#   * one block with two ends means one clamp setup has to serve both joints,
+#     and the two are drilled in different steps on different members.
+#
+# So: TWO blocks, one per angle, each of TOE_JIG_PLIES pieces of the bed's own
+# 48x68 screwed FLAT FACE TO FLAT FACE. A ⌀TOE_SEAT_D hole is bored SQUARE
+# through both while the block is still a rectangular block - that is the whole
+# trick, a square hole in a square block is a hole anyone can bore - and only
+# THEN is the sole cut off under it on the mitre saw with the blade tilted. The
+# tilt is the drill's own angle to the face; the sole it leaves stands at
+# 90 - tilt to the bored face, and therefore at `tilt` to the hole. The hole is
+# a sleeve now, not a ramp, and it is two plies deep.
+#
+#     saw tilt        = 90 - deg  (25 / 30)  - what you set on the saw
+#     sole to face    = deg       (65 / 60)  - what you measure on the block
+#     hole to sole    = 90 - deg  (25 / 30)  - what the bed is drawn on
+#
+# The control measure is the mouth the hole leaves in the finished sole: a
+# ⌀TOE_SEAT_D cylinder cut by a plane at `90 - deg` to its axis is an ellipse
+# TOE_SEAT_D wide and TOE_SEAT_D/sin(90 - deg) long. Measure it before the jig
+# ever touches the bed; if it is short, the tilt was set to the complement.
+TOE_JIG_LEN = 200                # per ply
+TOE_JIG_PLIES = 2                # screwed face to face - the hole is the guide
 TOE_JIG_ANGLES = {"J8-B": 90.0 - TOE_BENCH_POST["deg"],     # 25 deg
                   "J10": 90.0 - TOE_STUB_RAIL["deg"]}       # 30 deg
+TOE_JIG_SEATS = {"J8-B": TOE_BENCH_POST.get("seat", TOE_SEAT_DEPTH),
+                 "J10": TOE_STUB_RAIL.get("seat", TOE_SEAT_DEPTH)}
+TOE_JIG_ELLIPSE = {_k: (TOE_SEAT_D / math.sin(math.radians(_a)), TOE_SEAT_D)
+                   for _k, _a in TOE_JIG_ANGLES.items()}
 
 # SHOP AIDS - things you CUT but do not BUILD IN. They are not parts of the
 # bed, so they are not in `parts`, not in parts.tsv, not in CUT_LIST and not in
 # the piece count; they are cut in steg 0 off the offcut pile and they belong
 # in the manual because a jig you were never told to make is a jig you do not
 # have when you need it.
+def _nb(x, nd=1):
+    """A number the way a Norwegian ruler reads it: 42,6 and not 42.6."""
+    return f"{x:.{nd}f}".rstrip("0").rstrip(".").replace(".", ",")
+
+
 SHOP_AIDS = [
-    dict(key="vinkelkloss",
-         name="Vinkelkloss (borjigg for skråskruene)",
-         section=sec(BATTEN_W, BATTEN_H), length=TOE_JIG_LEN, qty=1,
-         cut=(f"kappsag med bladet vippet, rampe målt FRA FLATEN: "
-              f"{TOE_JIG_ANGLES['J8-B']:g}° i den ene enden (J8-B, dvs. "
-              f"{TOE_BENCH_POST['deg']:g}° fra flatens normal) og "
-              f"{TOE_JIG_ANGLES['J10']:g}° i den andre (J10, dvs. "
-              f"{TOE_STUB_RAIL['deg']:g}°)"),
-         use=("klemmes flatt mot flaten med rampa over merket; "
-              f"⌀{TOE_SEAT_D:g} forstnerbor og deretter forboret hviler PÅ "
-              f"rampa, så hullet får den vinkelen leddet er regnet på. "
-              f"Brukes i J8-B og J10")),
+    dict(key=f"vinkelkloss-{_jid.lower()}",
+         name=f"Vinkelkloss {_tilt:g}° ({_jid}) — borjigg for skråskruen",
+         section=sec(BATTEN_W, BATTEN_H), length=TOE_JIG_LEN,
+         qty=TOE_JIG_PLIES,
+         cut=(f"{TOE_JIG_PLIES} stk. skrus FLATE MOT FLATE til én kloss. "
+              f"⌀{TOE_SEAT_D:g} bores VINKELRETT gjennom begge mens klossen "
+              f"ennå er firkantet — det er hele trikset. Først DERETTER kappes "
+              f"sålen av under hullet: kappsag med bladet vippet "
+              f"{_tilt:g}°, som gir en såle som står "
+              f"{90.0 - _tilt:g}° på den borede flaten og dermed {_tilt:g}° "
+              f"på hullaksen. Kontrollmål: hullets munning i sålen er en "
+              f"ellipse på {_nb(TOE_JIG_ELLIPSE[_jid][0])} × "
+              f"{_nb(TOE_JIG_ELLIPSE[_jid][1])} mm — er den for kort, ble "
+              f"vippen satt på komplementvinkelen"),
+         use=(f"klemmes mot flaten med TO tvinger, hullet over merket. "
+              f"⌀{TOE_SEAT_D:g} forstnerbor og deretter forboret går NED I "
+              f"hullet, så boret ikke kan vandre. Dybdemerke: hold boret i "
+              f"jiggen til randen flukter med sålen ved hullaksen, merk av på "
+              f"skaftet og flytt merket {TOE_JIG_SEATS[_jid]:g} mm opp — det "
+              f"er setedybden. Brukes i {_jid}"))
+    for _jid, _tilt in TOE_JIG_ANGLES.items()
 ]
 
 JOINTS = [
@@ -3018,10 +3145,11 @@ JOINTS = [
                    row=2)])]),
     dict(id="J8-B", title="Bakre benkevange → bakre hjørnestolpe "
                           "(endeskjøt)", n=2,
-         drill="Først sete: ⌀18 forstner 18 mm ned LANGS skruens akse, med "
-               "vinkelklossen som styring. Så ⌀6 skrått videre gjennom "
-               "vangen og ⌀4 i stolpen — forbor hele veien, dette er en "
-               "skråskrue nær en ende",
+         drill=(f"Først sete: ⌀{TOE_SEAT_D:g} forstner "
+                f"{TOE_JIG_SEATS['J8-B']:g} mm ned LANGS skruens akse, med "
+                f"vinkelklossen som styring. Så ⌀6 skrått videre gjennom "
+                f"vangen og ⌀4 i stolpen — forbor hele veien, dette er en "
+                f"skråskrue nær en ende"),
          side="Skrått fra vangens forside inn i stolpen, ut av et flatbunnet "
               "sete så hodet ligger helt under treet. Vangen ligger fast "
               "mellom de to stolpene, og disse to skruene er HELE festet i "
@@ -3031,9 +3159,10 @@ JOINTS = [
                    toe=TOE_BENCH_POST,
                    exempt="skråskrue gjennom vangens forside nær enden")])]),
     dict(id="J10", title="Benkevange → stubbefot", n=4,
-         drill="⌀3 i foten og i vangen. Skråskruen får først sete: ⌀18 "
-               "forstner 18 mm ned langs skruens akse, med vinkelklossen som "
-               "styring, så ⌀3,5 videre",
+         drill=(f"⌀3 i foten og i vangen. Skråskruen får først sete: "
+                f"⌀{TOE_SEAT_D:g} forstner {TOE_JIG_SEATS['J10']:g} mm ned "
+                f"langs skruens akse, med vinkelklossen som styring, så ⌀3,5 "
+                f"videre"),
          side="Vinkelbeslaget sitter i hjørnet mellom fotens utside og "
               "vangens underside, med den ene fliken opp i vangen og den "
               "andre inn i foten; den ene 5×60 er en skråskrue nedenfra og "
@@ -3058,7 +3187,7 @@ JOINTS = [
     dict(id="J12", title="Bordbærelekt → bakre hjørnestolpe (endeskjøt)",
          n=2,
          drill="⌀3 i stolpen og i lekta — forboring er et krav: begge skruene "
-               "står nær en ende, og lekta (48×73) tas i endeveden",
+               "står nær en ende, og lekta (48×68) tas i endeveden",
          side="Beslaget på stolpens innerflate, med den vannrette fliken "
               "UNDER lektas ende, så lekta har noe å hvile på og ikke bare "
               "henger i skruer",
@@ -3995,13 +4124,26 @@ if FASTENERS_ON:
                 _high = (_s.extents[_sax][1] if _ssg > 0
                          else _s.extents[_sax][0])
                 _under = (_surf - _high) if _ssg > 0 else (_high - _surf)
-                assert _under >= TOE_SEAT_MIN_COVER, (
-                    f"{_label}: the highest point of the head stands "
-                    f"{-_under:+.2f} mm past the face at {_surf:g} on axis "
-                    f"{'XYZ'[_sax]} — the "
-                    f"{_f['seat_d']:g} mm seat is {_f['seat']:g} mm deep and "
-                    f"wants to leave {TOE_SEAT_MIN_COVER} mm of wood over it")
-                TOE_SEAT_COVER.append((_label, _under))
+                # K4: AND AGAIN WITH THE HEAD OFF THE BOTTOM. A 90 degree
+                # countersunk head in a flat-bottomed pocket has two rests -
+                # the bottom, and the rim of the pilot hole under it. The cone
+                # between head diameter and shank stands (D_h - d)/2 proud of
+                # the bottom when it takes the second one, and the part of that
+                # which is spent on the cover is its component along the face
+                # normal, i.e. cos(deg) = the direction's own component on the
+                # seat-face axis. Both cases are held to the same limit.
+                _rim = ((SCREW_HEAD_D[int(round(_f["d"]))] - _f["d"]) / 2
+                        * abs(_f["direction"][_sax]))
+                for _case, _have in (("på bunnen", _under),
+                                     ("på forborkanten", _under - _rim)):
+                    assert _have >= TOE_SEAT_MIN_COVER, (
+                        f"{_label}: with the head resting {_case} the highest "
+                        f"point of it stands {-_have:+.2f} mm past the face at "
+                        f"{_surf:g} on axis {'XYZ'[_sax]} — the "
+                        f"{_f['seat_d']:g} mm seat is {_f['seat']:g} mm deep "
+                        f"and wants to leave {TOE_SEAT_MIN_COVER} mm of wood "
+                        f"over it in BOTH rests (K4)")
+                TOE_SEAT_COVER.append((_label, _under, _under - _rim))
 
             # 2 - the tip is INSIDE the member it grips, with wood behind it.
             _tip = tuple(a + d * _f["length"]
@@ -4149,14 +4291,60 @@ if FASTENERS_ON:
     assert len(TOE_SEAT_COVER) == sum(1 for _f in FASTENER_SPECS
                                       if _f.get("toe")), \
         "V4: en skråskrue slapp unna setekontrollen"
-    print(f"OK  V4 skråskruesete: alle {len(TOE_SEAT_COVER)} skråskruene "
-          f"(J8-B ×4, J10 ×4) står i et flatbunnet ⌀{TOE_SEAT_D:g} sete boret "
-          f"{TOE_SEAT_DEPTH:g} mm ned LANGS skruens egen akse. Minste tre "
-          f"over hodets høyeste punkt: "
-          f"{min(u for _l, u in TOE_SEAT_COVER):.2f} mm (krav "
-          f"{TOE_SEAT_MIN_COVER:g}), største {max(u for _l, u in TOE_SEAT_COVER):.2f}"
-          f" mm - målt på kroppene. Ingen TOE_HEAD_ALLOWANCE lenger: "
-          f"skråskruene er like fullt inneholdt som alle andre")
+    print(f"OK  V4/K4 skråskruesete: alle {len(TOE_SEAT_COVER)} skråskruene "
+          f"(J8-B ×4 à {TOE_JIG_SEATS['J8-B']:g} mm, J10 ×4 à "
+          f"{TOE_JIG_SEATS['J10']:g} mm) står i et flatbunnet ⌀{TOE_SEAT_D:g} "
+          f"sete boret LANGS skruens egen akse. Minste tre over hodets høyeste "
+          f"punkt: {min(u for _l, u, _r in TOE_SEAT_COVER):.2f} mm med hodet "
+          f"på bunnen, {min(r for _l, _u, r in TOE_SEAT_COVER):.2f} mm med "
+          f"konusen på forborkanten (krav {TOE_SEAT_MIN_COVER:g} i begge) - "
+          f"målt på kroppene. K4 er nettopp det andre tallet: 18 mm på J8-B ga "
+          f"1,03 mm der, og en margin som forutsetter at skruen finner bunnen "
+          f"av sin egen lomme er ingen margin")
+
+    # K4: THE WALL BETWEEN TWO SEATS. See TOE_SEAT_MIN_WEB. The row rule that
+    # places these screws spaces SHANKS - 4d centres for a 6 mm screw - and the
+    # pocket each one sits in is three times the shank across, so what is left
+    # between two of them is 4d - TOE_SEAT_D and nobody was measuring it. K2's
+    # counterbore rule does not reach here (it is written on ⌀12 bores in a
+    # wing), so the seat gets its own. Measured on the placed fasteners, per
+    # joint and member, and PERPENDICULAR TO THE COMMON AXIS: two pockets are
+    # parallel cylinders, so the wood between them is the perpendicular part of
+    # the centre-to-centre vector, not its length.
+    _SEATED = {}
+    for _f in FASTENER_SPECS:
+        if _f.get("toe"):
+            _SEATED.setdefault((_f["jid"], _f["through"].label), []).append(_f)
+    TOE_SEAT_WEB_MIN = 1e18
+    TOE_SEAT_WEB_WHO = None
+    for (_jid, _), _group in sorted(_SEATED.items(), key=lambda kv: kv[0][0]):
+        for _i, _a in enumerate(_group):
+            for _b in _group[_i + 1:]:
+                _sep = [q - p for p, q in zip(_a["anchor"], _b["anchor"])]
+                _ax_u = _a["direction"]
+                _along = sum(s * u for s, u in zip(_sep, _ax_u))
+                _perp = math.dist([0.0, 0.0, 0.0],
+                                  [s - _along * u
+                                   for s, u in zip(_sep, _ax_u)])
+                if _perp - TOE_SEAT_D < TOE_SEAT_WEB_MIN:
+                    TOE_SEAT_WEB_MIN, TOE_SEAT_WEB_WHO = (_perp - TOE_SEAT_D,
+                                                          _jid)
+    if TOE_SEAT_WEB_WHO is None:
+        print("OK  K4 setevegg: ingen to skråskruesete deler flate - "
+              "ingenting å måle")
+    else:
+        assert TOE_SEAT_WEB_MIN >= TOE_SEAT_MIN_WEB - FIT_TOL, (
+            f"K4: {TOE_SEAT_WEB_WHO} leaves {TOE_SEAT_WEB_MIN:g} mm of wood "
+            f"between two ⌀{TOE_SEAT_D:g} seats in one face, and the floor is "
+            f"{TOE_SEAT_MIN_WEB:g} mm - one shank diameter, so the Forstner "
+            f"cutting the second pocket has solid wood to cut against all the "
+            f"way round. Move the row apart, take the seat down, or take a "
+            f"screw out - the wall is not a place to save millimetres")
+        print(f"OK  K4 setevegg: de to ⌀{TOE_SEAT_D:g}-lommene i "
+              f"{TOE_SEAT_WEB_WHO} står {TOE_SEAT_WEB_MIN + TOE_SEAT_D:g} mm "
+              f"fra hverandre på tvers av aksen = {TOE_SEAT_WEB_MIN:g} mm tre "
+              f"imellom, krav {TOE_SEAT_MIN_WEB:g} (én skruediameter). "
+              f"Rekkeregelen måler skruen; lomma den ligger i har sin egen")
 else:
     print("(fasteners off - LOFTBED_FASTENERS=0)")
 
@@ -5271,7 +5459,7 @@ print(f"OK  C5/W9/U2: back bench rail {sec(BENCH_RAIL_T, BENCH_RAIL_H)} x "
       f"{BENCH_RAIL_TOP} - butting both back posts over "
       f"{int(end_fixings['Bench Rail Back (continuous)'])} mm2 of their "
       f"{POST_T} mm X-inner faces (was 48 x 73 = 3504 on a 48 mm post) and "
-      f"screwed to them (2 x 6x90 skråskruer per ende, J8-B - no bearing "
+      f"screwed to them (2 x 6x80 skråskruer per ende, J8-B - no bearing "
       f"block since V5), propped by 2 stub legs")
 print(f"OK  C3: bench slats {sec(BENCH_SLAT_T, BENCH_SLAT_W)}, bench top Z="
       f"{BENCH_TOP}, bed-mode panel {PANEL_UNDER_BED}..{PANEL_TOP_BED} "
@@ -7021,7 +7209,7 @@ print(f"Note (W9): the back bench rail and the back table ledger run POST TO "
       f"the back posts moved into their Y band, so they butt them and are "
       f"screwed to their X-inner faces, an end fixing neither had before - and "
       f"since V5 deleted the two bearing blocks that hung under those ends, it "
-      f"is the WHOLE end fixing: 2 x 6x90 skew screws per end, 4.0 kN in shear "
+      f"is the WHOLE end fixing: 2 x 6x80 skew screws per end, 4.0 kN in shear "
       f"against 0.5. The bench slats are re-pitched to start at the post inner face: "
       f"X {BENCH_SLAT_X_START}..{BENCH_LEN}, pitch {BENCH_SLAT_PITCH:g} (124.75 "
       f"in v10, 137.5 before that), gap {BENCH_SLAT_PITCH - BENCH_SLAT_W:g} mm "
@@ -7091,10 +7279,11 @@ print(f"Note (U3): the front face of the bed is the plane Y={FRONT_POST_Y1} - "
       f"is still exactly as deep as its own end beams.")
 print(f"Note (U4): NO M8 GOES INTO A POST ANY MORE. An M8 needs 3d = 24 mm of "
       f"edge distance and a {POST_T} mm post offers 18 on its centre line, so "
-      f"every joint into a corner post switches to the 6x90 pre-drilled screw "
+      f"every joint into a corner post switches to the pre-drilled 6 mm screw "
       f"pattern the ladder uprights already use (J3): 6 mm wants 3d = 18, which "
-      f"is exactly what a {POST_T} mm face gives, and 6x90 through a {RAIL_T} mm "
-      f"rail leaves 42 mm in the post. Stacked along the post grain as the ties "
+      f"is exactly what a {POST_T} mm face gives, and 6x80 through a {RAIL_T} mm "
+      f"rail leaves 32 mm in the post (U4 wrote 6x90; the screw consolidation "
+      f"has since taken every one of them to 6x80). Stacked along the post grain as the ties "
       f"were. Affected: J1 (end beam -> post), J2 (front side rail -> post), "
       f"J8 (bench rail -> post) and the W9 end fixings of the back bench rail "
       f"and the back table ledger. U4 said the load path did not change "

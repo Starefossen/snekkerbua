@@ -241,6 +241,13 @@ def hardware_total(steps):
 # `avoid_top_left`   the top left corner is what the drawing is ABOUT, so no
 #                    panel may be parked there.
 def build_steps(G):
+    # The batten profile and a Norwegian decimal, both wanted in several of
+    # the strings below and neither worth repeating.
+    _SEC = G.sec(G.BATTEN_W, G.BATTEN_H).replace("x", "×")
+
+    def _mm(x):
+        return f"{x:.1f}".rstrip("0").rstrip(".").replace(".", ",")
+
     return [
         dict(
             n=0,
@@ -259,21 +266,40 @@ def build_steps(G):
             do=[
                 "Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring "
                   "— med to navngitte unntak, og begge står i kapplista: de "
-                  "to kilelektene under platens forkant, og vinkelklossen.",
-                f"Skråkapp de to kilelektene. De er 48×73 × {G.NOSE_LEN} mm og skal "
+                  "to kilelektene under platens forkant, og de to "
+                  "vinkelklossene.",
+                f"Skråkapp de to kilelektene. De er {_SEC} × {G.NOSE_LEN} mm "
+                  "og skal "
                   "sages ned i ett rett snitt fra full høyde i den ene enden "
                   f"til {G.NOSE_TIP_H} mm i den andre ("
                   + f"{G.NOSE_TAPER_DEG:.1f}".replace(".", ",")
                   + "°). Håndsag eller båndsag; "
                   "overkanten — den som skal limes mot plata — skal stå "
                   "urørt og plan.",
-                "Kapp vinkelklossen, borjiggen til de to skråskruene "
-                  "(J8-B og J10). Én bit 48×73 av restene, "
-                  f"{G.TOE_JIG_LEN} mm lang, med en rampe i hver ende: "
-                  f"{G.TOE_JIG_ANGLES['J8-B']:g}° i den ene (J8-B) og "
-                  f"{G.TOE_JIG_ANGLES['J10']:g}° i den andre (J10). "
-                  "Kappsag med bladet vippet. Den skal ikke bygges inn i "
-                  "sengen — den er verktøy.",
+                "Lag de to vinkelklossene, borjiggene til skråskruene — én "
+                  "til J8-B og én til J10. Hver kloss er "
+                  f"{G.TOE_JIG_PLIES} biter {_SEC} × {G.TOE_JIG_LEN} mm av "
+                  "restene, skrudd FLATE MOT FLATE. Bor "
+                  f"⌀{G.TOE_SEAT_D:g} VINKELRETT gjennom begge mens klossen "
+                  "ennå er firkantet — det er hullet som styrer boret siden, "
+                  "ikke en rampe. Kapp så sålen av under hullet på kappsag "
+                  f"med bladet vippet {G.TOE_JIG_ANGLES['J8-B']:g}° (J8-B) "
+                  f"hhv. {G.TOE_JIG_ANGLES['J10']:g}° (J10).",
+                "**Vippen og flaten er komplementvinkler.** "
+                  f"{G.TOE_JIG_ANGLES['J8-B']:g}° vipp gir en såle som står "
+                  f"{90 - G.TOE_JIG_ANGLES['J8-B']:g}° på den borede flaten "
+                  f"— og dermed {G.TOE_JIG_ANGLES['J8-B']:g}° på hullaksen, "
+                  "som er det leddet er regnet på. Kontroller med "
+                  "tommestokken før klossen får røre sengen: hullets munning "
+                  "i sålen skal måle "
+                  + _mm(G.TOE_JIG_ELLIPSE['J8-B'][0]) + " × "
+                  + _mm(G.TOE_JIG_ELLIPSE['J8-B'][1])
+                  + f" mm på {G.TOE_JIG_ANGLES['J8-B']:g}°-klossen og "
+                  + _mm(G.TOE_JIG_ELLIPSE['J10'][0]) + " × "
+                  + _mm(G.TOE_JIG_ELLIPSE['J10'][1])
+                  + f" mm på {G.TOE_JIG_ANGLES['J10']:g}°-klossen. Er "
+                  "ellipsen for kort, ble vippen satt på feil vinkel. "
+                  "Klossene bygges ikke inn i sengen — de er verktøy.",
                 "Merk hver del med blyant på en flate som blir skjult.",
                 "**Bryt alle kanter et barn kan nå, nå — mens delene er "
                   "løse.** Kravet er brutt kant, ikke en bestemt metode: "
@@ -294,6 +320,35 @@ def build_steps(G):
                   "flate. Beslaglista sier hvilke ledd det gjelder.",
                 "Forbor alle treskruer etter beslaglista. I bordene og i "
                   "all endeved er forboring et krav, ikke et råd.",
+                "**Bor setene til de åtte skråskruene nå** — mens delene er "
+                  "løse og ligger flatt på benken. Fire i den bakre "
+                  "benkevangens forside (J8-B) og fire i stubbeføttenes "
+                  "innersider (J10). Reist seng kommer du ikke til med "
+                  "hverken kloss eller tvinger. Alt om setene og klossene er "
+                  "tegnet opp på "
+                  "[setedetalj.svg](../schematics/setedetalj.svg).",
+                "Slik bores et sete: klem vinkelklossen mot flaten med TO "
+                  "tvinger, hullet rett over merket, og legg en offerkloss "
+                  "mot endeveden. Drillen i **gir 1 og slag AV** — et "
+                  "forstnerbor i slagmodus brenner og vandrer. Trekk boret "
+                  "helt ut 2–3 ganger per lomme og børst sponet ut; et fullt "
+                  "forstnerbor skjærer ikke, det gnisser. Dybden er merket "
+                  "du satte på boret da du lagde klossen: "
+                  f"{G.TOE_JIG_SEATS['J8-B']:g} mm langs aksen på J8-B, "
+                  f"{G.TOE_JIG_SEATS['J10']:g} mm på J10.",
+                "På den bakre benkevangen står to lommer ved siden av "
+                  "hverandre i hver ende, "
+                  f"{G.TOE_SEAT_D + G.TOE_SEAT_MIN_WEB:g} mm fra senter til "
+                  "senter. **Bor den som ligger nærmest kanten først** — da "
+                  "har klossen hel flate å stå på. Når den andre skal bores, "
+                  "hviler klossen delvis over den ferdige lomma; legg en "
+                  "tynn list under den enden så den ikke vipper.",
+                "Forbor for skruen med det samme, mens delen ligger som den "
+                  "ligger: **lommebunnen er forborets egen jigg.** Bunnen "
+                  "står vinkelrett på skrueaksen, så et brad-point-bor satt "
+                  "i senter av den flate bunnen (⌀6 på J8-B, ⌀3,5 på J10) "
+                  "retter seg selv inn i riktig vinkel. Ikke prøv å sikte "
+                  "den på frihånd.",
                 "Slå filtknotter under alle fire hjørnestolper og alle fire "
                   "stubbeføtter.",
             ],
@@ -333,13 +388,15 @@ def build_steps(G):
                   "under vangen mens du skrur hvis du er alene. Vangen er "
                   "kappet nøyaktig så den fyller mellom de to stolpene — den "
                   "kan ikke tres inn senere.",
-                "J8-B er skråskruer, og de skal ha SETE først: klem "
-                  "vinkelklossen fra steg 0 mot vangens forside med "
-                  f"{G.TOE_JIG_ANGLES['J8-B']:g}°-rampa over merket, bor "
-                  f"⌀{G.TOE_SEAT_D:g} forstner "
-                  f"{G.TOE_SEAT_DEPTH:g} mm ned LANGS rampa, og forbor "
-                  "videre i samme spor. Da ligger skruehodet flatt i "
-                  "bunnen av lommen og helt under treet.",
+                "J8-B er skråskruer, og setene deres er boret i steg 0 — "
+                  f"⌀{G.TOE_SEAT_D:g} flatbunnet lomme "
+                  f"{G.TOE_JIG_SEATS['J8-B']:g} mm ned langs skruens egen "
+                  f"akse, {G.TOE_JIG_ANGLES['J8-B']:g}° på flaten. Her skal "
+                  "du bare skru. Skruen finner lomma selv gjennom forboret; "
+                  "kjenn etter at hodet lander flatt på bunnen og ikke "
+                  "stopper høyt. Stopper det høyt, står konusen på kanten av "
+                  "forboret — skru ut, rens lomma for spon og ta den om "
+                  "igjen.",
                 "Sett vinkelbeslagene til bordbærelekta på stolpenes "
                   "innsider, legg lekta på høykant mellom stolpene og fest "
                   "etter J12.",
@@ -465,12 +522,12 @@ def build_steps(G):
                   "ingen utstikk forbi foten.",
                 "Sett de to bakre stubbeføttene under den bakre benkevangen, "
                   "rett under de samme punktene.",
-                "Fest alle fire føtter etter J10. Den ene 5×70 per fot er "
-                  "en skråskrue og skal ha SETE først — vinkelklossen fra "
-                  f"steg 0, {G.TOE_JIG_ANGLES['J10']:g}°-rampa mot fotens "
-                  f"innerside, ⌀{G.TOE_SEAT_D:g} forstner "
-                  f"{G.TOE_SEAT_DEPTH:g} mm ned langs rampa, så forboret i "
-                  "samme spor.",
+                "Fest alle fire føtter etter J10. Den ene 5×60 per fot er "
+                  "en skråskrue nedenfra og opp i vangen, og setet er boret "
+                  f"i steg 0 — ⌀{G.TOE_SEAT_D:g} flatbunnet lomme "
+                  f"{G.TOE_JIG_SEATS['J10']:g} mm ned langs aksen, "
+                  f"{G.TOE_JIG_ANGLES['J10']:g}° på fotens innerside. Skru "
+                  "beslaget først, skråskruen sist.",
             ],
             check=[
                 "Ingenting skal krysse gulvet mellom de to benkene.",
@@ -1076,18 +1133,30 @@ def emit_innkjopsliste(G, out_dir):
         # places (kappliste, steg 0). That claim is only true if a board of
         # the right profile actually has the rest to give, so it is checked
         # here rather than hoped for.
-        for aid in G.SHOP_AIDS:
-            if aid["section"] != e["section"].replace("×", "x"):
-                continue
+        # K5 made the jig two blocks of two plies each, so this is no longer
+        # "does one offcut hold one piece" but "does one offcut hold the whole
+        # pile, kerf between each" - the pieces are all the same length, so
+        # they come off the same rest in one row.
+        mine = [a for a in G.SHOP_AIDS
+                if a["section"] == e["section"].replace("×", "x")]
+        if mine:
             best = max(bb["rest"] for bb in e["boards"])
-            assert best >= aid["length"], (
-                f"'{aid['name']}' is {aid['length']} mm of "
-                f"{aid['section']} and the longest offcut on that profile is "
-                f"{best} mm - the manual says it comes off the rest pile and "
-                f"it does not")
-            L.append(f"Vinkelklossen ({_fmt(aid['length'])} mm, se "
-                     f"[kapplista](kappliste.md)) kappes av resten over — den "
-                     f"lengste er {_fmt(best)} mm.\n\n")
+            pieces = [(a["name"], a["length"])
+                      for a in mine for _ in range(a["qty"])]
+            need = sum(ln for _n, ln in pieces) + KERF * (len(pieces) - 1)
+            assert best >= need, (
+                f"the shop aids on {e['section']} come to {need} mm with "
+                f"{KERF} mm of kerf between them and the longest offcut on "
+                f"that profile is {best} mm - the manual says they come off "
+                f"the rest pile and they do not")
+            L.append("Hjelpedelene på denne dimensjonen — "
+                     + " + ".join(
+                         f"{a['qty']} × {_fmt(a['length'])} mm "
+                         f"({a['name'].split(' —')[0]})" for a in mine)
+                     + f", til sammen {_fmt(need)} mm med sagsnitt — kappes "
+                     f"av resten over. Den lengste er {_fmt(best)} mm, så det "
+                     f"går av rest og du trenger ikke kjøpe bord til dem. "
+                     f"Se [kapplista](kappliste.md).\n\n")
 
     L.append("## Merknader fra butikken\n\n")
     board = G.sec(G.BOARD36_T, G.BOARD36_W).replace("x", "×")
