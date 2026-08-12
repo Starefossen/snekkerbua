@@ -219,6 +219,17 @@ class View:
         return (v.dot(self.right), v.dot(self.up))
 
 
+# THE THREE VISIBLE-EDGE COMPOUNDS ARE TAKEN TOGETHER, AND FOR THE REFERENCE
+# BODIES THAT WAS MEASURED, NOT ASSUMED. A body is a fusion of spheres and
+# cylinders, so the worry was that the sharp (VCompound) and smooth
+# (Rg1LineVCompound) sets would arrive as the SEAMS - circles of solder where
+# one limb was welded to the next - and that a body would have to be harvested
+# from OutLineVCompound alone to read as a person. It is the other way round:
+# in a true elevation the outline compound holds ONLY the curved silhouettes
+# and drops every straight generatrix, so a child comes out as eleven
+# disconnected arcs. All three together is 64 edges on a seated child, 70 on a
+# lying one, and it draws a person. The seams that survive are the shoulder
+# and the hip, which is where a drawing wants a line anyway.
 def _harvest(hlr_to_shape, wrapped):
     """Visible edges belonging to one of the shapes fed to the HLR run."""
     from OCP.TopExp import TopExp_Explorer
@@ -4053,6 +4064,155 @@ def render_hero(G, out_dir, width, az=330, elev=22):
     return png
 
 
+# ---------------------------------------------------------------------------
+# BRUKSARKENE - the two positions with the people in them
+# ---------------------------------------------------------------------------
+# One page per position, and both of them are a TRUE ELEVATION: azimuth 0,
+# elevation 0, so the page's vertical axis IS the model's Z and a dimension
+# line between two heights is the difference between two numbers in
+# generate_loftbed.py. Nothing on these two pages is typed - every figure is a
+# solid, every clearance is measured off those solids in the model's own
+# validation block, and the text below the arrow prints that measurement.
+#
+# THE BED IS GREY AND THE PEOPLE ARE BLACK, and they are two separate hidden-
+# line runs on purpose, laid one over the other. A reference body is not part
+# of the subject: it must never occlude a board (it would be drawing a child
+# in front of a guard rail that is in front of the child), and it must never
+# be occluded either, or the one thing the page is about disappears behind the
+# ladder. Same layering the mechanism sheets use for the panel unit.
+BRUK_SHEETS = {
+    "bed_mode": ("bruk-sengestilling", "SENGESTILLING — TO SOM SOVER"),
+    "table_mode": ("bruk-bordstilling", "BORDSTILLING — TO SOM SITTER"),
+}
+
+
+def _bruk_dims(G, mode):
+    """[(kind, along, from, to, text, where)] - the dimension lines.
+
+    'v' is a vertical dimension standing at model X = `along`, 'h' a
+    horizontal one at model Z = `along`. `where` puts the label clear of the
+    line work - "top", "bot" or "side" - and it is chosen per dimension
+    because the page is a drawing, not a table. Every number in a label comes
+    out of the model's measured-clearance block; not one is typed here.
+    """
+    if mode == "bed_mode":
+        up, lo = G.figure_lying_upper, G.figure_lying_lower
+        return [
+            ("v", up.pose["head"][0], up.pose["head"][2] + G.FIG_HEAD_R,
+             G.GUARD_TOP, f"{G.GUARD_OVER_FACE:.0f} rekkverk over ansiktet",
+             "top"),
+            ("v", up.extents[0][1] - 60, up.extents[2][1], G.GUARD_TOP,
+             f"{G.GUARD_OVER_BODY:.0f} over kroppen", "top"),
+            ("h", G.GUARD_TOP + 55, up.extents[0][1], G.WALL_SPAN,
+             f"{G.WALL_SPAN - up.extents[0][1]:.0f} madrass igjen bak føttene",
+             "top"),
+            ("v", lo.pose["head"][0], lo.pose["head"][2] + G.FIG_HEAD_R,
+             G.SLAT_Z1 - G.BED_SLAT_T,
+             f"{G.LIE_LOWER_FACE:.0f} fri høyde over ansiktet nede", "side"),
+        ]
+    right = G.figure_seated_right
+    return [
+        ("v", right.pose["crown"][0], right.pose["crown"][2],
+         G.SLAT_Z1 - G.BED_SLAT_T,
+         f"{G.SIT_HEADROOM:.0f} over hodet — man sitter helt rett opp",
+         "side"),
+        ("v", right.pose["crown"][0] - 250, G.SEAT_FACE,
+         right.pose["crown"][2],
+         f"{G.FIG_SITTING_H:.0f} sittehøyde (0,545 H)", "top"),
+        ("v", G.PANEL_X0 + G.PANEL_W / 2, G.SEAT_FACE, G.PANEL_TOP_TABLE,
+         f"{G.TABLE_OVER_SEAT:.0f} plate over sete", "top"),
+        # The knee gap is a short dimension in a narrow gap, so it carries the
+        # number alone - what it means is one line down in the caption.
+        ("h", G.FIG_SIT_Z + 20, G.panel_table.extents[0][1],
+         right.extents[0][0], f"{G.LEG_TO_TABLE:.0f}", "top"),
+    ]
+
+
+BRUK_NOTE = {
+    "bed_mode":
+        "Kroppene er tegnet i et eget lag OVER sengen, ikke bak den: en "
+        "referansekropp skal verken skjule et bord eller skjules av et.",
+    "table_mode":
+        "Skredderstilling, og det er et måleresultat: platen ligger {over:.0f} "
+        "mm over seteflaten og har {under:.0f} mm under seg — ett lår er "
+        "{thigh:.0f} mm, så ingen knær går under denne platen. Målet mellom "
+        "kneet og platekanten er {leg:.0f} mm.",
+}
+
+
+def render_bruk(G, out_dir, width):
+    """The two use sheets: bed mode with two sleepers, table mode with two
+    sitting at the plate. Returns the PNG paths."""
+    use_model(G)
+    made = []
+    for mode, (stem, head) in BRUK_SHEETS.items():
+        panel = G.MODES[mode]
+        bed = comp([p for p in G.mode_parts(panel)])
+        people = comp(G.FIGURES[id(panel)])
+        look_at = bed.bounding_box().center()
+        view = View(camera_direction(0, 0), look_at)
+        bed_lines = project(view, [("b", bed)])["b"]
+        fig_lines = project(view, [("f", people)])["f"]
+
+        x0, y0, x1, y1 = bounds(bed_lines + fig_lines)
+        pad, lead = T.PAD * 1.6, T.BADGE_R * 4.2
+        page = Page(x0 - pad - lead, y0 - pad - lead * 0.8,
+                    x1 + pad + lead, y1 + pad + lead * 1.6)
+        page.polylines(bed_lines, GREY, T.W_NEW * 0.5)
+        page.polylines(fig_lines, INK, T.W_NEW * 0.5)
+
+        tick, size = T.BADGE_R * 0.55, T.BADGE_R * 0.78
+        for kind, along, a, b, label, where in _bruk_dims(G, mode):
+            if kind == "v":
+                p0, p1 = view.xy((along, 0, a)), view.xy((along, 0, b))
+            else:
+                p0, p1 = view.xy((a, 0, along)), view.xy((b, 0, along))
+            mid = ((p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2)
+            for end in (p0, p1):
+                page.line((end[0] - tick, end[1]) if kind == "v"
+                          else (end[0], end[1] - tick),
+                          (end[0] + tick, end[1]) if kind == "v"
+                          else (end[0], end[1] + tick), GREY, T.W_LEAD)
+                page.arrow(mid, end, INK, T.W_LEAD, T.BADGE_R * 0.5)
+            # A number written across a child is a number nobody reads, so
+            # every label says for itself which way it steps out of the way.
+            hi = p0 if p0[1] >= p1[1] else p1
+            lo = p0 if p0[1] < p1[1] else p1
+            if where == "top":
+                page.text((hi[0], hi[1] + size * 0.6), label, size,
+                          anchor="middle")
+            elif where == "bot":
+                page.text((lo[0], lo[1] - size * 1.35), label, size,
+                          anchor="middle")
+            else:
+                page.text((mid[0] + tick * 1.4, mid[1] - size * 0.32), label,
+                          size)
+
+        top = page.y1 - T.BADGE_R * 1.4
+        page.text((page.x0 + T.BADGE_R, top), head, T.BADGE_R * 1.5,
+                  weight="bold")
+        page.text((page.x0 + T.BADGE_R, top - T.BADGE_R * 1.7),
+                  f"Referansekroppen er et barn på {G.FIGURE_H:.0f} mm "
+                  f"(EN 747, alder 6+), bygget som én solid av 14 primitiver "
+                  f"etter AnthroKids (Snyder m.fl. 1977). Grått = sengen, "
+                  f"svart = kroppen. Kroppen er ikke en del: den kappes ikke, "
+                  f"bærer ingenting og står i ingen liste — men hvert mål på "
+                  f"arket er målt på den.", T.BADGE_R * 0.72)
+        page.text((page.x0 + T.BADGE_R, top - T.BADGE_R * 2.65),
+                  BRUK_NOTE[mode].format(
+                      over=G.TABLE_OVER_SEAT, under=G.TABLE_UNDER_SEAT,
+                      thigh=2 * G.FIG_THIGH_R, leg=G.LEG_TO_TABLE),
+                  T.BADGE_R * 0.72)
+        svg = os.path.join(out_dir, f"{stem}.svg")
+        png = os.path.join(out_dir, f"{stem}.png")
+        page.write(svg, width)
+        to_png(svg, png, width)
+        print(f"  bruk    {mode:11s} {len(bed_lines):4d} kanter seng + "
+              f"{len(fig_lines)} silhuett  -> {png}")
+        made += [png]
+    return made
+
+
 def main(argv):
     width = 1600
     out_dir = os.path.join(ROOT, "docs", "img")
@@ -4087,6 +4247,7 @@ def main(argv):
         made += render_all(G, data, out_dir, width, only)
     if not steps_only and only is None:
         made.append(render_hero(G, out_dir, width))
+        made += render_bruk(G, out_dir, width)
     if proof:
         preview = os.path.join(ROOT, "docs", "preview")
         # The sheets are rastered at the LARGEST page scale so their own type

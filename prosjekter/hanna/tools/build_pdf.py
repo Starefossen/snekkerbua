@@ -78,6 +78,8 @@ ANCHORS = {
     "bench-detail": "sch-bench-detail",
     "panel-detail": "sch-panel-detail",
     "setedetalj": "sch-setedetalj",
+    "bruk-sengestilling": "sch-bruk-sengestilling",
+    "bruk-bordstilling": "sch-bruk-bordstilling",
     "schematics/": "tegninger",
 }
 
@@ -373,6 +375,16 @@ SCHEMATICS = [
     ("setedetalj", "Skråskruesetene"),
 ]
 
+# BRUKSARKENE står sist blant tegningene og kommer fra docs/img, ikke fra
+# docs/schematics: de er strektegninger fra samme skjulte-linje-maskineri som
+# stegsidene, ikke skjemategninger. De to er de eneste sidene i boka der noen
+# BRUKER sengen - to som sover, to som sitter - og hvert mål på dem er målt på
+# referansekroppene i modellen.
+USE_SHEETS = [
+    ("bruk-sengestilling", "Sengestillingen, i bruk"),
+    ("bruk-bordstilling", "Bordstillingen, i bruk"),
+]
+
 
 def build_reference(marks: PageMarks) -> tuple[list[str], list[tuple[str, str]]]:
     pages: list[str] = []
@@ -421,6 +433,15 @@ def build_reference(marks: PageMarks) -> tuple[list[str], list[tuple[str, str]]]
   <h1>{html.escape(label)}</h1>
   <figure><img src="{path.as_uri()}" alt="{html.escape(label)}"></figure>
   <p class="cap">docs/schematics/{stem}.svg</p>
+</section>""")
+
+    for stem, label in USE_SHEETS:
+        path = (DOCS / "img" / f"{stem}.svg").resolve()
+        orient = "land" if svg_aspect(path) > 1.1 else "port"
+        pages.append(f"""<section class="page schematic {orient}" id="sch-{stem}">
+  <h1>{html.escape(label)}</h1>
+  <figure><img src="{path.as_uri()}" alt="{html.escape(label)}"></figure>
+  <p class="cap">docs/img/{stem}.svg</p>
 </section>""")
 
     pages.append(colophon())
