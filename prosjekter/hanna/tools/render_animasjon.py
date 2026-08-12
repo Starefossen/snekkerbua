@@ -843,11 +843,11 @@ STEP_ENTRY = {
     4:  (1, "+", "sidevangen legges på forfra"),
     5:  (1, "+", "benkevanger og føtter forfra"),
     6:  (1, "+", "stigen settes på forfra"),
-    7:  (2, "+", "benkespilene legges ned på vangene"),
+    7:  (2, "+", "benkespilene og endespilene legges ned"),
     8:  (2, "+", "køyespilene legges ned på vangene"),
     9:  (1, "+", "rekkverksbordene forfra"),
     10: (2, "+", "platen går rett ned i setet"),
-    11: (2, "+", "madrassen legges på"),
+    11: (2, "+", "madrassen og de fire putene legges på"),
 }
 ENTRY_OFFSET = 300.0        # mm, the brief's 250-350 band
 BYGG_FLY = 10               # frames of travel
@@ -864,7 +864,7 @@ def step_solids(G, steps):
     """{n: ([wood], [fasteners])} off byggesteg.json, on the model's solids."""
     universe = {p.label: p for p in
                 list(G.parts) + [G.panel_bed] + list(G.battens_bed)
-                + [G.mattress]}
+                + [G.mattress] + list(G.CUSHIONS_BED)}
     out = {}
     for st in steps:
         wood = [universe[l] for l in st["labels"]]

@@ -382,10 +382,14 @@
     },
     {
       "n": 7,
-      "title": "Benkespiler",
+      "title": "Benkespiler, endelister og endespiler",
       "image": true,
       "page": "step",
       "labels": [
+        "Bench End Cleat Left",
+        "Bench End Cleat Right",
+        "Bench End Slat Left",
+        "Bench End Slat Right",
         "Bench Slat Left_1",
         "Bench Slat Left_2",
         "Bench Slat Left_3",
@@ -398,6 +402,10 @@
         "Bench Slat Right_5"
       ],
       "highlight": [
+        "Bench End Cleat Left",
+        "Bench End Cleat Right",
+        "Bench End Slat Left",
+        "Bench End Slat Right",
         "Bench Slat Left_1",
         "Bench Slat Left_2",
         "Bench Slat Left_3",
@@ -414,24 +422,33 @@
         30,
         3.4
       ],
-      "intro": "Fem spiler per benk, lagt oppå benkevangene.",
+      "intro": "Fem spiler per benk, lagt oppå benkevangene — og helt ute ved hver vegg en 764 mm ENDESPILE på en endelist. De to endespilene er det som gjør underetasjen til en seng i full lengde: uten dem stopper spilefeltet 98 mm fra veggen i hver ende, og putekanten har ingenting under seg.",
       "do": [
         "Legg ut alle fem spilene på én benk før du skrur, og sjekk delingen mot kapplista.",
         "Skru hver spile ned i den bakre og den fremre benkevangen, én skrue per ende (J11). Forsenk hodene — dette er en sitteflate.",
-        "Gjenta speilvendt på den andre benken."
+        "Gjenta speilvendt på den andre benken.",
+        "ENDELISTEN: skru den flatt på FORSIDEN av den bakre hjørnestolpen, med overkanten i flukt med benkevangens overkant (259 mm over gulvet). To 5×60 ved siden av hverandre (J17) — 36 mm gjennom listen og 24 mm inn i stolpen, så det står 12 mm igjen til veggflaten bak. Ikke bruk lengre skrue.",
+        "ENDESPILEN er kortere enn de andre, 764 mm: den starter på stolpens forside, ikke på veggen — stolpen står i soveflaten her. Legg den mot veggen, tett inntil naboen, og skru én skrue ned i endelisten (J16) og én ned i den fremre benkevangen (J11-E)."
       ],
       "check": [
         "Kjenn over hele benken med håndflaten: ingen skruehoder skal stikke opp.",
-        "Sett deg på begge benker."
+        "Sett deg på begge benker.",
+        "Endespilen skal ligge i nøyaktig samme plan som de andre — legg en rett list på tvers over hele benken og se etter lys under.",
+        "Ingen skruespiss skal være synlig eller følbar på baksiden av den bakre stolpen. Det er veggflaten."
       ],
       "fasteners": [
-        "20× Treskrue 5×60 forsenket Torx"
+        "28× Treskrue 5×60 forsenket Torx"
       ],
       "joints": {
-        "J11": 20
+        "J11": 20,
+        "J11-E": 2,
+        "J16": 2,
+        "J17": 2
       },
       "parts": [
-        "10× Benkespile 23×98 × 800"
+        "10× Benkespile 23×98 × 800",
+        "2× Endelist 36×48 × 98",
+        "2× Endespile 23×98 × 764"
       ],
       "fill_code": false,
       "half_view": false,
@@ -623,14 +640,22 @@
     },
     {
       "n": 11,
-      "title": "Madrass og sluttsjekk",
+      "title": "Madrass og puter",
       "image": true,
       "page": "step",
       "labels": [
-        "Mattress 200x80 (reference)"
+        "Back Cushion Left (bed mode)",
+        "Back Cushion Right (bed mode)",
+        "Mattress 200x80 (reference)",
+        "Seat Cushion Left",
+        "Seat Cushion Right"
       ],
       "highlight": [
-        "Mattress 200x80 (reference)"
+        "Back Cushion Left (bed mode)",
+        "Back Cushion Right (bed mode)",
+        "Mattress 200x80 (reference)",
+        "Seat Cushion Left",
+        "Seat Cushion Right"
       ],
       "camera": [
         330,
@@ -640,7 +665,9 @@
       "intro": "Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er TYKKELSEN, og der er det bare ett riktig svar: 150 mm. Vinduet er 140–155 mm, og en helt vanlig 160 mm madrass er ULOVLIG i denne sengen — den legger spalten opp til rekkverket midt i klemvinduet.",
       "do": [
         "Legg madrassen på plass. En 80 × 200 presses de siste millimeterne inn mellom veggene, og den skal fylle hele dybden fra veggen til de fremre stolpene.",
-        "Legg de tre putene i underetasjen på plass.",
+        "UNDERETASJEN: fire puter, alle 100 mm tykke og 800 mm dype. To benkeputer på 663 mm og to ryggputer på 332 mm — lagt etter hverandre dekker de nedre soveflate nøyaktig, 663 + 332 + 332 + 663 = 1990 mm.",
+        "Skjær et 98 × 36 mm hakk i veggkanten på hver av de to benkeputene, der den bakre hjørnestolpen står. Brødkniv.",
+        "SOFASTILLING: benkeputene ligger der de ligger — de flyttes aldri. Ryggputene reises på høykant ytterst på hver benk, med ryggen mot bordbærelekta.",
         "MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er ikke en tusjstrek som skal kunne tørkes bort: skriv «MAKS MADRASS 155 MM» på innsiden av en fremre stolpe, i høyden 1341 mm over gulvet. Den som bytter madrass om ti år skal kunne lese grensen av sengen selv.",
         "Skriv nedre grense, 140 mm, ved siden av. For tynn madrass åpner spalten under nederste rekkverksbord; for tykk lukker den seg ned i klemvinduet."
       ],
@@ -654,7 +681,9 @@
       "fasteners": [],
       "joints": {},
       "parts": [
-        "1× Madrass 80 × 200 cm, **150 mm tykk** (vindu 140–155 mm)"
+        "2× Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten)",
+        "1× Madrass 80 × 200 cm, **150 mm tykk** (vindu 140–155 mm)",
+        "2× Ryggpute, skum **100 mm** (332 × 800 mm)"
       ],
       "fill_code": false,
       "half_view": false,

@@ -2302,6 +2302,207 @@ LEDGER_BACK_Z0 = LEDGER_BACK_Z1 - LEDGER_BACK_H     # 409  [was 387]
 LEDGER_BACK_Y0 = BACK_RAIL_Y0                  # -48 .. 0, on the wall plane
 
 # ---------------------------------------------------------------------------
+# V13: THE LOWER LEVEL BECOMES A BED IN FULL LENGTH - SLATS TO THE WALL,
+#      AND THE FOUR CUSHIONS THAT COVER IT
+# ---------------------------------------------------------------------------
+# This is the idea the whole lower level was drawn around, and until this round
+# it was the one part of it that lived in prose: the sofa cushions ARE the lower
+# bunk's mattress. The documentation said "three cushions, 645 + 700 + 645", and
+# the model had never been asked whether that was true. It was not, twice over:
+#
+#   1  THE BENCH SLAT FIELD STOPPED 98 mm SHORT AT EACH END. W9 started it at
+#      the back post's inner face (X 98 / 1892) because a bench slat runs
+#      Y -48..752 and would otherwise cut straight through the relocated post.
+#      So 645 + 700 + 645 = 1990 put 98 mm of cushion over open air at each
+#      end - a hole a cushion corner drops into, and 98 mm is over EN 747's
+#      75 mm opening limit into the bargain.
+#   2  WHICH LEFT THE LOWER BED 1794 LONG against the upper bed's 1990.
+#
+# Both are closed here, and the second is the reason for the first: ONE EXTRA
+# SLAT AT EACH END, exactly the width of the post it hides behind, on a cleat
+# screwed to that post's front face. After it the lower level is a bed in the
+# same length as the upper one -
+#
+#   THE LOWER SLEEPING SURFACE = X 0..1990, Y -48..752, less the two back
+#   corner posts, which stand 98 x 36 in the wall corner at either end
+#
+# - and every cushion number below is arithmetic on those figures.
+
+# --- the end slat -----------------------------------------------------------
+# It cannot be a full 800 mm slat: the back corner post occupies Y -48..-12 for
+# its whole height right there, so the end slat starts at the post's FRONT face
+# and runs Y -12..752. That is 764 mm, and it is the one bench slat with a
+# length of its own. Its width is not chosen either - the end zone is X 0..98,
+# the post's own width, and the 23x98 board is 98 wide, so the piece fills the
+# zone edge to edge and butts the first bench slat with a zero gap. Zero is
+# inside EN 747's <= 5 mm band; it is the tightest end this field can have.
+END_SLAT_X = [0, WALL_SPAN - BENCH_SLAT_W]         # 0..98 and 1892..1990
+END_SLAT_Y0 = BACK_POST_Y1                         # -12, the post's front face
+END_SLAT_Y1 = BENCH_SLAT_Y1                        # 752
+END_SLAT_LEN = END_SLAT_Y1 - END_SLAT_Y0           # 764
+END_SLAT_GAP = END_SLAT_X[0] + BENCH_SLAT_W - BENCH_SLAT_X_START   # 0
+
+# --- the cleat that carries its back end ------------------------------------
+# There is nothing under the end slat's back end and nowhere to put a rail: the
+# back bench rail lies at Y -48..0 and BUTTS the post's inner face at X 98
+# (W9/U2), and the 12 mm of Y that is left in front of the post between there
+# and the rail plane is not a bearing. What the end zone does have is the back
+# post's FRONT FACE - 98 x 1065 of clean side grain, untouched by any other
+# joint - so the bearing is a cleat screwed flat to it.
+#
+# 36x48, on the flat: 36 mm of Y (the bearing depth the slat end lands on) and
+# 48 mm of Z, top at the bench rail top so the end slat lies in the same plane
+# as every other one. The section is the ladder-upright/rung-block stock and it
+# comes out of that board's rest - 2 x 98 mm off a 1076 mm offcut, so the cleat
+# costs no timber at all. The 36 mm depth is what sets the screw: 5x60 through
+# 36 mm of cleat leaves 24 mm in a 36 mm post, so nothing comes near the post's
+# back face, which is the wall mounting plane. A 6x80 would go through it.
+END_CLEAT_T = BLOCK_T                              # 36 (Y), the bearing depth
+END_CLEAT_H = BLOCK_H                              # 48 (Z)
+END_CLEAT_LEN = BENCH_SLAT_W                       # 98 (X), the end zone
+END_CLEAT_Z1 = BENCH_RAIL_TOP                      # 259, the slat underside
+END_CLEAT_Z0 = END_CLEAT_Z1 - END_CLEAT_H          # 211
+END_CLEAT_Y0 = BACK_POST_Y1                        # -12, on the post face
+END_CLEAT_Y1 = END_CLEAT_Y0 + END_CLEAT_T          # 24
+END_CLEAT_X = END_SLAT_X                           # under its own slat
+# The end slat's span, back bearing centre to front bearing centre, against the
+# 752 mm the other bench slats run (vedlegg A.1): SHORTER, so the slat criterion
+# that governs the field governs this piece with room to spare.
+END_SLAT_SPAN = ((BENCH_RAIL_Y[1] + BENCH_RAIL_T / 2)
+                 - (END_CLEAT_Y0 + END_CLEAT_T / 2))          # 722
+END_CLEAT_BEARING = END_CLEAT_LEN * END_CLEAT_T               # 3528 mm2
+
+# --- the sleeping surface it completes --------------------------------------
+LOWER_SLEEP_X0 = 0
+LOWER_SLEEP_X1 = WALL_SPAN                             # 1990, wall to wall
+LOWER_SLEEP_LEN = LOWER_SLEEP_X1 - LOWER_SLEEP_X0      # 1990
+LOWER_SLEEP_Y0 = BENCH_SLAT_Y0                         # -48, the wall plane
+LOWER_SLEEP_Y1 = BENCH_SLAT_Y1                         # 752, the front vertical
+LOWER_SLEEP_DEPTH = LOWER_SLEEP_Y1 - LOWER_SLEEP_Y0    # 800 == BENCH_SLAT_LEN
+# The surface as rectangles, which is what it actually is: full depth over the
+# 1794 mm between the posts, and 764 mm deep over the 98 mm end zones, where the
+# back corner post takes the wall corner. This list IS the coverage assert's
+# right-hand side.
+LOWER_SLEEP_RECTS = [
+    (END_SLAT_X[0], END_SLAT_X[0] + BENCH_SLAT_W, END_SLAT_Y0, LOWER_SLEEP_Y1),
+    (BENCH_SLAT_X_START, WALL_SPAN - BENCH_SLAT_X_START,
+     LOWER_SLEEP_Y0, LOWER_SLEEP_Y1),
+    (END_SLAT_X[1], END_SLAT_X[1] + BENCH_SLAT_W, END_SLAT_Y0, LOWER_SLEEP_Y1),
+]
+LOWER_SLEEP_AREA = sum((x1 - x0) * (y1 - y0) for x0, x1, y0, y1
+                       in LOWER_SLEEP_RECTS)              # 1 584 944 mm2
+
+# --- the split: a third and a sixth -----------------------------------------
+# Two seat cushions at a third each and two back cushions at a sixth each is
+# 2/3 + 2/6 = ONE WHOLE SLEEPING SURFACE. The four pieces are a TILING of the
+# lower bed, not four pieces that happen to lie near each other, and that is
+# asserted below rather than claimed here.
+#
+# 1990 is not divisible by six, so the split is taken to whole millimetres and
+# the rounding is given to the back cushions: 663 = floor(L/3) is 0.33 mm under
+# a third, 332 is 0.33 mm over a sixth, and 2 x 663 + 2 x 332 = 1990 EXACTLY.
+# Nobody cuts a third of a millimetre of foam; the sum is what has to be exact.
+SEAT_CUSHION_LEN = LOWER_SLEEP_LEN // 3                   # 663
+BACK_CUSHION_LEN = (LOWER_SLEEP_LEN - 2 * SEAT_CUSHION_LEN) // 2   # 332
+
+# --- the thickness, one number for all four ---------------------------------
+# It has to be one number: four cushions butted together are one bed, and a bed
+# with a step in it is not a bed. That also RETIRES the old rule that the middle
+# cushion should be 5 mm thicker to swallow PANEL_BENCH_DIP. It cannot be, and
+# it no longer needs to be: no joint between two cushions falls on a zone
+# boundary any more. The dip stays a dip - 5 mm, which is what V6 cut it to
+# precisely so that foam could take it up.
+#
+# 100 mm, and every reason is measured, printed by the validation block and in
+# the key dimensions:
+#   * AN 80 x 200 FOAM MATTRESS IS 800 x 2000 - the same article as the one
+#     upstairs. 800 is exactly this surface's depth and 2000 is 10 mm over its
+#     length, so all four cushions are ONE standard mattress cut in four, with
+#     one crosscut of waste. 120 mm foam is sold the same way and would work;
+#     100 is the thickness the cheap sheet actually comes in.
+#   * seat height goes 282 -> 382, a child's chair.
+#   * the table plate top stays 118 mm above the seat cushion and its underside
+#     100 mm - at 120 mm foam those become 98 and 80.
+#   * head room under the upper bunk's slats stays 781 mm.
+CUSHION_T = 100
+CUSHION_TOP_BENCH = BENCH_TOP + CUSHION_T              # 382, over the benches
+CUSHION_TOP_PANEL = PANEL_TOP_BED + CUSHION_T          # 377, over the panel
+MIN_LOWER_HEADROOM = 700           # own rule: a child sits up in the lower bunk
+LOWER_HEADROOM = SLAT_Z0 - CUSHION_TOP_BENCH           # 781, to the slats
+LOWER_HEADROOM_RAIL = RAIL_BOTTOM - CUSHION_TOP_BENCH  # 683, under the rails
+EN_GUARD_TRIGGER_H = 600           # EN 747: over this, a bed base needs guards
+TABLE_OVER_CUSHION = PANEL_TOP_TABLE - CUSHION_TOP_BENCH           # 118
+TABLE_UNDER_OVER_CUSHION = PANEL_UNDER_TABLE - CUSHION_TOP_BENCH   # 100
+# The foam sheet the four of them come out of, and what is left of it.
+CUSHION_SHEET = (800, 2000)                            # a 80 x 200 foam slab
+CUSHION_SHEET_WASTE = CUSHION_SHEET[1] - LOWER_SLEEP_LEN           # 10
+
+# --- where they lie in bed mode: the tiling ---------------------------------
+#   seat 0..663 | back 663..995 | back 995..1327 | seat 1327..1990
+# The two back cushions meet on X 995, which is the ladder's centre line - not
+# arranged, just what a third and a sixth of this wall come to.
+SEAT_CUSHION_X = [LOWER_SLEEP_X0,                              # 0
+                  LOWER_SLEEP_X1 - SEAT_CUSHION_LEN]           # 1327
+BACK_CUSHION_BED_X = [LOWER_SLEEP_X0 + SEAT_CUSHION_LEN,       # 663
+                      LOWER_SLEEP_X0 + SEAT_CUSHION_LEN
+                      + BACK_CUSHION_LEN]                      # 995
+# THE NOTCH. A seat cushion is a rectangle 663 x 800 with one 98 x 36 corner
+# cut out of it - the back corner post, which is the only thing standing in the
+# lower sleeping surface. It is a bread-knife cut in foam and it is drawn,
+# because a cushion drawn as a plain box would be drawn through a post.
+CUSHION_NOTCH = (POST_W, POST_T)                       # 98 x 36, the post
+
+# --- the seat cushions do not move ------------------------------------------
+# Their bed-mode X is their sofa-mode X. A seat cushion is 663 long and the
+# bench under it is 645, so it is pushed against the wall at the outer end and
+# the last 18 mm hang over the ladder bay - in BOTH positions, because there is
+# nowhere else for them to be. Changing the bed over is therefore TWO cushions
+# and not four: stand the two back cushions up at the ends for a sofa, lay them
+# flat in the middle for a bed.
+SEAT_CUSHION_OVERHANG = SEAT_CUSHION_X[0] + SEAT_CUSHION_LEN - BENCH_LEN   # 18
+# and what that overhang leaves of the panel's transfer shaft (X 708..1282):
+SEAT_CUSHION_SHAFT_GAP = PANEL_X0 - (SEAT_CUSHION_X[0] + SEAT_CUSHION_LEN)  # 45
+# the ladder bay, measured at cushion height rather than at the floor:
+BAY_AT_CUSHION_H = PANEL_OPENING - 2 * SEAT_CUSHION_OVERHANG               # 664
+
+# --- where the back cushions stand in sofa mode -----------------------------
+# and why NOT against the back wall, which is where anyone would put them who
+# had not asked the model.
+#
+# A back cushion is 332 x 800 x 100, and the 800 is not negotiable: it is the
+# DEPTH of the sleeping surface, and it is the reason the four pieces cover the
+# bed at all. Stand one up against the back wall and that 800 has to go
+# somewhere, and there are only two directions:
+#   * ALONG X - and a bench offers 645 mm of back wall before the ladder bay
+#     starts, with the TABLE PLATE standing at Z 482..500 from X 708 on. It
+#     does not fit, on either bench, by 155 mm.
+#   * STRAIGHT UP - 382 + 800 = 1182, and the upper side rail's underside is
+#     1065. It does not fit by 117 mm.
+# So the one place an 800 mm dimension stands up in this bed is ACROSS THE
+# BENCH, at its end - which is also the answer to what this sofa is: two seats
+# either side of a low table, each with its back at the outer end. The bench is
+# 800 deep and the backrest is 800 wide; you sit sideways, facing the table,
+# two abreast if you like.
+#
+# TWO THINGS HOLD IT. Its Y0 is the BACK TABLE LEDGER's front face: the ledger
+# runs the whole length at Y -48..0, Z 414..482, so a cushion standing in the
+# wall plane would drive straight through it - and standing 48 mm forward of the
+# wall instead, it LEANS ON IT, 100 x 68 mm of contact right at the small of the
+# back. The corner post's inner face takes the sideways direction. The price is
+# 12 mm: the front face lands at Y 800 against a bed that is 836 deep to Y 788,
+# so a loose cushion stands 12 mm proud of the bed's front plane in sofa mode.
+# That is a soft part in one position and not the bed's depth - and it is
+# asserted here rather than discovered by somebody with a tape measure.
+BACKREST_Y0 = LEDGER_BACK_Y0 + LEDGER_BACK_T           # 0, the ledger's face
+BACKREST_Y1 = BACKREST_Y0 + LOWER_SLEEP_DEPTH          # 800
+BACKREST_PROUD = BACKREST_Y1 - FRONT_POST_Y1           # 12, past the front plane
+BACKREST_Z0 = CUSHION_TOP_BENCH                        # 382, on the seat cushion
+BACKREST_Z1 = BACKREST_Z0 + BACK_CUSHION_LEN           # 714
+BACKREST_X = [POST_W,                                  # 98..198
+              WALL_SPAN - POST_W - CUSHION_T]          # 1792..1892
+BACKREST_LEDGER_CONTACT = CUSHION_T * LEDGER_BACK_H    # 6800 mm2 on the ledger
+
+# ---------------------------------------------------------------------------
 # HELPERS
 # ---------------------------------------------------------------------------
 CUT_LIST = {}
@@ -2594,6 +2795,27 @@ for i in range(len(BENCH_X)):
                            ("Bench slat (C3)", sec(BENCH_SLAT_T, BENCH_SLAT_W),
                             BENCH_SLAT_LEN)))
 
+# V13: THE END SLAT AND ITS CLEAT - one of each per end. See the V13 block for
+# every number and for what they are for: they carry the lower sleeping surface
+# the last 98 mm out to the wall, which is what makes it a bed in full length.
+# The cleat goes in FIRST (the slat lands on it), and it is the only part in
+# this bed screwed to the back post's front face.
+end_cleats = []
+end_slats = []
+for i in range(len(END_SLAT_X)):
+    side = "Left" if i == 0 else "Right"
+    end_cleats.append(block(END_CLEAT_X[i], END_CLEAT_Y0, END_CLEAT_Z0,
+                            END_CLEAT_LEN, END_CLEAT_T, END_CLEAT_H,
+                            f"Bench End Cleat {side}", "boards",
+                            ("Bench end cleat (V13)",
+                             sec(END_CLEAT_T, END_CLEAT_H), END_CLEAT_LEN)))
+    end_slats.append(block(END_SLAT_X[i], END_SLAT_Y0, BENCH_RAIL_TOP,
+                           BENCH_SLAT_W, END_SLAT_LEN, BENCH_SLAT_T,
+                           f"Bench End Slat {side}", "boards",
+                           ("Bench end slat (V13)",
+                            sec(BENCH_SLAT_T, BENCH_SLAT_W), END_SLAT_LEN)))
+parts += end_cleats + end_slats
+
 # D3: only the BACK table ledger survives. The front one used to cross the
 # whole front of both sofa benches at shin height, right where you sit down,
 # and it is replaced by resting the panel's front edge on a ladder rung (D10).
@@ -2622,6 +2844,85 @@ panel_bed = block(PANEL_X0, PANEL_Y0, PANEL_UNDER_BED,
 panel_table = block(PANEL_X0, PANEL_Y0, PANEL_UNDER_TABLE,
                     PANEL_W, PANEL_LEN, PANEL_T,
                     "Movable Panel (table mode)", "panel")
+
+# ---------------------------------------------------------------------------
+# THE FOUR CUSHIONS  (V13 - see the constants block for every number)
+# ---------------------------------------------------------------------------
+# Soft parts, drawn in the mattress group and treated exactly the way the
+# reference mattress is: bought and not cut, out of the cut list, out of every
+# wood-only check, and out of the finished-bed drawings. They ARE in parts.tsv,
+# in the mattress step of the manual and in both modes of the model, because
+# where they go in each position is the one thing about them worth drawing.
+#
+# The two seat cushions are ONE part each: their position is identical in bed
+# mode and in sofa mode, so there is no "(bed mode)" / "(table mode)" pair to
+# tell apart. Only the two back cushions move, and they are built twice.
+#
+# THE SECOND SOLID IN THIS FILE THAT IS NOT A BOX. A seat cushion has a 98 x 36
+# notch in its wall-side corner, where the back corner post stands. The wedge's
+# rule (see "THE ONE PART THAT IS NOT A BOX") applies here too and this time it
+# is NOT enough on its own - the bounding box a clearance assert would read goes
+# straight through the post - so a notched cushion carries `boxes`, the exact
+# rectangular decomposition of what it really occupies, and the cushion checks
+# read that and never the bounding box.
+
+
+def cushion(x0, y0, z0, dx, dy, dz, label, notch_at=None):
+    """A cushion. `notch_at` is 'low' or 'high' in X and cuts CUSHION_NOTCH out
+    of that end's wall-side corner (the back corner post's footprint)."""
+    from build123d import Box, Location
+    b = Box(dx, dy, dz).moved(Location((x0 + dx / 2, y0 + dy / 2, z0 + dz / 2)))
+    boxes = [((x0, x0 + dx), (y0, y0 + dy), (z0, z0 + dz))]
+    if notch_at is not None:
+        nx, ny = CUSHION_NOTCH
+        nx0 = x0 if notch_at == "low" else x0 + dx - nx
+        cutter = Box(nx, ny, dz + 2).moved(
+            Location((nx0 + nx / 2, y0 + ny / 2, z0 + dz / 2)))
+        b = b - cutter
+        # exact decomposition: the notched end at reduced depth, then the rest
+        boxes = ([((nx0, nx0 + nx), (y0 + ny, y0 + dy), (z0, z0 + dz))]
+                 + ([((x0, nx0), (y0, y0 + dy), (z0, z0 + dz))] if nx0 > x0
+                    else [])
+                 + ([((nx0 + nx, x0 + dx), (y0, y0 + dy), (z0, z0 + dz))]
+                    if nx0 + nx < x0 + dx else []))
+    b.label = label
+    b.color = GROUP_COLORS["mattress"]
+    b.group = "mattress"
+    b.extents = ((x0, x0 + dx), (y0, y0 + dy), (z0, z0 + dz))
+    b.boxes = boxes
+    return b
+
+
+seat_cushions = []
+for i, cx0 in enumerate(SEAT_CUSHION_X):
+    side = "Left" if i == 0 else "Right"
+    seat_cushions.append(cushion(cx0, LOWER_SLEEP_Y0, BENCH_TOP,
+                                 SEAT_CUSHION_LEN, LOWER_SLEEP_DEPTH,
+                                 CUSHION_T, f"Seat Cushion {side}",
+                                 notch_at="low" if i == 0 else "high"))
+
+back_cushions_bed = []
+back_cushions_sofa = []
+for i, cx0 in enumerate(BACK_CUSHION_BED_X):
+    side = "Left" if i == 0 else "Right"
+    # BED MODE: flat, in the middle, lying on the panel - so its top is
+    # CUSHION_TOP_PANEL, PANEL_BENCH_DIP below the seat cushions beside it.
+    back_cushions_bed.append(cushion(cx0, LOWER_SLEEP_Y0, PANEL_TOP_BED,
+                                     BACK_CUSHION_LEN, LOWER_SLEEP_DEPTH,
+                                     CUSHION_T,
+                                     f"Back Cushion {side} (bed mode)"))
+for i, bx0 in enumerate(BACKREST_X):
+    side = "Left" if i == 0 else "Right"
+    # SOFA MODE: on edge at the outer end of its bench, standing on the seat
+    # cushion and leaning on the back table ledger. Its LENGTH becomes height.
+    back_cushions_sofa.append(cushion(bx0, BACKREST_Y0, BACKREST_Z0,
+                                      CUSHION_T, LOWER_SLEEP_DEPTH,
+                                      BACK_CUSHION_LEN,
+                                      f"Back Cushion {side} (table mode)"))
+
+CUSHIONS_BED = seat_cushions + back_cushions_bed
+CUSHIONS_TABLE = seat_cushions + back_cushions_sofa
+CUSHIONS_ALL = seat_cushions + back_cushions_bed + back_cushions_sofa
 
 # M4: the two stiffener battens. They are SCREWED TO THE PANEL, so they are not
 # part of the fixed structure - they move with it and are built once per mode,
@@ -2684,6 +2985,10 @@ Y_UP = Location((0, 0, 0), (0, 1, 0), 180) * Location((0, 0, 0), (1, 0, 0), -90)
 MODES = {"bed_mode": panel_bed, "table_mode": panel_table}
 # M4: the panel sub-assembly - the panel plus the battens screwed under it.
 PANEL_BATTENS = {id(panel_bed): battens_bed, id(panel_table): battens_table}
+# V13: and the same for the cushions - the two seat cushions are in both
+# lists because they are the same two objects in the same place in both
+# positions; only the back cushions differ.
+CUSHIONS = {id(panel_bed): CUSHIONS_BED, id(panel_table): CUSHIONS_TABLE}
 
 
 def mode_parts(panel):
@@ -2694,7 +2999,15 @@ def mode_parts(panel):
     overlaps the two members it ties together on purpose, so it would fail the
     no-overlap assert on sight.
     """
-    return parts + [mattress, panel] + PANEL_BATTENS[id(panel)]
+    return (parts + [mattress] + CUSHIONS[id(panel)] + [panel]
+            + PANEL_BATTENS[id(panel)])
+
+
+def is_soft(p):
+    """True for the reference mattress and the four cushions - everything in
+    the model that is bought as foam rather than cut as timber. Every wood-only
+    list in this file filters on THIS and not on identity with `mattress`."""
+    return getattr(p, "group", None) == "mattress"
 
 
 # ===========================================================================
@@ -2744,6 +3057,8 @@ _PART = {
     "guard_host":  r"(?:Corner Post Front|Ladder Upright) (?:Left|Right)",
     "bed_slat":    r"Bed Slat_\d+",
     "bench_slat":  r"Bench Slat (?:Left|Right)_\d+",
+    "end_slat":    r"Bench End Slat (?:Left|Right)",
+    "end_cleat":   r"Bench End Cleat (?:Left|Right)",
     "panel":       r"Movable Panel \(bed mode\)",
     "batten":      r"Panel Stiffener Batten (?:Left|Right) \(bed mode\)",
     "nose":        r"Panel Front Batten (?:Left|Right) \(bed mode\)",
@@ -2760,6 +3075,7 @@ PART_NO = {
     "upright": "stigevange", "rung": "rungetrinn", "rung_blk": "stigekloss",
     "guard": "rekkverksbord", "guard_host": "hjørnestolpe / stigevange",
     "bed_slat": "køyespile", "bench_slat": "benkespile",
+    "end_slat": "endespile", "end_cleat": "endelist",
     "panel": "løs plate", "batten": "avstivningslekt",
     "nose": "fremre kilelekt",
 }
@@ -3184,6 +3500,33 @@ JOINTS = [
          side="Ovenfra, ned i benkevangen",
          contacts=[dict(a="bench_slat", b="bench_rail", axis=2, drives=[
              drive("Treskrue 5×60 forsenket Torx", 1, frm="bench_slat")])]),
+    # V13: the end slat has a bearing of its own at the back - the cleat - and
+    # the ordinary front bench rail at the front. Two joints, because they are
+    # two different pieces of wood; the screw is the same one the whole slat
+    # field uses, driven the same way, from above.
+    dict(id="J11-E", title="Endespile → fremre benkevange (fremre spileende)",
+         n=2,
+         drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
+         side="Ovenfra, ned i benkevangen",
+         contacts=[dict(a="end_slat", b="bench_front", axis=2, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 1, frm="end_slat")])]),
+    dict(id="J16", title="Endespile → endelist (bakre spileende)", n=2,
+         drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
+         side="Ovenfra, ned i endelisten",
+         contacts=[dict(a="end_slat", b="end_cleat", axis=2, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 1, frm="end_slat")])]),
+    # V13: the one joint in this bed made into the back post's FRONT face. Two
+    # 5x60 side by side along the 98 mm cleat - 36 mm through the cleat leaves
+    # 24 mm in a 36 mm post, so nothing comes near the wall mounting plane
+    # behind it. The pair sits along X because that is the long way of the
+    # contact patch (98 x 48) and because the load they take is vertical shear.
+    dict(id="J17", title="Endelist → bakre hjørnestolpe (mot stolpens "
+                         "forside)", n=2,
+         drill="⌀3,5 gjennom listen, ⌀3 i stolpen",
+         side="Rett inn i stolpens forside, fra benkerommet — listen ligger "
+              "flatt på stolpen og de to skruene er hele festet",
+         contacts=[dict(a="end_cleat", b="post_back", axis=1, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 2, frm="end_cleat")])]),
     dict(id="J12", title="Bordbærelekt → bakre hjørnestolpe (endeskjøt)",
          n=2,
          drill="⌀3 i stolpen og i lekta — forboring er et krav: begge skruene "
@@ -3716,7 +4059,7 @@ def wall_fastener_specs():
 # Bed mode is the one that gets fastened: the loose panel is the same part in
 # both modes and carries the same steel, and the two joints it makes (J13b to
 # the rung, J13c over the bench rail) are the bed-mode ones the drawings show.
-_WOOD = [p for p in mode_parts(panel_bed) if p is not mattress]
+_WOOD = [p for p in mode_parts(panel_bed) if not is_soft(p)]
 _bb = [(min(p.extents[j][0] for p in _WOOD),
         max(p.extents[j][1] for p in _WOOD)) for j in range(3)]
 BED_CENTRE = tuple((a + b) / 2 for a, b in _bb)
@@ -4083,7 +4426,7 @@ def on_visible_front(f):
 if FASTENERS_ON:
     _others = {}
     for _mode, _panel in MODES.items():
-        _others[_mode] = [p for p in mode_parts(_panel) if p is not mattress]
+        _others[_mode] = [p for p in mode_parts(_panel) if not is_soft(p)]
 
     for _f in FASTENER_SPECS:
         _s = _f.get("solid")
@@ -4396,6 +4739,30 @@ def make_compound(panel, xform=IDENTITY):
 
 bed_mode = make_compound(panel_bed)
 table_mode = make_compound(panel_table)
+# V13: the ENVELOPE is a statement about the BED - the wood, the steel and the
+# reference mattress that fills the upper bunk exactly. The four cushions are
+# loose foam, and in sofa mode one of them deliberately stands 12 mm proud of
+# the front plane (see BACKREST_PROUD), so they are measured by their own
+# asserts and not by the bed's outline.
+_CUSHION_IDS = {id(c) for c in CUSHIONS_ALL}
+
+
+class _BB:
+    """The bounding box of a list of solids, without building a Compound out of
+    them - Compound(children=...) would re-parent solids that already belong to
+    the exported one."""
+
+    def __init__(self, solids):
+        boxes = [p.bounding_box() for p in solids]
+        self.min = type("P", (), {})()
+        self.max = type("P", (), {})()
+        for ax in "XYZ":
+            setattr(self.min, ax, min(getattr(b.min, ax) for b in boxes))
+            setattr(self.max, ax, max(getattr(b.max, ax) for b in boxes))
+
+
+def wood_envelope(panel):
+    return _BB([p for p in display_parts(panel) if id(p) not in _CUSHION_IDS])
 
 # ---------------------------------------------------------------------------
 # VALIDATION
@@ -4427,8 +4794,8 @@ print("\n=== VALIDATION ===")
 DEPTH_Y0 = WALL_Y                              # -48, the wall / mounting plane
 DEPTH_Y1 = FRONT_POST_Y1                       # 788  [was 800, 834, 940]
 OVERALL_DEPTH = DEPTH_Y1 - DEPTH_Y0            # 836  [was 848, 896, 930, 964]
-for name, comp in (("bed mode", bed_mode), ("table mode", table_mode)):
-    bb = comp.bounding_box()
+for name, _p in (("bed mode", panel_bed), ("table mode", panel_table)):
+    bb = wood_envelope(_p)
     assert bb.min.X >= -TOL, f"{name}: geometry crosses wall at X=0 ({bb.min.X:.3f})"
     assert bb.max.X <= WALL_SPAN + TOL, \
         f"{name}: geometry crosses wall at X={WALL_SPAN} ({bb.max.X:.3f})"
@@ -4741,16 +5108,18 @@ for p in parts:
                 f"back side rail bearing on it"
             break
 assert back_post_neighbours, "W2: the back posts touch nothing at all"
-# 7: per post, the end beam, the back bench rail, the back table ledger, the
-# back side rail and the outermost bench slat - x2, minus the three continuous
-# members counted once.
+# 11: per post, the end beam, the back bench rail, the back table ledger, the
+# back side rail, the outermost bench slat and - V13 - the end cleat screwed to
+# the post's front face and the end slat that lands on it, x2, minus the three
+# continuous members counted once.
 # (Was 13 in v9, when the end slats butted the posts; 11 until V5 deleted the
-# end-beam and bench-rail bearing blocks that hung on these two faces. After W6
-# the upper slats are 98 mm above the post tops and touch nothing there, and
-# the bench slats butt the post's X-inner face instead of clearing it in Y.)
-assert len(back_post_neighbours) == 7, \
-    f"W2/W6: the back posts touch {len(back_post_neighbours)} parts, expected " \
-    f"7: {sorted(p.label for p in back_post_neighbours)}"
+# end-beam and bench-rail bearing blocks that hung on these two faces; 7 until
+# V13 put the end cleat and its slat on the front face. After W6 the upper slats
+# are 98 mm above the post tops and touch nothing there, and the bench slats
+# butt the post's X-inner face instead of clearing it in Y.)
+assert len(back_post_neighbours) == 11, \
+    f"W2/W6/V13: the back posts touch {len(back_post_neighbours)} parts, " \
+    f"expected 11: {sorted(p.label for p in back_post_neighbours)}"
 highest = max(back_post_neighbours, key=lambda p: p.extents[2][1])
 assert highest is back_rail and highest.extents[2][1] == RAIL_TOP, \
     f"W6: the highest WOOD on a back post is '{highest.label}' at " \
@@ -4833,7 +5202,11 @@ print(f"OK  D4: posts flush with the walls at X 0..{POST_W} / "
 # Fixed heights. Everything below the platform is untouched by D5/D6/D7; the
 # platform stack itself is the thing that moved.
 assert RAIL_BOTTOM == 1065 and RAIL_TOP == 1163
-assert not any("Cleat" in p.label for p in parts), "D5: the slat cleats must be gone"
+# V13 narrowed the match: there IS a cleat in this bed now (the bench end
+# cleat), and the thing D5 deleted was the SLAT cleat under the upper
+# platform. The guard names it.
+assert not any("Slat Cleat" in p.label for p in parts), \
+    "D5: the slat cleats must be gone"
 assert (SLAT_Z0, SLAT_Z1) == (1163, 1186), "D5/U1/V6: slats not flush on top of the rails"
 assert (MATTRESS_Z0, MATTRESS_Z1) == (1186, 1336)
 assert (BENCH_RAIL_BOTTOM, BENCH_RAIL_TOP) == (191, 259)
@@ -5076,10 +5449,17 @@ SCREW_SHEAR_KN = {5: 1.5, 6: 2.0}
 #       ~510 mm, and the same 1 kN at its midpoint puts 0.5 kN on the post.
 #       The two screws are skew in the XY plane and the reaction is Z, so both
 #       are square to the load and neither loses anything to the skew.
+# J17 - V13's end cleat is the same kind of corner: a member that hangs on its
+#       own screws with no bearing under it. The end slat carries the bench
+#       slat criterion's 0.5 kN (vedlegg A.1, one foot on one slat) over a
+#       722 mm span between the cleat and the front bench rail, so the cleat
+#       takes half of it - and the gate below then stands the WHOLE 0.5 kN
+#       directly over the cleat anyway.
 BLOCKLESS_CORNERS = [
     ("J1", "endebjelkeende → hjørnestolpe", 1.0),
     ("J8", "fremre benkevangeende → fremre stolpe", 0.5),
     ("J8-B", "bakre benkevangeende → bakre stolpe", 0.5),
+    ("J17", "endelist → bakre stolpe (V13)", 0.25),
 ]
 # The gate this change had to pass: no row over 0.8 even with the whole design
 # load stood directly over the corner, i.e. at TWICE the reaction above.
@@ -5442,12 +5822,11 @@ assert BENCH_TOP == BENCH_RAIL_TOP + BENCH_SLAT_T == 282
 # the recess exists to swallow a cushion, and 18 mm of it is 18 mm.
 # V6: the dip is BENCH_SLAT_T - PANEL_T and nothing else - the bench slat and
 # the panel start from the same 259 plane - so the 23 mm slat takes it 18 -> 5.
-# The three zones of the lower sleeping surface are now essentially LEVEL. That
-# is a real change to what the bed feels like: the middle cushion is 5 mm
-# thicker than the bench cushions instead of 18, and the recess the sofa
-# cushions used to fold down into is gone. For SLEEPING this is the better
-# surface - three zones in one plane - and for sitting it means the fold is
-# taken up by the cushions themselves. It belongs in the manual, not a footnote.
+# The three zones of the lower sleeping surface are now essentially LEVEL, and
+# V13 has since cashed that in: with the dip down to 5 mm the four cushions can
+# all be ONE thickness, so the old rule "the middle cushion is 5 mm thicker" is
+# retired. Nothing folds down into a recess any more; the 5 mm is a step foam
+# takes up, and no cushion joint even falls on a zone boundary now.
 assert PANEL_BENCH_DIP == 5 and PANEL_TOP_BED == BENCH_TOP - PANEL_BENCH_DIP, \
     "D10/U1/V6: the bed-mode panel should sit 5 mm below the bench tops"
 assert PANEL_BENCH_DIP == BENCH_SLAT_T - PANEL_T + (BENCH_RAIL_TOP -
@@ -5500,6 +5879,230 @@ assert max(bench_slat_gaps) <= MAX_BENCH_SLAT_GAP + TOL, \
     f"C3: the widest bench slat gap is {max(bench_slat_gaps)}, limit " \
     f"{MAX_BENCH_SLAT_GAP}"
 assert abs(max(bench_slat_gaps) - (BENCH_SLAT_PITCH - BENCH_SLAT_W)) < TOL
+
+# ---------------------------------------------------------------------------
+# V13: THE END SLATS, THEIR CLEATS, AND THE FOUR CUSHIONS
+# ---------------------------------------------------------------------------
+# Everything the lower level gained this round, checked as geometry rather than
+# described as intent. Three questions, in order: is the slat field closed to
+# the wall, does the cleat that made that possible stay out of everything, and
+# do the four cushions actually COVER the surface the two together produce.
+
+# --- the end slat and its cleat ---------------------------------------------
+for _i, (_slat, _cleat) in enumerate(zip(end_slats, end_cleats)):
+    _sx, _sy, _sz = _slat.extents
+    _cx, _cy, _cz = _cleat.extents
+    assert _sx == (END_SLAT_X[_i], END_SLAT_X[_i] + BENCH_SLAT_W), \
+        f"V13: '{_slat.label}' is at X {_sx}, want the {BENCH_SLAT_W} mm end zone"
+    assert _sy == (BACK_POST_Y1, BENCH_SLAT_Y1), \
+        f"V13: '{_slat.label}' must run from the back post's FRONT face " \
+        f"({BACK_POST_Y1}) to the front vertical plane ({BENCH_SLAT_Y1})"
+    assert _sz == (BENCH_RAIL_TOP, BENCH_TOP), \
+        f"V13: '{_slat.label}' is not in the bench slat plane"
+    assert _cz[1] == BENCH_RAIL_TOP == _sz[0], \
+        "V13: the end cleat's top IS the end slat's underside"
+    assert _cy[0] == BACK_POST_Y1, \
+        "V13: the end cleat has to lie ON the back post's front face"
+    assert _cx == _sx, "V13: the cleat sits under its own slat, full width"
+# the field is CLOSED: no gap at the wall, and none between the end slat and
+# the first ordinary bench slat.
+assert END_SLAT_X[0] == 0 and END_SLAT_X[1] + BENCH_SLAT_W == WALL_SPAN, \
+    "V13: the end slats must reach both walls"
+assert END_SLAT_GAP == 0, \
+    f"V13: the end slat leaves a {END_SLAT_GAP} mm gap to the field it closes"
+assert END_SLAT_GAP <= EN_FINGER_FREE, \
+    f"V13: a {END_SLAT_GAP} mm gap is outside EN 747's <= {EN_FINGER_FREE} band"
+# the cleat's screws must not come near the post's back face - that face is the
+# wall mounting plane, and the post is only 36 mm thick.
+END_CLEAT_SCREW_LEN = 60
+END_CLEAT_BITE = END_CLEAT_SCREW_LEN - END_CLEAT_T                     # 24
+assert END_CLEAT_BITE < POST_T, \
+    f"V13: a {END_CLEAT_SCREW_LEN} mm screw through {END_CLEAT_T} mm of cleat " \
+    f"bites {END_CLEAT_BITE} mm into a {POST_T} mm post and comes out the back"
+assert END_CLEAT_BITE >= 4 * 5, \
+    f"V13: only {END_CLEAT_BITE} mm of a 5 mm screw in the post"
+assert END_SLAT_SPAN < BENCH_SLAT_LEN - BENCH_RAIL_T, \
+    f"V13: the end slat spans {END_SLAT_SPAN}, more than the field it joins"
+print(f"OK  V13 endespile: {sec(BENCH_SLAT_T, BENCH_SLAT_W)} x {END_SLAT_LEN} "
+      f"i hver ende (X {END_SLAT_X[0]}..{END_SLAT_X[0] + BENCH_SLAT_W} og "
+      f"{END_SLAT_X[1]}..{WALL_SPAN}), Y {END_SLAT_Y0}..{END_SLAT_Y1} - den "
+      f"starter på den bakre stolpens FORSIDE, for stolpen står i "
+      f"soveflaten. Spennet er {END_SLAT_SPAN:g} mm mot feltets "
+      f"{BENCH_SLAT_LEN - BENCH_RAIL_T} mm, og gapet inn til første "
+      f"benkespile er {END_SLAT_GAP} mm")
+print(f"OK  V13 endelist: {sec(END_CLEAT_T, END_CLEAT_H)} x {END_CLEAT_LEN} "
+      f"skrudd flatt på den bakre stolpens forside (Y {END_CLEAT_Y0}, Z "
+      f"{END_CLEAT_Z0}..{END_CLEAT_Z1}), 2 x 5x{END_CLEAT_SCREW_LEN} (J17): "
+      f"{END_CLEAT_T} mm gjennom listen, {END_CLEAT_BITE} mm inn i en "
+      f"{POST_T} mm stolpe, {POST_T - END_CLEAT_BITE} mm igjen til "
+      f"veggflaten. Spileenden lander på {END_CLEAT_BEARING:.0f} mm2")
+
+# --- the cushions: the split ------------------------------------------------
+assert 2 * SEAT_CUSHION_LEN + 2 * BACK_CUSHION_LEN == LOWER_SLEEP_LEN, \
+    f"V13: {SEAT_CUSHION_LEN} + {SEAT_CUSHION_LEN} + {BACK_CUSHION_LEN} + " \
+    f"{BACK_CUSHION_LEN} is not the {LOWER_SLEEP_LEN} mm sleeping surface"
+assert abs(SEAT_CUSHION_LEN - LOWER_SLEEP_LEN / 3) <= 1 and \
+    abs(BACK_CUSHION_LEN - LOWER_SLEEP_LEN / 6) <= 1, \
+    "V13: the seat cushion is a third of the length and the back cushion a " \
+    "sixth, to the nearest millimetre"
+# ONE FOAM BLOCK, WHICHEVER WAY UP IT IS. Every cushion in the model, in both
+# positions, has to be the same three numbers: its length, the surface depth
+# and the one thickness - only the axis they sit on changes when a back cushion
+# stands up.
+for _c in CUSHIONS_ALL:
+    _dims = sorted(round(hi - lo) for lo, hi in _c.extents)
+    _want = sorted([CUSHION_T, LOWER_SLEEP_DEPTH,
+                    BACK_CUSHION_LEN if "Back" in _c.label
+                    else SEAT_CUSHION_LEN])
+    assert _dims == _want, \
+        f"V13: '{_c.label}' measures {_dims}, want {_want} - a cushion is the " \
+        f"same block of foam in both positions"
+
+# --- the cushions: the tiling -----------------------------------------------
+# The assert Hans asked for, and it is a COVER: every cushion box lies inside
+# the surface, no two of them overlap, and their areas add up to the surface's
+# own area. Area + disjoint + contained is exactly "they tile it".
+def _rect(b):
+    return (b[0][0], b[0][1], b[1][0], b[1][1])
+
+
+def _inside(r, R):
+    return (r[0] >= R[0] - TOL and r[1] <= R[1] + TOL
+            and r[2] >= R[2] - TOL and r[3] <= R[3] + TOL)
+
+
+def _box_overlap(a, b):
+    v = 1.0
+    for (a0, a1), (b0, b1) in zip(a, b):
+        d = min(a1, b1) - max(a0, b0)
+        if d <= 0:
+            return 0.0
+        v *= d
+    return v
+
+
+def _rect_overlap(a, b):
+    return (max(0.0, min(a[1], b[1]) - max(a[0], b[0]))
+            * max(0.0, min(a[3], b[3]) - max(a[2], b[2])))
+
+
+cushion_rects = [_rect(b) for c in CUSHIONS_BED for b in c.boxes]
+covered = 0.0
+for r in cushion_rects:
+    assert any(_inside(r, R) for R in LOWER_SLEEP_RECTS), \
+        f"V13: a cushion covers {r}, which is not on the sleeping surface " \
+        f"(the surface is {LOWER_SLEEP_RECTS})"
+    covered += (r[1] - r[0]) * (r[3] - r[2])
+for _i, _a in enumerate(cushion_rects):
+    for _b in cushion_rects[_i + 1:]:
+        assert _rect_overlap(_a, _b) <= TOL, \
+            f"V13: two cushions overlap over {_rect_overlap(_a, _b):.0f} mm2"
+assert abs(covered - LOWER_SLEEP_AREA) < TOL, \
+    f"V13: the four cushions cover {covered:.0f} mm2 of a " \
+    f"{LOWER_SLEEP_AREA:.0f} mm2 sleeping surface - they are supposed to be a " \
+    f"TILING of it, with nothing over and nothing short"
+# and the tiling spans the whole length and the whole depth, edge to edge
+assert min(r[0] for r in cushion_rects) == LOWER_SLEEP_X0 and \
+    max(r[1] for r in cushion_rects) == LOWER_SLEEP_X1, \
+    "V13: the cushions must run wall to wall"
+for _c in CUSHIONS_BED:
+    assert _c.extents[1] == (LOWER_SLEEP_Y0, LOWER_SLEEP_Y1), \
+        f"V13: '{_c.label}' is {_c.extents[1]} deep, want the surface's own " \
+        f"{LOWER_SLEEP_Y0}..{LOWER_SLEEP_Y1}"
+    assert round(_c.extents[2][1] - _c.extents[2][0]) == CUSHION_T, \
+        f"V13: '{_c.label}' is not {CUSHION_T} mm thick - all four are, or " \
+        f"the bed has a step in it"
+print(f"OK  V13 tiling: {SEAT_CUSHION_LEN} + {BACK_CUSHION_LEN} + "
+      f"{BACK_CUSHION_LEN} + {SEAT_CUSHION_LEN} = {LOWER_SLEEP_LEN} mm x "
+      f"{LOWER_SLEEP_DEPTH} mm - de fire putene DEKKER nedre soveflate "
+      f"({covered:.0f} mm2 mot flatens {LOWER_SLEEP_AREA:.0f}), uten overlapp "
+      f"og uten hull. Benkeputen er 1/3 og ryggputen 1/6 av lengden; "
+      f"{LOWER_SLEEP_LEN} deler seg ikke på 6, så avrundingen "
+      f"({LOWER_SLEEP_LEN / 3:.2f} / {LOWER_SLEEP_LEN / 6:.2f}) er lagt på "
+      f"ryggputene og summen er eksakt")
+
+# --- the cushions: nothing they touch is inside them -------------------------
+for _mode, _panel in MODES.items():
+    _wood = [p for p in mode_parts(_panel) if not is_soft(p)]
+    _soft = CUSHIONS[id(_panel)]
+    _bad = []
+    for _c in _soft:
+        for _b in _c.boxes:
+            for _w in _wood:
+                if _box_overlap(_b, _w.extents) > 1.0:
+                    _bad.append((_c.label, _w.label))
+        for _o in _soft:
+            if _o is _c:
+                continue
+            for _b in _c.boxes:
+                for _ob in _o.boxes:
+                    if _box_overlap(_b, _ob) > 1.0:
+                        _bad.append((_c.label, _o.label))
+    assert not _bad, f"V13 {_mode}: cushions inside something: {sorted(set(_bad))}"
+print(f"OK  V13: ingen av de fire putene ligger inne i noe - verken i tre "
+      f"eller i hverandre, i noen av de to stillingene. De to benkeputene har "
+      f"et {CUSHION_NOTCH[0]} x {CUSHION_NOTCH[1]} mm hakk i veggkanten, der "
+      f"den bakre hjørnestolpen står; det er den ene grunnen til at en pute "
+      f"her ikke er en ren rektangelklump")
+
+# --- the cushions: the heights they set -------------------------------------
+assert CUSHION_TOP_BENCH - CUSHION_TOP_PANEL == PANEL_BENCH_DIP, \
+    "V13: with one thickness for all four, the 5 mm dip is the only step left"
+assert LOWER_HEADROOM >= MIN_LOWER_HEADROOM, \
+    f"V13: {LOWER_HEADROOM} mm from the lower sleeping surface to the slats " \
+    f"above it, want at least {MIN_LOWER_HEADROOM}"
+assert CUSHION_TOP_BENCH < EN_GUARD_TRIGGER_H, \
+    f"EN 747: a bed base {CUSHION_TOP_BENCH} mm over the floor needs safety " \
+    f"barriers; the lower level is supposed to be under the {EN_GUARD_TRIGGER_H} mm line"
+assert TABLE_UNDER_OVER_CUSHION > 0 and TABLE_OVER_CUSHION > 0, \
+    "V13: the table plate would land on the seat cushion"
+assert SEAT_CUSHION_SHAFT_GAP > 0, \
+    f"V13: the seat cushion reaches into the panel's transfer shaft by " \
+    f"{-SEAT_CUSHION_SHAFT_GAP} mm - the plate cannot be lowered past it"
+assert BACKREST_Y0 == LEDGER_BACK_Y0 + LEDGER_BACK_T, \
+    "V13: the backrest stands on the back table ledger's front face"
+# THE CUSHIONS COME OFF FIRST, AND THE MODEL SAYS SO RATHER THAN THE MANUAL
+# REMEMBERING IT. The mode change carries the panel unit SIDEWAYS over the
+# bench, in the shaft between the bench slat tops (282) and the back table
+# ledger's underside (414). A 100 mm cushion lying on that bench fills the
+# bottom 100 of those 132 mm. So this is not a tidiness instruction: the change
+# -over is BLOCKED with the cushions on, and it is derived here.
+CARRY_BAND = (BENCH_TOP, LEDGER_BACK_Z0)                     # 282..414
+CARRY_BAND_H = CARRY_BAND[1] - CARRY_BAND[0]                 # 132
+assert CUSHION_TOP_BENCH > CARRY_BAND[0] + TOL, \
+    "V13: a seat cushion that did not reach into the carry band would make " \
+    "this note pointless - check the geometry before deleting it"
+print(f"OK  V13 ombygging: seteputen fyller {CUSHION_T} av de "
+      f"{CARRY_BAND_H} mm i overføringssjakten over benken (Z {CARRY_BAND[0]}"
+      f"..{CARRY_BAND[1]}), som er der plateenheten bæres sidelengs. "
+      f"Putene MÅ av før stillingsbyttet - det er geometri, ikke ryddighet")
+# and it really does lean on the ledger: the two overlap in Z, or the "backstop"
+# is a sentence rather than a contact.
+assert BACKREST_Z0 < LEDGER_BACK_Z1 and BACKREST_Z1 > LEDGER_BACK_Z0, \
+    f"V13: the backrest (Z {BACKREST_Z0}..{BACKREST_Z1}) never meets the " \
+    f"ledger it is supposed to lean on (Z {LEDGER_BACK_Z0}..{LEDGER_BACK_Z1})"
+assert BACKREST_Z1 < RAIL_BOTTOM, \
+    f"V13: the backrest tops out at {BACKREST_Z1}, into the side rail at " \
+    f"{RAIL_BOTTOM}"
+assert BACKREST_PROUD == POST_THIN, \
+    f"V13: the backrest stands {BACKREST_PROUD} mm proud of the front plane"
+print(f"OK  V13 høyder: sittehøyde {BENCH_TOP} + {CUSHION_T} = "
+      f"{CUSHION_TOP_BENCH} mm (soveflaten nede; {CUSHION_TOP_PANEL} over "
+      f"platen, de samme {PANEL_BENCH_DIP} mm som før). Bordplaten ligger "
+      f"{TABLE_OVER_CUSHION} mm over seteputen ({TABLE_UNDER_OVER_CUSHION} mm "
+      f"til undersiden), hodehøyden under køyespilene er {LOWER_HEADROOM} mm "
+      f"({LOWER_HEADROOM_RAIL} under sidevangene), og fallhøyden "
+      f"{CUSHION_TOP_BENCH} mm er under EN 747s {EN_GUARD_TRIGGER_H} mm - "
+      f"nedre nivå har ikke rekkverkskrav og får det ikke av putene heller")
+print(f"OK  V13 sofastilling: seteputene ligger i SAMME X i begge stillinger "
+      f"({SEAT_CUSHION_X[0]}..{SEAT_CUSHION_X[0] + SEAT_CUSHION_LEN} og "
+      f"{SEAT_CUSHION_X[1]}..{WALL_SPAN}), {SEAT_CUSHION_OVERHANG} mm utenfor "
+      f"benkeenden og {SEAT_CUSHION_SHAFT_GAP} mm fra platebanen (X "
+      f"{PANEL_X0}..{PANEL_X1}); gangbukta måler {BAY_AT_CUSHION_H} mm i "
+      f"putehøyde mot {PANEL_OPENING} på gulvet. Ryggputene står på enden av "
+      f"hver benk, {CUSHION_T} mm tykke i X, {LOWER_SLEEP_DEPTH} mm dype og "
+      f"{BACK_CUSHION_LEN} mm høye (topp {BACKREST_Z1}), og lener seg mot "
+      f"bordbærelekta over {BACKREST_LEDGER_CONTACT:.0f} mm2")
 # K2: and the two strips the narrower panel leaves beside itself in bed mode,
 # stated against the thing this same bed already asks a mattress to bridge.
 assert PANEL_SIDE_GAP > slat_gap, \
@@ -6217,7 +6820,7 @@ for mode_name, panel in MODES.items():
         # no-two-parts-overlap check below sees the battens too; this one names
         # the batten and runs with a hard zero instead of the 1 mm3 threshold.)
         for q in mode_parts(panel):
-            if q is b or q is mattress:
+            if q is b or is_soft(q):
                 continue
             inter = [min(a1, c1) - max(a0, c0)
                      for (a0, a1), (c0, c1) in zip(b.extents, q.extents)]
@@ -6347,7 +6950,7 @@ def vertical_clear(mode):
     """(mm, what stops it) - how far the whole assembly can rise, straight up,
     before any part of it meets any part of the bed."""
     moving = panel_assembly_boxes(mode)
-    fixed = [p for p in parts if p is not mattress]
+    fixed = [p for p in parts if not is_soft(p)]
     best, who = math.inf, None
     for label, m in moving:
         for f in fixed:
@@ -6886,7 +7489,7 @@ print(f"OK  no part intrudes into the mattress volume (checked {checked} parts)"
 
 # --- no two parts may overlap each other -----------------------------------
 for mode_name, panel in MODES.items():
-    items = [p for p in mode_parts(panel) if p is not mattress]
+    items = [p for p in mode_parts(panel) if not is_soft(p)]
     bad = []
     for i, a in enumerate(items):
         for b in items[i + 1:]:
@@ -6918,7 +7521,7 @@ def aabb_distance(a, b):
 
 print("--- connectivity (min distance to the rest of the assembly) ---")
 for mode_name, panel in MODES.items():
-    items = [p for p in mode_parts(panel) if p is not mattress]
+    items = [p for p in mode_parts(panel) if not is_soft(p)]
     # No part is excluded, and after D10 the movable panel is not even a
     # borderline case any more: it is not hung on undrawn steel hardware, it
     # LIES on the wood this model draws. Its nearest neighbours are the members
@@ -7115,13 +7718,15 @@ assert sec(BOARD_T, BOARD_W) not in TIMBER_PROFILES, \
 assert len(TIMBER_PROFILES) == 5, \
     f"V6 put 23x98 in beside the four U1/U2/U5/V2 left; " \
     f"this is {len(TIMBER_PROFILES)}"
-# V6: the biggest pile moved. The 24 slats went to 23x98, so THAT is now both
+# V6: the biggest pile moved. The slats went to 23x98, so THAT is now both
 # the most numerous profile and the longest by metres, and 36x98 is left with
 # the 4 guard segments and the 4 corner posts - the on-edge and the standing
 # members, which is exactly what a 36 mm board is worth paying for.
-assert by_section[sec(BOARD23_T, BOARD36_W)] == 24 and \
+# V13: 24 -> 26. The two end slats are the same board, 764 instead of 800.
+assert by_section[sec(BOARD23_T, BOARD36_W)] == SLAT_COUNT + 2 * (
+        BENCH_SLAT_COUNT + 1) == 26 and \
     max(by_metres, key=by_metres.get) == sec(BOARD23_T, BOARD36_W), \
-    "V6: 23x98 must be both the most numerous and the longest profile"
+    "V6/V13: 23x98 must be both the most numerous and the longest profile"
 assert by_section[sec(BOARD36_T, BOARD36_W)] == 10, \
     "V6: 36x98 is 4 guard segments + 4 corner posts + 2 end beams (V6b)"
 assert "34x98" not in by_section, \
@@ -7153,7 +7758,9 @@ print(f"Note (D12): the depth stack came in {DEPTH_SHRINK} mm on the FRONT side 
       f"only, so the {MATTRESS_W} mm mattress is exactly the rail-to-rail "
       f"platform. All {SLAT_COUNT} upper slats, all "
       f"{BENCH_SLAT_COUNT * len(BENCH_X)} bench slats and the panel are "
-      f"{SLAT_LEN} mm long (was 906) and the end beams {END_BEAM_LEN} mm (was "
+      f"{SLAT_LEN} mm long (was 906) - the two V13 end slats are the one "
+      f"exception at {END_SLAT_LEN}, because the back corner post stands in "
+      f"their line - and the end beams {END_BEAM_LEN} mm (was "
       f"1002, 896, 848). Overall depth {OVERALL_DEPTH} mm (1070 in v7, 964 in "
       f"v8, 930 before D14, 896 before W6, 848 before U2).")
 print(f"Note (D14): the four front guard boards hang on the INNER faces of the "
@@ -7173,8 +7780,12 @@ print(f"Note (W1): *** WALL-SIDE BED - NOT REVERSIBLE. *** The back long side "
       f"back rail, so there are NO back guard boards: the wall is the barrier. "
       f"The back face of the assembly is the flat mounting plane Y={WALL_Y} - "
       f"the back rail, the 2 back posts tucked into its plane, the 2 end beams "
-      f"and their blocks, the back bench rail and its blocks, the ledger and all "
-      f"{SLAT_COUNT + BENCH_SLAT_COUNT * len(BENCH_X)} slat ends, all coplanar - "
+      f"and their blocks, the back bench rail and its blocks, the ledger and "
+      f"{SLAT_COUNT + BENCH_SLAT_COUNT * len(BENCH_X)} of the "
+      f"{SLAT_COUNT + BENCH_SLAT_COUNT * len(BENCH_X) + len(end_slats)} slat "
+      f"ends, all coplanar (the two V13 end slats stop on the back post's "
+      f"front face at Y {END_SLAT_Y0} instead - the post is what is in that "
+      f"plane there) - "
       f"and the mattress gap is {MAX_MATTRESS_GAP} mm (W5), against the "
       f"{MAX_GUARD_OPENING} mm EN 747 entrapment limit. The two deleted boards were "
       f"{sec(GUARD_T, GUARD_W)} x {THROUGH_LEN}; putting them and two full-height "
@@ -7214,7 +7825,10 @@ print(f"Note (W9): the back bench rail and the back table ledger run POST TO "
       f"X {BENCH_SLAT_X_START}..{BENCH_LEN}, pitch {BENCH_SLAT_PITCH:g} (124.75 "
       f"in v10, 137.5 before that), gap {BENCH_SLAT_PITCH - BENCH_SLAT_W:g} mm "
       f"(26.75, 39.5) - same five pieces per bench, closer together each time "
-      f"the post got wider.")
+      f"the post got wider. V13 adds a SIXTH outboard of them, the "
+      f"{END_SLAT_LEN} mm end slat on its cleat at X {END_SLAT_X[0]}.."
+      f"{BENCH_SLAT_X_START}, so the field reaches the wall after all and the "
+      f"lower level is a bed in full length.")
 print(f"Note (W5): the mattress is PINNED again. The clear between the wall "
       f"(Y {MATTRESS_STOP_Y0}) and the front verticals (Y {MATTRESS_STOP_Y1}) "
       f"is {MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0} mm, i.e. exactly the mattress, "
@@ -7322,7 +7936,8 @@ print("Note (D5): the slat cleats are gone; the upper slats are screwed "
 # and bounding box, sorted by label. Both panel positions are in it, told apart
 # by the "(bed mode)" / "(table mode)" suffix on the label. It is the one
 # generated file that IS committed - a diff on it is the diff on the model.
-snapshot = parts + [mattress, panel_bed, panel_table] + battens_bed + battens_table
+snapshot = (parts + [mattress] + CUSHIONS_ALL + [panel_bed, panel_table]
+            + battens_bed + battens_table)
 snap_path = os.path.join(OUT_DIR, "parts.tsv")
 with open(snap_path, "w", encoding="utf-8") as fh:
     fh.write("label\tgroup\tx0\tx1\ty0\ty1\tz0\tz1\n")

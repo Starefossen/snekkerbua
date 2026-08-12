@@ -10,8 +10,8 @@ Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regne
 | Dimensjon | Kjøp | Svinn |
 |---|---|---:|
 | **18 mm plate, 574 bred** | 1 plate 18 mm kryssfiner furu, minst 574 × 798 mm | — |
-| **23×98** | **5 stk. 4,8 m** | 20 % |
-| **36×48** | **1 stk. 4,8 m** | 23 % |
+| **23×98** | **5 stk. 4,8 m** | 14 % |
+| **36×48** | **1 stk. 4,8 m** | 19 % |
 | **36×98** | **3 stk. 4,8 m** | 27 % |
 | **48×68** | **2 stk. 4,8 m** | 11 % |
 | **48×98** | **1 stk. 4,2 m** | 6 % |
@@ -24,23 +24,23 @@ Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regne
 
 ### 23×98
 
-Kjøpt 24,00 m, brukt 19,20 m, svinn 20 %.
+Kjøpt 24,00 m, brukt 20,73 m, svinn 14 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 5 × 800 (Benkespile) | 784 |
-| 2 | 4800 | 5 × 800 (Benkespile) | 784 |
+| 1 | 4800 | 5 × 800 (Benkespile) + 1 × 764 (Endespile) | 16 |
+| 2 | 4800 | 5 × 800 (Benkespile) + 1 × 764 (Endespile) | 16 |
 | 3 | 4800 | 5 × 800 (Køyespile) | 784 |
 | 4 | 4800 | 5 × 800 (Køyespile) | 784 |
 | 5 | 4800 | 4 × 800 (Køyespile) | 1588 |
 
 ### 36×48
 
-Kjøpt 4,80 m, brukt 3,69 m, svinn 23 %.
+Kjøpt 4,80 m, brukt 3,88 m, svinn 19 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 8 × 36 (Stigekloss) + 2 × 1700 (Stigevange) | 1076 |
+| 1 | 4800 | 2 × 98 (Endelist) + 8 × 36 (Stigekloss) + 2 × 1700 (Stigevange) | 872 |
 
 ### 36×98
 
@@ -70,6 +70,19 @@ Kjøpt 4,20 m, brukt 3,97 m, svinn 6 %.
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
 | 1 | 4200 | 2 × 1984 (Sidevange, øvre) | 228 |
+
+## Mykt — kjøpes, ikke kappes
+
+Ikke trelast, men det står på samme handletur. Skum kjøpes som plate eller som ferdig skummadrass og kappes med brødkniv eller elektrisk kniv.
+
+| Hva | Mål | Ant. | Merknad |
+|---|---|---:|---|
+| Madrass, overkøye | 80 × 200 cm, **150 mm tykk** | 1 | Vindu 140–155 mm. En vanlig 160 mm er ULOVLIG her — se nøkkelmål |
+| **Benkepute**, underetasjen | **663 × 800 × 100 mm** | 2 | Hakk 98 × 36 mm i veggkanten, der den bakre hjørnestolpen står |
+| **Ryggpute**, underetasjen | **332 × 800 × 100 mm** | 2 | Rene rektangler |
+| Trekk | — | 5 | Skum uten trekk smuldrer. Regn det som en egen post |
+
+**De fire putene er én skumplate.** 663 + 332 + 332 + 663 = 1990 mm, og dybden er 800 mm — altså nøyaktig en 80 × 200 skumplate med 10 mm til overs på lengden. Kjøp én plate, kapp fire ganger. Samme regnestykke gjelder om du heller kjøper en billig skummadrass 80 × 200 og deler den.
 
 ## Merknader fra butikken
 

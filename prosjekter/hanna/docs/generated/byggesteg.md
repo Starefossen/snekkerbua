@@ -173,26 +173,30 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 * Alle fire trinn i vater.
 * Stå på nederste trinn og kjenn etter. Sitter noe løst nå, sitter det løst for alltid.
 
-## Steg 7 — Benkespiler
+## Steg 7 — Benkespiler, endelister og endespiler
 
-Fem spiler per benk, lagt oppå benkevangene.
+Fem spiler per benk, lagt oppå benkevangene — og helt ute ved hver vegg en 764 mm ENDESPILE på en endelist. De to endespilene er det som gjør underetasjen til en seng i full lengde: uten dem stopper spilefeltet 98 mm fra veggen i hver ende, og putekanten har ingenting under seg.
 
-**Deler:** 10× Benkespile 23×98 × 800
+**Deler:** 10× Benkespile 23×98 × 800 · 2× Endelist 36×48 × 98 · 2× Endespile 23×98 × 764
 
-**Festemidler:** 20× Treskrue 5×60 forsenket Torx
+**Festemidler:** 28× Treskrue 5×60 forsenket Torx
 
-**Ledd:** J11 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+**Ledd:** J11, J11-E, J16, J17 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
 **Slik gjør du:**
 
 1. Legg ut alle fem spilene på én benk før du skrur, og sjekk delingen mot kapplista.
 1. Skru hver spile ned i den bakre og den fremre benkevangen, én skrue per ende (J11). Forsenk hodene — dette er en sitteflate.
 1. Gjenta speilvendt på den andre benken.
+1. ENDELISTEN: skru den flatt på FORSIDEN av den bakre hjørnestolpen, med overkanten i flukt med benkevangens overkant (259 mm over gulvet). To 5×60 ved siden av hverandre (J17) — 36 mm gjennom listen og 24 mm inn i stolpen, så det står 12 mm igjen til veggflaten bak. Ikke bruk lengre skrue.
+1. ENDESPILEN er kortere enn de andre, 764 mm: den starter på stolpens forside, ikke på veggen — stolpen står i soveflaten her. Legg den mot veggen, tett inntil naboen, og skru én skrue ned i endelisten (J16) og én ned i den fremre benkevangen (J11-E).
 
 **Sjekk før du går videre:**
 
 * Kjenn over hele benken med håndflaten: ingen skruehoder skal stikke opp.
 * Sett deg på begge benker.
+* Endespilen skal ligge i nøyaktig samme plan som de andre — legg en rett list på tvers over hele benken og se etter lys under.
+* Ingen skruespiss skal være synlig eller følbar på baksiden av den bakre stolpen. Det er veggflaten.
 
 ## Steg 8 — Køyespiler
 
@@ -265,16 +269,18 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke 
 * Se over platens overside i motlys. Ingen skruehoder, ingen propper, ingen hull.
 * Platen kan løftes rett opp. Det skal den kunne — låsen i sengestilling er en egen avgjørelse, ikke en del av dette steget.
 
-## Steg 11 — Madrass og sluttsjekk
+## Steg 11 — Madrass og puter
 
 Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er TYKKELSEN, og der er det bare ett riktig svar: 150 mm. Vinduet er 140–155 mm, og en helt vanlig 160 mm madrass er ULOVLIG i denne sengen — den legger spalten opp til rekkverket midt i klemvinduet.
 
-**Deler:** 1× Madrass 80 × 200 cm, **150 mm tykk** (vindu 140–155 mm)
+**Deler:** 2× Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten) · 1× Madrass 80 × 200 cm, **150 mm tykk** (vindu 140–155 mm) · 2× Ryggpute, skum **100 mm** (332 × 800 mm)
 
 **Slik gjør du:**
 
 1. Legg madrassen på plass. En 80 × 200 presses de siste millimeterne inn mellom veggene, og den skal fylle hele dybden fra veggen til de fremre stolpene.
-1. Legg de tre putene i underetasjen på plass.
+1. UNDERETASJEN: fire puter, alle 100 mm tykke og 800 mm dype. To benkeputer på 663 mm og to ryggputer på 332 mm — lagt etter hverandre dekker de nedre soveflate nøyaktig, 663 + 332 + 332 + 663 = 1990 mm.
+1. Skjær et 98 × 36 mm hakk i veggkanten på hver av de to benkeputene, der den bakre hjørnestolpen står. Brødkniv.
+1. SOFASTILLING: benkeputene ligger der de ligger — de flyttes aldri. Ryggputene reises på høykant ytterst på hver benk, med ryggen mot bordbærelekta.
 1. MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er ikke en tusjstrek som skal kunne tørkes bort: skriv «MAKS MADRASS 155 MM» på innsiden av en fremre stolpe, i høyden 1341 mm over gulvet. Den som bytter madrass om ti år skal kunne lese grensen av sengen selv.
 1. Skriv nedre grense, 140 mm, ved siden av. For tynn madrass åpner spalten under nederste rekkverksbord; for tykk lukker den seg ned i klemvinduet.
 

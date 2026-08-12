@@ -12,7 +12,7 @@
 |---:|---:|---:|
 | **1990 mm** | **836 mm** | **1700 mm** |
 
-63 deler · 12 steg (0–11) · 2 personer · passer standard madrass 80 × 200 cm
+67 deler · 12 steg (0–11) · 2 personer · passer standard madrass 80 × 200 cm
 
 Sengen står inntil bakveggen og inntil begge sidevegger, og skrus fast i bakveggen. **Bygg bakfra og utover.**
 
@@ -54,7 +54,7 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 
 | | |
 |:---:|---|
-| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **84x** | Treskrue 5×60 forsenket Torx |
+| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **92x** | Treskrue 5×60 forsenket Torx |
 | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="44"> **36x** | Treskrue 5×40 forsenket Torx |
 | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **26x** | Treskrue 6×80 forsenket Torx |
 | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="44"> **12x** | Treskrue 6×120 forsenket Torx |
@@ -74,7 +74,9 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Løs plate | 18 mm plate, 574 bred | 798 | **1** |
 | Benkespile | 23×98 | 800 | **10** |
 | Køyespile | 23×98 | 800 | **14** |
+| Endespile | 23×98 | 764 | **2** |
 | Stigevange | 36×48 | 1700 | **2** |
+| Endelist | 36×48 | 98 | **2** |
 | Stigekloss | 36×48 | 36 | **8** |
 | Hjørnestolpe, front | 36×98 | 1700 | **2** |
 | Hjørnestolpe, bak (veggside) | 36×98 | 1065 | **2** |
@@ -89,7 +91,7 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Kilelekt under platens forkant (skråkappet) | 48×68 | 77 | **2** |
 | Sidevange, øvre | 48×98 | 1984 | **2** |
 
-**63 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
+**67 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
 
 Posisjoner: [kappliste](generated/kappliste.md). Hva du skal kjøpe: [innkjøpsliste](generated/innkjopsliste.md).
 
@@ -264,23 +266,25 @@ Ledd **J3**, **J4**, **J5** → [beslagliste](generated/beslagliste.md)
 
 # 7
 
-## Benkespiler
+## Benkespiler, endelister og endespiler
 
 ![Steg 7](img/steg-07.png)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **10×** | Benkespile | 23×98 | 800 |
+| **2×** | Endelist | 36×48 | 98 |
+| **2×** | Endespile | 23×98 | 764 |
 
 | | |
 |:---:|---|
-| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **20x** | Treskrue 5×60 |
+| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **28x** | Treskrue 5×60 |
 
-Ledd **J11** → [beslagliste](generated/beslagliste.md)
+Ledd **J11**, **J11-E**, **J16**, **J17** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Kjenn over hele benken med håndflaten: ingen skruehoder skal stikke opp.
 
-[Steg 7 i ord](generated/byggesteg.md#steg-7--benkespiler)
+[Steg 7 i ord](generated/byggesteg.md#steg-7--benkespiler-endelister-og-endespiler)
 
 ---
 
@@ -354,17 +358,19 @@ Ledd **J13a**, **J13b** → [beslagliste](generated/beslagliste.md)
 
 # 11
 
-## Madrass og sluttsjekk
+## Madrass og puter
 
 ![Steg 11](img/steg-11.png)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
+| **2×** | Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten) |  |  |
 | **1×** | Madrass 80 × 200 cm, **150 mm tykk** (vindu 140–155 mm) |  |  |
+| **2×** | Ryggpute, skum **100 mm** (332 × 800 mm) |  |  |
 
 ⚠️ Ettertrekk alle festemidler som kan ettertrekkes.
 
-[Steg 11 i ord](generated/byggesteg.md#steg-11--madrass-og-sluttsjekk)
+[Steg 11 i ord](generated/byggesteg.md#steg-11--madrass-og-puter)
 
 ---
 

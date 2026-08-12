@@ -26,10 +26,12 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **191** | benkevangens underkant / stubbefotens topp |
 | **259** | benkevangens overkant = trinn 1 = platens underside i sengestilling |
 | **277** | platens overside i sengestilling |
-| **282** | benkeoverflate (sittehøyde) |
+| **282** | benkeoverflate (sittehøyde uten pute) |
+| **382** | **puteoverflate — nedre soveflate og sittehøyde med pute** (V13) |
 | **414** | bordbærelektas underkant |
 | **482** | bordbærelektas overkant = trinn 2 = platens underside i bordstilling |
 | **500** | bordplate |
+| **714** | ryggputens topp i sofastilling (V13) |
 | **720** | trinn 3 |
 | **958** | trinn 4 |
 | **967** | endebjelkens underkant |
@@ -97,7 +99,9 @@ Bredden deltar **ikke** i begrensningene på stillingsbyttet — det er høyden 
 
 **Køyespiler:** 14 stk., første spile starter på X 20, deling 142,46 mm, siste spile slutter på X 1970. Åpning mellom spilene 44,46 mm.
 
-**Benkespiler:** 5 per benk, deling 112,25 mm fra ytterveggen og innover.
+**Benkespiler:** 5 per benk, deling 112,25 mm, felt X 98..645 (speilvendt på den andre benken).
+
+**Endespiler (V13):** 1 per benk, 764 mm lang, X 0..98 og 1892..1990, Y -12..752. Den er kortere fordi den starter på den bakre hjørnestolpens forside, og den lukker feltet helt ut til veggen — spalten inn til første benkespile er 0 mm. Uten den stopper soveflaten nede 98 mm fra veggen i hver ende. Endelisten under den er 36×48 × 98 mm, skrudd på stolpens forside (J17).
 
 ## Skruerader i rammeleddene
 
@@ -123,11 +127,16 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 | **Madrasstykkelse** | **140–155 mm — kjøp 150 mm.** Åpningen fra madrassens overside opp til nedre rekkverksbånd skal ligge i EN 747-båndet 60–75 mm. Tynnere enn 140 og åpningen blir større enn 75; **tykkere enn 155 og den faller ned i klemvinduet under 60 mm**. En vanlig 160 mm madrass er altså ULOVLIG her. Modellen tegner 150 mm, som gir 65 mm — midt i båndet |
 | **Maks madrasstykkelse merkes på sengen** | 155 mm. EN 747 krever at maksmålet står permanent på sengen. Merk linja 1341 mm over gulvet — 155 mm over spilene — på innsiden av en fremre stolpe (steg 11) |
 | Madrassens sideveis vandring | ingen — madrassen fyller hele bredden mellom veggen og de fremre stolpene |
-| Puter i underetasjen, dybde | 798 mm |
-| Pute over venstre benk | 645 mm bred |
-| Pute over platen (midten) | 700 mm bred — **måles etter sonen, ikke etter platen**: platen er 574 mm, så puten bygger ut en 63 mm åpen stripe på hver side (K2) |
-| Pute over høyre benk | 645 mm bred |
-| Midtputen er tykkere enn benkeputene med | 5 mm — platen ligger så mye lavere enn benkeflaten, og det er nettopp plassen putene skal folde seg ned i |
+| **Soveflate, underetasjen** | **1990 × 800 mm** — samme lengde som overkøyen. De to bakre hjørnestolpene står i flaten og tar et 98 × 36 mm hjørne i hver ende; ellers er den hel |
+| **Puter, tykkelse** | **100 mm, alle fire.** Lik tykkelse er hele poenget: fire like tykke puter er én seng. Sittehøyden blir 282 + 100 = **382 mm** |
+| Puter, dybde | 800 mm — hele flatens dybde, vegg til fremre stolpeplan |
+| **Benkepute (2 stk.)** | **663 × 800 × 100 mm** — 1/3 av lengden. Skjær et 98 × 36 mm hakk i veggkanten, der stolpen står |
+| **Ryggpute (2 stk.)** | **332 × 800 × 100 mm** — 1/6 av lengden. Rene rektangler |
+| Regnestykket | 663 + 332 + 332 + 663 = **1990 mm**. 1990 deler seg ikke på 6, så tredelen er rundet ned og sjettedelen opp — summen er eksakt, og det er summen som må stemme |
+| Alle fire av én skumplate | 80 × 200 cm dekker dem: 800 mm er nøyaktig dybden og 2000 mm er 10 mm mer enn lengden. Fire tverrkapp |
+| Midtsonen ligger | 5 mm lavere enn benkene (377 mot 382 mm). Putene er like tykke likevel — skummet tar de 5 millimeterne, og ingen puteskjøt ligger på en sonegrense |
+| Hodehøyde over nedre soveflate | 781 mm til køyespilene (683 mm under sidevangene) |
+| Ryggpute i sofastilling | står på høykant ytterst på hver benk: 100 mm tykk, 800 mm dyp, 332 mm høy, topp 714 mm. Ryggen mot bordbærelekta |
 
 ## Sikkerhetsmål (EN 747)
 

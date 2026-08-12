@@ -514,6 +514,29 @@ stikke ut forbi foten i det hele tatt — den ender på den.
 
 Én skrue i hver ende, ned i vangen. Forsenk. Dette er en sitteflate.
 
+### J11-E, J16 og J17 — endespilen og endelisten
+
+De tre leddene helt ute ved veggen. De finnes fordi soveflaten nede skal være
+like lang som overkøyen, og fordi den bakre hjørnestolpen står i veien for en
+vanlig benkespile der.
+
+**J17 — endelist → bakre hjørnestolpe.** Listen er 36×48 × 98 mm og skrus
+**flatt på stolpens forside**, med overkanten i flukt med benkevangens overkant
+(259 mm over gulvet). To 5×60 ved siden av hverandre langs listen. Regn på
+skruelengden før du bytter den ut: 36 mm går gjennom listen og 24 mm inn i en
+stolpe som er 36 mm tykk, så det står 12 mm igjen til baksiden — og baksiden av
+den stolpen **er veggflaten**. En 6×80 går tvers igjennom. Dette er det eneste
+leddet i sengen som går inn i den bakre stolpens forside; flaten er 98 × 1065 mm
+og helt ubrukt ellers.
+
+**J16 — endespile → endelist** og **J11-E — endespile → fremre benkevange.**
+Én 5×60 ned i hver ende, akkurat som J11. Endespilen er 764 mm og ikke 800: den
+starter på stolpens forside. Legg den helt inntil naboen — spalten der skal være
+null, ikke «omtrent null».
+
+Listen henger i sine to skruer, uten kloss under, akkurat som J1, J8 og J8-B.
+Lasttallet står i vedlegg A.
+
 ### J12 — Bordbærelekt → bakre hjørnestolpe
 
 Lekta går fra stolpe til stolpe og støter mot stolpenes sideflater med endene,
@@ -711,6 +734,10 @@ over sengesetet er det stigen som er taket. Veien er målt på solidene, ramme f
 ramme (`mise run film-mekanisme`), og filmen under **er** den prøven — ikke en
 tegning av den:
 
+0. **Ta av alle fire putene først.** Dette er ikke ryddighet: enheten bæres
+   sidelengs i sjakten mellom benkespilenes overkant (282) og bordbærelektas
+   underside (414), 132 mm, og en 100 mm pute som ligger på benken fyller 100
+   av dem. Med putene på er ombyggingen fysisk sperret.
 1. **Løft rett opp**, ca. 12 cm, til enheten står midt i overføringssjakten.
 2. **Skyv platen sidelengs** inn over benken, til den er klar av stigen —
    **vannrett hele veien**. Sjakten mellom benkespilenes overkant (282) og
@@ -803,41 +830,124 @@ rekkverket — og står i [nøkkelmålene](generated/nokkelmal.md#madrass-og-put
 **Maksmålet skal merkes permanent på sengen** (steg 11); EN 747 krever det, og
 den som bytter madrass om ti år skal kunne lese grensen av sengen selv.
 
-### Underetasjen — tre puter
+### Underetasjen — fire puter
 
-Underetasjen er sofa, bord og ekstraseng i én. Sengeflaten er tre soner: to
-benker og platen mellom dem. Derfor tre puter, ikke én madrass.
+Underetasjen er sofa, bord og ekstraseng i én, og **putene ER madrassen
+nede**. Det er hele ideen bak nivået: det du sitter på om dagen er det du
+sover på om natten, og de fire putene er derfor ikke fire løse gjenstander —
+de er én seng, delt i fire.
 
-Platen ligger 5 mm lavere enn benkeflaten — de tre sonene ligger praktisk talt
-i samme plan. Midtputen skal være de 5 millimeterne tykkere, så de tre putene
-ender likt. Det er ikke lenger noe **spor** å folde sofaputene ned i; folden tas
-opp av putene selv. Til gjengjeld er liggeflaten i underetasjen jevnere enn den
-var, og det er den som betyr noe når underetasjen brukes som seng.
+**Soveflaten nede er 1990 × 800 mm — samme lengde som overkøyen.** Det ble den
+i denne runden. Benkespilefeltet stoppet 98 mm fra veggen i hver ende, fordi en
+vanlig benkespile går fra veggplanet og fram og ville skåret tvers gjennom den
+bakre hjørnestolpen. Nå ligger det en kortere **endespile** der, 764 mm, som
+starter på stolpens forside og hviler på en **endelist** skrudd flatt på den
+samme stolpen. Se steg 7 og J16/J17. Uten den er ikke dette en seng i full
+lengde, og putekanten har ingenting under seg.
 
-**Midtsonen er 700 mm bred, men platen er 574.** Etter K2 står det derfor en
-**63 mm åpen stripe** langs hver side av platen, hele 798 mm fra veggen og fram
-til stigen — samme forsenkning, bare 18 mm dypere, og åpen ned mot den bakre
-benkevangen bakerst og gangsonen ellers. **Midtputen skal måles etter SONEN, 700
-mm, ikke etter platen**, så den bygger stripene ut sammen med forsenkningen.
-Skum bygger 63 mm ut uten videre — sengens egen spilebunn over ligger på 44,5
-mm mellom spilene, og benkene på 14,25.
+**Stolpen står i flaten.** Det er den ene tingen som ikke lot seg fjerne: de to
+bakre hjørnestolpene tar et hjørne på 98 × 36 mm inne i soveflaten, helt ute ved
+veggen i hver ende. Derfor skjæres et **hakk på 98 × 36 mm** i veggkanten på
+hver av de to benkeputene. Brødkniv, ett minutt.
 
-Stripene er der med hensikt og ikke ved uhell: 63 mm ligger i EN 747-båndet
-60–75 mm, der hele lemmet går fritt, og de er prisen for at platen skal kunne
-senkes ned i bordstillingen uten å treffe blindt. Se tabellen over lovlige
-platebredder i [nøkkelmål](generated/nokkelmal.md#platebredden-er-kvantisert--lovlige-vinduer)
-— bredden er kvantisert, ikke en skrue man vrir på.
+### Målene — dette er det du bestiller skum etter
 
-### Tre måter å skaffe dem på — valget er åpent
+| | Mål | Ant. |
+|---|---|---:|
+| **Benkepute** | **663 × 800 × 100 mm**, med hakk 98 × 36 mm i veggkanten | 2 |
+| **Ryggpute** | **332 × 800 × 100 mm**, rent rektangel | 2 |
+
+**Regnestykket er asserten.** Benkeputen er 1/3 av lengden og ryggputen 1/6, og
+lagt etter hverandre dekker de fire nøyaktig hele flaten:
+
+> 663 + 332 + 332 + 663 = **1990 mm**
+
+1990 deler seg ikke på seks. Tredelen er derfor rundet ned og sjettedelen opp —
+0,33 mm hver vei — og summen er eksakt. Det er summen som må stemme; ingen
+kapper en tredels millimeter skum. Modellen sjekker dekningen som areal, ikke
+som påstand: de fire puteflatene skal legge seg over soveflaten uten overlapp og
+uten hull, ellers stopper `mise run build`.
+
+**Alle fire er 100 mm tykke.** Lik tykkelse er ikke en forenkling, det er
+kravet: fire like tykke puter er én flat seng, fire ulike er en seng med trinn i.
+Valget av nettopp 100 mm står på fire tall:
+
+* **Én skumplate dekker alt.** 80 × 200 cm er 800 × 2000 mm — 800 er nøyaktig
+  flatens dybde og 2000 er 10 mm mer enn lengden. Fire tverrkapp, og du er
+  ferdig. Det gjelder like godt for en billig skummadrass 80 × 200 som for en
+  plate fra en skumforretning.
+* **Sittehøyden** blir 282 + 100 = **382 mm**. Det er en barnestol.
+* **Bordplaten** ligger 118 mm over seteputen, undersiden 100 mm. Går du til
+  120 mm skum blir de 98 og 80, og bordet begynner å ligge i fanget.
+* **Hodehøyden** over soveflaten nede er 781 mm opp til køyespilene (683 under
+  sidevangene). Det er sitte-opp-høyde for et barn.
+
+120 mm skum finnes i samme handel og ville også virket — det er mykere å sitte
+på og strammere mot bordet. Da må **alle fire** være 120.
+
+### Midtsonen ligger 5 mm lavere, og putene er like tykke likevel
+
+Platen i midten ligger 5 mm under benkeflaten (277 mot 282). Den gamle regelen
+var at midtputen skulle være de 5 millimeterne tykkere. Den regelen er ute, av
+to grunner: alle fire skal være like tykke, og **ingen puteskjøt ligger lenger
+på en sonegrense** — skjøtene faller på 663 og 1327, mens sonene skifter på 645
+og 1345. De 5 millimeterne tas av skummet, som er akkurat det V6 kappet
+forsenkningen fra 18 til 5 for.
+
+**Midtsonen er 700 mm bred, men platen er 574.** Etter K2 står det en **63 mm
+åpen stripe** langs hver side av platen, hele 798 mm fra veggen og fram til
+stigen. Den bygges nå ut av putene som ligger over den — benkeputen henger 18 mm
+utenfor benkeenden og ryggputen tar resten. Skum bygger 63 mm ut uten videre:
+sengens egen spilebunn over ligger på 44,5 mm mellom spilene, og benkene på
+14,25. Stripene er der med hensikt: 63 mm ligger i EN 747-båndet 60–75 mm, der
+hele lemmet går fritt, og de er prisen for at platen skal kunne senkes ned i
+bordstillingen uten å treffe blindt. Se tabellen over lovlige platebredder i
+[nøkkelmål](generated/nokkelmal.md#platebredden-er-kvantisert--lovlige-vinduer).
+
+### Hvor de ligger — og hvor de står
+
+**Sengestilling:** alle fire flatt, etter hverandre. Benkepute, ryggpute,
+ryggpute, benkepute, fra vegg til vegg.
+
+**Sofastilling:** de to benkeputene ligger **nøyaktig der de lå** — de flyttes
+aldri. De to ryggputene reises på høykant ytterst på hver benk, oppå seteputen,
+med den 800 mm lange kanten inn i dybden: 100 mm tykke, 800 mm dype, 332 mm
+høye, topp 714 mm over gulvet. Ombygging er altså **to puter, ikke fire**.
+
+Ryggputen står der den står fordi det er det eneste stedet den får plass.
+Ryggen mot bakveggen — det opplagte — går ikke: puten er 800 mm i sin andre
+retning, og bak benken er det bare 645 mm vegg før gangbukta begynner, og fra
+X 708 står bordplaten i veien. Stilt på høykant blir den 800 mm høy og treffer
+undersiden av sidevangen på 1065. Det ene stedet 800 mm står oppreist her, er
+**på tvers av benken**, altså i enden — og da er svaret på hva denne sofaen er
+også gitt: to seter som vender inn mot et lavt bord, med ryggen i hver sin ende.
+Benken er 800 mm dyp, ryggen er 800 mm bred, og det er plass til to i bredden.
+
+To ting holder den: **bordbærelekta**, som går langs hele bakveggen på Z
+414–482 og som ryggputen lener seg mot over 100 × 68 mm, og hjørnestolpens
+innerflate sideveis. Puten står derfor 48 mm fram fra veggplanet, og forkanten
+lander 12 mm utenfor sengens forkant. Det er en løs skumpute i én stilling, ikke
+sengens dybde — sengen er 836 mm dyp som før.
+
+### Putene av FØR du bygger om
+
+Plateenheten bæres **sidelengs inn over benken** i sjakten mellom benkespilenes
+overkant (282) og bordbærelektas underside (414) — 132 mm. En 100 mm pute som
+ligger på benken fyller 100 av dem. Ombyggingen er altså fysisk sperret med
+putene på, og modellen regner det ut selv. Første steg i begge retninger:
+**ta av alle fire putene.**
+
+### Å skaffe skummet
 
 | | Hva | Ca. pris | Merknad |
 |---|---|---|---|
-| **a** | Industrisøm, skumplate 12 cm kvalitet 35P, 120 × 200, kappes til | ≈ 2 590 kr | Én plate dekker alle tre putene. Fastest og mest «møbelaktig». Du kapper selv, eller får det kappet |
-| **b** | Billig skummadrass 80 × 200 × 10 fra en møbelkjede, kappes til | ≈ 450 kr | Klart billigst. 10 cm er i tynneste laget som sitteunderlag — legg en fastere topper på de to benkeputene |
-| **c** | Kaldskum 39K, eller mål-tilpasset fra maaho.com | ≈ 4 299 kr | Dyrest, men du får riktig mål og riktig fasthet levert, uten å kappe |
+| **a** | Skummadrass 80 × 200 × 10 fra en møbelkjede, deles i fire | ≈ 450 kr | Klart billigst, og målet passer på millimeteren. Fastheten er i tynneste laget som sitteunderlag — legg en fastere topper på de to benkeputene |
+| **b** | Industrisøm, skumplate 10 cm kvalitet 35P, 80 × 200, kappes til | ≈ 2 200 kr | Fastest og mest «møbelaktig». Du kapper selv, eller får det kappet |
+| **c** | Kaldskum 39K, eller mål-tilpasset fra maaho.com | ≈ 4 300 kr | Dyrest, men du får riktig mål og riktig fasthet levert, uten å kappe |
 
 **Alle tre trenger trekk.** Skum uten trekk smuldrer og blir skittent. Regn med
-trekk som en egen post uansett hvilken vei du går.
+trekk som en egen post uansett hvilken vei du går — fem trekk, ett til
+madrassen og fire til putene.
 
 **Skjøt putene til hverandre** med borrelås eller trykknapper i trekkene. Ellers
 sklir de fra hverandre den første natta noen sover der.
@@ -1077,6 +1187,9 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | Ledd | Bæremåte | Spenn / flate | Last | Utn. | Dom |
 |---|---|---|---|---:|---|
 | Benkespile 23×98 | Bøyning — samme stykke som køyespilen | 752 mm c/c | 0,5 kN på én spile | **0,50** | ✓ Delingen er tettere her, 112,25 mm, så en fot tar minst tre spiler |
+| Endespile 23×98 (V13) | Bøyning — samme stykke, kortere spenn | 722 mm c/c | 0,5 kN på én spile | **0,46** | ✓ Spennet er 30 mm kortere enn feltets, så raden over er den strenge |
+| Endespile → endelist | Trelagring 98 × 36 | 3528 mm² → 8,2 kN | 0,25 kN | 0,03 | ✓ |
+| Endelist → bakre stolpe (J17) | Skruskjær, 2 × 5 mm — hele festet, ingen kloss under | 3,0 kN | 0,25 kN | **0,08** | ✓ Med hele spilelasten stående rett over listen: 0,17 |
 | Spile → benkevange | Trelagring 48 × 98 | 4704 mm² → 10,9 kN | 0,5 kN | 0,05 | ✓ |
 | Bakre benkevange 48×68 | Bøyning over åpningen mellom stubbeføttene | 700 mm | 0,5 kN | **0,12** | ✓ Ved 1 kN: 0,24 |
 | Fremre benkevangebit 48×68 | Bøyning, to opplegg, ingen utkraging | 584 mm | 0,5 kN | < 0,12 | ✓ Innerenden lander helt på stubbefoten — rent endeopplegg, null utkraging |
@@ -1109,7 +1222,7 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 |---|---|---|
 | Langs rommet | De to sideveggene, og de fire hjørnestolpene som står inntil dem | ✓ |
 | I dybden, øvre nivå | Portalramme i hver ende — to stolper og en endebjelke, festet i begge hjørner — pluss veggfestet J14, som binder hele den bakre sidevangen til veggen | ✓ Veggfestet fjerner all gynging |
-| I dybden, nedre nivå | Den gjennomgående bakre benkevangen, de ti benkespilene og platen danner en vannrett skive som binder alle stolper og føtter sammen | ✓ |
+| I dybden, nedre nivå | Den gjennomgående bakre benkevangen, de tolv benkespilene (ti pluss de to endespilene) og platen danner en vannrett skive som binder alle stolper og føtter sammen | ✓ |
 | Vipping forover | Fotavtrykket er grunnere enn sengen er høy, men tyngdepunktet ligger godt innenfor det. Veggfestet er uansett det som avgjør | ✓ |
 
 ### A.6 De høyeste utnyttelsene

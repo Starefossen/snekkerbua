@@ -1650,7 +1650,8 @@ def remap(plines, src_c, src_r, dst_c, dst_r):
 # ---------------------------------------------------------------------------
 def universe(G):
     return {p.label: p for p in
-            list(G.parts) + [G.panel_bed] + list(G.battens_bed) + [G.mattress]}
+            list(G.parts) + [G.panel_bed] + list(G.battens_bed) + [G.mattress]
+            + list(G.CUSHIONS_BED)}
 
 
 def full_bed(G):

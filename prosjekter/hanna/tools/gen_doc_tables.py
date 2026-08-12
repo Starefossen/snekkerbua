@@ -575,10 +575,15 @@ def build_steps(G):
         ),
         dict(
             n=7,
-            title="Benkespiler",
-            parts=["Bench Slat *"],
+            title="Benkespiler, endelister og endespiler",
+            parts=["Bench Slat *", "Bench End Cleat *", "Bench End Slat *"],
             camera=(330, 30, 3.4),
-            intro="Fem spiler per benk, lagt oppå benkevangene.",
+            intro=f"Fem spiler per benk, lagt oppå benkevangene — og helt ute "
+                  f"ved hver vegg en {G.END_SLAT_LEN} mm ENDESPILE på en "
+                  f"endelist. De to endespilene er det som gjør underetasjen "
+                  f"til en seng i full lengde: uten dem stopper spilefeltet "
+                  f"{G.BENCH_SLAT_W} mm fra veggen i hver ende, og putekanten "
+                  f"har ingenting under seg.",
             do=[
                 "Legg ut alle fem spilene på én benk før du skrur, og sjekk "
                   "delingen mot kapplista.",
@@ -586,13 +591,30 @@ def build_steps(G):
                   "én skrue per ende (J11). Forsenk hodene — dette er en "
                   "sitteflate.",
                 "Gjenta speilvendt på den andre benken.",
+                f"ENDELISTEN: skru den flatt på FORSIDEN av den bakre "
+                  f"hjørnestolpen, med overkanten i flukt med benkevangens "
+                  f"overkant ({G.END_CLEAT_Z1} mm over gulvet). To 5×60 ved "
+                  f"siden av hverandre (J17) — {G.END_CLEAT_T} mm gjennom "
+                  f"listen og {G.END_CLEAT_BITE} mm inn i stolpen, så det "
+                  f"står {G.POST_T - G.END_CLEAT_BITE} mm igjen til "
+                  f"veggflaten bak. Ikke bruk lengre skrue.",
+                f"ENDESPILEN er kortere enn de andre, {G.END_SLAT_LEN} mm: "
+                  f"den starter på stolpens forside, ikke på veggen — "
+                  f"stolpen står i soveflaten her. Legg den mot veggen, tett "
+                  f"inntil naboen, og skru én skrue ned i endelisten (J16) "
+                  f"og én ned i den fremre benkevangen (J11-E).",
             ],
             check=[
                 "Kjenn over hele benken med håndflaten: ingen skruehoder skal "
                   "stikke opp.",
                 "Sett deg på begge benker.",
+                "Endespilen skal ligge i nøyaktig samme plan som de andre — "
+                  "legg en rett list på tvers over hele benken og se etter "
+                  "lys under.",
+                "Ingen skruespiss skal være synlig eller følbar på baksiden "
+                  "av den bakre stolpen. Det er veggflaten.",
             ],
-            joints={'J11': 20},
+            joints={'J11': 20, 'J11-E': 2, 'J16': 2, 'J17': 2},
         ),
         dict(
             n=8,
@@ -709,8 +731,10 @@ def build_steps(G):
         ),
         dict(
             n=11,
-            title="Madrass og sluttsjekk",
-            parts=["Mattress *"],
+            title="Madrass og puter",
+            parts=["Mattress *", "Seat Cushion *",
+                   "Back Cushion Left (bed mode)",
+                   "Back Cushion Right (bed mode)"],
             camera=(330, 26, 3.4),
             no_fasteners=True,
             info_panel=True,
@@ -727,7 +751,20 @@ def build_steps(G):
                 "Legg madrassen på plass. En 80 × 200 presses de siste "
                   "millimeterne inn mellom veggene, og den skal fylle hele "
                   "dybden fra veggen til de fremre stolpene.",
-                "Legg de tre putene i underetasjen på plass.",
+                f"UNDERETASJEN: fire puter, alle "
+                  f"{G.CUSHION_T} mm tykke og {G.LOWER_SLEEP_DEPTH} mm dype. "
+                  f"To benkeputer på {G.SEAT_CUSHION_LEN} mm og to ryggputer "
+                  f"på {G.BACK_CUSHION_LEN} mm — lagt etter hverandre dekker "
+                  f"de nedre soveflate nøyaktig, "
+                  f"{G.SEAT_CUSHION_LEN} + {G.BACK_CUSHION_LEN} + "
+                  f"{G.BACK_CUSHION_LEN} + {G.SEAT_CUSHION_LEN} = "
+                  f"{G.LOWER_SLEEP_LEN} mm.",
+                f"Skjær et {G.CUSHION_NOTCH[0]} × {G.CUSHION_NOTCH[1]} mm "
+                  f"hakk i veggkanten på hver av de to benkeputene, der den "
+                  f"bakre hjørnestolpen står. Brødkniv.",
+                "SOFASTILLING: benkeputene ligger der de ligger — de flyttes "
+                  "aldri. Ryggputene reises på høykant ytterst på hver benk, "
+                  "med ryggen mot bordbærelekta.",
                 f"MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er "
                   f"ikke en tusjstrek som skal kunne tørkes bort: skriv "
                   f"«MAKS MADRASS {G.MATTRESS_H_MAX} MM» på innsiden av en "
@@ -769,7 +806,7 @@ def _match(spec, label):
 def resolve_steps(G, steps):
     """Attach the concrete part labels to every step and check the cover."""
     universe = (list(G.parts) + [G.panel_bed] + list(G.battens_bed)
-                + [G.mattress])
+                + [G.mattress] + list(G.CUSHIONS_BED))
     by_label = {p.label: p for p in universe}
     taken = {}
     for st in steps:
@@ -793,6 +830,22 @@ def resolve_steps(G, steps):
     return steps
 
 
+def SOFT_BUY(G, label):
+    """The shopping line for a part that is foam: the reference mattress and
+    the four cushions. They have no cut-list key because nothing is sawn."""
+    if label.startswith("Mattress"):
+        return (f"Madrass 80 × 200 cm, **{G.MATTRESS_H} mm tykk** "
+                f"(vindu {G.MATTRESS_H_MIN:.0f}–{G.MATTRESS_H_MAX:.0f} mm)",
+                "", "")
+    if label.startswith("Seat Cushion"):
+        return (f"Benkepute, skum **{G.CUSHION_T} mm** "
+                f"({G.SEAT_CUSHION_LEN} × {G.LOWER_SLEEP_DEPTH} mm, hakk "
+                f"{G.CUSHION_NOTCH[0]} × {G.CUSHION_NOTCH[1]} i veggkanten)",
+                "", "")
+    return (f"Ryggpute, skum **{G.CUSHION_T} mm** "
+            f"({G.BACK_CUSHION_LEN} × {G.LOWER_SLEEP_DEPTH} mm)", "", "")
+
+
 def step_part_rows(G, st, cut_index):
     """[(antall, navn, dimensjon, lengde), ...] for the labels this step adds.
 
@@ -802,10 +855,8 @@ def step_part_rows(G, st, cut_index):
     counts = {}
     for lbl in st["labels"]:
         key = cut_index.get(lbl)
-        if key is None:                       # the reference mattress
-            key = (f"Madrass 80 × 200 cm, **{G.MATTRESS_H} mm tykk** "
-                   f"(vindu {G.MATTRESS_H_MIN:.0f}–{G.MATTRESS_H_MAX:.0f} mm)",
-                   "", "")
+        if key is None:                       # bought as foam, not cut as wood
+            key = SOFT_BUY(G, lbl)
         counts[key] = counts.get(key, 0) + 1
     return [(qty, name, section, _fmt(length) if section else "")
             for (name, section, length), qty in sorted(counts.items())]
@@ -838,6 +889,8 @@ NO_NAMES = {
     "Bench rail, front segment (D13)": "Benkevange, front (bit)",
     "Bench stub leg (W3)": "Stubbefot",
     "Bench slat (C3)": "Benkespile",
+    "Bench end slat (V13)": "Endespile",
+    "Bench end cleat (V13)": "Endelist",
     "Upper bed slat, short (D5/W4)": "Køyespile, kort (mot bakre stolpe)",
     "Upper bed slat, to the wall (W4)": "Køyespile, lang (inn til veggen)",
     "Upper bed slat": "Køyespile",
@@ -866,6 +919,8 @@ LABEL_TO_CUT = [
     ("Bench Rail Front", "Bench rail, front segment (D13)"),
     ("Bench Stub Leg", "Bench stub leg (W3)"),
     ("Bench Slat", "Bench slat (C3)"),
+    ("Bench End Slat", "Bench end slat (V13)"),
+    ("Bench End Cleat", "Bench end cleat (V13)"),
     ("Guard Rail Front", "Guard rail, front segment (D2/D7/D13)"),
     ("Table Ledger Back", "Table ledger, back"),
     ("Movable Panel", "Movable panel"),
@@ -1158,6 +1213,36 @@ def emit_innkjopsliste(G, out_dir):
                      f"går av rest og du trenger ikke kjøpe bord til dem. "
                      f"Se [kapplista](kappliste.md).\n\n")
 
+    # MYKT. The mattress and the four cushions are the only things on the
+    # shopping list that are not timber, and they were the only things not on
+    # it at all - the reader had to find them in ASSEMBLY §5. They belong here,
+    # in their own section, so that one list is the whole trip.
+    L.append("## Mykt — kjøpes, ikke kappes\n\n")
+    L.append("Ikke trelast, men det står på samme handletur. Skum kjøpes som "
+             "plate eller som ferdig skummadrass og kappes med brødkniv eller "
+             "elektrisk kniv.\n\n")
+    L.append("| Hva | Mål | Ant. | Merknad |\n|---|---|---:|---|\n")
+    L.append(f"| Madrass, overkøye | 80 × 200 cm, **{G.MATTRESS_H} mm tykk** "
+             f"| 1 | Vindu {G.MATTRESS_H_MIN:.0f}–{G.MATTRESS_H_MAX:.0f} mm. "
+             f"En vanlig 160 mm er ULOVLIG her — se nøkkelmål |\n")
+    L.append(f"| **Benkepute**, underetasjen | "
+             f"**{G.SEAT_CUSHION_LEN} × {G.LOWER_SLEEP_DEPTH} × "
+             f"{G.CUSHION_T} mm** | 2 | Hakk {G.CUSHION_NOTCH[0]} × "
+             f"{G.CUSHION_NOTCH[1]} mm i veggkanten, der den bakre "
+             f"hjørnestolpen står |\n")
+    L.append(f"| **Ryggpute**, underetasjen | "
+             f"**{G.BACK_CUSHION_LEN} × {G.LOWER_SLEEP_DEPTH} × "
+             f"{G.CUSHION_T} mm** | 2 | Rene rektangler |\n")
+    L.append(f"| Trekk | — | 5 | Skum uten trekk smuldrer. Regn det som en "
+             f"egen post |\n\n")
+    L.append(f"**De fire putene er én skumplate.** "
+             f"{G.SEAT_CUSHION_LEN} + {G.BACK_CUSHION_LEN} + "
+             f"{G.BACK_CUSHION_LEN} + {G.SEAT_CUSHION_LEN} = "
+             f"{G.LOWER_SLEEP_LEN} mm, og dybden er {G.LOWER_SLEEP_DEPTH} mm "
+             f"— altså nøyaktig en 80 × 200 skumplate med "
+             f"{G.CUSHION_SHEET_WASTE} mm til overs på lengden. Kjøp én "
+             f"plate, kapp fire ganger. Samme regnestykke gjelder om du "
+             f"heller kjøper en billig skummadrass 80 × 200 og deler den.\n\n")
     L.append("## Merknader fra butikken\n\n")
     board = G.sec(G.BOARD36_T, G.BOARD36_W).replace("x", "×")
     slat = G.sec(G.BOARD23_T, G.BOARD36_W).replace("x", "×")
@@ -1241,11 +1326,14 @@ def emit_nokkelmal(G, out_dir, rows):
         (G.BENCH_RAIL_TOP, "benkevangens overkant = trinn 1 = platens "
                            "underside i sengestilling"),
         (G.PANEL_TOP_BED, "platens overside i sengestilling"),
-        (G.BENCH_TOP, "benkeoverflate (sittehøyde)"),
+        (G.BENCH_TOP, "benkeoverflate (sittehøyde uten pute)"),
+        (G.CUSHION_TOP_BENCH, "**puteoverflate — nedre soveflate og "
+                              "sittehøyde med pute** (V13)"),
         (G.LEDGER_BACK_Z0, "bordbærelektas underkant"),
         (G.RUNG_TOPS[1], "bordbærelektas overkant = trinn 2 = platens "
                          "underside i bordstilling"),
         (G.PANEL_TOP_TABLE, "bordplate"),
+        (G.BACKREST_Z1, "ryggputens topp i sofastilling (V13)"),
         (G.RUNG_TOPS[2], "trinn 3"),
         (G.RUNG_TOPS[3], "trinn 4"),
         (G.END_BEAM_Z0, "endebjelkens underkant"),
@@ -1388,7 +1476,18 @@ def emit_nokkelmal(G, out_dir, rows):
              f"slutter på X {G.SLAT_X_END}. Åpning mellom spilene "
              f"{_fmt(slat_pitch - G.BED_SLAT_W)} mm.\n\n")
     L.append(f"**Benkespiler:** {G.BENCH_SLAT_COUNT} per benk, deling "
-             f"{_fmt(G.BENCH_SLAT_PITCH)} mm fra ytterveggen og innover.\n\n")
+             f"{_fmt(G.BENCH_SLAT_PITCH)} mm, felt X {G.BENCH_SLAT_X_START}.."
+             f"{G.BENCH_LEN} (speilvendt på den andre benken).\n\n")
+    L.append(f"**Endespiler (V13):** 1 per benk, {G.END_SLAT_LEN} mm lang, X "
+             f"{G.END_SLAT_X[0]}..{G.END_SLAT_X[0] + G.BENCH_SLAT_W} og "
+             f"{G.END_SLAT_X[1]}..{G.WALL_SPAN}, Y {G.END_SLAT_Y0}.."
+             f"{G.END_SLAT_Y1}. Den er kortere fordi den starter på den bakre "
+             f"hjørnestolpens forside, og den lukker feltet helt ut til "
+             f"veggen — spalten inn til første benkespile er "
+             f"{G.END_SLAT_GAP} mm. Uten den stopper soveflaten nede "
+             f"{G.BENCH_SLAT_W} mm fra veggen i hver ende. Endelisten under "
+             f"den er {G.END_CLEAT_T}×{G.END_CLEAT_H} × {G.END_CLEAT_LEN} mm, "
+             f"skrudd på stolpens forside (J17).\n\n")
 
     L.append("## Skruerader i rammeleddene\n\n")
     L.append(f"Ingen bolt går inn i en stolpe. Stolpen er {G.POST_T} mm tykk, "
@@ -1458,18 +1557,45 @@ def emit_nokkelmal(G, out_dir, rows):
     else:
         L.append("| Madrassens sideveis vandring | ingen — madrassen fyller "
                  "hele bredden mellom veggen og de fremre stolpene |\n")
-    L.append(f"| Puter i underetasjen, dybde | {G.PANEL_LEN} mm |\n")
-    L.append(f"| Pute over venstre benk | {G.BENCH_LEN} mm bred |\n")
-    L.append(f"| Pute over platen (midten) | "
-             f"{G.OPEN_FLOOR_X[1] - G.OPEN_FLOOR_X[0]} mm bred — **måles "
-             f"etter sonen, ikke etter platen**: platen er {G.PANEL_W} mm, "
-             f"så puten bygger ut en {G.PANEL_SIDE_GAP} mm åpen stripe på "
-             f"hver side (K2) |\n")
-    L.append(f"| Pute over høyre benk | {G.BENCH_LEN} mm bred |\n")
-    L.append(f"| Midtputen er tykkere enn benkeputene med | "
-             f"{G.PANEL_BENCH_DIP} mm — platen ligger så mye lavere enn "
-             f"benkeflaten, og det er nettopp plassen putene skal folde seg "
-             f"ned i |\n\n")
+    L.append(f"| **Soveflate, underetasjen** | **{G.LOWER_SLEEP_LEN} × "
+             f"{G.LOWER_SLEEP_DEPTH} mm** — samme lengde som overkøyen. De to "
+             f"bakre hjørnestolpene står i flaten og tar et "
+             f"{G.CUSHION_NOTCH[0]} × {G.CUSHION_NOTCH[1]} mm hjørne i hver "
+             f"ende; ellers er den hel |\n")
+    L.append(f"| **Puter, tykkelse** | **{G.CUSHION_T} mm, alle fire.** Lik "
+             f"tykkelse er hele poenget: fire like tykke puter er én seng. "
+             f"Sittehøyden blir {G.BENCH_TOP} + {G.CUSHION_T} = "
+             f"**{G.CUSHION_TOP_BENCH} mm** |\n")
+    L.append(f"| Puter, dybde | {G.LOWER_SLEEP_DEPTH} mm — hele flatens dybde, "
+             f"vegg til fremre stolpeplan |\n")
+    L.append(f"| **Benkepute (2 stk.)** | **{G.SEAT_CUSHION_LEN} × "
+             f"{G.LOWER_SLEEP_DEPTH} × {G.CUSHION_T} mm** — 1/3 av lengden. "
+             f"Skjær et {G.CUSHION_NOTCH[0]} × {G.CUSHION_NOTCH[1]} mm hakk i "
+             f"veggkanten, der stolpen står |\n")
+    L.append(f"| **Ryggpute (2 stk.)** | **{G.BACK_CUSHION_LEN} × "
+             f"{G.LOWER_SLEEP_DEPTH} × {G.CUSHION_T} mm** — 1/6 av lengden. "
+             f"Rene rektangler |\n")
+    L.append(f"| Regnestykket | {G.SEAT_CUSHION_LEN} + {G.BACK_CUSHION_LEN} + "
+             f"{G.BACK_CUSHION_LEN} + {G.SEAT_CUSHION_LEN} = "
+             f"**{G.LOWER_SLEEP_LEN} mm**. {G.LOWER_SLEEP_LEN} deler seg ikke "
+             f"på 6, så tredelen er rundet ned og sjettedelen opp — summen er "
+             f"eksakt, og det er summen som må stemme |\n")
+    L.append(f"| Alle fire av én skumplate | 80 × 200 cm dekker dem: "
+             f"{G.CUSHION_SHEET[0]} mm er nøyaktig dybden og "
+             f"{G.CUSHION_SHEET[1]} mm er {G.CUSHION_SHEET_WASTE} mm mer enn "
+             f"lengden. Fire tverrkapp |\n")
+    L.append(f"| Midtsonen ligger | {G.PANEL_BENCH_DIP} mm lavere enn "
+             f"benkene ({G.CUSHION_TOP_PANEL} mot {G.CUSHION_TOP_BENCH} mm). "
+             f"Putene er like tykke likevel — skummet tar de "
+             f"{G.PANEL_BENCH_DIP} millimeterne, og ingen puteskjøt ligger på "
+             f"en sonegrense |\n")
+    L.append(f"| Hodehøyde over nedre soveflate | {G.LOWER_HEADROOM} mm til "
+             f"køyespilene ({G.LOWER_HEADROOM_RAIL} mm under sidevangene) "
+             f"|\n")
+    L.append(f"| Ryggpute i sofastilling | står på høykant ytterst på hver "
+             f"benk: {G.CUSHION_T} mm tykk, {G.LOWER_SLEEP_DEPTH} mm dyp, "
+             f"{G.BACK_CUSHION_LEN} mm høy, topp {G.BACKREST_Z1} mm. Ryggen "
+             f"mot bordbærelekta |\n\n")
 
     L.append("## Sikkerhetsmål (EN 747)\n\n| | Mål | Krav |\n|---|---:|---:|\n")
     band = f"≤ 5 eller {G.EN_LIMB_BAND[0]:.0f}–{G.MAX_GUARD_OPENING}"
@@ -2145,7 +2271,7 @@ def emit_step_meshes(G, steps, group_dir):
     os.makedirs(step_dir, exist_ok=True)
     universe = {p.label: p for p in
                 list(G.parts) + [G.panel_bed] + list(G.battens_bed)
-                + [G.mattress]}
+                + [G.mattress] + list(G.CUSHIONS_BED)}
     PRIOR = (0.82, 0.82, 0.80, 1.0)
     NEW = (0.94, 0.42, 0.10, 1.0)
 

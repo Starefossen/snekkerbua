@@ -36,11 +36,11 @@ hvert merke står på det festemiddelet det navngir.*
 | | |
 |---|---|
 | **Ytre mål** | 1990 × 836 × 1700 mm — fyller nisjen fra vegg til vegg på 1990 mm. Gjennomgående deler kappes 1984 mm, for et bord på 1990 mm lar seg ikke svinge inn i en åpning på 1990 mm |
-| **Trevirke** | **63 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 46,8 løpemeter. 24 av de 63 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling |
-| **Stål** | **170 festemidler fordelt på 17 ledd**, **164 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert |
-| **Kontroller** | **389 asserter i modellen** og 57 til i verktøyene, alle sammen stopper bygget. Skrueretningene er utledet av fysikk (5 av 21 er tvunget av tykkelsene alene); antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
+| **Trevirke** | **67 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 48,5 løpemeter. 24 av de 67 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling |
+| **Stål** | **178 festemidler fordelt på 20 ledd**, **172 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert |
+| **Kontroller** | **420 asserter i modellen** og 57 til i verktøyene, alle sammen stopper bygget. Skrueretningene er utledet av fysikk (5 av 21 er tvunget av tykkelsene alene); antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
 | **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **115 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
-| **Ut av det** | En **trykkeklar PDF på 68 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, seks skjemategninger og eksport til STEP / STL / GLB / USDZ |
+| **Ut av det** | En **trykkeklar PDF på 75 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, seks skjemategninger og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
 
 Sengens *funksjon* — en loftplate over en benk/bord/ekstraseng som stilles om
@@ -146,7 +146,7 @@ denne katalogen, så disse virker uendret uansett hvor i treet du står:
 mise run build      # modellen + alle genererte tabeller + docs/MONTERING.md
 mise run montering  # tegn strektegningene i docs/img/ på nytt
 mise run check      # kjør hele kjeden to ganger, krev byte-identisk resultat
-mise run pdf        # docs/hanna.pdf, 68 sider, trykkeklar
+mise run pdf        # docs/hanna.pdf, 75 sider, trykkeklar
 ```
 
 | Oppgave | Hva den gjør |
@@ -175,7 +175,7 @@ Alt under ligger i `prosjekter/hanna/`, og alle stier er relative til den.
 | `tools/` | Alt som leser modellen: dokumenttabeller, strektegninger, kappeside, plateside, ikoner, PDF, USD-hjelpere |
 | `docs/generated/` | Maskinskrevet, aldri redigert for hånd: kappliste, innkjøpsliste, nøkkelmål, beslagliste, skrueretninger, stegtekst, `byggesteg.json` |
 | `docs/img/`, `docs/schematics/` | De innsjekkede tegningene — så manualen kan leses og skrives ut på en maskin uten noe av denne verktøykjeden |
-| `docs/hanna.pdf` | Manualen på 68 sider. Bevisst utenfor git — verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
+| `docs/hanna.pdf` | Manualen på 75 sider. Bevisst utenfor git — verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
 | `parts.tsv` | Innsjekket regresjonsavtrykk: navn, fargegruppe og omskrevet boks for hver del, i begge stillinger. En diff på den er diffen på modellen |
 | `v1/` | Den første køyesengrammen for nisjen, beholdt som historikk |
 

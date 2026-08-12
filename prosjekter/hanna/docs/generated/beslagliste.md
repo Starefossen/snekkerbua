@@ -9,7 +9,7 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 
 | Post | Behov | Kjøp |
 |---|---:|---|
-| Treskrue 5×60 forsenket Torx | 84 | 1 pk. à 100 stk. |
+| Treskrue 5×60 forsenket Torx | 92 | 1 pk. à 100 stk. |
 | Treskrue 5×40 forsenket Torx | 36 | 1 pk. à 50 stk. |
 | Treskrue 6×80 forsenket Torx | 26 | 1 pk. à 50 stk. |
 | Treskrue 6×120 forsenket Torx | 12 | 1 pk. à 20 stk. |
@@ -38,6 +38,9 @@ I tillegg trengs **D3 trelim**, én liten flaske. Den er ikke en post i tabellen
 | **J8-B** | Bakre benkevange → bakre hjørnestolpe (endeskjøt) | 2 | 2× Treskrue 6×80 forsenket Torx | Først sete: ⌀18 forstner 20 mm ned LANGS skruens akse, med vinkelklossen som styring. Så ⌀6 skrått videre gjennom vangen og ⌀4 i stolpen — forbor hele veien, dette er en skråskrue nær en ende | Skrått fra vangens forside inn i stolpen, ut av et flatbunnet sete så hodet ligger helt under treet. Vangen ligger fast mellom de to stolpene, og disse to skruene er HELE festet i enden — det står ingen kloss under den |
 | **J10** | Benkevange → stubbefot | 4 | 1× Vinkelbeslag 90×90×40×2,5 varmforsinket + 4× Treskrue 5×40 forsenket Torx + 1× Treskrue 5×60 forsenket Torx | ⌀3 i foten og i vangen. Skråskruen får først sete: ⌀18 forstner 18 mm ned langs skruens akse, med vinkelklossen som styring, så ⌀3,5 videre | Vinkelbeslaget sitter i hjørnet mellom fotens utside og vangens underside, med den ene fliken opp i vangen og den andre inn i foten; den ene 5×60 er en skråskrue nedenfra og opp i vangen, ut av et flatbunnet sete så hodet ligger helt under treet |
 | **J11** | Benkespile → benkevange (per spileende) | 20 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom spilen, forsenk hodet under flaten | Ovenfra, ned i benkevangen |
+| **J11-E** | Endespile → fremre benkevange (fremre spileende) | 2 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom spilen, forsenk hodet under flaten | Ovenfra, ned i benkevangen |
+| **J16** | Endespile → endelist (bakre spileende) | 2 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom spilen, forsenk hodet under flaten | Ovenfra, ned i endelisten |
+| **J17** | Endelist → bakre hjørnestolpe (mot stolpens forside) | 2 | 2× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom listen, ⌀3 i stolpen | Rett inn i stolpens forside, fra benkerommet — listen ligger flatt på stolpen og de to skruene er hele festet |
 | **J12** | Bordbærelekt → bakre hjørnestolpe (endeskjøt) | 2 | 1× Vinkelbeslag 40×40×20 + 2× Treskrue 5×40 forsenket Torx | ⌀3 i stolpen og i lekta — forboring er et krav: begge skruene står nær en ende, og lekta (48×68) tas i endeveden | Beslaget på stolpens innerflate, med den vannrette fliken UNDER lektas ende, så lekta har noe å hvile på og ikke bare henger i skruer |
 | **J13a** | Avstivningslekt → løs plate (limt, skrudd nedenfra) | 2 | 6× Treskrue 5×40 forsenket Torx | ⌀12 kontrabor 46 mm opp i lektas underside, ⌀3,5 videre gjennom resten av lekta. Ingenting gjennom platens overside | Nedenfra, opp gjennom lekta og 13 mm inn i den 18 mm platen. Limes med D3 trelim på hele lektas overkant først — skruene er tvinger som blir sittende |
 | **J13b** | Fremre kilelekt (vinge) → løs plate (limt, skrudd nedenfra) | 2 | 2× Treskrue 5×40 forsenket Torx | ⌀12 kontrabor opp i vingens underside TIL DET STÅR 27 mm IGJEN opp til plata — vingen er skråkappet, så det blir dypest ved roten og null ved tuppen. ⌀3,5 videre gjennom de siste 27 mm. Ingenting gjennom platens overside | Nedenfra, som J13a. Vingen ligger med forkanten i flukt med platens forkant, full høyde mot avstivningslekta og skråkappet ut mot platekanten |

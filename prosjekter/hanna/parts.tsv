@@ -1,4 +1,8 @@
 label	group	x0	x1	y0	y1	z0	z1
+Back Cushion Left (bed mode)	mattress	663	995	-48	752	277	377
+Back Cushion Left (table mode)	mattress	98	198	0	800	382	714
+Back Cushion Right (bed mode)	mattress	995	1327	-48	752	277	377
+Back Cushion Right (table mode)	mattress	1792	1892	0	800	382	714
 Bed Slat_1	boards	20	118	-48	752	1163	1186
 Bed Slat_10	boards	1302.15	1400.15	-48	752	1163	1186
 Bed Slat_11	boards	1444.62	1542.62	-48	752	1163	1186
@@ -13,6 +17,10 @@ Bed Slat_6	boards	732.308	830.308	-48	752	1163	1186
 Bed Slat_7	boards	874.769	972.769	-48	752	1163	1186
 Bed Slat_8	boards	1017.23	1115.23	-48	752	1163	1186
 Bed Slat_9	boards	1159.69	1257.69	-48	752	1163	1186
+Bench End Cleat Left	boards	0	98	-12	24	211	259
+Bench End Cleat Right	boards	1892	1990	-12	24	211	259
+Bench End Slat Left	boards	0	98	-12	752	259	282
+Bench End Slat Right	boards	1892	1990	-12	752	259	282
 Bench Rail Back (continuous)	rails	98	1892	-48	0	191	259
 Bench Rail Front Left (segment)	rails	3	645	704	752	191	259
 Bench Rail Front Right (segment)	rails	1345	1987	704	752	191	259
@@ -65,6 +73,8 @@ Rung Block Right_1	boards	1119	1155	752	788	163	211
 Rung Block Right_2	boards	1119	1155	752	788	386	434
 Rung Block Right_3	boards	1119	1155	752	788	624	672
 Rung Block Right_4	boards	1119	1155	752	788	862	910
+Seat Cushion Left	mattress	0	663	-48	752	282	382
+Seat Cushion Right	mattress	1327	1990	-48	752	282	382
 Table Ledger Back	boards	98	1892	-48	0	414	482
 Upper Side Rail Back	rails	3	1987	-48	0	1065	1163
 Upper Side Rail Front	rails	3	1987	704	752	1065	1163
