@@ -67,6 +67,45 @@ ISO_DY = -0.29
 PICTO_SIZE = 24
 PICTO_STROKE = 1.25
 
+# Menneskefiguren er det ene unntaket, og unntaket er målt.
+#
+# MÅLT KILDE: IKEAs egen anvisning til MYDAL køyeseng (AA-2207941-1), side 2,
+# rendret i 600 dpi og målt to veier - perpendikulær strekbredde i pikslene, og
+# etterpå mot PDF-ens egne w-operatorer, som ga samme svar:
+#
+#   strek                17 px  = 0,71 mm = 2,0 pt
+#   hodediameter        293 px  -> streken er 5,8 % av hodet
+#   figurhøyde         1091 px  = 46 mm -> streken er 1,56 % av høyden,
+#                                 hodet 26,9 %, figuren 3,7 hodehøyder
+#
+# Og en advarsel mot å lese for fort: IKEA-mannen har den TYKKESTE streken i
+# hele dokumentet, bortsett fra det store nei-krysset. Verktøyikonene deres er
+# 1,0 pt - halve mannen - og beslagene 0,75 pt. Hierarkiet deres er altså det
+# motsatte av det vi gjør her.
+#
+# Grunnen til at figuren deres likevel ser fin ut i streken, og vår ser tung ut,
+# er ikke vekten: det er at IKEA-mannen er en KONTUR rundt en hvit kropp, tegnet
+# i 46 mm. Streken er kanten, kroppen er papiret, og da kan kanten være tung
+# uten at figuren blir det. Vår er en strekmann i 16 mm: streken ER kroppen, og
+# tykkelsen leser som kroppsmasse. Det tallet som da lar seg flytte over er
+# forholdet inne i figuren - strek mot hode, 1:17 hos dem, 1:3,7 hos oss.
+#
+# Hele veien til 1:17 går ikke: det er 0,27 enheter = 0,22 mm, og en strekmann i
+# 0,22 mm er grå, ikke svart. Prøvd - allerede ved 0,4 enheter gråner hodet og
+# beina når ikonet settes i 72 px, som er det Markdown-manualen setter det i.
+#
+# HALVE piktogramstreken er det tynneste som er svart i begge medier - 0,5 mm på
+# papir i 19 mm, 1,9 px i 72 px - og den tar figuren fra 1:3,7 til 1:7,4.
+#
+# Verktøyene, delene og pilene beholder piktogramstreken, altså stikk i strid
+# med IKEAs rangering. Bevisst: deres rangering følger av en 46 mm silhuett, vår
+# av en 16 mm strekmann. Tegnes figuren en dag om til silhuett, snur den tilbake.
+#
+# Vekten settes her, ikke i ikonfilene; ikonfila sier bare HVA som er figur, med
+# ett merke på gruppen figuren ligger i.
+FIGURE_MARK = 'class="figur"'
+FIGURE_STROKE = PICTO_STROKE / 2
+
 _STOPWORDS = {
     "forsenket", "torx", "varmforsinket", "elforsinket", "etter", "av",
     "bøyd", "boyd", "i", "eller", "og", "med", "for", "til", "pk", "stk",
@@ -1079,6 +1118,12 @@ def icon_path(ref: str) -> str:
     return os.path.join(ICON_ROOT, *ref.split("/")) + ".svg"
 
 
+def _dedent(lines: list[str]) -> list[str]:
+    """Fjerner det felles innrykket, men beholder ikonfilas egen nesting."""
+    pad = min((len(ln) - len(ln.lstrip()) for ln in lines), default=0)
+    return [ln[pad:].rstrip() for ln in lines]
+
+
 def icon_body(ref: str) -> str:
     """Kroppen i en 24x24-ikonfil, uten <svg>-kappen og uten tomme linjer."""
     path = icon_path(ref)
@@ -1091,8 +1136,18 @@ def icon_body(ref: str) -> str:
     if not vb or (float(vb.group(1)), float(vb.group(2))) != (PICTO_SIZE,
                                                              PICTO_SIZE):
         raise ValueError(f"{path} er ikke på {PICTO_SIZE}x{PICTO_SIZE}-rutenettet")
-    return "\n".join(ln.strip() for ln in m.group(1).strip().splitlines()
-                     if ln.strip())
+    body = "\n".join(_dedent([ln for ln in m.group(1).splitlines()
+                              if ln.strip()]))
+    if FIGURE_MARK in body:
+        if not ref.startswith("hanna/"):
+            raise ValueError(f"{path}: figurmerket hører hjemme i hanna/ - en "
+                             "vendoret fil skal ligge som den kom")
+        body = body.replace(FIGURE_MARK,
+                            f'stroke-width="{_f(FIGURE_STROKE)}"')
+    if "class=" in body:
+        raise ValueError(f"{path}: ukjent class-attributt - figurmerket "
+                         f'skrives nøyaktig {FIGURE_MARK}')
+    return body
 
 
 def pictogram_svg(key: str) -> str:

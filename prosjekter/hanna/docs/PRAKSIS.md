@@ -550,14 +550,67 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   høyden sin, så en 6×120 forblir lengre enn en 5×40 også inne i panelet på
   stegsiden. Navnene leses ut av `docs/generated/beslagliste.md`, så en ny
   skruestørrelse i leddtabellen gir et nytt ikon uten at noen rører glyphfila.
-* **Piktogrammene** («før du begynner») er Lucide-baserte, én strektykkelse,
-  ingen fyll, ingen tekst i ikonet. `docs/icons/lucide/` er **vendoret, ikke
+* **Piktogrammene** («før du begynner») er Lucide-baserte, ingen fyll, ingen
+  tekst i ikonet. `docs/icons/lucide/` er **vendoret, ikke
   speilet**: der ligger bare de ikonene `PICTOGRAMS` faktisk slår opp, og
   ingenting annet. Et ikon som ikke står i den tabellen skal ut av katalogen —
   ellers vokser den til et halvt ikonbibliotek som ingen bygger leser og ingen
   lisensfil dekker meningsfullt. (Fem ubrukte ble slettet i denne runden:
   `baby`, `hammer`, `pencil`, `person-standing`, `phone`. `book-open` gikk
   samme vei da «blyanten først» avløste «les steg 0 først»-raden.)
+* **To strektykkelser, og bare to.** `PICTO_STROKE` — 1,25 av 24 enheter — er
+  vekten til alt som er en TING: verktøy, deler, senger, vegger, piler, hake og
+  kryss. Menneskefiguren har sin egen, `FIGURE_STROKE`, som er halvparten.
+  Skillet er ikke at mennesker skal være finere. På en ting er streken en
+  **kant** rundt et volum, og tykkelsen leser som blekk; på en strekmann **er**
+  streken kroppen, og tykkelsen leser som kroppsmasse. Derfor er det bare
+  figuren som tynnes — en tynnere kant hadde bare gjort siden lysere uten å
+  gjøre noe lettere.
+* **Forholdet er målt, ikke gjettet.** Kilde: IKEAs egen anvisning til MYDAL
+  køyeseng, `AA-2207941-1`, side 2, rendret i 600 dpi med `pdftoppm`. Målt to
+  veier — perpendikulær strekbredde i pikslene, og etterpå mot PDF-ens egne
+  `w`-operatorer, som ga samme svar.
+
+  | målt på IKEA-mannen | piksler @600 dpi | forhold |
+  |---|---:|---|
+  | strekbredde | 17 (= 0,71 mm = 2,0 pt) | — |
+  | hodediameter (ytre) | 293 | strek = **5,8 %** av hodet, altså **1:17** |
+  | figurhøyde | 1091 (= 46 mm) | strek = **1,56 %**, hode = **26,9 %**, figuren 3,7 hodehøyder |
+
+  Og en advarsel mot å lese dette for fort: **IKEA-mannen har den tykkeste
+  streken i hele dokumentet**, bortsett fra det store nei-krysset (5,5 pt).
+  Verktøyikonene deres er 1,0 pt — halve mannen — og beslagene i delelisten
+  0,75 pt. Hierarkiet deres er det motsatte av vårt.
+
+  Grunnen til at figuren deres likevel ser fin ut i streken, og vår ser tung ut,
+  er ikke vekten. IKEA-mannen er en **kontur rundt en hvit kropp**, tegnet i
+  46 mm: streken er kanten, kroppen er papiret, og da kan kanten være tung uten
+  at figuren blir det. Vår er en **strekmann i 16 mm** — streken *er* kroppen.
+  Det som da lar seg flytte over er forholdet inne i figuren: strek mot hode,
+  1:17 hos dem, 1:3,7 hos oss.
+
+  Hele veien til 1:17 går ikke: det blir 0,27 enheter = 0,22 mm, og en strekmann
+  i 0,22 mm er grå, ikke svart. Prøven viser at den gråner allerede ved 0,4
+  enheter når ikonet settes i 72 px, som er det Markdown-manualen setter det i.
+  **Halve piktogramstreken** er det tynneste som er svart i begge medier —
+  0,5 mm på papir i 19 mm, 1,9 px i 72 px — og den tar figuren fra 1:3,7 til
+  1:7,4. Verktøyene og tingene beholder piktogramstreken, altså stikk i strid
+  med IKEAs rangering; bevisst, fordi deres rangering følger av en 46 mm
+  silhuett og vår av en 16 mm strekmann. Tegnes figuren om til silhuett en dag,
+  snur den tilbake.
+
+  **Hodet ble stående.** IKEAs hode er 26,9 % av figurhøyden, vårt 22,4 %. Å
+  vokse dit ble prøvd og forkastet: hodet spiser da blyanten bak øret, og
+  blyanten er den ene detaljen på siden som var vanskelig å få til å lese.
+* **Figuren er ett skjelett tegnet fire ganger.** `to-personer`,
+  `en-person-nei`, `blyant-foerst` og `skrutrekker-foerst-nei` deler hode
+  (`r="2"`, ytre diameter 4,6 enheter), hals som starter nøyaktig på hodets
+  sirkel, skulderpunkt i 8,6 og bein som spriker 0,5 til siden per enhet
+  nedover. Bare posituren skiller dem. Ikonfila sier bare **hva** som er figur —
+  `class="figur"` på gruppen figuren ligger i — og `gen_glyphs` bytter merket
+  mot vekten når ikonet settes sammen. Vekten står ett sted, ikke fjorten;
+  merket i en vendoret Lucide-fil stopper bygget, for da er en fil som skulle
+  ligge urørt blitt rørt.
 * **Merkebokstavene** er ett tegn i en sirkel, samme radius overalt.
 * **De kodede glyfene.** Der et steg koder festemidlene sine, skrives
   skrueglyfen også i sin egen fyllkode (`treskrue-5x70-hatch.svg`), og det er
