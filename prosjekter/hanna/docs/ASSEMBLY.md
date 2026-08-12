@@ -616,7 +616,7 @@ kilene, bare i tykkere tre: bor opp til det står 27 mm igjen. Se J13b.
 
 I bruk står fugen uansett i trykk: platen *hviler* på lektas overkant, så
 2 kN-lasten går aldri gjennom et festemiddel. Skruene har én lastsituasjon —
-at enheten løftes etter et hjørne — og der er 64 N egenvekt (6,5 kg,
+at enheten løftes etter et hjørne — og der er 62 N egenvekt (6,3 kg,
 regnet av kroppene) mot 16 skruer.
 
 *De to alternativene, og hvorfor de tapte:* skråskruer gjennom lektas side
@@ -1013,7 +1013,7 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | **Fritt platehjørne, bar 18 mm plate** (V3, kontrollregning) | Punktlast på et fritt hjørne: utkraget stripe med effektiv bredde = egen lengde, så σ = P·a/(a·t²/6) = **6P/t²** og lengden faller ut | uavhengig av avstand | 1 kN kne | **2,66** | ✗ σ = 18,5 MPa. Gjelder like fullt om lekta står 213, 116 eller 77 mm unna — **derfor ble kilelektene ikke fjernet** |
 | **Kilelekt (vinge) under hjørnet, bøyning** (M5/V4/K2, 77 mm, 68 → 27 mm) | Utkraging fra styrelekta, med lasten på kilen selv. Med h(x) avtakende topper σ seg der h = 2 × spissen, altså 45 mm fra spissen — inne i delen, ikke ved roten | 77 mm, kritisk snitt h = 54 mm | 1 kN kne | **0,13** | ✓ σ = 2,17 MPa i C24. Roten selv: 2,08 MPa, 0,13. K2 gjorde vingen kortere og tallet falt med den (var 0,18 på 116 mm) |
 | **Kilelekt (vinge), skjær i spissen** (M5/V4) | Tverrskjær i delens tynneste snitt, 48 × 27 mm: τ = 1,5·1000/(48·27) | 27 mm spisshøyde | 1 kN kne | **0,42** | ✓ 1,16 MPa mot f<sub>v,d</sub> = 2,77. Delens dimensjonerende tall, og det som sier at spissen ikke skal bli tynnere |
-| Lekt → plate (J13a/J13b) | Limt fuge 48 × 750 mm + 6 skruer 5×40 opp fra kontrabor i hver styrelekt, 2 i hver kile, 13 mm gjenge i plata | uttrekk ≈ 0,27 kN per skrue (halvert for kryssfiner) | 0,13 kN, enheten (6,5 kg) løftet etter ett hjørne med faktor 2 | **< 0,05** | ✓ I bruk står fugen i trykk — platen hviler på lekta, lasten går ikke gjennom et festemiddel |
+| Lekt → plate (J13a/J13b) | Limt fuge 48 × 750 mm + 6 skruer 5×40 opp fra kontrabor i hver styrelekt, 2 i hver kile, 13 mm gjenge i plata | uttrekk ≈ 0,27 kN per skrue (halvert for kryssfiner) | 0,12 kN, enheten (6,3 kg) løftet etter ett hjørne med faktor 2 | **< 0,05** | ✓ I bruk står fugen i trykk — platen hviler på lekta, lasten går ikke gjennom et festemiddel |
 | Bordbærelekt 48×68 **på høykant** | Bøyning om sterk akse. **Dette er lekta som spenner fritt, ikke benkevangen:** i bordstilling hviler platen bak på bordbærelekta og foran på trinn 2, og lekta går post til post uten støtte under | 1794 mm | 0,55 kN bordlast | **0,34** | ✓ σ ≈ 6,7 MPa mot 19,5 |
 | Samme lekt, **noen lener seg tungt på bordet** | Halve den dynamiske designlasten havner på det bakre opplegget | 1794 mm | 1 kN | **0,62** | ✓ σ ≈ 12,1 MPa. Lektas dimensjonerende rad, og grunnen til at den ikke kan bli tynnere |
 | Bordbærelekt → stolpe | Skruskjær, 1 × 5 mm per beslagflik — 40 mm flik tar ikke to | 1,5 kN | 0,13 kN | 0,09 | ✓ Lekta ligger dessuten PÅ den vannrette fliken; skruen holder den bare nede |
@@ -1179,7 +1179,7 @@ det står ingen lås i beslaglista, og det skal det ikke gjøre.
   barnet ligger på.
 * **Dette er underetasjen.** Fallhøyden fra platens overside (277 mm) til gulvet
   er ~26 cm. Det er ikke fra køyehøyde.
-* **Platen er en enhet på 6,5 kg** (4,1 kg plate + 2,4 kg lekt, regnet av
+* **Platen er en enhet på 6,3 kg** (4,1 kg plate + 2,2 kg lekt, regnet av
   kroppene i modellen, ikke sitert), og styrelektene tar alle sidelengs
   frihetsgrader. Den kan bare gå rett opp, og den går ikke rett opp av seg selv.
 

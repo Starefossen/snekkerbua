@@ -2020,8 +2020,8 @@ NOSE_LEN = BATTEN_X[0] - PANEL_X0              # 116
 #       k_mod 0.9 / gamma_M 1.3. Halve it again for withdrawal into plywood
 #       rather than solid softwood and call it 265 N per screw. The assembly's
 #       own weight is computed below (PANEL_UNIT_MASS) rather than quoted:
-#       ~4.7 kg of sheet plus ~2.4 kg of lekt, about 70 N. Picked up by one
-#       corner with a factor 2 that is ~140 N, against 18 screws. ONE of them
+#       ~4.1 kg of sheet plus ~2.2 kg of lekt, about 62 N. Picked up by one
+#       corner with a factor 2 that is ~124 N, against 16 screws. ONE of them
 #       covers the whole panel twice over; utilisation on the worst-loaded
 #       group is under 0.05. The glue (D3, 48 x 750 = 36 000 mm2 per long
 #       batten) is not in that sum - it is what stops the sheet drumming on
