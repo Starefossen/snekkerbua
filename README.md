@@ -4,59 +4,59 @@
 
 *der Hans gjør ting han (ennå) ikke kan*
 
-A workshop repo, one directory per project. Every project here is built the same
-way: the model is parametric and is the only source of truth, the manual is
-generated out of the solids rather than written beside them, and nothing is
-allowed to exist until the machine has checked it.
+Et verkstedrepo, én katalog per prosjekt. Alle prosjektene her er bygd på samme
+måte: modellen er parametrisk og er den eneste kilden, manualen genereres ut av
+solidene i stedet for å skrives ved siden av dem, og ingenting får finnes før
+maskinen har sjekket det.
 
 ## Prosjekter
 
 | | | |
 |---|---|---|
-| <a href="prosjekter/hanna/"><img src="prosjekter/hanna/docs/img/hanna-hero.png" alt="HANNA" width="300"></a> | **[HANNA](prosjekter/hanna/)** — a convertible loft bed for one 199 cm alcove. 63 pieces of timber, 180 fasteners modelled as solids, and a print-ready assembly manual compiled from the model. | <img src="prosjekter/hanna/docs/img/hanna-turntable.gif" alt="One revolution" width="150"> |
+| <a href="prosjekter/hanna/"><img src="prosjekter/hanna/docs/img/hanna-hero.png" alt="HANNA" width="300"></a> | **[HANNA](prosjekter/hanna/)** — en loftseng med sofa, bord og ekstraseng under, bygd for én nisje på 199 cm. 63 trestykker, 180 festemidler modellert som solider, og en trykkeklar monteringsmanual kompilert av modellen. | <img src="prosjekter/hanna/docs/img/hanna-turntable.gif" alt="Én omdreining" width="150"> |
 
 ## Felles
 
-* **[PRAKSIS.md](PRAKSIS.md)** — the practices that hold across projects.
-* **[UTSTYR.md](UTSTYR.md)** — the tool park and the buying plan. One workshop,
-  one inventory, however many projects stand in it.
+* **[PRAKSIS.md](PRAKSIS.md)** — reglene som gjelder på tvers av prosjektene.
+* **[UTSTYR.md](UTSTYR.md)** — verktøyparken og innkjøpsplanen. Ett verksted, én
+  beholdning, uansett hvor mange prosjekter som står i det.
 
-The short version of PRAKSIS:
+Kortversjonen av PRAKSIS:
 
-* **One source.** Every number in the documentation *comes from* the model — not
-  "was copied from". If two files have to agree about a number, the number is in
-  the wrong place.
-* **An assert is a relation**, derived from physics or a standard, never a
-  restatement of a constant — and it says where to fix it when it breaks.
-* **Rules, not cases.** How a thing is treated is a property of the thing,
-  declared once. No `if` on a name, no switch somebody has to remember to flip.
-* **A drawn choice is measured, not argued.** The proof is cut out of the
-  finished page, and a tripwire assert measures the ink afterwards.
-* **The derived artefacts are committed**, so `git diff --stat` after a build
-  *is* the impact analysis.
-* **Determinism is an assert, not an expectation.** `mise run check` runs the
-  whole chain twice and demands byte-identical output.
+* **Én kilde.** Hvert tall i dokumentasjonen *kommer fra* modellen — ikke «er
+  kopiert fra». Må to filer være enige om et tall, er tallet på feil sted.
+* **En assert er et forhold**, utledet av fysikk eller en standard, aldri en
+  gjentakelse av en konstant — og den sier hvor man retter det når den ryker.
+* **Regler, ikke tilfeller.** Hvordan en ting behandles er en egenskap ved
+  tingen, definert ett sted. Ingen `if` på et navn, ingen bryter noen må huske å
+  skru på.
+* **Et tegnet valg måles, det argumenteres ikke.** Prøven klippes ut av den
+  ferdige siden, og en snubletråd-assert måler blekket etterpå.
+* **Alt utledet er sjekket inn**, så `git diff --stat` etter et bygg *er*
+  konsekvensanalysen.
+* **Determinismen er en assert, ikke en forventning.** `mise run check` kjører
+  hele kjeden to ganger og krever byte-identisk resultat.
 
-## Quickstart
+## Kom i gang
 
-Needs [`mise`](https://mise.jdx.dev/). There is one task file, `mise.toml`, here
-at the root, and each task runs with its own project as the working directory —
-so a command is the same command wherever in the tree you type it:
+Krever [`mise`](https://mise.jdx.dev/). Det er én oppgavefil, `mise.toml`, her på
+rota, og hver oppgave kjører med sitt eget prosjekt som arbeidskatalog — så en
+kommando er den samme kommandoen uansett hvor i treet du skriver den:
 
 ```bash
-mise run build      # model + every generated table and document
-mise run montering  # re-draw the line art
-mise run check      # run the whole chain twice, demand byte-identical output
-mise run pdf        # the print-ready manual
+mise run build      # modellen + hver generert tabell og dokument
+mise run montering  # tegn strektegningene på nytt
+mise run check      # kjør hele kjeden to ganger, krev byte-identisk resultat
+mise run pdf        # den trykkeklare manualen
 ```
 
-The full round for HANNA is `mise run build && montering && check && pdf &&
-usdz && film-check`. Per-project prerequisites and the rest of the tasks are in
-the project's own README.
+Hele runden for HANNA er `mise run build && montering && check && pdf && usdz &&
+film-check`. Forutsetningene for hvert prosjekt og resten av oppgavene står i
+prosjektets egen README.
 
-## Verify it yourself
+## Sjekk selv
 
-Don't take the badge's word for it — three commands, from nothing:
+Ikke ta badgen på ordet — tre kommandoer, fra ingenting:
 
 ```bash
 git clone https://github.com/Starefossen/snekkerbua.git && cd snekkerbua
@@ -64,22 +64,33 @@ mise trust && mise run install   # python 3.11 + requirements.txt
 mise run build && mise run montering && mise run check
 ```
 
-`check` builds the whole chain twice and compares SHA-256 of every committed
-derived file — the tables, `docs/MONTERING.md`, every drawing, `parts.tsv`.
-*Byte-identical* here means exactly that: not "looks the same", not "same
-numbers", the same bytes. If a run can produce two answers to the same
-question, then a diff on the drawings is not evidence of anything, and the rest
-of this repo is a story rather than a proof. The same gate runs on every push
-— [`.github/workflows/check.yml`](.github/workflows/check.yml). Pushing a
-`<prosjekt>-v*` tag runs a second one,
-[`release.yml`](.github/workflows/release.yml), which builds the manual and the
-3D models on macOS (the `.usdz` chain is Xcode-only) and hangs them off the
-release.
+`check` bygger hele kjeden to ganger og sammenligner SHA-256 av hver innsjekket,
+utledet fil — tabellene, `docs/MONTERING.md`, hver eneste tegning, `parts.tsv`.
+*Byte-identisk* betyr nøyaktig det: ikke «ser like ut», ikke «samme tall», de
+samme bytene. Kan en kjøring gi to svar på det samme spørsmålet, er en diff på
+tegningene ikke bevis på noe som helst, og resten av dette repoet er en
+fortelling i stedet for et bevis. Den samme porten kjører på hver push —
+[`.github/workflows/check.yml`](.github/workflows/check.yml). Å pushe en
+`<prosjekt>-v*`-tag kjører i tillegg
+[`release.yml`](.github/workflows/release.yml), som bygger
+manualen og 3D-modellene på macOS (`.usdz`-kjeden går bare med Xcode) og legger
+dem ved releasen.
 
-You also need `rsvg-convert` for the PNGs (`brew install librsvg`, or
-`apt install librsvg2-bin`); the workflow file is the exact list. `mise run
-pdf` wants two more: a Chrome to print with and poppler to read the result back
-with.
+Du trenger også `rsvg-convert` til PNG-ene (`brew install librsvg`, eller
+`apt install librsvg2-bin`); workflow-fila er den nøyaktige lista. `mise run
+pdf` vil ha to til: en Chrome å skrive ut med og poppler til å lese resultatet
+tilbake med.
 
-`git log --oneline` is the design journal — each commit is one decision, with
-the reasoning in the body.
+`git log --oneline` er designdagboka — hver commit er én beslutning, med
+begrunnelsen i brødteksten.
+
+## In English
+
+**snekkerbua** is a workshop repo — one directory per project, each of them a
+piece of furniture built from a parametric model. The model is the only source
+of truth: every drawing, every table and every page of the printed assembly
+manual is generated from the solids and machine-checked before it is allowed to
+exist. The documentation is written in Norwegian, because that is the language
+of whoever is standing at the saw. The proofs, on the other hand, run in CI:
+`mise run check` builds the whole chain twice and demands byte-identical output,
+and the badge at the top of this page is that gate.

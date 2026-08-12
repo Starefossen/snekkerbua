@@ -1,236 +1,242 @@
-# HANNA — a loft bed whose manual is compiled, not written
+# HANNA — loftsengen der manualen kompileres, ikke skrives
 
 [![check](https://github.com/Starefossen/snekkerbua/actions/workflows/check.yml/badge.svg)](https://github.com/Starefossen/snekkerbua/actions/workflows/check.yml)
 
-*The first project in [snekkerbua](../../README.md). Shared practices:
-[PRAKSIS.md](../../PRAKSIS.md) · workshop inventory:
+*Det første prosjektet i [snekkerbua](../../README.md). Felles praksis:
+[PRAKSIS.md](../../PRAKSIS.md) · verkstedets utstyr:
 [UTSTYR.md](../../UTSTYR.md).*
 
 ![HANNA — loftseng med sofa, bord og ekstraseng under](docs/img/hanna-poster@2x.png)
 
-<img src="docs/img/hanna-turntable.gif" alt="The finished bed, one revolution" width="440">
+<img src="docs/img/hanna-turntable.gif" alt="Den ferdige sengen, én omdreining" width="440">
 
-*48 frames off the solids, shot with `usdrecord` and assembled by
-`tools/render_animasjon.py`. Deterministic: the frame index drives the camera,
-so the same model gives the same bytes.*
+*48 rammer av solidene, tatt opp med `usdrecord` og satt sammen av
+`tools/render_animasjon.py`. Deterministisk: rammenummeret driver kameraet, så
+samme modell gir samme bytes.*
 
-A parametric loft bed in [build123d](https://github.com/gumyr/build123d) /
-OpenCascade, built for one 199 cm alcove between two walls. The model is the
-only source of truth: **every drawing, every table and all 68 pages of the
-printed assembly manual are generated from the solids and machine-checked
-before they are allowed to exist.** Nothing is hand-drawn and no number is
-hand-transcribed.
+En parametrisk loftseng i [build123d](https://github.com/gumyr/build123d) /
+OpenCascade, bygd for én nisje på 199 cm mellom to vegger. Modellen er den
+eneste kilden: **hver tegning, hver tabell og alle 68 sidene i den trykte
+monteringsmanualen genereres av solidene og maskinsjekkes før de får finnes.**
+Ingenting er tegnet for hånd, og ikke ett mål er skrevet av.
 
-<img src="docs/img/steg-05.png" alt="Step 5 of the generated assembly manual" width="560">
+<img src="docs/img/steg-05.png" alt="Steg 5 i den genererte monteringsmanualen" width="560">
 
-*Step 5, drawn by `tools/render_lineart.py`. The bed is a hidden-line
-projection of the real B-rep solids. Every screw is a modelled body, exploded
-along its own drive axis, in its true length. The letters, the fill code, the
-counts in the inset panel and the sectioned corner are all derived — and a
-build-failing assert measures the finished ink to prove each badge sits on the
-fastener it names.*
+*Steg 5, tegnet av `tools/render_lineart.py`. Sengen er en
+skjult-linje-projeksjon av de virkelige B-rep-solidene. Hver skrue er en
+modellert kropp, eksplodert langs sin egen drivakse, i sin sanne lengde.
+Bokstavene, fyllkoden, antallene i innsettpanelet og halvsnittet er alle
+utledet — og en assert som feller bygget måler det ferdige blekket og beviser at
+hvert merke står på det festemiddelet det navngir.*
 
 ---
 
-## Key facts
+## Nøkkeltall
 
 | | |
 |---|---|
-| **Envelope** | 1990 × 836 × 1700 mm — a wall-to-wall fit in a 1990 mm alcove. Through-running parts are cut 1984 mm, because a 1990 mm board will not swing into a 1990 mm opening |
-| **Timber** | **63 pieces** in **4 timber profiles** plus one 18 mm plywood sheet — 47.1 running metres. 32 of the 63 pieces come off a single profile (36×98) in four saw settings |
-| **Steel** | **180 fasteners laid out across 17 joints**, **166 of them modelled as solid bodies** — head, countersink, shank and point, each with its own drive vector. **Not one head sits on a room-facing face**, and that is an assert |
-| **Checks** | **385 asserts in the model** and 57 more in the tools, all build-failing. Screw directions are derived from physics (5 of 21 are forced by the thicknesses alone); screw counts must fit the face they stand on; every part must touch the assembly and clash with nothing |
-| **Determinism** | `mise run check` runs the whole chain twice and demands **112 byte-identical artefacts** — the three films included, plus a hash stamp that fails the gate if they are older than the model they show. Determinism is an assert, not an expectation |
-| **Output** | A **68-page print-ready PDF** in one command, plus a picture-only manual, a written build guide, six schematics, and STEP / STL / GLB / USDZ exports |
-| **Standards** | Clearances, guard heights and the mattress thickness window come out of EN 747; edge distances and screw spacing out of Eurocode 5 |
+| **Ytre mål** | 1990 × 836 × 1700 mm — fyller nisjen fra vegg til vegg på 1990 mm. Gjennomgående deler kappes 1984 mm, for et bord på 1990 mm lar seg ikke svinge inn i en åpning på 1990 mm |
+| **Trevirke** | **63 stykker** i **4 dimensjoner** pluss én 18 mm kryssfinerplate — 47,1 løpemeter. 32 av de 63 stykkene kommer av én og samme dimensjon (36×98) i fire saginnstillinger |
+| **Stål** | **180 festemidler fordelt på 17 ledd**, **166 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert |
+| **Kontroller** | **385 asserter i modellen** og 57 til i verktøyene, alle sammen stopper bygget. Skrueretningene er utledet av fysikk (5 av 21 er tvunget av tykkelsene alene); antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
+| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **112 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
+| **Ut av det** | En **trykkeklar PDF på 68 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, seks skjemategninger og eksport til STEP / STL / GLB / USDZ |
+| **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
 
-The bed's *functional* design — a loft platform over a bench/table/spare-bed
-that converts by moving one panel between two heights — is adapted from a
-Hoppekids convertible loft bed. The structure, the dimensions, every joint and
-all of the documentation here are original.
+Sengens *funksjon* — en loftplate over en benk/bord/ekstraseng som stilles om
+ved å flytte én plate mellom to høyder — er hentet fra en omstillbar loftseng
+fra Hoppekids. Konstruksjonen, målene, hvert eneste ledd og all dokumentasjonen
+her er egen.
 
 ---
 
-## How it works
+## Sånn henger det sammen
 
 ```
-generate_loftbed.py           the model: geometry, parts, fasteners, 385 asserts
+generate_loftbed.py           modellen: mål, deler, festemidler, 385 asserter
   ├─ tools/gen_doc_tables.py  → docs/generated/*.md, docs/MONTERING.md, byggesteg.json
   ├─ tools/render_lineart.py  → docs/img/steg-NN.svg/.png   (+ check_coverage)
-  │    ├─ tools/render_cutpage.py   step 0, the cutting plan
-  │    └─ tools/render_panel.py     step 10, the loose panel
-  ├─ tools/gen_glyphs.py      → fastener glyphs and pictograms
-  ├─ tools/render_animasjon.py → docs/img/hanna-*.gif  (the three films)
+  │    ├─ tools/render_cutpage.py   steg 0, kappeplanen
+  │    └─ tools/render_panel.py     steg 10, den løse platen
+  ├─ tools/gen_glyphs.py      → skrueikoner og piktogrammer
+  ├─ tools/render_animasjon.py → docs/img/hanna-*.gif  (de tre filmene)
   └─ tools/build_pdf.py       → docs/hanna.pdf
        └─ tools/render_pdf_matrix.py → docs/img/hanna-manual-sider.png
 ```
 
-<img src="docs/img/hanna-bygg.gif" alt="The bed assembling itself, steps 1-11" width="560">
+<img src="docs/img/hanna-bygg.gif" alt="Sengen bygger seg selv, steg 1–11" width="560">
 
-*The same eleven steps the manual is paginated from, read straight out of
-`docs/generated/byggesteg.json`: each step's parts fly in along the direction
-that step's text has you moving them, its screws appear once the wood has
-landed, and the corner numeral is the number on the printed page. Nothing here
-is a second description of the build — it is the build description, animated.*
+*De samme elleve stegene manualen er paginert av, lest rett ut av
+`docs/generated/byggesteg.json`: delene i hvert steg flyr inn langs den
+retningen stegteksten sier du skal føre dem, skruene kommer når treet har
+landet, og tallet i hjørnet er nummeret på den trykte siden. Ingenting her er en
+andre beskrivelse av byggingen — det er byggebeskrivelsen, animert.*
 
-**One source.** Any number that appears in the documentation *comes from* the
-model — not "was copied from". The tools import `generate_loftbed.py`, read its
-module globals and print. None of them defines geometry, and none of them
-re-derives something the model already knows. The one hand-written document,
-`docs/ASSEMBLY.md`, is allowed to name parts and cite joint numbers, but it may
-never restate a dimension a generated fragment already carries; it links
-instead. The rule behind it: **if two files have to agree about a number, the
-number is in the wrong place.**
+**Én kilde.** Ethvert tall som står i dokumentasjonen *kommer fra* modellen —
+ikke «er kopiert fra». Verktøyene importerer `generate_loftbed.py`, leser
+modulglobalene og skriver ut. Ingen av dem definerer geometri, og ingen av dem
+utleder noe modellen allerede vet. Den ene håndskrevne teksten,
+`docs/ASSEMBLY.md`, har lov til å navngi deler og sitere leddnumre, men den skal
+aldri gjenta et mål som et generert fragment allerede bærer — den lenker til
+fragmentet i stedet. Regelen bak det: **hvis to filer må være enige om et tall,
+er tallet på feil sted.**
 
-**The drawings are projections, not illustrations.** `render_lineart.py` puts
-the actual solids through OpenCascade's hidden-line removal — no meshes — and
-composes one page per build step: parts already standing in thin grey, the
-parts you fit now in heavy black, the hidden run of a new part dashed. That is
-the convention a picture-only assembly manual uses, the kind that comes in the
-box with flat-pack furniture, and it is used here because the model can satisfy
-it exactly.
+**Tegningene er projeksjoner, ikke illustrasjoner.** `render_lineart.py` kjører
+de virkelige solidene gjennom OpenCascades skjult-linje-fjerning — ingen nett —
+og setter sammen én side per byggesteg: det som allerede står, i tynt grått, det
+du fester nå, i tykk svart, og den skjulte strekningen av en ny del stiplet. Det
+er konvensjonen en ren billedmanual bruker, den slags som ligger i flatpakken,
+og den brukes her fordi modellen kan innfri den helt.
 
-**A rule/constraint layout engine, not tuned coordinates.** `tools/layout.py`
-knows nothing about beds. It answers the two questions every annotation asks —
-*how big* and *where is there room* — from rules rather than from numbers
-somebody liked the look of. Every stroke width, radius, margin and point size
-on a step page is a multiple of one length, `pen = bbox diagonal / 400`, so the
-whole pen set follows what is being drawn. Badge placement is a scored search
-over an occupancy field, with contact to the named body priced above any amount
-of white paper.
+**En layoutmotor på regler, ikke på innstilte koordinater.** `tools/layout.py`
+vet ingenting om senger. Den svarer på de to spørsmålene enhver påskrift stiller
+— *hvor stor* og *hvor er det plass* — av regler, ikke av tall noen syntes så
+bra ut. Hver strekbredde, radius, marg og punktstørrelse på en stegside er et
+multiplum av ett mål, `penn = bbox-diagonalen / 400`, så hele pennsettet følger
+det som tegnes. Hvor et merke havner er et poengsatt søk i et opptattfelt, der
+kontakt med kroppen merket navngir er priset over hvilken som helst mengde hvitt
+papir.
 
-**The manual cannot lie.** The asserts are almost never "this number is that
-number" — they are relations, derived from something outside the drawing, and
-they say where to fix it when they break. Four families:
+**Manualen kan ikke lyve.** Assertene sier nesten aldri at et tall er det
+tallet — de er forhold, utledet av noe utenfor tegningen, og de sier hvor man
+retter det når de ryker. Fire familier:
 
-* **Screw length.** A through screw must clear the part it is driven from and
-  end inside the other: `t(from) < length < t(from) + t(into)`. Where only one
-  direction satisfies that, the direction is *derived* and the joint table only
-  gets to agree.
-* **Fits the face.** A row of `n` screws needs `(n-1)·4d + 2·3d` mm of real
-  contact face. Switching this on deleted four screw counts that had stood
-  unchallenged.
-* **Completeness.** Every part in exactly one step; every joint present as
-  often as the table says; the shopping list equal to the fasteners actually
-  placed; and every step page must *draw* at least one of each fastener type it
-  lists, with the drawn count matching the printed count. That last one catches
-  silent drawings — a part listed but never shown being fixed.
-* **Orientation.** A bracket screwed into wood is not necessarily the right way
-  up. A bracket that *bears* something must have its horizontal leg driven
-  upward into the underside of what it carries.
+* **Skruelengde.** En gjennomgående skrue må gå klar av delen den drives fra og
+  ende inne i den andre: `t(fra) < lengde < t(fra) + t(inn i)`. Der bare én
+  retning holder målene, er retningen *utledet*, og leddtabellen får bare være
+  enig.
+* **Passer på flaten.** En rad med `n` skruer trenger `(n-1)·4d + 2·3d` mm
+  virkelig kontaktflate. Da denne ble slått på, strøk den fire skruetall som
+  hadde stått uimotsagt.
+* **Kompletthet.** Hver del i nøyaktig ett steg; hvert ledd til stede så mange
+  ganger som tabellen sier; handlelista lik de festemidlene som faktisk er
+  plassert; og hver stegside må *tegne* minst ett feste av hver type den lister
+  opp, med tegnet antall lik trykt antall. Den siste fanger tause tegninger — en
+  del som står i tabellen og aldri blir vist festet.
+* **Orientering.** Et beslag som er skrudd fast i tre er ikke nødvendigvis
+  riktig vei. Et beslag som *bærer* noe må ha den vannrette fliken skrudd rett
+  opp, i undersiden av det den bærer.
 
-And because the derived artefacts are committed — so that `git diff --stat`
-after a build *is* the impact analysis — the chain itself has to be
-reproducible. `mise run check` runs it twice and compares checksums. A failure
-there is never a model change: it is an unsorted `dict`, a timestamp, an
-`id()`-ordering or an order-dependent float sum.
+Og siden alt utledet er sjekket inn — nettopp for at `git diff --stat` etter et
+bygg *skal være* konsekvensanalysen — må kjeden selv være reproduserbar.
+`mise run check` kjører den to ganger og sammenligner sjekksummer. Ryker den, er
+det aldri en modellendring: det er en usortert `dict`, et tidsstempel, en
+`id()`-sortering eller en flyttallssum som avhenger av rekkefølgen.
 
-That same gate runs on every push to `main` — the badge at the top is
-[`.github/workflows/check.yml`](../../.github/workflows/check.yml), which is
-`build`, `montering` and `check` on a machine that starts with nothing. To run
-it yourself: **[Verify it yourself](../../README.md#verify-it-yourself)**.
+Den samme porten kjører på hver push til `main` — badgen øverst er
+[`.github/workflows/check.yml`](../../.github/workflows/check.yml), som er
+`build`, `montering` og `check` på en maskin som starter med ingenting. Vil du
+kjøre den selv: **[Sjekk selv](../../README.md#sjekk-selv)**.
 
 ---
 
-## Quickstart
+## Kom i gang
 
-Needs [`mise`](https://mise.jdx.dev/). Everything else is
-`pip install -r requirements.txt` (build123d, markdown) plus `rsvg-convert` for
-the PNGs. The PDF additionally wants a headless Chrome to print with and
-poppler to read the result back with — the page numbers in the table of
-contents are looked up in the finished PDF, not guessed:
-`brew install librsvg poppler` (or `apt install librsvg2-bin poppler-utils`).
+Krever [`mise`](https://mise.jdx.dev/). Resten er
+`pip install -r requirements.txt` (build123d, markdown) pluss `rsvg-convert` til
+PNG-ene. PDF-en vil i tillegg ha en headless Chrome å skrive ut med og poppler
+til å lese resultatet tilbake med — sidetallene i innholdsfortegnelsen slås opp
+i den ferdige PDF-en, de gjettes ikke: `brew install librsvg poppler` (eller
+`apt install librsvg2-bin poppler-utils`).
 
-The task file is `mise.toml` at the repo root and every task already runs in
-this directory, so these work unchanged from anywhere in the tree:
+Oppgavefila er `mise.toml` på rota av repoet, og hver oppgave kjører allerede i
+denne katalogen, så disse virker uendret uansett hvor i treet du står:
 
 ```bash
-mise run build      # model + all generated tables + docs/MONTERING.md
-mise run montering  # re-draw the line art in docs/img/
-mise run check      # run the whole chain twice, demand byte-identical output
-mise run pdf        # docs/hanna.pdf, 68 pages, print-ready
+mise run build      # modellen + alle genererte tabeller + docs/MONTERING.md
+mise run montering  # tegn strektegningene i docs/img/ på nytt
+mise run check      # kjør hele kjeden to ganger, krev byte-identisk resultat
+mise run pdf        # docs/hanna.pdf, 68 sider, trykkeklar
 ```
 
-| Task | What it does |
+| Oppgave | Hva den gjør |
 |---|---|
-| `build` | Builds and validates the model, exports it, writes every fragment in `docs/generated/` and `docs/MONTERING.md` |
-| `build-full` | Same plus the slow deliverables: `.glb` and the whole-model hidden-line `.svg` projections |
-| `montering` | Draws the cover and one line-art page per build step into `docs/img/` |
-| `check` | Determinism assert: two full runs, 112 artefacts, byte-identical or fail |
-| `pdf` | Assembles `docs/hanna.pdf` from the checked-in documents (no build123d needed) |
-| `schematics` | Renders `docs/schematics/*.svg` to PNG for proofreading |
-| `usdz` | Converts the meshes to `.usdz` for Quick Look / Xcode / AR, one material per colour group |
-| `render`, `render-validate` | Shaded previews and the five design-validation views (macOS `usdrecord`) |
-| `montering-skyggelagt` | Shaded reference renders of the same build steps |
-| `view`, `view-usdz` | Open the model in FreeCAD / Quick Look |
+| `build` | Bygger og validerer modellen, eksporterer den, skriver hvert fragment i `docs/generated/` og `docs/MONTERING.md` |
+| `build-full` | Det samme pluss det tunge: `.glb` og skjult-linje-projeksjonene av hele modellen |
+| `montering` | Tegner forsiden og én strektegning per byggesteg til `docs/img/` |
+| `check` | Determinismeasserten: to fulle kjøringer, 112 artefakter, byte-identisk eller feil |
+| `pdf` | Setter sammen `docs/hanna.pdf` av de innsjekkede dokumentene (trenger ikke build123d) |
+| `schematics` | Rendrer `docs/schematics/*.svg` til PNG for korrektur |
+| `usdz` | Konverterer nettene til `.usdz` for Quick Look / Xcode / AR, ett materiale per fargegruppe |
+| `render`, `render-validate` | Skyggelagte forhåndsvisninger og de fem designvalideringsbildene (macOS `usdrecord`) |
+| `montering-skyggelagt` | Skyggelagte referansebilder av de samme byggestegene |
+| `view`, `view-usdz` | Åpner modellen i FreeCAD / Quick Look |
 
 ---
 
-## Project map
+## Kart over prosjektet
 
-Everything below lives in `prosjekter/hanna/` and every path is relative to it.
+Alt under ligger i `prosjekter/hanna/`, og alle stier er relative til den.
 
-| Path | |
+| Sti | |
 |---|---|
-| `generate_loftbed.py` | The model. Geometry, the joint table, the fasteners as solids, and the asserts |
-| `tools/` | Everything that reads the model: doc tables, line art, cut page, panel page, glyphs, PDF, USD helpers |
-| `docs/generated/` | Machine-written, never edited by hand: cut list, buying list, key dimensions, hardware list, screw directions, step text, `byggesteg.json` |
-| `docs/img/`, `docs/schematics/` | The committed drawings — so the manual is readable and printable on a machine with none of this toolchain |
-| `docs/hanna.pdf` | The 68-page print manual. Deliberately untracked — the tooling is in git, the binary is one `mise run pdf` away |
-| `parts.tsv` | Tracked regression snapshot: label, colour group and bounding box of every part, both panel modes. A diff on it is the diff on the model |
-| `v1/` | The first alcove bunk-bed frame, kept for history |
+| `generate_loftbed.py` | Modellen. Mål, leddtabellen, festemidlene som solider, og assertene |
+| `tools/` | Alt som leser modellen: dokumenttabeller, strektegninger, kappeside, plateside, ikoner, PDF, USD-hjelpere |
+| `docs/generated/` | Maskinskrevet, aldri redigert for hånd: kappliste, innkjøpsliste, nøkkelmål, beslagliste, skrueretninger, stegtekst, `byggesteg.json` |
+| `docs/img/`, `docs/schematics/` | De innsjekkede tegningene — så manualen kan leses og skrives ut på en maskin uten noe av denne verktøykjeden |
+| `docs/hanna.pdf` | Manualen på 68 sider. Bevisst utenfor git — verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
+| `parts.tsv` | Innsjekket regresjonsavtrykk: navn, fargegruppe og omskrevet boks for hver del, i begge stillinger. En diff på den er diffen på modellen |
+| `v1/` | Den første køyesengrammen for nisjen, beholdt som historikk |
 
 ---
 
-## The build documents
+## Byggedokumentene
 
-These are **in Norwegian** — they are what someone standing at the saw actually
-reads.
+Dette er det den som står ved sagen faktisk leser.
 
-<img src="docs/img/hanna-manual-sider.png" alt="The first nine pages of the printed manual, three by three" width="760">
+<img src="docs/img/hanna-manual-sider.png" alt="De ni første sidene i den trykte manualen, tre og tre" width="760">
 
-*The first nine of the 68 printed pages, read straight back out of
-`docs/hanna.pdf` by `tools/render_pdf_matrix.py`: the cover, the contents, two
-pages of conventions and safety, the fastener list, the parts list, the
-landscape cutting plan, and the first two build steps. Every page on that sheet
-was compiled — nothing on it was laid out by hand. The finished PDF hangs off
-the [`hanna-v1.0`
-release](https://github.com/Starefossen/snekkerbua/releases/tag/hanna-v1.0) if
-you would rather read it than build it.*
+*De ni første av de 68 trykte sidene, lest rett tilbake ut av `docs/hanna.pdf`
+av `tools/render_pdf_matrix.py`: forsiden, innholdet, to sider med konvensjoner
+og sikkerhet, beslaglista, delelista, den liggende kappeplanen og de to første
+byggestegene. Hver eneste side på det arket er kompilert — ingenting på det er
+satt opp for hånd. Den ferdige PDF-en henger ved
+[releasen `hanna-v1.0`](https://github.com/Starefossen/snekkerbua/releases/tag/hanna-v1.0)
+om du heller vil lese den enn å bygge den.*
 
-* **[docs/MONTERING.md](docs/MONTERING.md)** — the picture manual. Twelve steps
-  (0–11), one drawing per step, almost no words. Generated.
-* **[docs/ASSEMBLY.md](docs/ASSEMBLY.md)** — the reasoning: tools, timber,
-  every joint J1…J15, the build order and why it has to be that order,
-  mattress and cushions, safety, and the load-path appendix. The one
-  hand-written file.
-* **[docs/generated/](docs/generated/)** — cut list, buying list with a
-  board-by-board cutting plan, key dimensions, hardware list and screw
-  directions.
-* `docs/hanna.pdf` — all of the above, imposed for print. Not committed; run
-  `mise run pdf` and it appears, identical, from the tracked documents.
+* **[docs/MONTERING.md](docs/MONTERING.md)** — billedmanualen. Tolv steg (0–11),
+  én tegning per steg, nesten ingen ord. Generert.
+* **[docs/ASSEMBLY.md](docs/ASSEMBLY.md)** — begrunnelsene: verktøy, trevirke,
+  hvert ledd J1…J15, byggerekkefølgen og hvorfor den må være slik, madrass og
+  puter, sikkerhet, og tillegget om lastveiene. Den ene håndskrevne fila.
+* **[docs/generated/](docs/generated/)** — kappliste, innkjøpsliste med
+  kappeplan bord for bord, nøkkelmål, beslagliste og skrueretninger.
+* `docs/hanna.pdf` — alt det over, satt opp for trykk. Ikke innsjekket; kjør
+  `mise run pdf`, så kommer den, identisk, ut av de innsjekkede dokumentene.
 
-## For whoever changes the model
+## For den som skal endre modellen
 
-Two files, both in Norwegian, neither part of the printed manual.
+To filer, ingen av dem en del av den trykte manualen.
 
-* **[../../PRAKSIS.md](../../PRAKSIS.md)** — the shared practices of the
-  workshop: the single-source rule, what makes an assert worth writing, rules
-  instead of cases, the drawing conventions that hold across projects, and why
-  determinism is an assert.
-* **[docs/PRAKSIS.md](docs/PRAKSIS.md)** — HANNA's own: the chain out of
-  `generate_loftbed.py`, the four assert families and the standards they come
-  from, the box invariant and its one wedge-shaped exception, where the
-  boundary between steel and timber runs, and every convention in this
-  manual's picture language — fill codes, badge rules, the bracket chain, the
-  icon spec — with the reason behind each.
+* **[../../PRAKSIS.md](../../PRAKSIS.md)** — verkstedets felles praksis:
+  én-kilde-regelen, hva som gjør en assert verdt å skrive, regler framfor
+  tilfeller, tegnekonvensjonene som holder på tvers av prosjektene, og hvorfor
+  determinismen er en assert.
+* **[docs/PRAKSIS.md](docs/PRAKSIS.md)** — HANNAs egen: kjeden ut av
+  `generate_loftbed.py`, de fire assertfamiliene og standardene de kommer av,
+  boksinvarianten og dens ene kileformede unntak, hvor grensen mellom stål og
+  tre går, og hver eneste konvensjon i billedspråket i denne manualen —
+  fyllkoder, merkeregler, kjeden i et beslaghjørne, ikonspesifikasjonen — med
+  grunnen bak hver av dem.
 
-## Limits
+## Grenser
 
-This is one product, not a furniture framework. Everything is axis-aligned box
-furniture: all cuts are 90°, there is no mitre and no curve in the bed, and the
-drawing engine assumes rectangular solids in an orthographic projection. The
-model is parametric in the sense that the dimensions are constants with asserts
-holding them together — change the alcove width or the main board profile and
-the chain will tell you loudly what no longer fits — but it is not a
-configurator, and the bed is wall-side-specific and not reversible.
+Dette er ett produkt, ikke et møbelrammeverk. Alt er akseparallelle bokser: alle
+kutt er 90°, det finnes verken gjæring eller kurve i sengen, og tegnemotoren går
+ut fra rektangulære solider i en ortografisk projeksjon. Modellen er parametrisk
+i den forstand at målene er konstanter som holdes sammen av asserter — endrer du
+nisjebredden eller hoveddimensjonen på virket, sier kjeden tydelig fra om hva
+som ikke lenger går opp — men den er ingen konfigurator, og sengen er laget for
+én bestemt veggside og lar seg ikke snu.
+
+## In English
+
+**HANNA** is a parametric loft bed — a bed platform over a bench, table and
+spare bed, built for one 199 cm alcove between two walls — modelled in build123d
+/ OpenCascade. The model is the only source of truth: every drawing, every table
+and all 68 pages of the printed assembly manual are generated from the solids
+and machine-checked before they are allowed to exist, so nothing is hand-drawn
+and no number is hand-transcribed. The documentation is in Norwegian, because
+that is what someone standing at the saw actually reads. The proofs run in CI:
+`mise run check` builds the whole chain twice and demands 112 byte-identical
+artefacts, and the badge at the top of this page is that gate.
