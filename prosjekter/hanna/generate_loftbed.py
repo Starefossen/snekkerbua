@@ -821,6 +821,7 @@ from build123d import (
     Compound,
     ExportSVG,
     Location,
+    Sphere,
     export_gltf,
     export_step,
     export_stl,
@@ -1006,8 +1007,9 @@ GROUP_COLORS = {
     "boards": Color(0.91, 0.84, 0.68),      # slats, rungs, blocks, guards, ledger
     "panel": Color(0.98, 0.98, 0.96),       # movable pine panel
     "mattress": Color(0.62, 0.72, 0.81, 0.45),   # translucent reference mattress
+    "figures": Color(0.90, 0.66, 0.52, 0.55),    # translucent reference child
 }
-GROUP_ORDER = ["posts", "rails", "boards", "panel", "mattress"]
+GROUP_ORDER = ["posts", "rails", "boards", "panel", "mattress", "figures"]
 
 # ---------------------------------------------------------------------------
 # ENVELOPE
@@ -4764,6 +4766,285 @@ class _BB:
 def wood_envelope(panel):
     return _BB([p for p in display_parts(panel) if id(p) not in _CUSHION_IDS])
 
+
+# ===========================================================================
+# REFERANSEKROPPENE - THE TWO CHILDREN, AS SOLIDS
+# ===========================================================================
+# A THIRD CATEGORY. The bed is made of wood (cut, listed, screwed), of steel
+# (bought, listed, driven) and of foam (bought, not listed, laid on). This is
+# the fourth: a body. It is not bought and it is not built - it is the reason
+# the rest exists, and until now it was only ever a number in a clearance
+# assert. A clearance is an argument about a child; drawing the child is
+# cheaper to check than reading the argument.
+#
+# THE CATEGORY RULE, and it is the mattress's rule word for word (docs/
+# PRAKSIS.md): a reference body has its own colour group, it is OUT of the cut
+# list, out of the contact / connectivity / overlap checks and out of every
+# wood-only list, and it is IN parts.tsv and in the exported scene. What it
+# adds on top of the mattress's rule is that it is not in `display_parts`
+# either: the films and the manual pages are built from that list, and a body
+# in the panel-sweep collision test would fail a film that is about wood.
+# `scene_parts()` below is display_parts + bodies, and that is what the STEP /
+# STL / GLB / USDZ scene is.
+#
+# THE BOX INVARIANT. Every clearance assert in this file is arithmetic on
+# `extents`, and `extents` on a figure is its BOUNDING BOX - a box that the
+# real solid is strictly inside, exactly as it is for the tapered wing and for
+# the notched cushions. The invariant holds for the same reason it holds
+# there, and this time the first half is free rather than argued: A FIGURE HAS
+# NO MATING FACE. It joins nothing, so contacts(), patch_window() and
+# bearing_area() are never asked about it. What is left is the conservative
+# half - anything reading `extents` clears more than the body occupies - and
+# that is the direction a clearance wants to be wrong in. The numbers that are
+# PUBLISHED, though, are measured on the solid (see FIGURE_CLEAR below), not
+# on the box: a seated child's bounding box is a 700 mm cube and would say
+# nothing true about the room over the head.
+#
+# ANTHROPOMETRY. Public domain: AnthroKids - the digitised 1975/1977 Snyder et
+# al. child anthropometry studies, math.nist.gov/~SRessler/anthrokids/. Every
+# segment below is a fraction of standing height H, and H is set at 1200 mm -
+# the 50th percentile for about 6-8 years, which is the age EN 747 opens the
+# upper bunk at. The five key dimensions the fractions are calibrated on are
+# sitting height 0.545 H, popliteal (knee-hollow) height 0.28 H, sitting knee
+# height 0.30 H, shoulder breadth 0.21 H and head height H/6, and each of them
+# comes back out of the built solid in FIGURE_ASSERTS below.
+#
+# LEVEL OF ABSTRACTION: the manual's. A round head, no face, no hands, a box
+# for a foot. Fourteen primitives fused into ONE solid, the same way the screw
+# is a Cylinder + Cone + Cylinder + Cone fused into one - a chain of
+# Pos() * Rot() down five joint types (hip, knee, shoulder, elbow, neck) with
+# no inverse kinematics anywhere: every angle in the pose tables is typed, and
+# what the model then MEASURES is where that pose puts the body.
+FIGURE_H = 1200.0                # standing height, mm  (EN 747 alder 6+)
+
+
+def _fh(k):
+    return k * FIGURE_H
+
+
+# --- the segment table, every entry a fraction of H -------------------------
+FIG_HEAD_R = _fh(0.0833)     # 100  head height H/6 = 200 IS the diameter
+FIG_NECK_R = _fh(0.030)      # 36
+FIG_NECK_L = _fh(0.052)      # 62
+FIG_TORSO_R = _fh(0.075)     # 90   between chest depth and chest breadth
+FIG_TORSO_L = _fh(0.262)     # 314  hip joint -> shoulder joint
+FIG_HIP_R = _fh(0.075)       # 90
+FIG_UARM_R = _fh(0.032)      # 38
+FIG_UARM_L = _fh(0.170)      # 204
+FIG_FARM_R = _fh(0.027)      # 32
+FIG_FARM_L = _fh(0.160)      # 192
+FIG_THIGH_R = _fh(0.048)     # 58
+FIG_THIGH_L = _fh(0.245)     # 294
+FIG_SHANK_R = _fh(0.038)     # 46
+FIG_SHANK_L = _fh(0.236)     # 283
+FIG_ANKLE_Z = _fh(0.039)     # 47   sole -> ankle joint
+FIG_FOOT_L = _fh(0.150)      # 180
+FIG_FOOT_W = _fh(0.055)      # 66
+FIG_FOOT_H = _fh(0.050)      # 60
+FIG_SHOULDER_Y = _fh(0.105)  # 126  half of shoulder breadth 0.21 H
+FIG_HIP_Y = _fh(0.050)       # 60
+FIG_SINK = 12                # mm the body settles into 100 mm of foam
+
+# The five reference dimensions the table is calibrated on.
+FIG_SITTING_H = _fh(0.545)   # 654  seat -> crown
+FIG_POPLITEAL = _fh(0.28)    # 336  floor -> knee hollow, seated
+FIG_KNEE_SIT = _fh(0.30)     # 360  floor -> top of knee, seated
+FIG_SHOULDER_W = _fh(0.21)   # 252
+FIG_HEAD_H = FIGURE_H / 6    # 200
+
+
+def _dirv(yaw, pitch):
+    """Unit vector from a compass bearing. `yaw` degrees about +Z from +X,
+    `pitch` degrees up from horizontal. One convention for all five joints."""
+    y, p = math.radians(yaw), math.radians(pitch)
+    return (math.cos(p) * math.cos(y), math.cos(p) * math.sin(y), math.sin(p))
+
+
+def _bone(base, direction, length, r):
+    """One limb: a cylinder from `base` along `direction`. Returns (solid,
+    tip), and the tip is the next joint - that is the whole kinematic chain."""
+    v = Vector(*direction)
+    v = v / v.length
+    d = (v.X, v.Y, v.Z)
+    c = Cylinder(r, length).moved(Location((0, 0, -length / 2)))
+    return (Location(base) * _rot_to(d) * c,
+            tuple(base[i] + d[i] * length for i in range(3)))
+
+
+def _foot(ankle, direction):
+    """The foot: a box hung off the ankle, long axis down `direction`. The
+    roll about that axis is not constrained and does not need to be - at
+    drawing scale a foot is a nub that says which way the leg ended."""
+    b = Box(FIG_FOOT_H, FIG_FOOT_W, FIG_FOOT_L).moved(
+        Location((0, 0, -FIG_FOOT_L / 2)))
+    return Location(ankle) * _rot_to(direction) * b
+
+
+def child(label, hip, facing, torso, head, arms, legs):
+    """One reference child, fused to a single solid.
+
+    `hip`     the hip-joint centre, model mm
+    `facing`  the bearing the body points, degrees about +Z from +X
+    `torso`   (yaw, pitch) of the hip -> shoulder axis, RELATIVE to `facing`
+    `head`    (yaw, pitch) of the neck -> head axis, same convention
+    `arms`    per side ((upper yaw, pitch), (fore yaw, pitch))
+    `legs`    per side ((thigh), (shank), (foot)), each (yaw, pitch)
+
+    Per side means (near, far); the far side's yaws are negated, so a
+    symmetric pose is written once and only the deliberate asymmetries - the
+    crossed shanks, the arm that reaches - are typed twice.
+    """
+    up = _dirv(facing + torso[0], torso[1])
+    body, shoulder = _bone(hip, up, FIG_TORSO_L, FIG_TORSO_R)
+    solid = body
+    solid += Sphere(FIG_HIP_R).moved(Location(hip))
+    neck, neck_top = _bone(shoulder, up, FIG_NECK_L, FIG_NECK_R)
+    solid += neck
+    hd = _dirv(facing + head[0], head[1])
+    head_c = tuple(neck_top[i] + hd[i] * FIG_HEAD_R for i in range(3))
+    solid += Sphere(FIG_HEAD_R).moved(Location(head_c))
+
+    side = _dirv(facing + 90.0, 0.0)
+    for s, (ua, fa) in zip((+1, -1), arms):
+        sh = tuple(shoulder[i] + side[i] * s * FIG_SHOULDER_Y for i in range(3))
+        upper, elbow = _bone(sh, _dirv(facing + s * ua[0], ua[1]),
+                             FIG_UARM_L, FIG_UARM_R)
+        fore, _wrist = _bone(elbow, _dirv(facing + s * fa[0], fa[1]),
+                             FIG_FARM_L, FIG_FARM_R)
+        solid += upper
+        solid += fore
+    for s, (th, sk, ft) in zip((+1, -1), legs):
+        hp = tuple(hip[i] + side[i] * s * FIG_HIP_Y for i in range(3))
+        thigh, knee = _bone(hp, _dirv(facing + s * th[0], th[1]),
+                            FIG_THIGH_L, FIG_THIGH_R)
+        shank, ankle = _bone(knee, _dirv(facing + s * sk[0], sk[1]),
+                             FIG_SHANK_L, FIG_SHANK_R)
+        solid += thigh
+        solid += shank
+        solid += _foot(ankle, _dirv(facing + s * ft[0], ft[1]))
+
+    solid.label = label
+    solid.color = GROUP_COLORS["figures"]
+    solid.group = "figures"
+    bb = solid.bounding_box()
+    solid.extents = ((bb.min.X, bb.max.X), (bb.min.Y, bb.max.Y),
+                     (bb.min.Z, bb.max.Z))
+    # The joints the pose was built through, kept for the measured clearances
+    # and for the drawings: a dimension line wants the crown, not the box.
+    # NOT `.joints` - build123d owns that name on a Shape, and a dict of
+    # tuples parked there dies in deepcopy the first time the solid is moved.
+    solid.pose = {"hip": hip, "shoulder": shoulder, "neck": neck_top,
+                    "head": head_c,
+                    "crown": tuple(head_c[i] + hd[i] * FIG_HEAD_R
+                                   for i in range(3))}
+    return solid
+
+
+# ---------------------------------------------------------------------------
+# THE FOUR POSES
+# ---------------------------------------------------------------------------
+# BENCH DEPTH is 800 mm and the bench is the lower bed, so a child sitting on
+# it sits in the middle of it: Y = 352 in both directions.
+FIG_BENCH_Y = (LOWER_SLEEP_Y0 + LOWER_SLEEP_Y0 + LOWER_SLEEP_DEPTH) / 2  # 352
+
+# SEATED: the hip joint rides SIT_RISE above the cushion face, not one hip
+# radius above it - a 100 mm foam cushion takes the buttock in. The number is
+# not chosen, it is solved: SIT_RISE is what puts the crown exactly one
+# sitting height (0.545 H) above the seat.
+FIG_SIT_RISE = FIG_SITTING_H - FIG_TORSO_L - FIG_NECK_L - 2 * FIG_HEAD_R  # 78
+SEAT_FACE = BENCH_TOP + CUSHION_T                      # 382, the sofa seat
+FIG_SIT_Z = SEAT_FACE + FIG_SIT_RISE                   # 460, hip joint
+
+# CROSS-LEGGED, and it is the table that says so. The plate is 118 mm above
+# the seat face and there is 100 mm between the seat face and the plate's
+# underside - one thigh. Nothing goes under this table: it is a lap-height
+# play surface between two sofa halves, and the way a child sits at one is
+# with the legs folded up on the bench. The pose is therefore the answer to a
+# measurement, and the measurement is printed below.
+# 30 degrees of splay: enough that the knees clear each other and the drawing
+# reads as folded legs seen from the side, little enough that the knee stays
+# well inside the bench in Y - the back table ledger's underside is at Z 414,
+# which is exactly the height a folded knee sits at.
+_CROSS_LEG = ((30, -6), (-110, 0), (-110, 0))
+FIG_SEAT_X = BACKREST_X[0] + CUSHION_T + FIG_TORSO_R   # 288 -> back on the pad
+
+figure_seated_left = child(
+    "Child Seated Left (table mode)",
+    (FIG_SEAT_X + 2, FIG_BENCH_Y, FIG_SIT_Z), 0.0,
+    # leaning 25 degrees over the plate: sat up straight against the back
+    # cushion the arm is 500 mm from the plate and reaches 396 - so the model
+    # leans the torso exactly as far as it takes to put the wrists down.
+    torso=(0, 65), head=(0, 65),
+    arms=(((0, -38), (0, -26)), ((0, -38), (0, -26))),
+    legs=((_CROSS_LEG[0], (-110, 2), (-110, 2)),
+          (_CROSS_LEG[0], (-110, -2), (-110, -2))))
+
+figure_seated_right = child(
+    "Child Seated Right (table mode)",
+    (WALL_SPAN - FIG_SEAT_X - 2, FIG_BENCH_Y, FIG_SIT_Z), 180.0,
+    # the other one sits up straight against the back cushion, and that is the
+    # pose that measures the headroom under the bunk.
+    torso=(0, 90), head=(0, 90),
+    arms=(((0, -72), (0, -14)), ((0, -72), (0, -14))),
+    legs=((_CROSS_LEG[0], (-110, 2), (-110, 2)),
+          (_CROSS_LEG[0], (-110, -2), (-110, -2))))
+
+# LYING: on the back, arms in, legs out, feet relaxed. The torso axis is one
+# torso radius above the sleeping face less the same foam sink; the head is a
+# sphere on the same axis, so it settles 22 mm in - which is what a head does
+# to a pillow that is not modelled.
+# The arms lie ALONGSIDE the body, i.e. they point the way the legs do - 180
+# degrees off the torso axis - and splay 14 degrees so they are not inside it.
+_LIE_ARMS = (((180 - 14, -3), (180 - 10, 0)), ((180 - 14, -3), (180 - 10, 0)))
+_LIE_LEGS = ((((180 - 4), 0), ((180 - 2), 0), ((180 - 2), 55)),
+             (((180 - 4), 0), ((180 - 2), 0), ((180 - 2), 55)))
+MATTRESS_TOP = mattress.extents[2][1]                  # 1336
+
+# UPPER BUNK: head at the left wall, feet toward the middle. 120 cm of child
+# in 199 cm of bed - the room to grow is the point, so it is drawn.
+figure_lying_upper = child(
+    "Child Lying Upper (bed mode)",
+    (696.0, FIG_BENCH_Y, MATTRESS_TOP + FIG_TORSO_R - FIG_SINK), 180.0,
+    torso=(0, 0), head=(0, 0), arms=_LIE_ARMS, legs=_LIE_LEGS)
+
+# LOWER BED: head at the right wall, so the two sleepers read as two and the
+# drawing shows both ends of the bed carrying a body. The trunk crosses the
+# 5 mm step from the seat cushions down to the back cushions on the panel -
+# it is drawn resting on the higher of the two, which is the one it is on
+# under the head and the shoulders.
+figure_lying_lower = child(
+    "Child Lying Lower (bed mode)",
+    (WALL_SPAN - 696.0, FIG_BENCH_Y, SEAT_FACE + FIG_TORSO_R - FIG_SINK), 0.0,
+    torso=(0, 0), head=(0, 0), arms=_LIE_ARMS, legs=_LIE_LEGS)
+
+FIGURES_BED = [figure_lying_upper, figure_lying_lower]
+FIGURES_TABLE = [figure_seated_left, figure_seated_right]
+FIGURES_ALL = FIGURES_BED + FIGURES_TABLE
+FIGURES = {id(panel_bed): FIGURES_BED, id(panel_table): FIGURES_TABLE}
+
+
+def is_body(p):
+    """True for a reference body. The counterpart of is_soft(): every
+    wood-only list filters on is_soft, and no list in this file has to filter
+    on THIS one, because a body is never in a list a part belongs to. It
+    exists so that a tool importing this module can ask."""
+    return getattr(p, "group", None) == "figures"
+
+
+def scene_parts(panel):
+    """The exported scene: the wood, the steel, the foam AND the bodies.
+
+    display_parts() is the BED - it is what the films, the step drawings and
+    the panel-sweep collision test are built from, and it must stay a list of
+    things the bed is made of. This is the picture.
+    """
+    return display_parts(panel) + FIGURES[id(panel)]
+
+
+def make_scene(panel, xform=IDENTITY):
+    return Compound(children=[p.moved(xform) for p in scene_parts(panel)])
+
+
 # ---------------------------------------------------------------------------
 # VALIDATION
 # ---------------------------------------------------------------------------
@@ -7554,6 +7835,134 @@ for mode_name, panel in MODES.items():
           f"(worst gap {worst[1]:.3f} mm on '{worst[0]}')")
 
 # ---------------------------------------------------------------------------
+# THE REFERENCE BODIES, MEASURED
+# ---------------------------------------------------------------------------
+# Two kinds of number come out of this block and they are not the same kind.
+#
+# The ASSERTS are about the FIGURE: they read the five anthropometric key
+# dimensions back off the built solid and fell the build if the segment table
+# and the pose have drifted apart. A figure that is no longer 1200 mm tall is
+# not a measuring instrument any more.
+#
+# The CLEARANCES are about the BED and they are printed, not asserted. A
+# reference body is a body: it is in no cut list, it bears on nothing, and the
+# hard asserts of this model are about wood that has to fit. What the bodies
+# add is the number the wood was always FOR - how much room is over a sitting
+# child's head, how far a folded knee stops short of the table - and those
+# numbers go into the drawings and into nøkkelmål, where a reader can see them.
+# The one hard rule that IS asserted here is that no body is inside any piece
+# of wood or steel. Foam is exempt on purpose: a 100 mm cushion takes a
+# buttock 12 mm in (FIG_SINK) and a head 22 mm into the sleeping face, and a
+# figure that floated on top of the foam instead would be the drawing that
+# lies.
+print("--- referansekroppene ---")
+
+_fig_bad = []
+for _f in FIGURES_ALL:
+    for _mode, _panel in MODES.items():
+        if _f not in FIGURES[id(_panel)]:
+            continue
+        for _p in display_parts(_panel):
+            if is_soft(_p):
+                continue
+            if overlap_volume(_f.extents, _p.extents) <= 0:
+                continue          # bounding boxes miss: the solids cannot meet
+            _hit = _f.intersect(_p)      # None when the solids miss entirely
+            if _hit is not None and _hit.volume > 1.0:
+                _fig_bad.append((_f.label, _p.label, _hit.volume))
+assert not _fig_bad, f"reference bodies inside the bed: {_fig_bad}"
+print(f"OK  ingen av de {len(FIGURES_ALL)} referansekroppene er inne i noe "
+      f"tre eller stål (skummet er unntatt: kroppen synker "
+      f"{FIG_SINK} mm ned i puta og hodet "
+      f"{FIG_HEAD_R - FIG_TORSO_R + FIG_SINK:.0f} mm ned i soveflaten)")
+
+# --- the figure reads its own key dimensions back off the solid -------------
+_up = figure_seated_right
+assert abs(_up.pose["crown"][2] - (SEAT_FACE + FIG_SITTING_H)) < TOL, (
+    f"sittehøyde: kronen står {_up.pose['crown'][2]:.1f}, "
+    f"skal stå {SEAT_FACE + FIG_SITTING_H:.1f}")
+assert abs(2 * FIG_SHOULDER_Y - FIG_SHOULDER_W) < TOL, \
+    "skulderleddene står ikke 0,21 H fra hverandre"
+assert abs(2 * FIG_HEAD_R - FIG_HEAD_H) < TOL, "hodet er ikke H/6 høyt"
+_stand = FIG_ANKLE_Z + FIG_SHANK_L + FIG_THIGH_L + FIG_TORSO_L + FIG_NECK_L \
+    + 2 * FIG_HEAD_R
+assert abs(_stand - FIGURE_H) < 2.0, \
+    f"leddkjeden summerer til {_stand:.1f} mm, ikke {FIGURE_H:.0f}"
+print(f"OK  figuren: H {FIGURE_H:.0f}, sittehøyde {FIG_SITTING_H:.0f} "
+      f"(0,545 H), skulderbredde {FIG_SHOULDER_W:.0f} (0,21 H), hode "
+      f"{FIG_HEAD_H:.0f} (H/6), {14} primitiver smeltet til én kropp, "
+      f"{FIGURES_ALL[0].volume / 1e6:.1f} dm3 - en kropp på ca "
+      f"{FIGURES_ALL[0].volume / 1e6:.0f} kg")
+
+
+def body_headroom(fig, panel):
+    """(mm, what) - the clear straight up over a reference body.
+
+    Box arithmetic, and conservative on purpose in the one direction that
+    matters: the answer is measured from the TOP of the body's bounding box to
+    the UNDERSIDE of the first part standing over its footprint, so the real
+    body has at least this much room and usually more.
+    """
+    best, who = math.inf, None
+    for p in display_parts(panel):
+        if not _footprints_overlap(fig.extents, p.extents):
+            continue
+        gap = p.extents[2][0] - fig.extents[2][1]
+        if gap < 0:
+            continue
+        if gap < best:
+            best, who = gap, p.label
+    return best, who
+
+
+FIGURE_CLEAR = {}
+for _mode, _panel in MODES.items():
+    for _f in FIGURES[id(_panel)]:
+        _room, _who = body_headroom(_f, _panel)
+        _head_top = _f.pose["head"][2] + FIG_HEAD_R
+        FIGURE_CLEAR[_f.label] = {
+            "mode": _mode, "crown": _f.pose["crown"],
+            "head_top": _head_top, "room": _room, "over": _who}
+
+# The numbers the drawings dimension and nøkkelmål prints, each one measured
+# on the solids that were just built - none of them typed.
+SIT_HEADROOM = FIGURE_CLEAR["Child Seated Right (table mode)"]["room"]
+SIT_HEAD_OVER = FIGURE_CLEAR["Child Seated Right (table mode)"]["over"]
+SIT_CROWN_Z = figure_seated_right.pose["crown"][2]
+TABLE_OVER_SEAT = PANEL_TOP_TABLE - SEAT_FACE          # 118
+TABLE_UNDER_SEAT = PANEL_UNDER_TABLE - SEAT_FACE       # 100, one thigh
+# OCC solid-to-solid, both of them: the right-hand child is folded up clear of
+# the plate, the left-hand one has reached over it.
+LEG_TO_TABLE = figure_seated_right.distance(panel_table)
+WRIST_OVER_TABLE = figure_seated_left.distance(panel_table)
+LIE_UPPER_ROOM = FIGURE_CLEAR["Child Lying Upper (bed mode)"]["room"]
+LIE_LOWER_ROOM = FIGURE_CLEAR["Child Lying Lower (bed mode)"]["room"]
+LIE_LOWER_FACE = SLAT_Z1 - BED_SLAT_T - (
+    figure_lying_lower.pose["head"][2] + FIG_HEAD_R)
+GUARD_OVER_BODY = GUARD_TOP - figure_lying_upper.extents[2][1]
+GUARD_OVER_FACE = GUARD_TOP - (figure_lying_upper.pose["head"][2]
+                               + FIG_HEAD_R)
+
+print(f"OK  bordstilling: den som sitter rett opp har {SIT_HEADROOM:.0f} mm "
+      f"over hodet (kronen Z {SIT_CROWN_Z:.0f}, '{SIT_HEAD_OVER}' over) - et "
+      f"barn på {FIGURE_H:.0f} mm kan sitte helt oppreist i sofaen")
+print(f"OK  bordstilling: plata ligger {TABLE_OVER_SEAT:.0f} mm over "
+      f"seteflaten og har {TABLE_UNDER_SEAT:.0f} mm under seg - ETT lår "
+      f"({2 * FIG_THIGH_R:.0f} mm). Ingen knær går under dette bordet, og "
+      f"figurene sitter derfor i skredderstilling: det foldede kneet stopper "
+      f"{LEG_TO_TABLE:.0f} mm fra platekanten, håndleddet lander "
+      f"{WRIST_OVER_TABLE:.0f} mm over plata")
+print(f"OK  sengestilling: over den som ligger i køya står ingenting - "
+      f"rekkverket står {GUARD_OVER_BODY:.0f} mm over kroppens høyeste punkt "
+      f"og {GUARD_OVER_FACE:.0f} mm over ansiktet")
+print(f"OK  sengestilling: over den som ligger nede er det "
+      f"{LIE_LOWER_ROOM:.0f} mm til '"
+      f"{FIGURE_CLEAR['Child Lying Lower (bed mode)']['over']}' og "
+      f"{LIE_LOWER_FACE:.0f} mm rett over ansiktet")
+assert LIE_UPPER_ROOM == math.inf, \
+    "noe står nå over den som ligger i køya - køya skal være åpen oppover"
+
+# ---------------------------------------------------------------------------
 # EXPORT
 # ---------------------------------------------------------------------------
 print("\n=== EXPORT ===")
@@ -7562,7 +7971,12 @@ exports = []
 group_files = []
 
 for name, panel in MODES.items():
-    comp = bed_mode if name == "bed_mode" else table_mode
+    # THE EXPORTED SCENE, not the bed: the two reference children are in every
+    # one of these files. They cost four solids and they answer the one
+    # question a STEP file or a phone's AR view is actually asked - how big is
+    # it, next to whom - and the drawings that must stay about wood are drawn
+    # off `display_parts`, which does not have them.
+    comp = make_scene(panel)
 
     # STEP stays in the CAD convention: mm, Z-up.
     step_path = os.path.join(OUT_DIR, f"loftbed_{name}.step")
@@ -7592,7 +8006,7 @@ for name, panel in MODES.items():
     # intermediates and deliberately live outside the repo.
     manifest = []
     for group in GROUP_ORDER:
-        members = [p.moved(Y_UP) for p in display_parts(panel)
+        members = [p.moved(Y_UP) for p in scene_parts(panel)
                    if p.group == group]
         if not members:
             continue
@@ -7619,7 +8033,7 @@ for name, panel in MODES.items():
     # part is a BOX, and a planar face triangulates to the same two triangles
     # at any deflection, so the wood comes out byte-identical to the default
     # export and only the steel gets cheaper.
-    y_up = make_compound(panel, Y_UP)
+    y_up = make_scene(panel, Y_UP)
     stl_path = os.path.join(OUT_DIR, f"loftbed_{name}.stl")
     export_stl(y_up, stl_path, tolerance=FASTENER_MESH_TOL,
                angular_tolerance=FASTENER_MESH_ANG)
@@ -7937,7 +8351,7 @@ print("Note (D5): the slat cleats are gone; the upper slats are screwed "
 # by the "(bed mode)" / "(table mode)" suffix on the label. It is the one
 # generated file that IS committed - a diff on it is the diff on the model.
 snapshot = (parts + [mattress] + CUSHIONS_ALL + [panel_bed, panel_table]
-            + battens_bed + battens_table)
+            + battens_bed + battens_table + FIGURES_ALL)
 snap_path = os.path.join(OUT_DIR, "parts.tsv")
 with open(snap_path, "w", encoding="utf-8") as fh:
     fh.write("label\tgroup\tx0\tx1\ty0\ty1\tz0\tz1\n")

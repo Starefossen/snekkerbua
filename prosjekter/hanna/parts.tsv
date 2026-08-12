@@ -38,6 +38,10 @@ Bench Stub Leg Back Left	posts	577	645	-48	0	0	191
 Bench Stub Leg Back Right	posts	1345	1413	-48	0	0	191
 Bench Stub Leg Front Left	posts	577	645	704	752	0	191
 Bench Stub Leg Front Right	posts	1345	1413	704	752	0	191
+Child Lying Lower (bed mode)	figures	587.906	1870.72	111.467	592.533	360.04	625.305
+Child Lying Upper (bed mode)	figures	119.28	1402.09	111.467	592.533	1314.04	1579.3
+Child Seated Left (table mode)	figures	200	770.397	95.8315	608.169	369.28	991.331
+Child Seated Right (table mode)	figures	1403.93	1799.96	95.8315	608.169	369.28	1036
 Corner Post Back Left	posts	0	98	-48	-12	0	1065
 Corner Post Back Right	posts	1892	1990	-48	-12	0	1065
 Corner Post Front Left	posts	0	98	752	788	0	1700
