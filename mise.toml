@@ -53,6 +53,13 @@ description = "Tegn repoets sosiale forhåndsvisning - GitHubs og:image (docs/im
 # rsvg-convert. Bildet lastes opp under Settings -> Social preview.
 run = "python tools/render_poster.py"
 
+[tasks.manualsider]
+description = "Kontaktark av manualen - de ni første sidene i docs/hanna.pdf side ved side (docs/img/hanna-manual-sider.png, 3x3)"
+# Leser den ferdige PDF-en med poppler og setter sidene sammen med Pillow -
+# den bygger den ikke. PDF-en koster en Chrome-runde, og dette er en avlesning
+# av den, ikke en ny kilde: kjør `mise run pdf` først, ellers sier oppgaven fra.
+run = "python tools/render_pdf_matrix.py"
+
 [tasks.check]
 description = "Determinismesjekk: kjør hele kjeden to ganger og krev byte-identiske artefakter"
 # Alt i docs/generated/, docs/MONTERING.md, docs/img/ og parts.tsv er utledet

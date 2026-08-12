@@ -40,7 +40,7 @@ fastener it names.*
 | **Timber** | **63 pieces** in **4 timber profiles** plus one 18 mm plywood sheet — 47.1 running metres. 32 of the 63 pieces come off a single profile (36×98) in four saw settings |
 | **Steel** | **180 fasteners laid out across 17 joints**, **166 of them modelled as solid bodies** — head, countersink, shank and point, each with its own drive vector. **Not one head sits on a room-facing face**, and that is an assert |
 | **Checks** | **385 asserts in the model** and 57 more in the tools, all build-failing. Screw directions are derived from physics (5 of 21 are forced by the thicknesses alone); screw counts must fit the face they stand on; every part must touch the assembly and clash with nothing |
-| **Determinism** | `mise run check` runs the whole chain twice and demands **108 byte-identical artefacts** — the three films included, plus a hash stamp that fails the gate if they are older than the model they show. Determinism is an assert, not an expectation |
+| **Determinism** | `mise run check` runs the whole chain twice and demands **112 byte-identical artefacts** — the three films included, plus a hash stamp that fails the gate if they are older than the model they show. Determinism is an assert, not an expectation |
 | **Output** | A **68-page print-ready PDF** in one command, plus a picture-only manual, a written build guide, six schematics, and STEP / STL / GLB / USDZ exports |
 | **Standards** | Clearances, guard heights and the mattress thickness window come out of EN 747; edge distances and screw spacing out of Eurocode 5 |
 
@@ -62,6 +62,7 @@ generate_loftbed.py           the model: geometry, parts, fasteners, 385 asserts
   ├─ tools/gen_glyphs.py      → fastener glyphs and pictograms
   ├─ tools/render_animasjon.py → docs/img/hanna-*.gif  (the three films)
   └─ tools/build_pdf.py       → docs/hanna.pdf
+       └─ tools/render_pdf_matrix.py → docs/img/hanna-manual-sider.png
 ```
 
 <img src="docs/img/hanna-bygg.gif" alt="The bed assembling itself, steps 1-11" width="560">
@@ -155,7 +156,7 @@ mise run pdf        # docs/hanna.pdf, 68 pages, print-ready
 | `build` | Builds and validates the model, exports it, writes every fragment in `docs/generated/` and `docs/MONTERING.md` |
 | `build-full` | Same plus the slow deliverables: `.glb` and the whole-model hidden-line `.svg` projections |
 | `montering` | Draws the cover and one line-art page per build step into `docs/img/` |
-| `check` | Determinism assert: two full runs, 108 artefacts, byte-identical or fail |
+| `check` | Determinism assert: two full runs, 112 artefacts, byte-identical or fail |
 | `pdf` | Assembles `docs/hanna.pdf` from the checked-in documents (no build123d needed) |
 | `schematics` | Renders `docs/schematics/*.svg` to PNG for proofreading |
 | `usdz` | Converts the meshes to `.usdz` for Quick Look / Xcode / AR, one material per colour group |
@@ -185,6 +186,17 @@ Everything below lives in `prosjekter/hanna/` and every path is relative to it.
 
 These are **in Norwegian** — they are what someone standing at the saw actually
 reads.
+
+<img src="docs/img/hanna-manual-sider.png" alt="The first nine pages of the printed manual, three by three" width="760">
+
+*The first nine of the 68 printed pages, read straight back out of
+`docs/hanna.pdf` by `tools/render_pdf_matrix.py`: the cover, the contents, two
+pages of conventions and safety, the fastener list, the parts list, the
+landscape cutting plan, and the first two build steps. Every page on that sheet
+was compiled — nothing on it was laid out by hand. The finished PDF hangs off
+the [`hanna-v1.0`
+release](https://github.com/Starefossen/snekkerbua/releases/tag/hanna-v1.0) if
+you would rather read it than build it.*
 
 * **[docs/MONTERING.md](docs/MONTERING.md)** — the picture manual. Twelve steps
   (0–11), one drawing per step, almost no words. Generated.
