@@ -360,7 +360,7 @@ Ledd **J13a**, **J13b** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **1×** | Madrass (se nøkkelmål) |  |  |
+| **1×** | Madrass 80 × 200 cm, **150 mm tykk** (vindu 140–155 mm) |  |  |
 
 ⚠️ Ettertrekk alle festemidler som kan ettertrekkes.
 

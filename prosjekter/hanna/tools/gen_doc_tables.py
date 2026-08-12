@@ -661,16 +661,26 @@ def build_steps(G):
             intro="Sengen er dimensjonert rundt en STANDARD madrass på "
                   "80 × 200 cm — den er ikke spesialmål og skal ikke "
                   "spesialbestilles. Det eneste målet du må velge selv er "
-                  "tykkelsen, og den har både en nedre og en øvre grense.",
+                  "TYKKELSEN, og der er det bare ett riktig svar: "
+                  f"{G.MATTRESS_H} mm. Vinduet er {G.MATTRESS_H_MIN}–"
+                  f"{G.MATTRESS_H_MAX} mm, og en helt vanlig 160 mm madrass "
+                  "er ULOVLIG i denne sengen — den legger spalten opp til "
+                  "rekkverket midt i klemvinduet.",
             do=[
                 "Legg madrassen på plass. En 80 × 200 presses de siste "
                   "millimeterne inn mellom veggene, og den skal fylle hele "
                   "dybden fra veggen til de fremre stolpene.",
                 "Legg de tre putene i underetasjen på plass.",
-                "Skriv BEGGE grensene for madrasstykkelse med tusj på "
-                  "innsiden av en fremre stolpe — se nøkkelmålene. For tynn "
-                  "madrass åpner spalten under nederste rekkverksbord, for "
-                  "tykk senker rekkverket over den som ligger der.",
+                f"MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er "
+                  f"ikke en tusjstrek som skal kunne tørkes bort: skriv "
+                  f"«MAKS MADRASS {G.MATTRESS_H_MAX} MM» på innsiden av en "
+                  f"fremre stolpe, i høyden {G.SLAT_Z1 + G.MATTRESS_H_MAX} "
+                  f"mm over gulvet. Den som bytter madrass om ti år skal "
+                  f"kunne lese grensen av sengen selv.",
+                f"Skriv nedre grense, {G.MATTRESS_H_MIN} mm, ved siden av. "
+                  f"For tynn madrass åpner spalten under nederste "
+                  f"rekkverksbord; for tykk lukker den seg ned i "
+                  f"klemvinduet.",
             ],
             check=[
                 "Ettertrekk alle festemidler som kan ettertrekkes.",
@@ -678,6 +688,10 @@ def build_steps(G):
                   "stolpene, uten spalte langs noen av de to lange kantene.",
                 "Rist i sengen i begge retninger. Ingen bevegelse mot "
                   "bakveggen.",
+                f"Mål spalten fra madrassens overside opp til undersiden "
+                  f"av det nederste rekkverksbordet. Den skal være "
+                  f"{G.EN_LIMB_BAND[0]:.0f}–{G.MAX_GUARD_OPENING} mm. Er "
+                  f"den mindre, er madrassen for tykk.",
                 "Sett datoen for første ettertrekk i kalenderen: om fire "
                   "uker, og deretter en gang i året.",
             ],
@@ -732,7 +746,9 @@ def step_part_rows(G, st, cut_index):
     for lbl in st["labels"]:
         key = cut_index.get(lbl)
         if key is None:                       # the reference mattress
-            key = ("Madrass (se nøkkelmål)", "", "")
+            key = (f"Madrass 80 × 200 cm, **{G.MATTRESS_H} mm tykk** "
+                   f"(vindu {G.MATTRESS_H_MIN:.0f}–{G.MATTRESS_H_MAX:.0f} mm)",
+                   "", "")
         counts[key] = counts.get(key, 0) + 1
     return [(qty, name, section, _fmt(length) if section else "")
             for (name, section, length), qty in sorted(counts.items())]
@@ -1350,12 +1366,22 @@ def emit_nokkelmal(G, out_dir, rows):
              f"{G.MATTRESS_W} mm, så madrassen presses de siste "
              f"{2000 - G.WALL_SPAN} mm inn mellom veggene og fyller bredden "
              f"nøyaktig |\n")
-    L.append(f"| Madrasstykkelse | **{G.MATTRESS_H_MIN}–{G.MATTRESS_H_MAX} "
-             f"mm.** Tynnere enn {G.MATTRESS_H_MIN} og åpningen opp til nedre "
-             f"rekkverksbånd blir større enn {G.MAX_GUARD_OPENING} mm; "
-             f"tykkere enn {G.MATTRESS_H_MAX} og rekkverket står mindre enn "
-             f"{G.MIN_GUARD_OVER_MATTRESS} mm over madrassen. Modellen "
-             f"tegner {G.MATTRESS_H} mm |\n")
+    L.append(f"| **Madrasstykkelse** | **{G.MATTRESS_H_MIN}–"
+             f"{G.MATTRESS_H_MAX} mm — kjøp {G.MATTRESS_H} mm.** Åpningen fra "
+             f"madrassens overside opp til nedre rekkverksbånd skal ligge i "
+             f"EN 747-båndet {G.EN_LIMB_BAND[0]:.0f}–"
+             f"{G.MAX_GUARD_OPENING} mm. Tynnere enn {G.MATTRESS_H_MIN} og "
+             f"åpningen blir større enn {G.MAX_GUARD_OPENING}; **tykkere enn "
+             f"{G.MATTRESS_H_MAX} og den faller ned i klemvinduet under "
+             f"{G.EN_LIMB_BAND[0]:.0f} mm**. En vanlig 160 mm madrass er "
+             f"altså ULOVLIG her. Modellen tegner {G.MATTRESS_H} mm, som gir "
+             f"{G.GUARD_BAND_Z0[0] - G.MATTRESS_Z1} mm — midt i båndet |\n")
+    L.append(f"| **Maks madrasstykkelse merkes på sengen** | "
+             f"{G.MATTRESS_H_MAX} mm. EN 747 krever at maksmålet står "
+             f"permanent på sengen. Merk linja "
+             f"{G.SLAT_Z1 + G.MATTRESS_H_MAX} mm over gulvet — "
+             f"{G.MATTRESS_H_MAX} mm over spilene — på innsiden av en fremre "
+             f"stolpe (steg 11) |\n")
     wander = getattr(G, "MATTRESS_WANDER", 0)
     if wander:
         L.append(f"| Madrassens sideveis vandring | {wander} mm mellom "
@@ -1377,15 +1403,14 @@ def emit_nokkelmal(G, out_dir, rows):
              f"ned i |\n\n")
 
     L.append("## Sikkerhetsmål (EN 747)\n\n| | Mål | Krav |\n|---|---:|---:|\n")
+    band = f"≤ 5 eller {G.EN_LIMB_BAND[0]:.0f}–{G.MAX_GUARD_OPENING}"
     L.append(f"| Madrassoverside → nedre rekkverksbånd | "
-             f"{G.GUARD_BAND_Z0[0] - G.MATTRESS_Z1} | ≤ "
-             f"{G.MAX_GUARD_OPENING} |\n")
+             f"{G.GUARD_BAND_Z0[0] - G.MATTRESS_Z1} | {band} |\n")
     L.append(f"| Mellom de to rekkverksbåndene | "
-             f"{G.GUARD_BAND_Z0[1] - (G.GUARD_BAND_Z0[0] + G.GUARD_W)} | ≤ "
-             f"{G.MAX_GUARD_OPENING} |\n")
-    L.append(f"| Øvre bånd → stolpetopp | "
-             f"{G.POST_HEIGHT - (G.GUARD_BAND_Z0[1] + G.GUARD_W)} | ≤ "
-             f"{G.MAX_GUARD_OPENING} |\n")
+             f"{G.GUARD_BAND_Z0[1] - (G.GUARD_BAND_Z0[0] + G.GUARD_W)} | "
+             f"{band} |\n")
+    L.append(f"| Klatreåpningens bredde | {G.LADDER_CLEAR} | "
+             f"{G.MIN_LADDER_CLEAR}–{G.MAX_LADDER_CLEAR} |\n")
     L.append(f"| Rekkverkets høyde over madrassen | "
              f"{G.GUARD_BAND_Z0[1] + G.GUARD_W - G.MATTRESS_Z1} | ≥ "
              f"{G.MIN_GUARD_OVER_MATTRESS} |\n")

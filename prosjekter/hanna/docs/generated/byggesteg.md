@@ -262,20 +262,22 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke 
 
 ## Steg 11 — Madrass og sluttsjekk
 
-Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er tykkelsen, og den har både en nedre og en øvre grense.
+Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er TYKKELSEN, og der er det bare ett riktig svar: 150 mm. Vinduet er 140–155 mm, og en helt vanlig 160 mm madrass er ULOVLIG i denne sengen — den legger spalten opp til rekkverket midt i klemvinduet.
 
-**Deler:** 1× Madrass (se nøkkelmål)
+**Deler:** 1× Madrass 80 × 200 cm, **150 mm tykk** (vindu 140–155 mm)
 
 **Slik gjør du:**
 
 1. Legg madrassen på plass. En 80 × 200 presses de siste millimeterne inn mellom veggene, og den skal fylle hele dybden fra veggen til de fremre stolpene.
 1. Legg de tre putene i underetasjen på plass.
-1. Skriv BEGGE grensene for madrasstykkelse med tusj på innsiden av en fremre stolpe — se nøkkelmålene. For tynn madrass åpner spalten under nederste rekkverksbord, for tykk senker rekkverket over den som ligger der.
+1. MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er ikke en tusjstrek som skal kunne tørkes bort: skriv «MAKS MADRASS 155 MM» på innsiden av en fremre stolpe, i høyden 1341 mm over gulvet. Den som bytter madrass om ti år skal kunne lese grensen av sengen selv.
+1. Skriv nedre grense, 140 mm, ved siden av. For tynn madrass åpner spalten under nederste rekkverksbord; for tykk lukker den seg ned i klemvinduet.
 
 **Sjekk før du går videre:**
 
 * Ettertrekk alle festemidler som kan ettertrekkes.
 * Madrassen skal ligge stramt mot veggen og mot de fremre stolpene, uten spalte langs noen av de to lange kantene.
 * Rist i sengen i begge retninger. Ingen bevegelse mot bakveggen.
+* Mål spalten fra madrassens overside opp til undersiden av det nederste rekkverksbordet. Den skal være 60–75 mm. Er den mindre, er madrassen for tykk.
 * Sett datoen for første ettertrekk i kalenderen: om fire uker, og deretter en gang i året.
 

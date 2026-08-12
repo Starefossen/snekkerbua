@@ -574,10 +574,10 @@ dypest ved roten.
 **Tallene.** Kilen er 184 800 mm³ mot 269 808 for den hele klossen — 32 % mindre
 tre, og hele det lave ytterhjørnet vekk. Det verste bøyesnittet er **ikke**
 roten: når h(x) smalner mot spissen, topper σ seg 45 mm fra spissen, der
-h = 54 mm. Der er den 1,94 MPa mot f<sub>m,d</sub> = 16,6 for C24, altså
-utnyttelse **0,12**; roten selv ligger på 1,81 MPa og 0,11. Skjæret sitter i den
-andre enden: i 27 mm-spissen er τ = 1,16 MPa mot f<sub>v,d</sub> = 2,77, altså
-**0,42**. Det er det høyeste tallet på delen, og det er det tallet som sier at
+h = 54 mm. Der er den 2,17 MPa mot f<sub>m,d</sub> = 19,5 for C24, altså
+utnyttelse **0,13**; roten selv ligger på 2,08 MPa og 0,13. Skjæret sitter i den
+andre enden: i 27 mm-spissen er τ = 1,73 MPa mot f<sub>v,d</sub> = 2,77 (med
+sprekkfaktoren k<sub>cr</sub> = 0,67), altså **0,62**. Det er det høyeste tallet på delen, og det er det tallet som sier at
 spissen ikke skal bli tynnere. *K2 gjorde kilen kortere (116 → 77 mm) da platen
 ble smalere, og bøyningen falt med den; skjæret i spissen er uendret, og det er
 fortsatt det som styrer.*
@@ -742,18 +742,24 @@ sengen som er bygd etter madrassen. Rommet er noen millimeter smalere enn
 200 cm, så madrassen presses de siste millimeterne inn mellom veggene. Det er
 meningen: da ligger den i ro.
 
-**Tykkelsen har BEGGE grenser, og de trekker hver sin vei.** Rekkverksbåndene
-sitter i faste høyder, og madrassens overflate er det de måles fra:
+**Tykkelsen er 150 mm, og vinduet er smalt: 140–155.** Dette er ikke en
+smakssak, og det er den ene grensen i sengen som er lett å bryte uten å vite
+det. Spalten mellom madrassens overside og undersiden av det nederste
+rekkverksbordet skal ligge i EN 747-båndet **60–75 mm**:
 
-* **For tynn** madrass senker liggeflaten, og spalten mellom madrassen og det
-  nederste rekkverksbordet blir større enn EN 747 tillater.
-* **For tykk** madrass hever liggeflaten, og rekkverket står ikke lenger høyt
-  nok over den som ligger der.
+* **For tynn** madrass åpner spalten forbi 75 mm, og et barn kan gli ut.
+* **For tykk** madrass lukker den ned under 60 mm — inn i det gapet et lem
+  kiler seg fast i i stedet for å gå igjennom.
 
-Begge tallene regnes ut av modellen av de to faste høydene — spilebunnen og
+**En vanlig 160 mm madrass er ulovlig i denne sengen.** Den legger spalten på
+55 mm. Kjøp 15 cm; da ligger den på 65, midt i båndet, med margin begge veier.
+Hele resonnementet og det tekniske unntaket for svært tykke madrasser står i
+avsnitt 7.3 og vedlegg B.
+
+Tallene regnes ut av modellen av de to faste høydene — spilebunnen og
 rekkverket — og står i [nøkkelmålene](generated/nokkelmal.md#madrass-og-puter).
-Skriv dem BEGGE med tusj på innsiden av en fremre stolpe. Panelet på siste side
-i monteringsanvisningen tegner de to grensene med en pil hver.
+**Maksmålet skal merkes permanent på sengen** (steg 11); EN 747 krever det, og
+den som bytter madrass om ti år skal kunne lese grensen av sengen selv.
 
 ### Underetasjen — tre puter
 
@@ -833,7 +839,7 @@ sklir de fra hverandre den første natta noen sover der.
 
 ## 7. Sikkerhet
 
-Kravene er fra **EN 747** (køyesenger og loftsenger). Tallene sengen faktisk
+Kravene er fra **EN 747-1:2024 og EN 747-2:2024** (køyesenger og loftsenger). Tallene sengen faktisk
 har, og kravet ved siden av, står i
 [nøkkelmål](generated/nokkelmal.md#sikkerhetsmål-en-747). Alle er innenfor.
 
@@ -847,9 +853,26 @@ tatt.
 **7.2 Rekkverket foran har en klatreåpning.** Man klatrer gjennom, ikke over
 toppbordet. Åpningen er like bred som stigen og ligger rett over den.
 
-**7.3 Madrasstykkelsen skal ligge innenfor BEGGE grensene.** For tynn åpner
-spalten under nederste rekkverksbord; for tykk senker rekkverket over den som
-ligger der. Se avsnitt 5 og nøkkelmålene.
+**7.3 Madrasstykkelsen skal være 140–155 mm, og 150 er anbefalt.** Dette er
+den viktigste tallgrensen i hele sengen, og den er ikke et tak — den er et
+**bånd**. EN 747-1 krever at åpningen mellom madrassens overflate og
+undersiden av det nederste rekkverksbordet enten er **≤ 5 mm** eller ligger
+i **60–75 mm**. Alt imellom er nettopp det gapet et lem kiler seg fast i i
+stedet for å gå igjennom.
+
+Madrassen er det eneste som styrer den åpningen:
+
+| Madrass | Åpning | Dom |
+|---:|---:|---|
+| 140 mm | 75 mm | lovlig, men **nøyaktig på grensen** — ingen margin |
+| **150 mm** | **65 mm** | ✓ **anbefalt, midt i båndet** |
+| 155 mm | 60 mm | lovlig, på den andre grensen |
+| 156–205 mm | 59–10 mm | ✗ **FORBUDT** — klemvinduet |
+| 210 mm og over | ≤ 5 mm | teknisk lovlig, se vedlegg B |
+
+**Kjøp 15 cm.** En helt vanlig 16 cm madrass er *ulovlig* i denne sengen — den
+legger åpningen på 55 mm, midt i klemvinduet. Det er ikke opplagt, og det er
+grunnen til at maksmålet skal merkes permanent på sengen (steg 11).
 
 **7.4 Ikke sett hele vekten på én bar spile.** Å gå på bar spilebunn er greit —
 en fotsåle rekker alltid over minst to spiler, og det er den lasten spilen er
@@ -913,13 +936,31 @@ spilelasten deles på det antallet spiler foten eller madrassen faktisk dekker.
 Å ta den en gang til på motstandssiden ville vært å telle samme fysikk to
 ganger. Den ligger som reserve.
 
+**Hvorfor k<sub>mod</sub> = 0,9 og ikke 1,1.** Eurokode 5 har en høyere klasse,
+«øyeblikks», på 1,1 — men den er for vind og ulykkeslast, ikke for et barn som
+setter seg ned. Lasttilfellet her er en kortvarig topplast, og 0,9 er klassen
+for det. Kombinasjonen som styrer er 2 kN med k<sub>mod</sub> = 0,9, ikke 1 kN
+vedvarende med 0,8. Vi bruker altså ikke 1,1 noe sted, og det er et bevisst
+valg og ikke en forglemmelse.
+
+**Skjær regnes med sprekkfaktoren k<sub>cr</sub> = 0,67.** Eurokode 5 krever at
+skjærbredden reduseres for opptørkingssprekker: τ = 1,5·V/(k<sub>cr</sub>·b·h).
+Den lå ikke inne før, og den flytter det ene skjærtallet i sengen som betyr
+noe — kilelektas spiss, se A.4.
+
 **Trykket** regnes med k<sub>mod</sub> = 0,8 (middels lang lastvarighet
 — egenvekt og vedvarende opplegg), så f<sub>c,0,d</sub> = 21 × 0,8 / 1,3 =
 **12,92 MPa** og f<sub>c,90,d</sub> = 2,5 × 0,8 / 1,3 = **1,54 MPa**. Trykk på
 tvers av fiberretningen med k<sub>c,90</sub> = 1,5 gir **2,31 MPa**.
 
-**Festemidler**, konservative erfaringstall: treskrue 5 mm i skjær ≈ **1,5 kN**,
-6 mm ≈ **2,0 kN**. Det finnes ikke en bolt i denne sengen — alt er forborede
+**Festemidler**, erfaringstall: treskrue 5 mm i skjær ≈ **1,5 kN**, 6 mm ≈
+**2,0 kN**. Disse tallene **forutsetter taueffekt** — at skruens gjenger holder
+de to delene sammen mens leddet lastes, slik at friksjonen i fugen bærer sin
+del. Ren Johansen-teori uten taueffekt gir **1,15 kN** og **1,56 kN**. Begge
+settene står her fordi raden skal være ærlig: bruker man de rene tallene, går
+den høyeste skrueraden i sengen fra 0,33 til 0,43, og ingen rad passerer 1,0
+med noen av dem. Forutsetningen er reell — alle skruene er forborede og trekker
+delene sammen — men den er en forutsetning. Det finnes ikke en bolt i denne sengen — alt er forborede
 treskruer og to slags vinkelbeslag.
 
 **Designlaster:** overkøye 100 kg + madrass, dynamisk faktor 2 → **2 kN**
@@ -979,7 +1020,7 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 
 | Ledd | Bæremåte | Spenn / flate | Last | Utn. | Dom |
 |---|---|---|---|---:|---|
-| Rungetrinn 48×68 | Bøyning | 320 mm | 1 kN | **0,15** | ✓ σ ≈ 3,1 MPa mot 20,9. Trinnet kjennes helt stivt |
+| Rungetrinn 48×68 | Bøyning | 320 mm | **1,2 kN** | **0,18** | ✓ σ ≈ 3,7 MPa mot 20,9. Lasten er EN 747-2s prøvenivå for et trinn, ikke vårt eget anslag. Trinnet kjennes helt stivt |
 | Trinn → stigekloss | **Trelagring** 36 × 36 | 1296 mm² → 3,2 kN | 0,5 kN | 0,15 | ✓ K1 kappet klossen 73 → 36 mm; flaten halveres, tallet fordobles og ligger fortsatt lavt |
 | Stigekloss → stigevange | Skruskjær, 1 × 5 mm — klossflaten 36 × 48 mm tar ikke to | 1,5 kN | 0,5 kN | **0,33** | ✓ |
 | Samme hjørne, **kombinert skjærvei** | Klossens skrue + trinnendens 6×120 gjennom stigevangen | 3,5 kN | 0,5 kN | 0,14 | ✓ Trinnet låser også klossen mot å rotere om sin ene skrue |
@@ -1012,7 +1053,7 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | **Styrelektas forende → trinnet, gjennom plata** (V3) | Lekta står 2 mm utenfor trinnenden, så forenden har ikke opplegg under seg: reaksjonen går 26 mm sideveis gjennom plata (lektas senterlinje X 809 → trinnets opplegskant X 835) | 26 mm arm, 100 mm effektiv bredde (konservativt) | 1 kN | **0,69** | ✓ σ ≈ 4,8 MPa. Dette er platas dimensjonerende rad nå — prisen for å legge styringen der styringen må skje |
 | **Fritt platehjørne, bar 18 mm plate** (V3, kontrollregning) | Punktlast på et fritt hjørne: utkraget stripe med effektiv bredde = egen lengde, så σ = P·a/(a·t²/6) = **6P/t²** og lengden faller ut | uavhengig av avstand | 1 kN kne | **2,66** | ✗ σ = 18,5 MPa. Gjelder like fullt om lekta står 213, 116 eller 77 mm unna — **derfor ble kilelektene ikke fjernet** |
 | **Kilelekt (vinge) under hjørnet, bøyning** (M5/V4/K2, 77 mm, 68 → 27 mm) | Utkraging fra styrelekta, med lasten på kilen selv. Med h(x) avtakende topper σ seg der h = 2 × spissen, altså 45 mm fra spissen — inne i delen, ikke ved roten | 77 mm, kritisk snitt h = 54 mm | 1 kN kne | **0,13** | ✓ σ = 2,17 MPa i C24. Roten selv: 2,08 MPa, 0,13. K2 gjorde vingen kortere og tallet falt med den (var 0,18 på 116 mm) |
-| **Kilelekt (vinge), skjær i spissen** (M5/V4) | Tverrskjær i delens tynneste snitt, 48 × 27 mm: τ = 1,5·1000/(48·27) | 27 mm spisshøyde | 1 kN kne | **0,42** | ✓ 1,16 MPa mot f<sub>v,d</sub> = 2,77. Delens dimensjonerende tall, og det som sier at spissen ikke skal bli tynnere |
+| **Kilelekt (vinge), skjær i spissen** (M5/V4) | Tverrskjær i delens tynneste snitt, 48 × 27 mm, med sprekkfaktoren: τ = 1,5·1000/(0,67·48·27) | 27 mm spisshøyde | 1 kN kne | **0,62** | ✓ 1,73 MPa mot f<sub>v,d</sub> = 2,77. Delens dimensjonerende tall, og det som sier at spissen ikke skal bli tynnere |
 | Lekt → plate (J13a/J13b) | Limt fuge 48 × 750 mm + 6 skruer 5×40 opp fra kontrabor i hver styrelekt, 2 i hver kile, 13 mm gjenge i plata | uttrekk ≈ 0,27 kN per skrue (halvert for kryssfiner) | 0,12 kN, enheten (6,3 kg) løftet etter ett hjørne med faktor 2 | **< 0,05** | ✓ I bruk står fugen i trykk — platen hviler på lekta, lasten går ikke gjennom et festemiddel |
 | Bordbærelekt 48×68 **på høykant** | Bøyning om sterk akse. **Dette er lekta som spenner fritt, ikke benkevangen:** i bordstilling hviler platen bak på bordbærelekta og foran på trinn 2, og lekta går post til post uten støtte under | 1794 mm | 0,55 kN bordlast | **0,34** | ✓ σ ≈ 6,7 MPa mot 19,5 |
 | Samme lekt, **noen lener seg tungt på bordet** | Halve den dynamiske designlasten havner på det bakre opplegget | 1794 mm | 1 kN | **0,62** | ✓ σ ≈ 12,1 MPa. Lektas dimensjonerende rad, og grunnen til at den ikke kan bli tynnere |
@@ -1036,9 +1077,9 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | Plate, styrelektas forende gjennom plata inn i trinnet (V3) | **0,69** |
 | Bakre sidevange regnet uten veggfestet | 0,65 |
 | Bordbærelekt, noen lener seg tungt på bordet | **0,62** |
+| Kilelekt under platehjørnet, skjær i 27 mm-spissen (med k<sub>cr</sub>) | **0,62** |
 | Avstivningslekt under platen, hele lasten over én av dem | **0,52** |
 | Køyespile og benkespile, 0,5 kN på én bar spile | **0,50** |
-| Kilelekt under platehjørnet, skjær i 27 mm-spissen | **0,42** |
 | Endebjelke (36×98) | 0,40 |
 | Bordbærelekt på høykant, ren bordlast | 0,34 |
 | Stigekloss → stigevange, klossens ene skrue regnet alene | **0,33** |
@@ -1059,8 +1100,30 @@ De fire øverste er fire forskjellige slags ledd — en plate, en vange uten sit
 veggfeste, en lekt og en spile — og det er slik det skal se ut. Ingen enkelt
 delfamilie er verken flaskehalsen eller den overdimensjonerte.
 
+### A.7 Kilder
+
+Tallene over er regnet etter Eurokode 5 (NS-EN 1995-1-1) med materialverdier
+fra NS-EN 338. Kravene i avsnitt 7 er fra EN 747:
+
+* EN 747-1:2007 §4.3 og EN 747-1:2012 §4.2.2 — åpningsbåndene. 2012-utgaven
+  gir oppsamlingsregelen ≤ 7 / 12–25 / 60–75 / ≥ 200 mm, 2007-utgaven
+  rekkverksregelen ≤ 5 eller 60–75 mm med probe-prøve (⌀60 skal passere fritt,
+  ⌀75 skal ikke passere med 100 N).
+  <https://cdn.standards.iteh.ai/samples/23918/> · <https://cdn.standards.iteh.ai/samples/34675/>
+* EN 747-1:2024 — gjeldende utgave, som innfører «completely bound» og
+  «partially bound opening» (def. 3.8/3.9). <https://cdn.standards.iteh.ai/samples/75666/>
+* Prøveprotokoll for køyesenger, med lastnivåene EN 747-2 bruker:
+  <https://quality.bluerock.hk/wp-content/uploads/2021/04/tests-protocole-for-Bunk-bedV3.pdf>
+
+**Et ærlig forbehold om utgaven.** Den fritt tilgjengelige samplen av
+EN 747-1:2024 stopper før kravkapitlet, så de eksakte millimeterne i
+2024-utgaven er **ikke** verifisert her. Madrassvinduet 140–155 mm er valgt
+fordi det er lovlig under begge utgavene vi *kan* lese, og fordi det er den
+strengeste av de to lesningene. Skulle 2024-teksten vise seg å være mildere,
+er sengen fortsatt riktig bygget; er den strengere, er dette stedet å se etter.
+
 **Kilelekta under platehjørnet er den ene delen i sengen der skjær, ikke bøyning, er
-dimensjonerende:** 0,42 i spissen mot 0,13 i det verste bøyesnittet. Det er
+dimensjonerende:** 0,62 i spissen mot 0,13 i det verste bøyesnittet. Det er
 skjærtallet som holder spissen på 27 mm, ikke utseendet.
 
 **Den høyeste skrueraden i sengen er nå stigeklossens ene 5 mm skrue, 0,33** —
@@ -1084,6 +1147,32 @@ monteres.
 
 Her står de bevisste valgene som ikke er det lærebokrene, med begrunnelsen,
 slik at den som bygger vet hva han går med på.
+
+**Avvik 0 — de 28 mm over rekkverket er ikke en åpning, og her er hvorfor.**
+De fire loddrette delene i fronten — to hjørnestolper og to stigevanger — går
+til 1700, og det øverste rekkverksbordet slutter på 1672. Mellom dem står det
+28 mm, og det tallet ligger i klemvinduet. Det er likevel ikke en åpning i
+standardens forstand, og påstanden er målt og ikke antatt: **det finnes ingen
+del i hele sengen i høydebåndet 1672–1700 utenom de fire stolpeendene selv.**
+Rommet er avgrenset nedenfra av rekkverksbordet og på sidene av stolpene, og
+**ikke av noe som helst ovenfra** — det er åpent rett opp i rommet.
+
+En åpning som kan klemme, må være omsluttet. EN 747-1:2024 skiller uttrykkelig
+mellom «completely bound» og «partially bound» åpninger (def. 3.8/3.9), og
+dette er ikke engang delvis omsluttet oppover. Et lem som føres inn der er ikke
+fanget; det er over rekkverket, i fri luft. Det som faktisk står der, er at
+**stolpene rager 28 mm over rekkverket** — en kantbrytingssak (avsnitt 3), ikke
+en klemsak. Derfor står de 28 millimeterne ikke i åpningstabellen i
+nøkkelmålene.
+
+**Avvik 4b — den tykke madrassen er teknisk lovlig, og frarådes likevel.**
+Åpningen mellom madrass og nederste rekkverksbord er lovlig både i 60–75-båndet
+og når den er lukket til ≤ 5 mm. Det siste inntreffer ved madrasser fra 210 mm
+og oppover, der madrassen rekker opp til bordets underkant. Det er en gyldig
+lesning av kravet, men den er ikke tegnet, ikke målt på en bygget seng, og den
+flytter liggeflaten 60 mm opp med det rekkverkshøyden det koster. **Bygg etter
+140–155 mm.** Det øvre vinduet står her fordi det er sant, ikke fordi det er en
+anbefaling, og det er med vilje holdt ute av billedmanualen.
 
 **Avvik 1 — veggen erstatter det bakre rekkverket.**
 Sengen har rekkverk bare på framsiden. På baksiden er veggen sperren. Madrassen

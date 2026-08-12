@@ -2,6 +2,6 @@
 # Skrevet av tools/render_animasjon.py, lest av `mise run film-check`.
 # En linje per film: <film> <kilde>=<sha256> ...  Endres en kilde uten at
 # filmen kjøres på nytt, feiler film-check - se docs/PRAKSIS.md punkt 5.
-turntable  parts=194739ce2eaa220127ebb81bf18a407f8d2d9f059904c01a0755d72d25f3addb
-mekanisme  parts=194739ce2eaa220127ebb81bf18a407f8d2d9f059904c01a0755d72d25f3addb
-bygg  parts=194739ce2eaa220127ebb81bf18a407f8d2d9f059904c01a0755d72d25f3addb  steg=b51f060a0ab3598a4dd2ef6701052303b6047a9a2d59dfc36494402ac56f12f0
+turntable  parts=ef5f930c02c403230837d1e890cad4c60f5f8e657f49b7906d90bd104e46bb3b
+mekanisme  parts=ef5f930c02c403230837d1e890cad4c60f5f8e657f49b7906d90bd104e46bb3b
+bygg  parts=ef5f930c02c403230837d1e890cad4c60f5f8e657f49b7906d90bd104e46bb3b  steg=2b377c0d851efb3a50d32b353495e17a567275aabf2eb7418e224251c2fcd39a

@@ -36,7 +36,7 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **1065** | endebjelkens overkant = sidevangens underkant (fri høyde under sengen) |
 | **1163** | sidevangens overkant |
 | **1186** | spilebunn / madrassens underside / bakre stolpetopp |
-| **1326** | madrassens overside (ved 140 mm madrass; lovlig band 140–326) |
+| **1336** | madrassens overside (ved 150 mm madrass; lovlig band 140–155) |
 | **1401** | rekkverk, nedre bånd underkant |
 | **1499** | rekkverk, nedre bånd overkant |
 | **1574** | rekkverk, øvre bånd underkant |
@@ -120,7 +120,8 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 | | Mål |
 |---|---|
 | Madrass, overkøye | **standard 80 × 200 cm.** Sengen er dimensjonert rundt den; liggeflaten er 1990 × 800 mm, så madrassen presses de siste 10 mm inn mellom veggene og fyller bredden nøyaktig |
-| Madrasstykkelse | **140–326 mm.** Tynnere enn 140 og åpningen opp til nedre rekkverksbånd blir større enn 75 mm; tykkere enn 326 og rekkverket står mindre enn 160 mm over madrassen. Modellen tegner 140 mm |
+| **Madrasstykkelse** | **140–155 mm — kjøp 150 mm.** Åpningen fra madrassens overside opp til nedre rekkverksbånd skal ligge i EN 747-båndet 60–75 mm. Tynnere enn 140 og åpningen blir større enn 75; **tykkere enn 155 og den faller ned i klemvinduet under 60 mm**. En vanlig 160 mm madrass er altså ULOVLIG her. Modellen tegner 150 mm, som gir 65 mm — midt i båndet |
+| **Maks madrasstykkelse merkes på sengen** | 155 mm. EN 747 krever at maksmålet står permanent på sengen. Merk linja 1341 mm over gulvet — 155 mm over spilene — på innsiden av en fremre stolpe (steg 11) |
 | Madrassens sideveis vandring | ingen — madrassen fyller hele bredden mellom veggen og de fremre stolpene |
 | Puter i underetasjen, dybde | 798 mm |
 | Pute over venstre benk | 645 mm bred |
@@ -132,10 +133,10 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 
 | | Mål | Krav |
 |---|---:|---:|
-| Madrassoverside → nedre rekkverksbånd | 75 | ≤ 75 |
-| Mellom de to rekkverksbåndene | 75 | ≤ 75 |
-| Øvre bånd → stolpetopp | 28 | ≤ 75 |
-| Rekkverkets høyde over madrassen | 346 | ≥ 160 |
+| Madrassoverside → nedre rekkverksbånd | 65 | ≤ 5 eller 60–75 |
+| Mellom de to rekkverksbåndene | 75 | ≤ 5 eller 60–75 |
+| Klatreåpningens bredde | 320 | 300–400 |
+| Rekkverkets høyde over madrassen | 336 | ≥ 160 |
 | Åpning mellom madrass og vegg (verste stilling) | 0 | ≤ 75 |
 | Fri klatreåpning i stigen | 320 | ≥ 300 |
 | Største klatretrinn | 238 | ≤ 250 |

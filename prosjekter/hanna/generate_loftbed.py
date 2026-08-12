@@ -974,7 +974,11 @@ GROUP_ORDER = ["posts", "rails", "boards", "panel", "mattress"]
 # ---------------------------------------------------------------------------
 WALL_SPAN = 1990                 # X = 0 .. 1990, hard limit
 MATTRESS_W = 800                 # 200x80 mattress
-MATTRESS_H = 140
+# V7: 150 mm, og vinduet er 140..155. Se MATTRESS_H_MIN/MAX nedenfor: EN 747-1
+# gir ikke bare et tak på åpningen mellom madrassen og nederste rekkverksbord,
+# den gir et BÅND - 60..75 mm - og en madrass som er tykkere enn 155 lukker
+# åpningen ned i klemvinduet under 60. 150 legger den på 65, midt i båndet.
+MATTRESS_H = 150
 
 # D12: the platform depth IS the mattress width. The slats run from the outer
 # face of the back rail to the outer face of the front rail, so the platform is
@@ -1357,6 +1361,11 @@ LADDER_INNER_R = LADDER_CENTER_X + LADDER_CLEAR // 2          # 1155 (FIXED)
 LADDER_LEFT_X = LADDER_INNER_L - UPRIGHT_W                    # 787 .. 835
 LADDER_RIGHT_X = LADDER_INNER_R                               # 1155 .. 1203
 MIN_LADDER_CLEAR = 300                   # EN 747 clear width between stiles
+# V7: the access opening is a BAND, not a floor. EN 747 wants 300..400 mm of
+# clear width: under 300 a child cannot get through, over 400 the opening stops
+# guiding the climb and becomes somewhere to fall through. 320 sits low in the
+# band on purpose - the ladder is meant to be a snug climb, not a stair.
+MAX_LADDER_CLEAR = 400                   # EN 747 upper bound on the same opening
 
 # Rungs are proper treads out of 48x73 stock: 73 deep, 48 thick.
 # D10: the treads sit BACK in the uprights - their front faces are flush with
@@ -1494,7 +1503,11 @@ MIN_GUARD_OVER_MATTRESS = 160    # EN 747 barrier height above the mattress
 # position sets both numbers at once - but it is a MINIMUM here, not a maximum:
 # raise the bands and the clearance grows, lower them and the board starts to
 # come down towards the mattress.
-MIN_GUARD_INBOARD_CLEAR = 75
+# V7: the overhang is a non-event once the gap is in the EN band, where a whole
+# limb passes rather than wedges - so this follows the band's LOWER edge, not
+# the 75 it used to copy off the opening cap. At 75 it pinned the mattress to
+# exactly the thinnest legal one and left no margin at all.
+MIN_GUARD_INBOARD_CLEAR = 60
 # U2: the narrowest face lap the guard detail has ever been signed off on - the
 # 36 mm of a v10 ladder upright, two 5x60 into 36 x 98 = 3528 mm2. Every lap in
 # the bed has to be at least that, and after U2 both of them are more: 48 mm on
@@ -4619,8 +4632,9 @@ assert up[1].extents[0][0] - up[0].extents[0][1] == LADDER_CLEAR
 # D13: still centred on 995 and still wide enough to climb through.
 assert (up[0].extents[0][1] + up[1].extents[0][0]) / 2 == LADDER_CENTER_X, \
     "D13: the ladder opening is not symmetric about X 995"
-assert LADDER_CLEAR >= MIN_LADDER_CLEAR, \
-    f"D13: {LADDER_CLEAR} mm clear ladder is under the {MIN_LADDER_CLEAR} limit"
+assert MIN_LADDER_CLEAR <= LADDER_CLEAR <= MAX_LADDER_CLEAR, \
+    f"D13/V7: the {LADDER_CLEAR} mm clear ladder is outside the EN 747 " \
+    f"access band {MIN_LADDER_CLEAR}..{MAX_LADDER_CLEAR}"
 print(f"OK  D4: posts flush with the walls at X 0..{POST_W} / "
       f"{WALL_SPAN - POST_W}..{WALL_SPAN}; D13 ladder clear opening "
       f"{LADDER_CLEAR} mm (min {MIN_LADDER_CLEAR}) between X "
@@ -4633,7 +4647,7 @@ print(f"OK  D4: posts flush with the walls at X 0..{POST_W} / "
 assert RAIL_BOTTOM == 1065 and RAIL_TOP == 1163
 assert not any("Cleat" in p.label for p in parts), "D5: the slat cleats must be gone"
 assert (SLAT_Z0, SLAT_Z1) == (1163, 1186), "D5/U1/V6: slats not flush on top of the rails"
-assert (MATTRESS_Z0, MATTRESS_Z1) == (1186, 1326)
+assert (MATTRESS_Z0, MATTRESS_Z1) == (1186, 1336)
 assert (BENCH_RAIL_BOTTOM, BENCH_RAIL_TOP) == (191, 259)
 assert BENCH_TOP == 282 and PANEL_TOP_BED == 277 and PANEL_UNDER_BED == 259
 assert PANEL_TOP_TABLE == 500 and PANEL_UNDER_TABLE == 482
@@ -5066,8 +5080,26 @@ for z0 in GUARD_BAND_Z0:
 # mattress lies on, and the guard - so both are derived, and the panel on the
 # last page of the manual prints the pair with an arrow on each constraint.
 GUARD_TOP = GUARD_BAND_Z0[-1] + GUARD_W
+# V7: THE WINDOW IS A BAND, NOT A CEILING. EN 747-1 does not merely cap the
+# opening between the mattress top and the underside of the lowest guard board
+# at 75 mm - it requires that opening to be <= 5 mm OR in the 60..75 mm band,
+# because an opening between the two is the one a limb wedges in instead of
+# passing through. The mattress sets that opening, so the mattress window is
+# the band read backwards:
+#   thinnest  -> the opening is at its widest, and 75 is the top of the band
+#   thickest  -> the opening is at its narrowest, and 60 is the bottom of it
+# The old MAX came off MIN_GUARD_OVER_MATTRESS (barrier height above the
+# sleeping surface) and gave 326 - true as far as it went, but it was not the
+# governing bound, and a 16 cm mattress inside it put the opening at 55 mm,
+# squarely in the trap window. The barrier-height bound is still checked; it is
+# simply never the one that bites.
 MATTRESS_H_MIN = GUARD_BAND_Z0[0] - SLAT_Z1 - MAX_GUARD_OPENING
-MATTRESS_H_MAX = GUARD_TOP - SLAT_Z1 - MIN_GUARD_OVER_MATTRESS
+MATTRESS_H_MAX = int(GUARD_BAND_Z0[0] - SLAT_Z1 - EN_LIMB_BAND[0])
+MATTRESS_H_MAX_BARRIER = GUARD_TOP - SLAT_Z1 - MIN_GUARD_OVER_MATTRESS
+assert MATTRESS_H_MAX < MATTRESS_H_MAX_BARRIER, \
+    "V7: the band bound is supposed to be the governing one"
+assert (MATTRESS_H_MIN, MATTRESS_H_MAX) == (140, 155), \
+    f"V7: the mattress window is {MATTRESS_H_MIN}..{MATTRESS_H_MAX}, want 140..155"
 assert MATTRESS_H_MIN <= MATTRESS_H <= MATTRESS_H_MAX, \
     f"the modelled {MATTRESS_H} mm mattress is outside its own legal band " \
     f"{MATTRESS_H_MIN}..{MATTRESS_H_MAX} mm"
@@ -5849,7 +5881,18 @@ _NOSE_TRAPEZOID = BATTEN_W * NOSE_LEN * (NOSE_ROOT_H + NOSE_TIP_H) / 2
 # only load case those screws have is the unit being picked up by one corner),
 # the lock decision in vedlegg B avvik 4, and what a parent is told to lift.
 PLY_DENSITY = 500e-9             # kg/mm3, 18 mm gran kryssfiner
-C24_DENSITY = 420e-9             # kg/mm3, rho_mean for C24
+# V7: TWO DENSITIES, AND THEY ARE FOR TWO DIFFERENT QUESTIONS.
+# 420 is rho_mean for the C24 CLASS (EN 338) - a strength-grading figure, tied
+# to the characteristic values the load appendix uses, and the right number to
+# quote whenever a number has to be consistent with f_m,k.
+# 450 is what the board actually weighs coming off the shelf at ~16% moisture
+# (Svenskt Tra). It is the right number for anything a person has to LIFT or
+# carry, and for the up-screw case in J13a, where the unit's own mass IS the
+# load - there the heavier figure is the conservative one.
+# The model keeps the class figure as the primary so every number stays
+# consistent with the appendix, and prints the delivered one beside it.
+C24_DENSITY = 420e-9             # kg/mm3, rho_mean for the C24 class (EN 338)
+C24_DENSITY_DELIVERED = 450e-9   # kg/mm3, board as delivered, ~16% moisture
 PANEL_UNIT_MASS = (abs(panel_bed.volume) * PLY_DENSITY
                    + sum(abs(b.volume) for b in battens_bed) * C24_DENSITY)
 PANEL_UNIT_WEIGHT = PANEL_UNIT_MASS * 9.81                    # N
@@ -5857,13 +5900,23 @@ assert 6.0 < PANEL_UNIT_MASS < 8.5, (
     f"the panel unit is {PANEL_UNIT_MASS:.1f} kg - if that is right the "
     f"lifting argument in vedlegg B avvik 4 has to be re-read, and so has "
     f"the J13a up-screw case")
+PANEL_UNIT_MASS_DELIVERED = (abs(panel_bed.volume) * PLY_DENSITY
+                             + sum(abs(b.volume) for b in battens_bed)
+                             * C24_DENSITY_DELIVERED)
+_tv = sum(abs(p.volume) for p in _WOOD)
+BED_MASS = _tv * C24_DENSITY + abs(panel_bed.volume) * PLY_DENSITY
+BED_MASS_DELIVERED = _tv * C24_DENSITY_DELIVERED + abs(panel_bed.volume) * PLY_DENSITY
+print(f"OK  hele sengen veier {BED_MASS:.0f} kg regnet med C24-klassetallet "
+      f"420 kg/m3 og {BED_MASS_DELIVERED:.0f} kg med levert virke, 450 - "
+      f"begge uten madrass og puter. Det er tallet to voksne skal flytte")
 print(f"OK  plateenheten veier {PANEL_UNIT_MASS:.1f} kg "
       f"({PANEL_UNIT_WEIGHT:.0f} N) - "
       f"{abs(panel_bed.volume) * PLY_DENSITY:.1f} kg plate + "
       f"{sum(abs(b.volume) for b in battens_bed) * C24_DENSITY:.1f} kg lekt, "
       f"regnet av kroppene og ikke sitert. Løftet etter ett hjørne med "
       f"faktor 2 er {2 * PANEL_UNIT_WEIGHT:.0f} N mot "
-      f"{sum(1 for f in FASTENER_SPECS if f['jid'].startswith('J13'))} skruer i J13")
+      f"{sum(1 for f in FASTENER_SPECS if f['jid'].startswith('J13'))} skruer i J13 "
+      f"(levert virke: {PANEL_UNIT_MASS_DELIVERED:.1f} kg)")
 for _w in (b for b in battens_bed + battens_table
            if b.label.startswith("Panel Front Batten")):
     assert getattr(_w, "tapered", None) is not None, \

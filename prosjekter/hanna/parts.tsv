@@ -46,7 +46,7 @@ Ladder Rung_3	boards	835	1155	720	788	672	720
 Ladder Rung_4	boards	835	1155	720	788	910	958
 Ladder Upright Left	posts	787	835	752	788	0	1700
 Ladder Upright Right	posts	1155	1203	752	788	0	1700
-Mattress 200x80 (reference)	mattress	0	1990	-48	752	1186	1326
+Mattress 200x80 (reference)	mattress	0	1990	-48	752	1186	1336
 Movable Panel (bed mode)	panel	708	1282	-48	750	259	277
 Movable Panel (table mode)	panel	708	1282	-48	750	482	500
 Panel Front Batten Left (bed mode)	panel	708	785	702	750	191	259
