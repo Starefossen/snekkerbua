@@ -1597,6 +1597,47 @@ def emit_nokkelmal(G, out_dir, rows):
              f"{G.BACK_CUSHION_LEN} mm høy, topp {G.BACKREST_Z1} mm. Ryggen "
              f"mot bordbærelekta |\n\n")
 
+    # REFERANSEKROPPEN. Tallene under er de eneste i nøkkelmål som er målt på
+    # noe annet enn tre: fire barnekropper i modellen, hver bygget av 14
+    # primitiver etter AnthroKids og posert i den stillingen raden handler om.
+    # Ingen av dem er skrevet inn her - alle kommer ut av modellens egen
+    # måleblokk, akkurat som resten av tabellen.
+    L.append(f"\n## Referansekroppen — hva sengen er til for\n\n"
+             f"Modellen har fire *referansekropper*: et barn på "
+             f"**{G.FIGURE_H:.0f} mm** (EN 747 åpner overkøya fra 6 år), "
+             f"bygget som én solid av {14} kuler, sylindre og bokser med "
+             f"segmentene som brøkdeler av ståhøyden etter **AnthroKids** "
+             f"(de digitaliserte Snyder-studiene 1975/1977, "
+             f"math.nist.gov/~SRessler/anthrokids/, fri bruk). To ligger i "
+             f"sengestilling, to sitter i bordstilling. En kropp er ikke en "
+             f"del: den kappes ikke, bærer ingenting, står i ingen liste og "
+             f"er tatt ut av alle kontaktsjekker — men den er i parts.tsv og "
+             f"i eksportene, og målene under er målt på den.\n\n"
+             f"| | Mål |\n|---|---:|\n")
+    L.append(f"| **Fri høyde over hodet, sittende** | **{G.SIT_HEADROOM:.0f} "
+             f"mm** — kronen står i Z {G.SIT_CROWN_Z:.0f} og "
+             f"«{G.SIT_HEAD_OVER}» er det første over. Man sitter helt "
+             f"rett opp i sofaen |\n")
+    L.append(f"| Sittehøyde | {G.FIG_SITTING_H:.0f} mm (0,545 × H) over "
+             f"seteflaten på {G.SEAT_FACE:.0f} mm |\n")
+    L.append(f"| **Bordplaten over setet** | **{G.TABLE_OVER_SEAT:.0f} mm**, "
+             f"og bare {G.TABLE_UNDER_SEAT:.0f} mm under seg — ett lår er "
+             f"{2 * G.FIG_THIGH_R:.0f} mm. **Ingen knær går under denne "
+             f"platen.** Den er en lekeflate i fanghøyde mellom to sofahalvdeler, "
+             f"og man sitter i skredderstilling ved den |\n")
+    L.append(f"| Foldet kne til platekant | {G.LEG_TO_TABLE:.0f} mm |\n")
+    L.append(f"| Håndleddet over platen | {G.WRIST_OVER_TABLE:.0f} mm — "
+             f"armen rekker fram når overkroppen lener seg |\n")
+    L.append(f"| **Fri høyde over ansiktet, nede** | "
+             f"**{G.LIE_LOWER_FACE:.0f} mm** til køyespilene |\n")
+    L.append(f"| Over den som ligger i køya | ingenting — køya er åpen "
+             f"oppover. Rekkverket står {G.GUARD_OVER_BODY:.0f} mm over "
+             f"kroppens høyeste punkt og {G.GUARD_OVER_FACE:.0f} mm over "
+             f"ansiktet |\n")
+    L.append(f"| Madrass igjen bak føttene | "
+             f"{G.WALL_SPAN - G.figure_lying_upper.extents[0][1]:.0f} mm av "
+             f"{G.WALL_SPAN} — plassen å vokse i |\n\n")
+
     L.append("## Sikkerhetsmål (EN 747)\n\n| | Mål | Krav |\n|---|---:|---:|\n")
     band = f"≤ 5 eller {G.EN_LIMB_BAND[0]:.0f}–{G.MAX_GUARD_OPENING}"
     L.append(f"| Madrassoverside → nedre rekkverksbånd | "

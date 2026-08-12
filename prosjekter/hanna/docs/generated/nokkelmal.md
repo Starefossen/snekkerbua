@@ -138,6 +138,22 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 | Hodehøyde over nedre soveflate | 781 mm til køyespilene (683 mm under sidevangene) |
 | Ryggpute i sofastilling | står på høykant ytterst på hver benk: 100 mm tykk, 800 mm dyp, 332 mm høy, topp 714 mm. Ryggen mot bordbærelekta |
 
+
+## Referansekroppen — hva sengen er til for
+
+Modellen har fire *referansekropper*: et barn på **1200 mm** (EN 747 åpner overkøya fra 6 år), bygget som én solid av 14 kuler, sylindre og bokser med segmentene som brøkdeler av ståhøyden etter **AnthroKids** (de digitaliserte Snyder-studiene 1975/1977, math.nist.gov/~SRessler/anthrokids/, fri bruk). To ligger i sengestilling, to sitter i bordstilling. En kropp er ikke en del: den kappes ikke, bærer ingenting, står i ingen liste og er tatt ut av alle kontaktsjekker — men den er i parts.tsv og i eksportene, og målene under er målt på den.
+
+| | Mål |
+|---|---:|
+| **Fri høyde over hodet, sittende** | **127 mm** — kronen står i Z 1036 og «Bed Slat_11» er det første over. Man sitter helt rett opp i sofaen |
+| Sittehøyde | 654 mm (0,545 × H) over seteflaten på 382 mm |
+| **Bordplaten over setet** | **118 mm**, og bare 100 mm under seg — ett lår er 115 mm. **Ingen knær går under denne platen.** Den er en lekeflate i fanghøyde mellom to sofahalvdeler, og man sitter i skredderstilling ved den |
+| Foldet kne til platekant | 130 mm |
+| Håndleddet over platen | 5 mm — armen rekker fram når overkroppen lener seg |
+| **Fri høyde over ansiktet, nede** | **603 mm** til køyespilene |
+| Over den som ligger i køya | ingenting — køya er åpen oppover. Rekkverket står 93 mm over kroppens høyeste punkt og 158 mm over ansiktet |
+| Madrass igjen bak føttene | 588 mm av 1990 — plassen å vokse i |
+
 ## Sikkerhetsmål (EN 747)
 
 | | Mål | Krav |

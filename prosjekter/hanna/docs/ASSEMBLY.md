@@ -1058,6 +1058,57 @@ Kravet, stedene og verktøyet står i avsnitt 3.
 
 ---
 
+## 8. Kroppene i sengen
+
+Modellen har fire **referansekropper**: et barn på **1200 mm**, bygget som én
+solid av fjorten kuler, sylindre og bokser, med hvert segment som en brøkdel av
+ståhøyden etter **AnthroKids** — de digitaliserte Snyder-studiene 1975/1977,
+[math.nist.gov/~SRessler/anthrokids/](https://math.nist.gov/~SRessler/anthrokids/),
+fri bruk. 1200 mm er 50-persentilen for omtrent 6–8 år, altså alderen EN 747
+åpner overkøya i (7.8). To ligger i sengestilling, to sitter i bordstilling, og
+begge stillingene har hver sin tegning: [sengestillingen i
+bruk](img/bruk-sengestilling.svg) og [bordstillingen i
+bruk](img/bruk-bordstilling.svg).
+
+En kropp er **ikke en del**. Den kappes ikke, bærer ingenting, står i ingen
+liste og er tatt ut av alle kontakt-, sammenhengs- og overlappskontroller. Det
+eneste som er assertert om den, er at ingen av de fire ligger inne i noe tre
+eller stål. Skummet er unntatt: en pute på 100 mm tar rumpa 12 mm inn og hodet
+22 mm ned i soveflaten, som er hva skum gjør.
+
+Det de er til for, er tallene. Alle er **målt på solidene**, ikke skrevet inn,
+og hele lista står i [nøkkelmål](generated/nokkelmal.md#referansekroppen--hva-sengen-er-til-for).
+
+**8.1 Man kan sitte helt rett opp i sofaen.** Kronen står i Z 1036 — seteflaten
+382 pluss sittehøyden 654 — og køyespilenes underside i 1163. **127 mm** over
+hodet. Det er ikke mye, men det er positivt, og det er målt på en kropp og ikke
+på en påstand.
+
+**8.2 Ingen knær går under bordplaten.** Platen ligger **118 mm** over
+seteflaten og har **100 mm** under seg. Ett barnelår er 115 mm. Bordet i
+bordstilling er derfor ikke et spisebord: det er en **lekeflate i fanghøyde
+mellom to sofahalvdeler**, og måten man sitter ved den på, er i
+skredderstilling med beina oppe på benken. Det er slik figurene sitter, og det
+foldede kneet stopper 130 mm fra platekanten. Armen rekker fram når
+overkroppen lener seg — håndleddet lander 5 mm over platen.
+
+Dette er en opplysning om bruken, ikke et avvik: benken er 800 mm dyp og er
+underetasjens seng, ikke en spisebenk. Vil du ha et bord med knerom, må
+seteflaten ned eller platen opp, og platens to høyder er låst av mekanismen
+(K1/V2).
+
+**8.3 Fri høyde over ansiktet til den som ligger nede: 603 mm.** Målt fra
+hodets overside til køyespilenes underside.
+
+**8.4 Over den som ligger i køya står ingenting.** Køya er åpen oppover — det
+er en assert. Rekkverket står **93 mm** over kroppens høyeste punkt og **158
+mm** over ansiktet, og barrieren er 336 mm over madrassen (7. avsnitt).
+
+**8.5 Plassen å vokse i.** Et barn på 1200 mm legger beslag på 1402 av de 1990
+millimeterne madrassen er lang. **588 mm igjen bak føttene.**
+
+---
+
 ## Vedlegg A — lastbane
 
 Regnedelen. Du trenger ikke lese dette for å bygge sengen.
@@ -1443,8 +1494,10 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | [bench-detail.svg](schematics/bench-detail.svg) | Benken: vangeenden mot hjørnestolpen uten kloss, vangebiten som ender på stubbefoten, benkespilene og platekanten. Egen plan gjennom J8-Bs sete og skruevinkel |
 | [setedetalj.svg](schematics/setedetalj.svg) | Skråskruesetene: snitt langs skrueaksen for begge vinkler, munningen ovenfra med veggen mellom lommene, vinkelklossen eksplodert og klossen i bruk |
 | [panel-detail.svg](schematics/panel-detail.svg) | Plateenheten i begge stillinger: plate, to avstivningslekter, to kilelekter, glidesjakten ved trinnenden og skruen nedenfra ut av kontraboret. Ingen ståldel |
+| [bruk-sengestilling.svg](img/bruk-sengestilling.svg) | Sengestillingen i bruk: én som sover i køya og én på nedre soveflate, med rekkverket over kroppen, fri høyde over ansiktet nede og madrassen som er igjen bak føttene. Rett oppriss — hver målpil er differansen mellom to Z i modellen |
+| [bruk-bordstilling.svg](img/bruk-bordstilling.svg) | Bordstillingen i bruk: to i skredderstilling på hver sin benkepute, vendt mot platen. Fri høyde over hodet, sittehøyde, plate over sete og kne til platekant |
 
-**Alle seks arkene er tegnet om mot den ferdige geometrien.** De viser
+**Alle sju skjemaarkene er tegnet om mot den ferdige geometrien.** De viser
 574×798-platen, 750 mm avstivningslekter, de to skråkappede kilelektene,
 bordbærelekta som 48×68 på høykant (Z 414–482), navnene
 sengestilling/bordstilling — og ingen bæreklosser, ingen U-brakett, ingen

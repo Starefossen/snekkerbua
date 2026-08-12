@@ -126,6 +126,53 @@ Regelen videre: **en del som ikke er en boks er tillatt bare når paringsflatene
 forblir rektangulære og den omskrevne boksen er den konservative konvolutten.**
 Alt annet går tilbake til bokser.
 
+### Referansekroppen: den fjerde kategorien
+
+Sengen er laget av **tre** (kappes, står i lista, skrus), av **stål** (kjøpes,
+står i lista, drives) og av **skum** (kjøpes, står ikke i kapplista, legges
+på). Referansekroppen er den fjerde: **den er grunnen til at de tre andre
+finnes.** Madrassen har vært en referansekropp siden begynnelsen; V14 legger
+til fire barn — to som ligger i sengestilling, to som sitter i bordstilling.
+
+Kategorien har madrassens regel, ord for ord:
+
+* egen fargegruppe (`figures`), egen farge i STEP/GLB/USDZ;
+* **ute** av kapplista, kontaktsjekken, sammenhengssjekken og
+  overlappssjekken — den bærer ingenting og røres av ingenting;
+* **inne** i `parts.tsv` (en diff på den er diffen på modellen) og i
+  eksportene.
+
+Ett tillegg som madrassen ikke trenger: kroppen er heller **ikke** i
+`display_parts()`. Den lista er *sengen* — filmene, stegtegningene og
+platesveipets kollisjonsprøve er bygd på den, og en kropp i en kollisjonsprøve
+som handler om tre, ville felt en film som handler om tre. `scene_parts()` er
+`display_parts` + kroppene, og det er dét som eksporteres.
+
+**Boksinvarianten holder, og første halvdel er gratis her.** For kilen måtte
+det argumenteres at paringsflatene fortsatt er rektangler; en kropp har
+**ingen paringsflate i det hele tatt**. Den skjøtes ikke, så `contacts()`,
+`patch_window()` og `bearing_area()` blir aldri spurt om den. Igjen står den
+konservative halvdelen: `.extents` er den omskrevne boksen, og alt som leser
+den, rydder mer plass enn kroppen tar. Tallene som **publiseres**, måles
+likevel på soliden og aldri på boksen — den omskrevne boksen rundt et barn i
+skredderstilling er en kube på 700 mm og sier ingenting sant om rommet over
+hodet.
+
+**Antropometrien er offentlig:** AnthroKids, de digitaliserte
+Snyder-studiene fra 1975/1977
+([math.nist.gov/~SRessler/anthrokids/](https://math.nist.gov/~SRessler/anthrokids/)).
+Hvert segment er en brøkdel av ståhøyden H = 1200 mm (50-persentil ~6–8 år,
+alderen EN 747 åpner overkøya i), og modellen leser de fem nøkkelmålene —
+sittehøyde 0,545 H, knehasehøyde 0,28 H, knehøyde sittende 0,30 H,
+skulderbredde 0,21 H, hodehøyde H/6 — **tilbake ut av den ferdige soliden** i
+en assert. En figur som ikke lenger er 1200 mm høy, er ikke et måleinstrument.
+
+**Klaringene er trykt, ikke assertert.** De harde assertene i denne modellen
+handler om tre som må passe. Det ene som *er* assertert om kroppene, er at
+ingen av dem ligger inne i noe tre eller stål; skummet er unntatt med vilje —
+en pute på 100 mm tar rumpa 12 mm inn og hodet 22 mm ned i soveflaten, og en
+figur som svevde oppå skummet i stedet, ville vært tegningen som lyver.
+
 ---
 
 ## 3. Festemidlene som geometri
@@ -736,4 +783,15 @@ og hva et brudd betyr, står i
   vegg som ikke er modellert, og 52 mm stål bak Y = −48 ville gjort den
   eksporterte sengen 888 mm dyp. Det flate monteringsplanet på 836 mm er hele
   poenget med den baksiden, så skruene tegnes og eksporteres ikke.
+* **Ingen ansikter, ingen hender, ingen fingre på referansekroppene.**
+  Fjorten primitiver: rundt hode, sylindre for hals, overkropp, armer og bein,
+  kule for hofta, boks for foten. Manualens abstraksjonsnivå. Et ansikt ville
+  vært det eneste i hele boka som ikke er utledet av et mål.
+* **Silhuett-filtrering av kroppene ble prøvd og forkastet.** Tanken var å
+  hente bare `OutLineVCompound` for figurgruppa, så sømmene mellom lemmene
+  ikke skulle vises. Målt: i et rett oppriss inneholder den compounden bare de
+  *krumme* silhuettene og mister hver eneste rette frembringer — barnet kommer
+  ut som elleve løse buer. Alle tre synlig-kant-compoundene sammen er 64 kanter
+  på en som sitter og 70 på en som ligger, og det tegner et menneske. Regelen
+  er derfor at kroppene tegnes som alt annet.
 * **Madrassen er en referansekropp, ikke en del.** Den er ikke i kapplista.
