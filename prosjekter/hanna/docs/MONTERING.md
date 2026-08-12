@@ -74,22 +74,22 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Del | Dim. | Lengde | Ant. |
 |---|---|---:|---:|
 | Løs plate | 18 mm plate, 574 bred | 798 | **1** |
+| Benkespile | 23×98 | 800 | **10** |
+| Køyespile | 23×98 | 800 | **14** |
 | Stigevange | 36×48 | 1700 | **2** |
 | Stigekloss | 36×48 | 36 | **8** |
 | Hjørnestolpe, front | 36×98 | 1700 | **2** |
 | Hjørnestolpe, bak (veggside) | 36×98 | 1065 | **2** |
+| Endebjelke | 36×98 | 836 | **2** |
 | Rekkverksbord, front | 36×98 | 832 | **4** |
-| Benkespile | 36×98 | 800 | **10** |
-| Køyespile | 36×98 | 800 | **14** |
-| Benkevange, bak (gjennomgående) | 48×73 | 1794 | **1** |
-| Bordbærelekt, bak | 48×73 | 1794 | **1** |
-| Avstivningslekt under plate | 48×73 | 750 | **2** |
-| Benkevange, front (bit) | 48×73 | 642 | **2** |
-| Rungetrinn | 48×73 | 320 | **4** |
-| Stubbefot | 48×73 | 186 | **4** |
-| Kilelekt under platens forkant (skråkappet) | 48×73 | 77 | **2** |
+| Benkevange, bak (gjennomgående) | 48×68 | 1794 | **1** |
+| Bordbærelekt, bak | 48×68 | 1794 | **1** |
+| Avstivningslekt under plate | 48×68 | 750 | **2** |
+| Benkevange, front (bit) | 48×68 | 642 | **2** |
+| Rungetrinn | 48×68 | 320 | **4** |
+| Stubbefot | 48×68 | 191 | **4** |
+| Kilelekt under platens forkant (skråkappet) | 48×68 | 77 | **2** |
 | Sidevange, øvre | 48×98 | 1984 | **2** |
-| Endebjelke | 48×98 | 836 | **2** |
 
 **63 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
 
@@ -123,8 +123,8 @@ Ledd **J15** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **1×** | Benkevange, bak (gjennomgående) | 48×73 | 1794 |
-| **1×** | Bordbærelekt, bak | 48×73 | 1794 |
+| **1×** | Benkevange, bak (gjennomgående) | 48×68 | 1794 |
+| **1×** | Bordbærelekt, bak | 48×68 | 1794 |
 | **2×** | Hjørnestolpe, bak (veggside) | 36×98 | 1065 |
 | **1×** | Sidevange, øvre | 48×98 | 1984 |
 
@@ -171,7 +171,7 @@ Ledd **J14** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **2×** | Endebjelke | 48×98 | 836 |
+| **2×** | Endebjelke | 36×98 | 836 |
 | **2×** | Hjørnestolpe, front | 36×98 | 1700 |
 
 | | |
@@ -216,8 +216,8 @@ Ledd **J2** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **2×** | Benkevange, front (bit) | 48×73 | 642 |
-| **4×** | Stubbefot | 48×73 | 186 |
+| **2×** | Benkevange, front (bit) | 48×68 | 642 |
+| **4×** | Stubbefot | 48×68 | 191 |
 
 | | | |
 |:---:|:---:|---|
@@ -244,7 +244,7 @@ Ledd **J8**, **J10** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **4×** | Rungetrinn | 48×73 | 320 |
+| **4×** | Rungetrinn | 48×68 | 320 |
 | **8×** | Stigekloss | 36×48 | 36 |
 | **2×** | Stigevange | 36×48 | 1700 |
 
@@ -272,7 +272,7 @@ Ledd **J3**, **J4**, **J5** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **10×** | Benkespile | 36×98 | 800 |
+| **10×** | Benkespile | 23×98 | 800 |
 
 | | |
 |:---:|---|
@@ -294,7 +294,7 @@ Ledd **J11** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **14×** | Køyespile | 36×98 | 800 |
+| **14×** | Køyespile | 23×98 | 800 |
 
 | | |
 |:---:|---|
@@ -338,8 +338,8 @@ Ledd **J7** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **2×** | Avstivningslekt under plate | 48×73 | 750 |
-| **2×** | Kilelekt under platens forkant (skråkappet) | 48×73 | 77 |
+| **2×** | Avstivningslekt under plate | 48×68 | 750 |
+| **2×** | Kilelekt under platens forkant (skråkappet) | 48×68 | 77 |
 | **1×** | Løs plate | 18 mm plate, 574 bred | 798 |
 
 | | |

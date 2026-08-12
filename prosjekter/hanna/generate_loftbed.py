@@ -897,16 +897,16 @@ UPRIGHT_T = 36       # ladder uprights, Y  [was 48] - the 36 mm front-plane dept
 # leg stays under that segment. Only the OUTER face moves back out, 597 -> 572
 # and 1393 -> 1418 (the pre-W3 positions).
 LEG_T = 48           # bench stub legs, thin dim (Y)   - unchanged stock
-LEG_W = 73           # bench stub legs, wide dim (X)   [48 in W3..U4; 73 again, U5]
+LEG_W = 68           # bench stub legs, wide dim (X)   [48 in W3..U4; 73 again, U5]
 
 RAIL_T = 48          # upper bed side rails and end beams, thickness
 RAIL_H = 98          # upper bed side rails and end beams, height  [was 123]
 
 BENCH_RAIL_T = 48    # continuous bench rails, thickness (Y) - unchanged stock
-BENCH_RAIL_H = 73    # continuous bench rails, height (Z)    - unchanged stock
+BENCH_RAIL_H = 68    # continuous bench rails, height (Z)    - unchanged stock
 
 TREAD_T = 48         # ladder rung (tread) thickness (Z) - unchanged stock
-TREAD_D = 73         # ladder rung (tread) depth (Y)     - unchanged stock
+TREAD_D = 68         # ladder rung (tread) depth (Y)     - unchanged stock
 
 BOARD_T = 21         # 21x95 board, thickness  - D7: the back table ledger ONLY
 BOARD_W = 95         # 21x95 board, width      - D7: the back table ledger ONLY
@@ -938,9 +938,17 @@ BOARD36_W = 98       # 36x98 board, width
 
 GUARD_T = BOARD36_T  # guard boards, thickness (Y) - FRONT only after W1
 GUARD_W = BOARD36_W  # guard boards, width (Z)
-BED_SLAT_T = BOARD36_T   # D5: upper bed slats, thickness (Z)
+# V6: THE 24 SLATS ARE 23x98, NOT 36x98. A slat is loaded FLAT, so its 23 mm is
+# the bending depth and the section modulus is 98*23^2/6 = 8640 mm3 - 41% of the
+# 36 mm board's. That is affordable only because the slat load case was
+# recalibrated onto what a slat actually carries (vedlegg A.1): a mattress
+# spreads a body over the field, and a bare foot always lands on two slats at
+# this pitch. The bought profile is a standard justert dimension, the field
+# loses 13 mm of build-up and 24 pieces lose a third of their weight.
+BOARD23_T = 23       # 23x98 slat board, thickness  [V6: was BOARD36_T]
+BED_SLAT_T = BOARD23_T   # D5/V6: upper bed slats, thickness (Z)
 BED_SLAT_W = BOARD36_W   # D5: upper bed slat width (X)
-BENCH_SLAT_T = BOARD36_T # C3: bench slats upgraded 21x95 -> 36x98, thickness (Z)
+BENCH_SLAT_T = BOARD23_T # C3/V6: bench slats, thickness (Z)
 BENCH_SLAT_W = BOARD36_W # C3: bench slat width (X)
 BLOCK_T = 36         # 36x48 bearing/rung block stock, thin dim
 BLOCK_H = 48         # 36x48 bearing/rung block stock, wide dim
@@ -1245,6 +1253,15 @@ MATTRESS_WANDER = (MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0) - MATTRESS_W    # 0
 # - screwed now, U4 - to their X-inner faces. Both faces moved: the back post's
 # front face came in 12 (it is 36 deep, not 48) and the front post's front face
 # with it, so the beam is 836 long, Y -48..788, and the bed is exactly that deep.
+# V6b: THE END BEAMS ARE 36x98, NOT 48x98. The beam is loaded on edge - 98 mm
+# is the bending depth either way - so dropping the thickness 48 -> 36 costs
+# only the 25% of section modulus that sat in the width, and the member had
+# margin to spare (utilisation 0.26 -> 0.35). It buys two things: the beams
+# come off the 36x98 board that the posts and guards already use, and 48x98
+# shrinks to the two side rails on one 4.2 m board. Nothing screws INTO a beam
+# - J1 drives out of it into the post - so the thinner member is the ENTRY
+# side, which the fits-the-face rule likes: 36 < 90 < 36 + 98.
+END_BEAM_T = BOARD36_T                         # 36  [V6b: was RAIL_T = 48]
 END_BEAM_Y0 = BACK_POST_Y0                     # -48  [was -96, W6]
 END_BEAM_Y1 = FRONT_POST_Y1                    # 788  [was 800, 906]
 END_BEAM_LEN = END_BEAM_Y1 - END_BEAM_Y0       # 836  [was 848, 896, 1002]
@@ -1254,7 +1271,7 @@ END_BEAM_Z0 = END_BEAM_Z1 - RAIL_H             # 967
 # post inner faces X 98 / 1892 (they were at 48 / 1942 on a 48 mm post). The side
 # rails run X 3..1987 and still cover both beams completely - 48 mm of full
 # bearing on each, asserted in the validation block.
-END_BEAM_X = [POST_W, WALL_SPAN - POST_W - RAIL_T]   # 98..146 and 1844..1892
+END_BEAM_X = [POST_W, WALL_SPAN - POST_W - END_BEAM_T]   # 98..134 / 1856..1892
 
 # V5: THE FOUR J1-B BEARING BLOCKS ARE GONE, AND SO IS THE ARGUMENT FOR THEM.
 # A 36x48 offcut used to sit under each beam end, screwed to the post face, so
@@ -1454,7 +1471,20 @@ RUNG_BLOCK_X = [LADDER_INNER_L,                          # 835 .. 871
 # asks for 160). This is the item that closes the entrapment finding. The third
 # opening is the only one that changes at all: it closes against the FIXED 1700
 # post tops, so it absorbs the whole 2 mm, 17 -> 15 mm.
-GUARD_BAND_Z0 = [1414, 1587]             # [was 1412, 1585 - U1, +2]
+#
+# V6 RE-BANDING. Same rule as U1, the other way. The 23 mm slat takes 13 mm out
+# of the platform build-up, so the mattress top goes 1339 -> 1326 and both bands
+# follow it DOWN by 13 - the bands are dimensioned off the sleeping surface, not
+# off the floor. Every opening is therefore the same arithmetic 13 mm lower:
+#     1326 -> 1401   75 mm   (mattress top to the underside of band 1)
+#     1499 -> 1574   75 mm   (between the bands)
+#     1672 -> 1700   28 mm   (band 2 to the top of the FRONT posts)
+# The barrier top is 1672 - 1326 = 346 mm above the mattress, exactly as before,
+# and the legal mattress window is untouched at 140..326 mm. The third opening
+# is again the only one that changes, because it closes against the FIXED 1700
+# post tops: it ABSORBS the 13 mm and grows 15 -> 28. Nothing about the mattress
+# the reader buys changes; the bed just got 13 mm of build-up cheaper.
+GUARD_BAND_Z0 = [1401, 1574]             # [was 1414, 1587 - V6, -13]
 MAX_GUARD_OPENING = 75           # EN 747 entrapment limit, above the mattress
 MIN_GUARD_OVER_MATTRESS = 160    # EN 747 barrier height above the mattress
 # D14: the guards hang inboard of the verticals now, so they overhang the
@@ -2023,7 +2053,7 @@ NOSE_LEN = BATTEN_X[0] - PANEL_X0              # 116
 LIMTRE_SHELF_W = 600             # widest limtre furu panel in the shop
 PANEL_FITS_LIMTRE = PANEL_W <= LIMTRE_SHELF_W                 # True after K2
 PANEL_UPSCREW_LEN = 40                         # 5x40, the stock length
-PANEL_UPSCREW_CBORE = 46                       # 12 mm hole, 46 mm up the batten
+PANEL_UPSCREW_PASS = 27                        # wood left under the screw head
 # K2 FINDING - THE FITS-THE-FACE RULE SIZES THE SCREW, NOT THE HOLE IT SITS IN.
 # These screws do not stand in the wood on their own: each one sits at the
 # bottom of a 12 mm clearance bore, and the rule that spaces a row - 4d between
@@ -2036,7 +2066,7 @@ PANEL_UPSCREW_CBORE = 46                       # 12 mm hole, 46 mm up the batten
 PANEL_UPSCREW_CBORE_D = 12                     # the clearance bore
 MIN_CBORE_WEB = PANEL_UPSCREW_CBORE_D          # 12, a bore's worth of wood
 MIN_CBORE_PITCH = PANEL_UPSCREW_CBORE_D + MIN_CBORE_WEB       # 24 mm centres
-PANEL_UPSCREW_PASS = BATTEN_H - PANEL_UPSCREW_CBORE       # 27, batten left
+PANEL_UPSCREW_CBORE = BATTEN_H - PANEL_UPSCREW_PASS       # 41, bore depth
 PANEL_UPSCREW_BITE = PANEL_UPSCREW_LEN - PANEL_UPSCREW_PASS   # 13, into the ply
 PANEL_UPSCREW_COVER = PANEL_T - PANEL_UPSCREW_BITE            # 5, ply over it
 
@@ -2171,7 +2201,7 @@ WALK_ZONE_Z = (0, BENCH_RAIL_BOTTOM)           # 0 .. 186
 # comfort the round was opened for. THIS IS A REAL CHANGE TO WHAT THE BED
 # FEELS LIKE with the cushions off, and it belongs in the manual, not in a
 # footnote: see docs/ASSEMBLY.md, the K2 note in the mode-change section.
-PANEL_BENCH_DIP = BENCH_TOP - PANEL_TOP_BED    # 18  [was 16, U1]
+PANEL_BENCH_DIP = BENCH_TOP - PANEL_TOP_BED    # 5  [V6: was 18]
 PANEL_SIDE_STRIP_LEN = PANEL_LEN               # 798, the strip runs the depth
 
 # BACK TABLE LEDGER (21x95), permanently mounted in both modes.
@@ -2395,9 +2425,9 @@ for i, x0 in enumerate(CORNER_POST_X):
 # flush with the rail underside so both side rails bear on it.
 for i, x0 in enumerate(END_BEAM_X):
     side = "Left" if i == 0 else "Right"
-    parts.append(block(x0, END_BEAM_Y0, END_BEAM_Z0, RAIL_T, END_BEAM_LEN, RAIL_H,
-                       f"End Beam {side}", "rails",
-                       ("End beam", sec(RAIL_T, RAIL_H), END_BEAM_LEN)))
+    parts.append(block(x0, END_BEAM_Y0, END_BEAM_Z0, END_BEAM_T, END_BEAM_LEN,
+                       RAIL_H, f"End Beam {side}", "rails",
+                       ("End beam", sec(END_BEAM_T, RAIL_H), END_BEAM_LEN)))
     # V5: no bearing block under the beam ends any more - the two 6x90 of J1
     # are the whole fixing, at half the utilisation the block's own screw had.
 
@@ -4465,7 +4495,7 @@ assert BACK_POST_HEIGHT == RAIL_BOTTOM == BACK_RAIL_ON_POST_Z, \
     f"{RAIL_BOTTOM} so the rail bears on them"
 assert BACK_POST_HEIGHT < SLAT_Z1 < MATTRESS_Z1, \
     "W2/W6: the back posts must stay clear of the platform and the mattress band"
-assert SLAT_Z1 - BACK_POST_HEIGHT == RAIL_H + BED_SLAT_T == 134, \
+assert SLAT_Z1 - BACK_POST_HEIGHT == RAIL_H + BED_SLAT_T == 121, \
     f"W6: the post top is {SLAT_Z1 - BACK_POST_HEIGHT} mm under the mattress " \
     f"underside, expected one rail + one slat = {RAIL_H + BED_SLAT_T}"
 # (b) the rail actually BEARS on both post tops, over the full post depth in Y.
@@ -4569,7 +4599,7 @@ assert wall_side_top == SLAT_Z1, \
     f"W2: the wall side tops out at {wall_side_top}, want the platform {SLAT_Z1}"
 assert front_top == POST_HEIGHT, \
     f"W2: the front side tops out at {front_top}, want {POST_HEIGHT}"
-assert front_top - wall_side_top == POST_HEIGHT - SLAT_Z1 == 501  # [was 503, 363]
+assert front_top - wall_side_top == POST_HEIGHT - SLAT_Z1 == 514  # [V6: was 501]
 print(f"OK  W1/W2/W6: asymmetric envelope - the back rail plane "
       f"(Y <= {BACK_RAIL_Y1}) tops out at {back_top} = the back side rail, "
       f"anything reaching into it at {wall_side_top} = the platform surface, "
@@ -4602,16 +4632,16 @@ print(f"OK  D4: posts flush with the walls at X 0..{POST_W} / "
 # platform stack itself is the thing that moved.
 assert RAIL_BOTTOM == 1065 and RAIL_TOP == 1163
 assert not any("Cleat" in p.label for p in parts), "D5: the slat cleats must be gone"
-assert (SLAT_Z0, SLAT_Z1) == (1163, 1199), "D5/U1: slats not flush on top of the rails"
-assert (MATTRESS_Z0, MATTRESS_Z1) == (1199, 1339)
-assert (BENCH_RAIL_BOTTOM, BENCH_RAIL_TOP) == (186, 259)
-assert BENCH_TOP == 295 and PANEL_TOP_BED == 277 and PANEL_UNDER_BED == 259
+assert (SLAT_Z0, SLAT_Z1) == (1163, 1186), "D5/U1/V6: slats not flush on top of the rails"
+assert (MATTRESS_Z0, MATTRESS_Z1) == (1186, 1326)
+assert (BENCH_RAIL_BOTTOM, BENCH_RAIL_TOP) == (191, 259)
+assert BENCH_TOP == 282 and PANEL_TOP_BED == 277 and PANEL_UNDER_BED == 259
 assert PANEL_TOP_TABLE == 500 and PANEL_UNDER_TABLE == 482
 assert RUNG_TOPS == [259, 482, 720, 958] and POST_HEIGHT == 1700
 assert BACK_POST_HEIGHT == 1065, "W6: the back posts must stop at the rail underside"
-assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (409, 482), \
-    "V2: the ledger is a 48x73 now, so its underside is 409 (was 387)"
-assert STUB_LEG_H == 186, "W3: the stub legs keep their height"
+assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (414, 482), \
+    "V2: the ledger is a bench-rail profile, so its underside is 414"
+assert STUB_LEG_H == 191, "W3: the stub legs reach the bench rail underside"
 print(f"OK  invariant heights held: rail underside {RAIL_BOTTOM}, rail top "
       f"{RAIL_TOP}, no cleats, slats {SLAT_Z0}..{SLAT_Z1} (flush on the rails, "
       f"U1: the {BED_SLAT_T} mm board took the platform 1197 -> {SLAT_Z1}), "
@@ -4686,7 +4716,7 @@ assert WALL_Y == -48 and WALL_Y == BACK_RAIL_Y0, \
 assert (END_BEAM_Y0, END_BEAM_Y1, END_BEAM_LEN) == (-48, 788, 836), \
     f"W6/U3: the end beams are Y {END_BEAM_Y0}..{END_BEAM_Y1} ({END_BEAM_LEN}), " \
     f"want -48..788 (836)"
-assert END_BEAM_X == [POST_W, WALL_SPAN - POST_W - RAIL_T] == [98, 1844], \
+assert END_BEAM_X == [POST_W, WALL_SPAN - POST_W - END_BEAM_T] == [98, 1856], \
     f"U2: the end beams are at X {END_BEAM_X}, want the new post inner faces " \
     f"[98, 1844] (98..146 and 1844..1892)"
 assert OVERALL_DEPTH == 836, f"W7/U3: overall depth {OVERALL_DEPTH}, want 836"
@@ -4734,11 +4764,11 @@ assert (FRONT_POST_Y0, FRONT_POST_Y1) == (752, 788) == (LADDER_Y0, LADDER_Y1), \
 # The rungs are the one family whose BACK face moves too: they keep their 73 mm
 # depth and their fronts stay flush with the uprights, so the whole tread comes
 # back 12 and the ledge behind the upright plane grows 25 -> 37.
-assert (RUNG_Y0, RUNG_Y1) == (715, 788) and RUNG_D == 73, \
-    f"U2: the rungs are Y {RUNG_Y0}..{RUNG_Y1}, want 715..788"
-assert RUNG_REST_LEDGE == RUNG_D - UPRIGHT_T == 37, \
+assert (RUNG_Y0, RUNG_Y1) == (720, 788) and RUNG_D == 68, \
+    f"U2: the rungs are Y {RUNG_Y0}..{RUNG_Y1}, want 720..788"
+assert RUNG_REST_LEDGE == RUNG_D - UPRIGHT_T == 32, \
     f"U2: the rung rest ledge is {RUNG_REST_LEDGE}, want {RUNG_D} - " \
-    f"{UPRIGHT_T} = 37"
+    f"{UPRIGHT_T} = 32"
 # D14: the guards are the ONE front plane that did not simply come in by 106.
 # They came in by 106 with everything else (906..940 -> 800..834) and then
 # jumped the posts, 800..834 -> 718..752, a further POST_T + GUARD_T = 82, which
@@ -4770,8 +4800,8 @@ assert "SLAT_LEN_EXT" not in globals() and "SLAT_Y0_EXT" not in globals(), \
     "W8: the W4 two-length slat split is supposed to be gone"
 assert SLAT_Y0 == WALL_Y, \
     f"W8: the slats start at Y {SLAT_Y0}, want the wall plane {WALL_Y}"
-assert RUNG_REST_LEDGE == 37, \
-    f"D12/U2: the rung rest ledge is {RUNG_REST_LEDGE} mm, want 37 (it was 25 " \
+assert RUNG_REST_LEDGE == 32, \
+    f"D12/U2: the rung rest ledge is {RUNG_REST_LEDGE} mm, want 32 (it was 25 " \
     f"while the upright was 48 deep; the tread is still 73 and still flush)"
 print(f"OK  D12/W6/U3: back planes - the post layer in by {BACK_TUCK} (wall "
       f"{WALL_Y}, posts {BACK_POST_Y0}..{BACK_POST_Y1} after the U2 thinning), "
@@ -4812,11 +4842,14 @@ for beam in (p for p in parts if p.label.startswith("End Beam ")
             rail.extents[1][1] <= beam.extents[1][1], "rail not carried by the end beam"
         bear = min(rail.extents[0][1], beam.extents[0][1]) - \
             max(rail.extents[0][0], beam.extents[0][0])
-        assert bear >= RAIL_T - TOL, \
+        # V6b: the rail must cover the beam's WHOLE thickness - the bearing is
+        # the beam, not the rail, and the beam is the thinner of the two now.
+        assert bear >= END_BEAM_T - TOL, \
             f"'{rail.label}' only bears {bear:.1f} mm on '{beam.label}' in X"
-print(f"OK  end beams {sec(RAIL_T, RAIL_H)} x {END_BEAM_LEN} at Z "
+print(f"OK  end beams {sec(END_BEAM_T, RAIL_H)} x {END_BEAM_LEN} at Z "
       f"{END_BEAM_Z0}..{RAIL_BOTTOM} carry both side rails "
-      f"(full {RAIL_T} mm bearing in X, beams at X {END_BEAM_X[0]} / {END_BEAM_X[1]})")
+      f"(full {END_BEAM_T} mm bearing in X, beams at X {END_BEAM_X[0]} / "
+      f"{END_BEAM_X[1]})")
 
 # V5: THE BEARING BLOCKS ARE GONE - AND THIS IS WHAT STANDS IN THEIR PLACE.
 # Eight 36x48 offcuts used to hang off the post faces under the end beams and
@@ -5177,18 +5210,26 @@ for what, (member, height) in POST_TO_POST_ENDS.items():
     assert len(areas) == 2 and areas[0] == areas[1]
     end_fixings[what] = areas[0]
 assert end_fixings["Bench Rail Back (continuous)"] == POST_T * BENCH_RAIL_H \
-    == 2628, "U2: the back bench rail should butt 36 x 73 of post face"
+    == 2448, "U2: the back bench rail should butt 36 x 68 of post face"
 # V2: the ledger is the bench rail's profile now, so it butts the same 36 x 73
 # of post face the bench rail does - 2628 mm2 instead of the 21x95's 1995.
-assert end_fixings["Table Ledger Back"] == POST_T * LEDGER_BACK_H == 2628, \
+assert end_fixings["Table Ledger Back"] == POST_T * LEDGER_BACK_H == 2448, \
     "V2: the back ledger is 48 deep now, so 36 of it butts the post face"
-assert BENCH_TOP == BENCH_RAIL_TOP + BENCH_SLAT_T == 295
+assert BENCH_TOP == BENCH_RAIL_TOP + BENCH_SLAT_T == 282
 # D10/U1: the cushion recess. The bench slat got 2 mm thicker and the panel did
 # not (it is an 18 mm sheet on a rail top that has not moved), so the dip the
 # fold-out cushions fold into grows 16 -> 18 mm. That is the right direction:
 # the recess exists to swallow a cushion, and 18 mm of it is 18 mm.
-assert PANEL_BENCH_DIP == 18 and PANEL_TOP_BED == BENCH_TOP - PANEL_BENCH_DIP, \
-    "D10/U1: the bed-mode panel should sit 18 mm below the bench tops"
+# V6: the dip is BENCH_SLAT_T - PANEL_T and nothing else - the bench slat and
+# the panel start from the same 259 plane - so the 23 mm slat takes it 18 -> 5.
+# The three zones of the lower sleeping surface are now essentially LEVEL. That
+# is a real change to what the bed feels like: the middle cushion is 5 mm
+# thicker than the bench cushions instead of 18, and the recess the sofa
+# cushions used to fold down into is gone. For SLEEPING this is the better
+# surface - three zones in one plane - and for sitting it means the fold is
+# taken up by the cushions themselves. It belongs in the manual, not a footnote.
+assert PANEL_BENCH_DIP == 5 and PANEL_TOP_BED == BENCH_TOP - PANEL_BENCH_DIP, \
+    "D10/U1/V6: the bed-mode panel should sit 5 mm below the bench tops"
 assert PANEL_BENCH_DIP == BENCH_SLAT_T - PANEL_T + (BENCH_RAIL_TOP -
                                                    PANEL_UNDER_BED), \
     "D10: the dip is the bench slat minus the panel, both off the same rail top"
@@ -5739,7 +5780,7 @@ assert PANEL_LEN == BENCH_SLAT_LEN - PANEL_FIT == PLATFORM_DEPTH - PANEL_FIT, \
     "D10/V2: the panel has to reach its rear bearing, less the front fit"
 assert PANEL_Y0 == BENCH_SLAT_Y0 and PANEL_Y1 == LADDER_Y0 - PANEL_FIT
 assert RUNG_Y1 == LADDER_Y1, "D10: the tread fronts must be flush with the uprights"
-assert LADDER_Y0 - RUNG_Y0 == RUNG_D - UPRIGHT_T == RUNG_REST_LEDGE == 37, \
+assert LADDER_Y0 - RUNG_Y0 == RUNG_D - UPRIGHT_T == RUNG_REST_LEDGE == 32, \
     "D10/U2: the rungs must reach 37 mm behind the upright plane to catch the " \
     "panel (25 while the upright was 48 deep - the tread did not change, the " \
     "upright did)"
@@ -5768,7 +5809,7 @@ assert BATTEN_Y0 == BACK_RAIL_Y1, \
 assert BATTEN_Y1 == PANEL_Y1, \
     "M4/V3: the battens must reach the panel's own front edge - the last " \
     "35 mm of them IS the guide, standing in the rung's rest-ledge shaft"
-assert BATTEN_GUIDE_ENGAGE_Y == BATTEN_Y1 - RUNG_Y0 == 35 and \
+assert BATTEN_GUIDE_ENGAGE_Y == BATTEN_Y1 - RUNG_Y0 == 30 and \
     BATTEN_GUIDE_ENGAGE_Y < RUNG_REST_LEDGE, \
     f"M4/V3: the batten reaches {BATTEN_GUIDE_ENGAGE_Y} mm into a " \
     f"{RUNG_REST_LEDGE} mm shaft - past the ledge it would foul the uprights"
@@ -6441,7 +6482,14 @@ assert MATTRESS_Z0 == SLAT_Z1, "mattress does not sit on the slats"
 assert (SLAT_Y0, SLAT_Y1) == (BACK_RAIL_Y0, FRONT_RAIL_Y1)
 assert SLAT_LEN == BENCH_SLAT_LEN == 800, \
     "D5: an upper slat is supposed to be the same piece as a bench slat"
-assert (BED_SLAT_T, BED_SLAT_W) == (BENCH_SLAT_T, BENCH_SLAT_W) == (GUARD_T, GUARD_W)
+# V6: the two SLAT families are still one and the same piece - that is what
+# makes the 24-in-one-setup cut - but they are no longer the guard board's
+# profile. A slat is loaded flat and a guard board is loaded on edge, so they
+# want opposite things from a section, and V6 stops paying 36 mm for the flat
+# one. The bed carries five profiles now instead of four.
+assert (BED_SLAT_T, BED_SLAT_W) == (BENCH_SLAT_T, BENCH_SLAT_W) == (23, 98)
+assert (GUARD_T, GUARD_W) == (BOARD36_T, BOARD36_W), \
+    "the guard boards stay on the 36x98 board - they are loaded on edge"
 assert len(bed_slats) == SLAT_COUNT == 14
 rail_y = [(BACK_RAIL_Y0, BACK_RAIL_Y1), (FRONT_RAIL_Y0, FRONT_RAIL_Y1)]
 for s in bed_slats:
@@ -6799,12 +6847,13 @@ print(f"  {'TOTAL':<12}{sum(by_section.values()):>4} pcs "
 # The profile list is a design statement, not an observation: any new profile
 # has to be argued for, and any profile that empties out has to leave.
 EXPECTED_PROFILES = {
+    sec(BOARD23_T, BOARD36_W),      # 23x98 - the 24 slats (V6), flat-loaded
     sec(BOARD36_T, BOARD36_W),      # 36x98 - boards AND corner posts (U1/U2)
     sec(BLOCK_T, BLOCK_H),          # 36x48 - ladder uprights and every block
     sec(BENCH_RAIL_T, BENCH_RAIL_H),  # 48x73 - bench rails, rungs, battens,
                                       #         the four stub legs (U5) AND the
                                       #         back table ledger (V2)
-    sec(RAIL_T, RAIL_H),            # 48x98 - side rails and end beams
+    sec(RAIL_T, RAIL_H),            # 48x98 - the two side rails (V6b)
 }
 # U5: the stub legs are cut from the bench-rail profile now, so they add no
 # entry of their own - this is the assert that would have caught 48x48 coming
@@ -6822,12 +6871,18 @@ assert set(TIMBER_PROFILES) == EXPECTED_PROFILES, \
 # says the saving is real and that 21x95 is not to come back quietly.
 assert sec(BOARD_T, BOARD_W) not in TIMBER_PROFILES, \
     "V2: 21x95 is supposed to be gone from the bed entirely"
-assert len(TIMBER_PROFILES) == 4, \
-    f"U1/U2/U5 aimed at 5 timber profiles and V2 took one out; " \
+assert len(TIMBER_PROFILES) == 5, \
+    f"V6 put 23x98 in beside the four U1/U2/U5/V2 left; " \
     f"this is {len(TIMBER_PROFILES)}"
-assert by_section[sec(BOARD36_T, BOARD36_W)] == 32 and \
-    max(by_metres, key=by_metres.get) == sec(BOARD36_T, BOARD36_W), \
-    "U1/U2: 36x98 must be both the most numerous and the longest profile"
+# V6: the biggest pile moved. The 24 slats went to 23x98, so THAT is now both
+# the most numerous profile and the longest by metres, and 36x98 is left with
+# the 4 guard segments and the 4 corner posts - the on-edge and the standing
+# members, which is exactly what a 36 mm board is worth paying for.
+assert by_section[sec(BOARD23_T, BOARD36_W)] == 24 and \
+    max(by_metres, key=by_metres.get) == sec(BOARD23_T, BOARD36_W), \
+    "V6: 23x98 must be both the most numerous and the longest profile"
+assert by_section[sec(BOARD36_T, BOARD36_W)] == 10, \
+    "V6: 36x98 is 4 guard segments + 4 corner posts + 2 end beams (V6b)"
 assert "34x98" not in by_section, \
     "U1: 34x98 is supposed to be gone from the bed entirely"
 print("\nNote: the movable panel and its four battens are listed once; they "

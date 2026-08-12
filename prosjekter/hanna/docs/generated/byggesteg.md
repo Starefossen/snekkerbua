@@ -18,7 +18,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 **Slik gjør du:**
 
 1. Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring — med to navngitte unntak, og begge står i kapplista: de to kilelektene under platens forkant, og vinkelklossen.
-1. Skråkapp de to kilelektene. De er 48×73 × 77 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (30,9°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.
+1. Skråkapp de to kilelektene. De er 48×73 × 77 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (28,0°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.
 1. Kapp vinkelklossen, borjiggen til de to skråskruene (J8-B og J10). Én bit 48×73 av restene, 160 mm lang, med en rampe i hver ende: 25° i den ene (J8-B) og 30° i den andre (J10). Kappsag med bladet vippet. Den skal ikke bygges inn i sengen — den er verktøy.
 1. Merk hver del med blyant på en flate som blir skjult.
 1. **Bryt alle kanter et barn kan nå, nå — mens delene er løse.** Kravet er brutt kant, ikke en bestemt metode: 45° fas eller avrunding, du velger. Fres med V-spor eller avrundingsfres om du har fres; ellers gjør en blokkhøvel eller en pussekloss med 120-korn nøyaktig samme nytte. Viktigst: plateenhetens underside — begge styrelektenes nedre kanter og begge kilene — for det er der et kne møter treet når noen sitter ved bordet. Deretter platens fire egne kanter, og så stolper, rekkverksbord, trinn og stigevangenes kanter. Modellen tegner alle deler skarpe; kantbrytningen er en instruks og flytter ingen mål.
@@ -36,7 +36,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 
 Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannrette deler i samme plan. Det laget er monteringsflaten mot veggen. Og det MÅ bygges som én ramme: den bakre benkevangen og bordbærelekta er kappet til å fylle nøyaktig mellom de to stolpene, så de lar seg ikke tre inn etterpå.
 
-**Deler:** 1× Benkevange, bak (gjennomgående) 48×73 × 1794 · 1× Bordbærelekt, bak 48×73 × 1794 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1065 · 1× Sidevange, øvre 48×98 × 1984
+**Deler:** 1× Benkevange, bak (gjennomgående) 48×68 × 1794 · 1× Bordbærelekt, bak 48×68 × 1794 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1065 · 1× Sidevange, øvre 48×98 × 1984
 
 **Festemidler:** 4× Treskrue 5×40 forsenket Torx · 4× Treskrue 6×120 forsenket Torx · 4× Treskrue 6×90 forsenket Torx · 2× Vinkelbeslag 40×40×20
 
@@ -82,7 +82,7 @@ Sengen festes til veggen gjennom den bakre sidevangen. Vangen ligger flatt mot v
 
 Nå bygges de to endene ut fra bakrammen. Endebjelken går fra den bakre stolpen til den fremre og bærer begge sidevanger.
 
-**Deler:** 2× Endebjelke 48×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
+**Deler:** 2× Endebjelke 36×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
 
 **Festemidler:** 8× Treskrue 6×90 forsenket Torx
 
@@ -126,7 +126,7 @@ Den fremre vangen lukker rammen i overetasjen. Den hviler på begge endebjelker 
 
 Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gulvet foran stigen er helt fritt.
 
-**Deler:** 2× Benkevange, front (bit) 48×73 × 642 · 4× Stubbefot 48×73 × 186
+**Deler:** 2× Benkevange, front (bit) 48×68 × 642 · 4× Stubbefot 48×68 × 191
 
 **Festemidler:** 16× Treskrue 5×40 forsenket Torx · 4× Treskrue 5×70 forsenket Torx · 4× Treskrue 6×80 forsenket Torx · 4× Vinkelbeslag 90×90×40×2,5 varmforsinket
 
@@ -149,7 +149,7 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 
 Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre sidevangen.
 
-**Deler:** 4× Rungetrinn 48×73 × 320 · 8× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 1700
+**Deler:** 4× Rungetrinn 48×68 × 320 · 8× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 1700
 
 **Festemidler:** 16× Treskrue 5×60 forsenket Torx · 8× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×80 forsenket Torx
 
@@ -172,7 +172,7 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 
 Fem spiler per benk, lagt oppå benkevangene.
 
-**Deler:** 10× Benkespile 36×98 × 800
+**Deler:** 10× Benkespile 23×98 × 800
 
 **Festemidler:** 20× Treskrue 5×60 forsenket Torx
 
@@ -193,7 +193,7 @@ Fem spiler per benk, lagt oppå benkevangene.
 
 Spilene ligger OPPÅ begge sidevanger — ikke i et spor og ikke på en lekt. Alle er like lange.
 
-**Deler:** 14× Køyespile 36×98 × 800
+**Deler:** 14× Køyespile 23×98 × 800
 
 **Festemidler:** 28× Treskrue 5×60 forsenket Torx
 
@@ -236,7 +236,7 @@ To bånd, hvert delt i to bord, med klatreåpningen i midten. Man klatrer GJENNO
 
 Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke og senkes rett ned igjen — i begge stillinger. Lektene under den gjør to jobber: de gjør platen stiv, OG de er styringen. De to lange går ned på hver side av trinnenden med 2 mm klaring, så de finner plassen selv. Det er ikke ett beslag i denne mekanismen, og det skal ikke være én skrue synlig oppå platen.
 
-**Deler:** 2× Avstivningslekt under plate 48×73 × 750 · 2× Kilelekt under platens forkant (skråkappet) 48×73 × 77 · 1× Løs plate 18 mm plate, 574 bred × 798
+**Deler:** 2× Avstivningslekt under plate 48×68 × 750 · 2× Kilelekt under platens forkant (skråkappet) 48×68 × 77 · 1× Løs plate 18 mm plate, 574 bred × 798
 
 **Festemidler:** 16× Treskrue 5×40 forsenket Torx
 
@@ -244,7 +244,7 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke 
 
 **Slik gjør du:**
 
-1. Bor hullene i lektene FØR noe limes. Regelen er den samme for alle fire delene, og den er lettest å huske slik: bor ⌀12 opp i undersiden TIL DET STÅR 27 mm igjen opp til plata, og ⌀3,5 videre gjennom de siste 27 mm. På de to lange styrelektene, som er 73 mm hele veien, blir det 46 mm kontrabor. På de to skråkappede kilene blir det dypest ved roten og null ved tuppen — tuppen ER 27 mm, så der ligger hodet i flukt med kilens egen underside. Skruen tar 13 mm i den 18 mm tykke platen uansett, med 5 mm plate igjen over spissen.
+1. Bor hullene i lektene FØR noe limes. Regelen er den samme for alle fire delene, og den er lettest å huske slik: bor ⌀12 opp i undersiden TIL DET STÅR 27 mm igjen opp til plata, og ⌀3,5 videre gjennom de siste 27 mm. På de to lange styrelektene, som er 68 mm hele veien, blir det 41 mm kontrabor. På de to skråkappede kilene blir det dypest ved roten og null ved tuppen — tuppen ER 27 mm, så der ligger hodet i flukt med kilens egen underside. Skruen tar 13 mm i den 18 mm tykke platen uansett, med 5 mm plate igjen over spissen.
 1. Legg platen med undersiden opp. Merk av de to lange avstivningslektene 77 mm inn fra hver sidekant — det er målet som gjør at de treffer utsiden av trinnenden.
 1. Lim (D3) hele lektas overkant, legg den på plass og skru opp fra undersiden (J13a). Skruene er tvinger: de trekker limfugen sammen og blir sittende.
 1. Samme sak for de to kilelektene, i flukt med platens forkant og med den HØYE enden mot den lange lekta (J13b) — den skråkappede tuppen peker ut mot platekanten. De bærer hjørnet trinnet ikke rekker fram til.

@@ -23,11 +23,11 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | Z | Hva |
 |---:|---|
 | **0** | gulv |
-| **186** | benkevangens underkant / stubbefotens topp |
+| **191** | benkevangens underkant / stubbefotens topp |
 | **259** | benkevangens overkant = trinn 1 = platens underside i sengestilling |
 | **277** | platens overside i sengestilling |
-| **295** | benkeoverflate (sittehøyde) |
-| **409** | bordbærelektas underkant |
+| **282** | benkeoverflate (sittehøyde) |
+| **414** | bordbærelektas underkant |
 | **482** | bordbærelektas overkant = trinn 2 = platens underside i bordstilling |
 | **500** | bordplate |
 | **720** | trinn 3 |
@@ -35,15 +35,15 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **967** | endebjelkens underkant |
 | **1065** | endebjelkens overkant = sidevangens underkant (fri høyde under sengen) |
 | **1163** | sidevangens overkant |
-| **1199** | spilebunn / madrassens underside / bakre stolpetopp |
-| **1339** | madrassens overside (ved 140 mm madrass; lovlig band 140–326) |
-| **1414** | rekkverk, nedre bånd underkant |
-| **1512** | rekkverk, nedre bånd overkant |
-| **1587** | rekkverk, øvre bånd underkant |
-| **1685** | rekkverk, øvre bånd overkant |
+| **1186** | spilebunn / madrassens underside / bakre stolpetopp |
+| **1326** | madrassens overside (ved 140 mm madrass; lovlig band 140–326) |
+| **1401** | rekkverk, nedre bånd underkant |
+| **1499** | rekkverk, nedre bånd overkant |
+| **1574** | rekkverk, øvre bånd underkant |
+| **1672** | rekkverk, øvre bånd overkant |
 | **1700** | fremre stolpetopp |
 
-Stigningen fra gulv til spilebunn: 259 + 223 + 238 + 238 + 241 mm. Første stigning er benkevangens høyde — det er en avsats du trår opp på, ikke et klatretrinn. De fire klatretrinnene er 223–241 mm.
+Stigningen fra gulv til spilebunn: 259 + 223 + 238 + 238 + 228 mm. Første stigning er benkevangens høyde — det er en avsats du trår opp på, ikke et klatretrinn. De fire klatretrinnene er 223–238 mm.
 
 ## Dybdeplan (Y)
 
@@ -53,8 +53,8 @@ Stigningen fra gulv til spilebunn: 259 + 223 + 238 + 238 + 241 mm. Første stign
 | **-27** | bordbærelektas forside |
 | **0** | bakre sidevanges og benkevanges forside; avstivningslektenes bakkant |
 | **704** | fremre sidevange og benkevange — bakkant |
-| **715** | trinnenes bakkant (hylla platen hviler på) |
 | **716** | rekkverksbordenes bakkant |
+| **720** | trinnenes bakkant (hylla platen hviler på) |
 | **750** | platens forkant; avstivningslektenes og kilelektenes forkant |
 | **752** | fremre sidevanges forside = fremre stolpers og stigevangers bakside = spilebunnens forkant; rekkverksbordenes forkant |
 | **788** | fremre stolpers og stigevangers forside = trinnenes forkant; sengens forkant — det ytterste planet |
@@ -75,7 +75,7 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | Benkene | 0..645 og 1345..1990 |
 | Åpent gulv mellom benkene | 645..1345 (700 mm) |
 | Gangpassasje ved siden av stigen | 142 mm på hver side |
-| Stubbeføtter | 572..645 og 1345..1418 |
+| Stubbeføtter | 577..645 og 1345..1413 |
 | Løs plate | 708..1282 (574 mm bred) |
 | Avstivningslekter (styrer platen) | 785..833 og 1157..1205 |
 | Kilelekter under forkanten | 708..785 og 1205..1282 |
@@ -93,7 +93,7 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | — | **581–649 mm** | **forbudt** — klaringer 25,5–59,5 mm, midt i klembåndet |
 | — | **677–689 mm** | **forbudt** — klaringer 5,5–11,5 mm, midt i klembåndet |
 
-Bredden deltar **ikke** i begrensningene på stillingsbyttet — det er høyden og dybden på plateenheten som møter overføringssjakten (114 mm fri høyde mot en 91 mm høy enhet). Å smalne platen gir mer slingring ved innsettingen og mindre bordflate, ingenting annet. Modellen asserter vinduene: en «bare litt smalere»-endring stopper byggeporten med akkurat denne tabellen.
+Bredden deltar **ikke** i begrensningene på stillingsbyttet — det er høyden og dybden på plateenheten som møter overføringssjakten (132 mm fri høyde mot en 86 mm høy enhet). Å smalne platen gir mer slingring ved innsettingen og mindre bordflate, ingenting annet. Modellen asserter vinduene: en «bare litt smalere»-endring stopper byggeporten med akkurat denne tabellen.
 
 **Køyespiler:** 14 stk., første spile starter på X 20, deling 142,46 mm, siste spile slutter på X 1970. Åpning mellom spilene 44,46 mm.
 
@@ -107,7 +107,7 @@ Ingen bolt går inn i en stolpe. Stolpen er 36 mm tykk, og på den tykkelsen har
 |---|---:|---|---|---:|---|
 | J1 — endebjelke 48×98 | 2 per ledd | **994** og **1038** | 27 / 27 | 44 | Y -30 og 770 (midt i stolpedybden) |
 | J2 — sidevange 48×98 | 2 per ledd | **1092** og **1136** | 27 / 27 | 44 | X 50,5 fra hver vegg |
-| J8 — benkevange 48×73 | 2 per ledd | **210,5** og **234,5** | 24,5 / 24,5 | 24 | X 50,5 fra hver vegg |
+| J8 — benkevange 48×68 | 2 per ledd | **213** og **237** | 22 / 22 | 24 | X 50,5 fra hver vegg |
 
 Minstekrav for en forboret 6 mm treskrue: kantavstand 18 mm (3d), avstand mellom to skruer langs fiberretningen 30 mm (5d). Alle radene over holder kravet.
 
@@ -126,7 +126,7 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 | Pute over venstre benk | 645 mm bred |
 | Pute over platen (midten) | 700 mm bred — **måles etter sonen, ikke etter platen**: platen er 574 mm, så puten bygger ut en 63 mm åpen stripe på hver side (K2) |
 | Pute over høyre benk | 645 mm bred |
-| Midtputen er tykkere enn benkeputene med | 18 mm — platen ligger så mye lavere enn benkeflaten, og det er nettopp plassen putene skal folde seg ned i |
+| Midtputen er tykkere enn benkeputene med | 5 mm — platen ligger så mye lavere enn benkeflaten, og det er nettopp plassen putene skal folde seg ned i |
 
 ## Sikkerhetsmål (EN 747)
 
@@ -134,8 +134,8 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 |---|---:|---:|
 | Madrassoverside → nedre rekkverksbånd | 75 | ≤ 75 |
 | Mellom de to rekkverksbåndene | 75 | ≤ 75 |
-| Øvre bånd → stolpetopp | 15 | ≤ 75 |
+| Øvre bånd → stolpetopp | 28 | ≤ 75 |
 | Rekkverkets høyde over madrassen | 346 | ≥ 160 |
 | Åpning mellom madrass og vegg (verste stilling) | 0 | ≤ 75 |
 | Fri klatreåpning i stigen | 320 | ≥ 300 |
-| Største klatretrinn | 241 | ≤ 250 |
+| Største klatretrinn | 238 | ≤ 250 |

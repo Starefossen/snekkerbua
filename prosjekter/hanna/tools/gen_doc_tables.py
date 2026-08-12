@@ -50,8 +50,15 @@ SALE_LENGTHS = [2400, 3000, 3600, 4200, 4800]
 # 4200/3600 boards would send the reader home with lengths he cannot buy, so
 # the main board is packed into 4800s only. Costs a little more offcut; the cut
 # list itself is untouched, this is purchasing.
+# V6 butikkrunde: dette er lengdene virket FAKTISK ble kjøpt i. 36x98 finnes
+# bare i 4,8 m (se over), og de tre andre lektedimensjonene ble tatt i 4,8 m
+# fordi det er den lengden butikken hadde dem i. Kappeplanen skal beskrive det
+# virket som ligger på planet, ikke en optimal pakking av en annen lengdeliste.
 SALE_LENGTHS_BY_SECTION = {
+    "23×98": [4800],
+    "36×48": [4800],
     "36×98": [4800],
+    "48×68": [4800],
 }
 KERF = 4                 # saw kerf allowance between two cuts, mm
 
@@ -1068,13 +1075,19 @@ def emit_innkjopsliste(G, out_dir):
 
     L.append("## Merknader fra butikken\n\n")
     board = G.sec(G.BOARD36_T, G.BOARD36_W).replace("x", "×")
-    L.append(f"* **{board}** er hovedbordet i denne sengen — det aller meste "
-             f"av delelista er kappet av det. Ring og bestill før du drar; "
+    slat = G.sec(G.BOARD23_T, G.BOARD36_W).replace("x", "×")
+    L.append(f"* **{slat}** er det største bordet i denne sengen i antall og "
+             f"lengde — de 24 spilene er kappet av det, og ingenting annet er. "
+             f"**{board}** tar resten av det flate virket: stolper, "
+             f"rekkverksbord og endebjelker. Ring og bestill før du drar; "
              f"butikken har sjelden nok av én dimensjon på lager. Får du ikke "
-             f"akkurat {board}, kan modellen kjøres om på en nabodimensjon — "
-             f"det er én konstant i `generate_loftbed.py` — men da må hele "
-             f"kapplista og alle nøkkelmål regnes på nytt. Ikke improviser på "
-             f"sagbenken.\n")
+             f"akkurat disse målene, kan modellen kjøres om på en "
+             f"nabodimensjon — det er én konstant i `generate_loftbed.py` — "
+             f"men da må hele kapplista og alle nøkkelmål regnes på nytt. Ikke "
+             f"improviser på sagbenken.\n")
+    L.append(f"* **Kjøp ett bord {slat} ekstra.** Planen over bruker fem, og "
+             f"fem er nok. Spilene er den ene delen det er 24 like av, og et "
+             f"reservebord koster mindre enn en ny tur.\n")
     only = ", ".join(
         f"**{s}** finnes bare i "
         + " / ".join(f"{ln / 1000:.1f}".replace(".", ",") + " m"

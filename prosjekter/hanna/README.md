@@ -36,7 +36,7 @@ hvert merke står på det festemiddelet det navngir.*
 | | |
 |---|---|
 | **Ytre mål** | 1990 × 836 × 1700 mm — fyller nisjen fra vegg til vegg på 1990 mm. Gjennomgående deler kappes 1984 mm, for et bord på 1990 mm lar seg ikke svinge inn i en åpning på 1990 mm |
-| **Trevirke** | **63 stykker** i **4 dimensjoner** pluss én 18 mm kryssfinerplate — 47,1 løpemeter. 32 av de 63 stykkene kommer av én og samme dimensjon (36×98) i fire saginnstillinger |
+| **Trevirke** | **63 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 46,8 løpemeter. 24 av de 63 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling |
 | **Stål** | **180 festemidler fordelt på 17 ledd**, **166 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert |
 | **Kontroller** | **385 asserter i modellen** og 57 til i verktøyene, alle sammen stopper bygget. Skrueretningene er utledet av fysikk (5 av 21 er tvunget av tykkelsene alene); antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
 | **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **112 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
