@@ -1376,7 +1376,7 @@ MIN_LADDER_CLEAR = 300                   # EN 747 clear width between stiles
 # D11/D13 keep the front bench rail out of the whole X band between the sofas.
 RUNG_LEN = LADDER_CLEAR                  # 320, X 835 .. 1155  [was 420]
 RUNG_T = TREAD_T                         # 48, tread thickness (Z)
-RUNG_D = TREAD_D                         # 73, tread depth (Y)
+RUNG_D = TREAD_D                         # 68, tread depth (Y)
 RUNG_Y1 = LADDER_Y1                      # 788, flush with the upright front
 RUNG_Y0 = RUNG_Y1 - RUNG_D               # 715  [was 727]
 RUNG_REST_LEDGE = LADDER_Y0 - RUNG_Y0    # 37, the bit behind the upright plane
@@ -1931,7 +1931,7 @@ PANEL_MODE_LIFT = PANEL_UNDER_TABLE - PANEL_UNDER_BED       # 223
 # price of putting the guides where the guiding has to happen, and it is the
 # panel's governing sheet row now.
 BATTEN_W = BENCH_RAIL_T                        # 48, batten width (X)
-BATTEN_H = BENCH_RAIL_H                        # 73, batten depth (Z), on edge
+BATTEN_H = BENCH_RAIL_H                        # 68, batten depth (Z), on edge
 BATTEN_Y0 = BACK_RAIL_Y1                       # 0, clear of the back rail/ledger
 BATTEN_Y1 = PANEL_Y1                           # 750, the panel's own front edge
 BATTEN_LEN = BATTEN_Y1 - BATTEN_Y0             # 750  [was 713]
@@ -2243,7 +2243,7 @@ PANEL_SIDE_STRIP_LEN = PANEL_LEN               # 798, the strip runs the depth
 # against the 21x95's 31 587, on the same 1794 mm post-to-post span, and the
 # end fixing into the 36 mm post face goes 21x95 = 1995 mm2 to 36x73 = 2628.
 LEDGER_BACK_T = BENCH_RAIL_T                   # 48 (Y)  [was BOARD_T = 21]
-LEDGER_BACK_H = BENCH_RAIL_H                   # 73 (Z)  [was BOARD_W = 95]
+LEDGER_BACK_H = BENCH_RAIL_H                   # 68 (Z)  [was BOARD_W = 95]
 LEDGER_BACK_Z1 = PANEL_UNDER_TABLE             # 482
 LEDGER_BACK_Z0 = LEDGER_BACK_Z1 - LEDGER_BACK_H     # 409  [was 387]
 LEDGER_BACK_Y0 = BACK_RAIL_Y0                  # -48 .. 0, on the wall plane
@@ -2934,7 +2934,7 @@ JOINTS = [
               "tilgjengelig hele veien. Disse to skruene er HELE festet: "
               "det står ingen kloss under bjelkeenden",
          contacts=[dict(a="post", b="beam", axis=0, drives=[
-             drive("Treskrue 6×90 forsenket Torx", 2, frm="beam", row=2)])]),
+             drive("Treskrue 6×80 forsenket Torx", 2, frm="beam", row=2)])]),
     # V5: DRIVEN FROM INSIDE THE BED. Both directions fit (a 6x80 crosses 36
     # into 48 and 48 into 36 alike), so the rule calls it 'tvetydig' and the
     # table decides - and the table decides on the front face: a head on the
@@ -3014,7 +3014,7 @@ JOINTS = [
               "mellom de to stolpene, og disse to skruene er HELE festet i "
               "enden — det står ingen kloss under den",
          contacts=[dict(a="bench_back", b="post_back", axis=0, drives=[
-             drive("Treskrue 6×90 forsenket Torx", 2, frm="bench_back",
+             drive("Treskrue 6×80 forsenket Torx", 2, frm="bench_back",
                    toe=TOE_BENCH_POST,
                    exempt="skråskrue gjennom vangens forside nær enden")])]),
     dict(id="J10", title="Benkevange → stubbefot", n=4,
@@ -3023,7 +3023,7 @@ JOINTS = [
                "styring, så ⌀3,5 videre",
          side="Vinkelbeslaget sitter i hjørnet mellom fotens utside og "
               "vangens underside, med den ene fliken opp i vangen og den "
-              "andre inn i foten; den ene 5×70 er en skråskrue nedenfra og "
+              "andre inn i foten; den ene 5×60 er en skråskrue nedenfra og "
               "opp i vangen, ut av et flatbunnet sete så hodet ligger helt "
               "under treet",
          contacts=[dict(a="bench_rail", b="stub", axis=2, drives=[
@@ -3034,7 +3034,7 @@ JOINTS = [
                    sign="inboard", row=2, row_sign=-1, reach=90.0),
              drive("Treskrue 5×40 forsenket Torx", 2, into="bench_rail",
                    axis=2, sign=1, row=0, row_sign="outboard", reach=90.0),
-             drive("Treskrue 5×70 forsenket Torx", 1, frm="stub",
+             drive("Treskrue 5×60 forsenket Torx", 1, frm="stub",
                    toe=TOE_STUB_RAIL,
                    exempt="skråskrue nedenfra opp i vangen")])]),
     dict(id="J11", title="Benkespile → benkevange (per spileende)", n=20,

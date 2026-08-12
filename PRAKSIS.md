@@ -180,3 +180,60 @@ som avhenger av rekkefølgen. Rett årsaken, ikke artefaktet.
 **Ingenting som er generert skal redigeres for hånd.** Hver genererte fil
 starter med en kommentar som sier det, der formatet tillater en. Skal et tall
 endres, endres det i modellen.
+
+---
+
+## 7. Overdimensjonering gjemmer seg i kriteriet, ikke i tabellen
+
+Et lasttall er ikke en måling. Det er et valg, og valget arves videre uten at
+noen ser på det igjen. Spilene i Hanna bar «1 kN på én spile» i flere runder —
+et selvvalgt tall, ikke et krav fra noen standard — og det tallet alene var det
+som gjorde 36 mm nødvendig. Da kriteriet ble forankret i noe som lar seg måle
+på tegningen, at en fotsåle på 250 mm alltid rekker over minst to spiler ved
+den delingen feltet faktisk har, falt lasten til 0,5 kN og virket til 23 mm.
+Ingen fysikk endret seg. Kriteriet ble ærlig.
+
+**Forankre kriteriet i noe verifiserbart, og skriv ned hva det er forankret i.**
+Et tall som følger av geometrien i modellen kan etterprøves av den neste som
+leser. Et tall noen valgte kan bare tros.
+
+**Sammenlign med noe som finnes.** En ribbebunn fra møbelhandelen er sjiktlimt
+bjørk på 8 mm. Ligger regnestykket ditt en størrelsesorden over det folk sover
+på hver natt, er det kriteriet som skal undersøkes, ikke virket. Sammenligningen
+er kontekst og aldri bevis — den forteller hvor du skal lete, ikke hva svaret er.
+
+**Skill reserve-med-jobb fra margin på margin.** Avstivningslektene under platen
+står på 0,26 i idealtilfellet, og det ser romslig ut helt til man spør hva som
+skjer når kneet lander rett over den ene lekta i stedet for midt imellom: 0,52.
+Reserven hadde en jobb. Sikkerhetsfaktorer stablet oppå hverandre uten navn har
+ingen. Skriv hvilken av delene et tall er, ellers blir all slakk like hellig —
+eller like fristende å barbere.
+
+**Stivhet er ikke bruddmargin.** Å stå på et bord uten at det synlig beveger seg
+sier noe om E, og E er den samme i C16 og C24. En 23×98 på 800 mm bøyer seg
+knapt 8 mm under 80 kg — usynlig — og ligger samtidig på utnyttelse over 1. Den
+prøven er verdiløs som argument for at noe er overdimensjonert, og verdifull som
+kalibrering av at regnestykket stemmer. Bruk den til det den duger til.
+
+## 8. Butikken er en designforutsetning
+
+Modellen kan regne hvilken som helst dimensjon. Butikken fører fem. Det er
+butikken som vinner, og det er billigere å vite det før kapplista skrives enn
+etterpå.
+
+**Dimensjoner:** 48×73 sto i modellen i mange runder fordi det er standard på
+papiret. Det fantes ikke i hylla; 48×68 gjorde. Hele nedstrømskjeden — koter,
+skruevinduer, kontraborets dybde — måtte regnes om for fem millimeter.
+
+**Salgslengder:** en kappeplan som pakker perfekt i 4,2 m er verdiløs hvis
+dimensjonen bare selges i 4,8. Kappeplanen skal beskrive det virket som faktisk
+kan bæres ut av butikken, også når det gir mer svinn på papiret.
+
+**Pakkestørrelser:** skruer selges i hundre. Å presse skruesortimentet fra fire
+typer til tre sparte null pakker — behovet krysset bare 100 på en annen type —
+og kostet skjærkapasitet i hvert rammeledd. **Optimum og minimum er ikke samme
+sak.** Regn i pakker, ikke i typer.
+
+**Sorteringsklasse er en dimensjon til.** Lasttabellen regner C24. Står bordet i
+hylla som «klasse 1 lekt/rekke — ikke-bærende», er det ikke det bordet
+regnestykket handler om, uansett hva målene sier. Spør i skranken.

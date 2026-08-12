@@ -54,14 +54,12 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 
 | | |
 |:---:|---|
-| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **80x** | Treskrue 5×60 forsenket Torx |
+| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **84x** | Treskrue 5×60 forsenket Torx |
 | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="44"> **36x** | Treskrue 5×40 forsenket Torx |
-| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **14x** | Treskrue 6×80 forsenket Torx |
+| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **26x** | Treskrue 6×80 forsenket Torx |
 | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="44"> **12x** | Treskrue 6×120 forsenket Torx |
-| <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="44"> **12x** | Treskrue 6×90 forsenket Torx |
 | <img src="img/beslag/filtknott-d40.svg" alt="Filtknott / møbeltapp ⌀40" height="44"> **8x** | Filtknott / møbeltapp ⌀40 |
 | <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="44"> **6x** | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) |
-| <img src="img/beslag/treskrue-5x70.svg" alt="Treskrue 5×70 forsenket Torx" height="44"> **4x** | Treskrue 5×70 forsenket Torx |
 | <img src="img/beslag/vinkelbeslag-90x90x40.svg" alt="Vinkelbeslag 90×90×40×2,5 varmforsinket" height="179"> **4x** | Vinkelbeslag 90×90×40×2,5 varmforsinket |
 | <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="84"> **2x** | Vinkelbeslag 40×40×20 |
 
@@ -132,7 +130,7 @@ Ledd **J15** → [beslagliste](generated/beslagliste.md)
 |:---:|:---:|---|
 | <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="30"> **4x** | Treskrue 5×40 |
 | <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **4x** | Treskrue 6×120 |
-| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="30"> **4x** | Treskrue 6×90 |
+| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **4x** | Treskrue 6×80 |
 | <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="58"> **2x** | Vinkelbeslag 40×40×20 |
 
 Bokstavene viser hvor på tegningen hver type går.
@@ -176,7 +174,7 @@ Ledd **J14** → [beslagliste](generated/beslagliste.md)
 
 | | |
 |:---:|---|
-| <img src="img/beslag/treskrue-6x90.svg" alt="Treskrue 6×90 forsenket Torx" height="30"> **8x** | Treskrue 6×90 |
+| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **8x** | Treskrue 6×80 |
 
 Ledd **J1** → [beslagliste](generated/beslagliste.md)
 
@@ -222,11 +220,11 @@ Ledd **J2** → [beslagliste](generated/beslagliste.md)
 | | | |
 |:---:|:---:|---|
 | <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="30"> **16x** | Treskrue 5×40 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-5x70-hatch.svg" alt="Treskrue 5×70 forsenket Torx" height="30"> **4x** | Treskrue 5×70 |
-| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80-cross.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **4x** | Treskrue 6×80 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **4x** | Treskrue 5×60 |
+| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **4x** | Treskrue 6×80 |
 | <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/vinkelbeslag-90x90x40.svg" alt="Vinkelbeslag 90×90×40×2,5 varmforsinket" height="72"> **4x** | Vinkelbeslag 90×90×40×2,5 |
 
-Bokstavene viser hvor på tegningen hver type går. To av dem er nesten like lange, så de bærer fyll også — den samme bokstaven om igjen — se [fyllkoden på beslagsiden](#beslag).
+Bokstavene viser hvor på tegningen hver type går.
 
 Ledd **J8**, **J10** → [beslagliste](generated/beslagliste.md)
 

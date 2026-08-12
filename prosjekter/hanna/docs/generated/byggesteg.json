@@ -79,7 +79,7 @@
       "fasteners": [
         "4× Treskrue 5×40 forsenket Torx",
         "4× Treskrue 6×120 forsenket Torx",
-        "4× Treskrue 6×90 forsenket Torx",
+        "4× Treskrue 6×80 forsenket Torx",
         "2× Vinkelbeslag 40×40×20"
       ],
       "joints": {
@@ -178,7 +178,7 @@
         "Kjenn etter at ingenting stikker ut mot sideveggene."
       ],
       "fasteners": [
-        "8× Treskrue 6×90 forsenket Torx"
+        "8× Treskrue 6×80 forsenket Torx"
       ],
       "joints": {
         "J1": 4
@@ -278,7 +278,7 @@
       ],
       "fasteners": [
         "16× Treskrue 5×40 forsenket Torx",
-        "4× Treskrue 5×70 forsenket Torx",
+        "4× Treskrue 5×60 forsenket Torx",
         "4× Treskrue 6×80 forsenket Torx",
         "4× Vinkelbeslag 90×90×40×2,5 varmforsinket"
       ],
@@ -290,7 +290,7 @@
         "2× Benkevange, front (bit) 48×68 × 642",
         "4× Stubbefot 48×68 × 191"
       ],
-      "fill_code": true,
+      "fill_code": false,
       "half_view": true,
       "thumbnails": false,
       "crop_to_subject": false,
