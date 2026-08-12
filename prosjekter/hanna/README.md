@@ -6,7 +6,7 @@
 [PRAKSIS.md](../../PRAKSIS.md) · workshop inventory:
 [UTSTYR.md](../../UTSTYR.md).*
 
-![HANNA](docs/img/hanna-hero.png)
+![HANNA — loftseng med sofa, bord og ekstraseng under](docs/img/hanna-poster@2x.png)
 
 <img src="docs/img/hanna-turntable.gif" alt="The finished bed, one revolution" width="440">
 
