@@ -1,8 +1,8 @@
+![snekkerbua — der Hans gjør ting han (ennå) ikke kan](prosjekter/hanna/docs/img/hanna-poster@2x.png)
+
 # snekkerbua
 
 [![check](https://github.com/Starefossen/snekkerbua/actions/workflows/check.yml/badge.svg)](https://github.com/Starefossen/snekkerbua/actions/workflows/check.yml)
-
-*der Hans gjør ting han (ennå) ikke kan*
 
 A workshop repo, one directory per project. Every project here is built the same
 way: the model is parametric and is the only source of truth, the manual is
