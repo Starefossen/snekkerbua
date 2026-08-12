@@ -54,6 +54,28 @@ flush-trim. **Dekker ikke:** innstikk midt på flaten (ingen dykk-funksjon) —
 runde sete-forsenkninger tas fortsatt med **forstnerbor i drillen**, og
 skråskruene bores gjennom den hjemmelagde vinkelklossen (se kapplista).
 
+### Skinnesag — Ryobi ONE+ HP RPLS18X-0 (kjøpt aug. 2026)
+
+| Egenskap | Verdi | Betyr i praksis |
+|---|---|---|
+| Klasse | Dykksag med skinne, børsteløs (HP) | Platekutt (HANNA-platen!) og kløyving/langsgående kutt |
+| Skinner | 2 × 70 cm inkludert | Skjøtes for lange kutt; rette snitt uten oppflising |
+
+**Dekker:** kapasitetsgapet kappsaga ikke tok — plater og langsgående kutt.
+⚠️ Husk: RAK03SR-«skinnen» er en klemlist for andre sager, ikke til denne.
+
+### Multiverktøy — Ryobi ONE+ HP RMT18X-0 (kjøpt aug. 2026)
+
+**Dekker:** flush-kutt av lister (HANNA står i nisje med gulvlister),
+justering på plass, detaljsliping i kroker.
+
+### Fresestål — Ryobi 5-pakk (6,35 mm skaft)
+
+Til overfresen. **Før inn innholdet ved anledning** (typisk rettfres,
+flush-trim, avrunding, fas). Avrundingsstålet tar kantbrytningen på HANNA;
+merknaden om **8–10 mm rettfres på 6 mm skaft** som suppleringskjøp står
+til innholdet er verifisert mot behovet.
+
 ### Håndverktøy (fra HANNA-byggelista, antatt i hus)
 
 Vater, vinkelhake, tommestokk/målebånd, skrutvinger ×2, sag (hånd),
@@ -66,12 +88,10 @@ Rangert etter hva som låser opp mest per krone, gitt eksisterende park:
 | # | Verktøy | Hvorfor / hva det låser opp | Merknad (ONE+/HP-status) |
 |---|---|---|---|
 | 1 | **Eksentersliper — ONE+ HP-variant** | Finish-kvalitet på alt; HANNA: 71 deler skal slipes før maling | Kjøp før malejobben. HP børsteløs-utgave finnes i sortimentet — verifiser modellnr. (ikke ta brushed R18ROS hvis HP står ved siden av) |
-| 2 | **Skinnesag — Ryobi RPLS18X-0** ✅ HP | Platekutt (HANNA-platen!) og kløyving — kapasitetsgapet i parken | ONE+ HP børsteløs dykksag, 2×70 cm skinner inkl. **3 895 kr (Obs Bygg Midtun, verifisert aug. 2026)**. **Planens valg**; erstatter sirkelsag + skinne i ett. ⚠️ Felle: RAK03SR-«skinnen» er en klemlist og passer IKKE R18CS-0 |
-| 3 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Batteriuavhengig; billigst per nytte på lista |
-| 5 | **Japansk sag (ryoba) + stemjern-sett** | Rene hakk og presisjon for hånd; billigste vei til skjult treskjøt | Batteriuavhengig, ~200–400 kr |
-| 6 | **Multiverktøy — Ryobi ONE+ HP RMT18X-0** ✅ HP | Flush-kutt av lister, justering på plass (HANNA i nisje med gulvlister) | **1 995 kr (Midtun)**; brushed-variantene R18MT-0 (1 495) / RMT18-0 (1 095) er avvikene om budsjettet presser. NB: «RCT18C-0 Compact multikutter» (76 mm blad) er en annen verktøyklasse — ikke forveksle |
-| 7 | **Forstnerbor-sett** | Flatbunnede hull: magneter, plugger, eksenterbeslag | Drives av drillen (13 mm chuck ✓) |
-| 8 | Dyvel-jig, lommehullsjig | Skjulte skjøter i fremtidige synlige møbler | Ved behov |
+| 2 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Batteriuavhengig; billigst per nytte på lista |
+| 3 | **Forstnerbor-sett** | Flatbunnede hull: HANNA trenger ⌀18 (skråskrue-setene) og ⌀40 (filtknottene) | Drives av drillen (13 mm chuck ✓). **Trengs til HANNA-byggingen** |
+| 4 | **Japansk sag (ryoba) + stemjern-sett** | Rene hakk og presisjon for hånd; billigste vei til skjult treskjøt | Batteriuavhengig, ~200–400 kr |
+| 5 | Dyvel-jig, lommehullsjig | Skjulte skjøter i fremtidige synlige møbler | Ved behov |
 
 **Avmeldt etter strategivalget:** R18CS-0 (brushed sirkelsag, skinneinkompatibel),
 RCK183G-0-pakken (inneholder brushed sirkelsag + stikksag vi ikke trenger ennå),
