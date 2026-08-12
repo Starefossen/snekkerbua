@@ -77,6 +77,7 @@ ANCHORS = {
     "ladder-detail": "sch-ladder-detail",
     "bench-detail": "sch-bench-detail",
     "panel-detail": "sch-panel-detail",
+    "setedetalj": "sch-setedetalj",
     "schematics/": "tegninger",
 }
 
@@ -369,6 +370,7 @@ SCHEMATICS = [
     ("ladder-detail", "Stigen"),
     ("bench-detail", "Benken"),
     ("panel-detail", "Den løse platen"),
+    ("setedetalj", "Skråskruesetene"),
 ]
 
 

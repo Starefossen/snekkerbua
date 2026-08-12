@@ -39,7 +39,7 @@ hvert merke står på det festemiddelet det navngir.*
 | **Trevirke** | **63 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 46,8 løpemeter. 24 av de 63 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling |
 | **Stål** | **170 festemidler fordelt på 17 ledd**, **164 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert |
 | **Kontroller** | **389 asserter i modellen** og 57 til i verktøyene, alle sammen stopper bygget. Skrueretningene er utledet av fysikk (5 av 21 er tvunget av tykkelsene alene); antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
-| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **114 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
+| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **115 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
 | **Ut av det** | En **trykkeklar PDF på 68 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, seks skjemategninger og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
 
@@ -154,7 +154,8 @@ mise run pdf        # docs/hanna.pdf, 68 sider, trykkeklar
 | `build` | Bygger og validerer modellen, eksporterer den, skriver hvert fragment i `docs/generated/` og `docs/MONTERING.md` |
 | `build-full` | Det samme pluss det tunge: `.glb` og skjult-linje-projeksjonene av hele modellen |
 | `montering` | Tegner forsiden og én strektegning per byggesteg til `docs/img/` |
-| `check` | Determinismeasserten: to fulle kjøringer, 114 artefakter, byte-identisk eller feil |
+| `setedetalj` | Tegner detaljarket for skråskruesetene til `docs/schematics/setedetalj.svg` — det eneste genererte arket i den mappa |
+| `check` | Determinismeasserten: to fulle kjøringer, 115 artefakter, byte-identisk eller feil |
 | `pdf` | Setter sammen `docs/hanna.pdf` av de innsjekkede dokumentene (trenger ikke build123d) |
 | `schematics` | Rendrer `docs/schematics/*.svg` til PNG for korrektur |
 | `usdz` | Konverterer nettene til `.usdz` for Quick Look / Xcode / AR, ett materiale per fargegruppe |
@@ -238,5 +239,5 @@ and all 68 pages of the printed assembly manual are generated from the solids
 and machine-checked before they are allowed to exist, so nothing is hand-drawn
 and no number is hand-transcribed. The documentation is in Norwegian, because
 that is what someone standing at the saw actually reads. The proofs run in CI:
-`mise run check` builds the whole chain twice and demands 114 byte-identical
+`mise run check` builds the whole chain twice and demands 115 byte-identical
 artefacts, and the badge at the top of this page is that gate.

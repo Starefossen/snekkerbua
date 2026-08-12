@@ -84,6 +84,7 @@ work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 snap() {
   git ls-files -z -- docs/generated docs/MONTERING.md docs/img parts.tsv \\
+                     docs/schematics/setedetalj.svg \\
     | xargs -0 shasum -a 256
 }
 for pass in 1 2; do
@@ -91,6 +92,8 @@ for pass in 1 2; do
     || { cat "$work/build-$pass.log"; exit 1; }
   python tools/render_lineart.py --width 1600 > "$work/draw-$pass.log" 2>&1 \\
     || { cat "$work/draw-$pass.log"; exit 1; }
+  python tools/render_setedetalj.py > "$work/sete-$pass.log" 2>&1 \\
+    || { cat "$work/sete-$pass.log"; exit 1; }
   snap > "$work/sum-$pass"
 done
 if ! diff -u "$work/sum-1" "$work/sum-2" > "$work/delta"; then
@@ -107,6 +110,14 @@ echo "OK  $(wc -l < "$work/sum-1" | tr -d ' ') artefakter byte-identiske over to
 python tools/render_animasjon.py --check
 """
 depends = ["install"]
+
+[tasks.setedetalj]
+description = "Detaljark for skråskruesetene: snitt langs skrueaksen, munningen ovenfra, vinkelklossen og bruken av den (docs/schematics/setedetalj.svg)"
+# De andre arkene i docs/schematics/ er tegnet for hånd; dette ene er generert
+# av modellen, og derfor er det med i `check` - resten har ingenting å
+# regenereres mot.
+depends = ["build"]
+run = "python tools/render_setedetalj.py"
 
 [tasks.mekanisme]
 description = "Bevisark for platemekanismen: de to hjørnene i begge stillinger, og de tre låsevalgene (docs/preview/)"

@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 606" width="2400">
+  <title>Loftseng - skraaskruesetet og vinkelklossen</title>
+  <defs>
+    <marker id="aE" markerWidth="13" markerHeight="10" refX="12" refY="4.5"
+      orient="auto"><path d="M0,0 L12,4.5 L0,9 z" fill="#000"/></marker>
+    <marker id="aS" markerWidth="13" markerHeight="10" refX="1" refY="4.5"
+      orient="auto"><path d="M12,0 L0,4.5 L12,9 z" fill="#000"/></marker>
+    <pattern id="hatch" width="2.45" height="2.45"
+      patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="2.45" height="2.45"
+        fill="#dcdcdc"/>
+      <line x1="0" y1="0" x2="0" y2="2.45" stroke="#000"
+        stroke-width="0.297"/></pattern>
+  </defs>
+  <style>
+    svg  { background:#fff; }
+    text { font-family:Helvetica,Arial,sans-serif; fill:#000;
+           font-size:3.85px; }
+    .ttl { font-size:8.75px; font-weight:bold; }
+    .sub { font-size:4.55px; }
+    .pt  { font-size:5.425px; font-weight:bold; }
+    .big { font-size:4.725px; font-weight:bold; }
+    .sml { font-size:3.85px; }
+    .tiny{ font-size:3.325px; }
+    .tinyh{ font-size:3.325px; paint-order:stroke; stroke:#fff;
+           stroke-width:1.05px; }
+    .smh { font-size:3.85px; paint-order:stroke; stroke:#fff;
+           stroke-width:1.05px; }
+    .dm  { font-size:4.025px; }
+    .dmh { font-size:4.025px; paint-order:stroke; stroke:#fff;
+           stroke-width:1.05px; }
+    .leg { font-size:4.55px; font-weight:bold; }
+    .jl  { font-size:4.725px; font-weight:bold; paint-order:stroke;
+           stroke:#fff; stroke-width:1.05px; }
+    .wood{ fill:url(#hatch); stroke:#000; stroke-width:0.455; }
+    .mate{ fill:#c4c4c4; stroke:#000; stroke-width:0.525; }
+    .brd { fill:#ececec; stroke:#000; stroke-width:0.455; }
+    .plain{ fill:#fff; stroke:#000; stroke-width:0.455; }
+    .gho { fill:none; stroke:#000; stroke-width:0.297;
+           stroke-dasharray:1.907 1.19; }
+    .ctr { fill:none; stroke:#000; stroke-width:0.193;
+           stroke-dasharray:1.575 0.525
+           0.262 0.525; }
+    .dot { fill:none; stroke:#000; stroke-width:0.315;
+           stroke-dasharray:0.105 0.787;
+           stroke-linecap:round; }
+    .dim { fill:none; stroke:#000; stroke-width:0.245; }
+    .ext { fill:none; stroke:#000; stroke-width:0.158; }
+    .ldr { fill:none; stroke:#000; stroke-width:0.262; }
+    .brk { fill:none; stroke:#000; stroke-width:0.35; }
+    .cut { fill:none; stroke:#000; stroke-width:0.455; }
+    .scr { fill:#fff; stroke:#000; stroke-width:0.315; }
+    .scrd{ fill:none; stroke:#000; stroke-width:0.315;
+           stroke-dasharray:1.54 0.997; }
+    .pic { fill:none; stroke:#000; stroke-width:0.455;
+           stroke-linecap:round; stroke-linejoin:round; }
+    .picf{ fill:#fff; stroke:#000; stroke-width:0.455;
+           stroke-linecap:round; stroke-linejoin:round; }
+    .pic2{ fill:none; stroke:#000; stroke-width:0.28;
+           stroke-linecap:round; stroke-linejoin:round; }
+    .fld { fill:none; stroke:#000; stroke-width:0.28; }
+    .era { fill:none; stroke:#fff; stroke-width:0.455; }
+  </style>
+  <rect x="0" y="0" width="880" height="606" fill="#ffffff"/>
+  <text x="18" y="24" class="ttl" text-anchor="start">SKRÅSKRUESETET OG VINKELKLOSSEN</text>
+  <text x="18" y="36" class="sub" text-anchor="start">Lommen skråskruen ligger i, munningen slik den ser ut på treet, borjiggen som gir vinkelen, og jiggen i bruk · alle mål i mm</text>
+  <text x="18" y="54" class="pt" text-anchor="start">1 · SNITT LANGS SKRUEAKSEN — LOMMEN, BUNNEN OG HODET, 2:1</text>
+  <text x="18" y="59.154" class="sub" text-anchor="start">Vinkelen står MELLOM AKSEN OG FLATEN. Setet bores LANGS aksen, ikke ned i treet, og bunnen står 90° på aksen.</text>
+  <text x="18" y="69.05" class="big" text-anchor="start">J8-B · 25° · treskrue 6×80</text>
+  <text x="18" y="74.248" class="sml" text-anchor="start">bakre benkevange → bakre hjørnestolpe</text>
+  <polygon points="18,138.374 110,138.374 110,198.374 18,198.374" class="mate"/>
+  <polyline points="18,138.374 15.2,150.374 20.8,162.374 15.2,174.374 20.8,186.374 18,198.374" class="brk"/>
+  <polyline points="18,198.374 29.5,201.174 41,195.574 52.5,201.174 64,195.574 75.5,201.174 87,195.574 98.5,201.174 110,198.374" class="brk"/>
+  <polygon points="110,114.374 135.408,114.374 134.141,114.965 149.355,147.592 220.592,114.374 258,114.374 258,198.374 110,198.374" class="wood"/>
+  <polyline points="258,114.374 255.2,124.874 260.8,135.374 255.2,145.874 260.8,156.374 255.2,166.874 260.8,177.374 255.2,187.874 258,198.374" class="brk"/>
+  <polyline points="258,198.374 246.615,195.574 235.231,201.174 223.846,195.574 212.462,201.174 201.077,195.574 189.692,201.174 178.308,195.574 166.923,201.174 155.538,195.574 144.154,201.174 132.769,195.574 121.385,201.174 110,198.374" class="brk"/>
+  <line x1="110" y1="114.374" x2="135.408" y2="114.374" class="cut"/>
+  <line x1="220.592" y1="114.374" x2="258" y2="114.374" class="cut"/>
+  <line x1="110" y1="114.374" x2="110" y2="198.374" class="cut"/>
+  <line x1="134.141" y1="114.965" x2="149.355" y2="147.592" class="cut"/>
+  <line x1="214.252" y1="97.469" x2="22.115" y2="187.064" class="ctr"/>
+  <path d="M 202,114.374 A 24,24 0 0 0 199.751,104.231" class="dim"/>
+  <text x="213.147" y="108.982" class="dmh" text-anchor="middle">25°</text>
+  <polyline points="142.017,118.133 151.991,139.522 144.283,136.716 54.921,178.386 38.247,179.541 49.85,167.511 139.212,125.841 142.017,118.133" class="scrd"/>
+  <polygon points="136.761,120.584 146.735,141.973 139.027,139.168 49.665,180.838 32.991,181.993 44.593,169.962 133.955,128.292" class="scr"/>
+  <line x1="110" y1="113.174" x2="110" y2="81.974" class="ext"/>
+  <line x1="178" y1="113.174" x2="178" y2="81.974" class="ext"/>
+  <line x1="110" y1="84.374" x2="178" y2="84.374" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="144" y="88.399" class="dmh" text-anchor="middle">34</text>
+  <line x1="178" y1="114.374" x2="178" y2="82.374" class="ext"/>
+  <line x1="177.493" y1="113.286" x2="170.224" y2="97.698" class="ext"/>
+  <line x1="141.241" y1="130.191" x2="133.972" y2="114.602" class="ext"/>
+  <line x1="171.238" y1="99.873" x2="134.986" y2="116.778" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="153.112" y="106.313" class="dmh" text-anchor="middle">20</text>
+  <line x1="136.761" y1="120.584" x2="234" y2="120.584" class="ext"/>
+  <line x1="226" y1="114.374" x2="226" y2="120.584" class="dim"/>
+  <line x1="226" y1="107.934" x2="226" y2="114.374" class="dim" marker-end="url(#aE)"/>
+  <line x1="226" y1="127.024" x2="226" y2="120.584" class="dim" marker-end="url(#aE)"/>
+  <text x="228.012" y="122.913" class="dmh" text-anchor="start">3,11</text>
+  <text x="228" y="130.584" class="tinyh" text-anchor="start">under flaten</text>
+  <text x="254" y="108.374" class="smh" text-anchor="end">flaten</text>
+  <text x="113" y="193.374" class="smh" text-anchor="start">bakre benkevange</text>
+  <text x="21" y="193.374" class="smh" text-anchor="start">hjørnestolpe</text>
+  <text x="170" y="176.374" class="jl" text-anchor="middle">J8-B</text>
+  <polyline points="135.947,133.983 138.652,139.784 144.452,137.079" class="ext"/>
+  <text x="18" y="206.844" class="sml" text-anchor="start">Lomme ⌀18, flat bunn, 20 mm LANGS aksen. Hodet ⌀11,8 ligger i bunnen;</text>
+  <text x="18" y="212.041" class="sml" text-anchor="start">høyeste punkt 3,11 mm under flaten.</text>
+  <text x="18" y="217.239" class="sml" text-anchor="start">STIPLET: konusen hviler på ⌀6-forborkanten i stedet. Da står hodet</text>
+  <text x="18" y="222.436" class="sml" text-anchor="start">2,9 mm høyere langs aksen og dekket er 1,88 mm.</text>
+  <text x="18" y="227.634" class="sml" text-anchor="start">Begge over kravet 1 mm.</text>
+  <text x="304" y="69.05" class="big" text-anchor="start">J10 · 30° · treskrue 5×60</text>
+  <text x="304" y="74.248" class="sml" text-anchor="start">stubbefot → bakre benkevange</text>
+  <polygon points="304,76.374 396,76.374 396,198.374 304,198.374" class="mate"/>
+  <polyline points="304,76.374 301.2,87.465 306.8,98.556 301.2,109.646 306.8,120.737 301.2,131.828 306.8,142.919 301.2,154.01 306.8,165.101 301.2,176.192 306.8,187.283 304,198.374" class="brk"/>
+  <polyline points="304,76.374 315.5,79.174 327,73.574 338.5,79.174 350,73.574 361.5,79.174 373,73.574 384.5,79.174 396,76.374" class="brk"/>
+  <polyline points="304,198.374 315.5,201.174 327,195.574 338.5,201.174 350,195.574 361.5,201.174 373,195.574 384.5,201.174 396,198.374" class="brk"/>
+  <polygon points="396,114.374 430,114.374 425.823,116.785 443.823,147.962 502,114.374 544,114.374 544,198.374 396,198.374" class="wood"/>
+  <polyline points="544,114.374 541.2,124.874 546.8,135.374 541.2,145.874 546.8,156.374 541.2,166.874 546.8,177.374 541.2,187.874 544,198.374" class="brk"/>
+  <polyline points="544,198.374 532.615,195.574 521.231,201.174 509.846,195.574 498.462,201.174 487.077,195.574 475.692,201.174 464.308,195.574 452.923,201.174 441.538,195.574 430.154,201.174 418.769,195.574 407.385,201.174 396,198.374" class="brk"/>
+  <line x1="396" y1="114.374" x2="430" y2="114.374" class="cut"/>
+  <line x1="502" y1="114.374" x2="544" y2="114.374" class="cut"/>
+  <line x1="396" y1="114.374" x2="396" y2="198.374" class="cut"/>
+  <line x1="425.823" y1="116.785" x2="443.823" y2="147.962" class="cut"/>
+  <line x1="500.641" y1="94.374" x2="351.685" y2="180.374" class="ctr"/>
+  <path d="M 490,114.374 A 24,24 0 0 0 486.785,102.374" class="dim"/>
+  <text x="500.773" y="107.456" class="dmh" text-anchor="middle">30°</text>
+  <polygon points="430.073,124.147 439.573,140.601 433.426,138.954 375.835,172.204 362.077,174.374 370.835,163.544 428.426,130.294" class="scr"/>
+  <line x1="396" y1="113.174" x2="396" y2="81.974" class="ext"/>
+  <line x1="466" y1="113.174" x2="466" y2="81.974" class="ext"/>
+  <line x1="396" y1="84.374" x2="466" y2="84.374" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="431" y="88.399" class="dmh" text-anchor="middle">35</text>
+  <line x1="466" y1="114.374" x2="466" y2="82.374" class="ext"/>
+  <line x1="465.4" y1="113.335" x2="456.8" y2="98.439" class="ext"/>
+  <line x1="434.223" y1="131.335" x2="425.623" y2="116.439" class="ext"/>
+  <line x1="458" y1="100.517" x2="426.823" y2="118.517" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="442.412" y="107.505" class="dmh" text-anchor="middle">18</text>
+  <line x1="430.073" y1="124.147" x2="520" y2="124.147" class="ext"/>
+  <line x1="512" y1="114.374" x2="512" y2="124.147" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="514.013" y="124.694" class="dmh" text-anchor="start">4,89</text>
+  <text x="514" y="134.147" class="tinyh" text-anchor="start">under flaten</text>
+  <text x="540" y="108.374" class="smh" text-anchor="end">flaten</text>
+  <text x="399" y="193.374" class="smh" text-anchor="start">stubbefot</text>
+  <text x="307" y="193.374" class="smh" text-anchor="start">benkevange</text>
+  <text x="456" y="176.374" class="jl" text-anchor="middle">J10</text>
+  <polyline points="429.281,135.574 432.481,141.116 438.023,137.916" class="ext"/>
+  <text x="304" y="206.844" class="sml" text-anchor="start">Lomme ⌀18, flat bunn, 18 mm LANGS aksen. Hodet ⌀9,5 ligger i bunnen;</text>
+  <text x="304" y="212.041" class="sml" text-anchor="start">høyeste punkt 4,89 mm under flaten, krav 1 mm.</text>
+  <text x="304" y="217.239" class="sml" text-anchor="start">35 mm måles fra FOTENS TOPP, ikke fra en ende:</text>
+  <text x="304" y="222.436" class="sml" text-anchor="start">skruen går opp i benkevangen som hviler på foten.</text>
+  <text x="304" y="227.634" class="sml" text-anchor="start">Snittet ligger på siden — fotens topp er til venstre.</text>
+  <text x="566" y="54" class="pt" text-anchor="start">2 · MUNNINGEN SETT RETT PÅ, 1:1</text>
+  <text x="566" y="59.154" class="sub" text-anchor="start">Setet er ⌀18, men munningen er en ELLIPSE, 18/sin(vinkelen) lang. Det er ellipsen du merker opp etter.</text>
+  <text x="566" y="69.741" class="big" text-anchor="start">J8-B · vangens forside, to lommer</text>
+  <text x="566" y="75.175" class="sml" text-anchor="start">bakre benkevange 48×68, sett mot enden</text>
+  <polygon points="578,174.829 600,174.829 600,106.829 578,106.829" class="mate"/>
+  <polyline points="578,174.829 576.6,169.162 579.4,163.495 576.6,157.829 579.4,152.162 576.6,146.495 579.4,140.829 576.6,135.162 579.4,129.495 576.6,123.829 579.4,118.162 576.6,112.495 578,106.829" class="brk"/>
+  <polygon points="600,174.829 684,174.829 684,106.829 600,106.829" class="brd"/>
+  <polyline points="684,174.829 682.6,169.162 685.4,163.495 682.6,157.829 685.4,152.162 682.6,146.495 685.4,140.829 682.6,135.162 685.4,129.495 682.6,123.829 685.4,118.162 682.6,112.495 684,106.829" class="brk"/>
+  <line x1="600" y1="174.829" x2="600" y2="106.829" class="cut"/>
+  <text x="579.5" y="140.829" class="tinyh" text-anchor="start">stolpen</text>
+  <text x="602.5" y="111.829" class="smh" text-anchor="start">bakre benkevange</text>
+  <text x="598.5" y="102.829" class="tinyh" text-anchor="end">vangeenden</text>
+  <ellipse cx="615.874" cy="152.829" rx="3.804" ry="9" class="gho"/>
+  <ellipse cx="634" cy="152.829" rx="21.296" ry="9" class="plain"/>
+  <line x1="608.704" y1="152.829" x2="659.296" y2="152.829" class="ctr"/>
+  <ellipse cx="615.874" cy="152.829" rx="3.804" ry="9" class="gho"/>
+  <ellipse cx="615.874" cy="128.829" rx="3.804" ry="9" class="gho"/>
+  <ellipse cx="634" cy="128.829" rx="21.296" ry="9" class="plain"/>
+  <line x1="608.704" y1="128.829" x2="659.296" y2="128.829" class="ctr"/>
+  <ellipse cx="615.874" cy="128.829" rx="3.804" ry="9" class="gho"/>
+  <ellipse cx="615.874" cy="152.829" rx="3.804" ry="9" class="gho"/>
+  <ellipse cx="634" cy="152.829" rx="21.296" ry="9" class="plain"/>
+  <line x1="608.704" y1="152.829" x2="659.296" y2="152.829" class="ctr"/>
+  <ellipse cx="615.874" cy="152.829" rx="3.804" ry="9" class="gho"/>
+  <ellipse cx="615.874" cy="128.829" rx="3.804" ry="9" class="gho"/>
+  <ellipse cx="634" cy="128.829" rx="21.296" ry="9" class="plain"/>
+  <line x1="608.704" y1="128.829" x2="659.296" y2="128.829" class="ctr"/>
+  <ellipse cx="615.874" cy="128.829" rx="3.804" ry="9" class="gho"/>
+  <line x1="634" y1="178.829" x2="634" y2="82.829" class="ctr"/>
+  <line x1="682.2" y1="174.829" x2="693.4" y2="174.829" class="ext"/>
+  <line x1="682.2" y1="161.829" x2="693.4" y2="161.829" class="ext"/>
+  <line x1="691" y1="174.829" x2="691" y2="161.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="693.013" y="169.738" class="dmh" text-anchor="start">13</text>
+  <line x1="682.2" y1="161.829" x2="693.4" y2="161.829" class="ext"/>
+  <line x1="682.2" y1="143.829" x2="693.4" y2="143.829" class="ext"/>
+  <line x1="691" y1="161.829" x2="691" y2="143.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="693.013" y="154.238" class="dmh" text-anchor="start">⌀18</text>
+  <line x1="682.2" y1="143.829" x2="693.4" y2="143.829" class="ext"/>
+  <line x1="682.2" y1="137.829" x2="693.4" y2="137.829" class="ext"/>
+  <line x1="691" y1="143.829" x2="691" y2="137.829" class="dim"/>
+  <line x1="691" y1="150.269" x2="691" y2="143.829" class="dim" marker-end="url(#aE)"/>
+  <line x1="691" y1="131.389" x2="691" y2="137.829" class="dim" marker-end="url(#aE)"/>
+  <text x="693.013" y="142.238" class="dmh" text-anchor="start">6</text>
+  <line x1="682.2" y1="137.829" x2="693.4" y2="137.829" class="ext"/>
+  <line x1="682.2" y1="119.829" x2="693.4" y2="119.829" class="ext"/>
+  <line x1="691" y1="137.829" x2="691" y2="119.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="693.013" y="130.238" class="dmh" text-anchor="start">⌀18</text>
+  <line x1="682.2" y1="119.829" x2="693.4" y2="119.829" class="ext"/>
+  <line x1="682.2" y1="106.829" x2="693.4" y2="106.829" class="ext"/>
+  <line x1="691" y1="119.829" x2="691" y2="106.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="693.013" y="114.738" class="dmh" text-anchor="start">13</text>
+  <line x1="682.2" y1="174.829" x2="707.4" y2="174.829" class="ext"/>
+  <line x1="682.2" y1="106.829" x2="707.4" y2="106.829" class="ext"/>
+  <line x1="705" y1="174.829" x2="705" y2="106.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="707.013" y="142.238" class="dmh" text-anchor="start">68</text>
+  <line x1="612.704" y1="105.629" x2="612.704" y2="95.429" class="ext"/>
+  <line x1="655.296" y1="105.629" x2="655.296" y2="95.429" class="ext"/>
+  <line x1="612.704" y1="97.829" x2="655.296" y2="97.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="634" y="101.854" class="dmh" text-anchor="middle">42,6</text>
+  <line x1="600" y1="105.629" x2="600" y2="84.429" class="ext"/>
+  <line x1="634" y1="105.629" x2="634" y2="84.429" class="ext"/>
+  <line x1="600" y1="86.829" x2="634" y2="86.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="617" y="90.854" class="dmh" text-anchor="middle">34</text>
+  <line x1="600" y1="176.029" x2="600" y2="188.229" class="ext"/>
+  <line x1="612.704" y1="176.029" x2="612.704" y2="188.229" class="ext"/>
+  <line x1="600" y1="185.829" x2="612.704" y2="185.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="606.352" y="189.854" class="dmh" text-anchor="middle">12,7</text>
+  <line x1="600" y1="176.029" x2="600" y2="199.229" class="ext"/>
+  <line x1="612.07" y1="176.029" x2="612.07" y2="199.229" class="ext"/>
+  <line x1="600" y1="196.829" x2="612.07" y2="196.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="606.035" y="200.854" class="dmh" text-anchor="middle">12,1</text>
+  <polyline points="615.874,161.829 623.874,167.829 625.874,167.829" class="ldr" marker-start="url(#aE)"/>
+  <text x="627.874" y="166.998" class="tiny" text-anchor="start">lommebunnen</text>
+  <text x="712" y="69.741" class="big" text-anchor="start">J10 · fotens innerside</text>
+  <text x="712" y="75.175" class="sml" text-anchor="start">stubbefot 48×68, sett fra sengens midte</text>
+  <polygon points="756,76.829 804,76.829 804,96.829 756,96.829" class="mate"/>
+  <polyline points="756,76.829 761.333,78.229 766.667,75.429 772,78.229 777.333,75.429 782.667,78.229 788,75.429 793.333,78.229 798.667,75.429 804,76.829" class="brk"/>
+  <polygon points="756,96.829 804,96.829 804,188.829 756,188.829" class="brd"/>
+  <polyline points="756,188.829 761.333,190.229 766.667,187.429 772,190.229 777.333,187.429 782.667,190.229 788,187.429 793.333,190.229 798.667,187.429 804,188.829" class="brk"/>
+  <line x1="756" y1="96.829" x2="804" y2="96.829" class="cut"/>
+  <text x="758.5" y="83.829" class="tinyh" text-anchor="start">benkevangen</text>
+  <text x="758.5" y="184.829" class="smh" text-anchor="start">stubbefot</text>
+  <text x="806" y="94.329" class="tinyh" text-anchor="start">fotens topp</text>
+  <ellipse cx="780" cy="116.24" rx="9" ry="4.5" class="gho"/>
+  <ellipse cx="780" cy="131.829" rx="9" ry="18" class="plain"/>
+  <line x1="780" y1="90.829" x2="780" y2="184.829" class="ctr"/>
+  <line x1="767" y1="131.829" x2="793" y2="131.829" class="ctr"/>
+  <line x1="754.8" y1="96.829" x2="743.6" y2="96.829" class="ext"/>
+  <line x1="754.8" y1="113.829" x2="743.6" y2="113.829" class="ext"/>
+  <line x1="746" y1="96.829" x2="746" y2="113.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="743.987" y="106.737" class="dmh" text-anchor="end">17</text>
+  <line x1="754.8" y1="96.829" x2="730.6" y2="96.829" class="ext"/>
+  <line x1="754.8" y1="111.74" x2="730.6" y2="111.74" class="ext"/>
+  <line x1="733" y1="96.829" x2="733" y2="111.74" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="730.987" y="105.693" class="dmh" text-anchor="end">14,9</text>
+  <line x1="805.2" y1="96.829" x2="817.4" y2="96.829" class="ext"/>
+  <line x1="805.2" y1="131.829" x2="817.4" y2="131.829" class="ext"/>
+  <line x1="815" y1="96.829" x2="815" y2="131.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="817.013" y="115.738" class="dmh" text-anchor="start">35</text>
+  <line x1="805.2" y1="113.829" x2="830.4" y2="113.829" class="ext"/>
+  <line x1="805.2" y1="149.829" x2="830.4" y2="149.829" class="ext"/>
+  <line x1="828" y1="113.829" x2="828" y2="149.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="830.013" y="133.238" class="dmh" text-anchor="start">36</text>
+  <line x1="756" y1="187.029" x2="756" y2="198.229" class="ext"/>
+  <line x1="771" y1="187.029" x2="771" y2="198.229" class="ext"/>
+  <line x1="756" y1="195.829" x2="771" y2="195.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="763.5" y="199.854" class="dmh" text-anchor="middle">15</text>
+  <line x1="771" y1="187.029" x2="771" y2="198.229" class="ext"/>
+  <line x1="789" y1="187.029" x2="789" y2="198.229" class="ext"/>
+  <line x1="771" y1="195.829" x2="789" y2="195.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="780" y="199.854" class="dmh" text-anchor="middle">⌀18</text>
+  <line x1="789" y1="187.029" x2="789" y2="198.229" class="ext"/>
+  <line x1="804" y1="187.029" x2="804" y2="198.229" class="ext"/>
+  <line x1="789" y1="195.829" x2="804" y2="195.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="796.5" y="199.854" class="dmh" text-anchor="middle">15</text>
+  <line x1="756" y1="187.029" x2="756" y2="210.229" class="ext"/>
+  <line x1="804" y1="187.029" x2="804" y2="210.229" class="ext"/>
+  <line x1="756" y1="207.829" x2="804" y2="207.829" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="780" y="211.854" class="dmh" text-anchor="middle">48</text>
+  <text x="566" y="222.829" class="sml" text-anchor="start">J8-B: to munninger 42,6 × 18 mm, langaksen mot vangeenden. Senteravstand 24 mm gir 6 mm tre mellom lommene — kravet er én skruediameter.</text>
+  <text x="566" y="228.026" class="sml" text-anchor="start">Stiplet ellipse = lommebunnen sett gjennom munningen. Den ligger 12,1 mm fra endeveden mot munningens 12,7 mm, så det er BUNNEN som styrer</text>
+  <text x="566" y="233.224" class="sml" text-anchor="start">kantavstanden.</text>
+  <text x="566" y="238.421" class="sml" text-anchor="start">J10: én munning 36 × 18 mm i fotens innerside, 35 mm ned fra fotens topp. Foten er 48×68 og det er 48-flaten skruen går inn i.</text>
+  <text x="18" y="264" class="pt" text-anchor="start">3 · VINKELKLOSSEN — BORJIGGEN, EKSPLODERT, 1:1</text>
+  <text x="18" y="269.154" class="sub" text-anchor="start">Én kloss per vinkel. Hullet bores VINKELRETT gjennom begge bitene mens klossen ennå er firkantet. Sålen kappes ETTERPÅ.</text>
+  <polygon points="62,287.344 110,287.344 110,487.344 62,487.344" class="gho"/>
+  <polygon points="136,287.344 184,287.344 184,487.344 136,487.344" class="gho"/>
+  <polygon points="62,287.344 110,287.344 110,447.344 62,424.961" class="brd"/>
+  <polygon points="136,287.344 184,287.344 184,469.727 136,447.344" class="brd"/>
+  <line x1="62" y1="424.961" x2="110" y2="447.344" class="cut"/>
+  <line x1="136" y1="447.344" x2="184" y2="469.727" class="cut"/>
+  <line x1="50" y1="412.703" x2="110" y2="447.344" class="scrd"/>
+  <line x1="136" y1="447.344" x2="184" y2="475.057" class="scrd"/>
+  <line x1="62" y1="438.344" x2="110" y2="438.344" class="scrd"/>
+  <line x1="136" y1="438.344" x2="184" y2="438.344" class="scrd"/>
+  <line x1="62" y1="456.344" x2="110" y2="456.344" class="scrd"/>
+  <line x1="136" y1="456.344" x2="184" y2="456.344" class="scrd"/>
+  <line x1="48" y1="447.344" x2="110" y2="447.344" class="ctr"/>
+  <line x1="136" y1="447.344" x2="200" y2="447.344" class="ctr"/>
+  <line x1="62" y1="321.344" x2="158" y2="321.344" class="dot"/>
+  <circle cx="62" cy="321.344" r="1.6" class="scr"/>
+  <line x1="62" y1="405.344" x2="158" y2="405.344" class="dot"/>
+  <circle cx="62" cy="405.344" r="1.6" class="scr"/>
+  <line x1="62" y1="424.961" x2="96" y2="424.961" class="ext"/>
+  <path d="M 75,424.961 A 13,13 0 0 1 73.782,430.455" class="dim"/>
+  <path d="M 81.032,433.836 A 21,21 0 0 0 62,403.961" class="dim"/>
+  <text x="81" y="430.461" class="dmh" text-anchor="start">25°</text>
+  <text x="77" y="412.961" class="dmh" text-anchor="start">65°</text>
+  <text x="48" y="411.203" class="dmh" text-anchor="end">30°</text>
+  <line x1="62" y1="286.144" x2="62" y2="271.944" class="ext"/>
+  <line x1="110" y1="286.144" x2="110" y2="271.944" class="ext"/>
+  <line x1="62" y1="274.344" x2="110" y2="274.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="86" y="278.369" class="dmh" text-anchor="middle">48</text>
+  <line x1="136" y1="286.144" x2="136" y2="271.944" class="ext"/>
+  <line x1="184" y1="286.144" x2="184" y2="271.944" class="ext"/>
+  <line x1="136" y1="274.344" x2="184" y2="274.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="160" y="278.369" class="dmh" text-anchor="middle">48</text>
+  <line x1="185.2" y1="287.344" x2="212.4" y2="287.344" class="ext"/>
+  <line x1="185.2" y1="487.344" x2="212.4" y2="487.344" class="ext"/>
+  <line x1="210" y1="287.344" x2="210" y2="487.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="212.012" y="388.752" class="dmh" text-anchor="start">200</text>
+  <line x1="185.2" y1="447.344" x2="199.4" y2="447.344" class="ext"/>
+  <line x1="185.2" y1="487.344" x2="199.4" y2="487.344" class="ext"/>
+  <line x1="197" y1="447.344" x2="197" y2="487.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="199.012" y="468.752" class="dmh" text-anchor="start">40</text>
+  <polyline points="146,438.344 152,407.344 154,407.344" class="ldr" marker-start="url(#aE)"/>
+  <text x="156" y="406.512" class="tiny" text-anchor="start">⌀18 gjennom</text>
+  <text x="156" y="411.001" class="tiny" text-anchor="start">begge bitene</text>
+  <text x="22" y="299.344" class="smh" text-anchor="start">48×68×200</text>
+  <text x="22" y="304.349" class="smh" text-anchor="start">to like biter</text>
+  <text x="188" y="299.344" class="tinyh" text-anchor="start">boret</text>
+  <text x="188" y="303.666" class="tinyh" text-anchor="start">går inn her</text>
+  <text x="64" y="483.344" class="tinyh" text-anchor="start">kappes av</text>
+  <text x="258" y="280.344" class="big" text-anchor="start">SÅLEN, 25°-KLOSSEN — kontrollmål</text>
+  <rect x="258" y="287.344" width="105.924" height="68" class="brd"/>
+  <ellipse cx="310.962" cy="321.344" rx="21.296" ry="9" class="plain"/>
+  <line x1="284.666" y1="321.344" x2="337.258" y2="321.344" class="ctr"/>
+  <line x1="310.962" y1="282.344" x2="310.962" y2="360.344" class="ctr"/>
+  <line x1="289.666" y1="356.544" x2="289.666" y2="368.744" class="ext"/>
+  <line x1="332.258" y1="356.544" x2="332.258" y2="368.744" class="ext"/>
+  <line x1="289.666" y1="366.344" x2="332.258" y2="366.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="310.962" y="370.369" class="dmh" text-anchor="middle">42,6</text>
+  <line x1="256.8" y1="312.344" x2="244.6" y2="312.344" class="ext"/>
+  <line x1="256.8" y1="330.344" x2="244.6" y2="330.344" class="ext"/>
+  <line x1="247" y1="312.344" x2="247" y2="330.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="244.988" y="322.752" class="dmh" text-anchor="end">18</text>
+  <line x1="258" y1="356.544" x2="258" y2="380.744" class="ext"/>
+  <line x1="363.924" y1="356.544" x2="363.924" y2="380.744" class="ext"/>
+  <line x1="258" y1="378.344" x2="363.924" y2="378.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="310.962" y="382.369" class="dmh" text-anchor="middle">105,9</text>
+  <text x="260" y="352.344" class="tinyh" text-anchor="start">68 bred</text>
+  <text x="258" y="388.344" class="big" text-anchor="start">SÅLEN, 30°-KLOSSEN — kontrollmål</text>
+  <rect x="258" y="395.344" width="110.851" height="68" class="brd"/>
+  <ellipse cx="313.426" cy="429.344" rx="18" ry="9" class="plain"/>
+  <line x1="290.426" y1="429.344" x2="336.426" y2="429.344" class="ctr"/>
+  <line x1="313.426" y1="390.344" x2="313.426" y2="468.344" class="ctr"/>
+  <line x1="295.426" y1="464.544" x2="295.426" y2="476.744" class="ext"/>
+  <line x1="331.426" y1="464.544" x2="331.426" y2="476.744" class="ext"/>
+  <line x1="295.426" y1="474.344" x2="331.426" y2="474.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="313.426" y="478.369" class="dmh" text-anchor="middle">36</text>
+  <line x1="256.8" y1="420.344" x2="244.6" y2="420.344" class="ext"/>
+  <line x1="256.8" y1="438.344" x2="244.6" y2="438.344" class="ext"/>
+  <line x1="247" y1="420.344" x2="247" y2="438.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="244.988" y="430.752" class="dmh" text-anchor="end">18</text>
+  <line x1="258" y1="464.544" x2="258" y2="488.744" class="ext"/>
+  <line x1="368.851" y1="464.544" x2="368.851" y2="488.744" class="ext"/>
+  <line x1="258" y1="486.344" x2="368.851" y2="486.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="313.426" y="490.369" class="dmh" text-anchor="middle">110,9</text>
+  <text x="260" y="460.344" class="tinyh" text-anchor="start">68 bred</text>
+  <text x="404" y="280.344" class="big" text-anchor="start">DYBDEMERKET</text>
+  <polygon points="415.5,293.344 424.5,293.344 424.5,406.344 415.5,406.344" class="plain"/>
+  <polygon points="411,406.344 429,406.344 429,421.344 411,421.344" class="plain"/>
+  <polygon points="417.8,421.344 422.2,421.344 420,428.344" class="plain"/>
+  <line x1="411" y1="421.344" x2="411" y2="424.844" class="cut"/>
+  <line x1="429" y1="421.344" x2="429" y2="424.844" class="cut"/>
+  <line x1="412.5" y1="380.344" x2="427.5" y2="380.344" class="cut"/>
+  <line x1="412.5" y1="360.344" x2="427.5" y2="360.344" class="cut"/>
+  <line x1="426.3" y1="380.344" x2="415.1" y2="380.344" class="ext"/>
+  <line x1="426.3" y1="360.344" x2="415.1" y2="360.344" class="ext"/>
+  <line x1="417.5" y1="380.344" x2="417.5" y2="360.344" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="419.512" y="371.149" class="dmh" text-anchor="start">20 / 18</text>
+  <text x="437.5" y="375.576" class="tinyh" text-anchor="start">= setedybden</text>
+  <text x="408" y="382.344" class="tinyh" text-anchor="end">1 merk av</text>
+  <text x="408" y="362.344" class="tinyh" text-anchor="end">2 bor hit</text>
+  <text x="408" y="424.344" class="tinyh" text-anchor="end">randen i</text>
+  <text x="408" y="428.334" class="tinyh" text-anchor="end">flukt med</text>
+  <text x="408" y="432.324" class="tinyh" text-anchor="end">sålen</text>
+  <text x="18" y="521.344" class="sml" text-anchor="start">2 stk. 48×68×200 skrus FLATE MOT FLATE til én kloss 96 mm tykk. Bor ⌀18 VINKELRETT gjennom begge, 40 mm fra enden og midt i bredden, MENS KLOSSEN ER FIRKANTET.</text>
+  <text x="18" y="526.541" class="sml" text-anchor="start">Kapp så sålen av under hullet: kappsag med bladet vippet 25° hhv. 30°. Da står sålen 65° hhv. 60° på den borede flaten — de to tallene er komplementer, og det er her den gamle oppskriften tok feil.</text>
+  <text x="18" y="531.739" class="sml" text-anchor="start">KONTROLL: mål munningen i sålen. Den skal være 42,6 × 18 mm på 25°-klossen og 36 × 18 mm på 30°-klossen. Er den for kort, ble vippen satt på komplementvinkelen.</text>
+  <text x="18" y="536.936" class="sml" text-anchor="start">DYBDEMERKE: hold boret i jiggen til randen flukter med sålen ved hullaksen, merk av på skaftet der det kommer ut av klossen, og flytt merket 20 mm (J8-B) / 18 mm (J10) opp. Bor til det øverste merket.</text>
+  <text x="470" y="264" class="pt" text-anchor="start">4 · KLOSSEN I BRUK</text>
+  <text x="470" y="269.154" class="sub" text-anchor="start">Klossen og virket 1:1, tvinger og drill skjematisk. Flaten ligger vannrett her; i sengen står den loddrett.</text>
+  <polygon points="596.962,385.154 775.924,385.154 775.924,433.154 596.962,433.154" class="brd"/>
+  <polygon points="558.962,385.154 596.962,385.154 596.962,433.154 558.962,433.154" class="plain"/>
+  <line x1="596.962" y1="385.154" x2="596.962" y2="433.154" class="cut"/>
+  <polygon points="578,385.154 683.924,385.154 648.424,309.024 542.5,309.024" class="picf"/>
+  <polyline points="542.5,309.024 552.13,311.424 561.759,306.624 571.389,311.424 581.018,306.624 590.647,311.424 600.277,306.624 609.906,311.424 619.536,306.624 629.165,311.424 638.795,306.624 648.424,309.024" class="pic2"/>
+  <line x1="609.666" y1="385.154" x2="652.258" y2="385.154" class="era"/>
+  <line x1="609.666" y1="385.154" x2="670.661" y2="356.711" class="pic2"/>
+  <line x1="652.258" y1="385.154" x2="678.268" y2="373.025" class="pic2"/>
+  <polyline points="644.378,368.967 651.986,385.281 664.674,379.364 657.067,363.051 644.378,368.967" class="gho"/>
+  <polyline points="662.772,375.286 676.367,368.946" class="gho"/>
+  <polyline points="672.563,360.79 658.969,367.129" class="gho"/>
+  <polygon points="672.563,360.79 676.367,368.946 712.619,352.042 708.815,343.885" class="picf"/>
+  <polygon points="708.182,342.525 713.253,353.401 726.664,353.768 716.521,332.016" class="picf"/>
+  <polygon points="715.254,329.297 727.932,356.487 780.498,331.975 767.819,304.785" class="picf"/>
+  <polygon points="738.808,351.415 747.439,379.389 767.377,370.091 758.747,342.118" class="picf"/>
+  <line x1="735.192" y1="320" x2="747.871" y2="347.189" class="pic2"/>
+  <polygon points="556.631,348.339 570.631,348.339 570.631,354.339 556.631,354.339" class="picf"/>
+  <polyline points="556.631,348.339 543.631,348.339 543.631,448.154 556.631,448.154" class="pic"/>
+  <polygon points="556.631,433.154 570.631,433.154 570.631,439.154 556.631,439.154" class="picf"/>
+  <line x1="563.631" y1="439.154" x2="563.631" y2="453.154" class="pic"/>
+  <line x1="556.631" y1="453.154" x2="570.631" y2="453.154" class="pic"/>
+  <polygon points="653.258,328.401 667.258,328.401 667.258,334.401 653.258,334.401" class="picf"/>
+  <polyline points="667.258,328.401 680.258,328.401 680.258,448.154 667.258,448.154" class="pic"/>
+  <polygon points="653.258,433.154 667.258,433.154 667.258,439.154 653.258,439.154" class="picf"/>
+  <line x1="660.258" y1="439.154" x2="660.258" y2="453.154" class="pic"/>
+  <line x1="653.258" y1="453.154" x2="667.258" y2="453.154" class="pic"/>
+  <line x1="630.962" y1="385.154" x2="596.962" y2="401.008" class="dot"/>
+  <circle cx="596.962" cy="401.008" r="2.2" class="scr"/>
+  <line x1="574.962" y1="453.154" x2="574.962" y2="436.154" class="ldr"/>
+  <text x="562.962" y="460.154" class="sml" text-anchor="start">offerkloss mot endeveden</text>
+  <line x1="737.924" y1="453.154" x2="737.924" y2="436.154" class="ldr"/>
+  <text x="729.924" y="460.154" class="sml" text-anchor="start">virket</text>
+  <text x="678.457" y="349.766" class="smh" text-anchor="end">⌀18 forstnerbor i føringshullet</text>
+  <text x="612.262" y="402.874" class="smh" text-anchor="end">skruens vei</text>
+  <text x="560.99" y="337.953" class="smh" text-anchor="start">vinkelklossen</text>
+  <text x="517.631" y="338.339" class="smh" text-anchor="end">to tvinger</text>
+  <line x1="519.631" y1="336.339" x2="539.631" y2="346.339" class="ldr"/>
+  <text x="470" y="485.154" class="sml" text-anchor="start">Klem klossen mot flaten med TO tvinger, hullet rett over merket. Sålen henger utfor endeveden, så sett en offerkloss inntil — den bærer sålen og hindrer utrivning.</text>
+  <text x="470" y="490.351" class="sml" text-anchor="start">Forstnerboret går NED I føringshullet før det tar treet, så det ikke kan vandre. Bor til det øverste merket på skaftet. Bytt så til forboret, i samme hull.</text>
+  <rect x="18" y="556.134" width="844" height="30" class="fld"/>
+  <text x="23" y="564.134" class="leg" text-anchor="start">TEGNFORKLARING</text>
+  <rect x="23" y="569.134" width="11" height="6" class="wood"/>
+  <text x="37" y="574.134" class="sml" text-anchor="start">Gjennomskåret tre</text>
+  <rect x="77.034" y="569.134" width="11" height="6" class="mate"/>
+  <text x="91.034" y="574.134" class="sml" text-anchor="start">Delen skruen går inn i</text>
+  <rect x="141.078" y="569.134" width="11" height="6" class="brd"/>
+  <text x="155.078" y="574.134" class="sml" text-anchor="start">Tre sett rett på</text>
+  <line x1="193.11" y1="572.134" x2="205.11" y2="572.134" class="gho"/>
+  <text x="208.11" y="574.134" class="sml" text-anchor="start">Skjult kant — lommebunn, hull, materiale som skal kappes bort</text>
+  <line x1="342.236" y1="572.134" x2="354.236" y2="572.134" class="dot"/>
+  <text x="357.236" y="574.134" class="sml" text-anchor="start">Festemiddelets vei (aldri en pil)</text>
+  <text x="23" y="582.634" class="tiny" text-anchor="start">Alle mål i mm. Vinkler, setedybder, ⌀18, munningsellipsene, hodediametrene og de to dekningstallene er lest ut av generate_loftbed.py — ingen av dem er skrevet inn her. Generert av tools/render_setedetalj.py; rediger ikke for hånd.</text>
+</svg>
