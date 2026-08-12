@@ -1045,7 +1045,13 @@ PICTOGRAMS: dict[str, tuple[str, object]] = {
     "underlag": ("Mykt underlag under delene", "hanna/underlag"),
     "dra-nei": ("Ikke dra delene over gulvet", "hanna/dra-nei"),
     "sorter": ("Sorter delene før du starter", "hanna/sorter"),
-    "les": ("Les veiledningen først", "lucide/book-open"),
+    # Steg 0-regelen tegnet: blyanten bak øret og delene merket, mot
+    # skrutrekkeren i hånda og delene i en haug. Den avløste bokikonet
+    # ("les steg 0 først"), som sa det samme uten å vise det - og lucide/
+    # book-open fulgte med ut av katalogen, etter regelen over.
+    "blyant-foerst": ("Merk av før du skrur", "hanna/blyant-foerst"),
+    "skrutrekker-foerst-nei": ("Ikke start med skrutrekkeren",
+                               "hanna/skrutrekker-foerst-nei"),
     # V5: the spanner is gone with the last threaded fastener - there is
     # nothing in this bed to put a 10 mm nut on, and a tool panel that shows
     # one is a tool panel that sends somebody looking for it.

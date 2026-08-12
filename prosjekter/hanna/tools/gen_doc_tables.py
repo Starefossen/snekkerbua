@@ -1480,8 +1480,12 @@ PREP = [
     ("sorter", None,
      "**Sorter delene** etter kapplista, og merk hver del på en flate som "
      "blir skjult."),
-    ("les", None,
-     "**Les steg 0 først.** All saging og all boring skjer før noe reises."),
+    # Denne raden avløste "Les steg 0 først" med bokikonet. Budskapet var det
+    # samme - alt kappes og bores før noe reises - men det stod bare i teksten;
+    # nå står det i bildet, og paret har fått den IKKE SLIK-en boka aldri hadde.
+    ("blyant-foerst", "skrutrekker-foerst-nei",
+     "**Blyanten først.** Merk av hvert kapp og hvert hull før du skrur — "
+     "all saging og all boring skjer i steg 0, før noe reises."),
     ("verktoy", None,
      "**Verktøy:** drill med bor, torxbits, tommestokk, vater og "
      "vinkelhake."),

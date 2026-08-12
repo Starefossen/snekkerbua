@@ -556,7 +556,8 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   ingenting annet. Et ikon som ikke står i den tabellen skal ut av katalogen —
   ellers vokser den til et halvt ikonbibliotek som ingen bygger leser og ingen
   lisensfil dekker meningsfullt. (Fem ubrukte ble slettet i denne runden:
-  `baby`, `hammer`, `pencil`, `person-standing`, `phone`.)
+  `baby`, `hammer`, `pencil`, `person-standing`, `phone`. `book-open` gikk
+  samme vei da «blyanten først» avløste «les steg 0 først»-raden.)
 * **Merkebokstavene** er ett tegn i en sirkel, samme radius overalt.
 * **De kodede glyfene.** Der et steg koder festemidlene sine, skrives
   skrueglyfen også i sin egen fyllkode (`treskrue-5x70-hatch.svg`), og det er
