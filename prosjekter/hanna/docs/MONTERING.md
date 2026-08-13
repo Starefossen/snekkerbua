@@ -210,29 +210,30 @@ Ledd **J2** → [beslagliste](generated/beslagliste.md)
 
 # 5
 
-## Fremre benkevanger og alle fire stubbeføtter
+## Fremre benkevanger, stubbeføtter og endelister
 
 ![Steg 5](img/steg-05.png)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **2×** | Benkevange, front (bit) | 48×68 | 642 |
+| **2×** | Endelist | 36×48 | 98 |
 | **4×** | Stubbefot | 48×68 | 191 |
 
 | | | |
 |:---:|:---:|---|
 | <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="30"> **16x** | Treskrue 5×40 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **4x** | Treskrue 5×60 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **8x** | Treskrue 5×60 |
 | <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **4x** | Treskrue 6×80 |
 | <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/vinkelbeslag-90x90x40.svg" alt="Vinkelbeslag 90×90×40×2,5 varmforsinket" height="72"> **4x** | Vinkelbeslag 90×90×40×2,5 |
 
 Bokstavene viser hvor på tegningen hver type går.
 
-Ledd **J8**, **J10** → [beslagliste](generated/beslagliste.md)
+Ledd **J8**, **J10**, **J17** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Ingenting skal krysse gulvet mellom de to benkene.
 
-[Steg 5 i ord](generated/byggesteg.md#steg-5--fremre-benkevanger-og-alle-fire-stubbeføtter)
+[Steg 5 i ord](generated/byggesteg.md#steg-5--fremre-benkevanger-stubbeføtter-og-endelister)
 
 ---
 
@@ -266,25 +267,24 @@ Ledd **J3**, **J4**, **J5** → [beslagliste](generated/beslagliste.md)
 
 # 7
 
-## Benkespiler, endelister og endespiler
+## Benkespiler og endespiler
 
 ![Steg 7](img/steg-07.png)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **10×** | Benkespile | 23×98 | 800 |
-| **2×** | Endelist | 36×48 | 98 |
 | **2×** | Endespile | 23×98 | 764 |
 
 | | |
 |:---:|---|
-| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **28x** | Treskrue 5×60 |
+| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **24x** | Treskrue 5×60 |
 
-Ledd **J11**, **J11-E**, **J16**, **J17** → [beslagliste](generated/beslagliste.md)
+Ledd **J11**, **J11-E**, **J16** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Kjenn over hele benken med håndflaten: ingen skruehoder skal stikke opp.
 
-[Steg 7 i ord](generated/byggesteg.md#steg-7--benkespiler-endelister-og-endespiler)
+[Steg 7 i ord](generated/byggesteg.md#steg-7--benkespiler-og-endespiler)
 
 ---
 

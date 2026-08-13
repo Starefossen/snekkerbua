@@ -178,8 +178,9 @@ Derfor:
    vater, og resten bygges framover fra den.
 3. **Endene bygges ut:** fremre stolpe, så endebjelke. Én ende av gangen.
    Det står ingen kloss under bjelkeenden — de forborede hullene er jiggen.
-4. **Fronten lukkes:** fremre sidevange, så de to fremre benkevangene og alle
-   fire stubbeføtter.
+4. **Fronten lukkes:** fremre sidevange, så de to fremre benkevangene, alle
+   fire stubbeføtter og de to endelistene — hele benkens bæreverk i samme
+   kotehøyde.
 5. **Resten kommer forfra og ovenfra:** stige, benkespiler, køyespiler,
    rekkverk, plate, madrass.
 
@@ -842,7 +843,8 @@ i denne runden. Benkespilefeltet stoppet 98 mm fra veggen i hver ende, fordi en
 vanlig benkespile går fra veggplanet og fram og ville skåret tvers gjennom den
 bakre hjørnestolpen. Nå ligger det en kortere **endespile** der, 764 mm, som
 starter på stolpens forside og hviler på en **endelist** skrudd flatt på den
-samme stolpen. Se steg 7 og J16/J17. Uten den er ikke dette en seng i full
+samme stolpen. Listen settes i steg 5 sammen med resten av benkens bæreverk,
+spilen i steg 7. Se J16/J17. Uten den er ikke dette en seng i full
 lengde, og putekanten har ingenting under seg.
 
 **Stolpen står i flaten.** Det er den ene tingen som ikke lot seg fjerne: de to

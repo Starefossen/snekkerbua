@@ -245,10 +245,12 @@
     },
     {
       "n": 5,
-      "title": "Fremre benkevanger og alle fire stubbeføtter",
+      "title": "Fremre benkevanger, stubbeføtter og endelister",
       "image": true,
       "page": "step",
       "labels": [
+        "Bench End Cleat Left",
+        "Bench End Cleat Right",
         "Bench Rail Front Left (segment)",
         "Bench Rail Front Right (segment)",
         "Bench Stub Leg Back Left",
@@ -257,6 +259,8 @@
         "Bench Stub Leg Front Right"
       ],
       "highlight": [
+        "Bench End Cleat Left",
+        "Bench End Cleat Right",
         "Bench Rail Front Left (segment)",
         "Bench Rail Front Right (segment)",
         "Bench Stub Leg Back Left",
@@ -269,30 +273,35 @@
         20,
         3.4
       ],
-      "intro": "Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gulvet foran stigen er helt fritt.",
+      "intro": "Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gulvet foran stigen er helt fritt. Endelisten hører hjemme i dette steget og ikke blant spilene: den er bæreverk som vangene, den står i samme høyde som dem, og den skal stå ferdig før noe legges oppå.",
       "do": [
         "Fest hver vangebit til sin fremre hjørnestolpe etter J8. **Skruene drives innenfra**, fra vangens innside og inn i stolpen, så stolpens forside blir stående uten skruehoder. Du kommer til ovenfra: benken er åpen til spilene går på i steg 7. Ingen kloss under enden — hullene fra steg 0 holder vangen i riktig høyde.",
         "Sett en stubbefot under den innerste enden av hver vangebit. Vangebiten skal slutte akkurat der foten står — ingen utstikk forbi foten.",
         "Sett de to bakre stubbeføttene under den bakre benkevangen, rett under de samme punktene.",
-        "Fest alle fire føtter etter J10. Den ene 5×60 per fot er en skråskrue nedenfra og opp i vangen, og setet er boret i steg 0 — ⌀18 flatbunnet lomme 18 mm ned langs aksen, 30° på fotens innerside. Skru beslaget først, skråskruen sist."
+        "Fest alle fire føtter etter J10. Den ene 5×60 per fot er en skråskrue nedenfra og opp i vangen, og setet er boret i steg 0 — ⌀18 flatbunnet lomme 18 mm ned langs aksen, 30° på fotens innerside. Skru beslaget først, skråskruen sist.",
+        "ENDELISTEN, én i hver ende: skru den flatt på FORSIDEN av den bakre hjørnestolpen, med overkanten i flukt med benkevangens overkant (259 mm over gulvet). To 5×60 ved siden av hverandre (J17) — 36 mm gjennom listen og 24 mm inn i stolpen, så det står 12 mm igjen til veggflaten bak. Ikke bruk lengre skrue."
       ],
       "check": [
         "Ingenting skal krysse gulvet mellom de to benkene.",
         "Vater langs begge vangebiter, og samme høyde som den bakre benkevangen.",
-        "Alle fire føtter skal stå med hele endeflaten mot gulvet og hele toppflaten mot vangen. Er det luft under en fot, kil den ikke opp — juster den."
+        "Alle fire føtter skal stå med hele endeflaten mot gulvet og hele toppflaten mot vangen. Er det luft under en fot, kil den ikke opp — juster den.",
+        "Legg en rett list fra endelisten og bort på begge benkevanger. Alle tre overkanter skal ta borti listen — det er flaten spilene legges på i steg 7.",
+        "Ingen skruespiss skal være synlig eller følbar på baksiden av den bakre stolpen. Det er veggflaten."
       ],
       "fasteners": [
         "16× Treskrue 5×40 forsenket Torx",
-        "4× Treskrue 5×60 forsenket Torx",
+        "8× Treskrue 5×60 forsenket Torx",
         "4× Treskrue 6×80 forsenket Torx",
         "4× Vinkelbeslag 90×90×40×2,5 varmforsinket"
       ],
       "joints": {
         "J8": 2,
-        "J10": 4
+        "J10": 4,
+        "J17": 2
       },
       "parts": [
         "2× Benkevange, front (bit) 48×68 × 642",
+        "2× Endelist 36×48 × 98",
         "4× Stubbefot 48×68 × 191"
       ],
       "fill_code": false,
@@ -382,12 +391,10 @@
     },
     {
       "n": 7,
-      "title": "Benkespiler, endelister og endespiler",
+      "title": "Benkespiler og endespiler",
       "image": true,
       "page": "step",
       "labels": [
-        "Bench End Cleat Left",
-        "Bench End Cleat Right",
         "Bench End Slat Left",
         "Bench End Slat Right",
         "Bench Slat Left_1",
@@ -402,8 +409,6 @@
         "Bench Slat Right_5"
       ],
       "highlight": [
-        "Bench End Cleat Left",
-        "Bench End Cleat Right",
         "Bench End Slat Left",
         "Bench End Slat Right",
         "Bench Slat Left_1",
@@ -422,32 +427,28 @@
         30,
         3.4
       ],
-      "intro": "Fem spiler per benk, lagt oppå benkevangene — og helt ute ved hver vegg en 764 mm ENDESPILE på en endelist. De to endespilene er det som gjør underetasjen til en seng i full lengde: uten dem stopper spilefeltet 98 mm fra veggen i hver ende, og putekanten har ingenting under seg.",
+      "intro": "Fem spiler per benk, lagt oppå benkevangene — og helt ute ved hver vegg en 764 mm ENDESPILE på endelisten fra steg 5. De to endespilene er det som gjør underetasjen til en seng i full lengde: uten dem stopper spilefeltet 98 mm fra veggen i hver ende, og putekanten har ingenting under seg.",
       "do": [
         "Legg ut alle fem spilene på én benk før du skrur, og sjekk delingen mot kapplista.",
         "Skru hver spile ned i den bakre og den fremre benkevangen, én skrue per ende (J11). Forsenk hodene — dette er en sitteflate.",
         "Gjenta speilvendt på den andre benken.",
-        "ENDELISTEN: skru den flatt på FORSIDEN av den bakre hjørnestolpen, med overkanten i flukt med benkevangens overkant (259 mm over gulvet). To 5×60 ved siden av hverandre (J17) — 36 mm gjennom listen og 24 mm inn i stolpen, så det står 12 mm igjen til veggflaten bak. Ikke bruk lengre skrue.",
-        "ENDESPILEN er kortere enn de andre, 764 mm: den starter på stolpens forside, ikke på veggen — stolpen står i soveflaten her. Legg den mot veggen, tett inntil naboen, og skru én skrue ned i endelisten (J16) og én ned i den fremre benkevangen (J11-E)."
+        "ENDESPILEN er kortere enn de andre, 764 mm: den starter på stolpens forside, ikke på veggen — stolpen står i soveflaten her. Endelisten den skal hvile på sitter ferdig på stolpen fra steg 5; her legges bare spilen. Legg den mot veggen, tett inntil naboen, og skru én skrue ned i endelisten (J16) og én ned i den fremre benkevangen (J11-E)."
       ],
       "check": [
         "Kjenn over hele benken med håndflaten: ingen skruehoder skal stikke opp.",
         "Sett deg på begge benker.",
-        "Endespilen skal ligge i nøyaktig samme plan som de andre — legg en rett list på tvers over hele benken og se etter lys under.",
-        "Ingen skruespiss skal være synlig eller følbar på baksiden av den bakre stolpen. Det er veggflaten."
+        "Endespilen skal ligge i nøyaktig samme plan som de andre — legg en rett list på tvers over hele benken og se etter lys under."
       ],
       "fasteners": [
-        "28× Treskrue 5×60 forsenket Torx"
+        "24× Treskrue 5×60 forsenket Torx"
       ],
       "joints": {
         "J11": 20,
         "J11-E": 2,
-        "J16": 2,
-        "J17": 2
+        "J16": 2
       },
       "parts": [
         "10× Benkespile 23×98 × 800",
-        "2× Endelist 36×48 × 98",
         "2× Endespile 23×98 × 764"
       ],
       "fill_code": false,

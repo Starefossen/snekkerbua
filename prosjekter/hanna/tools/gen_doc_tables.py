@@ -504,12 +504,16 @@ def build_steps(G):
         ),
         dict(
             n=5,
-            title="Fremre benkevanger og alle fire stubbeføtter",
-            parts=["Bench Rail Front *", "Bench Stub Leg *"],
+            title="Fremre benkevanger, stubbeføtter og endelister",
+            parts=["Bench Rail Front *", "Bench Stub Leg *",
+                   "Bench End Cleat *"],
             camera=(330, 20, 3.4),
             half_view=True,
             intro="Den fremre benkevangen er delt i to. Midtpartiet er med "
-                  "vilje åpent, slik at gulvet foran stigen er helt fritt.",
+                  "vilje åpent, slik at gulvet foran stigen er helt fritt. "
+                  "Endelisten hører hjemme i dette steget og ikke blant "
+                  "spilene: den er bæreverk som vangene, den står i samme "
+                  "høyde som dem, og den skal stå ferdig før noe legges oppå.",
             do=[
                 "Fest hver vangebit til sin fremre hjørnestolpe etter J8. "
                   "**Skruene drives innenfra**, fra vangens innside og inn i "
@@ -528,6 +532,13 @@ def build_steps(G):
                   f"{G.TOE_JIG_SEATS['J10']:g} mm ned langs aksen, "
                   f"{G.TOE_JIG_ANGLES['J10']:g}° på fotens innerside. Skru "
                   "beslaget først, skråskruen sist.",
+                f"ENDELISTEN, én i hver ende: skru den flatt på FORSIDEN av "
+                  f"den bakre hjørnestolpen, med overkanten i flukt med "
+                  f"benkevangens overkant ({G.END_CLEAT_Z1} mm over gulvet). "
+                  f"To 5×60 ved siden av hverandre (J17) — {G.END_CLEAT_T} mm "
+                  f"gjennom listen og {G.END_CLEAT_BITE} mm inn i stolpen, så "
+                  f"det står {G.POST_T - G.END_CLEAT_BITE} mm igjen til "
+                  f"veggflaten bak. Ikke bruk lengre skrue.",
             ],
             check=[
                 "Ingenting skal krysse gulvet mellom de to benkene.",
@@ -536,8 +547,13 @@ def build_steps(G):
                 "Alle fire føtter skal stå med hele endeflaten mot gulvet og "
                   "hele toppflaten mot vangen. Er det luft under en fot, kil "
                   "den ikke opp — juster den.",
+                "Legg en rett list fra endelisten og bort på begge "
+                  "benkevanger. Alle tre overkanter skal ta borti listen — "
+                  "det er flaten spilene legges på i steg 7.",
+                "Ingen skruespiss skal være synlig eller følbar på baksiden "
+                  "av den bakre stolpen. Det er veggflaten.",
             ],
-            joints={'J8': 2, 'J10': 4},
+            joints={'J8': 2, 'J10': 4, 'J17': 2},
         ),
         dict(
             n=6,
@@ -575,13 +591,14 @@ def build_steps(G):
         ),
         dict(
             n=7,
-            title="Benkespiler, endelister og endespiler",
-            parts=["Bench Slat *", "Bench End Cleat *", "Bench End Slat *"],
+            title="Benkespiler og endespiler",
+            parts=["Bench Slat *", "Bench End Slat *"],
             camera=(330, 30, 3.4),
             intro=f"Fem spiler per benk, lagt oppå benkevangene — og helt ute "
-                  f"ved hver vegg en {G.END_SLAT_LEN} mm ENDESPILE på en "
-                  f"endelist. De to endespilene er det som gjør underetasjen "
-                  f"til en seng i full lengde: uten dem stopper spilefeltet "
+                  f"ved hver vegg en {G.END_SLAT_LEN} mm ENDESPILE på "
+                  f"endelisten fra steg 5. De to endespilene er det som gjør "
+                  f"underetasjen til en seng i full lengde: uten dem stopper "
+                  f"spilefeltet "
                   f"{G.BENCH_SLAT_W} mm fra veggen i hver ende, og putekanten "
                   f"har ingenting under seg.",
             do=[
@@ -591,18 +608,13 @@ def build_steps(G):
                   "én skrue per ende (J11). Forsenk hodene — dette er en "
                   "sitteflate.",
                 "Gjenta speilvendt på den andre benken.",
-                f"ENDELISTEN: skru den flatt på FORSIDEN av den bakre "
-                  f"hjørnestolpen, med overkanten i flukt med benkevangens "
-                  f"overkant ({G.END_CLEAT_Z1} mm over gulvet). To 5×60 ved "
-                  f"siden av hverandre (J17) — {G.END_CLEAT_T} mm gjennom "
-                  f"listen og {G.END_CLEAT_BITE} mm inn i stolpen, så det "
-                  f"står {G.POST_T - G.END_CLEAT_BITE} mm igjen til "
-                  f"veggflaten bak. Ikke bruk lengre skrue.",
                 f"ENDESPILEN er kortere enn de andre, {G.END_SLAT_LEN} mm: "
                   f"den starter på stolpens forside, ikke på veggen — "
-                  f"stolpen står i soveflaten her. Legg den mot veggen, tett "
-                  f"inntil naboen, og skru én skrue ned i endelisten (J16) "
-                  f"og én ned i den fremre benkevangen (J11-E).",
+                  f"stolpen står i soveflaten her. Endelisten den skal hvile "
+                  f"på sitter ferdig på stolpen fra steg 5; her legges bare "
+                  f"spilen. Legg den mot veggen, tett inntil naboen, og skru "
+                  f"én skrue ned i endelisten (J16) og én ned i den fremre "
+                  f"benkevangen (J11-E).",
             ],
             check=[
                 "Kjenn over hele benken med håndflaten: ingen skruehoder skal "
@@ -611,10 +623,8 @@ def build_steps(G):
                 "Endespilen skal ligge i nøyaktig samme plan som de andre — "
                   "legg en rett list på tvers over hele benken og se etter "
                   "lys under.",
-                "Ingen skruespiss skal være synlig eller følbar på baksiden "
-                  "av den bakre stolpen. Det er veggflaten.",
             ],
-            joints={'J11': 20, 'J11-E': 2, 'J16': 2, 'J17': 2},
+            joints={'J11': 20, 'J11-E': 2, 'J16': 2},
         ),
         dict(
             n=8,
