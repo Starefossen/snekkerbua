@@ -612,14 +612,42 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   mellom hode og skulder, armene går ut av skulderen og ender i en avrundet
   krok uten fingre, og kroppen ender i en bue: ingen føtter, ingen bein.
 
-  **Hodet er tegnet i PROFIL**, slik IKEA-mannen er det, og det er nesen som
-  gjør det: ett øye midt i en helt sirkelrund isse er ikke et menneske sett
-  forfra, det er et vesen. Nesen er bygget inn i hodekonturen som et ledd til i
-  kjeden — en liten sirkel hengt på hodesirkelen i ansiktsretningen, felt inn
-  med en konkav fals over (neseroten) og en under (nesebunnen), akkurat som
-  halsen og armhulen felles inn. Ansiktet er så én fylt øyeprikk, satt høyt og
-  fremme, og en åpen smilekurve under nesen. Alt sammen står i
-  landemerketabellen nedenfor: nesen er REGNET, ikke tegnet på frihånd.
+  **Hodet er tegnet i PROFIL**, slik IKEA-mannen er det, og profilen er
+  tre ting: en ISSE, en HAKE og en rett NESERYGG mellom dem. Ansiktet er så én
+  fylt øyeprikk og en åpen smilekurve mellom nesen og haken. Alt sammen står i
+  landemerketabellen nedenfor: hodet er REGNET, ikke tegnet på frihånd.
+
+  **Og det tok to runder, fordi den første ble en and.** Første forsøk var én
+  rund hodesirkel med en liten nesesirkel hengt på, felt inn med en konkav fals
+  over (neseroten) og en under (nesebunnen). Alle tre feilene i den leser som
+  fugl, og de leser det sammen:
+
+  | hva den runde hodesirkelen gjorde | hva den ble lest som |
+  |---|---|
+  | nesen en KULE som stikker ut midt på et sirkelrundt hode | nebb |
+  | den konkave falsen under nesen løp uavbrutt ned i halsen | strupe |
+  | ingen hake — bare 10° hodebue mellom nesebunnen og halsfalsen | hodet slutter der nebbet slutter |
+
+  Rettelsen er alle tre på én gang, og den ene som gjør mest er den siste:
+
+  * **Hodet er to ledd, ikke ett.** ISSEN er hjerneskallen — stor, rund, bak og
+    over. HAKEN er et eget lite ledd, lavt og skjøvet fram i ansiktsretningen.
+    Hodebåndet står: issens topp er fortsatt 1,5 og hakens bunn fortsatt 7,1,
+    så **hodeandelen er urørt** (26,7 %). Men hodet er ikke lenger like bredt
+    som høyt: hjerneskallen er 5,04 av 5,6 (0,90), og med haken regnet med 5,27
+    (0,94). Høyere enn bredt, med tyngden ned mot kjeven.
+  * **Neseryggen er en RETT LINJE.** Skjøten isse → nese er en ytre
+    tangentlinje, ikke en konkav fals. Det er den som avliver nebbet: en nese
+    som er felt inn med en fals på oversiden henger PÅ hodet, mens en nese som
+    er tangert vokser UT av pannen. Neseroten finnes ikke lenger som ledd.
+  * **Under nesen felles det inn i haken, ikke i halsen.** Falsen nese → hake
+    er 0,45 og kort — det er munnpartiet. Så kommer haken som en konveks bue,
+    og først DER snører halsen seg inn, med den samme 1,40-falsen som før.
+    Rekkefølgen nese, munn, hake, hals er hele forskjellen på et ansikt og et
+    hode med nebb.
+
+  Halsen treffer hodet på to ulike ledd, og det er slik en hals treffer et
+  hode: den fremre falsen ender på HAKEN, den bakre på ISSEN.
 
   **Og da har figuren en synsretning, som brukes.** Blikket peker på det
   figuren holder på med: de to som løfter ser mot rammen, og dermed mot
@@ -661,11 +689,11 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   | trangt sted | hva som skjer når vekten øker |
   |---|---|
   | armhulen i `to-personer` | figurene der er skalert 0,86, så armens 1,3 enheter klaring er 1,12. Ved 0,875 (0,7 × PICTO) står det 0,24 enheter = 0,7 px igjen i 72 px, og hullet lukker seg |
-  | øyet mot hodekonturen | øyeprikken er streket den også og vokser fra begge sider. Ved 0,875 renner den sammen med neseroten, og ansiktet forsvinner |
+  | øyet mot hodekonturen | øyeprikken er streket den også og vokser fra begge sider. Ved 0,875 renner den sammen med neseryggen, og ansiktet forsvinner |
 
   0,6 × PICTO er det tyngste begge overlever: armhulen beholder 0,37 enheter
   (1,1 px i 72 px, 3,4 px i 19 mm), og ansiktet er tegnet mot nettopp den
-  vekten — øyet inn til 1,50 fra hodesenteret, munnviken til 1,80.
+  vekten — øyet inn til 1,35 fra hodesenteret, munnviken til 1,80.
 
   **Og oppjusteringen fra 0,5 er kjøpt for sidebalansen.** Da rekvisittene falt
   fra 1,25 ned i figurvekt, ble figurikonene merkbart lettere enn naboradene på
@@ -724,7 +752,8 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
 
   | ledd | dx | y | r |
   |---|---:|---:|---:|
-  | hode | 0 | 4,3 | 2,80 |
+  | isse | 0 | 4,02 | 2,52 |
+  | hake | 1,30 | 5,65 | 1,45 |
   | hals (konkav) | — | — | 1,40 |
   | skulder | 1,15 | 9,4 | 1,35 |
   | bryst | 1,10 | 11,6 | 1,40 |
@@ -734,26 +763,41 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   | fald, midt | 0 | 20,7 | 1,70 |
   | armhule (konkav) | — | — | 0,80 |
 
-  **Hodet i profil** er de samme fire tallene en gang til, bare polart om
-  hodesenteret: avstand og vinkel i ansiktsretningen, positiv vinkel = under
-  vannrett. Nesen er et ledd i kjeden som alle de andre, og de to falsene er de
-  samme konkave overgangene som hals og armhule er:
+  `dx` er symmetrisk om midtlinjen for alle ledd unntatt **haken**: den ligger
+  bare på den ene siden, i ANSIKTSRETNINGEN. Det er det ene stedet figuren
+  vet hvilken vei den ser.
+
+  **Ansiktet** er de samme tallene en gang til, bare polart om hodesenteret
+  (0; 4,3): avstand og vinkel i ansiktsretningen, positiv vinkel = under
+  vannrett. Nesen er et ledd i kjeden som alle de andre:
 
   | landemerke | avstand | vinkel | r |
   |---|---:|---:|---:|
-  | nese | 3,35 | 12° | 0,65 |
-  | neserot (konkav fals) | — | — | 0,28 |
-  | nesebunn (konkav fals) | — | — | 0,80 |
-  | øyeprikk | 1,50 | −40° | 0,30 |
+  | nese | 3,05 | 10° | 0,68 |
+  | neserygg | ytre tangentlinje nese → isse | — | — |
+  | munnfals (konkav, nese → hake) | — | — | 0,45 |
+  | øyeprikk | 1,35 | −38° | 0,30 |
   | smilekurve, fremre munnvik | 1,80 | 40° | bue r 1,30 |
   | smilekurve, bakre ende | 0,95 | 68° | — |
 
-  Nesetippen stikker da 1,20 enheter forbi hodekonturen — 21 % av
-  hodediameteren, altså mer enn et menneske har, og bevisst: en nese som ikke
-  bryter silhuetten i 72 px, finnes ikke i 72 px. Hodet er fortsatt en sirkel
-  på 2,80, så **hodeandelen er urørt av nesen** (26,7 % av figurhøyden): nesen
-  vokser sidelengs, og figuren er like høy som før. Vender figuren mot venstre,
-  speiles de fire polare landemerkene om hodesenteret og ingenting annet.
+  Nesetippen stikker 1,19 enheter forbi issekonturen — 24 % av
+  hjerneskallens bredde, altså mer enn et menneske har, og bevisst: en nese som
+  ikke bryter silhuetten i 72 px, finnes ikke i 72 px. Vender figuren mot
+  venstre, speiles haken og de polare landemerkene om hodesenteret og
+  ingenting annet.
+
+  **Mellomrommene i ansiktet ble større, ikke mindre, av omleggingen.** Målt
+  som fri luft mellom strekkantene, i enheter (0,75-streken trukket fra):
+
+  | | rund hodesirkel | isse + hake |
+  |---|---:|---:|
+  | øyeprikken → nærmeste kontur | 0,25 | **0,30** |
+  | munnviken → nærmeste kontur | 0,25 | **0,66** |
+
+  Øyet er flyttet inn fra 1,50 til 1,35 for å betale for den smalere issen, og
+  det er den flyttingen som gjør at porten holder. Dekningsgraden er så godt
+  som uendret — 18,2–21,5 % mot 18,4–21,6 % før, i 19 mm @ 300 dpi — så
+  sidebalansen som §4 kjøpte med 0,6 × PICTO står urørt.
 
   Figuren blir da 1,5–22,4 høy (20,95) og 12,9 bred med armene ute. Armen er
   albue + hånd hengt på skulderen; hånden er siste ledd og svøper rundt tuppen.

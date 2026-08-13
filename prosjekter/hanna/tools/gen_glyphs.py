@@ -111,11 +111,11 @@ PICTO_STROKE = 1.25
 #                             72 px, og hullet lukker seg: figuren blir en klump.
 #   øyet mot hodekonturen   - øyeprikken er STREKET også, så den vokser med
 #                             vekten fra begge sider. Ved 0,875 renner den
-#                             sammen med neseroten og ansiktet forsvinner.
+#                             sammen med neseryggen og ansiktet forsvinner.
 #
 # 0,6 x PICTO = 0,75 enheter er det tyngste begge overlever: armhulen beholder
 # 0,37 enheter (1,1 px i 72 px, 3,4 px i 19 mm), og ansiktet er tegnet mot den
-# vekten - øyet flyttet inn til 1,50 fra hodesenteret og munnviken til 1,80, se
+# vekten - øyet inn til 1,35 fra hodesenteret og munnviken til 1,80, se
 # landemerketabellen i PRAKSIS §4. Det var 0,5 x PICTO før, og oppjusteringen
 # er kjøpt for SIDEBALANSEN: da rekvisittene falt fra 1,25 ned i figurvekten,
 # ble figurikonene merkbart lettere enn naboradene på samme side (mykt underlag,
