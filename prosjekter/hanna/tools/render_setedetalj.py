@@ -35,10 +35,10 @@ THE UNIT SYSTEM
 ---------------
 One SVG user unit is one millimetre of paper, so a view drawn at 2:1 really is
 2 units per model millimetre and the scale printed on it is the truth. The
-type sizes and stroke weights are the checked-in sheets' own (docs/schematics/
-side-elevation.svg and friends), multiplied by STYLE_K = this sheet's width
-over theirs - so rendered at the same pixel width, a line here is the same
-line there.
+type sizes and stroke weights are the checked-in sheets' own (the hand-drawn
+sheets in docs/schematics/ - bench-detail.svg and friends, all drawn 3450
+units wide), multiplied by STYLE_K = this sheet's width over theirs - so
+rendered at the same pixel width, a line here is the same line there.
 
 Usage:
     python tools/render_setedetalj.py [--out docs/schematics/setedetalj.svg]

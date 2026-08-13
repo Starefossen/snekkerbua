@@ -1490,18 +1490,25 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | Tegning | Innhold |
 |---|---|
 | [byggerekkefolge.svg](schematics/byggerekkefolge.svg) | Oversikt over byggerekkefølgen, med samme nummer som byggesteg og MONTERING |
-| [side-elevation.svg](schematics/side-elevation.svg) | Langsiden sett forfra: stolper, stigevanger og trinn, sidevange, begge rekkverksbånd med klatreåpningen, benkevanger, stubbeføtter og benkespiler, med alle skrueposisjoner |
 | [end-elevation.svg](schematics/end-elevation.svg) | Kortsiden, med veggen inntegnet. Her ser du at sengen er usymmetrisk: bakre stolpe stopper i sengeflaten, fremre går helt opp til rekkverket |
 | [ladder-detail.svg](schematics/ladder-detail.svg) | Stigen: vanger, klosser, trinn, J3-skruene, hylla bak trinnet som platen hviler på, og sjaktene ved siden av trinnendene der avstivningslektene løper |
 | [bench-detail.svg](schematics/bench-detail.svg) | Benken: vangeenden mot hjørnestolpen uten kloss, vangebiten som ender på stubbefoten, benkespilene og platekanten. Egen plan gjennom J8-Bs sete og skruevinkel |
 | [setedetalj.svg](schematics/setedetalj.svg) | Skråskruesetene: snitt langs skrueaksen for begge vinkler, munningen ovenfra med veggen mellom lommene, vinkelklossen eksplodert og klossen i bruk |
 | [panel-detail.svg](schematics/panel-detail.svg) | Plateenheten i begge stillinger: plate, to avstivningslekter, to kilelekter, glidesjakten ved trinnenden og skruen nedenfra ut av kontraboret. Ingen ståldel |
-| [bruk-sengestilling.svg](img/bruk-sengestilling.svg) | Sengestillingen i bruk: én som sover i køya og én på nedre soveflate, med rekkverket over kroppen, fri høyde over ansiktet nede og madrassen som er igjen bak føttene. Rett oppriss — hver målpil er differansen mellom to Z i modellen |
+| [bruk-sengestilling.svg](img/bruk-sengestilling.svg) | Sengestillingen i bruk: én som sover i køya og én på nedre soveflate, med rekkverket over kroppen, fri høyde over ansiktet nede og madrassen som er igjen bak føttene. Rett oppriss av langsiden — stolper, stigevanger og trinn, sidevange, begge rekkverksbånd, benkevanger og stubbeføtter står der som de står i modellen, og hver målpil er differansen mellom to Z |
 | [bruk-bordstilling.svg](img/bruk-bordstilling.svg) | Bordstillingen i bruk: to i skredderstilling på hver sin benkepute, vendt mot platen. Fri høyde over hodet, sittehøyde, plate over sete og kne til platekant |
 
-**Alle sju skjemaarkene er tegnet om mot den ferdige geometrien.** De viser
-574×798-platen, 750 mm avstivningslekter, de to skråkappede kilelektene,
-bordbærelekta som 48×68 på høykant (Z 414–482), navnene
-sengestilling/bordstilling — og ingen bæreklosser, ingen U-brakett, ingen
-krokplate og ikke én M6, fordi ingen av delene finnes. J2, J3 og J8 er tegnet
-med hodet på vangens innside, slik de skrus.
+**Arkene er tegnet om mot V13-geometrien.** De viser 574×798-platen, 750 mm
+avstivningslekter, de to skråkappede kilelektene, bordbærelekta som 48×68 på
+høykant (Z 414–482), navnene sengestilling/bordstilling — og ingen
+bæreklosser, ingen U-brakett, ingen krokplate og ikke én M6, fordi ingen av
+delene finnes. J2, J3 og J8 er tegnet med hodet på vangens innside, slik de
+skrus.
+
+**Men bare `setedetalj.svg` regenereres av modellen.** De fem andre er
+håndtegnet, og fire av dem ble sist rørt før tverrsnittsrunden: der et tall på
+et håndtegnet ark er i strid med `docs/generated/`, er det den genererte
+tabellen som gjelder. Det som har flyttet seg siden arkene ble tegnet er
+spilene (36×98 → 23×98), lektene (48×73 → 48×68), endebjelken (48×98 →
+36×98), madrassvinduet (140–155, tegn 150) og underetasjen, som har fått
+endespiler, endelister og fire puter à 100 mm.

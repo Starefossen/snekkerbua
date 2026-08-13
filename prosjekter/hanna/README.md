@@ -40,7 +40,7 @@ hvert merke står på det festemiddelet det navngir.*
 | **Stål** | **178 festemidler fordelt på 20 ledd**, **172 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert |
 | **Kontroller** | **433 asserter i modellen** og 62 til i verktøyene, alle sammen stopper bygget. Skrueretningene er utledet av fysikk (5 av 21 er tvunget av tykkelsene alene); antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
 | **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **119 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
-| **Ut av det** | En **trykkeklar PDF på 79 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
+| **Ut av det** | En **trykkeklar PDF på 78 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, seks skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
 | **Menneskene** | **Fire referansekropper** — et barn på **1200 mm** bygget av 14 primitiver etter [AnthroKids](https://math.nist.gov/~SRessler/anthrokids/), to som sover og to som sitter, som ekte solider i modellen. De kappes ikke og bærer ingenting, men de **måler**: 127 mm over hodet på den som sitter rett opp, 603 mm over ansiktet til den som ligger nede — og de beviste at ingen knær går under bordplaten |
 
@@ -147,7 +147,7 @@ denne katalogen, så disse virker uendret uansett hvor i treet du står:
 mise run build      # modellen + alle genererte tabeller + docs/MONTERING.md
 mise run montering  # tegn strektegningene i docs/img/ på nytt
 mise run check      # kjør hele kjeden to ganger, krev byte-identisk resultat
-mise run pdf        # docs/hanna.pdf, 79 sider, trykkeklar
+mise run pdf        # docs/hanna.pdf, 78 sider, trykkeklar
 ```
 
 | Oppgave | Hva den gjør |
@@ -176,7 +176,7 @@ Alt under ligger i `prosjekter/hanna/`, og alle stier er relative til den.
 | `tools/` | Alt som leser modellen: dokumenttabeller, strektegninger, kappeside, plateside, ikoner, PDF, USD-hjelpere |
 | `docs/generated/` | Maskinskrevet, aldri redigert for hånd: kappliste, innkjøpsliste, nøkkelmål, beslagliste, skrueretninger, stegtekst, `byggesteg.json` |
 | `docs/img/`, `docs/schematics/` | De innsjekkede tegningene — så manualen kan leses og skrives ut på en maskin uten noe av denne verktøykjeden |
-| `docs/hanna.pdf` | Manualen på 79 sider. Bevisst utenfor git — verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
+| `docs/hanna.pdf` | Manualen på 78 sider. Bevisst utenfor git — verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
 | `parts.tsv` | Innsjekket regresjonsavtrykk: navn, fargegruppe og omskrevet boks for hver del, i begge stillinger. En diff på den er diffen på modellen |
 | `v1/` | Den første køyesengrammen for nisjen, beholdt som historikk |
 

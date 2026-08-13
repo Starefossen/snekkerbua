@@ -72,7 +72,6 @@ ANCHORS = {
     "skrueretninger": "doc-skrueretninger",
     "byggesteg": "doc-byggesteg",
     "byggerekkefolge": "sch-byggerekkefolge",
-    "side-elevation": "sch-side-elevation",
     "end-elevation": "sch-end-elevation",
     "ladder-detail": "sch-ladder-detail",
     "bench-detail": "sch-bench-detail",
@@ -367,7 +366,6 @@ REF_DOCS = [
 
 SCHEMATICS = [
     ("byggerekkefolge", "Byggerekkefølgen"),
-    ("side-elevation", "Langside, oppriss"),
     ("end-elevation", "Kortside, snitt A–A"),
     ("ladder-detail", "Stigen"),
     ("bench-detail", "Benken"),
