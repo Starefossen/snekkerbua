@@ -597,22 +597,34 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   høyden sin, så en 6×120 forblir lengre enn en 5×40 også inne i panelet på
   stegsiden. Navnene leses ut av `docs/generated/beslagliste.md`, så en ny
   skruestørrelse i leddtabellen gir et nytt ikon uten at noen rører glyphfila.
-* **Piktogrammene** («før du begynner») er Lucide-baserte, ingen fyll, ingen
-  tekst i ikonet. `docs/icons/lucide/` er **vendoret, ikke
+* **Piktogrammene** («før du begynner») er Lucide-baserte, ingen tekst i
+  ikonet. Fyll brukes bare der det gjør en jobb: hvitt der en form skal
+  maskere det som ligger bak, svart i øyeprikken. `docs/icons/lucide/` er **vendoret, ikke
   speilet**: der ligger bare de ikonene `PICTOGRAMS` faktisk slår opp, og
   ingenting annet. Et ikon som ikke står i den tabellen skal ut av katalogen —
   ellers vokser den til et halvt ikonbibliotek som ingen bygger leser og ingen
   lisensfil dekker meningsfullt. (Fem ubrukte ble slettet i denne runden:
   `baby`, `hammer`, `pencil`, `person-standing`, `phone`. `book-open` gikk
   samme vei da «blyanten først» avløste «les steg 0 først»-raden.)
+* **Menneskefiguren er en KONTURFIGUR.** Én lukket path per figur, hvit
+  fylling, svart kant. Streken er kanten, papiret er kroppen. Hodet er en del
+  av den samme konturen — ikke en sirkel på en pinne — halsen snører seg inn
+  mellom hode og skulder, armene går ut av skulderen og ender i en avrundet
+  krok uten fingre, og kroppen ender i en bue: ingen føtter, ingen bein.
+  Ansiktet er én fylt øyeprikk og en åpen smilekurve.
+
+  **Opphavsrett, absolutt grense: egen tegning i idiomet, aldri kalkert.**
+  Ingen del av denne figuren er lastet ned, sporet eller kalkert fra IKEAs
+  anvisninger. Det som er hentet derfra er MÅLTALL — strekforhold,
+  hodeandel, at konturen er lukket — og måltall er målinger, ikke kunstverk.
+  Positurfamilien, kurvene og skjelettet under er våre egne.
 * **To strektykkelser, og bare to.** `PICTO_STROKE` — 1,25 av 24 enheter — er
   vekten til alt som er en TING: verktøy, deler, senger, vegger, piler, hake og
   kryss. Menneskefiguren har sin egen, `FIGURE_STROKE`, som er halvparten.
-  Skillet er ikke at mennesker skal være finere. På en ting er streken en
-  **kant** rundt et volum, og tykkelsen leser som blekk; på en strekmann **er**
-  streken kroppen, og tykkelsen leser som kroppsmasse. Derfor er det bare
-  figuren som tynnes — en tynnere kant hadde bare gjort siden lysere uten å
-  gjøre noe lettere.
+  Skillet er ikke at mennesker skal være finere: på en 16 mm konturfigur er det
+  **mellomrommene** som setter grensen. Armhulen mellom arm og kropp er drøyt
+  1,3 enheter bred, og hver strek spiser 0,3 av den fra hver side. En figur i
+  full piktogramstrek har ingen armhule igjen — den blir en klump.
 * **Forholdet er målt, ikke gjettet.** Kilde: IKEAs egen anvisning til MYDAL
   køyeseng, `AA-2207941-1`, side 2, rendret i 600 dpi med `pdftoppm`. Målt to
   veier — perpendikulær strekbredde i pikslene, og etterpå mot PDF-ens egne
@@ -629,35 +641,69 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   Verktøyikonene deres er 1,0 pt — halve mannen — og beslagene i delelisten
   0,75 pt. Hierarkiet deres er det motsatte av vårt.
 
-  Grunnen til at figuren deres likevel ser fin ut i streken, og vår ser tung ut,
-  er ikke vekten. IKEA-mannen er en **kontur rundt en hvit kropp**, tegnet i
-  46 mm: streken er kanten, kroppen er papiret, og da kan kanten være tung uten
-  at figuren blir det. Vår er en **strekmann i 16 mm** — streken *er* kroppen.
-  Det som da lar seg flytte over er forholdet inne i figuren: strek mot hode,
-  1:17 hos dem, 1:3,7 hos oss.
+  De tre måltallene som er flyttet over er **formen** (lukket kontur rundt hvit
+  kropp), **hodeandelen** (27 % av figurhøyden) og **strekforholdet** som en
+  retning å gå i. Alt annet er vårt.
 
-  Hele veien til 1:17 går ikke: det blir 0,27 enheter = 0,22 mm, og en strekmann
-  i 0,22 mm er grå, ikke svart. Prøven viser at den gråner allerede ved 0,4
+  Hele veien til 1:17 går ikke: det blir 0,27 enheter = 0,22 mm, og en kontur i
+  0,22 mm er grå, ikke svart. Prøven viser at den gråner allerede ved 0,4
   enheter når ikonet settes i 72 px, som er det Markdown-manualen setter det i.
   **Halve piktogramstreken** er det tynneste som er svart i begge medier —
-  0,5 mm på papir i 19 mm, 1,9 px i 72 px — og den tar figuren fra 1:3,7 til
-  1:7,4. Verktøyene og tingene beholder piktogramstreken, altså stikk i strid
-  med IKEAs rangering; bevisst, fordi deres rangering følger av en 46 mm
-  silhuett og vår av en 16 mm strekmann. Tegnes figuren om til silhuett en dag,
-  snur den tilbake.
+  0,5 mm på papir i 19 mm, 1,9 px i 72 px — og det er også det tykkeste som
+  lar armhulen overleve. Verktøyene og tingene beholder piktogramstreken, altså
+  stikk i strid med IKEAs rangering; bevisst, fordi deres rangering følger av en
+  46 mm silhuett og vår av en 16 mm, der mellomrommene er knapphetsvaren.
 
-  **Hodet ble stående.** IKEAs hode er 26,9 % av figurhøyden, vårt 22,4 %. Å
-  vokse dit ble prøvd og forkastet: hodet spiser da blyanten bak øret, og
-  blyanten er den ene detaljen på siden som var vanskelig å få til å lese.
-* **Figuren er ett skjelett tegnet fire ganger.** `to-personer`,
-  `en-person-nei`, `blyant-foerst` og `skrutrekker-foerst-nei` deler hode
-  (`r="2"`, ytre diameter 4,6 enheter), hals som starter nøyaktig på hodets
-  sirkel, skulderpunkt i 8,6 og bein som spriker 0,5 til siden per enhet
-  nedover. Bare posituren skiller dem. Ikonfila sier bare **hva** som er figur —
-  `class="figur"` på gruppen figuren ligger i — og `gen_glyphs` bytter merket
-  mot vekten når ikonet settes sammen. Vekten står ett sted, ikke fjorten;
-  merket i en vendoret Lucide-fil stopper bygget, for da er en fil som skulle
-  ligge urørt blitt rørt.
+  **Hodet vokste med idiomet.** Strekmannen hadde 22,4 %; konturfiguren har
+  26,7 % — 5,6 av 20,95 enheter — altså IKEAs andel. Det gikk denne gangen
+  fordi blyanten ikke lenger ligger vannrett over issen: den står på skrå bak
+  øret og bruker plassen som hodet ikke tar.
+* **Figuren er én kontur tegnet fire ganger.** `to-personer`, `en-person-nei`,
+  `blyant-foerst` og `skrutrekker-foerst-nei` deler nøyaktig det samme
+  skjelettet; bare posituren skiller dem. Konturen er «beltet» rundt en kjede
+  av sirkler — ytre tangentlinjer mellom nabosirkler, en bue på hver sirkel, og
+  en konkav overgang der hals og armhule snører seg inn. Landemerkene, i
+  24-rutenettets enheter (`dx` er ut fra figurens midtlinje):
+
+  | ledd | dx | y | r |
+  |---|---:|---:|---:|
+  | hode | 0 | 4,3 | 2,80 |
+  | hals (konkav) | — | — | 1,40 |
+  | skulder | 1,15 | 9,4 | 1,35 |
+  | bryst | 1,10 | 11,6 | 1,40 |
+  | midje | 1,05 | 14,2 | 1,40 |
+  | hofte | 1,30 | 17,5 | 1,45 |
+  | fald, hjørne | 1,80 | 20,4 | 1,65 |
+  | fald, midt | 0 | 20,7 | 1,70 |
+  | armhule (konkav) | — | — | 0,80 |
+
+  Figuren blir da 1,5–22,4 høy (20,95) og 12,9 bred med armene ute. Armen er
+  albue + hånd hengt på skulderen; hånden er siste ledd og svøper rundt tuppen.
+  **Armen må ut:** kroppen er 5,0 bred, og skal armhulen leses må armens indre
+  kant ligge minst 1,3 enheter utenfor kroppssiden. Ligger den nærmere blir
+  armhulen en sprekk som forsvinner i 72 px, og figuren leser som en klump.
+  I `to-personer` er begge figurene skalert til 0,86 om ikonets midtlinje —
+  to figurer på 12,9 får ikke plass på 24 enheter — og skaleringen tar konturen
+  og radiene, ikke streken.
+* **Hva som maskerer hva er tegnerekkefølge.** Figurgruppen har
+  `fill="#fff"`, og en hvit kropp maskerer det som er tegnet FØR den. Derfor
+  ligger bordet i `to-personer` og `en-person-nei` **etter** figurene (det er
+  bordet som er nærmest, og det dekker hendene), mens delene i `blyant-foerst`
+  ligger **før** figuren (hånden hennes går foran dem). Blyanten bak øret og
+  skrutrekkeren er også hvitfylte og ligger etter figuren — de er foran hodet
+  og foran hånden. Ikonfila sier bare **hva** som er figur — `class="figur"` på
+  gruppen figuren ligger i — og `gen_glyphs` bytter merket mot vekten når
+  ikonet settes sammen. Vekten står ett sted, ikke fjorten; merket i en
+  vendoret Lucide-fil stopper bygget, for da er en fil som skulle ligge urørt
+  blitt rørt.
+* **De to verktøyene er tegnet mot lesbarhetsporten, ikke mot naturen.**
+  Blyanten står på skrå bak øret, ikke vannrett over det: en vannrett stang
+  over issen leser som lue. Skrutrekkeren står på TVERS av nei-kryssets
+  diagonal — to svarte streker som ligger nesten parallelt i samme ikon
+  smelter sammen til en klump — og den er tegnet som polygon, ikke som
+  beltekontur, fordi skulderen mellom håndtak og skaft skal være et knekk og
+  ikke en avrunding. Begge er hvitfylte i piktogramstrek, som alt annet som er
+  en ting.
 * **Merkebokstavene** er ett tegn i en sirkel, samme radius overalt.
 * **De kodede glyfene.** Der et steg koder festemidlene sine, skrives
   skrueglyfen også i sin egen fyllkode (`treskrue-5x70-hatch.svg`), og det er

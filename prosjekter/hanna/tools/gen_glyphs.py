@@ -83,26 +83,30 @@ PICTO_STROKE = 1.25
 # 1,0 pt - halve mannen - og beslagene 0,75 pt. Hierarkiet deres er altså det
 # motsatte av det vi gjør her.
 #
-# Grunnen til at figuren deres likevel ser fin ut i streken, og vår ser tung ut,
-# er ikke vekten: det er at IKEA-mannen er en KONTUR rundt en hvit kropp, tegnet
-# i 46 mm. Streken er kanten, kroppen er papiret, og da kan kanten være tung
-# uten at figuren blir det. Vår er en strekmann i 16 mm: streken ER kroppen, og
-# tykkelsen leser som kroppsmasse. Det tallet som da lar seg flytte over er
-# forholdet inne i figuren - strek mot hode, 1:17 hos dem, 1:3,7 hos oss.
+# Det tallet som lar seg flytte over er FORMEN, ikke vekten: IKEA-mannen er en
+# KONTUR rundt en hvit kropp - streken er kanten, kroppen er papiret. Figuren
+# her er tegnet om til det samme idiomet: én lukket path per figur, hvit fylling,
+# hodet en del av konturen. Målene fra MYDAL er brukt som stilparametre - hodet
+# 27 % av figurhøyden, konturen lukket - og ikke som mal: figuren er vår egen
+# tegning i idiomet, aldri kalkert eller sporet av deres.
 #
-# Hele veien til 1:17 går ikke: det er 0,27 enheter = 0,22 mm, og en strekmann i
-# 0,22 mm er grå, ikke svart. Prøvd - allerede ved 0,4 enheter gråner hodet og
-# beina når ikonet settes i 72 px, som er det Markdown-manualen setter det i.
-#
-# HALVE piktogramstreken er det tynneste som er svart i begge medier - 0,5 mm på
-# papir i 19 mm, 1,9 px i 72 px - og den tar figuren fra 1:3,7 til 1:7,4.
+# Vekten er likevel den samme som da figuren var en strekmann, og det er en
+# lesbarhetsgrense, ikke en analogi. Hele veien til IKEAs 1:17 går ikke: det er
+# 0,27 enheter = 0,22 mm, og en kontur i 0,22 mm er grå, ikke svart. Prøvd -
+# allerede ved 0,4 enheter gråner hodet når ikonet settes i 72 px, som er det
+# Markdown-manualen setter det i. HALVE piktogramstreken er det tynneste som er
+# svart i begge medier - 0,5 mm på papir i 19 mm, 1,9 px i 72 px - og den er
+# dessuten tynn nok til at armhulen mellom arm og kropp overlever: konturen er
+# en kant, og en tung kant spiser mellomrommene i en 16 mm figur.
 #
 # Verktøyene, delene og pilene beholder piktogramstreken, altså stikk i strid
 # med IKEAs rangering. Bevisst: deres rangering følger av en 46 mm silhuett, vår
-# av en 16 mm strekmann. Tegnes figuren en dag om til silhuett, snur den tilbake.
+# av en 16 mm - der er det mellomrommene inne i figuren som setter grensen.
 #
 # Vekten settes her, ikke i ikonfilene; ikonfila sier bare HVA som er figur, med
-# ett merke på gruppen figuren ligger i.
+# ett merke på gruppen figuren ligger i. Fyllingen står derimot i ikonfila
+# (fill="#fff" på samme gruppe), for det er tegnerekkefølgen i det enkelte
+# ikonet som avgjør hva som maskerer hva.
 FIGURE_MARK = 'class="figur"'
 FIGURE_STROKE = PICTO_STROKE / 2
 
