@@ -67,7 +67,14 @@ ISO_DY = -0.29
 PICTO_SIZE = 24
 PICTO_STROKE = 1.25
 
-# Menneskefiguren er det ene unntaket, og unntaket er målt.
+# FIGURIKONENE er det ene unntaket, og unntaket er målt.
+#
+# Merk hva unntaket gjelder: ikke MENNESKET, men IKONET. Et ikon med en figur i
+# tegnes i én vekt fra kant til kant - figuren, blyanten, skrutrekkeren, bordet
+# og delene. Vekten er en egenskap ved ikonet, ikke ved elementet i det. Slik
+# var det ikke før: figuren gikk i FIGURE_STROKE og rekvisittene i full
+# PICTO_STROKE, og en dobbelt så tung blyant ved siden av en halvt så tung
+# hånd leser som to tegninger klippet sammen, ikke som ett bilde.
 #
 # MÅLT KILDE: IKEAs egen anvisning til MYDAL køyeseng (AA-2207941-1), side 2,
 # rendret i 600 dpi og målt to veier - perpendikulær strekbredde i pikslene, og
@@ -90,25 +97,42 @@ PICTO_STROKE = 1.25
 # 27 % av figurhøyden, konturen lukket - og ikke som mal: figuren er vår egen
 # tegning i idiomet, aldri kalkert eller sporet av deres.
 #
-# Vekten er likevel den samme som da figuren var en strekmann, og det er en
-# lesbarhetsgrense, ikke en analogi. Hele veien til IKEAs 1:17 går ikke: det er
-# 0,27 enheter = 0,22 mm, og en kontur i 0,22 mm er grå, ikke svart. Prøvd -
-# allerede ved 0,4 enheter gråner hodet når ikonet settes i 72 px, som er det
-# Markdown-manualen setter det i. HALVE piktogramstreken er det tynneste som er
-# svart i begge medier - 0,5 mm på papir i 19 mm, 1,9 px i 72 px - og den er
-# dessuten tynn nok til at armhulen mellom arm og kropp overlever: konturen er
-# en kant, og en tung kant spiser mellomrommene i en 16 mm figur.
+# Vekten er ikke IKEAs, og det er en lesbarhetsgrense, ikke en analogi. Hele
+# veien til deres 1:17 går ikke: det er 0,27 enheter = 0,22 mm, og en kontur i
+# 0,22 mm er grå, ikke svart. Prøvd - allerede ved 0,4 enheter gråner hodet når
+# ikonet settes i 72 px, som er det Markdown-manualen setter det i.
 #
-# Verktøyene, delene og pilene beholder piktogramstreken, altså stikk i strid
-# med IKEAs rangering. Bevisst: deres rangering følger av en 46 mm silhuett, vår
-# av en 16 mm - der er det mellomrommene inne i figuren som setter grensen.
+# Oppover setter MELLOMROMMENE grensen, og de er målt på de to trangeste
+# stedene i settet, i 72 px og i 19 mm @ 300 dpi:
 #
-# Vekten settes her, ikke i ikonfilene; ikonfila sier bare HVA som er figur, med
-# ett merke på gruppen figuren ligger i. Fyllingen står derimot i ikonfila
-# (fill="#fff" på samme gruppe), for det er tegnerekkefølgen i det enkelte
-# ikonet som avgjør hva som maskerer hva.
-FIGURE_MARK = 'class="figur"'
-FIGURE_STROKE = PICTO_STROKE / 2
+#   armhulen i to-personer  - de to figurene der er skalert 0,86, så armens
+#                             1,3 enheter klaring er 1,12 der. Ved 0,875
+#                             (0,7 x PICTO) står 0,24 enheter = 0,7 px igjen i
+#                             72 px, og hullet lukker seg: figuren blir en klump.
+#   øyet mot hodekonturen   - øyeprikken er STREKET også, så den vokser med
+#                             vekten fra begge sider. Ved 0,875 renner den
+#                             sammen med neseroten og ansiktet forsvinner.
+#
+# 0,6 x PICTO = 0,75 enheter er det tyngste begge overlever: armhulen beholder
+# 0,37 enheter (1,1 px i 72 px, 3,4 px i 19 mm), og ansiktet er tegnet mot den
+# vekten - øyet flyttet inn til 1,50 fra hodesenteret og munnviken til 1,80, se
+# landemerketabellen i PRAKSIS §4. Det var 0,5 x PICTO før, og oppjusteringen
+# er kjøpt for SIDEBALANSEN: da rekvisittene falt fra 1,25 ned i figurvekten,
+# ble figurikonene merkbart lettere enn naboradene på samme side (mykt underlag,
+# sorter delene). Målt som dekningsgrad i 19 mm @ 300 dpi er de fire
+# figurikonene 17,5-20,1 % ved 0,75, mot 15,4-15,6 % for underlag/dra-nei og
+# 22,5 % for sorter - altså midt i det siden ellers er.
+#
+# Nei-krysset er unntatt: det er en MARKØR og ikke innhold, og en markør som
+# blir tynnere sammen med det den overstyrer, sier mindre enn den skal.
+#
+# Vekten settes her, ikke i ikonfilene; ikonfila sier bare HVA slags ikon det
+# er - ett merke på <svg>-taggen - og hvilke elementer som er markører.
+# Fyllingen står derimot i ikonfila (fill="#fff" på figurgruppen), for det er
+# tegnerekkefølgen i det enkelte ikonet som avgjør hva som maskerer hva.
+FIGURE_ICON_MARK = 'class="figurikon"'   # på <svg>: hele ikonet i figurvekt
+MARKER_MARK = 'class="markor"'           # dette elementet beholder PICTO_STROKE
+FIGURE_STROKE = PICTO_STROKE * 0.6
 
 _STOPWORDS = {
     "forsenket", "torx", "varmforsinket", "elforsinket", "etter", "av",
@@ -1129,7 +1153,12 @@ def _dedent(lines: list[str]) -> list[str]:
 
 
 def icon_body(ref: str) -> str:
-    """Kroppen i en 24x24-ikonfil, uten <svg>-kappen og uten tomme linjer."""
+    """Kroppen i en 24x24-ikonfil, uten <svg>-kappen og uten tomme linjer.
+
+    Merket på <svg>-taggen sier at ikonet er et FIGURIKON, og da legges hele
+    kroppen i én gruppe med figurvekten - vekten følger ikonet, ikke elementet.
+    Et element merket som markør bærer sin egen piktogramstrek og overstyrer
+    gruppen, for et nei-kryss er en markør og ikke innhold."""
     path = icon_path(ref)
     with open(path, "r", encoding="utf-8") as fh:
         text = fh.read()
@@ -1140,17 +1169,26 @@ def icon_body(ref: str) -> str:
     if not vb or (float(vb.group(1)), float(vb.group(2))) != (PICTO_SIZE,
                                                              PICTO_SIZE):
         raise ValueError(f"{path} er ikke på {PICTO_SIZE}x{PICTO_SIZE}-rutenettet")
+    figure_icon = FIGURE_ICON_MARK in text[:m.start(1)]
     body = "\n".join(_dedent([ln for ln in m.group(1).splitlines()
                               if ln.strip()]))
-    if FIGURE_MARK in body:
-        if not ref.startswith("hanna/"):
-            raise ValueError(f"{path}: figurmerket hører hjemme i hanna/ - en "
-                             "vendoret fil skal ligge som den kom")
-        body = body.replace(FIGURE_MARK,
-                            f'stroke-width="{_f(FIGURE_STROKE)}"')
+    if figure_icon and not ref.startswith("hanna/"):
+        raise ValueError(f"{path}: figurikonmerket hører hjemme i hanna/ - en "
+                         "vendoret fil skal ligge som den kom")
+    if MARKER_MARK in body:
+        if not figure_icon:
+            raise ValueError(f"{path}: markørmerket sier at elementet skal HOLDE "
+                             "piktogramstreken der ikonet ellers tegnes i "
+                             "figurvekt - i et ikon uten figurikonmerke sier "
+                             "det ingenting")
+        body = body.replace(MARKER_MARK, f'stroke-width="{_f(PICTO_STROKE)}"')
     if "class=" in body:
-        raise ValueError(f"{path}: ukjent class-attributt - figurmerket "
-                         f'skrives nøyaktig {FIGURE_MARK}')
+        raise ValueError(f"{path}: ukjent class-attributt - ikonmerket skrives "
+                         f"nøyaktig {FIGURE_ICON_MARK} på <svg>-taggen og "
+                         f"markørmerket nøyaktig {MARKER_MARK}")
+    if figure_icon:
+        inner = "\n".join("  " + ln for ln in body.splitlines())
+        body = (f'<g stroke-width="{_f(FIGURE_STROKE)}">\n{inner}\n</g>')
     return body
 
 

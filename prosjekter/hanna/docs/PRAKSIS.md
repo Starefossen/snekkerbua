@@ -611,20 +611,76 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   av den samme konturen — ikke en sirkel på en pinne — halsen snører seg inn
   mellom hode og skulder, armene går ut av skulderen og ender i en avrundet
   krok uten fingre, og kroppen ender i en bue: ingen føtter, ingen bein.
-  Ansiktet er én fylt øyeprikk og en åpen smilekurve.
+
+  **Hodet er tegnet i PROFIL**, slik IKEA-mannen er det, og det er nesen som
+  gjør det: ett øye midt i en helt sirkelrund isse er ikke et menneske sett
+  forfra, det er et vesen. Nesen er bygget inn i hodekonturen som et ledd til i
+  kjeden — en liten sirkel hengt på hodesirkelen i ansiktsretningen, felt inn
+  med en konkav fals over (neseroten) og en under (nesebunnen), akkurat som
+  halsen og armhulen felles inn. Ansiktet er så én fylt øyeprikk, satt høyt og
+  fremme, og en åpen smilekurve under nesen. Alt sammen står i
+  landemerketabellen nedenfor: nesen er REGNET, ikke tegnet på frihånd.
+
+  **Og da har figuren en synsretning, som brukes.** Blikket peker på det
+  figuren holder på med: de to som løfter ser mot rammen, og dermed mot
+  hverandre; den ene som løfter alene ser samme vei; smartingen med blyanten
+  ser mot delene hun merker; og han som griper skrutrekkeren først, ser på
+  skrutrekkeren. En figur som ser bort fra sin egen handling er en tredje
+  opplysning ingen har bedt om.
 
   **Opphavsrett, absolutt grense: egen tegning i idiomet, aldri kalkert.**
   Ingen del av denne figuren er lastet ned, sporet eller kalkert fra IKEAs
   anvisninger. Det som er hentet derfra er MÅLTALL — strekforhold,
   hodeandel, at konturen er lukket — og måltall er målinger, ikke kunstverk.
-  Positurfamilien, kurvene og skjelettet under er våre egne.
-* **To strektykkelser, og bare to.** `PICTO_STROKE` — 1,25 av 24 enheter — er
-  vekten til alt som er en TING: verktøy, deler, senger, vegger, piler, hake og
-  kryss. Menneskefiguren har sin egen, `FIGURE_STROKE`, som er halvparten.
-  Skillet er ikke at mennesker skal være finere: på en 16 mm konturfigur er det
-  **mellomrommene** som setter grensen. Armhulen mellom arm og kropp er drøyt
-  1,3 enheter bred, og hver strek spiser 0,3 av den fra hver side. En figur i
-  full piktogramstrek har ingen armhule igjen — den blir en klump.
+  Positurfamilien, kurvene og skjelettet under er våre egne. Nesen, blikket og
+  falsene rundt dem er heller ikke hentet noe sted: de er regnet ut av vår egen
+  sirkelkjede.
+* **Vekten følger IKONET, ikke elementet.** Det er to strektykkelser i settet,
+  og hvilken et strøk får, avgjøres av hvilket ikon det ligger i:
+
+  | | vekt | hvem |
+  |---|---|---|
+  | piktogramikon | `PICTO_STROKE` = 1,25 av 24 enheter | alt i ikonet |
+  | figurikon | `FIGURE_STROKE` = 0,6 × `PICTO_STROKE` = 0,75 | alt i ikonet — figuren, blyanten, skrutrekkeren, bordet, delene |
+  | markør | `PICTO_STROKE`, uansett ikon | nei-krysset |
+
+  **Det var ikke slik før, og det er den feilen regelen finnes for.**
+  Vekten hang på ELEMENTET: figuren i `FIGURE_STROKE`, rekvisittene i full
+  `PICTO_STROKE`. En blyant dobbelt så tung som hånden som holder den leser
+  ikke som ett bilde, men som to tegninger klippet sammen — og verre, den sier
+  at blyanten er viktigere enn mennesket. Nå er vekten en egenskap ved ikonet,
+  og ikonfila sier bare hva slags ikon det er.
+
+  Krysset er det ene unntaket, og det er et unntak med en grunn: krysset er en
+  MARKØR, ikke innhold. Det sier «ikke slik» om hele ikonet, og en markør som
+  blir tynnere sammen med det den overstyrer, sier mindre enn den skal.
+* **Hvor tungt et figurikon kan tegnes, er MELLOMROMMENE som bestemmer.**
+  På en 16 mm figur er det de trange stedene som setter grensen, og de to
+  trangeste er målt, i 72 px (Markdown) og i 19 mm @ 300 dpi (papir):
+
+  | trangt sted | hva som skjer når vekten øker |
+  |---|---|
+  | armhulen i `to-personer` | figurene der er skalert 0,86, så armens 1,3 enheter klaring er 1,12. Ved 0,875 (0,7 × PICTO) står det 0,24 enheter = 0,7 px igjen i 72 px, og hullet lukker seg |
+  | øyet mot hodekonturen | øyeprikken er streket den også og vokser fra begge sider. Ved 0,875 renner den sammen med neseroten, og ansiktet forsvinner |
+
+  0,6 × PICTO er det tyngste begge overlever: armhulen beholder 0,37 enheter
+  (1,1 px i 72 px, 3,4 px i 19 mm), og ansiktet er tegnet mot nettopp den
+  vekten — øyet inn til 1,50 fra hodesenteret, munnviken til 1,80.
+
+  **Og oppjusteringen fra 0,5 er kjøpt for sidebalansen.** Da rekvisittene falt
+  fra 1,25 ned i figurvekt, ble figurikonene merkbart lettere enn naboradene på
+  samme side. Målt som dekningsgrad i 19 mm @ 300 dpi:
+
+  | | dekning |
+  |---|---:|
+  | `underlag`, `dra-nei` (figurløse, 1,25) | 15,4–15,6 % |
+  | `sorter` (figurløs, 1,25) | 22,5 % |
+  | de fire figurikonene ved 0,5 × PICTO | 14,7–17,8 % |
+  | de fire figurikonene ved 0,6 × PICTO | 17,5–20,1 % |
+
+  Ved 0,5 lå figurradene under den letteste naboraden; ved 0,6 ligger de midt
+  i det siden ellers er. Høyere enn det når vi ikke uten å miste armhulen, og
+  en side som henger sammen er ikke verdt en figur som er en klump.
 * **Forholdet er målt, ikke gjettet.** Kilde: IKEAs egen anvisning til MYDAL
   køyeseng, `AA-2207941-1`, side 2, rendret i 600 dpi med `pdftoppm`. Målt to
   veier — perpendikulær strekbredde i pikslene, og etterpå mot PDF-ens egne
@@ -648,11 +704,12 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   Hele veien til 1:17 går ikke: det blir 0,27 enheter = 0,22 mm, og en kontur i
   0,22 mm er grå, ikke svart. Prøven viser at den gråner allerede ved 0,4
   enheter når ikonet settes i 72 px, som er det Markdown-manualen setter det i.
-  **Halve piktogramstreken** er det tynneste som er svart i begge medier —
-  0,5 mm på papir i 19 mm, 1,9 px i 72 px — og det er også det tykkeste som
-  lar armhulen overleve. Verktøyene og tingene beholder piktogramstreken, altså
-  stikk i strid med IKEAs rangering; bevisst, fordi deres rangering følger av en
-  46 mm silhuett og vår av en 16 mm, der mellomrommene er knapphetsvaren.
+  Vekten vår ligger derfor mellom det tynneste som er svart i begge medier og
+  det tykkeste armhulen tåler — 0,6 × piktogramstreken, se raden over. IKEAs
+  rangering er ikke flyttet over i det hele tatt: hos dem er mannen det
+  tykkeste på arket og verktøyet halvparten, hos oss er de like tunge inne i
+  samme ikon. Deres rangering følger av en 46 mm silhuett og vår av en 16 mm,
+  der mellomrommene er knapphetsvaren.
 
   **Hodet vokste med idiomet.** Strekmannen hadde 22,4 %; konturfiguren har
   26,7 % — 5,6 av 20,95 enheter — altså IKEAs andel. Det gikk denne gangen
@@ -677,6 +734,27 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   | fald, midt | 0 | 20,7 | 1,70 |
   | armhule (konkav) | — | — | 0,80 |
 
+  **Hodet i profil** er de samme fire tallene en gang til, bare polart om
+  hodesenteret: avstand og vinkel i ansiktsretningen, positiv vinkel = under
+  vannrett. Nesen er et ledd i kjeden som alle de andre, og de to falsene er de
+  samme konkave overgangene som hals og armhule er:
+
+  | landemerke | avstand | vinkel | r |
+  |---|---:|---:|---:|
+  | nese | 3,35 | 12° | 0,65 |
+  | neserot (konkav fals) | — | — | 0,28 |
+  | nesebunn (konkav fals) | — | — | 0,80 |
+  | øyeprikk | 1,50 | −40° | 0,30 |
+  | smilekurve, fremre munnvik | 1,80 | 40° | bue r 1,30 |
+  | smilekurve, bakre ende | 0,95 | 68° | — |
+
+  Nesetippen stikker da 1,20 enheter forbi hodekonturen — 21 % av
+  hodediameteren, altså mer enn et menneske har, og bevisst: en nese som ikke
+  bryter silhuetten i 72 px, finnes ikke i 72 px. Hodet er fortsatt en sirkel
+  på 2,80, så **hodeandelen er urørt av nesen** (26,7 % av figurhøyden): nesen
+  vokser sidelengs, og figuren er like høy som før. Vender figuren mot venstre,
+  speiles de fire polare landemerkene om hodesenteret og ingenting annet.
+
   Figuren blir da 1,5–22,4 høy (20,95) og 12,9 bred med armene ute. Armen er
   albue + hånd hengt på skulderen; hånden er siste ledd og svøper rundt tuppen.
   **Armen må ut:** kroppen er 5,0 bred, og skal armhulen leses må armens indre
@@ -691,19 +769,21 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   bordet som er nærmest, og det dekker hendene), mens delene i `blyant-foerst`
   ligger **før** figuren (hånden hennes går foran dem). Blyanten bak øret og
   skrutrekkeren er også hvitfylte og ligger etter figuren — de er foran hodet
-  og foran hånden. Ikonfila sier bare **hva** som er figur — `class="figur"` på
-  gruppen figuren ligger i — og `gen_glyphs` bytter merket mot vekten når
-  ikonet settes sammen. Vekten står ett sted, ikke fjorten; merket i en
-  vendoret Lucide-fil stopper bygget, for da er en fil som skulle ligge urørt
-  blitt rørt.
+  og foran hånden. Ikonfila sier bare **hva slags** ikon det er —
+  `class="figurikon"` på `<svg>`-taggen, og `class="markor"` på nei-krysset —
+  og `gen_glyphs` bytter merkene mot vekter når ikonet settes sammen. Vekten
+  står ett sted, ikke fjorten. To ting stopper bygget: merket i en vendoret
+  Lucide-fil, for da er en fil som skulle ligge urørt blitt rørt, og et
+  markørmerke i et ikon som ikke er et figurikon, for der overstyrer det
+  ingenting og sier derfor ingenting.
 * **De to verktøyene er tegnet mot lesbarhetsporten, ikke mot naturen.**
   Blyanten står på skrå bak øret, ikke vannrett over det: en vannrett stang
   over issen leser som lue. Skrutrekkeren står på TVERS av nei-kryssets
   diagonal — to svarte streker som ligger nesten parallelt i samme ikon
   smelter sammen til en klump — og den er tegnet som polygon, ikke som
   beltekontur, fordi skulderen mellom håndtak og skaft skal være et knekk og
-  ikke en avrunding. Begge er hvitfylte i piktogramstrek, som alt annet som er
-  en ting.
+  ikke en avrunding. Begge er hvitfylte, og begge går i figurvekt som alt annet
+  i sitt ikon — de er rekvisitter i et figurikon, ikke ting på egen hånd.
 * **Merkebokstavene** er ett tegn i en sirkel, samme radius overalt.
 * **De kodede glyfene.** Der et steg koder festemidlene sine, skrives
   skrueglyfen også i sin egen fyllkode (`treskrue-5x70-hatch.svg`), og det er
