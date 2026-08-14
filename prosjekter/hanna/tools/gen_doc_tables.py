@@ -1821,6 +1821,14 @@ def emit_montering(G, root, steps, idx):
                                          os.path.join(img_dir, "beslag"))
     fill_legend = gen_glyphs.emit_fill_code_legend(
         os.path.join(img_dir, "beslag"))
+    # FIGURHODET er REGNET, ikke tegnet. Landemerketabellen i
+    # tools/gen_figurhode.py er kilden, og den skriver hodet inn i de fire
+    # figurikonene FØR piktogramsiden settes av dem - og den samme tabellen
+    # skriver PRAKSIS §4. Ikonfilene er dermed artefakter som resten: en hånd
+    # som retter et tall i en av dem blir overskrevet ved neste bygg, og
+    # `mise run check` hasher dem.
+    import gen_figurhode
+    gen_figurhode.regenerate()
     pikto = gen_glyphs.emit_pictograms(os.path.join(img_dir, "ikon"))
     # As many letters as the busiest step needs, and no more.
     widest = max((len(step_badges(st)) for st in steps), default=0)

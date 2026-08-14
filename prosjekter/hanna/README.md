@@ -39,7 +39,7 @@ hvert merke står på det festemiddelet det navngir.*
 | **Trevirke** | **67 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 48,5 løpemeter. 24 av de 67 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling |
 | **Stål** | **178 festemidler fordelt på 20 ledd**, **172 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert |
 | **Kontroller** | **433 asserter i modellen** og 62 til i verktøyene, alle sammen stopper bygget. Skrueretningene er utledet av fysikk (5 av 21 er tvunget av tykkelsene alene); antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
-| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **119 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
+| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **134 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
 | **Ut av det** | En **trykkeklar PDF på 78 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, seks skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
 | **Menneskene** | **Fire referansekropper** — et barn på **1200 mm** bygget av 14 primitiver etter [AnthroKids](https://math.nist.gov/~SRessler/anthrokids/), to som sover og to som sitter, som ekte solider i modellen. De kappes ikke og bærer ingenting, men de **måler**: 127 mm over hodet på den som sitter rett opp, 603 mm over ansiktet til den som ligger nede — og de beviste at ingen knær går under bordplaten |
@@ -59,6 +59,7 @@ generate_loftbed.py           modellen: mål, deler, festemidler, 433 asserter
   ├─ tools/render_lineart.py  → docs/img/steg-NN.svg/.png   (+ check_coverage)
   │    ├─ tools/render_cutpage.py   steg 0, kappeplanen
   │    └─ tools/render_panel.py     steg 10, den løse platen
+  ├─ tools/gen_figurhode.py   → figurikonenes hoder + landemerkene i PRAKSIS §4
   ├─ tools/gen_glyphs.py      → skrueikoner og piktogrammer
   ├─ tools/render_animasjon.py → docs/img/hanna-*.gif  (de tre filmene)
   └─ tools/build_pdf.py       → docs/hanna.pdf
@@ -155,8 +156,9 @@ mise run pdf        # docs/hanna.pdf, 78 sider, trykkeklar
 | `build` | Bygger og validerer modellen, eksporterer den, skriver hvert fragment i `docs/generated/` og `docs/MONTERING.md` |
 | `build-full` | Det samme pluss det tunge: `.glb` og skjult-linje-projeksjonene av hele modellen |
 | `montering` | Tegner forsiden og én strektegning per byggesteg til `docs/img/` |
-| `setedetalj` | Tegner detaljarket for skråskruesetene til `docs/schematics/setedetalj.svg` — det eneste genererte arket i den mappa |
-| `check` | Determinismeasserten: to fulle kjøringer, 119 artefakter, byte-identisk eller feil |
+| `setedetalj` | Tegner detaljarket for skråskruesetene til `docs/schematics/setedetalj.svg` |
+| `figurhode` | Regner hodet på konturfiguren inn i de fire figurikonene og skriver landemerketabellene i PRAKSIS §4 |
+| `check` | Determinismeasserten: to fulle kjøringer, 134 artefakter, byte-identisk eller feil |
 | `pdf` | Setter sammen `docs/hanna.pdf` av de innsjekkede dokumentene (trenger ikke build123d) |
 | `schematics` | Rendrer `docs/schematics/*.svg` til PNG for korrektur |
 | `usdz` | Konverterer nettene til `.usdz` for Quick Look / Xcode / AR, ett materiale per fargegruppe |
@@ -240,5 +242,5 @@ and all 68 pages of the printed assembly manual are generated from the solids
 and machine-checked before they are allowed to exist, so nothing is hand-drawn
 and no number is hand-transcribed. The documentation is in Norwegian, because
 that is what someone standing at the saw actually reads. The proofs run in CI:
-`mise run check` builds the whole chain twice and demands 119 byte-identical
+`mise run check` builds the whole chain twice and demands 134 byte-identical
 artefacts, and the badge at the top of this page is that gate.

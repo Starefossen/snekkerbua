@@ -64,7 +64,11 @@ run = "python tools/render_pdf_matrix.py"
 description = "Determinismesjekk: kjør hele kjeden to ganger og krev byte-identiske artefakter"
 # Alt i docs/generated/, docs/MONTERING.md, docs/img/ og parts.tsv er utledet
 # av modellen, og det er sjekket inn nettopp for at en diff skal vise hva en
-# endring i modellen gjorde med tegningene. Den avlesningen er verdiløs hvis
+# endring i modellen gjorde med tegningene. De fire figurikonene i
+# docs/icons/hanna/ og landemerketabellene i docs/PRAKSIS.md §4 er utledet av
+# den samme slags kilde - landemerketabellen i tools/gen_figurhode.py - og
+# hasjes derfor sammen med resten. De ti andre ikonene i katalogen er tegnet,
+# ikke regnet; de er med fordi katalogen er med, og de skal ikke endre seg. Den avlesningen er verdiløs hvis
 # kjeden selv kan gi to svar på samme spørsmål, så dette er den asserten:
 # kjør den to ganger og krev samme bytes. Ryker den, er det en usortert dict,
 # en tidsstempel eller en id()-sortering et sted - ikke en modellendring.
@@ -85,6 +89,7 @@ trap 'rm -rf "$work"' EXIT
 snap() {
   git ls-files -z -- docs/generated docs/MONTERING.md docs/img parts.tsv \\
                      docs/schematics/setedetalj.svg \\
+                     docs/icons/hanna docs/PRAKSIS.md \\
     | xargs -0 shasum -a 256
 }
 for pass in 1 2; do
@@ -118,6 +123,13 @@ description = "Detaljark for skråskruesetene: snitt langs skrueaksen, munningen
 # regenereres mot.
 depends = ["build"]
 run = "python tools/render_setedetalj.py"
+
+[tasks.figurhode]
+description = "Regn hodet på konturfiguren inn i de fire figurikonene og skriv landemerketabellene i PRAKSIS §4 (tools/gen_figurhode.py)"
+# `mise run build` gjør det samme underveis - denne er for den som holder på
+# med selve hodet og vil se det uten å bygge modellen. `--check` skriver
+# ingenting og feller hvis en ikonfil er rørt for hånd.
+run = "python tools/gen_figurhode.py"
 
 [tasks.mekanisme]
 description = "Bevisark for platemekanismen: de to hjørnene i begge stillinger, og de tre låsevalgene (docs/preview/)"

@@ -24,6 +24,7 @@ Kilden her er `generate_loftbed.py`, og dette er veien ut av den:
       ├─ tools/render_lineart.py leser modellen → docs/img/steg-NN.svg/.png
       │    ├─ tools/render_cutpage.py   steg 0 (kappeplanen)
       │    └─ tools/render_panel.py     steg 10 (den løse platen)
+      ├─ tools/gen_figurhode.py  landemerkene → figurikonenes hoder og §4
       ├─ tools/gen_glyphs.py     ikoner og piktogrammer
       └─ tools/build_pdf.py      setter sammen docs/hanna.pdf av det ferdige
 
@@ -743,12 +744,20 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   26,7 % — 5,6 av 20,95 enheter — altså IKEAs andel. Det gikk denne gangen
   fordi blyanten ikke lenger ligger vannrett over issen: den står på skrå bak
   øret og bruker plassen som hodet ikke tar.
-* **Figuren er én kontur tegnet fire ganger.** `to-personer`, `en-person-nei`,
-  `blyant-foerst` og `skrutrekker-foerst-nei` deler nøyaktig det samme
-  skjelettet; bare posituren skiller dem. Konturen er «beltet» rundt en kjede
+* **Figuren er én kontur tegnet fire ganger, og hodet er REGNET.**
+  `to-personer`, `en-person-nei`, `blyant-foerst` og
+  `skrutrekker-foerst-nei` deler nøyaktig det samme skjelettet; bare posituren
+  skiller dem. Kroppen ligger tegnet i ikonfilene, mens halsfalsene og alt over
+  dem skrives inn av `tools/gen_figurhode.py` hver gang `mise run build`
+  kjører — og det er den samme tabellen som skriver de to tabellene under her.
+  Retter noen et tall i en ikonfil for hånd, blir det overskrevet ved neste
+  bygg. Konturen er «beltet» rundt en kjede
   av sirkler — ytre tangentlinjer mellom nabosirkler, en bue på hver sirkel, og
   en konkav overgang der hals og armhule snører seg inn. Landemerkene, i
-  24-rutenettets enheter (`dx` er ut fra figurens midtlinje):
+  24-rutenettets enheter (`dx` er ut fra figurens midtlinje) — tabellen er
+  skrevet av verktøyet som tegner hodet, ikke skrevet av her:
+
+  <!-- GENERERT AV tools/gen_figurhode.py: figur-landemerker -->
 
   | ledd | dx | y | r |
   |---|---:|---:|---:|
@@ -763,6 +772,8 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   | fald, midt | 0 | 20,7 | 1,70 |
   | armhule (konkav) | — | — | 0,80 |
 
+  <!-- SLUTT: figur-landemerker -->
+
   `dx` er symmetrisk om midtlinjen for alle ledd unntatt **haken**: den ligger
   bare på den ene siden, i ANSIKTSRETNINGEN. Det er det ene stedet figuren
   vet hvilken vei den ser.
@@ -770,6 +781,8 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   **Ansiktet** er de samme tallene en gang til, bare polart om hodesenteret
   (0; 4,3): avstand og vinkel i ansiktsretningen, positiv vinkel = under
   vannrett. Nesen er et ledd i kjeden som alle de andre:
+
+  <!-- GENERERT AV tools/gen_figurhode.py: figur-ansikt -->
 
   | landemerke | avstand | vinkel | r |
   |---|---:|---:|---:|
@@ -779,6 +792,8 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   | øyeprikk | 1,35 | −38° | 0,30 |
   | smilekurve, fremre munnvik | 1,80 | 40° | bue r 1,30 |
   | smilekurve, bakre ende | 0,95 | 68° | — |
+
+  <!-- SLUTT: figur-ansikt -->
 
   Nesetippen stikker 1,19 enheter forbi issekonturen — 24 % av
   hjerneskallens bredde, altså mer enn et menneske har, og bevisst: en nese som
