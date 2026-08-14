@@ -47,9 +47,14 @@
     .cut { fill:none; stroke:#000; stroke-width:2.6; }
     .legbox { fill:none; stroke:#000; stroke-width:1.6; }
   </style>
+  <!-- Et EKSPLISITT underlag, ikke en CSS-background: rsvg-convert rendrer
+       CSS-en til gjennomsiktighet, og et gjennomsiktig ark er et svart ark i det
+       noe legger det oppå noe. -->
+  <rect x="0" y="150" width="3450" height="2830" fill="#ffffff"/>
+
 
   <text x="90" y="220" class="ttl">BENKEDETALJ</text>
-  <text x="90" y="262" class="sub">Benkevanger, stubbeføtter, endefester og benkespiler · venstre benk, høyre er speilvendt · veggplan Y = −48 · alle mål i mm</text>
+  <text x="90" y="262" class="sub">Benkevanger, stubbeføtter, endelister, benkespiler og endespiler · venstre benk, høyre er speilvendt · veggplan Y = −48 · alle mål i mm</text>
 
   <!-- ============================================================ A -->
   <text x="300" y="360" class="pt" text-anchor="start">A · VENSTRE BENK SETT FORFRA (X–Z), 1,5:1</text>
@@ -63,6 +68,9 @@
   <rect x="1240.5" y="557" width="147" height="34.5" class="brd"/>
   <rect x="1482" y="564.5" width="288" height="27" class="pnl"/>
   <rect x="420" y="455" width="147" height="525" class="pst"/>
+  <!-- endespile X 0..98, Z 259..282 og endelist X 0..98, Z 211..259 - begge bak den fremre stolpen -->
+  <rect x="420" y="557" width="147" height="34.5" class="raig"/>
+  <rect x="420" y="591.5" width="147" height="72" class="raig"/>
   <polyline points="417,476 441,452 465,485 495,458 519,485 543,452 567,476" class="brk"/>
   <polyline points="1755,693.5 1770,672 1755,650 1770,629 1755,607 1770,591.5" class="brk"/>
   <polyline points="1755,591.5 1770,578 1755,564.5" class="brk"/>
@@ -155,7 +163,11 @@
   <text x="640.5" y="502" class="dm" text-anchor="middle">98</text>
   <line x1="714" y1="512" x2="735.375" y2="512" class="dim"/>
   <text x="747.375" y="504" class="dm" text-anchor="start">14,25  glipe</text>
-  <text x="880" y="440" class="sml" text-anchor="start">5 benkespiler 23×98 × 800 per benk, X 98–645, s/s 112,25</text>
+  <text x="880" y="440" class="sml" text-anchor="start">5 benkespiler 23×98 × 800 per benk, X 98–645, s/s 112,25 · 1 endespile 764 ytterst</text>
+  <polyline points="452,570 352,470" class="ldr" marker-start="url(#aE)"/>
+  <text x="344" y="404" class="sml" text-anchor="end">endespile 23×98 × 764</text>
+  <text x="344" y="432" class="sml" text-anchor="end">endelist 36×48 × 98 · J17</text>
+  <text x="344" y="460" class="sml" text-anchor="end">ligger bak stolpen</text>
   <line x1="420" y1="980" x2="292" y2="980" class="ext"/>
   <line x1="420" y1="693.5" x2="292" y2="693.5" class="ext"/>
   <line x1="420" y1="591.5" x2="292" y2="591.5" class="ext"/>
@@ -191,6 +203,11 @@
   <text x="516" y="704" class="jl" text-anchor="start">J8</text>
   <text x="662" y="582" class="jl" text-anchor="start">J11</text>
   <text x="1150" y="742" class="jl" text-anchor="start">J10</text>
+
+  <text x="90" y="1176" class="lbl" text-anchor="start">Endespile 23×98 × 764, X 0–98 og 1892–1990, Y −12 … 752 – 1 per benk, ytterst mot veggen, i samme plan som benkespilene.</text>
+  <text x="90" y="1205" class="sml" text-anchor="start">Kortere fordi den starter på den bakre stolpens forside; spalten inn til nabospilen er 0 mm, og soveflaten nede går helt ut til veggen. J16 ned i endelisten, J11-E ned i den fremre benkevangen.</text>
+  <text x="90" y="1243" class="lbl" text-anchor="start">Endelist 36×48 × 98, X 0–98 og 1892–1990, Z 211–259 – ligger flatt på den bakre hjørnestolpens forside, overkant i flukt med benkevangen.</text>
+  <text x="90" y="1272" class="sml" text-anchor="start">J17: 2 × treskrue 5×60 ved siden av hverandre, rett inn i stolpens forside fra benkerommet – 36 mm gjennom listen, 24 mm inn i stolpen, 12 mm igjen til veggflaten.</text>
 
   <!-- ============================================================ B -->
   <text x="230" y="1330" class="pt" text-anchor="start">B · SNITT D–D VED X = 611, gjennom stubbeføttene (Y–Z), 1,3:1</text>
@@ -280,9 +297,10 @@
   <text x="230" y="2422" class="lbl" text-anchor="start">Bordbærelekt, bak 48×68 × 1794 PÅ HØYKANT, Z 414–482 – bærer platen i bordstilling.</text>
   <text x="230" y="2453" class="sml" text-anchor="start">Samme lengde og samme X som den bakre vangen; henger i J12-beslaget mot stolpen.</text>
   <text x="230" y="2494" class="lbl" text-anchor="start">Benkespile 23×98 × 800, Y −48 … 752 – dekker begge vangene, 48 mm opplegg i hver ende.</text>
-  <text x="230" y="2525" class="sml" text-anchor="start">Løs plate ok Z 277 ligger 5 mm under benketoppen 282 – der brettes putekanten ned.</text>
+  <text x="230" y="2525" class="sml" text-anchor="start">Løs plate ok Z 277 ligger 5 mm under benketoppen 282 – skummet i puta tar de 5 mm, og ingen puteskjøt ligger på sonegrensen.</text>
   <text x="230" y="2566" class="lbl" text-anchor="start">Stubbefot 48×68 × 191 – én under hvert vangeplan, X 577–645 og 1345–1413.</text>
   <text x="230" y="2597" class="sml" text-anchor="start">Vinkelbeslaget og skråskruen i J10 ligger i X-planene 577 og 645 – de vises i D.</text>
+  <text x="230" y="2634" class="sml" text-anchor="start">Puter: 2 benkeputer 663 × 800 × 100 ligger flatt, 2 ryggputer 332 × 800 × 100 står på høykant (topp 714). Benkeputa har et 98 × 36 hakk der den bakre stolpen står. Sittehøyde med pute 382.</text>
 
   <!-- ============================================================ D -->
   <text x="1650" y="1330" class="pt" text-anchor="start">D · DETALJ F – J10 VED STUBBEFOTEN</text>
@@ -467,5 +485,5 @@
   <circle cx="1500" cy="2777" r="11" class="scrg"/>
   <text x="1566" y="2785" class="sml" text-anchor="start">Treskrue ut av tegningsplanet (hodet kan ligge på baksiden)</text>
   <text x="1566" y="2827" class="sml" text-anchor="start">Alle mål i mm. Forbor hver eneste treskrue.</text>
-  <text x="1566" y="2869" class="sml" text-anchor="start">Skruene i benken: 6×80 (J8, J8-B), 5×60 (J10, J11), 5×40 (J10).</text>
+  <text x="1566" y="2869" class="sml" text-anchor="start">Skruer: 6×80 (J8, J8-B) · 5×60 (J10, J11, J11-E, J16, J17) · 5×40 (J10).</text>
 </svg>
