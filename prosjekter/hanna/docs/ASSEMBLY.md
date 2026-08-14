@@ -1490,7 +1490,7 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | Tegning | Innhold |
 |---|---|
 | [byggerekkefolge.svg](schematics/byggerekkefolge.svg) | Oversikt over byggerekkefølgen, med samme nummer som byggesteg og MONTERING |
-| [end-elevation.svg](schematics/end-elevation.svg) | Kortsiden, med veggen inntegnet. Her ser du at sengen er usymmetrisk: bakre stolpe stopper i sengeflaten, fremre går helt opp til rekkverket |
+| [end-elevation.svg](schematics/end-elevation.svg) | Kortsiden: snitt A–A gjennom endebjelken, med veggen inntegnet. Hele dybden i ett bilde, hver etasje fra gulv til rekkverkstopp, og det arket som viser at sengen er usymmetrisk — bakre stolpe stopper i sengeflaten, fremre går helt opp til rekkverket |
 | [ladder-detail.svg](schematics/ladder-detail.svg) | Stigen: vanger, klosser, trinn, J3-skruene, hylla bak trinnet som platen hviler på, og sjaktene ved siden av trinnendene der avstivningslektene løper |
 | [bench-detail.svg](schematics/bench-detail.svg) | Benken: vangeenden mot hjørnestolpen uten kloss, vangebiten som ender på stubbefoten, benkespilene og platekanten. Egen plan gjennom J8-Bs sete og skruevinkel |
 | [setedetalj.svg](schematics/setedetalj.svg) | Skråskruesetene: snitt langs skrueaksen for begge vinkler, munningen ovenfra med veggen mellom lommene, vinkelklossen eksplodert og klossen i bruk |
@@ -1505,10 +1505,10 @@ bæreklosser, ingen U-brakett, ingen krokplate og ikke én M6, fordi ingen av
 delene finnes. J2, J3 og J8 er tegnet med hodet på vangens innside, slik de
 skrus.
 
-**Men bare `setedetalj.svg` regenereres av modellen.** De fem andre er
-håndtegnet, og fire av dem ble sist rørt før tverrsnittsrunden: der et tall på
-et håndtegnet ark er i strid med `docs/generated/`, er det den genererte
-tabellen som gjelder. Det som har flyttet seg siden arkene ble tegnet er
-spilene (36×98 → 23×98), lektene (48×73 → 48×68), endebjelken (48×98 →
-36×98), madrassvinduet (140–155, tegn 150) og underetasjen, som har fått
-endespiler, endelister og fire puter à 100 mm.
+**To av arkene regenereres av modellen: `setedetalj.svg` og
+`end-elevation.svg`.** De fire andre er håndtegnet. De er gått gjennom mot
+`docs/generated/` og stemmer nå — spilene 23×98, lektene og vangene 48×68,
+endebjelken 36×98, kontraboret 41 mm, endespiler og endelister inntegnet, fire
+puter à 100 mm — men de har ingen port som holder dem der. Regelen står
+derfor: **er et tall på et håndtegnet ark i strid med `docs/generated/`, er det
+den genererte tabellen som gjelder.**

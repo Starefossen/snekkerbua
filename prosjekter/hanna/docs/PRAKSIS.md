@@ -24,6 +24,8 @@ Kilden her er `generate_loftbed.py`, og dette er veien ut av den:
       ├─ tools/render_lineart.py leser modellen → docs/img/steg-NN.svg/.png
       │    ├─ tools/render_cutpage.py   steg 0 (kappeplanen)
       │    └─ tools/render_panel.py     steg 10 (den løse platen)
+      ├─ tools/render_setedetalj.py  → docs/schematics/setedetalj.svg
+      ├─ tools/render_endelevation.py → docs/schematics/end-elevation.svg
       ├─ tools/gen_figurhode.py  landemerkene → figurikonenes hoder og §4
       ├─ tools/gen_glyphs.py     ikoner og piktogrammer
       └─ tools/build_pdf.py      setter sammen docs/hanna.pdf av det ferdige
@@ -862,12 +864,14 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
 ## 5. Regenerering
 
 ```
-mise run build        modellen + docs/generated/ + docs/MONTERING.md
-mise run montering    strektegningene i docs/img/
-mise run pdf          docs/hanna.pdf
+mise run build           modellen + docs/generated/ + docs/MONTERING.md
+mise run montering       strektegningene i docs/img/
+mise run setedetalj      docs/schematics/setedetalj.svg
+mise run endelevation    docs/schematics/end-elevation.svg
+mise run pdf             docs/hanna.pdf
 ```
 
-De tre må være grønne i den rekkefølgen. `build` importerer modellen, så alle
+De må være grønne i den rekkefølgen. `build` importerer modellen, så alle
 assertene kjører der; `montering` importerer den igjen og legger
 tegningsassertene (`check_coverage`) på toppen; `pdf` bruker de innsjekkede
 filene som de er og trenger ikke build123d.
