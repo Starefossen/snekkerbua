@@ -3551,8 +3551,9 @@ JOINTS = [
     # the three options and the numbers that picked this one.
     dict(id="J13a", title="Avstivningslekt → løs plate (limt, skrudd "
                           "nedenfra)", n=2,
-         drill="⌀12 kontrabor 46 mm opp i lektas underside, ⌀3,5 videre "
-               "gjennom resten av lekta. Ingenting gjennom platens overside",
+         drill=f"⌀{PANEL_UPSCREW_CBORE_D} kontrabor {PANEL_UPSCREW_CBORE:g} "
+               f"mm opp i lektas underside, ⌀3,5 videre gjennom resten av "
+               f"lekta. Ingenting gjennom platens overside",
          side="Nedenfra, opp gjennom lekta og 13 mm inn i den 18 mm platen. "
               "Limes med D3 trelim på hele lektas overkant først — skruene "
               "er tvinger som blir sittende",

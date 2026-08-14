@@ -1379,9 +1379,11 @@ def emit_nokkelmal(G, out_dir, rows):
                    "planet. Ingenting får stikke bak det."),
         (G.BACK_RAIL_Y0, "bakre sidevange, benkevange, bordbærelekt og "
                          "spilebunn — bakkant; bakre stolpes forside"),
-        (G.LEDGER_BACK_Y0 + G.BOARD_T, "bordbærelektas forside"),
-        (G.BACK_RAIL_Y1, "bakre sidevanges og benkevanges forside; "
-                         "avstivningslektenes bakkant"),
+        # Bordbærelekta er 48 dyp som benkevangen, ikke en 21 mm bordkant:
+        # forsiden ligger i BACK_RAIL_Y1 og har ingen egen rad. (Den hadde en
+        # rad regnet med BOARD_T her, og den ga et Y-plan som ikke finnes.)
+        (G.BACK_RAIL_Y1, "bakre sidevanges, benkevanges og bordbærelektas "
+                         "forside; avstivningslektenes bakkant"),
         (G.RUNG_Y0, "trinnenes bakkant (hylla platen hviler på)"),
         (G.BATTEN_Y1, "platens forkant; avstivningslektenes og kilelektenes "
                       "forkant"),
