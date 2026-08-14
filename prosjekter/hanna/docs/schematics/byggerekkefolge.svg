@@ -44,6 +44,11 @@
     .legbox { fill:none; stroke:#000; stroke-width:1.6; }
     .notebox{ fill:#fff; stroke:#000; stroke-width:3; }
   </style>
+  <!-- Et EKSPLISITT underlag, ikke en CSS-background: rsvg-convert rendrer
+       CSS-en til gjennomsiktighet, og et gjennomsiktig ark er et svart ark i det
+       noe legger det oppå noe. -->
+  <rect x="0" y="150" width="3450" height="2250" fill="#ffffff"/>
+
 
   <text x="90" y="220" class="ttl">BYGGEREKKEFØLGE – 12 STEG (0–11)</text>
   <text x="90" y="262" class="sub">Numrene svarer til stegene i docs/generated/byggesteg.md og docs/MONTERING.md · veggplan Y = −48 · alle mål i mm</text>
@@ -60,10 +65,10 @@
   <rect x="161.86" y="399.94" width="1230.14" height="59.76" class="rai"/>
   <rect x="160" y="459.7" width="60.76" height="660.3" class="pst"/>
   <rect x="1333.04" y="459.7" width="60.76" height="660.3" class="pst"/>
-  <rect x="220.76" y="821.16" width="1112.28" height="58.9" class="brd"/>
-  <rect x="220.76" y="959.42" width="1112.28" height="45.26" class="rai"/>
-  <rect x="530.14" y="1004.68" width="29.76" height="115.32" class="gho"/>
-  <rect x="994" y="1004.68" width="29.76" height="115.32" class="gho"/>
+  <rect x="220.76" y="821.16" width="1112.28" height="42.16" class="brd"/>
+  <rect x="220.76" y="959.42" width="1112.28" height="42.16" class="rai"/>
+  <rect x="517.74" y="1001.58" width="42.16" height="118.42" class="gho"/>
+  <rect x="994" y="1001.58" width="42.16" height="118.42" class="gho"/>
   <line x1="120" y1="1120" x2="1440" y2="1120" class="grd"/>
 
   <line x1="196" y1="492" x2="196" y2="424" class="stll"/>
@@ -74,16 +79,12 @@
   <circle cx="900" cy="430" r="8" class="scr"/>
   <circle cx="1120" cy="430" r="8" class="scr"/>
   <circle cx="1330" cy="430" r="8" class="scr"/>
-  <line x1="252" y1="968" x2="206" y2="990" class="scrl"/><circle cx="252" cy="968" r="8" class="scr"/>
-  <line x1="252" y1="996" x2="206" y2="1018" class="scrl"/><circle cx="252" cy="996" r="8" class="scr"/>
-  <line x1="1302" y1="968" x2="1348" y2="990" class="scrl"/><circle cx="1302" cy="968" r="8" class="scr"/>
-  <line x1="1302" y1="996" x2="1348" y2="1018" class="scrl"/><circle cx="1302" cy="996" r="8" class="scr"/>
-  <line x1="250" y1="1010" x2="200" y2="1010" class="scrl"/><circle cx="250" cy="1010" r="8" class="scr"/>
-  <line x1="250" y1="1022" x2="200" y2="1022" class="scrl"/><circle cx="250" cy="1022" r="8" class="scr"/>
-  <line x1="1304" y1="1010" x2="1354" y2="1010" class="scrl"/><circle cx="1304" cy="1010" r="8" class="scr"/>
-  <line x1="1304" y1="1022" x2="1354" y2="1022" class="scrl"/><circle cx="1304" cy="1022" r="8" class="scr"/>
-  <polyline points="248.76,880 220.76,880 220.76,908" class="stll"/>
-  <polyline points="1305.04,880 1333.04,880 1333.04,908" class="stll"/>
+  <line x1="252" y1="973.06" x2="206" y2="995.06" class="scrl"/><circle cx="252" cy="973.06" r="7" class="scr"/>
+  <line x1="252" y1="987.94" x2="206" y2="1009.94" class="scrl"/><circle cx="252" cy="987.94" r="7" class="scr"/>
+  <line x1="1302" y1="973.06" x2="1348" y2="995.06" class="scrl"/><circle cx="1302" cy="973.06" r="7" class="scr"/>
+  <line x1="1302" y1="987.94" x2="1348" y2="1009.94" class="scrl"/><circle cx="1302" cy="987.94" r="7" class="scr"/>
+  <polyline points="248.76,863.32 220.76,863.32 220.76,891.32" class="stll"/>
+  <polyline points="1305.04,863.32 1333.04,863.32 1333.04,891.32" class="stll"/>
 
   <circle cx="600" cy="430" r="19" class="bal"/><text x="600" y="439" class="baln" text-anchor="middle">2</text>
   <circle cx="1010" cy="430" r="19" class="bal"/><text x="1010" y="439" class="baln" text-anchor="middle">1</text>
@@ -95,10 +96,10 @@
   <text x="262" y="566" class="sml" text-anchor="start">J2-B: 2× treskrue 6×120 rett ned gjennom vangen i stolpens endeved. Aldri noe på veggsiden.</text>
   <text x="262" y="600" class="sml" text-anchor="start">J14 (steg 2): 6 veggfester rett gjennom vangen inn i stenderne – prikkene på vangen.</text>
   <text x="262" y="660" class="lbl" text-anchor="start">Hjørnestolpe, bak (veggside) 36×98 × 1065 – bakflaten ER veggflaten.</text>
-  <text x="262" y="720" class="lbl" text-anchor="start">Bordbærelekt, bak 48×73 × 1794 – på høykant, J12 vinkelbeslag i hver ende.</text>
-  <text x="262" y="756" class="lbl" text-anchor="start">Benkevange, bak 48×73 × 1794 – J8-B: 2 skrå 6×90 i hver ende, og det er hele festet.</text>
+  <text x="262" y="720" class="lbl" text-anchor="start">Bordbærelekt, bak 48×68 × 1794 – på høykant (Z 414–482), J12 vinkelbeslag i hver ende.</text>
+  <text x="262" y="756" class="lbl" text-anchor="start">Benkevange, bak 48×68 × 1794 (Z 191–259) – J8-B: 2 skrå 6×80 i hver ende, og det er hele festet.</text>
   <text x="262" y="792" class="sml" text-anchor="start">Ingen bærekloss under enden. Hullene fra steg 0 er jiggen: vangen har én høyde der de møtes.</text>
-  <text x="262" y="1090" class="sml" text-anchor="start">Stubbeføtter: steg 5 (stiplet)</text>
+  <text x="262" y="1090" class="sml" text-anchor="start">Stubbeføtter: steg 5</text>
 
   <line x1="160" y1="1120" x2="160" y2="1270" class="ext"/>
   <line x1="220.76" y1="1120" x2="220.76" y2="1270" class="ext"/>
@@ -124,19 +125,19 @@
   <text x="234" y="1492" class="sml" text-anchor="start">VEGG</text>
   <rect x="300" y="1698.6" width="13" height="383.4" class="pst"/>
   <rect x="300" y="1663.3" width="17.3" height="35.3" class="rai"/>
-  <rect x="300" y="1988.8" width="17.3" height="26.2" class="rai"/>
-  <rect x="300" y="1908.5" width="7.6" height="34.2" class="brd"/>
+  <rect x="300" y="1988.8" width="17.3" height="24.48" class="rai"/>
+  <rect x="300" y="1908.5" width="17.3" height="24.48" class="brd"/>
   <rect x="300" y="1698.6" width="301" height="35.3" class="rai"/>
   <rect x="588" y="1470" width="13" height="612" class="pst"/>
   <rect x="570.7" y="1663.3" width="17.3" height="35.3" class="rai"/>
-  <rect x="570.7" y="1988.8" width="17.3" height="26.2" class="rai"/>
-  <rect x="574.6" y="1988.8" width="26.4" height="17.2" class="gho"/>
-  <rect x="574.6" y="1908.5" width="26.4" height="17.2" class="gho"/>
-  <rect x="300" y="1975.8" width="288" height="13" class="brd"/>
-  <rect x="300" y="1650.4" width="288" height="12.9" class="brd"/>
-  <rect x="300" y="1600" width="288" height="50.4" class="mat"/>
-  <rect x="575" y="1537.7" width="13" height="35.3" class="brd"/>
-  <rect x="575" y="1475.4" width="13" height="35.3" class="brd"/>
+  <rect x="570.7" y="1988.8" width="17.3" height="24.48" class="rai"/>
+  <rect x="577.28" y="1988.8" width="24.48" height="17.28" class="gho"/>
+  <rect x="577.28" y="1908.5" width="24.48" height="17.28" class="gho"/>
+  <rect x="300" y="1980.52" width="288" height="8.28" class="brd"/>
+  <rect x="300" y="1655.04" width="288" height="8.28" class="brd"/>
+  <rect x="300" y="1601.04" width="288" height="54" class="mat"/>
+  <rect x="575" y="1542.36" width="13" height="35.3" class="brd"/>
+  <rect x="575" y="1480.08" width="13" height="35.3" class="brd"/>
   <rect x="300" y="1982.3" width="288" height="6.5" class="pnl"/>
   <line x1="240" y1="2082" x2="680" y2="2082" class="grd"/>
 
@@ -149,14 +150,15 @@
   <circle cx="400" cy="1962" r="16" class="bal"/><text x="400" y="1970" class="baln2" text-anchor="middle">7</text>
   <line x1="400" y1="1972" x2="400" y2="1980" class="ldr"/>
   <circle cx="500" cy="1630" r="16" class="bal"/><text x="500" y="1638" class="baln2" text-anchor="middle">8</text>
-  <line x1="500" y1="1640" x2="500" y2="1652" class="ldr"/>
-  <circle cx="581" cy="1555" r="16" class="bal"/><text x="581" y="1563" class="baln2" text-anchor="middle">9</text>
+  <line x1="500" y1="1640" x2="500" y2="1655" class="ldr"/>
+  <circle cx="545" cy="1560" r="16" class="bal"/><text x="545" y="1568" class="baln2" text-anchor="middle">9</text>
+  <line x1="561" y1="1560" x2="573" y2="1560" class="ldr"/>
   <circle cx="520" cy="2045" r="16" class="bal"/><text x="520" y="2053" class="baln2" text-anchor="middle">10</text>
   <line x1="516" y1="2029" x2="500" y2="1990" class="ldr"/>
   <circle cx="400" cy="1625" r="16" class="bal"/><text x="400" y="1633" class="baln2" text-anchor="middle">11</text>
 
   <text x="680" y="1490" class="sml" text-anchor="start">9   Rekkverksbord, Y 716–752 – på INNSIDEN av stolpene, ikke utenpå</text>
-  <text x="680" y="1528" class="sml" text-anchor="start">11  Madrass 800 × 140 – pinnet mellom veggen og de fremre stolpene</text>
+  <text x="680" y="1528" class="sml" text-anchor="start">11  Madrass 800 dyp × 150 tykk (Z 1186–1336) – pinnet mellom veggen og de fremre stolpene</text>
   <text x="680" y="1566" class="sml" text-anchor="start">8   Køyespiler oppå BEGGE sidevanger, Y −48 … 752</text>
   <text x="680" y="1604" class="sml" text-anchor="start">4   Fremre sidevange, Y 704–752</text>
   <text x="680" y="1642" class="sml" text-anchor="start">3   Endebjelke Y −48 … 788 + fremre hjørnestolpe Y 752–788</text>
@@ -196,7 +198,7 @@
 
   <circle cx="1520" cy="968" r="19" class="bal"/><text x="1520" y="977" class="baln" text-anchor="middle">1</text>
   <text x="1560" y="976" class="st" text-anchor="start">Bakrammen – bygg den flatt på gulvet</text>
-  <text x="1560" y="1010" class="sml" text-anchor="start">2 stolper 36×98×1065 · sidevange 48×98×1984 · benkevange 48×73×1794 · bordbærelekt 48×73×1794.</text>
+  <text x="1560" y="1010" class="sml" text-anchor="start">2 stolper 36×98×1065 · sidevange 48×98×1984 · benkevange 48×68×1794 · bordbærelekt 48×68×1794.</text>
   <text x="1560" y="1040" class="sml" text-anchor="start">Ledd: J2-B, J8-B, J12.  Mål diagonalene, og kjenn over hele baksiden: ingenting får stikke ut.</text>
 
   <circle cx="1520" cy="1086" r="19" class="bal"/><text x="1520" y="1095" class="baln" text-anchor="middle">2</text>
@@ -205,39 +207,40 @@
 
   <circle cx="1520" cy="1204" r="19" class="bal"/><text x="1520" y="1213" class="baln" text-anchor="middle">3</text>
   <text x="1560" y="1212" class="st" text-anchor="start">Endebjelkene og de fremre stolpene</text>
-  <text x="1560" y="1246" class="sml" text-anchor="start">2 endebjelker 48×98×836 · 2 stolper 36×98×1700. Ledd: J1 (Z 994 og 1038) – to 6×90 per hjørne, ingen kloss under.</text>
+  <text x="1560" y="1246" class="sml" text-anchor="start">2 endebjelker 36×98×836 · 2 stolper 36×98×1700. Ledd: J1 (Z 994 og 1038) – to 6×80 per hjørne, ingen kloss under.</text>
 
   <circle cx="1520" cy="1322" r="19" class="bal"/><text x="1520" y="1331" class="baln" text-anchor="middle">4</text>
   <text x="1560" y="1330" class="st" text-anchor="start">Fremre sidevange</text>
   <text x="1560" y="1364" class="sml" text-anchor="start">48×98×1984 opp på begge endebjelker, festet til de fremre stolpene.  Ledd: J2 (Z 1092 og 1136) – skrudd innenfra og ut.</text>
 
   <circle cx="1520" cy="1440" r="19" class="bal"/><text x="1520" y="1449" class="baln" text-anchor="middle">5</text>
-  <text x="1560" y="1448" class="st" text-anchor="start">Fremre benkevanger og alle fire stubbeføtter</text>
-  <text x="1560" y="1482" class="sml" text-anchor="start">2 vangebiter 48×73×642 · 4 stubbeføtter 48×73×186.  Ledd: J8 (Z 210,5 og 234,5), J10.</text>
+  <text x="1560" y="1448" class="st" text-anchor="start">Fremre benkevanger, stubbeføtter og endelister</text>
+  <text x="1560" y="1482" class="sml" text-anchor="start">2 vangebiter 48×68×642 · 4 stubbeføtter 48×68×191 · 2 endelister 36×48×98 på de bakre stolpenes forside.  Ledd: J8 (Z 213 og 237), J10, J17.</text>
 
   <circle cx="1520" cy="1558" r="19" class="bal"/><text x="1520" y="1567" class="baln" text-anchor="middle">6</text>
   <text x="1560" y="1566" class="st" text-anchor="start">Stigen</text>
-  <text x="1560" y="1600" class="sml" text-anchor="start">Bygges ferdig liggende: 2 stigevanger 36×48×1700 · 8 stigeklosser · 4 rungetrinn 48×73×320.  Ledd: J3, J4, J5.</text>
+  <text x="1560" y="1600" class="sml" text-anchor="start">Bygges ferdig liggende: 2 stigevanger 36×48×1700 · 8 stigeklosser · 4 rungetrinn 48×68×320.  Ledd: J3, J4, J5.</text>
 
   <circle cx="1520" cy="1676" r="19" class="bal"/><text x="1520" y="1685" class="baln" text-anchor="middle">7</text>
-  <text x="1560" y="1684" class="st" text-anchor="start">Benkespiler</text>
-  <text x="1560" y="1718" class="sml" text-anchor="start">10 stk. 36×98×800, 5 per benk, X 98–645, s/s 112,25.  Ledd: J11.</text>
+  <text x="1560" y="1684" class="st" text-anchor="start">Benkespiler og endespiler</text>
+  <text x="1560" y="1718" class="sml" text-anchor="start">10 benkespiler 23×98×800, 5 per benk, X 98–645, s/s 112,25 · 2 endespiler 23×98×764 ytterst mot hver vegg.  Ledd: J11, J11-E, J16.</text>
 
   <circle cx="1520" cy="1794" r="19" class="bal"/><text x="1520" y="1803" class="baln" text-anchor="middle">8</text>
   <text x="1560" y="1802" class="st" text-anchor="start">Køyespiler</text>
-  <text x="1560" y="1836" class="sml" text-anchor="start">14 stk. 36×98×800 oppå BEGGE sidevanger, s/s 142,46, klaring 44,46.  Ledd: J6.</text>
+  <text x="1560" y="1836" class="sml" text-anchor="start">14 stk. 23×98×800 oppå BEGGE sidevanger, s/s 142,46, klaring 44,46.  Ledd: J6.</text>
 
   <circle cx="1520" cy="1912" r="19" class="bal"/><text x="1520" y="1921" class="baln" text-anchor="middle">9</text>
   <text x="1560" y="1920" class="st" text-anchor="start">Rekkverk foran</text>
-  <text x="1560" y="1954" class="sml" text-anchor="start">4 bord 36×98×832 på INNSIDEN av stolpene, Y 716–752, bånd Z 1414–1512 og 1587–1685.  Ledd: J7.</text>
+  <text x="1560" y="1954" class="sml" text-anchor="start">4 bord 36×98×832 på INNSIDEN av stolpene, Y 716–752, bånd Z 1401–1499 og 1574–1672.  Ledd: J7.</text>
 
   <circle cx="1520" cy="2030" r="19" class="bal"/><text x="1520" y="2039" class="baln" text-anchor="middle">10</text>
   <text x="1560" y="2038" class="st" text-anchor="start">Løs plate med fire lekter – og ingen beslag</text>
-  <text x="1560" y="2072" class="sml" text-anchor="start">Plate 18 mm 574×798 · 2 avstivningslekter 48×73×750 · 2 kilelekter 48×73×77 (skråkappet).  Ledd: J13a, J13b.</text>
+  <text x="1560" y="2072" class="sml" text-anchor="start">Plate 18 mm 574×798 · 2 avstivningslekter 48×68×750 · 2 kilelekter 48×68×77 (skråkappet).  Ledd: J13a, J13b.</text>
 
   <circle cx="1520" cy="2148" r="19" class="bal"/><text x="1520" y="2157" class="baln" text-anchor="middle">11</text>
-  <text x="1560" y="2156" class="st" text-anchor="start">Madrass og sluttsjekk</text>
-  <text x="1560" y="2190" class="sml" text-anchor="start">Madrass 1990×800, tykkelse 140–326 mm · tre puter i underetasjen · ettertrekk alt som kan ettertrekkes.</text>
+  <text x="1560" y="2156" class="st" text-anchor="start">Madrass og puter</text>
+  <text x="1560" y="2190" class="sml" text-anchor="start">Madrass 80×200 cm, tykkelse 140–155 mm – kjøp 150. FIRE puter, alle 100 mm tykke og 800 dype: 2 benkeputer 663 + 2 ryggputer 332 = 1990.</text>
+  <text x="1560" y="2220" class="sml" text-anchor="start">Sittehøyde med pute 382 · ryggputa på høykant i sofastilling, topp Z 714 · merk «MAKS MADRASS 155 MM» i Z 1341 · ettertrekk alt.</text>
 
   <!-- ==================================================== legend -->
   <rect x="90" y="2200" width="1330" height="166" class="legbox"/>
