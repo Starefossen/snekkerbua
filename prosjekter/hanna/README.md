@@ -59,6 +59,8 @@ generate_loftbed.py           modellen: mål, deler, festemidler, 433 asserter
   ├─ tools/render_lineart.py  → docs/img/steg-NN.svg/.png   (+ check_coverage)
   │    ├─ tools/render_cutpage.py   steg 0, kappeplanen
   │    └─ tools/render_panel.py     steg 10, den løse platen
+  ├─ tools/render_setedetalj.py → docs/schematics/setedetalj.svg
+  ├─ tools/render_endelevation.py → docs/schematics/end-elevation.svg
   ├─ tools/gen_figurhode.py   → figurikonenes hoder + landemerkene i PRAKSIS §4
   ├─ tools/gen_glyphs.py      → skrueikoner og piktogrammer
   ├─ tools/render_animasjon.py → docs/img/hanna-*.gif  (de tre filmene)
@@ -157,6 +159,7 @@ mise run pdf        # docs/hanna.pdf, 78 sider, trykkeklar
 | `build-full` | Det samme pluss det tunge: `.glb` og skjult-linje-projeksjonene av hele modellen |
 | `montering` | Tegner forsiden og én strektegning per byggesteg til `docs/img/` |
 | `setedetalj` | Tegner detaljarket for skråskruesetene til `docs/schematics/setedetalj.svg` |
+| `endelevation` | Tegner kortsnittet (sengen sett fra enden) til `docs/schematics/end-elevation.svg` |
 | `figurhode` | Regner hodet på konturfiguren inn i de fire figurikonene og skriver landemerketabellene i PRAKSIS §4 |
 | `check` | Determinismeasserten: to fulle kjøringer, 134 artefakter, byte-identisk eller feil |
 | `pdf` | Setter sammen `docs/hanna.pdf` av de innsjekkede dokumentene (trenger ikke build123d) |

@@ -68,7 +68,12 @@ description = "Determinismesjekk: kjør hele kjeden to ganger og krev byte-ident
 # docs/icons/hanna/ og landemerketabellene i docs/PRAKSIS.md §4 er utledet av
 # den samme slags kilde - landemerketabellen i tools/gen_figurhode.py - og
 # hasjes derfor sammen med resten. De ti andre ikonene i katalogen er tegnet,
-# ikke regnet; de er med fordi katalogen er med, og de skal ikke endre seg. Den avlesningen er verdiløs hvis
+# ikke regnet; de er med fordi katalogen er med, og de skal ikke endre seg.
+# De to genererte skjemaarkene, setedetalj og end-elevation, er med av samme
+# grunn som resten.
+#
+# Alt dette er sjekket inn for at en diff skal vise hva en endring i modellen
+# gjorde med tegningene, og den avlesningen er verdiløs hvis
 # kjeden selv kan gi to svar på samme spørsmål, så dette er den asserten:
 # kjør den to ganger og krev samme bytes. Ryker den, er det en usortert dict,
 # en tidsstempel eller en id()-sortering et sted - ikke en modellendring.
@@ -89,6 +94,7 @@ trap 'rm -rf "$work"' EXIT
 snap() {
   git ls-files -z -- docs/generated docs/MONTERING.md docs/img parts.tsv \\
                      docs/schematics/setedetalj.svg \\
+                     docs/schematics/end-elevation.svg \\
                      docs/icons/hanna docs/PRAKSIS.md \\
     | xargs -0 shasum -a 256
 }
@@ -99,6 +105,8 @@ for pass in 1 2; do
     || { cat "$work/draw-$pass.log"; exit 1; }
   python tools/render_setedetalj.py > "$work/sete-$pass.log" 2>&1 \\
     || { cat "$work/sete-$pass.log"; exit 1; }
+  python tools/render_endelevation.py > "$work/kort-$pass.log" 2>&1 \\
+    || { cat "$work/kort-$pass.log"; exit 1; }
   snap > "$work/sum-$pass"
 done
 if ! diff -u "$work/sum-1" "$work/sum-2" > "$work/delta"; then
@@ -118,11 +126,18 @@ depends = ["install"]
 
 [tasks.setedetalj]
 description = "Detaljark for skråskruesetene: snitt langs skrueaksen, munningen ovenfra, vinkelklossen og bruken av den (docs/schematics/setedetalj.svg)"
-# De andre arkene i docs/schematics/ er tegnet for hånd; dette ene er generert
-# av modellen, og derfor er det med i `check` - resten har ingenting å
-# regenereres mot.
+# To av arkene i docs/schematics/ er generert av modellen - dette og
+# end-elevation - og derfor er de med i `check`. De fire andre er tegnet for
+# hånd og har ingenting å regenereres mot.
 depends = ["build"]
 run = "python tools/render_setedetalj.py"
+
+[tasks.endelevation]
+description = "Kortsnittet: sengen sett fra enden, snitt A-A i Y-Z gjennom endebjelken (docs/schematics/end-elevation.svg)"
+# Det eneste arket som viser sengens DYBDE i sin helhet, og det som sier at
+# den er asymmetrisk: 1065 mot veggen, 1700 mot rommet.
+depends = ["build"]
+run = "python tools/render_endelevation.py"
 
 [tasks.figurhode]
 description = "Regn hodet på konturfiguren inn i de fire figurikonene og skriv landemerketabellene i PRAKSIS §4 (tools/gen_figurhode.py)"
