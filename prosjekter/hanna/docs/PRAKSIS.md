@@ -23,9 +23,11 @@ Kilden her er `generate_loftbed.py`, og dette er veien ut av den:
       │                          docs/MONTERING.md, byggesteg.json
       ├─ tools/render_lineart.py leser modellen → docs/img/steg-NN.svg/.png
       │    ├─ tools/render_cutpage.py   steg 0 (kappeplanen)
-      │    └─ tools/render_panel.py     steg 10 (den løse platen)
+      │    ├─ tools/render_panel.py     steg 10 (den løse platen)
+      │    └─ tools/render_maalfigur.py forsteget (målefiguren av nisja)
       ├─ tools/render_setedetalj.py  → docs/schematics/setedetalj.svg
       ├─ tools/render_endelevation.py → docs/schematics/end-elevation.svg
+      ├─ tools/render_spikerslag.py  → docs/schematics/spikerslag.svg
       ├─ tools/gen_figurhode.py  landemerkene → figurikonenes hoder og §4
       ├─ tools/gen_glyphs.py     ikoner og piktogrammer
       └─ tools/build_pdf.py      setter sammen docs/hanna.pdf av det ferdige
@@ -868,6 +870,7 @@ mise run build           modellen + docs/generated/ + docs/MONTERING.md
 mise run montering       strektegningene i docs/img/
 mise run setedetalj      docs/schematics/setedetalj.svg
 mise run endelevation    docs/schematics/end-elevation.svg
+mise run spikerslag      docs/schematics/spikerslag.svg
 mise run pdf             docs/hanna.pdf
 ```
 

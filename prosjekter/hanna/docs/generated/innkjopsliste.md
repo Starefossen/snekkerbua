@@ -5,7 +5,7 @@
 
 Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. Kappingen under er regnet med 4 mm sagsnitt mellom hvert kutt, og hvert bord er valgt som den korteste salgslengden som rommer det som skal kappes av det — blant de lengdene dimensjonen faktisk selges i. Se merknadene nederst.
 
-Lengdene under er de nominelle. Romdelene kappes for lange og finkappes i rommet — se [kapplista](kappliste.md) — og overmålet går av resten på det samme bordet. Du trenger ikke kjøpe mer virke for det.
+Romdelene kappes for lange og finkappes i rommet — se [kapplista](kappliste.md). Overmålet er regnet inn i kappeplanen under, og står som **+ tall** etter lengden: det er tre som går av bordet. Det koster likevel ikke ett bord mer — det går av resten, og det er en assert.
 
 ## Kort handleliste
 
@@ -13,10 +13,10 @@ Lengdene under er de nominelle. Romdelene kappes for lange og finkappes i rommet
 |---|---|---:|
 | **18 mm plate, 574 bred** | 1 plate 18 mm kryssfiner furu, minst 574 × 798 mm | — |
 | **23×98** | **5 stk. 4,8 m** | 14 % |
-| **36×48** | **1 stk. 4,8 m** | 19 % |
-| **36×98** | **3 stk. 4,8 m** | 27 % |
-| **48×68** | **2 stk. 4,8 m** | 11 % |
-| **48×98** | **1 stk. 4,2 m** | 6 % |
+| **36×48** | **1 stk. 4,8 m** | 18 % |
+| **36×98** | **3 stk. 4,8 m** | 26 % |
+| **48×68** | **2 stk. 4,8 m** | 10 % |
+| **48×98** | **1 stk. 4,2 m** | 5 % |
 
 ## Kappeplan, bord for bord
 
@@ -38,40 +38,40 @@ Kjøpt 24,00 m, brukt 20,73 m, svinn 14 %.
 
 ### 36×48
 
-Kjøpt 4,80 m, brukt 3,88 m, svinn 19 %.
+Kjøpt 4,80 m, brukt 3,93 m, svinn 18 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 2 × 98 (Endelist) + 8 × 36 (Stigekloss) + 2 × 1700 (Stigevange) | 872 |
+| 1 | 4800 | 2 × 98 + 10 (Endelist) + 8 × 36 (Stigekloss) + 2 × 1700 + 15 (Stigevange) | 822 |
 
 ### 36×98
 
-Kjøpt 14,40 m, brukt 10,53 m, svinn 27 %.
+Kjøpt 14,40 m, brukt 10,63 m, svinn 26 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 2 × 836 (Endebjelke) + 1 × 1065 (Hjørnestolpe, bak (veggside)) + 2 × 832 (Rekkverksbord, front) | 383 |
-| 2 | 4800 | 1 × 1065 (Hjørnestolpe, bak (veggside)) + 2 × 1700 (Hjørnestolpe, front) | 327 |
-| 3 | 4800 | 2 × 832 (Rekkverksbord, front) | 3132 |
+| 1 | 4800 | 1 × 1065 + 15 (Hjørnestolpe, bak (veggside)) + 4 × 832 + 10 (Rekkverksbord, front) | 336 |
+| 2 | 4800 | 1 × 1065 + 15 (Hjørnestolpe, bak (veggside)) + 2 × 1700 + 15 (Hjørnestolpe, front) | 282 |
+| 3 | 4800 | 2 × 836 (Endebjelke) | 3124 |
 
 ### 48×68
 
-Kjøpt 9,60 m, brukt 8,57 m, svinn 11 %.
+Kjøpt 9,60 m, brukt 8,65 m, svinn 10 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 (Benkevange, front (bit)) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 3 × 320 (Rungetrinn) + 4 × 191 (Stubbefot) | 925 |
+| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 + 10 (Benkevange, front (bit)) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 3 × 320 (Rungetrinn) + 4 × 191 + 15 (Stubbefot) | 845 |
 | 2 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 1 × 320 (Rungetrinn) | 49 |
 
 Hjelpedelene på denne dimensjonen — 2 × 200 mm (Vinkelkloss 25° (J8-B)) + 2 × 200 mm (Vinkelkloss 30° (J10)), til sammen 812 mm med sagsnitt — kappes av resten over. Den lengste er 845 mm, så det går av rest og du trenger ikke kjøpe bord til dem. Se [kapplista](kappliste.md).
 
 ### 48×98
 
-Kjøpt 4,20 m, brukt 3,97 m, svinn 6 %.
+Kjøpt 4,20 m, brukt 4,01 m, svinn 5 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4200 | 2 × 1984 (Sidevange, øvre) | 228 |
+| 1 | 4200 | 2 × 1984 + 20 (Sidevange, øvre) | 188 |
 
 ## Mykt — kjøpes, ikke kappes
 

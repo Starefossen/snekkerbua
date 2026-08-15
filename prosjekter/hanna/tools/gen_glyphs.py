@@ -1127,6 +1127,11 @@ PICTOGRAMS: dict[str, tuple[str, object]] = {
                  "hanna/tape-measure", "hanna/spirit-level",
                  "hanna/try-square"]),
     "forbor": ("Forbor før du skrur", "hanna/forbor"),
+    # Forsteg-sidens eget par. Veggen buler, og de to ikonene viser den samme
+    # bulen to ganger: med avstandskloss følger streken veggen hele veien,
+    # med ett punktmål blir streken rett og bulen står igjen.
+    "meddrag-ja": ("Strek opp med avstandskloss", "hanna/meddrag-ja"),
+    "punktmaal-nei": ("Ikke ett punktmål mot veggen", "hanna/punktmaal-nei"),
     "veggfeste-ja": ("Sengen skal festes i veggen", "hanna/veggfeste-ja"),
     "fritt-staaende-nei": ("Sengen skal ikke stå fritt",
                            "hanna/fritt-staaende-nei"),

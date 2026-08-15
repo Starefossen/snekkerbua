@@ -69,8 +69,8 @@ description = "Determinismesjekk: kjør hele kjeden to ganger og krev byte-ident
 # den samme slags kilde - landemerketabellen i tools/gen_figurhode.py - og
 # hasjes derfor sammen med resten. De ti andre ikonene i katalogen er tegnet,
 # ikke regnet; de er med fordi katalogen er med, og de skal ikke endre seg.
-# De to genererte skjemaarkene, setedetalj og end-elevation, er med av samme
-# grunn som resten.
+# De tre genererte skjemaarkene - setedetalj, end-elevation og spikerslag -
+# er med av samme grunn som resten.
 #
 # Alt dette er sjekket inn for at en diff skal vise hva en endring i modellen
 # gjorde med tegningene, og den avlesningen er verdiløs hvis
@@ -95,6 +95,7 @@ snap() {
   git ls-files -z -- docs/generated docs/MONTERING.md docs/img parts.tsv \\
                      docs/schematics/setedetalj.svg \\
                      docs/schematics/end-elevation.svg \\
+                     docs/schematics/spikerslag.svg \\
                      docs/icons/hanna docs/PRAKSIS.md \\
     | xargs -0 shasum -a 256
 }
@@ -107,6 +108,8 @@ for pass in 1 2; do
     || { cat "$work/sete-$pass.log"; exit 1; }
   python tools/render_endelevation.py > "$work/kort-$pass.log" 2>&1 \\
     || { cat "$work/kort-$pass.log"; exit 1; }
+  python tools/render_spikerslag.py > "$work/spik-$pass.log" 2>&1 \\
+    || { cat "$work/spik-$pass.log"; exit 1; }
   snap > "$work/sum-$pass"
 done
 if ! diff -u "$work/sum-1" "$work/sum-2" > "$work/delta"; then
@@ -126,9 +129,9 @@ depends = ["install"]
 
 [tasks.setedetalj]
 description = "Detaljark for skråskruesetene: snitt langs skrueaksen, munningen ovenfra, vinkelklossen og bruken av den (docs/schematics/setedetalj.svg)"
-# To av arkene i docs/schematics/ er generert av modellen - dette og
-# end-elevation - og derfor er de med i `check`. De fire andre er tegnet for
-# hånd og har ingenting å regenereres mot.
+# Tre av arkene i docs/schematics/ er generert av modellen - dette,
+# end-elevation og spikerslag - og derfor er de med i `check`. De fire andre
+# er tegnet for hånd og har ingenting å regenereres mot.
 depends = ["build"]
 run = "python tools/render_setedetalj.py"
 
@@ -138,6 +141,14 @@ description = "Kortsnittet: sengen sett fra enden, snitt A-A i Y-Z gjennom endeb
 # den er asymmetrisk: 1065 mot veggen, 1700 mot rommet.
 depends = ["build"]
 run = "python tools/render_endelevation.py"
+
+[tasks.spikerslag]
+description = "Bakveggen som oppriss: sonene som skal ha spikerslag, malt fra ferdig gulv (docs/schematics/spikerslag.svg)"
+# Det eneste arket som ikke tegner sengen, men VEGGEN. Sonene er modellens
+# WALL_ZONES, og arket leses av byggmesteren for veggen lukkes - etterpa
+# kommer han ikke til.
+depends = ["build"]
+run = "python tools/render_spikerslag.py"
 
 [tasks.figurhode]
 description = "Regn hodet på konturfiguren inn i de fire figurikonene og skriv landemerketabellene i PRAKSIS §4 (tools/gen_figurhode.py)"

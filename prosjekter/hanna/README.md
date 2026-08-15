@@ -16,7 +16,7 @@ samme modell gir samme bytes.*
 
 En parametrisk loftseng i [build123d](https://github.com/gumyr/build123d) /
 OpenCascade, bygd for én nisje på 199 cm mellom to vegger. Modellen er den
-eneste kilden: **hver tegning, hver tabell og alle 78 sidene i den trykte
+eneste kilden: **hver tegning, hver tabell og alle 82 sidene i den trykte
 monteringsmanualen genereres av solidene og maskinsjekkes før de får finnes.**
 Ikke ett mål er skrevet av. Unntaket er fire skjemaark i `docs/schematics/`,
 som er tegnet for hånd — der et tall på et slikt ark er i strid med en
@@ -40,9 +40,9 @@ hvert merke står på det festemiddelet det navngir.*
 | **Ytre mål** | 1990 × 836 × 1700 mm — fyller nisjen fra vegg til vegg på 1990 mm. Gjennomgående deler kappes 1984 mm, for et bord på 1990 mm lar seg ikke svinge inn i en åpning på 1990 mm |
 | **Trevirke** | **67 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 48,5 løpemeter. 24 av de 67 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling |
 | **Stål** | **178 festemidler fordelt på 20 ledd**, **172 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert |
-| **Kontroller** | **433 asserter i modellen** og 62 til i verktøyene, alle sammen stopper bygget. Skrueretningene er utledet av fysikk (5 av 21 er tvunget av tykkelsene alene); antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
-| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **135 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
-| **Ut av det** | En **trykkeklar PDF på 80 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, seks skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
+| **Kontroller** | **419 asserter i modellen** og 82 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått: `grep -cE '^[[:space:]]*assert\b' generate_loftbed.py` og `cat tools/*.py | grep -cE '^[[:space:]]*assert\b'`, så neste runde regner dem ut på nytt i stedet for å arve dem. Skrueretningene er utledet av fysikk (5 av 21 er tvunget av tykkelsene alene); antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
+| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **144 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
+| **Ut av det** | En **trykkeklar PDF på 82 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
 | **Menneskene** | **Fire referansekropper** — et barn på **1200 mm** bygget av 14 primitiver etter [AnthroKids](https://math.nist.gov/~SRessler/anthrokids/), to som sover og to som sitter, som ekte solider i modellen. De kappes ikke og bærer ingenting, men de **måler**: 127 mm over hodet på den som sitter rett opp, 603 mm over ansiktet til den som ligger nede — og de beviste at ingen knær går under bordplaten |
 
@@ -56,13 +56,15 @@ her er egen.
 ## Sånn henger det sammen
 
 ```
-generate_loftbed.py           modellen: mål, deler, festemidler, 433 asserter
+generate_loftbed.py           modellen: mål, deler, festemidler, asserter
   ├─ tools/gen_doc_tables.py  → docs/generated/*.md, docs/MONTERING.md, byggesteg.json
   ├─ tools/render_lineart.py  → docs/img/steg-NN.svg/.png   (+ check_coverage)
   │    ├─ tools/render_cutpage.py   steg 0, kappeplanen
-  │    └─ tools/render_panel.py     steg 10, den løse platen
+  │    ├─ tools/render_panel.py     steg 10, den løse platen
+  │    └─ tools/render_maalfigur.py forsteget, målefiguren av nisja
   ├─ tools/render_setedetalj.py → docs/schematics/setedetalj.svg
   ├─ tools/render_endelevation.py → docs/schematics/end-elevation.svg
+  ├─ tools/render_spikerslag.py → docs/schematics/spikerslag.svg
   ├─ tools/gen_figurhode.py   → figurikonenes hoder + landemerkene i PRAKSIS §4
   ├─ tools/gen_glyphs.py      → skrueikoner og piktogrammer
   ├─ tools/render_animasjon.py → docs/img/hanna-*.gif  (de tre filmene)
@@ -152,7 +154,7 @@ denne katalogen, så disse virker uendret uansett hvor i treet du står:
 mise run build      # modellen + alle genererte tabeller + docs/MONTERING.md
 mise run montering  # tegn strektegningene i docs/img/ på nytt
 mise run check      # kjør hele kjeden to ganger, krev byte-identisk resultat
-mise run pdf        # docs/hanna.pdf, 80 sider, trykkeklar
+mise run pdf        # docs/hanna.pdf, 82 sider, trykkeklar
 ```
 
 | Oppgave | Hva den gjør |
@@ -162,8 +164,9 @@ mise run pdf        # docs/hanna.pdf, 80 sider, trykkeklar
 | `montering` | Tegner forsiden og én strektegning per byggesteg til `docs/img/` |
 | `setedetalj` | Tegner detaljarket for skråskruesetene til `docs/schematics/setedetalj.svg` |
 | `endelevation` | Tegner kortsnittet (sengen sett fra enden) til `docs/schematics/end-elevation.svg` |
+| `spikerslag` | Tegner bakveggen som oppriss med sonene som skal ha spikerslag til `docs/schematics/spikerslag.svg` |
 | `figurhode` | Regner hodet på konturfiguren inn i de fire figurikonene og skriver landemerketabellene i PRAKSIS §4 |
-| `check` | Determinismeasserten: to fulle kjøringer, 135 artefakter, byte-identisk eller feil |
+| `check` | Determinismeasserten: to fulle kjøringer, 144 artefakter, byte-identisk eller feil |
 | `pdf` | Setter sammen `docs/hanna.pdf` av de innsjekkede dokumentene (trenger ikke build123d) |
 | `schematics` | Rendrer `docs/schematics/*.svg` til PNG for korrektur |
 | `usdz` | Konverterer nettene til `.usdz` for Quick Look / Xcode / AR, ett materiale per fargegruppe |
@@ -183,7 +186,7 @@ Alt under ligger i `prosjekter/hanna/`, og alle stier er relative til den.
 | `tools/` | Alt som leser modellen: dokumenttabeller, strektegninger, kappeside, plateside, ikoner, PDF, USD-hjelpere |
 | `docs/generated/` | Maskinskrevet, aldri redigert for hånd: kappliste, innkjøpsliste, nøkkelmål, beslagliste, skrueretninger, stegtekst, `byggesteg.json` |
 | `docs/img/`, `docs/schematics/` | De innsjekkede tegningene — så manualen kan leses og skrives ut på en maskin uten noe av denne verktøykjeden |
-| `docs/hanna.pdf` | Manualen på 80 sider. Bevisst utenfor git — verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
+| `docs/hanna.pdf` | Manualen på 82 sider. Bevisst utenfor git — verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
 | `parts.tsv` | Innsjekket regresjonsavtrykk: navn, fargegruppe og omskrevet boks for hver del, i begge stillinger. En diff på den er diffen på modellen |
 | `v1/` | Den første køyesengrammen for nisjen, beholdt som historikk |
 
@@ -243,11 +246,11 @@ som ikke lenger går opp — men den er ingen konfigurator, og sengen er laget f
 **HANNA** is a parametric loft bed — a bed platform over a bench, table and
 spare bed, built for one 199 cm alcove between two walls — modelled in build123d
 / OpenCascade. The model is the only source of truth: every drawing, every table
-and all 80 pages of the printed assembly manual are generated from the solids
+and all 82 pages of the printed assembly manual are generated from the solids
 and machine-checked before they are allowed to exist, and no number is
 hand-transcribed. Four schematic sheets in `docs/schematics/` are the one
 exception: they are drawn by hand, and where one of them disagrees with a
 generated table, the table wins. The documentation is in Norwegian, because
 that is what someone standing at the saw actually reads. The proofs run in CI:
-`mise run check` builds the whole chain twice and demands 135 byte-identical
+`mise run check` builds the whole chain twice and demands 144 byte-identical
 artefacts, and the badge at the top of this page is that gate.

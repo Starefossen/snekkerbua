@@ -372,6 +372,9 @@ REF_DOCS = [
 
 SCHEMATICS = [
     ("byggerekkefolge", "Byggerekkefølgen"),
+    # Veggarket star forst blant snittene: det er det eneste som skal leses
+    # for veggen lukkes, altsa for noe annet pa disse sidene er aktuelt.
+    ("spikerslag", "Bakveggen — spikerslagsoner"),
     ("end-elevation", "Kortside, snitt A–A"),
     ("ladder-detail", "Stigen"),
     ("bench-detail", "Benken"),

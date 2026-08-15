@@ -5414,6 +5414,15 @@ _below = max(z1 for z0, z1 in _bands if z1 <= MEASURE_DATUM_Z)
 _above = min(z0 for z0, z1 in _bands if z0 >= MEASURE_DATUM_Z)
 assert _below < MEASURE_DATUM_Z < _above, \
     f"the {MEASURE_DATUM_Z} mm datum line falls inside a nogging zone"
+# HOW MANY TIMES THE NICHE IS MEASURED. One tape reading is a point, and a
+# wall is a surface: the width that matters is the SMALLEST one anywhere the
+# bed touches, so each end wall is read on a grid - so many heights, so many
+# depths - and the pairs are added up point by point. Two of each is the least
+# that can find a bulge at all; the numbers here are what the pre-step tells
+# the reader to do and what the measuring figure draws, from one place.
+MEASURE_GRID = (5, 3)            # heights x depths, per end wall
+assert min(MEASURE_GRID) >= 2, \
+    "a measuring grid with a single row or column reads a point, not a wall"
 print(f"OK  SPIKERSLAG: {len(WALL_ZONES)} zones on the wall face, "
       + " ".join(f"{zo['z'][0]:g}-{zo['z'][1]:g}" for zo in WALL_ZONES)
       + f" mm above the finished floor, carrying "

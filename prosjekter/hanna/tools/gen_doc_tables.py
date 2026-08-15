@@ -1033,6 +1033,17 @@ def cut_index(G):
 # ---------------------------------------------------------------------------
 # BUYING LIST - first-fit-decreasing into sale lengths
 # ---------------------------------------------------------------------------
+# A piece is (name, finished length, OVERLENGTH). The third number is what
+# the ROOM adds to the piece and the shop still has to saw off the board: a
+# post that stands on the floor is cut 15 mm long and trimmed on site, and
+# those 15 mm are wood, kerf and floor sweepings, not a rounding error. The
+# packer therefore packs `fin + over` and reports `used` the same way - what
+# comes off the board is what the board loses.
+def _sawn(p):
+    """What a piece actually takes out of a board."""
+    return p[1] + p[2]
+
+
 def pack(pieces, lengths=None):
     """First-fit-decreasing bin packing into the sale lengths of one profile.
 
@@ -1040,24 +1051,29 @@ def pack(pieces, lengths=None):
     shortest one that still holds what they were given, which is what you
     would do at the counter - unless the profile only comes in one length, in
     which case there is nothing to shrink to.
+
+    Every length in here is the SAWN length, finished plus the room's
+    overlength. A cutting plan drawn on nominal lengths promises board that
+    the saw has already eaten.
     """
     lengths = lengths or SALE_LENGTHS
     boards = []
-    for name, length in sorted(pieces, key=lambda p: -p[1]):
+    for piece in sorted(pieces, key=lambda p: -_sawn(p)):
         for b in boards:
-            used = sum(x[1] for x in b) + KERF * len(b)
-            if used + length <= max(lengths):
-                b.append((name, length))
+            used = sum(_sawn(x) for x in b) + KERF * len(b)
+            if used + _sawn(piece) <= max(lengths):
+                b.append(piece)
                 break
         else:
-            assert length <= max(lengths), \
-                f"'{name}' is {length} mm - longer than any sale length"
-            boards.append([(name, length)])
+            assert _sawn(piece) <= max(lengths), \
+                f"'{piece[0]}' is {_sawn(piece)} mm sawn - longer than any " \
+                f"sale length"
+            boards.append([piece])
     out = []
     for b in boards:
-        need = sum(x[1] for x in b) + KERF * (len(b) - 1)
+        need = sum(_sawn(x) for x in b) + KERF * (len(b) - 1)
         buy = min(s for s in lengths if s >= need)
-        out.append(dict(buy=buy, pieces=b, used=sum(x[1] for x in b),
+        out.append(dict(buy=buy, pieces=b, used=sum(_sawn(x) for x in b),
                         rest=buy - need))
     out.sort(key=lambda b: (-b["buy"], -len(b["pieces"])))
     return out
@@ -1066,14 +1082,29 @@ def pack(pieces, lengths=None):
 def buy_table(G):
     rows = cut_table(G)
     by_section = {}
-    for no_name, section, length, qty, _spans, _en, _fit in rows:
-        by_section.setdefault(section, []).extend([(no_name, length)] * qty)
+    for no_name, section, length, qty, _spans, _en, fit in rows:
+        # fit[1] is the model's own total allowance for the line - one foot
+        # trimmed, or one or two wall ends fine-cut. Nothing is decided here.
+        over = fit[1] if fit else 0
+        by_section.setdefault(section, []).extend(
+            [(no_name, length, over)] * qty)
     out = []
     for section, pieces in sorted(by_section.items()):
         if "plate" in section or "panel" in section:   # sheet, not a stick
             out.append(dict(section=section, sheet=True, pieces=pieces))
             continue
-        boards = pack(pieces, SALE_LENGTHS_BY_SECTION.get(section))
+        sale = SALE_LENGTHS_BY_SECTION.get(section)
+        boards = pack(pieces, sale)
+        # THE CLAIM THE LIST MAKES OUT LOUD - "du trenger ikke kjøpe mer
+        # virke for det" - measured instead of hoped for: pack the same
+        # pieces at their nominal lengths and demand the same shopping.
+        nominal = pack([(n, ln, 0) for n, ln, _o in pieces], sale)
+        assert sorted(b["buy"] for b in boards) == \
+            sorted(b["buy"] for b in nominal), (
+                f"{section}: med overmålet pakket blir handlelista "
+                f"{sorted(b['buy'] for b in boards)} mot "
+                f"{sorted(b['buy'] for b in nominal)} uten - "
+                "innkjøpslista kan ikke lenger si at overmålet er gratis")
         bought = sum(b["buy"] for b in boards)
         used = sum(b["used"] for b in boards)
         out.append(dict(section=section, sheet=False, boards=boards,
@@ -1312,15 +1343,11 @@ def emit_kappliste(G, out_dir):
 
 def emit_innkjopsliste(G, out_dir):
     tab = buy_table(G)
-    # ROMDELENE KAPPES FOR LANGE. Kappeplanen under er regnet på de nominelle
-    # lengdene, så overmålet må gå av resten på det bordet delen ligger på -
-    # ellers ber kapplista om tre denne lista ikke har kjøpt. Det er en assert
-    # per bord, ikke et håp, og den bruker modellens egne overmål.
-    over = {(no_name, length): fit[1]
-            for no_name, _s, length, _q, _sp, _en, fit in cut_table(G) if fit}
-
-    def _over_on(board):
-        return sum(over.get((name, ln), 0) for name, ln in board["pieces"])
+    # ROMDELENE KAPPES FOR LANGE, og kappeplanen under er PAKKET med
+    # overmålet: en romdel spiser lengde + overmål av bordet sitt, fordi det
+    # er det sagen gjør. Resten i tabellen er derfor allerede resten ETTER at
+    # overmålet er tatt, og at det likevel ikke koster ett bord mer er
+    # asserten i buy_table().
 
     L = [HEAD, "# Innkjøpsliste — trevirke\n\n",
          "Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. "
@@ -1328,10 +1355,11 @@ def emit_innkjopsliste(G, out_dir):
          "kutt, og hvert bord er valgt som den korteste salgslengden som "
          "rommer det som skal kappes av det — blant de lengdene dimensjonen "
          "faktisk selges i. Se merknadene nederst.\n\n",
-         "Lengdene under er de nominelle. Romdelene kappes for lange og "
-         "finkappes i rommet — se [kapplista](kappliste.md) — og overmålet "
-         "går av resten på det samme bordet. Du trenger ikke kjøpe mer virke "
-         "for det.\n\n"]
+         "Romdelene kappes for lange og finkappes i rommet — se "
+         "[kapplista](kappliste.md). Overmålet er regnet inn i kappeplanen "
+         "under, og står som **+ tall** etter lengden: det er tre som går av "
+         "bordet. Det koster likevel ikke ett bord mer — det går av resten, "
+         "og det er en assert.\n\n"]
 
     L.append("## Kort handleliste\n\n| Dimensjon | Kjøp | Svinn |\n")
     L.append("|---|---|---:|\n")
@@ -1363,15 +1391,23 @@ def emit_innkjopsliste(G, out_dir):
         L.append("|---:|---:|---|---:|\n")
         for i, b in enumerate(e["boards"], 1):
             per = {}
-            for name, ln in b["pieces"]:
-                per[(name, ln)] = per.get((name, ln), 0) + 1
-            txt = " + ".join(f"{q} × {_fmt(ln)} ({name})"
-                             for (name, ln), q in sorted(per.items()))
-            extra = _over_on(b)
-            assert b["rest"] >= extra, (
-                f"bord {i} av {e['section']} har {_fmt(b['rest'])} mm rest, "
-                f"men romdelene på det skal kappes {_fmt(extra)} mm for "
-                "lange - overmålet går ikke av dette bordet")
+            for name, ln, ov in b["pieces"]:
+                per[(name, ln, ov)] = per.get((name, ln, ov), 0) + 1
+            txt = " + ".join(
+                f"{q} × {_fmt(ln)}" + (f" + {_fmt(ov)}" if ov else "")
+                + f" ({name})"
+                for (name, ln, ov), q in sorted(per.items()))
+            # THE ASSERT THAT READS THE PACKED INK: the row's own numbers have
+            # to add up on the row. Everything sawn off this board, kerf
+            # between each cut, plus the rest printed beside it, is the board
+            # that was bought - overlength included, because the overlength is
+            # in the pieces now.
+            sawn = sum(ln + ov for _n, ln, ov in b["pieces"])
+            cuts = KERF * (len(b["pieces"]) - 1)
+            assert abs(sawn + cuts + b["rest"] - b["buy"]) < 0.5, (
+                f"bord {i} av {e['section']}: {_fmt(sawn)} kappet + "
+                f"{_fmt(cuts)} sagsnitt + {_fmt(b['rest'])} rest er ikke "
+                f"{_fmt(b['buy'])} kjøpt")
             L.append(f"| {i} | {_fmt(b['buy'])} | {txt} | "
                      f"{_fmt(b['rest'])} |\n")
         L.append("\n")
@@ -1386,9 +1422,9 @@ def emit_innkjopsliste(G, out_dir):
         mine = [a for a in G.SHOP_AIDS
                 if a["section"] == e["section"].replace("×", "x")]
         if mine:
-            # Resten ETTER at romdelenes overmål er tatt av det samme bordet:
-            # jiggene og overmålet spiser av den samme avkappen.
-            best = max(bb["rest"] - _over_on(bb) for bb in e["boards"])
+            # Resten er allerede resten etter romdelenes overmål - den er
+            # pakket inn. Jiggene spiser av det som da er igjen.
+            best = max(bb["rest"] for bb in e["boards"])
             pieces = [(a["name"], a["length"])
                       for a in mine for _ in range(a["qty"])]
             need = sum(ln for _n, ln in pieces) + KERF * (len(pieces) - 1)
@@ -1905,10 +1941,10 @@ def room_first(G):
             f"Slå et vannrett høyderiss rundt hele nisja med linjelaser, "
             f"{G.MEASURE_DATUM_Z} mm over ferdig gulv. Alt måles fra risset, "
             "aldri fra gulvet.",
-            "Sett laseren som loddlinje midt i nisja. Mål ut til hver "
-            "endevegg i rutenett: fem høyder × tre dybder på hver vegg. Legg "
-            "sammen paret i hvert punkt. **Minste sum er nisjas minste "
-            "bredde.**",
+            f"Sett laseren som loddlinje midt i nisja. Mål ut til hver "
+            f"endevegg i rutenett: {G.MEASURE_GRID[0]} høyder × "
+            f"{G.MEASURE_GRID[1]} dybder på hver vegg. Legg sammen paret i "
+            f"hvert punkt. **Minste sum er nisjas minste bredde.**",
             f"Er minste bredde et annet tall enn {G.WALL_SPAN}: sett den inn "
             "som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run "
             "build`. Kapplista regner seg om.",
@@ -2068,6 +2104,21 @@ PREP = [
 ]
 
 
+# Forsteg-sidens eget SLIK / IKKE SLIK-par, i samme oppsett som «Før du
+# begynner». Det er én ting på den siden som ikke lar seg si med tall, og det
+# er HVORDAN en strek mot vegg blir til: klossen følger veggen, tommestokken
+# gjør det ikke. Bakfallet fra punkt 8 fikk ikke sitt eget par - siden bærer
+# allerede lista, målefiguren og spikerslagstabellen, og et par til ville
+# skyve tabellen over på neste side for å illustrere en setning som står
+# tydelig i lista.
+ROOM_PREP = [
+    ("meddrag-ja", "punktmaal-nei",
+     "**Avstandskloss, ikke tommestokk.** Klossen følger veggen hele veien, "
+     "og blyanten mot klossens ytterkant gir emnet veggens form. Ett "
+     "punktmål gir en rett strek mot en vegg som ikke er rett."),
+]
+
+
 # On a step page the size is what you need; the full trade name is on the
 # hardware page. Nothing is dropped that you cannot look up two pages back.
 def _fast_short(name):
@@ -2085,6 +2136,14 @@ def _fast_short(name):
 
 def _img(src, height, alt=""):
     return f'<img src="{src}" alt="{alt}" height="{height}">'
+
+
+# Målefiguren på forsteg-siden er bred og lav (oppriss + plan side ved side).
+# Høyden er i piksler som alle andre bildehøyder her; build_pdf regner den om
+# til millimeter på papiret. 295 px er ca. 78 mm høyt og fyller satsbredden
+# 180 mm - så bredt som siden tillater, og det er den bredden figurens egen
+# typestørrelse er regnet for (se tools/render_maalfigur.py).
+ROOM_FIG_PX = 295
 
 
 # The glyphs are all drawn to ONE scale, and each carries that scale in the
@@ -2199,6 +2258,25 @@ def emit_montering(G, root, steps, idx):
     L.append(room["intro"] + "\n\n")
     for i, d in enumerate(room["do"], 1):
         L.append(f"{i}. {d}\n")
+    # Figuren står ETTER lista og før spikerslagstabellen, fordi den er
+    # bildet av punkt 2 og 3 og ikke av siden som helhet. Den tegnes av
+    # tools/render_maalfigur.py under `mise run montering`, akkurat som
+    # stegbildene lenger bak - denne fila skriver bare taggen.
+    L.append("\n" + _img("img/maal-rommet.png", ROOM_FIG_PX,
+                         f"Oppriss og plan av nisja: høyderisset "
+                         f"{G.MEASURE_DATUM_Z} mm over ferdig gulv, "
+                         f"loddlinjen midt i nisja, og de "
+                         f"{G.MEASURE_GRID[0]} høydene og "
+                         f"{G.MEASURE_GRID[1]} dybdene hver endevegg måles i")
+             + "\n\n")
+    L.append("\n**Slik strekes en del opp mot vegg og gulv:**\n\n")
+    L.append("| Slik | Ikke slik | |\n|:---:|:---:|---|\n")
+    for do, dont, line in ROOM_PREP:
+        yes = (_img("img/ikon/" + pikto[do], 72, do) + " "
+               + _img("img/ikon/" + pikto["hake"], 26, "ja"))
+        no = (_img("img/ikon/" + pikto[dont], 72, dont) + " "
+              + _img("img/ikon/" + pikto["kryss"], 26, "nei"))
+        L.append(f"| {yes} | {no} | {line} |\n")
     L.append("\n**Spikerslag i veggen** — legg dem mens veggen er åpen:\n\n")
     L.append(spikerslag_table(G, idx) + "\n")
     L.append(ROOM_ZONE_NOTE + "\n\n")

@@ -26,12 +26,21 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 
 1. Vent til vegger og gulv er ferdige. **Mens veggen er åpen: legg spikerslag i sonene under.** Etterpå kommer du ikke til.
 2. Slå et vannrett høyderiss rundt hele nisja med linjelaser, 1000 mm over ferdig gulv. Alt måles fra risset, aldri fra gulvet.
-3. Sett laseren som loddlinje midt i nisja. Mål ut til hver endevegg i rutenett: fem høyder × tre dybder på hver vegg. Legg sammen paret i hvert punkt. **Minste sum er nisjas minste bredde.**
+3. Sett laseren som loddlinje midt i nisja. Mål ut til hver endevegg i rutenett: 5 høyder × 3 dybder på hver vegg. Legg sammen paret i hvert punkt. **Minste sum er nisjas minste bredde.**
 4. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
 5. Gulv: mål ned fra risset i sengas fire hjørner og på midten. Merk det høyeste punktet på gulvet. Senga bygges ned fra det.
 6. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 15 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
 7. **De fire hjørnestolpene står helt inntil endeveggen — null klaring.** Derfor strekes veggsiden på hver av dem, hver gang: sett stolpen på plass, hold den i lodd, og strek opp veggsiden med avstandskloss der veggen buler. Høvle av til stolpen står i lodd inntil veggen. Ingen monn i bredden — det er tre som skal bort, ikke legges til. Buler veggen og du lar det stå, skyver bulen hele rammen ut av lodd.
 8. Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
+
+<img src="img/maal-rommet.png" alt="Oppriss og plan av nisja: høyderisset 1000 mm over ferdig gulv, loddlinjen midt i nisja, og de 5 høydene og 3 dybdene hver endevegg måles i" height="295">
+
+
+**Slik strekes en del opp mot vegg og gulv:**
+
+| Slik | Ikke slik | |
+|:---:|:---:|---|
+| <img src="img/ikon/meddrag-ja.svg" alt="meddrag-ja" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/punktmaal-nei.svg" alt="punktmaal-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Avstandskloss, ikke tommestokk.** Klossen følger veggen hele veien, og blyanten mot klossens ytterkant gir emnet veggens form. Ett punktmål gir en rett strek mot en vegg som ikke er rett. |
 
 **Spikerslag i veggen** — legg dem mens veggen er åpen:
 

@@ -4248,6 +4248,12 @@ def main(argv):
     if not steps_only and only is None:
         made.append(render_hero(G, out_dir, width))
         made += render_bruk(G, out_dir, width)
+        # The pre-step's figure. It is not a projection of anything - there is
+        # no bed yet when it is read - but it is drawn with this file's pen and
+        # lands in the same folder as the step pages, so it is made here with
+        # them rather than in a chain of its own.
+        import render_maalfigur
+        made.append(render_maalfigur.render(G, out_dir, width))
     if proof:
         preview = os.path.join(ROOT, "docs", "preview")
         # The sheets are rastered at the LARGEST page scale so their own type

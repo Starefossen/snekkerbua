@@ -10,9 +10,11 @@ WHERE THE NUMBERS COME FROM
 ---------------------------
 All of them from tools/gen_doc_tables.py's buy_table(), which is the same
 first-fit packing that docs/generated/innkjopsliste.md prints - which in turn
-is packed out of the model's own CUT_LIST. Not one millimetre on this page is
-typed by hand: the sale lengths, the piece lengths, the saw kerf between two
-cuts and the leftover at the end of every board are all read off that table,
+is packed out of the model's own CUT_LIST, at SAWN lengths (see the
+overlength section below). Not one millimetre on this page is typed by hand:
+the sale lengths, the piece lengths, the room's allowances, the saw kerf
+between two cuts and the leftover at the end of every board are read off that
+table,
 and the plywood line takes its size from G.PANEL_W / G.PANEL_LEN / G.PANEL_T.
 Change the model and this page changes with it.
 
@@ -62,6 +64,39 @@ one, opened out, and the magnification is printed beside it. A run only ever
 falls back to a grouped "n x len" label where even the zoom strip cannot give
 its pieces three digits' worth of width - or where the small pieces are spread
 so far along the board that there is nothing left to magnify into.
+
+THE OVERLENGTH ON A ROOM PART
+-----------------------------
+Half the cut list is not finished on the trestles. A part that stands on the
+floor is cut LONG and trimmed at the foot until the frame is level; a part that
+runs into an end wall is cut LONG at that end and fine-cut once the niche has
+been measured. The bars used to show those pieces at their nominal length like
+everything else, which is the one thing on this page a reader could act on and
+be wrong.
+
+So a room part carries its allowance in the drawing: a DASHED CAP off the end
+of the piece, the width of the allowance at the page's own scale, in the same
+weight as the bar it grows out of. One cap per end the room finishes - one on
+a piece that stands on the floor, one or two on a piece that runs into a wall,
+none at all on a piece that is only scribed across its width. A piece long at
+BOTH ends has its finished length in the middle of what is sawn, which is why
+a segment knows its `lead` as well as its `over`.
+
+AND THE CAP EATS BOARD. The packer packs `fin + over`, so the bar behind a cap
+is really that much longer, everything after it is pushed along and the rest
+at the tail is that much shorter. A cutting plan that drew the caps for free
+would be promising board the saw has already taken - the sheet cannot say one
+thing and the trestles do another. "Brukt" in the footer counts the allowance
+too: it is wood, it becomes floor sweepings, and it does not come back.
+
+How much each cap is worth is not written on it: at this scale fifteen
+millimetres is five units of page and a "+15" beside it would be four times
+the width of the thing it labels. The rule stands in the legend instead, in
+the model's own numbers, and the millimetre per line is in the cut list.
+
+Which pieces those are, and how much they get, is the model's ROOM_LINES
+verdict - nothing here decides it, and the assert at the end of render() counts
+the dashed caps in the finished SVG back against it.
 
 The tail of every board is the REST - what the packer could not place. It is
 hatched and greyed so it can never be mistaken for a piece to cut, and it
@@ -130,6 +165,14 @@ HATCH_STEP = 18.0        # the rest hatching
 PAD = 12.0               # white the knockout keeps around a label
 
 TINT = "#ececec"         # the region of a bar a zoom strip expands
+
+# The dashed cap on a room part's end. It is the only dash on this sheet, and
+# that is what lets the assert count the caps by reading the file back.
+OVER_DASH = "7 5"
+# ...and the same dash under another name for the LEGEND swatch, which is a
+# picture OF a cap and not a cap. It must not answer the assert's question -
+# it would answer it wrong. Same numbers, so it looks identical on paper.
+OVER_DASH_KEY = "7 5.0"
 
 
 # ---------------------------------------------------------------------------
@@ -202,11 +245,12 @@ def _runs(pieces):
     every one of the eight lengths is still written on its own piece.
     """
     out = []
-    for name, length in pieces:
-        if out and out[-1][0] == name and out[-1][1] == length:
-            out[-1][2] += 1
+    for name, length, over in pieces:
+        if (out and out[-1][0] == name and out[-1][1] == length
+                and out[-1][2] == over):
+            out[-1][3] += 1
         else:
-            out.append([name, length, 1])
+            out.append([name, length, over, 1])
     return [tuple(r) for r in out]
 
 
@@ -233,6 +277,25 @@ def _name_forms(name):
             seen.add(f)
             out.append(f)
     return out
+
+
+def _room_over(fit):
+    """(millimetres per end, how many ends) - what the ROOM adds to a line.
+
+    `fit` is the model's own verdict, ("gulv"|"gulv+side"|"vegg"|"meddrag",
+    total allowance, ends touched). The total is what the model worked out;
+    the only thing decided here is how it is SPREAD, and that follows the
+    kind: a piece standing on the floor is trimmed at its one foot, a piece
+    running into walls is fine-cut at each of them, and a piece that is only
+    scribed across its width gets no length at all. No millimetre is typed.
+    """
+    if not fit:
+        return (0.0, 0)
+    kind, over, ends = fit
+    if not over:
+        return (0.0, 0)
+    n = 1 if kind.startswith("gulv") else ends
+    return (over / n, n)
 
 
 def _qty_text(count, length):
@@ -263,30 +326,41 @@ def _label_run(s, sc):
     s["size"] = _fit_size(s["qty"], (s["mm1"] - s["mm0"]) * sc) or S_LEN_SM
 
 
-def _plan_board(board, scale, kerf):
+def _plan_board(board, scale, kerf, sec, fits):
     """Where every piece, cut mark and label of ONE board lands.
 
     Returns a dict: the segments (one per RUN of identical pieces, but each
-    knowing whether its pieces carry their lengths one by one), the cut marks,
-    the rest, the region a zoom strip has to expand, and whether a band of
-    outside leader callouts is needed under the bar.
+    knowing whether its pieces carry their lengths one by one, and how much
+    overlength the room adds to how many of its ends), the cut marks, the
+    rest, the region a zoom strip has to expand, and whether a band of outside
+    leader callouts is needed under the bar.
     """
     runs = _runs(board["pieces"])
     segs, marks = [], []
     pos = 0.0
-    for i, (name, length, count) in enumerate(runs):
-        start, end = pos, pos + length * count + kerf * (count - 1)
+    for i, (name, length, over_total, count) in enumerate(runs):
+        # What one piece TAKES OUT of the board is the finished length plus
+        # the room's allowance - that is where the saw goes. `lead` is the
+        # part of the allowance that sits in front of the finished length: a
+        # piece fine-cut at both wall ends is long at both ends, so the
+        # finished length stands in the middle of what is sawn.
+        per_end, nend = _room_over(fits.get((sec, name, length)))
+        sawn = length + over_total
+        lead = per_end if nend == 2 else 0.0
+        start, end = pos, pos + sawn * count + kerf * (count - 1)
         # One mark per cut, including the ones inside a run - those are the
         # repeats, drawn a shade lighter so the eye still finds the joints
         # between one KIND of piece and the next.
         for k in range(1, count):
-            marks.append((start + (length + kerf) * k - kerf / 2, False))
+            marks.append((start + (sawn + kerf) * k - kerf / 2, False))
         pos = end + kerf
         if i < len(runs) - 1:
             marks.append((end + kerf / 2, True))
         segs.append(dict(mm0=start, mm1=end, name=name, count=count,
-                         length=length, x0=start * scale, x1=end * scale,
-                         qty=_qty_text(count, length), txt=_mm(length)))
+                         length=length, sawn=sawn, lead=lead,
+                         x0=start * scale, x1=end * scale,
+                         qty=_qty_text(count, length), txt=_mm(length),
+                         over=per_end, nend=nend))
     rest_at = pos - kerf if runs else 0.0
     rest = board["buy"] - rest_at
     if rest > 0.5 and runs:
@@ -400,16 +474,27 @@ def _hatch_swatch(page, RL, x, y, w, h):
     page.hatch(x, y, w, h, HATCH_STEP, RL.GREY, RL.T.W_RULE * 0.65)
 
 
+def _over_swatch(page, RL, x, y, w, h):
+    """A piece of bar with the dashed cap on it - the key to the overlength."""
+    cap = w * 0.30
+    page.rect(x, y, w - cap, h, fill="#ffffff", stroke=RL.INK,
+              width=RL.T.W_NEW * 0.42)
+    page.polylines([[(x + w - cap, y), (x + w, y), (x + w, y + h),
+                     (x + w - cap, y + h)]], RL.INK, RL.T.W_NEW * 0.42,
+                   dash=OVER_DASH_KEY)
+
+
 # ---------------------------------------------------------------------------
 # THE SHAPE OF THE SHEET
 # ---------------------------------------------------------------------------
-def _layout(timber, sheets, kerf, page_w):
+def _layout(timber, sheets, kerf, page_w, fits):
     """Plan every board at a trial width; say how tall the page came out."""
     bar_x = MARGIN + BUY_COL
     bar_w = page_w - MARGIN - bar_x
     longest = max(b["buy"] for e in timber for b in e["boards"])
     scale = bar_w / longest
-    plans = [(e, [_plan_board(b, scale, kerf) for b in e["boards"]])
+    plans = [(e, [_plan_board(b, scale, kerf, e["section"], fits)
+                  for b in e["boards"]])
              for e in timber]
 
     h = 2 * MARGIN + TOP_H + FOOT_H
@@ -426,7 +511,7 @@ def _layout(timber, sheets, kerf, page_w):
                 page_w=page_w)
 
 
-def _shape(timber, sheets, kerf):
+def _shape(timber, sheets, kerf, fits):
     """Settle the landscape sheet: height from the metrics, width from ASPECT.
 
     The vertical metrics are fixed, so the content height is very nearly
@@ -434,9 +519,9 @@ def _shape(timber, sheets, kerf):
     piece and saves a callout band. Three passes is far more than that ever
     needs.
     """
-    lay = _layout(timber, sheets, kerf, 2100.0)
+    lay = _layout(timber, sheets, kerf, 2100.0, fits)
     for _ in range(3):
-        lay = _layout(timber, sheets, kerf, lay["h"] * ASPECT)
+        lay = _layout(timber, sheets, kerf, lay["h"] * ASPECT, fits)
     return lay
 
 
@@ -460,7 +545,13 @@ def render(G, out_dir, width, glyph_dir):
     timber = [e for e in table if not e["sheet"]]
     sheets = [e for e in table if e["sheet"]]
 
-    lay = _shape(timber, sheets, kerf)
+    # The room's verdict on every cut-list line, keyed the way a board's
+    # pieces are keyed. Straight out of the model via gen_doc_tables, so the
+    # dashed caps below and the «kapp på stedet» column in the cut list are
+    # the same rule read twice.
+    fits = {(sec, no_name, length): fit
+            for no_name, sec, length, _q, _sp, _en, fit in T.cut_table(G)}
+    lay = _shape(timber, sheets, kerf, fits)
     PAGE_W, height = lay["page_w"], lay["h"]
     bar_x, bar_w, scale = lay["bar_x"], lay["bar_w"], lay["scale"]
     plans = lay["plans"]
@@ -469,7 +560,7 @@ def render(G, out_dir, width, glyph_dir):
     top = height - MARGIN
 
     # --- the two things this step IS, plus the key to the hatching ---------
-    card_w = (PAGE_W - 2 * MARGIN) / 3
+    card_w = (PAGE_W - 2 * MARGIN) / 4
     strip_y, strip_h = top - TOP_H + 34.0, TOP_H - 48.0
     forbor = os.path.join(ICON_DIR, "forbor.svg")
 
@@ -492,6 +583,22 @@ def render(G, out_dir, width, glyph_dir):
                                           ICON, 46.0),
                ["Skravert = rest,",
                 "det du ikke skal kappe"])
+    # The fourth card is the key to the dashed caps, and its two numbers are
+    # read out of the model's own verdicts - not out of this file. If the
+    # allowances change, the legend changes with them.
+    overs = {}
+    for kind, over, ends in G.ROOM_LINES.values():
+        mm, n = _room_over((kind, over, ends))
+        if n:
+            overs[kind] = mm
+    foot = next((v for k, v in sorted(overs.items())
+                 if k.startswith("gulv")), 0.0)
+    wall = overs.get("vegg", 0.0)
+    _pictogram(page, MARGIN + 3 * card_w, strip_y, strip_h,
+               lambda x, y: _over_swatch(page, RL, x, y + (ICON - 46.0) / 2,
+                                         ICON, 46.0),
+               ["Stiplet = overmål på romdelene:",
+                f"+{_mm(foot)} i bunn, +{_mm(wall)} per veggende"])
     top -= TOP_H
 
     # --- the boards -------------------------------------------------------
@@ -517,9 +624,32 @@ def render(G, out_dir, width, glyph_dir):
                 _label(page, (cx, base), s["qty"], size, weight="bold")
             else:
                 for k in range(s["count"]):
-                    c = s["mm0"] + (s["length"] + kerf) * k + s["length"] / 2
+                    # The number labels the FINISHED length, so it sits over
+                    # the solid part of the piece and not over the allowance.
+                    c = (s["mm0"] + (s["sawn"] + kerf) * k + s["lead"]
+                         + s["length"] / 2)
                     _label(page, (x + (c - mm0) * sc, base), s["txt"], size,
                            weight="bold")
+        # The room's overlength, dashed off the end of every piece that has
+        # it. It is drawn where the piece's LENGTH is drawn - so a run that
+        # has gone down to the zoom strip is capped down there, once, and not
+        # up here where it would be a smudge three units wide.
+        for s in segs:
+            if s["mode"] == "zoom" or not s["nend"]:
+                continue
+            for k in range(s["count"]):
+                p0 = s["mm0"] + (s["sawn"] + kerf) * k
+                q0 = p0 + s["lead"]              # where the finished length
+                q1 = q0 + s["length"]            # starts and stops
+                caps = ([(q1, q1 + s["over"])] if s["nend"] == 1
+                        else [(p0, q0), (q1, q1 + s["over"])])
+                for a_mm, b_mm in caps:
+                    xa = x + (a_mm - mm0) * sc
+                    xb = x + (b_mm - mm0) * sc
+                    page.polylines([[(xa, y), (xb, y), (xb, y + h),
+                                     (xa, y + h)]], RL.INK,
+                                   RL.T.W_NEW * 0.42, dash=OVER_DASH)
+
         # The knockout under each label punched a hole in the cut marks, so
         # the parts of them that live outside the bar go back on top: the comb
         # over a run of eight blocks is never lost to a caption spanning it.
@@ -674,10 +804,33 @@ def render(G, out_dir, width, glyph_dir):
     svg = os.path.join(out_dir, "steg-00.svg")
     png = os.path.join(out_dir, "steg-00.png")
     page.write(svg, width)
+    n_caps = _assert_over_ink(svg, timber, fits)
     RL.to_png(svg, png, width)
-    print(f"  steg  0  {n_boards} bord / {n_pieces} deler "
+    print(f"  steg  0  {n_boards} bord / {n_pieces} deler, {n_caps} overmål "
           f"({PAGE_W:.0f} × {height:.0f}, {PAGE_W / height:.3f}) -> {png}")
     return png
+
+
+# THE ASSERT THAT READS THE INK. Every dashed cap on the finished sheet is one
+# end that the room finishes, so counting them in the file answers the only
+# question that matters: does the drawing promise the same overlength the cut
+# list does? The count on the other side is built from the packed pieces - the
+# model's own cut list, one entry per piece that will actually be sawn - and
+# not from the drawing code, so a piece that quietly lost its cap is a failed
+# build. The dash is this sheet's only one, which is what makes it countable.
+def _assert_over_ink(svg, timber, fits):
+    with open(svg, encoding="utf-8") as fh:
+        text = fh.read()
+    drawn = text.count(f'stroke-dasharray="{OVER_DASH}"')
+    want = 0
+    for e in timber:
+        for b in e["boards"]:
+            for name, length, _over in b["pieces"]:
+                want += _room_over(fits.get((e["section"], name, length)))[1]
+    assert drawn == want, (
+        f"kappeplanen tegnet {drawn} stiplede overmål, men modellens "
+        f"ROOM_LINES gir {want} ender som rommet kapper")
+    return drawn
 
 
 if __name__ == "__main__":
