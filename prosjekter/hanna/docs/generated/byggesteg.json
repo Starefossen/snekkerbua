@@ -10,7 +10,7 @@
       "camera": null,
       "intro": "Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du ikke til med drillen på de flatene som vender mot vegg.",
       "do": [
-        "Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring — med to navngitte unntak, og begge står i kapplista: de to kilelektene under platens forkant, og de to vinkelklossene.",
+        "Kapp etter kapplista. **Verksteddelene kappes ferdig; romdelene kappes med overmål** — kapplista sier hvilke og hvor mye, og de finkappes i rommet. Alle kutt er 90°, ingen gjæring — med to navngitte unntak, og begge står i kapplista: de to kilelektene under platens forkant, og de to vinkelklossene.",
         "Skråkapp de to kilelektene. De er 48×68 × 77 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (28,0°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.",
         "Lag de to vinkelklossene, borjiggene til skråskruene — én til J8-B og én til J10. Hver kloss er 2 biter 48×68 × 200 mm av restene, skrudd FLATE MOT FLATE. Bor ⌀18 VINKELRETT gjennom begge mens klossen ennå er firkantet — det er hullet som styrer boret siden, ikke en rampe. Kapp så sålen av under hullet på kappsag med bladet vippet 25° (J8-B) hhv. 30° (J10).",
         "**Vippen og flaten er komplementvinkler.** 25° vipp gir en såle som står 65° på den borede flaten — og dermed 25° på hullaksen, som er det leddet er regnet på. Kontroller med tommestokken før klossen får røre sengen: hullets munning i sålen skal måle 42,6 × 18 mm på 25°-klossen og 36 × 18 mm på 30°-klossen. Er ellipsen for kort, ble vippen satt på feil vinkel. Klossene bygges ikke inn i sengen — de er verktøy.",
@@ -26,6 +26,7 @@
         "Slå filtknotter under alle fire hjørnestolper og alle fire stubbeføtter."
       ],
       "check": [
+        "Romdelene skal IKKE kappes ferdig nå. Kapplista sier hvilke — de kappes med overmål og finkappes i rommet.",
         "Legg de to lengste delene — sidevangene — inn i rommet nå og sjekk at de går fritt forbi begge vegger. De er kappet kortere enn veggavstanden nettopp for dette.",
         "Legg delene i fire hauger på gulvet, én per steg. Du kommer til å lete mindre."
       ],

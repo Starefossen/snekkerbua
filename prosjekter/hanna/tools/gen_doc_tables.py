@@ -264,10 +264,12 @@ def build_steps(G):
                   "Etterpå kommer du ikke til med drillen på de flatene som "
                   "vender mot vegg.",
             do=[
-                "Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring "
-                  "— med to navngitte unntak, og begge står i kapplista: de "
-                  "to kilelektene under platens forkant, og de to "
-                  "vinkelklossene.",
+                "Kapp etter kapplista. **Verksteddelene kappes ferdig; "
+                  "romdelene kappes med overmål** — kapplista sier hvilke og "
+                  "hvor mye, og de finkappes i rommet. Alle kutt er 90°, "
+                  "ingen gjæring — med to navngitte unntak, og begge står i "
+                  "kapplista: de to kilelektene under platens forkant, og de "
+                  "to vinkelklossene.",
                 f"Skråkapp de to kilelektene. De er {_SEC} × {G.NOSE_LEN} mm "
                   "og skal "
                   "sages ned i ett rett snitt fra full høyde i den ene enden "
@@ -353,6 +355,8 @@ def build_steps(G):
                   "stubbeføtter.",
             ],
             check=[
+                "Romdelene skal IKKE kappes ferdig nå. Kapplista sier hvilke "
+                  "— de kappes med overmål og finkappes i rommet.",
                 "Legg de to lengste delene — sidevangene — inn i rommet nå og "
                   "sjekk at de går fritt forbi begge vegger. De er kappet "
                   "kortere enn veggavstanden nettopp for dette.",
@@ -973,6 +977,12 @@ def part_cut_keys(G):
                          if p.label.startswith(pre)), None)
             assert name is not None, f"no cut-list line known for '{p.label}'"
         out[p.label] = by_name[name][0]
+        # The model now writes the line onto the piece as it makes it, so the
+        # prefix table above has something to be checked AGAINST rather than
+        # merely asserted for completeness.
+        assert p.cut == out[p.label], \
+            f"LABEL_TO_CUT puts '{p.label}' in {out[p.label]}, the model put " \
+            f"it in {p.cut}"
 
     counted = {}
     for key in out.values():
@@ -986,7 +996,12 @@ def part_cut_keys(G):
 
 
 def cut_table(G):
-    """[(no_name, section, length, qty, (xr, yr, zr)), ...] sorted for humans."""
+    """[(no_name, section, length, qty, (xr, yr, zr), en, fit), ...].
+
+    `fit` is the model's room-fit verdict for the whole line - None for a
+    piece the workshop finishes, otherwise ("gulv"|"vegg"|"meddrag", overmål).
+    The verdict is a rule in generate_loftbed.py; nothing here decides it.
+    """
     keys = part_cut_keys(G)
     spans = {}
     for p in list(G.parts) + [G.panel_bed] + list(G.battens_bed):
@@ -1000,7 +1015,8 @@ def cut_table(G):
     for (name, section, length), qty in G.CUT_LIST.items():
         assert name in NO_NAMES, f"cut-list name '{name}' has no Norwegian name"
         rows.append((NO_NAMES[name], _no_section(G, section), length, qty,
-                     spans[(name, section, length)], name))
+                     spans[(name, section, length)], name,
+                     G.ROOM_LINES.get((name, section, length))))
     rows.sort(key=lambda r: (r[1], -r[2], r[0]))
     return rows
 
@@ -1049,7 +1065,7 @@ def pack(pieces, lengths=None):
 def buy_table(G):
     rows = cut_table(G)
     by_section = {}
-    for no_name, section, length, qty, _spans, _en in rows:
+    for no_name, section, length, qty, _spans, _en, _fit in rows:
         by_section.setdefault(section, []).extend([(no_name, length)] * qty)
     out = []
     for section, pieces in sorted(by_section.items()):
@@ -1078,22 +1094,138 @@ def write(path, text):
     print(f"  wrote {path}")
 
 
+# WHAT THE ROOM FINISHES, IN WORDS. The kind and the millimetres come out of
+# generate_loftbed.py; this only puts them in Norwegian. Nothing here decides
+# how much - `over` is the model's own allowance for that line.
+def _fit_text(G, fit):
+    kind, over, ends = fit
+    if kind == "gulv":
+        return f"**+{over}** — trimmes i bunn"
+    if kind == "vegg":
+        hvor = "i hver ende" if ends == 2 else "i veggenden"
+        return f"**+{over // ends}** {hvor} — finkappes"
+    return "nominell — bredden strekes opp"
+
+
+def _cut_rows(L, rows):
+    """One position table. Returns the number of pieces it printed."""
+    L.append("| Del | Dim. | Lengde | Ant. | X | Y | Z |\n")
+    L.append("|---|---|---:|---:|---|---|---|\n")
+    n = 0
+    for no_name, section, length, qty, sp, _en, _fit in rows:
+        n += qty
+        L.append(f"| {no_name} | {section} | **{_fmt(length)}** | {qty} | "
+                 f"{_axis(sp[0])} | {_axis(sp[1])} | {_axis(sp[2])} |\n")
+    return n
+
+
+def _room_rows(G, L, rows):
+    L.append("| Del | Dim. | Lengde | Ant. | Kapp på stedet | X | Y | Z |\n")
+    L.append("|---|---|---:|---:|---|---|---|---|\n")
+    n = 0
+    for no_name, section, length, qty, sp, _en, fit in rows:
+        n += qty
+        L.append(f"| {no_name} | {section} | **{_fmt(length)}** | {qty} | "
+                 f"{_fit_text(G, fit)} | "
+                 f"{_axis(sp[0])} | {_axis(sp[1])} | {_axis(sp[2])} |\n")
+    return n
+
+
+# THE ASSERT THAT READS THE INK. The split into two tables is a rule in the
+# model, and a rule can be printed wrong. So the finished file is read back
+# and every row is checked against the POSITION PRINTED IN THE SAME ROW: a
+# part under «kapp på stedet» has to show an X that reaches a wall or a Z
+# that starts on the floor, and a part under «kapp nå» has to show neither.
+# Nothing here repeats a length or a name.
+def _assert_kappliste_ink(G, text):
+    def cells(row):
+        return [c.strip() for c in row.strip().strip("|").split("|")]
+
+    def span(cell):
+        lo, hi = cell.replace(" (fordelt)", "").split("..")
+        return float(lo.replace(",", ".")), float(hi.replace(",", "."))
+
+    tables = {}
+    head = None
+    for line in text.split("\n"):
+        if line.startswith("## "):
+            head = line[3:].strip()
+            tables.setdefault(head, [])
+        elif line.startswith("| ") and head in tables:
+            c = cells(line)
+            if c[0] in ("Del", "---") or set(c[0]) <= set("-:"):
+                continue
+            tables[head].append(c)
+
+    shop = next(v for k, v in tables.items() if k.startswith("Kapp nå —"))
+    room = next(v for k, v in tables.items() if k.startswith("Kapp når rommet"))
+    assert shop and room, "one of the two cut tables came out empty"
+
+    for c in shop + room:
+        is_room = len(c) == 8
+        x0, x1 = span(c[-3])
+        z0, _z1 = span(c[-1])
+        touches = (x0 <= G.ROOM_TOL or x1 >= G.WALL_SPAN - G.ROOM_TOL
+                   or z0 == 0)
+        assert touches == is_room, (
+            f"«{c[0]}» står under «{'kapp på stedet' if is_room else 'kapp nå'}»"
+            f", men posisjonen i samme rad sier X {c[-3]}, Z {c[-1]}")
+        if is_room:
+            allowed = {f"+{G.ROOM_OVER_FLOOR}", f"+{G.ROOM_OVER_WALL}"}
+            assert (any(a in c[4] for a in allowed)
+                    or "nominell" in c[4]), \
+                f"«{c[0]}» har overmålet «{c[4]}», som ikke er en av " \
+                f"modellens: {sorted(allowed)} eller nominell lengde"
+
+    assert len(shop) + len(room) == len(G.CUT_LIST), \
+        f"{len(shop)} + {len(room)} rader mot {len(G.CUT_LIST)} linjer i " \
+        "modellens kappliste"
+    assert len(room) == len(G.ROOM_LINES), \
+        f"{len(room)} romdel-rader mot {len(G.ROOM_LINES)} romdel-linjer i " \
+        "modellen"
+
+
 def emit_kappliste(G, out_dir):
     rows = cut_table(G)
+    shop = [r for r in rows if r[6] is None]
+    room = [r for r in rows if r[6] is not None]
     L = [HEAD, "# Kappliste\n\n",
          "Alle mål i mm. Alle kutt er 90° på to nær — se merknaden "
-         "under tabellen. Posisjonen er delens plass i "
+         "under tabellene. Posisjonen er delens plass i "
          f"modellen: X langs veggen (0 = venstre vegg, {G.WALL_SPAN} = høyre "
          f"vegg), Y i dybden ({_fmt(G.WALL_Y)} = bakveggen), Z opp fra "
          "gulvet.\n\n",
-         "| Del | Dim. | Lengde | Ant. | X | Y | Z |\n",
-         "|---|---|---:|---:|---|---|---|\n"]
-    total = 0
-    for no_name, section, length, qty, sp, _en in rows:
-        total += qty
-        L.append(f"| {no_name} | {section} | **{_fmt(length)}** | {qty} | "
-                 f"{_axis(sp[0])} | {_axis(sp[1])} | {_axis(sp[2])} |\n")
-    L.append(f"\n**{total} deler i alt.**\n\n")
+         "Lista står i to bolker, og skillet er en regel: **en del som "
+         f"kommer nærmere enn {_fmt(G.ROOM_TOL)} mm fra en endevegg, eller "
+         "som står på gulvet, får sluttmålet sitt av rommet — ikke av "
+         "modellen.** Rommet er hverken i vinkel eller i vater. Resten "
+         "kappes ferdig på bukken.\n\n",
+         "Mål rommet før du kapper romdelene: se "
+         "[byggesteg](byggesteg.md#før-steg-0--mål-rommet).\n\n"]
+
+    L.append("## Kapp nå — verksteddeler\n\n")
+    n_shop = _cut_rows(L, shop)
+    L.append(f"\n**{n_shop} deler.** Rommet bestemmer ingen mål på disse. "
+             "Kapp dem ferdig med én gang.\n\n")
+
+    L.append("## Kapp når rommet er ferdig — romdeler\n\n")
+    n_room = _room_rows(G, L, room)
+    L.append(f"\n**{n_room} deler.** Kapp dem med overmålet i kolonnen "
+             "«Kapp på stedet», og finkapp på stedet:\n\n")
+    L.append(f"* **Står på gulvet:** kapp {G.ROOM_OVER_FLOOR} mm for lang. "
+             "Gulvet legges først. Så trimmes foten til rammen står i "
+             "vater. Strek opp med avstandskloss — meddrag.\n")
+    L.append(f"* **Går fra vegg til vegg:** kapp {G.ROOM_OVER_WALL} mm for "
+             "lang i hver ende som møter vegg. Finkapp etter målt "
+             "nisjebredde.\n")
+    L.append("* **Bredden mot veggen:** kappes på nominell lengde. Det er "
+             "BREDDEN som tilpasses, ikke lengden — ytterkanten strekes opp "
+             "etter veggen så fugen blir jevn.\n\n")
+    L.append("Kapp kanter som møter vegg eller gulv med lite bakfall. Da er "
+             "det bare den synlige kanten som bestemmer fugen.\n\n")
+
+    total = n_shop + n_room
+    L.append(f"**{total} deler i alt.**\n\n")
     L.append("«(fordelt)» betyr at delene i den raden står på flere "
              "posisjoner langs den aksen; kolonnen viser da hele området de "
              "dekker. Nøyaktige posisjoner står i "
@@ -1127,7 +1259,7 @@ def emit_kappliste(G, out_dir):
              "restene i steg 0.\n\n")
 
     by_section = {}
-    for no_name, section, length, qty, _sp, _en in rows:
+    for no_name, section, length, qty, _sp, _en, _fit in rows:
         by_section[section] = by_section.get(section, 0) + qty
     L.append("Fordelt på dimensjon: "
              + " · ".join(f"**{s}** {n} stk."
@@ -1136,7 +1268,7 @@ def emit_kappliste(G, out_dir):
              + "\n\n")
     board = G.sec(G.BOARD36_T, G.BOARD36_W).replace("x", "×")
     lens = {}
-    for no_name, section, length, qty, _sp, _en in rows:
+    for no_name, section, length, qty, _sp, _en, _fit in rows:
         if section == board:
             lens[length] = lens.get(length, 0) + qty
     L.append("Sagstopp for hovedbordet " + board + ": "
@@ -1145,17 +1277,33 @@ def emit_kappliste(G, out_dir):
              + f" — {len(lens)} innstilling"
              + ("er" if len(lens) != 1 else "")
              + " på sagen, ikke én per del.\n")
-    write(os.path.join(out_dir, "kappliste.md"), "".join(L))
+    text = "".join(L)
+    _assert_kappliste_ink(G, text)
+    write(os.path.join(out_dir, "kappliste.md"), text)
 
 
 def emit_innkjopsliste(G, out_dir):
     tab = buy_table(G)
+    # ROMDELENE KAPPES FOR LANGE. Kappeplanen under er regnet på de nominelle
+    # lengdene, så overmålet må gå av resten på det bordet delen ligger på -
+    # ellers ber kapplista om tre denne lista ikke har kjøpt. Det er en assert
+    # per bord, ikke et håp, og den bruker modellens egne overmål.
+    over = {(no_name, length): fit[1]
+            for no_name, _s, length, _q, _sp, _en, fit in cut_table(G) if fit}
+
+    def _over_on(board):
+        return sum(over.get((name, ln), 0) for name, ln in board["pieces"])
+
     L = [HEAD, "# Innkjøpsliste — trevirke\n\n",
          "Høvlet konstruksjonsvirke C24 der ikke annet er nevnt. "
          f"Kappingen under er regnet med {KERF} mm sagsnitt mellom hvert "
          "kutt, og hvert bord er valgt som den korteste salgslengden som "
          "rommer det som skal kappes av det — blant de lengdene dimensjonen "
-         "faktisk selges i. Se merknadene nederst.\n\n"]
+         "faktisk selges i. Se merknadene nederst.\n\n",
+         "Lengdene under er de nominelle. Romdelene kappes for lange og "
+         "finkappes i rommet — se [kapplista](kappliste.md) — og overmålet "
+         "går av resten på det samme bordet. Du trenger ikke kjøpe mer virke "
+         "for det.\n\n"]
 
     L.append("## Kort handleliste\n\n| Dimensjon | Kjøp | Svinn |\n")
     L.append("|---|---|---:|\n")
@@ -1191,6 +1339,11 @@ def emit_innkjopsliste(G, out_dir):
                 per[(name, ln)] = per.get((name, ln), 0) + 1
             txt = " + ".join(f"{q} × {_fmt(ln)} ({name})"
                              for (name, ln), q in sorted(per.items()))
+            extra = _over_on(b)
+            assert b["rest"] >= extra, (
+                f"bord {i} av {e['section']} har {_fmt(b['rest'])} mm rest, "
+                f"men romdelene på det skal kappes {_fmt(extra)} mm for "
+                "lange - overmålet går ikke av dette bordet")
             L.append(f"| {i} | {_fmt(b['buy'])} | {txt} | "
                      f"{_fmt(b['rest'])} |\n")
         L.append("\n")
@@ -1205,7 +1358,9 @@ def emit_innkjopsliste(G, out_dir):
         mine = [a for a in G.SHOP_AIDS
                 if a["section"] == e["section"].replace("×", "x")]
         if mine:
-            best = max(bb["rest"] for bb in e["boards"])
+            # Resten ETTER at romdelenes overmål er tatt av det samme bordet:
+            # jiggene og overmålet spiser av den samme avkappen.
+            best = max(bb["rest"] - _over_on(bb) for bb in e["boards"])
             pieces = [(a["name"], a["length"])
                       for a in mine for _ in range(a["qty"])]
             need = sum(ln for _n, ln in pieces) + KERF * (len(pieces) - 1)
@@ -1673,6 +1828,115 @@ def emit_nokkelmal(G, out_dir, rows):
     write(os.path.join(out_dir, "nokkelmal.md"), "".join(L))
 
 
+# ---------------------------------------------------------------------------
+# BEFORE STEP 0 - the room
+# ---------------------------------------------------------------------------
+# The bed is cut to a niche this model draws as three perfect planes. The
+# house it is going into is being rebuilt, so those planes are about to be
+# rebuilt too - and that makes the order of work a fact about the BUILD, not
+# advice. This is that order, and every number in it is read off the model:
+# the zones off WALL_ZONES, the niche width off WALL_SPAN, the allowances off
+# ROOM_OVER_*. The text lives here, once, and is rendered into both
+# byggesteg.md and MONTERING.md the way the numbered steps are.
+ROOM_TITLE = "Før steg 0 — mål rommet"
+
+
+def spikerslag_rows(G, idx):
+    """[(nr, "fra–til", vegg, del), ...] - the noggings the wall needs."""
+    out = []
+    for i, zo in enumerate(G.WALL_ZONES, 1):
+        z0, z1 = zo["z"]
+        name = idx[zo["labels"][0]][0]
+        n = len(zo["labels"])
+        out.append((i, f"{_fmt(z0)}–{_fmt(z1)}",
+                    "Hjørnene, mot endeveggene" if zo["corner"]
+                    else "Bakveggen",
+                    f"{name}" + (f" ({n} stk.)" if n > 1 else "")))
+    return out
+
+
+def spikerslag_table(G, idx):
+    L = ["| Sone | Fra ferdig gulv | Vegg | Del som skal ha feste |\n",
+         "|---:|---|---|---|\n"]
+    for nr, z, wall, part in spikerslag_rows(G, idx):
+        L.append(f"| {nr} | **{z}** | {wall} | {part} |\n")
+    return "".join(L)
+
+
+def room_first(G):
+    """The pre-step, step-shaped: title, intro, do, check."""
+    return dict(
+        title=ROOM_TITLE,
+        intro="Nisja er hverken i vinkel eller i vater, og senga skal stå i "
+              "begge deler. **Senga er referansen, ikke rommet — bygg i "
+              "vater og lodd, og ta skjevheten i delene som møter vegg og "
+              "gulv.**",
+        do=[
+            "Vent til vegger og gulv er ferdige. **Mens veggen er åpen: legg "
+            "spikerslag i sonene under.** Etterpå kommer du ikke til.",
+            f"Slå et vannrett høyderiss rundt hele nisja med linjelaser, "
+            f"{G.MEASURE_DATUM_Z} mm over ferdig gulv. Alt måles fra risset, "
+            "aldri fra gulvet.",
+            "Sett laseren som loddlinje midt i nisja. Mål ut til hver "
+            "endevegg i rutenett: fem høyder × tre dybder på hver vegg. Legg "
+            "sammen paret i hvert punkt. **Minste sum er nisjas minste "
+            "bredde.**",
+            f"Er minste bredde et annet tall enn {G.WALL_SPAN}: sett den inn "
+            "som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run "
+            "build`. Kapplista regner seg om.",
+            "Gulv: mål ned fra risset i sengas fire hjørner og på midten. "
+            "Merk det høyeste punktet på gulvet. Senga bygges ned fra det.",
+            "Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper "
+            f"og føtter kappes {G.ROOM_OVER_FLOOR} mm for lange og trimmes i "
+            "bunn til rammen står i vater — strek opp med avstandskloss, "
+            f"meddrag. Sidevangene kappes {G.ROOM_OVER_WALL} mm for lange i "
+            "hver veggende og finkappes etter målt bredde. Ytterste "
+            "endespile strekes opp etter veggen med fast avstand, så fugen "
+            "blir jevn.",
+            "Kapp kanter som møter vegg eller gulv med lite bakfall. Da er "
+            "det bare den synlige kanten som bestemmer fugen.",
+        ],
+        check=[
+            "Høyderisset skal gå hele veien rundt nisja og møte seg selv. "
+            "Gjør det ikke det, står laseren feil.",
+            f"Er forskjellen mellom minste og største bredde større enn "
+            f"{G.ROOM_OVER_WALL} mm, mål om. Kapp uansett etter den minste.",
+            "Sjekk at spikerslagene ligger i sonene før veggen lukkes.",
+        ],
+    )
+
+
+ROOM_ZONE_NOTE = ("Målene er fra **ferdig gulv**. Legges gulvet etterpå, må "
+                  "påforingshøyden legges til.")
+
+
+# THE ASSERT THAT READS THE INK. Every height band printed in the nogging
+# table has to be the real Z extent of the part named in the same row - not a
+# number that once was.
+def assert_spikerslag_ink(G, idx, text):
+    seen = 0
+    for line in text.split("\n"):
+        if not line.startswith("| ") or "**" not in line:
+            continue
+        c = [x.strip() for x in line.strip().strip("|").split("|")]
+        if len(c) != 4:
+            continue
+        m = re.fullmatch(r"\*\*([\d,]+)–([\d,]+)\*\*", c[1])
+        if not m:
+            continue
+        z0, z1 = (float(v.replace(",", ".")) for v in m.groups())
+        part = re.sub(r" \(\d+ stk\.\)$", "", c[3])
+        hits = [p for p in G.CUT_PARTS
+                if idx[p.label][0] == part
+                and abs(p.extents[2][0] - z0) < 0.05
+                and abs(p.extents[2][1] - z1) < 0.05]
+        assert hits, (f"spikerslagsone {c[0]} sier {c[1]} for «{part}», men "
+                      "ingen del med det navnet står i den høyden")
+        seen += 1
+    assert seen == len(G.WALL_ZONES), \
+        f"{seen} soner på trykk mot {len(G.WALL_ZONES)} i modellen"
+
+
 def emit_byggesteg(G, out_dir, steps, idx):
     L = [HEAD, "# Steg for steg\n\n",
          "Rekkefølgen er ikke fri. Sengen står inntil bakveggen og inntil "
@@ -1685,6 +1949,25 @@ def emit_byggesteg(G, out_dir, steps, idx):
          "leddene står i J-oversikten i "
          "[ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene), med antall og forboring "
          "i [beslaglista](beslagliste.md).\n\n"]
+
+    # Før steg 0: rommet. Steg 0 kapper, og halve kapplista kan ikke kappes
+    # ferdig før nisja er målt - så dette står foran, ikke i en merknad.
+    room = room_first(G)
+    L.append(f"## {room['title']}\n\n")
+    L.append(room["intro"] + "\n\n")
+    L.append("**Slik gjør du:**\n\n")
+    for d in room["do"]:
+        L.append(f"1. {d}\n")
+    L.append("\n**Spikerslag i veggen:**\n\n")
+    L.append(spikerslag_table(G, idx) + "\n")
+    L.append(ROOM_ZONE_NOTE + "\n\n")
+    L.append("Hva som kappes nå og hva som kappes på stedet: "
+             "[kapplista](kappliste.md).\n\n")
+    L.append("**Sjekk før du går videre:**\n\n")
+    for c in room["check"]:
+        L.append(f"* {c}\n")
+    L.append("\n")
+
     for st in steps:
         L.append(f"## Steg {st['n']} — {st['title']}\n\n")
         L.append(st["intro"] + "\n\n")
@@ -1708,7 +1991,9 @@ def emit_byggesteg(G, out_dir, steps, idx):
         for c in st["check"]:
             L.append(f"* {c}\n")
         L.append("\n")
-    write(os.path.join(out_dir, "byggesteg.md"), "".join(L))
+    text = "".join(L)
+    assert_spikerslag_ink(G, idx, text)
+    write(os.path.join(out_dir, "byggesteg.md"), text)
 
 
 MONTERING_HEAD = (
@@ -1867,7 +2152,22 @@ def emit_montering(G, root, steps, idx):
          "Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). "
          "Full steg-for-steg-tekst: [byggesteg](generated/byggesteg.md).\n\n"]
 
-    # ----- page 2: before you start ---------------------------------------
+    # ----- page 2: the room ------------------------------------------------
+    # Denne siden står før alt annet fordi arbeidet gjør det: nisja må være
+    # ferdig og målt før halve kapplista kan kappes. Samme tekst som i
+    # byggesteg.md - den står ett sted, i room_first().
+    room = room_first(G)
+    L.append("---\n\n# Mål rommet først\n\n")
+    L.append(room["intro"] + "\n\n")
+    for i, d in enumerate(room["do"], 1):
+        L.append(f"{i}. {d}\n")
+    L.append("\n**Spikerslag i veggen** — legg dem mens veggen er åpen:\n\n")
+    L.append(spikerslag_table(G, idx) + "\n")
+    L.append(ROOM_ZONE_NOTE + "\n\n")
+    for c in room["check"][:1]:
+        L.append(f"⚠️ {c}\n\n")
+
+    # ----- page 3: before you start ---------------------------------------
     L.append("---\n\n# Før du begynner\n\n")
     L.append("**Svart strek** er delen du setter opp nå. "
              "**Grå strek** er det som allerede står.\n\n")
@@ -1915,7 +2215,7 @@ def emit_montering(G, root, steps, idx):
         L.append(f"| {yes} | {no} | {line} |\n")
     L.append("\n")
 
-    # ----- page 3: hardware -----------------------------------------------
+    # ----- page 4: hardware -----------------------------------------------
     # The legend first: nothing on this page says what the two numbers in
     # "5×60" are, or what the "100x" counts. One measured exemplar does.
     L.append("---\n\n# Beslag\n\n")
@@ -1940,14 +2240,20 @@ def emit_montering(G, root, steps, idx):
              "enkelt drives, og hvorfor: "
              "[skrueretninger](generated/skrueretninger.md).\n\n")
 
-    # ----- page 4: parts ---------------------------------------------------
+    # ----- page 5: parts ---------------------------------------------------
     L.append("---\n\n# Delene\n\n")
-    L.append("| Del | Dim. | Lengde | Ant. |\n|---|---|---:|---:|\n")
-    for no_name, section, length, qty, _sp, _en in parts_rows:
-        L.append(f"| {no_name} | {section} | {_fmt(length)} | **{qty}** |\n")
+    L.append("| Del | Dim. | Lengde | Ant. | Kapp |\n|---|---|---:|---:|---|\n")
+    for no_name, section, length, qty, _sp, _en, fit in parts_rows:
+        L.append(f"| {no_name} | {section} | {_fmt(length)} | **{qty}** | "
+                 + ("på stedet" if fit else "nå") + " |\n")
     L.append(f"\n**{n_parts} deler.** **Ant.** er antallet — det samme tallet "
              "som står som `4×` på stegsidene. **Dim.** og **Lengde** er i "
              "millimeter.\n\n")
+    n_room = sum(r[3] for r in parts_rows if r[6])
+    L.append(f"**Kapp:** «nå» er delene verkstedet gjør ferdig. «på stedet» "
+             f"er de {n_room} delene som møter en endevegg eller gulvet — de "
+             "kappes med overmål og finkappes i rommet. Overmålet står i "
+             "[kapplista](generated/kappliste.md).\n\n")
     L.append("Posisjoner: [kappliste](generated/kappliste.md). Hva du skal "
              "kjøpe: [innkjøpsliste](generated/innkjopsliste.md).\n\n")
 

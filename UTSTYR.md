@@ -89,10 +89,12 @@ Rangert etter hva som låser opp mest per krone, gitt eksisterende park:
 | # | Verktøy | Hvorfor / hva det låser opp | Merknad (ONE+/HP-status) |
 |---|---|---|---|
 | 1 | **Eksentersliper — ONE+ HP-variant** | Finish-kvalitet på alt; HANNA: 71 deler skal slipes før maling | Kjøp før malejobben. HP børsteløs-utgave finnes i sortimentet — verifiser modellnr. (ikke ta brushed R18ROS hvis HP står ved siden av) |
-| 2 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Batteriuavhengig; billigst per nytte på lista |
-| 3 | **Forstnerbor-sett** | Flatbunnede hull: HANNA trenger ⌀18 (skråskrue-setene) og ⌀40 (filtknottene) | Drives av drillen (13 mm chuck ✓). **Trengs til HANNA-byggingen** |
-| 4 | **Japansk sag (ryoba) + stemjern-sett** | Rene hakk og presisjon for hånd; billigste vei til skjult treskjøt | Batteriuavhengig, ~200–400 kr |
-| 5 | Dyvel-jig, lommehullsjig | Skjulte skjøter i fremtidige synlige møbler | Ved behov |
+| 2 | **Linjelaser, selvnivellerende kryss** | Høyderiss rundt nisja og loddlinje midt i den. Uten den kan ikke romdelene i HANNA kappes: nisjas minste bredde og gulvets høyeste punkt måles fra risset, ikke fra gulvet | Batteriuavhengig, 500–1500 kr. **Trengs FØR kapp av romdelene** |
+| 3 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Batteriuavhengig; billigst per nytte på lista |
+| 4 | **Forstnerbor-sett** | Flatbunnede hull: HANNA trenger ⌀18 (skråskrue-setene) og ⌀40 (filtknottene) | Drives av drillen (13 mm chuck ✓). **Trengs til HANNA-byggingen** |
+| 5 | **Japansk sag (ryoba) + stemjern-sett** | Rene hakk og presisjon for hånd; billigste vei til skjult treskjøt | Batteriuavhengig, ~200–400 kr |
+| 6 | Blokkhøvel | Finjustering av skribede føtter og kanter som møter vegg — de siste millimeterne etter finkapp | Valgfri: båndsliper eller pussekloss duger. Batteriuavhengig |
+| 7 | Dyvel-jig, lommehullsjig | Skjulte skjøter i fremtidige synlige møbler | Ved behov |
 
 **Avmeldt etter strategivalget:** R18CS-0 (brushed sirkelsag, skinneinkompatibel),
 RCK183G-0-pakken (inneholder brushed sirkelsag + stikksag vi ikke trenger ennå),

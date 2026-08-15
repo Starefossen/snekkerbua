@@ -199,6 +199,12 @@ def build_manual(marks: PageMarks) -> tuple[list[str], list[tuple[str, str]]]:
             key = "prep"
             toc.append((key, "Før du begynner"))
             pages.append(simple_page(section, marks, key, css="prep"))
+        elif head == "# Mål rommet først":
+            # Forsteget: nisja males for noe kappes. Ren tekst og en liten
+            # tabell, sa den gar pa prep-malen.
+            key = "rommet"
+            toc.append((key, "Mål rommet først"))
+            pages.append(simple_page(section, marks, key, css="prep"))
         elif head == "# Beslag":
             key = "beslag"
             toc.append((key, "Beslag"))

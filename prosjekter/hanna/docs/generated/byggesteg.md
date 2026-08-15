@@ -7,6 +7,39 @@ Rekkefølgen er ikke fri. Sengen står inntil bakveggen og inntil begge sidevegg
 
 Bildeversjonen av de samme stegene, med samme nummer, ligger i [MONTERING.md](../MONTERING.md). Mål slår du opp i [nøkkelmål](nokkelmal.md) og [kappliste](kappliste.md); leddene står i J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene), med antall og forboring i [beslaglista](beslagliste.md).
 
+## Før steg 0 — mål rommet
+
+Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Senga er referansen, ikke rommet — bygg i vater og lodd, og ta skjevheten i delene som møter vegg og gulv.**
+
+**Slik gjør du:**
+
+1. Vent til vegger og gulv er ferdige. **Mens veggen er åpen: legg spikerslag i sonene under.** Etterpå kommer du ikke til.
+1. Slå et vannrett høyderiss rundt hele nisja med linjelaser, 1000 mm over ferdig gulv. Alt måles fra risset, aldri fra gulvet.
+1. Sett laseren som loddlinje midt i nisja. Mål ut til hver endevegg i rutenett: fem høyder × tre dybder på hver vegg. Legg sammen paret i hvert punkt. **Minste sum er nisjas minste bredde.**
+1. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
+1. Gulv: mål ned fra risset i sengas fire hjørner og på midten. Merk det høyeste punktet på gulvet. Senga bygges ned fra det.
+1. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 15 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
+1. Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
+
+**Spikerslag i veggen:**
+
+| Sone | Fra ferdig gulv | Vegg | Del som skal ha feste |
+|---:|---|---|---|
+| 1 | **0–1065** | Hjørnene, mot endeveggene | Hjørnestolpe, bak (veggside) (2 stk.) |
+| 2 | **191–259** | Bakveggen | Benkevange, bak (gjennomgående) |
+| 3 | **414–482** | Bakveggen | Bordbærelekt, bak |
+| 4 | **1065–1163** | Bakveggen | Sidevange, øvre |
+
+Målene er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøyden legges til.
+
+Hva som kappes nå og hva som kappes på stedet: [kapplista](kappliste.md).
+
+**Sjekk før du går videre:**
+
+* Høyderisset skal gå hele veien rundt nisja og møte seg selv. Gjør det ikke det, står laseren feil.
+* Er forskjellen mellom minste og største bredde større enn 10 mm, mål om. Kapp uansett etter den minste.
+* Sjekk at spikerslagene ligger i sonene før veggen lukkes.
+
 ## Steg 0 — Kapping, forboring og forsenking
 
 Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du ikke til med drillen på de flatene som vender mot vegg.
@@ -17,7 +50,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 
 **Slik gjør du:**
 
-1. Kapp alt etter kapplista. Alle kutt er 90°, ingen gjæring — med to navngitte unntak, og begge står i kapplista: de to kilelektene under platens forkant, og de to vinkelklossene.
+1. Kapp etter kapplista. **Verksteddelene kappes ferdig; romdelene kappes med overmål** — kapplista sier hvilke og hvor mye, og de finkappes i rommet. Alle kutt er 90°, ingen gjæring — med to navngitte unntak, og begge står i kapplista: de to kilelektene under platens forkant, og de to vinkelklossene.
 1. Skråkapp de to kilelektene. De er 48×68 × 77 mm og skal sages ned i ett rett snitt fra full høyde i den ene enden til 27 mm i den andre (28,0°). Håndsag eller båndsag; overkanten — den som skal limes mot plata — skal stå urørt og plan.
 1. Lag de to vinkelklossene, borjiggene til skråskruene — én til J8-B og én til J10. Hver kloss er 2 biter 48×68 × 200 mm av restene, skrudd FLATE MOT FLATE. Bor ⌀18 VINKELRETT gjennom begge mens klossen ennå er firkantet — det er hullet som styrer boret siden, ikke en rampe. Kapp så sålen av under hullet på kappsag med bladet vippet 25° (J8-B) hhv. 30° (J10).
 1. **Vippen og flaten er komplementvinkler.** 25° vipp gir en såle som står 65° på den borede flaten — og dermed 25° på hullaksen, som er det leddet er regnet på. Kontroller med tommestokken før klossen får røre sengen: hullets munning i sålen skal måle 42,6 × 18 mm på 25°-klossen og 36 × 18 mm på 30°-klossen. Er ellipsen for kort, ble vippen satt på feil vinkel. Klossene bygges ikke inn i sengen — de er verktøy.
@@ -34,6 +67,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 
 **Sjekk før du går videre:**
 
+* Romdelene skal IKKE kappes ferdig nå. Kapplista sier hvilke — de kappes med overmål og finkappes i rommet.
 * Legg de to lengste delene — sidevangene — inn i rommet nå og sjekk at de går fritt forbi begge vegger. De er kappet kortere enn veggavstanden nettopp for dette.
 * Legg delene i fire hauger på gulvet, én per steg. Du kommer til å lete mindre.
 

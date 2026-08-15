@@ -3,29 +3,50 @@
 
 # Kappliste
 
-Alle mål i mm. Alle kutt er 90° på to nær — se merknaden under tabellen. Posisjonen er delens plass i modellen: X langs veggen (0 = venstre vegg, 1990 = høyre vegg), Y i dybden (-48 = bakveggen), Z opp fra gulvet.
+Alle mål i mm. Alle kutt er 90° på to nær — se merknaden under tabellene. Posisjonen er delens plass i modellen: X langs veggen (0 = venstre vegg, 1990 = høyre vegg), Y i dybden (-48 = bakveggen), Z opp fra gulvet.
+
+Lista står i to bolker, og skillet er en regel: **en del som kommer nærmere enn 5 mm fra en endevegg, eller som står på gulvet, får sluttmålet sitt av rommet — ikke av modellen.** Rommet er hverken i vinkel eller i vater. Resten kappes ferdig på bukken.
+
+Mål rommet før du kapper romdelene: se [byggesteg](byggesteg.md#før-steg-0--mål-rommet).
+
+## Kapp nå — verksteddeler
 
 | Del | Dim. | Lengde | Ant. | X | Y | Z |
 |---|---|---:|---:|---|---|---|
 | Løs plate | 18 mm plate, 574 bred | **798** | 1 | 708..1282 | -48..750 | 259..277 |
 | Benkespile | 23×98 | **800** | 10 | 98..1892 (fordelt) | -48..752 | 259..282 |
 | Køyespile | 23×98 | **800** | 14 | 20..1970 (fordelt) | -48..752 | 1163..1186 |
-| Endespile | 23×98 | **764** | 2 | 0..1990 (fordelt) | -12..752 | 259..282 |
-| Stigevange | 36×48 | **1700** | 2 | 787..1203 (fordelt) | 752..788 | 0..1700 |
-| Endelist | 36×48 | **98** | 2 | 0..1990 (fordelt) | -12..24 | 211..259 |
 | Stigekloss | 36×48 | **36** | 8 | 835..1155 (fordelt) | 752..788 | 163..910 (fordelt) |
-| Hjørnestolpe, front | 36×98 | **1700** | 2 | 0..1990 (fordelt) | 752..788 | 0..1700 |
-| Hjørnestolpe, bak (veggside) | 36×98 | **1065** | 2 | 0..1990 (fordelt) | -48..-12 | 0..1065 |
 | Endebjelke | 36×98 | **836** | 2 | 98..1892 (fordelt) | -48..788 | 967..1065 |
-| Rekkverksbord, front | 36×98 | **832** | 4 | 3..1987 (fordelt) | 716..752 | 1401..1672 (fordelt) |
 | Benkevange, bak (gjennomgående) | 48×68 | **1794** | 1 | 98..1892 | -48..0 | 191..259 |
 | Bordbærelekt, bak | 48×68 | **1794** | 1 | 98..1892 | -48..0 | 414..482 |
 | Avstivningslekt under plate | 48×68 | **750** | 2 | 785..1205 (fordelt) | 0..750 | 191..259 |
-| Benkevange, front (bit) | 48×68 | **642** | 2 | 3..1987 (fordelt) | 704..752 | 191..259 |
 | Rungetrinn | 48×68 | **320** | 4 | 835..1155 | 720..788 | 211..958 (fordelt) |
-| Stubbefot | 48×68 | **191** | 4 | 577..1413 (fordelt) | -48..752 (fordelt) | 0..191 |
 | Kilelekt under platens forkant (skråkappet) | 48×68 | **77** | 2 | 708..1282 (fordelt) | 702..750 | 191..259 |
-| Sidevange, øvre | 48×98 | **1984** | 2 | 3..1987 | -48..752 (fordelt) | 1065..1163 |
+
+**45 deler.** Rommet bestemmer ingen mål på disse. Kapp dem ferdig med én gang.
+
+## Kapp når rommet er ferdig — romdeler
+
+| Del | Dim. | Lengde | Ant. | Kapp på stedet | X | Y | Z |
+|---|---|---:|---:|---|---|---|---|
+| Endespile | 23×98 | **764** | 2 | nominell — bredden strekes opp | 0..1990 (fordelt) | -12..752 | 259..282 |
+| Stigevange | 36×48 | **1700** | 2 | **+15** — trimmes i bunn | 787..1203 (fordelt) | 752..788 | 0..1700 |
+| Endelist | 36×48 | **98** | 2 | **+10** i veggenden — finkappes | 0..1990 (fordelt) | -12..24 | 211..259 |
+| Hjørnestolpe, front | 36×98 | **1700** | 2 | **+15** — trimmes i bunn | 0..1990 (fordelt) | 752..788 | 0..1700 |
+| Hjørnestolpe, bak (veggside) | 36×98 | **1065** | 2 | **+15** — trimmes i bunn | 0..1990 (fordelt) | -48..-12 | 0..1065 |
+| Rekkverksbord, front | 36×98 | **832** | 4 | **+10** i veggenden — finkappes | 3..1987 (fordelt) | 716..752 | 1401..1672 (fordelt) |
+| Benkevange, front (bit) | 48×68 | **642** | 2 | **+10** i veggenden — finkappes | 3..1987 (fordelt) | 704..752 | 191..259 |
+| Stubbefot | 48×68 | **191** | 4 | **+15** — trimmes i bunn | 577..1413 (fordelt) | -48..752 (fordelt) | 0..191 |
+| Sidevange, øvre | 48×98 | **1984** | 2 | **+10** i hver ende — finkappes | 3..1987 | -48..752 (fordelt) | 1065..1163 |
+
+**22 deler.** Kapp dem med overmålet i kolonnen «Kapp på stedet», og finkapp på stedet:
+
+* **Står på gulvet:** kapp 15 mm for lang. Gulvet legges først. Så trimmes foten til rammen står i vater. Strek opp med avstandskloss — meddrag.
+* **Går fra vegg til vegg:** kapp 10 mm for lang i hver ende som møter vegg. Finkapp etter målt nisjebredde.
+* **Bredden mot veggen:** kappes på nominell lengde. Det er BREDDEN som tilpasses, ikke lengden — ytterkanten strekes opp etter veggen så fugen blir jevn.
+
+Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
 
 **67 deler i alt.**
 

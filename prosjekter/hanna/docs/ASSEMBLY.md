@@ -18,7 +18,7 @@ modellen, endrer tabellene seg med den.
 
 | Fil | Hva du finner der |
 |---|---|
-| [generated/kappliste.md](generated/kappliste.md) | Hver del: dimensjon, lengde, antall, hvor den sitter |
+| [generated/kappliste.md](generated/kappliste.md) | Hver del: dimensjon, lengde, antall, hvor den sitter — og om den kappes ferdig nå eller med overmål og tilpasses i rommet |
 | [generated/innkjopsliste.md](generated/innkjopsliste.md) | Hva du skal kjøpe, og hvilke deler som kappes av hvert bord |
 | [generated/nokkelmal.md](generated/nokkelmal.md) | Ytre mål, alle høyder, alle dybdeplan, stige- og rekkverksmål, skruerader, madrassmål, sikkerhetsmål |
 | [generated/beslagliste.md](generated/beslagliste.md) | Alle beslag og skruer, hvor de går, hva som forbores, hvilken side du driver fra |
@@ -48,6 +48,7 @@ fra kapplista og nøkkelmålene.
 | Sirkelsag eller håndsag + anlegg | Alle kutt er 90°, med ett unntak: de to kilelektene sages på skrå i ett langsgående snitt (J13b). Ingen gjæring i hele sengen |
 | Vinkelhake, minst 300 mm | Rett vinkel i bakrammen og i sengeflaten — mål diagonalene |
 | Vater, minst 600 mm | Endebjelker og vanger |
+| Linjelaser, selvnivellerende kryss | Høyderisset rundt nisja og loddlinja midt i den. All oppmåling av rommet skjer fra risset — se avsnitt 3 |
 | Tommestokk og målebånd | |
 | To skrutvinger, minst 300 mm | Holder deler mens du borer gjennom begge samtidig |
 | Blyant og syl | Merking av borsentre |
@@ -190,7 +191,39 @@ Den samme rekkefølgen, med sjekkpunkter for hvert steg:
 [schematics/byggerekkefolge.svg](schematics/byggerekkefolge.svg).
 
 **Og før steg 1: bryt kantene.** Det gjøres i steg 0, mens delene ennå er løse
-på bukken. Kravet står rett under.
+på bukken. Kravet står under.
+
+### Rommet først — før noe kappes
+
+Nisja er ikke et rektangel. Vegger heller, gulv faller, og hjørner er sjelden
+90°. Senga skal stå i vater og lodd likevel. Regelen er derfor:
+
+**Senga er referansen, ikke rommet — bygg i vater og lodd, og ta skjevheten i
+delene som møter vegg og gulv.**
+
+Det deler kapplista i to, og delingen er en regel i modellen, ikke en
+håndskrevet liste: en del som kommer inntil en endevegg, eller som står på
+gulvet, får sluttmålet sitt av rommet. De delene står for seg selv i
+[kapplista](generated/kappliste.md), med overmålet sitt i egen kolonne. Resten
+kappes ferdig på bukken.
+
+To ting må være på plass før kappingen:
+
+* **Spikerslag i veggen.** Senga ligger flatt mot veggen i noen få
+  høydebånd, ikke overalt. Sonene er regnet ut av modellen og står med høyder
+  fra ferdig gulv i
+  [byggesteg](generated/byggesteg.md#før-steg-0--mål-rommet). Legg dem mens
+  veggen er åpen — etterpå kommer du ikke til.
+* **Et vannrett høyderiss rundt hele nisja.** Alt måles fra risset, aldri fra
+  gulvet. Framgangsmåten — loddlinje midt i nisja, rutenett mot hver
+  endevegg, minste sum er minste bredde — står samme sted.
+
+Blir minste bredde et annet tall enn det modellen står på, er det ett tall som
+skal endres: `WALL_SPAN` i `generate_loftbed.py`. Kjør `mise run build`, og
+kapplista, innkjøpslista og nøkkelmålene følger etter.
+
+Kanter som møter vegg eller gulv kappes med lite bakfall. Da er det bare den
+synlige kanten som bestemmer fugen.
 
 ### Kantbrytning — alle kanter et barn kan nå
 

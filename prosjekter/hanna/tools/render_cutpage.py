@@ -479,7 +479,10 @@ def render(G, out_dir, width, glyph_dir):
 
     _pictogram(page, MARGIN, strip_y, strip_h,
                lambda x, y: _saw_icon(page, RL, x, y, ICON),
-               ["Kapp alt først —",
+               # «Kapp alt først» stod her til kapplista ble delt i to.
+               # Romdelene kappes med overmål og finkappes i rommet, så
+               # siden lover ikke lenger ferdige lengder på alle bar.
+               ["Kapp på bukken først —",
                 f"alle kutt 90°, {kerf} mm sagsnitt"])
     _pictogram(page, MARGIN + card_w, strip_y, strip_h, _drill,
                ["Forbor og forsenk alt",

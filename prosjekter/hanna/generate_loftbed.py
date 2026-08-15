@@ -2523,9 +2523,15 @@ def block(x0, y0, z0, dx, dy, dz, label, group, cut=None):
     b.color = GROUP_COLORS[group]
     b.group = group
     b.extents = ((x0, x0 + dx), (y0, y0 + dy), (z0, z0 + dz))
+    # The cut-list line this piece was counted into, ON the piece. Without it
+    # the sawn LENGTH of a part is guesswork from its bounding box - and the
+    # longest side is not always the length (a rung block is 36 long and 48
+    # tall). The room-fit rule below needs to know which way the length runs.
+    b.cut = None
     if cut is not None:
         name, section, length = cut
         key = (name, section, round(length))
+        b.cut = key
         CUT_LIST[key] = CUT_LIST.get(key, 0) + 1
     return b
 
@@ -2581,9 +2587,11 @@ def wedge(x0, y0, z0, dx, dy, dz, tip_dz, tip_at_x0, label, group, cut=None):
     # this part clears the box it was cut from.
     b.extents = ((x0, x0 + dx), (y0, y0 + dy), (z0, z0 + dz))
     b.tapered = (tip_dz, tip_at_x0)
+    b.cut = None
     if cut is not None:
         name, section, length = cut
         key = (name, section, round(length))
+        b.cut = key
         CUT_LIST[key] = CUT_LIST.get(key, 0) + 1
     return b
 
@@ -5177,6 +5185,209 @@ print(f"OK  W1/W6/W7: WALL-SIDE BED - no back guard boards; the back face is the
       f"of its blocks + back ledger + all {len(bed_slats) + len(bench_slat_parts)} "
       f"slat ends - and nothing behind it. The fixing is screws through the back "
       f"rail into the studs, which also mid-support it")
+
+# ---------------------------------------------------------------------------
+# THE ROOM'S OWN PARTS - the ones a tape measure finishes, not the cut list
+# ---------------------------------------------------------------------------
+# Three of the six surfaces round this bed are NOT in the model: the two end
+# walls and the floor. The model draws them as the perfect planes X = 0,
+# X = WALL_SPAN and Z = 0, and a real niche is none of those things. So the
+# cut list has always been telling a small lie by omission: some of its lines
+# are sawn on the trestles and are done, and some of them are only a blank to
+# be trimmed once the room stands finished.
+#
+# Which is which is a RULE, not a list. A part is the room's if it comes
+# within ROOM_TOL of an end wall, or if it stands on the floor. Everything
+# else is the workshop's, and stays exactly as drawn.
+#
+# HOW the room finishes it follows from WHICH WAY ITS SAWN LENGTH RUNS - and
+# that is why block() now writes the cut-list line onto the part:
+#
+#   length up the Z axis, standing on the floor  -> cut LONG, trim the foot
+#       until the frame is level. The floor is the plane you cannot trust.
+#   length along the X axis, into an end wall    -> cut LONG, fine-cut on
+#       site once the narrowest width of the niche is measured.
+#   length across, but an edge against a wall    -> nominal length. It is the
+#       WIDTH that is scribed to the wall, never the length.
+ROOM_TOL = 5.0            # how near an end wall a part has to come to be fitted
+ROOM_OVER_FLOOR = 15      # trim allowance at the foot of a standing part
+ROOM_OVER_WALL = 10       # fine-cut allowance per wall-facing end
+
+
+def _cut_axes(p):
+    """The axes the part's SAWN LENGTH could run along, as a set.
+
+    Usually one. A square section (the rung block is 36 x 36 x 48 with a
+    36 mm length) leaves two, and the rules below refuse to guess: any part
+    the room touches has to be unambiguous.
+    """
+    assert p.cut is not None, f"'{p.label}' is in no cut-list line"
+    length = p.cut[2]
+    return frozenset(i for i, (lo, hi) in enumerate(p.extents)
+                     if round(hi - lo) == length)
+
+
+def _cut_axis(p):
+    axes = _cut_axes(p)
+    assert len(axes) == 1, \
+        f"'{p.label}' is {p.cut[2]} mm long and that length fits " \
+        f"{len(axes)} of its sides - the room cannot be told which one it " \
+        f"trims. Give the piece its own cut-list line or change the section"
+    return next(iter(axes))
+
+
+def near_end_walls(p):
+    """[0], [1], [0, 1] or [] - which end walls this part reaches."""
+    (x0, x1), _, _ = p.extents
+    return [i for i, near in enumerate((x0 <= ROOM_TOL,
+                                        x1 >= WALL_SPAN - ROOM_TOL)) if near]
+
+
+def on_floor(p):
+    return abs(p.extents[2][0]) < TOL
+
+
+def flush_with_end_wall(p):
+    """True when a whole face of the part lies IN an end wall plane."""
+    (x0, x1), _, _ = p.extents
+    return abs(x0) < TOL or abs(x1 - WALL_SPAN) < TOL
+
+
+def room_fit(p):
+    """How the room finishes this part - or None if the workshop does."""
+    ends = near_end_walls(p)
+    floor = on_floor(p)
+    if not ends and not floor:
+        return None
+    axis = _cut_axis(p)
+    if floor and axis == 2:
+        return dict(kind="gulv", over=ROOM_OVER_FLOOR, ends=len(ends))
+    if ends and axis == 0:
+        return dict(kind="vegg", over=ROOM_OVER_WALL * len(ends),
+                    ends=len(ends))
+    if ends:
+        return dict(kind="meddrag", over=0, ends=len(ends))
+    raise AssertionError(
+        f"'{p.label}' lies on the floor but its length runs along axis "
+        f"{axis} - there is no rule for trimming that, and inventing one "
+        f"here would be a special case")
+
+
+CUT_PARTS = [p for p in list(parts) + [panel_bed] + battens_bed]
+assert all(p.cut is not None for p in CUT_PARTS), \
+    "every wooden part must carry the cut-list line it was counted into"
+
+ROOM_FIT = {p.label: room_fit(p) for p in CUT_PARTS}
+ROOM_FIT = {lbl: f for lbl, f in ROOM_FIT.items() if f is not None}
+
+# A cut-list LINE is what the reader saws to, so a line whose pieces disagree
+# about who finishes them cannot be printed either way round. Mirrored parts
+# are mirrored, so they agree by construction - and this assert is what says
+# so out loud.
+ROOM_LINES = {}
+for p in CUT_PARTS:
+    fit = ROOM_FIT.get(p.label)
+    key = (fit["kind"], fit["over"], fit["ends"]) if fit else None
+    if p.cut in ROOM_LINES:
+        assert ROOM_LINES[p.cut] == key, \
+            f"cut-list line {p.cut} has pieces the room finishes differently " \
+            f"({ROOM_LINES[p.cut]} vs {key}) - '{p.label}' broke the mirror"
+    else:
+        ROOM_LINES[p.cut] = key
+ROOM_LINES = {k: v for k, v in ROOM_LINES.items() if v is not None}
+
+# The wall-end allowance has to be bigger than the clearance the model already
+# leaves itself, or the "cut it long" instruction would hand back a part that
+# is still short of the wall it is supposed to be scribed to.
+assert ROOM_OVER_WALL > THROUGH_X0, \
+    f"the fine-cut allowance {ROOM_OVER_WALL} does not even cover the " \
+    f"{THROUGH_X0} mm the through members are already held off each wall"
+# ...and the foot allowance has to be smaller than the height of the lowest
+# thing fastened to a standing part, or trimming the foot would saw through a
+# joint instead of a blank.
+def _lowest_neighbour_z(p):
+    (x0, x1), (y0, y1), _ = p.extents
+    zs = [q.extents[2][0] for q in CUT_PARTS
+          if q is not p and not on_floor(q)
+          and q.extents[0][1] >= x0 - TOL and q.extents[0][0] <= x1 + TOL
+          and q.extents[1][1] >= y0 - TOL and q.extents[1][0] <= y1 + TOL]
+    return min(zs) if zs else None
+
+
+_standing = [p for p in CUT_PARTS if ROOM_FIT.get(p.label, {}).get("kind")
+             == "gulv"]
+_lowest = min(z for z in (_lowest_neighbour_z(p) for p in _standing)
+              if z is not None)
+assert ROOM_OVER_FLOOR < _lowest, \
+    f"trimming {ROOM_OVER_FLOOR} mm off a foot would cut into the joint at " \
+    f"Z {_lowest}"
+print(f"OK  ROMDELER: {len(ROOM_FIT)} of {len(CUT_PARTS)} pieces in "
+      f"{len(ROOM_LINES)} of {len(CUT_LIST)} cut-list lines are finished by "
+      f"the ROOM, not the shop - "
+      + ", ".join(f"{k} x{sum(1 for f in ROOM_FIT.values() if f['kind'] == k)}"
+                  for k in ("gulv", "vegg", "meddrag"))
+      + f"; the foot allowance {ROOM_OVER_FLOOR} clears the lowest joint on a "
+      f"standing part (Z {_lowest:g})")
+
+# ---------------------------------------------------------------------------
+# WHERE THE WALL NEEDS NOGGINGS
+# ---------------------------------------------------------------------------
+# The bed presses on the wall in bands, not everywhere, and the bands are a
+# property of the geometry: a part on the wall face whose LENGTH runs along
+# the wall lies flat on it over that whole length, and a part on the wall
+# face that is also flush with an end wall stands in the corner. Those are
+# the two shapes you need wood behind. Everything else on the wall face meets
+# it end-on (the slats and the end beams, whose length runs OUT of the wall)
+# or stands on the floor clear of the corners (the two back stub legs).
+WALL_FIX_PARTS = [p for p in CUT_PARTS
+                  if abs(p.extents[1][0] - WALL_Y) < TOL
+                  and (0 in _cut_axes(p) or flush_with_end_wall(p))]
+_fix_labels = {p.label for p in WALL_FIX_PARTS}
+for p in on_wall:
+    if p.label in _fix_labels:
+        continue
+    assert 1 in _cut_axes(p) or (on_floor(p) and not flush_with_end_wall(p)), \
+        f"'{p.label}' lies on the wall face but is neither a member running " \
+        f"along it, a piece meeting it end-on, nor a foot on the floor - " \
+        f"the nogging rule has no answer for it"
+
+# One zone per (height band, cut-list line); mirrored parts share a zone.
+WALL_ZONES = []
+for p in WALL_FIX_PARTS:
+    z = p.extents[2]
+    hit = next((zo for zo in WALL_ZONES
+                if zo["z"] == z and zo["cut"] == p.cut), None)
+    if hit is None:
+        WALL_ZONES.append(dict(z=z, cut=p.cut, labels=[p.label],
+                               corner=flush_with_end_wall(p)))
+    else:
+        hit["labels"].append(p.label)
+        hit["corner"] = hit["corner"] and flush_with_end_wall(p)
+WALL_ZONES.sort(key=lambda zo: (zo["z"][0], zo["z"][1], zo["cut"]))
+for zo in WALL_ZONES:
+    zo["labels"].sort()
+assert len({zo["cut"] for zo in WALL_ZONES}) == len(WALL_ZONES), \
+    "two nogging zones carry the same cut-list line - group them"
+assert max(zo["z"][1] for zo in WALL_ZONES) == RAIL_TOP, \
+    f"the highest nogging zone stops at " \
+    f"{max(zo['z'][1] for zo in WALL_ZONES)}, but the topmost thing lying " \
+    f"on the wall is the back side rail at {RAIL_TOP}"
+assert min(zo["z"][0] for zo in WALL_ZONES) == 0, \
+    "no nogging zone reaches the floor, yet the back posts stand on it"
+# The height line the whole fitting job is measured from. A metre line is the
+# trade's own datum, but it is only usable if it lands on BARE WALL between
+# two nogging zones - a line struck across a batten is a line you cannot see
+# once the bed is up against it.
+MEASURE_DATUM_Z = 1000
+_bands = sorted((zo["z"] for zo in WALL_ZONES if not zo["corner"]))
+_below = max(z1 for z0, z1 in _bands if z1 <= MEASURE_DATUM_Z)
+_above = min(z0 for z0, z1 in _bands if z0 >= MEASURE_DATUM_Z)
+assert _below < MEASURE_DATUM_Z < _above, \
+    f"the {MEASURE_DATUM_Z} mm datum line falls inside a nogging zone"
+print(f"OK  SPIKERSLAG: {len(WALL_ZONES)} zones on the wall face, "
+      + " ".join(f"{zo['z'][0]:g}-{zo['z'][1]:g}" for zo in WALL_ZONES)
+      + f" mm above the finished floor, carrying "
+      + ", ".join(sorted({zo["cut"][0] for zo in WALL_ZONES})))
 
 # C9: nothing horizontal may be longer than 1984, and every long member must sit
 # in one of the two legal X bands. A 1990 mm piece cannot be swung into a 1990 mm

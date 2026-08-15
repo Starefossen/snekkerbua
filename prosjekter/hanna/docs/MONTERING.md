@@ -20,6 +20,33 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 
 ---
 
+# Mål rommet først
+
+Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Senga er referansen, ikke rommet — bygg i vater og lodd, og ta skjevheten i delene som møter vegg og gulv.**
+
+1. Vent til vegger og gulv er ferdige. **Mens veggen er åpen: legg spikerslag i sonene under.** Etterpå kommer du ikke til.
+2. Slå et vannrett høyderiss rundt hele nisja med linjelaser, 1000 mm over ferdig gulv. Alt måles fra risset, aldri fra gulvet.
+3. Sett laseren som loddlinje midt i nisja. Mål ut til hver endevegg i rutenett: fem høyder × tre dybder på hver vegg. Legg sammen paret i hvert punkt. **Minste sum er nisjas minste bredde.**
+4. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
+5. Gulv: mål ned fra risset i sengas fire hjørner og på midten. Merk det høyeste punktet på gulvet. Senga bygges ned fra det.
+6. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 15 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
+7. Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
+
+**Spikerslag i veggen** — legg dem mens veggen er åpen:
+
+| Sone | Fra ferdig gulv | Vegg | Del som skal ha feste |
+|---:|---|---|---|
+| 1 | **0–1065** | Hjørnene, mot endeveggene | Hjørnestolpe, bak (veggside) (2 stk.) |
+| 2 | **191–259** | Bakveggen | Benkevange, bak (gjennomgående) |
+| 3 | **414–482** | Bakveggen | Bordbærelekt, bak |
+| 4 | **1065–1163** | Bakveggen | Sidevange, øvre |
+
+Målene er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøyden legges til.
+
+⚠️ Høyderisset skal gå hele veien rundt nisja og møte seg selv. Gjør det ikke det, står laseren feil.
+
+---
+
 # Før du begynner
 
 **Svart strek** er delen du setter opp nå. **Grå strek** er det som allerede står.
@@ -69,29 +96,31 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 
 # Delene
 
-| Del | Dim. | Lengde | Ant. |
-|---|---|---:|---:|
-| Løs plate | 18 mm plate, 574 bred | 798 | **1** |
-| Benkespile | 23×98 | 800 | **10** |
-| Køyespile | 23×98 | 800 | **14** |
-| Endespile | 23×98 | 764 | **2** |
-| Stigevange | 36×48 | 1700 | **2** |
-| Endelist | 36×48 | 98 | **2** |
-| Stigekloss | 36×48 | 36 | **8** |
-| Hjørnestolpe, front | 36×98 | 1700 | **2** |
-| Hjørnestolpe, bak (veggside) | 36×98 | 1065 | **2** |
-| Endebjelke | 36×98 | 836 | **2** |
-| Rekkverksbord, front | 36×98 | 832 | **4** |
-| Benkevange, bak (gjennomgående) | 48×68 | 1794 | **1** |
-| Bordbærelekt, bak | 48×68 | 1794 | **1** |
-| Avstivningslekt under plate | 48×68 | 750 | **2** |
-| Benkevange, front (bit) | 48×68 | 642 | **2** |
-| Rungetrinn | 48×68 | 320 | **4** |
-| Stubbefot | 48×68 | 191 | **4** |
-| Kilelekt under platens forkant (skråkappet) | 48×68 | 77 | **2** |
-| Sidevange, øvre | 48×98 | 1984 | **2** |
+| Del | Dim. | Lengde | Ant. | Kapp |
+|---|---|---:|---:|---|
+| Løs plate | 18 mm plate, 574 bred | 798 | **1** | nå |
+| Benkespile | 23×98 | 800 | **10** | nå |
+| Køyespile | 23×98 | 800 | **14** | nå |
+| Endespile | 23×98 | 764 | **2** | på stedet |
+| Stigevange | 36×48 | 1700 | **2** | på stedet |
+| Endelist | 36×48 | 98 | **2** | på stedet |
+| Stigekloss | 36×48 | 36 | **8** | nå |
+| Hjørnestolpe, front | 36×98 | 1700 | **2** | på stedet |
+| Hjørnestolpe, bak (veggside) | 36×98 | 1065 | **2** | på stedet |
+| Endebjelke | 36×98 | 836 | **2** | nå |
+| Rekkverksbord, front | 36×98 | 832 | **4** | på stedet |
+| Benkevange, bak (gjennomgående) | 48×68 | 1794 | **1** | nå |
+| Bordbærelekt, bak | 48×68 | 1794 | **1** | nå |
+| Avstivningslekt under plate | 48×68 | 750 | **2** | nå |
+| Benkevange, front (bit) | 48×68 | 642 | **2** | på stedet |
+| Rungetrinn | 48×68 | 320 | **4** | nå |
+| Stubbefot | 48×68 | 191 | **4** | på stedet |
+| Kilelekt under platens forkant (skråkappet) | 48×68 | 77 | **2** | nå |
+| Sidevange, øvre | 48×98 | 1984 | **2** | på stedet |
 
 **67 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
+
+**Kapp:** «nå» er delene verkstedet gjør ferdig. «på stedet» er de 22 delene som møter en endevegg eller gulvet — de kappes med overmål og finkappes i rommet. Overmålet står i [kapplista](generated/kappliste.md).
 
 Posisjoner: [kappliste](generated/kappliste.md). Hva du skal kjøpe: [innkjøpsliste](generated/innkjopsliste.md).
 
@@ -109,7 +138,7 @@ Posisjoner: [kappliste](generated/kappliste.md). Hva du skal kjøpe: [innkjøpsl
 
 Ledd **J15** → [beslagliste](generated/beslagliste.md)
 
-⚠️ Legg de to lengste delene — sidevangene — inn i rommet nå og sjekk at de går fritt forbi begge vegger. De er kappet kortere enn veggavstanden nettopp for dette.
+⚠️ Romdelene skal IKKE kappes ferdig nå. Kapplista sier hvilke — de kappes med overmål og finkappes i rommet.
 
 [Steg 0 i ord](generated/byggesteg.md#steg-0--kapping-forboring-og-forsenking)
 
