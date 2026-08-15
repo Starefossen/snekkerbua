@@ -5209,6 +5209,13 @@ print(f"OK  W1/W6/W7: WALL-SIDE BED - no back guard boards; the back face is the
 #       site once the narrowest width of the niche is measured.
 #   length across, but an edge against a wall    -> nominal length. It is the
 #       WIDTH that is scribed to the wall, never the length.
+#   standing on the floor AND a SIDE against an end wall -> both jobs on the
+#       same piece. The foot is trimmed as above, and the wall-facing side is
+#       scribed: the corner posts sit IN the wall plane with no clearance at
+#       all, so a bulge in the wall cannot be swallowed by a gap. Either it
+#       comes off the wood or it pushes the whole frame out of plumb. That is
+#       material REMOVED - the nominal section still stands, and there is no
+#       allowance in the width.
 ROOM_TOL = 5.0            # how near an end wall a part has to come to be fitted
 ROOM_OVER_FLOOR = 15      # trim allowance at the foot of a standing part
 ROOM_OVER_WALL = 10       # fine-cut allowance per wall-facing end
@@ -5261,7 +5268,10 @@ def room_fit(p):
         return None
     axis = _cut_axis(p)
     if floor and axis == 2:
-        return dict(kind="gulv", over=ROOM_OVER_FLOOR, ends=len(ends))
+        # Standing, and reaching an end wall with something that is not its
+        # sawn end: the face against the wall is a SIDE. Both jobs.
+        return dict(kind="gulv+side" if ends else "gulv",
+                    over=ROOM_OVER_FLOOR, ends=len(ends))
     if ends and axis == 0:
         return dict(kind="vegg", over=ROOM_OVER_WALL * len(ends),
                     ends=len(ends))
@@ -5314,20 +5324,40 @@ def _lowest_neighbour_z(p):
     return min(zs) if zs else None
 
 
-_standing = [p for p in CUT_PARTS if ROOM_FIT.get(p.label, {}).get("kind")
-             == "gulv"]
+# Both floor classes stand on the floor and both get the foot trimmed, so
+# both are held to the clearance below - "gulv" and "gulv+side" alike.
+_standing = [p for p in CUT_PARTS
+             if ROOM_FIT.get(p.label, {}).get("kind", "").startswith("gulv")]
 _lowest = min(z for z in (_lowest_neighbour_z(p) for p in _standing)
               if z is not None)
 assert ROOM_OVER_FLOOR < _lowest, \
     f"trimming {ROOM_OVER_FLOOR} mm off a foot would cut into the joint at " \
     f"Z {_lowest}"
+# A side is only worth scribing where there is NOWHERE ELSE for the bulge to
+# go. So the pieces the rule sends to the plane have to be the ones that sit
+# in the wall plane itself: a whole face at X = 0 or X = WALL_SPAN, zero
+# clearance. If one of them ever gets held off the wall, the gap takes the
+# bulge and the instruction is wrong.
+_scribed_sides = [p for p in CUT_PARTS
+                  if ROOM_FIT.get(p.label, {}).get("kind") == "gulv+side"]
+assert _scribed_sides, \
+    "no standing part reaches an end wall with its side - the corner posts " \
+    "have moved off the wall plane and the scribing instruction has no owner"
+for p in _scribed_sides:
+    assert flush_with_end_wall(p), \
+        f"'{p.label}' is told to have its wall side scribed, but it stands " \
+        f"off the wall at X {p.extents[0]} - the clearance would take the " \
+        f"bulge, not the plane"
+    assert _cut_axis(p) != 0, \
+        f"'{p.label}' meets an end wall with its sawn END, not a side"
 print(f"OK  ROMDELER: {len(ROOM_FIT)} of {len(CUT_PARTS)} pieces in "
       f"{len(ROOM_LINES)} of {len(CUT_LIST)} cut-list lines are finished by "
       f"the ROOM, not the shop - "
       + ", ".join(f"{k} x{sum(1 for f in ROOM_FIT.values() if f['kind'] == k)}"
-                  for k in ("gulv", "vegg", "meddrag"))
+                  for k in sorted({f["kind"] for f in ROOM_FIT.values()}))
       + f"; the foot allowance {ROOM_OVER_FLOOR} clears the lowest joint on a "
-      f"standing part (Z {_lowest:g})")
+      f"standing part (Z {_lowest:g}); {len(_scribed_sides)} of them stand in "
+      f"the wall plane with no clearance and get the side scribed too")
 
 # ---------------------------------------------------------------------------
 # WHERE THE WALL NEEDS NOGGINGS

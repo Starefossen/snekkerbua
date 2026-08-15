@@ -222,6 +222,16 @@ Blir minste bredde et annet tall enn det modellen står på, er det ett tall som
 skal endres: `WALL_SPAN` i `generate_loftbed.py`. Kjør `mise run build`, og
 kapplista, innkjøpslista og nøkkelmålene følger etter.
 
+**De fire hjørnestolpene har null klaring mot endeveggen.** Modellen setter dem
+i selve veggplanet, så en bul i veggen har ingen luft å forsvinne i: enten går
+den av treet, eller så skyver den hele rammen ut av lodd. Derfor er dette fast
+framgangsmåte for hver av de fire, ikke et unntak ved store avvik: sett
+stolpen på plass, hold den i lodd, strek opp veggsiden med avstandskloss —
+meddrag — og høvle av til stolpen står i lodd inntil veggen. Det er materiale
+som fjernes; det legges ingenting på i bredden, og den nominelle dimensjonen i
+kapplista står. Stolpene bærer begge behandlingene i
+[kapplista](generated/kappliste.md): overmål i bunn og oppstreking av siden.
+
 Kanter som møter vegg eller gulv kappes med lite bakfall. Da er det bare den
 synlige kanten som bestemmer fugen.
 

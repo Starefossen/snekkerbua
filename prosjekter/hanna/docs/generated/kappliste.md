@@ -33,8 +33,8 @@ Mål rommet før du kapper romdelene: se [byggesteg](byggesteg.md#før-steg-0--m
 | Endespile | 23×98 | **764** | 2 | nominell — bredden strekes opp | 0..1990 (fordelt) | -12..752 | 259..282 |
 | Stigevange | 36×48 | **1700** | 2 | **+15** — trimmes i bunn | 787..1203 (fordelt) | 752..788 | 0..1700 |
 | Endelist | 36×48 | **98** | 2 | **+10** i veggenden — finkappes | 0..1990 (fordelt) | -12..24 | 211..259 |
-| Hjørnestolpe, front | 36×98 | **1700** | 2 | **+15** — trimmes i bunn | 0..1990 (fordelt) | 752..788 | 0..1700 |
-| Hjørnestolpe, bak (veggside) | 36×98 | **1065** | 2 | **+15** — trimmes i bunn | 0..1990 (fordelt) | -48..-12 | 0..1065 |
+| Hjørnestolpe, front | 36×98 | **1700** | 2 | **+15** — trimmes i bunn · siden mot veggen strekes opp ved bul | 0..1990 (fordelt) | 752..788 | 0..1700 |
+| Hjørnestolpe, bak (veggside) | 36×98 | **1065** | 2 | **+15** — trimmes i bunn · siden mot veggen strekes opp ved bul | 0..1990 (fordelt) | -48..-12 | 0..1065 |
 | Rekkverksbord, front | 36×98 | **832** | 4 | **+10** i veggenden — finkappes | 3..1987 (fordelt) | 716..752 | 1401..1672 (fordelt) |
 | Benkevange, front (bit) | 48×68 | **642** | 2 | **+10** i veggenden — finkappes | 3..1987 (fordelt) | 704..752 | 191..259 |
 | Stubbefot | 48×68 | **191** | 4 | **+15** — trimmes i bunn | 577..1413 (fordelt) | -48..752 (fordelt) | 0..191 |
@@ -43,6 +43,7 @@ Mål rommet før du kapper romdelene: se [byggesteg](byggesteg.md#før-steg-0--m
 **22 deler.** Kapp dem med overmålet i kolonnen «Kapp på stedet», og finkapp på stedet:
 
 * **Står på gulvet:** kapp 15 mm for lang. Gulvet legges først. Så trimmes foten til rammen står i vater. Strek opp med avstandskloss — meddrag.
+* **Står på gulvet inntil endevegg — hjørnestolpene:** samme trimming i bunn, og i tillegg strekes siden. Stolpen står helt inntil veggen uten klaring, så en bul i veggen må tas i treet: hold stolpen i lodd på plass, strek opp veggsiden med avstandskloss og høvle av til den står i lodd inntil veggen. Ikke legg på noe i bredden — den nominelle dimensjonen står, det er bare bulen som går av.
 * **Går fra vegg til vegg:** kapp 10 mm for lang i hver ende som møter vegg. Finkapp etter målt nisjebredde.
 * **Bredden mot veggen:** kappes på nominell lengde. Det er BREDDEN som tilpasses, ikke lengden — ytterkanten strekes opp etter veggen så fugen blir jevn.
 

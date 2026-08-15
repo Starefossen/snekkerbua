@@ -999,7 +999,8 @@ def cut_table(G):
     """[(no_name, section, length, qty, (xr, yr, zr), en, fit), ...].
 
     `fit` is the model's room-fit verdict for the whole line - None for a
-    piece the workshop finishes, otherwise ("gulv"|"vegg"|"meddrag", overmål).
+    piece the workshop finishes, otherwise ("gulv"|"gulv+side"|"vegg"|
+    "meddrag", overmål).
     The verdict is a rule in generate_loftbed.py; nothing here decides it.
     """
     keys = part_cut_keys(G)
@@ -1101,6 +1102,9 @@ def _fit_text(G, fit):
     kind, over, ends = fit
     if kind == "gulv":
         return f"**+{over}** — trimmes i bunn"
+    if kind == "gulv+side":
+        return (f"**+{over}** — trimmes i bunn · siden mot veggen strekes "
+                "opp ved bul")
     if kind == "vegg":
         hvor = "i hver ende" if ends == 2 else "i veggenden"
         return f"**+{over // ends}** {hvor} — finkappes"
@@ -1136,7 +1140,10 @@ def _room_rows(G, L, rows):
 # and every row is checked against the POSITION PRINTED IN THE SAME ROW: a
 # part under «kapp på stedet» has to show an X that reaches a wall or a Z
 # that starts on the floor, and a part under «kapp nå» has to show neither.
-# Nothing here repeats a length or a name.
+# The side-scribing sentence is checked the same way: only a row whose own Z
+# says it stands on the floor over its whole sawn length, AND whose own X
+# reaches an end wall, may carry it - because that combination is the one
+# that meets the wall with a side. Nothing here repeats a length or a name.
 def _assert_kappliste_ink(G, text):
     def cells(row):
         return [c.strip() for c in row.strip().strip("|").split("|")]
@@ -1161,12 +1168,13 @@ def _assert_kappliste_ink(G, text):
     room = next(v for k, v in tables.items() if k.startswith("Kapp når rommet"))
     assert shop and room, "one of the two cut tables came out empty"
 
+    n_side = 0
     for c in shop + room:
         is_room = len(c) == 8
         x0, x1 = span(c[-3])
-        z0, _z1 = span(c[-1])
-        touches = (x0 <= G.ROOM_TOL or x1 >= G.WALL_SPAN - G.ROOM_TOL
-                   or z0 == 0)
+        z0, z1 = span(c[-1])
+        at_wall = x0 <= G.ROOM_TOL or x1 >= G.WALL_SPAN - G.ROOM_TOL
+        touches = at_wall or z0 == 0
         assert touches == is_room, (
             f"«{c[0]}» står under «{'kapp på stedet' if is_room else 'kapp nå'}»"
             f", men posisjonen i samme rad sier X {c[-3]}, Z {c[-1]}")
@@ -1176,6 +1184,19 @@ def _assert_kappliste_ink(G, text):
                     or "nominell" in c[4]), \
                 f"«{c[0]}» har overmålet «{c[4]}», som ikke er en av " \
                 f"modellens: {sorted(allowed)} eller nominell lengde"
+            length = float(c[2].strip("*").replace(",", "."))
+            stands = z0 == 0 and abs(z1 - z0 - length) < 0.5
+            side = "siden mot veggen" in c[4]
+            assert side == (stands and at_wall), (
+                f"«{c[0]}» {'sier' if side else 'sier ikke'} at siden mot "
+                f"veggen strekes opp, men raden selv sier lengde {c[2]}, "
+                f"X {c[-3]}, Z {c[-1]}")
+            n_side += int(side)
+
+    want_side = sum(1 for f in G.ROOM_LINES.values() if f[0] == "gulv+side")
+    assert n_side == want_side, \
+        f"{n_side} rader streker opp siden mot veggen, mot {want_side} " \
+        f"«gulv+side»-linjer i modellen"
 
     assert len(shop) + len(room) == len(G.CUT_LIST), \
         f"{len(shop)} + {len(room)} rader mot {len(G.CUT_LIST)} linjer i " \
@@ -1215,6 +1236,13 @@ def emit_kappliste(G, out_dir):
     L.append(f"* **Står på gulvet:** kapp {G.ROOM_OVER_FLOOR} mm for lang. "
              "Gulvet legges først. Så trimmes foten til rammen står i "
              "vater. Strek opp med avstandskloss — meddrag.\n")
+    L.append("* **Står på gulvet inntil endevegg — hjørnestolpene:** samme "
+             "trimming i bunn, og i tillegg strekes siden. Stolpen står "
+             "helt inntil veggen uten klaring, så en bul i veggen må tas i "
+             "treet: hold stolpen i lodd på plass, strek opp veggsiden med "
+             "avstandskloss og høvle av til den står i lodd inntil veggen. "
+             "Ikke legg på noe i bredden — den nominelle dimensjonen står, "
+             "det er bare bulen som går av.\n")
     L.append(f"* **Går fra vegg til vegg:** kapp {G.ROOM_OVER_WALL} mm for "
              "lang i hver ende som møter vegg. Finkapp etter målt "
              "nisjebredde.\n")
@@ -1893,6 +1921,13 @@ def room_first(G):
             "hver veggende og finkappes etter målt bredde. Ytterste "
             "endespile strekes opp etter veggen med fast avstand, så fugen "
             "blir jevn.",
+            "**De fire hjørnestolpene står helt inntil endeveggen — null "
+            "klaring.** Derfor strekes veggsiden på hver av dem, hver gang: "
+            "sett stolpen på plass, hold den i lodd, og strek opp veggsiden "
+            "med avstandskloss der veggen buler. Høvle av til stolpen står i "
+            "lodd inntil veggen. Ingen monn i bredden — det er tre som skal "
+            "bort, ikke legges til. Buler veggen og du lar det stå, skyver "
+            "bulen hele rammen ut av lodd.",
             "Kapp kanter som møter vegg eller gulv med lite bakfall. Da er "
             "det bare den synlige kanten som bestemmer fugen.",
         ],
@@ -1902,6 +1937,9 @@ def room_first(G):
             f"Er forskjellen mellom minste og største bredde større enn "
             f"{G.ROOM_OVER_WALL} mm, mål om. Kapp uansett etter den minste.",
             "Sjekk at spikerslagene ligger i sonene før veggen lukkes.",
+            "Hver hjørnestolpe skal stå i lodd begge veier. Vipper den "
+            "fordi veggen buler, høvles bulen av — lys i fugen der veggen "
+            "viker er greit og skal stå.",
         ],
     )
 
