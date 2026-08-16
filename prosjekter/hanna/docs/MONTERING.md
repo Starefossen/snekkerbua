@@ -33,7 +33,7 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 7. **De fire hjørnestolpene står helt inntil endeveggen — null klaring.** Derfor strekes veggsiden på hver av dem, hver gang: sett stolpen på plass, hold den i lodd, og strek opp veggsiden med avstandskloss der veggen buler. Høvle av til stolpen står i lodd inntil veggen. Ingen monn i bredden — det er tre som skal bort, ikke legges til. Buler veggen og du lar det stå, skyver bulen hele rammen ut av lodd.
 8. Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
 
-<img src="img/maal-rommet.png" alt="Oppriss og plan av nisja: høyderisset 1000 mm over ferdig gulv, loddlinjen midt i nisja, og de 5 høydene og 3 dybdene hver endevegg måles i" height="295">
+<img src="img/maal-rommet.png" alt="Nisja som rom, med oppriss og plan ved siden av: høyderisset 1000 mm over ferdig gulv går som en ring rundt alle tre veggene, loddplanet står midt i nisja, og hver endevegg måles i 5 høyder × 3 dybder" height="360">
 
 
 **Slik strekes en del opp mot vegg og gulv:**

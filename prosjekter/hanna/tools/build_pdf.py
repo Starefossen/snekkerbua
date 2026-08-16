@@ -550,6 +550,12 @@ td img { display: block; margin: 0 auto; }
 .prep table td:nth-child(1) { width: 32mm; text-align: center; }
 .prep table td:nth-child(2) { width: 26mm; text-align: center; }
 .prep table td img { display: inline-block; margin: 0 1mm; vertical-align: middle; }
+/* Malefiguren over piktogramtabellen tar det meste av det som er igjen av
+   forstegssiden, og da havnet "Slik strekes en del opp mot vegg og gulv:"
+   alene nederst mens tabellen den innleder gikk over pa neste side. En
+   avsnittslinje som star igjen uten det den innleder er ikke en side, det er
+   en feil - overskriften folger tabellen sin. */
+#rommet p:has(+ table) { break-after: avoid; }
 
 /* ---------- beslag ----------
    Skruglyfene er tegnet i riktig innbyrdes lengde, sa de er brede. Hele

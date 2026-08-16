@@ -2138,12 +2138,16 @@ def _img(src, height, alt=""):
     return f'<img src="{src}" alt="{alt}" height="{height}">'
 
 
-# Målefiguren på forsteg-siden er bred og lav (oppriss + plan side ved side).
-# Høyden er i piksler som alle andre bildehøyder her; build_pdf regner den om
-# til millimeter på papiret. 295 px er ca. 78 mm høyt og fyller satsbredden
-# 180 mm - så bredt som siden tillater, og det er den bredden figurens egen
-# typestørrelse er regnet for (se tools/render_maalfigur.py).
-ROOM_FIG_PX = 295
+# Målefiguren på forsteg-siden er tre visninger: nisja som rom til venstre,
+# oppriss og plan under hverandre til høyre. Høyden er i piksler som alle
+# andre bildehøyder her; build_pdf regner den om til millimeter på papiret.
+# 360 px er ca. 95 mm høyt og fyller satsbredden 180 mm - så bredt som siden
+# tillater, og det er den bredden figurens egen typestørrelse er regnet for.
+# Tallet er ikke fritt: render_maalfigur.assert_fits_column() leser det herfra
+# og stopper tegningen hvis figurens egne proporsjoner ikke gir 180 mm ved
+# akkurat denne høyden - endrer du komposisjonen der, sier asserten hva tallet
+# skal være (se tools/render_maalfigur.py).
+ROOM_FIG_PX = 360
 
 
 # The glyphs are all drawn to ONE scale, and each carries that scale in the
@@ -2263,11 +2267,12 @@ def emit_montering(G, root, steps, idx):
     # tools/render_maalfigur.py under `mise run montering`, akkurat som
     # stegbildene lenger bak - denne fila skriver bare taggen.
     L.append("\n" + _img("img/maal-rommet.png", ROOM_FIG_PX,
-                         f"Oppriss og plan av nisja: høyderisset "
-                         f"{G.MEASURE_DATUM_Z} mm over ferdig gulv, "
-                         f"loddlinjen midt i nisja, og de "
-                         f"{G.MEASURE_GRID[0]} høydene og "
-                         f"{G.MEASURE_GRID[1]} dybdene hver endevegg måles i")
+                         f"Nisja som rom, med oppriss og plan ved siden av: "
+                         f"høyderisset {G.MEASURE_DATUM_Z} mm over ferdig "
+                         f"gulv går som en ring rundt alle tre veggene, "
+                         f"loddplanet står midt i nisja, og hver endevegg "
+                         f"måles i {G.MEASURE_GRID[0]} høyder × "
+                         f"{G.MEASURE_GRID[1]} dybder")
              + "\n\n")
     L.append("\n**Slik strekes en del opp mot vegg og gulv:**\n\n")
     L.append("| Slik | Ikke slik | |\n|:---:|:---:|---|\n")
