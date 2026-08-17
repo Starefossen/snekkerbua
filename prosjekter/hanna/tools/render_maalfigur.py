@@ -82,9 +82,26 @@ not the bed's.
 There are no words in the figure. The words are on the page it sits on: the
 only type on it is the millimetre readings and the two grid counts.
 
+THE TWO COUNTS ARE TALLIES
+--------------------------
+"5×" and "3×" were once written beside two plain brackets standing off the
+drawing, and the first reader they met asked what they counted. A bracket with
+no divisions in it is a span, not a count, so both are drawn as COMBS now: a
+spine with one notch in it per reading, and the notch runs all the way to the
+reading it counts. Four of them, one per bracket, and they are all read the
+same way - five notches to five heights, three to three depths.
+
+In the room view the comb is on the WALL, in the margin the grid leaves
+itself: half a pitch of bare wall between the mouth of the niche and the first
+column of readings, and the same between the floor and the first row. Every
+point of it is a point in the room, in millimetres, put through the same eye()
+as the dots - a notch is its own row's line on the wall, drawn short - so the
+perspective is what lays it against its row. Laid out on the paper instead it
+would come out square and point at nothing.
+
 THE ASSERTS READ THE INK
 ------------------------
-Three of them, and all three read what was emitted rather than what was meant:
+Four of them, and all four read what was emitted rather than what was meant:
 
     assert_ring() takes the height line back out of the emitted path. It has
         to be ONE polyline of three segments that meet, level across the back,
@@ -94,6 +111,12 @@ Three of them, and all three read what was emitted rather than what was meant:
     assert_grid_on_wall() counts the emitted dots against MEASURE_GRID and
         demands that every one of them fall inside the polygon that was
         emitted for the end wall.
+    assert_tally() takes each of the four count brackets back out as a comb
+        and asks that it have one notch per reading - MEASURE_GRID's own
+        number, again - and that each notch, PROLONGED, run through a row of
+        readings of its own. On the wall the notch and its dots sit at
+        different depths, so that last one is a statement about the camera:
+        it only comes out true if both went through it.
     assert_fits_column() holds the drawing and gen_doc_tables.ROOM_FIG_PX
         together: at the height the manual sets the figure in, the figure's
         own proportions have to come out the width of the text column. Change
@@ -149,12 +172,25 @@ PX_MM = 25.4 / 96.0
 _PT = re.compile(r"(-?[\d.]+),(-?[\d.]+)")
 
 
-def _points(element):
-    """The points back out of an emitted <path>, in the figure's own
+def _subpaths(element):
+    """The polylines an emitted <path> was drawn from, in the figure's own
     coordinates - Page draws with y flipped, so flip it back."""
     i = element.index('d="') + 3
     d = element[i:element.index('"', i)]
-    return [(float(a), -float(b)) for a, b in _PT.findall(d)]
+    return [[(float(a), -float(b)) for a, b in _PT.findall(s)]
+            for s in d.split("M")[1:]]
+
+
+def _points(element):
+    """...and all of them in one list, for a path that is one polyline."""
+    return [p for sub in _subpaths(element) for p in sub]
+
+
+def _centres(elements):
+    """The centres back out of emitted <circle>s - the reading points."""
+    return [(float(re.search(r'cx="(-?[\d.]+)"', el).group(1)),
+             -float(re.search(r'cy="(-?[\d.]+)"', el).group(1)))
+            for el in elements]
 
 
 def assert_ring(element, back, span, datum, eps):
@@ -203,9 +239,7 @@ def assert_grid_on_wall(wall_element, dot_elements, n_h, n_d):
         (f"{len(dot_elements)} rutenettprikker tegnet, "
          f"men MEASURE_GRID er {n_h}×{n_d} = {n_h * n_d}")
     poly = _points(wall_element)
-    for el in dot_elements:
-        cx = float(re.search(r'cx="(-?[\d.]+)"', el).group(1))
-        cy = -float(re.search(r'cy="(-?[\d.]+)"', el).group(1))
+    for cx, cy in _centres(dot_elements):
         inside = False
         j = len(poly) - 1
         for i, (xi, yi) in enumerate(poly):
@@ -217,6 +251,52 @@ def assert_grid_on_wall(wall_element, dot_elements, n_h, n_d):
         assert inside, \
             f"rutenettprikk ({cx:.1f}, {cy:.1f}) ligger utenfor endeveggen"
     return len(dot_elements)
+
+
+def assert_tally(element, groups, eps):
+    """A count bracket has to COUNT - one notch per thing, on the thing.
+
+    Every one of the four brackets in the figure is drawn as a tally: a spine
+    with a notch in it for each row (or column) of readings it stands beside,
+    and the type only says out loud what the notches already show. Two things
+    are read back out of the ink:
+
+        the NUMBER of notches, against the number of things counted - both of
+            them MEASURE_GRID's own, so a grid that changed and a bracket that
+            did not cannot get to paper; and
+        the LINE of each notch: prolonged, it has to run through every
+            reading of exactly one row, and every row has to get a notch of
+            its own. In the room view the notch and the dots it counts lie at
+            different depths on the wall, and the perspective moves them apart
+            on the page - so this only comes out true if the notch was set in
+            the room, in millimetres, and put through the same camera. A notch
+            positioned on the paper instead dies here.
+    """
+    spine, *teeth = _subpaths(element)
+    assert len(teeth) == len(groups), \
+        (f"klammen har {len(teeth)} hakk, men teller {len(groups)} - "
+         f"delestrekene skal være én per avlesning")
+
+    def off(a, b, p):
+        """How far p lies off the line through a and b."""
+        n = math.hypot(b[0] - a[0], b[1] - a[1]) or 1.0
+        return abs((b[0] - a[0]) * (p[1] - a[1])
+                   - (b[1] - a[1]) * (p[0] - a[0])) / n
+
+    seen = []
+    for t in teeth:
+        assert off(spine[0], spine[-1], t[0]) < eps, \
+            f"et hakk står løst fra klammens rygg, på ({t[0][0]:.1f}, " \
+            f"{t[0][1]:.1f})"
+        hit = [i for i, g in enumerate(groups)
+               if all(off(t[0], t[-1], p) < eps for p in g)]
+        assert len(hit) == 1, \
+            (f"hakket fra ({t[0][0]:.1f}, {t[0][1]:.1f}) flukter med "
+             f"{len(hit)} rader avlesninger, ikke med én")
+        seen.append(hit[0])
+    assert sorted(seen) == list(range(len(groups))), \
+        "to hakk peker på samme rad - en av radene er utellet"
+    return len(teeth)
 
 
 def assert_fits_column(page, fig_px):
@@ -362,36 +442,37 @@ def render(G, out_dir, width):
         wall(RX(x), RY(y), w * ROOM_S, h * ROOM_S)
 
     def measure(a, b):
-        """One reading: arrows out from the middle to both ends."""
+        """One reading: arrows out from the middle to both ends. Hands back
+        the two SHAFTS as they were emitted - they ARE the row, and the tally
+        assert lines the bracket's notches up against them."""
         mid = ((a[0] + b[0]) / 2.0, (a[1] + b[1]) / 2.0)
+        i = len(page.body)
         page.arrow(mid, a, RL.INK, W_DIM, HEAD)
+        j = len(page.body)
         page.arrow(mid, b, RL.INK, W_DIM, HEAD)
+        return (page.body[i], page.body[j])
 
-    def bracket(x, lo, hi, text):
-        """A square bracket down a column of readings, with its count."""
-        page.polylines([[(x + TICK, hi), (x, hi), (x, lo), (x + TICK, lo)]],
-                       RL.GREY, W_DIM)
-        page.text((x - TICK * 0.6, (lo + hi) / 2.0 - SZ * 0.34), text, SZ,
-                  anchor="end")
+    def comb(spine, teeth):
+        """A count bracket, drawn as a TALLY: a spine with one notch in it per
+        thing counted. The notches are handed in already computed, because two
+        of the four combs are painted on a wall in perspective and come in
+        through the camera - see the room view. One path, so assert_tally can
+        take the spine and the notches back out of it."""
+        page.polylines([spine] + teeth, RL.GREY, W_DIM)
+        return page.body[-1]
 
-    def bracket_along(a, b, text):
-        """The same bracket laid along a run of readings that goes away from
-        the eye, so it has to lean with them."""
-        dx, dy = b[0] - a[0], b[1] - a[1]
-        n = math.hypot(dx, dy) or 1.0
-        nx, ny = dy / n, -dx / n              # out, away from the niche
-        # Further out than the flat views' bracket stands, because the line it
-        # is offset from and the line it must not touch - the foot of the wall
-        # and the row of readings just above it - both run to the same
-        # vanishing point and close on each other as they go.
-        off, lip = TICK * 3.0, TICK * 0.55
+    def bracket(x, at, text):
+        """The flat views' comb: straight down a column of readings, a notch
+        out at each one, and the count outside it."""
+        el = comb([(x, at[0]), (x, at[-1])],
+                  [[(x, a), (x + TICK, a)] for a in at])
+        page.text((x - TICK * 0.6, (at[0] + at[-1]) / 2.0 - SZ * 0.34), text,
+                  SZ, anchor="end")
+        return el
 
-        def at(p, d):
-            return (p[0] + nx * d, p[1] + ny * d)
-        page.polylines([[at(a, off - lip), at(a, off), at(b, off),
-                         at(b, off - lip)]], RL.GREY, W_DIM)
-        m = at(((a[0] + b[0]) / 2.0, (a[1] + b[1]) / 2.0), off + SZ * 0.85)
-        page.text((m[0], m[1] - SZ * 0.34), text, SZ, anchor="middle")
+    def rows_of(pairs):
+        """The readings back out of the ink, one list of points per row."""
+        return [[p for el in pair for p in _points(el)] for pair in pairs]
 
     # -- THE ROOM -----------------------------------------------------------
     # Painter's order, back to front. Nothing here overlaps anything else -
@@ -460,9 +541,39 @@ def render(G, out_dir, width):
     z_ex, y_ex = heights[n_h // 2], ys[n_d // 2]
     page.arrow(P(W / 2.0, y_ex, z_ex), P(0, y_ex, z_ex), RL.INK, W_DIM, HEAD)
 
-    bracket(-WALL_T - TICK * 1.6, P(0, ys[-1], heights[0])[1],
-            P(0, ys[-1], heights[-1])[1], f"{n_h}×")
-    bracket_along(P(0, ys[-1], 0.0), P(0, ys[0], 0.0), f"{n_d}×")
+    # THE TWO COUNTS, ON THE WALL THEY COUNT. Each is a comb standing in the
+    # margin the grid leaves itself - half a pitch of bare wall between the
+    # mouth of the niche and the first column of readings, and the same
+    # between the floor and the first row - with its notches turned in towards
+    # the dots, so there is nothing between a notch and the reading it counts.
+    #
+    # Every point of both combs is a point IN THE ROOM, in millimetres, put
+    # through the same camera as the dots: a notch is the row's own line on
+    # the wall, drawn short. That is what makes it lean with its row and land
+    # in line with it - a comb laid out on the paper would only be square, and
+    # would point at nothing. assert_tally() prolongs each notch and finds the
+    # row it belongs to, which is the same statement read back off the ink.
+    m_y, m_z = ys[-1], heights[0]
+    y_s, z_s = m_y * 0.30, m_z * 0.30          # where the two spines stand
+    comb_h = comb([P(0, y_s, heights[0]), P(0, y_s, heights[-1])],
+                  [[P(0, y_s, z), P(0, m_y, z)] for z in heights])
+    comb_d = comb([P(0, ys[-1], z_s), P(0, ys[0], z_s)],
+                  [[P(0, y, z_s), P(0, y, m_z)] for y in ys])
+
+    # The counts themselves are TYPE, and type does not go in perspective: it
+    # is set on the paper, each one at the near end of its own comb. The
+    # height count stands over the top notch, in the clear wall above the
+    # grid; the depth count goes out on the floor, square off the foot of the
+    # wall, because everything on the wall down there runs to the vanishing
+    # point and no horizontal word can be laid beside it without crossing one.
+    top = P(0, y_s, heights[-1])
+    page.text((top[0], top[1] + SZ * 1.55), f"{n_h}×", SZ)
+    fa, fb = P(0, ys[-1], 0.0), P(0, ys[0], 0.0)          # the foot of it
+    fx, fy = fb[0] - fa[0], fb[1] - fa[1]
+    fn = math.hypot(fx, fy) or 1.0
+    page.text(((fa[0] + fb[0]) / 2.0 + fy / fn * SZ * 1.5,
+               (fa[1] + fb[1]) / 2.0 - fx / fn * SZ * 1.5 - SZ * 0.34),
+              f"{n_d}×", SZ, anchor="middle")
 
     # The height line off the finished floor, read in the MOUTH of the niche -
     # the one plane of the room view that is not foreshortened, so the reading
@@ -493,9 +604,8 @@ def render(G, out_dir, width):
               RL.INK, W_DATUM)
     page.line((ox + W / 2.0, H), (ox + W / 2.0, 0.0), RL.INK, W_PLUMB,
               dash=DASH)
-    for z in heights:
-        measure((ox + W / 2.0, z), (ox, z))
-    bracket(ox - WALL_T - TICK * 1.6, heights[0], heights[-1], f"{n_h}×")
+    e_rows = [measure((ox + W / 2.0, z), (ox, z)) for z in heights]
+    b_elev = bracket(ox - WALL_T - TICK * 1.6, heights, f"{n_h}×")
 
     dx = ox + W * 0.84
     for z in (0.0, EYE):
@@ -520,15 +630,24 @@ def render(G, out_dir, width):
     page.line((ox + W / 2.0, plan_top),
               (ox + W / 2.0, plan_top - D - OVERRUN), RL.INK, W_PLUMB,
               dash=DASH)
-    for d in depths:
-        measure((ox + W / 2.0, plan_top - d), (ox, plan_top - d))
-    bracket(ox - WALL_T - TICK * 1.6, plan_top - depths[-1],
-            plan_top - depths[0], f"{n_d}×")
+    p_rows = [measure((ox + W / 2.0, plan_top - d), (ox, plan_top - d))
+              for d in depths]
+    b_plan = bracket(ox - WALL_T - TICK * 1.6, [plan_top - d for d in depths],
+                     f"{n_d}×")
 
     # -- read the ink back --------------------------------------------------
     import gen_doc_tables as T
-    assert_ring(page.body[i_ring], unP, W, EYE, SZ * 0.05)
+    eps = SZ * 0.05
+    assert_ring(page.body[i_ring], unP, W, EYE, eps)
     assert_grid_on_wall(page.body[i_wall], dots, n_h, n_d)
+    # The four combs, each against the readings it stands beside: in the room
+    # the emitted dots, row by row and then column by column; in the flat
+    # views the emitted reading arrows.
+    xy = _centres(dots)                        # drawn row by row, n_d per row
+    assert_tally(comb_h, [xy[i * n_d:(i + 1) * n_d] for i in range(n_h)], eps)
+    assert_tally(comb_d, [xy[j::n_d] for j in range(n_d)], eps)
+    assert_tally(b_elev, rows_of(e_rows), eps)
+    assert_tally(b_plan, rows_of(p_rows), eps)
     mm = assert_fits_column(page, T.ROOM_FIG_PX)
 
     svg = os.path.join(out_dir, "maal-rommet.svg")

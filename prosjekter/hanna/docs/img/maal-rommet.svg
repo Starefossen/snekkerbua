@@ -35,10 +35,10 @@
 <path d="M1735.07,-416.65 L404.1,-416.65" fill="none" stroke="#111111" stroke-width="6.26" stroke-linecap="round"/>
 <path d="M404.1,-416.65 L464.13,-380.53" fill="none" stroke="#111111" stroke-width="6.26" stroke-linecap="round"/>
 <path d="M404.1,-416.65 L464.13,-452.76" fill="none" stroke="#111111" stroke-width="6.26" stroke-linecap="round"/>
-<path d="M-150.02,-1200.89 L-200.07,-1200.89 L-200.07,818.92 L-150.02,818.92" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="-230.09" y="-156.96" font-family="Helvetica, Arial, sans-serif" font-size="100.08" font-weight="normal" text-anchor="end" fill="#111111">5×</text>
-<path d="M297.81,1134.62 L321.39,1148.82 L705.86,510.18 L682.28,495.99" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="586.51" y="907.41" font-family="Helvetica, Arial, sans-serif" font-size="100.08" font-weight="normal" text-anchor="middle" fill="#111111">3×</text>
+<path d="M107.36,950.66 L107.36,-1150.22 M107.36,950.66 L192.78,818.92 M107.36,425.44 L192.78,313.97 M107.36,-99.78 L192.78,-190.99 M107.36,-625 L192.78,-695.94 M107.36,-1150.22 L192.78,-1200.89" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M192.78,995.65 L577.25,370.7 M577.25,370.7 L577.25,225.9 M404.1,652.14 L404.1,492.96 M192.78,995.65 L192.78,818.92" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="107.36" y="-1305.34" font-family="Helvetica, Arial, sans-serif" font-size="100.08" font-weight="normal" text-anchor="start" fill="#111111">5×</text>
+<text x="513.62" y="863.53" font-family="Helvetica, Arial, sans-serif" font-size="100.08" font-weight="normal" text-anchor="middle" fill="#111111">3×</text>
 <path d="M3008.83,1277.63 L3196.51,1277.63" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round"/>
 <path d="M3008.83,-294.18 L3196.51,-294.18" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round"/>
 <path d="M3008.83,491.73 L3008.83,1277.63" fill="none" stroke="#111111" stroke-width="6.26" stroke-linecap="round"/>
@@ -96,7 +96,7 @@
 <path d="M4642.62,-1530 L4145.12,-1530" fill="none" stroke="#111111" stroke-width="6.26" stroke-linecap="round"/>
 <path d="M4145.12,-1530 L4205.16,-1493.89" fill="none" stroke="#111111" stroke-width="6.26" stroke-linecap="round"/>
 <path d="M4145.12,-1530 L4205.16,-1566.11" fill="none" stroke="#111111" stroke-width="6.26" stroke-linecap="round"/>
-<path d="M3995.1,-1530 L3945.06,-1530 L3945.06,-170 L3995.1,-170" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3945.06,-170 L3945.06,-1530 M3945.06,-170 L3995.1,-170 M3945.06,-510 L3995.1,-510 M3945.06,-850 L3995.1,-850 M3945.06,-1190 L3995.1,-1190 M3945.06,-1530 L3995.1,-1530" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="3915.03" y="-815.97" font-family="Helvetica, Arial, sans-serif" font-size="100.08" font-weight="normal" text-anchor="end" fill="#111111">5×</text>
 <path d="M5766.68,-0 L5866.76,-0" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round"/>
 <path d="M5766.68,-1000 L5866.76,-1000" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round"/>
@@ -142,6 +142,6 @@
 <path d="M4642.62,1457.09 L4145.12,1457.09" fill="none" stroke="#111111" stroke-width="6.26" stroke-linecap="round"/>
 <path d="M4145.12,1457.09 L4205.16,1493.21" fill="none" stroke="#111111" stroke-width="6.26" stroke-linecap="round"/>
 <path d="M4145.12,1457.09 L4205.16,1420.98" fill="none" stroke="#111111" stroke-width="6.26" stroke-linecap="round"/>
-<path d="M3995.1,899.76 L3945.06,899.76 L3945.06,1457.09 L3995.1,1457.09" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3945.06,899.76 L3945.06,1457.09 M3945.06,899.76 L3995.1,899.76 M3945.06,1178.43 L3995.1,1178.43 M3945.06,1457.09 L3995.1,1457.09" fill="none" stroke="#9a9a9a" stroke-width="6.26" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="3915.03" y="1212.45" font-family="Helvetica, Arial, sans-serif" font-size="100.08" font-weight="normal" text-anchor="end" fill="#111111">3×</text>
 </svg>
