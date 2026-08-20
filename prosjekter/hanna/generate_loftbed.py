@@ -46,6 +46,113 @@ back corner posts into the back rail plane. Consequences you cannot ignore:
     (1700), which costs the 48 mm of depth v10 just won - and, on a 36 mm
     post, 36 rather than 48 of it. Flagged for the docs round.
 
+DESIGN INTENT (v15 - "the wall gets a datum, the bench gets a room, and the
+                      desk gets an answer")
+--------------------------------------------------------------------------
+X8  THE DESK AT 700 IS NOT BUILDABLE, AND WHAT SAYS SO IS RUNG 3. This entry
+    is a REFUSAL, written down at the same length the change would have been,
+    because the request was right and the reason it cannot be had is not
+    obvious from any drawing in this folder.
+
+    WHAT WAS ASKED FOR, AND WHY. The plate is a sofa table today: top 560,
+    140 mm over the 420 cushion, 122 under it. A thigh is ~115 mm, so a
+    straight leg goes under it and a bent knee does not - it is a surface you
+    lean over from a bench, not one you sit AT. The builder wants the other
+    thing: a PULT. Top ~700, i.e. 280 over the cushion and ~262 under it,
+    knees in under the plate the way they go under a desk, and his reference
+    is a thing he can point at in a shop rather than a number he made up -
+    IKEA SMASTAD's desk at 730. The argument is X1's own: the lower storey is
+    "the play, homework, sofa and table storey - the one the hours go in", and
+    homework at a lap table is homework done badly. Nothing about the case is
+    wrong.
+
+    WHAT IT WOULD HAVE TAKEN. Two moves. The rear seat is easy - the back
+    table ledger is a 48x68 on the wall that only has to be screwed 140 mm
+    higher, 474..542 -> 614..682, and its nogging zone with it; the transfer
+    slot over the bench GROWS when it goes, 154 -> 294 mm. The front seat is
+    the whole problem: the plate's front edge lands on wood at the LADDER, the
+    ladder's wood at that height is rung 2 (top 542) and rung 3 (top 787), and
+    682 is between them. So it needs new bearers on the uprights - blocks in
+    the rung-block family, 36x48, screwed to the upright's inner face with a
+    ledge standing back into Y 720..752 for the plate to sit on. That much is
+    ordinary joinery and it drew fine.
+
+    WHY IT DOES NOT WORK. The plate is not fitted, it is CARRIED - the same
+    unit is the bed in one mode and the table in the other, and it gets from
+    one seat to the other by hand. Two walls, and they are the same piece of
+    wood twice:
+      1  THE LIFT. The panel is 574 x 798 and lies at Y -48..750; the rungs
+         are X 835..1155 at Y 720..788. So wherever the plate sits at the
+         ladder, a strip of it lies UNDER a rung, and in table mode that rung
+         is rung 3, underside 739. At the plate's present 560 the straight-up
+         run is 179 mm (measured, INSERT_CLEAR). At 700 it is 39 - and the
+         guide battens need 48 to come free of their locator at all. The unit
+         cannot be lifted off its own seat.
+      2  THE CROSSING. It does not go up in place either: the thing that
+         carries it at table height is over the bed seat, so the trip is out
+         over a bench and back across the ladder in the free band between
+         rung 2's top (542) and rung 3's underside (739) - 197 mm for an
+         86 mm unit (K3, leg 6). A front bearer at 682 stands at 634..682,
+         INSIDE that band, and splits it into 92 and 57: the unit fits
+         neither with clearance. Crossing UNDER the bearer is no use, because
+         the plate would then have to rise through the bearer to reach its own
+         seat. Crossing OVER it needs the plate top at 768 while rung 3's
+         underside is at 739. Twenty-nine millimetres short, and no detail on
+         the bearer changes it: 68 of the band is spent before the unit is in
+         it, because the bearer top IS the plate's underside.
+
+    THE CEILING, MEASURED AND NOW ASSERTED. Both walls are arithmetic on the
+    same 739, so the highest plate top the mechanism allows falls out of it:
+      671  zero clearance anywhere - a number, not a design
+      649  with the 11 mm of daylight the mechanism film keeps
+      639  with INSERT_CLEAR_MIN, the 100 mm of straight-up run this file has
+           always demanded. THIS IS THE ANSWER: plate top 639, underside 621,
+           219 mm over the cushion and 201 under it. Knees DO go under 201.
+    That is 79 mm above where the plate sits now and 61 below the desk that
+    was asked for, and it is a real improvement rather than the one wanted.
+    Not taken in this round: it moves the ledger, the zone, the bearers, the
+    figures, the film and every number in the manual, and it is the builder's
+    call whether two thirds of a desk is worth that. The ceiling is computed
+    off the solids and asserted (X8, by the insertion sweep), so the next
+    attempt is met with the number instead of with a collision.
+
+    AND WHAT WOULD ACTUALLY UNLOCK 700: rung 3 would have to go up 51 mm, to
+    838. Then step 2 -> 3 is 296 mm against the 280 limit X2 set from EN 131.
+    THE EVEN LADDER AND THE DESK WANT THE SAME 51 MILLIMETRES and only one of
+    them can have them. X2 already settled the precedence once - "the LADDER
+    decides and the TABLE FOLLOWS" - and this entry is that rule being paid
+    for a second time, out loud.
+
+    THE FIGURES DO NOT MOVE. The two seated bodies sit cross-legged because
+    the plate is at lap height, and the plate is still at lap height, so the
+    pose and the prose that explains it are still true. Nothing in this round
+    makes them a lie.
+
+X8b THE SPIKERSLAG ZONES ARE WRITTEN FROM THE LASER LINE AS WELL. Every
+    height in this file is over FERDIG GULV, which is right for a drawing and
+    wrong for a wall: the floor in this house is out of level, the whole
+    fitting job is built plumb and level off a laser line struck 1000 mm above
+    the floor's HIGHEST point (MEASURE_DATUM_Z), and "229 over ferdig gulv" is
+    a number the man at the open wall cannot set without first trusting the
+    floor under that exact spot. So each zone is printed twice - over the
+    floor, and as a signed offset from the line: minus below, plus above. The
+    second column is the first minus 1000, derived nowhere else and asserted
+    in three places, one of them in the ink of the finished table and one in
+    the ink of the finished sheet. Zone 2 reads -771..-703, zone 3 -526..-458.
+
+X8c THE ROOM UNDER THE BENCH IS MEASURED, BECAUSE IT IS GOING TO HOLD BOXES.
+    Nothing in this round makes that space - the stub legs left it when they
+    replaced a plinth - but nothing had ever said how big it is, and a room
+    nobody has measured is a room nobody buys boxes for. Read off the solids:
+    229 mm of clear height (floor to the bench rail underside), 479 mm of
+    clear width (the back corner post's inner face to the stub leg's outer
+    face) and 800 mm of clear depth - the bench slat's own length, because the
+    box goes in UNDER the front rail rather than past it. Two of them, one
+    under each bench. Both the room and the corridor it is pushed in through
+    are asserted empty, and the height is stated as the minimum it is: the
+    frame is level and the floor is not, so 229 is what you get at the floor's
+    high point and more everywhere else.
+
 DESIGN INTENT (v14 - "both storeys seat an adult")
 --------------------------------------------------------------------------
 X1  THE UPPER DECK GOES UP 337 mm AND THE BENCH 38, AND THE ROOM BECOMES A
@@ -6109,10 +6216,71 @@ assert _below < MEASURE_DATUM_Z < _above, \
 MEASURE_GRID = (5, 3)            # heights x depths, per end wall
 assert min(MEASURE_GRID) >= 2, \
     "a measuring grid with a single row or column reads a point, not a wall"
+
+# ---------------------------------------------------------------------------
+# X8b - THE ZONES, READ FROM THE LINE THE MAN ACTUALLY WORKS FROM
+# ---------------------------------------------------------------------------
+# Every height in this file is measured from FERDIG GULV, Z = 0, and that is
+# the right datum for a drawing: the floor is where the bed stands and where
+# the arithmetic starts. It is the wrong datum for a WALL. The floor in this
+# house is out of level - the whole fitting job is built plumb and level off
+# MEASURE_DATUM_Z, a laser line struck round the niche 1000 mm above the
+# HIGHEST point of the floor - so "229 over ferdig gulv" is a number the man
+# at the open wall cannot set: he would have to find the floor under that
+# exact spot first, and the floor is the thing he has already decided not to
+# trust. What he CAN set, anywhere along the wall, in one tape pull, is a
+# distance from the laser line.
+#
+# So the zones are emitted in BOTH notations, and the second one is derived
+# from the first by subtraction - never written down. Sign convention is the
+# only thing to remember and it is the natural one: MINUS is below the line,
+# PLUS is above it. The datum sits at 1000 on purpose (it is a metre line and
+# it lands on bare wall, asserted above), so the two notations differ by
+# exactly MEASURE_DATUM_Z everywhere, and that difference is asserted here
+# and again in the printed table and on the drawn sheet - measured in the
+# ink, not trusted.
+def riss(z):
+    """A height over the finished floor as an offset from the height line."""
+    return z - MEASURE_DATUM_Z
+
+
+def riss_num(z):
+    """That offset, signed, the way it is written on a tape: -771, +402."""
+    v = riss(z)
+    return f"{'+' if v > 0 else '-' if v < 0 else ''}{abs(v):g}"
+
+
+def riss_span(z0, z1):
+    """A whole band from the line: '-771..-703 under risset'."""
+    txt = f"{riss_num(z0)}..{riss_num(z1)}"
+    if riss(z1) <= 0:
+        return f"{txt} under risset"
+    if riss(z0) >= 0:
+        return f"{txt} over risset"
+    return f"{txt} krysser risset"
+
+
+for zo in WALL_ZONES:
+    zo["riss"] = tuple(riss(v) for v in zo["z"])
+    zo["riss_txt"] = riss_span(*zo["z"])
+    for _a, _b in zip(zo["z"], zo["riss"]):
+        assert _a - _b == MEASURE_DATUM_Z, \
+            f"nogging zone {zo['cut'][0]}: {_a} over the floor and {_b} from " \
+            f"the height line differ by {_a - _b}, not {MEASURE_DATUM_Z}"
+assert sum(1 for zo in WALL_ZONES if min(zo["riss"]) < 0 < max(zo["riss"])) \
+    == sum(1 for zo in WALL_ZONES if zo["corner"]), \
+    "the only zones that straddle the height line should be the two corner " \
+    "columns - they are the ones that run from the floor past 1000"
+
 print(f"OK  SPIKERSLAG: {len(WALL_ZONES)} zones on the wall face, "
       + " ".join(f"{zo['z'][0]:g}-{zo['z'][1]:g}" for zo in WALL_ZONES)
       + f" mm above the finished floor, carrying "
       + ", ".join(sorted({zo["cut"][0] for zo in WALL_ZONES})))
+print(f"OK  X8b fra høyderisset ({MEASURE_DATUM_Z} over ferdig gulv): "
+      + " · ".join(f"sone {_n} {zo['riss_txt']}"
+                   for _n, zo in enumerate(WALL_ZONES, 1))
+      + " - utledet ved subtraksjon, aldri skrevet inn, og differansen er "
+        "asserted på hver eneste sonekant")
 
 # C9: nothing horizontal may be longer than 1984, and every long member must sit
 # in one of the two legal X bands. A 1990 mm piece cannot be swung into a 1990 mm
@@ -7625,6 +7793,108 @@ print(f"OK  U5: 4 stub legs {sec(LEG_T, LEG_W)} x {STUB_LEG_H} (was "
       f"{LEG_W} mm >= {MIN_LEG_BEARING} mm of bearing in X. Y is unchanged at "
       f"{LEG_T}, flush in the rail's {BENCH_RAIL_T} mm depth")
 
+# ---------------------------------------------------------------------------
+# X8c - THE ROOM UNDER THE BENCH, MEASURED. IT IS STORAGE, SO SAY HOW BIG.
+# ---------------------------------------------------------------------------
+# Nothing in this round CREATES this space - it has been under the benches
+# since the stub legs replaced a solid plinth - but nothing has ever said how
+# big it is either, and a room nobody has measured is a room nobody buys boxes
+# for. The builder is going to put loose boxes there, so the bed owes him
+# three numbers he can take to a shop, and they have to be the SOLIDS' numbers
+# and not a sentence somebody wrote once.
+#
+# WHAT BOUNDS IT, in the order the box meets them:
+#   CEILING  the bench rail underside, BENCH_RAIL_BOTTOM. The bench top itself
+#            is 91 mm higher, but the rails hang under it and they are what a
+#            box actually hits.
+#   FLOOR    the floor. NB the honest caveat, and it is the whole reason
+#            MEASURE_DATUM_Z exists: the frame is built level off the laser
+#            line over the HIGHEST point of the floor, so the clear height is
+#            exactly this number at that point and MORE everywhere else.
+#   DEPTH    the wall behind (WALL_Y) to the front bench rail's front face.
+#            That is the same 800 mm the bench slats are long: the box can be
+#            as deep as the bench is, and it goes in UNDER the front rail,
+#            which is why the rail's own 48 mm does not count against it.
+#   WIDTH    whatever the things standing on the floor leave. Measured, not
+#            listed: the back corner post takes the wall end of each bench and
+#            the two stub legs take the sofa end, and what is left between
+#            them is one clear field per bench.
+# The field is then asserted EMPTY, and so is the corridor it is pushed in
+# through - the front plane, floor to the same ceiling - because a box you
+# cannot get in is not storage either.
+STORAGE_BAY_Z = (0, BENCH_RAIL_BOTTOM)                 # 0 .. 229
+STORAGE_BAY_Y = (WALL_Y, FRONT_RAIL_Y1)                # -48 .. 752
+STORAGE_BAY_H = STORAGE_BAY_Z[1] - STORAGE_BAY_Z[0]    # 229
+STORAGE_BAY_D = STORAGE_BAY_Y[1] - STORAGE_BAY_Y[0]    # 800
+
+
+def _clear_x_field(x0, x1, ybox, zbox):
+    """The widest clear X interval in (x0, x1) inside the Y/Z box given."""
+    edges = [x0, x1]
+    for p in parts:
+        (px0, px1), (py0, py1), (pz0, pz1) = p.extents
+        if min(py1, ybox[1]) - max(py0, ybox[0]) <= TOL:
+            continue
+        if min(pz1, zbox[1]) - max(pz0, zbox[0]) <= TOL:
+            continue
+        if min(px1, x1) - max(px0, x0) <= TOL:
+            continue
+        edges += [max(px0, x0), min(px1, x1)]
+    edges = sorted(set(edges))
+    best = (0.0, x0, x0)
+    for a, b in zip(edges, edges[1:]):
+        mid = (a + b) / 2
+        if any(p.extents[0][0] < mid < p.extents[0][1]
+               and min(p.extents[1][1], ybox[1]) - max(p.extents[1][0], ybox[0]) > TOL
+               and min(p.extents[2][1], zbox[1]) - max(p.extents[2][0], zbox[0]) > TOL
+               for p in parts):
+            continue
+        if b - a > best[0]:
+            best = (b - a, a, b)
+    return best
+
+
+STORAGE_BAYS = []
+for _side, _bx0, _bx1 in (("left", 0.0, float(BENCH_LEN)),
+                          ("right", float(WALL_SPAN - BENCH_LEN),
+                           float(WALL_SPAN))):
+    _w, _x0, _x1 = _clear_x_field(_bx0, _bx1, STORAGE_BAY_Y, STORAGE_BAY_Z)
+    # the room itself, and the way in - both have to be genuinely empty
+    for _what, _box in (("kasserommet", ((_x0 + TOL, _x1 - TOL),
+                                         STORAGE_BAY_Y, STORAGE_BAY_Z)),
+                        ("innkjøringen", ((_x0 + TOL, _x1 - TOL),
+                                          (FRONT_RAIL_Y1, FRONT_POST_Y1),
+                                          STORAGE_BAY_Z))):
+        for p in parts:
+            inter = [min(a1, b1) - max(a0, b0)
+                     for (a0, a1), (b0, b1) in zip(p.extents, _box)]
+            assert min(inter) <= TOL, \
+                f"X8c: '{p.label}' står i {_what} under {_side} benk"
+    STORAGE_BAYS.append((_side, _x0, _x1, _w))
+STORAGE_BAY_W = STORAGE_BAYS[0][3]
+assert len(STORAGE_BAYS) == 2 and \
+    all(abs(b[3] - STORAGE_BAY_W) < TOL for b in STORAGE_BAYS), \
+    f"X8c: the two under-bench bays are {[b[3] for b in STORAGE_BAYS]} mm " \
+    f"wide - the bed is symmetric, so they are supposed to be the same room " \
+    f"twice"
+assert abs(STORAGE_BAY_W - (STUB_LEG_X[0] - POST_W)) < TOL, \
+    f"X8c: the clear field is {STORAGE_BAY_W} mm, and the rule says it is " \
+    f"the back post's inner face to the stub leg's outer face, " \
+    f"{STUB_LEG_X[0] - POST_W}"
+assert abs(STORAGE_BAY_D - BENCH_SLAT_LEN) < TOL, \
+    f"X8c: the bay is {STORAGE_BAY_D} mm deep and a bench slat is " \
+    f"{BENCH_SLAT_LEN} - the box is supposed to be able to be as deep as the " \
+    f"bench it stands under"
+print(f"OK  X8c kasserommet under benkene: {len(STORAGE_BAYS)} rom, "
+      f"{STORAGE_BAY_H:g} høyt x {STORAGE_BAY_W:g} bredt x {STORAGE_BAY_D:g} "
+      f"dypt (X "
+      + " / ".join(f"{b[1]:g}..{b[2]:g}" for b in STORAGE_BAYS)
+      + f", Y {STORAGE_BAY_Y[0]:g}..{STORAGE_BAY_Y[1]:g}, Z "
+        f"{STORAGE_BAY_Z[0]:g}..{STORAGE_BAY_Z[1]:g}) - taket er "
+        f"benkevangens underkant, bredden er fra bakre hjørnestolpe til "
+        f"stubbefot, dybden er benkespilens egen lengde, og både rommet og "
+        f"innkjøringen foran det er målt tomme på solidene")
+
 # D13: WALK-AROUND. There must be a real passage on each side of the ladder,
 # between the sofa end and the upright outer face, clear from the floor up to
 # the table-mode panel line (542) across the whole front zone.
@@ -8333,6 +8603,7 @@ print(f"OK  V2 innsetting: the panel assembly - sheet, 4 lekter og "
       f"{BATTEN_GUIDE_ENGAGE_Z} mm som skal til for å løfte styrelektene fri "
       f"av trinnenden. Ingenting i veien for noen av delene på veien ned")
 
+
 # ---------------------------------------------------------------------------
 # K1 - THE TRANSFER SLOT, MEASURED
 # ---------------------------------------------------------------------------
@@ -8440,6 +8711,54 @@ print(f"OK  K1 stigeklossen 36x48 x {RUNG_BLOCK_LEN} (var {RUNG_D}): flate mot "
       f"{RUNG_BLOCK_BEAR_UTIL:.2f}; skruen sitter nå på Y {RUNG_BLOCK_Y0 + RUNG_BLOCK_LEN / 2:g}, "
       f"midt i vangen")
 
+
+# ---------------------------------------------------------------------------
+# X8 - HOW HIGH THE TABLE CAN GO, AND WHY IT IS NOT A MATTER OF TASTE
+# ---------------------------------------------------------------------------
+# The builder asked for a DESK: the plate at ~700 over the floor, 280 over the
+# seat cushion, knees under it (IKEA SMASTAD's desk is 730). The answer is no,
+# and the number that says no is not an opinion - it is rung 3. This block
+# works the ceiling out on the solids so the next person who wants a taller
+# table is told HOW MUCH taller it can be instead of being told "collision".
+#
+# THE TWO WALLS, both of them the same piece of wood:
+#   1  THE STRAIGHT-UP RUN. The panel is 574 x 798 and the ladder rungs run
+#      X 835..1155 at Y 720..788, so wherever the plate sits at the ladder its
+#      front strip lies UNDER a rung. In table mode the rung above is rung 3,
+#      measured here as the stopper of INSERT_CLEAR. The unit has to rise
+#      BATTEN_GUIDE_ENGAGE_Z (48) before its guides are free of their locator
+#      at all, and INSERT_CLEAR_MIN (100) before that is a lift and not a
+#      wrestle - so the plate TOP can be at most the rung underside less 100.
+#   2  THE CROSSING. The unit does not go from seat to seat straight up: it
+#      goes out over a bench and comes back across the ladder in the free band
+#      between rung 2's top and rung 3's underside (K3, leg 6). Whatever
+#      carries the plate's front edge at table height stands IN that band, so
+#      the unit has to cross ABOVE it: batten bottom over the bearer top, i.e.
+#      over the plate's own underside, while the plate top is still under
+#      rung 3. That is PANEL_UNIT_H - PANEL_T = 68 mm of the band spent
+#      before the unit is even in it.
+# Both are measured, neither is typed, and the lower of the two is the ceiling.
+TABLE_CEILING_Z = PANEL_TOP_TABLE + INSERT_CLEAR["table_mode"]     # 739
+TABLE_TOP_MAX_LIFT = TABLE_CEILING_Z - INSERT_CLEAR_MIN            # 639
+TABLE_TOP_MAX_CROSS = TABLE_CEILING_Z - (PANEL_UNIT_H - PANEL_T)   # 671
+TABLE_TOP_CEILING = min(TABLE_TOP_MAX_LIFT, TABLE_TOP_MAX_CROSS)   # 639
+assert PANEL_TOP_TABLE <= TABLE_TOP_CEILING, (
+    f"X8: the table plate is drawn at {PANEL_TOP_TABLE} and the mode change "
+    f"tops out at {TABLE_TOP_CEILING} - {TABLE_CEILING_Z} "
+    f"({INSERT_STOPPER['table_mode']}) less the bigger of "
+    f"{INSERT_CLEAR_MIN} mm of straight-up run and the "
+    f"{PANEL_UNIT_H - PANEL_T} mm the unit spends getting over its own front "
+    f"bearer on the way across. Above that the plate can be drawn but not "
+    f"put there")
+print(f"OK  X8 bordhøydens tak: {TABLE_TOP_CEILING:g} mm platetopp. "
+      f"{INSERT_STOPPER['table_mode']} setter taket på {TABLE_CEILING_Z:g}; "
+      f"derfra går {INSERT_CLEAR_MIN} mm til rett løft (gir "
+      f"{TABLE_TOP_MAX_LIFT:g}) og {PANEL_UNIT_H - PANEL_T:g} mm til å komme "
+      f"over sin egen bærekant på tvers (gir {TABLE_TOP_MAX_CROSS:g}) - det "
+      f"laveste gjelder. Platen ligger på {PANEL_TOP_TABLE}, altså "
+      f"{TABLE_TOP_CEILING - PANEL_TOP_TABLE:g} mm under taket. En pult på "
+      f"700 er {700 - TABLE_TOP_CEILING:g} mm over det, og det er trinn 3 som "
+      f"sier nei - se X8 i toppen av fila")
 
 # ---------------------------------------------------------------------------
 # X7 - THE REAL EC5 6.3.2, ON THE MEMBER THE LIFT MADE THE WORST

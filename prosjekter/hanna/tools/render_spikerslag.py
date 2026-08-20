@@ -19,11 +19,14 @@ its own X extent, its own Z band - so the two corner columns come out 98 mm
 wide because that is how wide the back posts are, and the long bands stop at
 the post faces because that is where the members stop.
 
-Every height on the sheet is measured from the FINISHED FLOOR, Z = 0, which is
-the same datum the fitting job uses: MEASURE_DATUM_Z is struck round the niche
-with a laser and everything is measured off that line. The line is drawn here
-too, thin, and the model asserts that it falls on bare wall between two zones -
-a line struck across a nogging is a line you cannot see once the bed is up.
+Every height on the sheet is measured from the FINISHED FLOOR, Z = 0 - and,
+after X8b, ALSO from the height line, in brackets beside it. The line is
+MEASURE_DATUM_Z, struck round the niche with a laser 1000 mm over the floor;
+it is drawn here too, thin, and the model asserts that it falls on bare wall
+between two zones - a line struck across a nogging is a line you cannot see
+once the bed is up. The second notation exists because the floor is out of
+level and the line is not: at the open wall you set a zone by pulling the tape
+from the laser, not by finding the floor. Minus is below the line, plus above.
 
 WHICH WAY ROUND X RUNS
 ----------------------
@@ -37,7 +40,9 @@ THE ASSERT
 The sheet is written, then READ BACK: every hatched field in the finished SVG
 is converted from sheet units to model millimetres and has to be the X extent
 and Z band of a part in WALL_ZONES. A zone the model grew and the drawing did
-not is a failed build, not a drawing to be noticed later.
+not is a failed build, not a drawing to be noticed later. The second height
+notation is read back the same way: every height written in both is subtracted
+on the finished sheet and has to differ by exactly MEASURE_DATUM_Z.
 
 Usage:
     python tools/render_spikerslag.py [--out docs/schematics/spikerslag.svg]
@@ -67,7 +72,8 @@ OUT = os.path.join(ROOT, "docs", "schematics", "spikerslag.svg")
 FAMILY_W = 3450.0
 STYLE_K = 1.0
 SHEET_W = FAMILY_W
-SHEET_H = 2760.0
+SHEET_H = 2900.0            # X8b: +140 for the second height notation in the
+                            # notes column - the sheet grew, the type did not
 ORIGIN = (0.0, 150.0)
 
 MARG = 120.0
@@ -140,7 +146,8 @@ class Model:
                                         name=name, corner=zo["corner"]))
             self.zones.append(dict(n=n, z0=z0, z1=z1, name=name,
                                    corner=zo["corner"], spans=sorted(spans),
-                                   count=len(zo["labels"])))
+                                   count=len(zo["labels"]),
+                                   riss=zo["riss"], riss_txt=zo["riss_txt"]))
         self.z_top = max(z["z1"] for z in self.zones) + AIR_OVER
         # The J14 wall fixing: the screws that make the whole thing a rule
         # rather than a suggestion. Anchors are the model's own.
@@ -202,7 +209,8 @@ def draw_zone_names(sh, M):
     """The part each zone carries, written where the field has room for it."""
     G = M.G
     for z in M.zones:
-        txt = f"{z['name']} — {nb(z['z0'], 0)}–{nb(z['z1'], 0)}"
+        txt = (f"{z['name']} — {nb(z['z0'], 0)}–{nb(z['z1'], 0)} over gulv  ·  "
+               f"{z['riss_txt']}")
         if z["corner"]:
             # A 98 mm column has no room for words. The two corner fields are
             # named once, on the bare wall between the bands, each pointing at
@@ -229,7 +237,8 @@ def draw_datum(sh, M):
     sh.line((ex(0.0) - 120.0, zed(d)), (ex(G.WALL_SPAN) + 120.0, zed(d)),
             "ctr")
     sh.text((ex(0.0) + 150.0, zed(d) - sh.sz["sml"] * 0.5),
-            f"HØYDERISS {nb(d, 0)} OVER FERDIG GULV", "smh")
+            f"HØYDERISS {nb(d, 0)} OVER FERDIG GULV — 0 I RISS-NOTASJONEN "
+            f"(MINUS ER UNDER, PLUSS ER OVER)", "smh")
 
 
 def draw_fixings(sh, M):
@@ -291,7 +300,8 @@ def draw_ladder(sh, M):
         if abs(y - (zed(z) + sh.sz["sml"] * 0.36)) > 1.0:
             sh.pline([(LAD_X, zed(z)), (LAD_X + 26.0, zed(z)),
                       (LAD_X + 52.0, y - sh.sz["sml"] * 0.34)], "ext")
-        sh.text((LAB_X, y), f"{nb(z, 0)}   {txt}", "sml")
+        sh.text((LAB_X, y),
+                f"{nb(z, 0)}   ({M.G.riss_num(z)} fra risset)   {txt}", "sml")
 
 
 def draw_widths(sh, M):
@@ -327,8 +337,8 @@ def notes(M, T):
     corner = [z for z in M.zones if z["corner"]]
     bands = [z for z in M.zones if not z["corner"]]
     zone_lines = [
-        f"Sone {z['n']}:  {nb(z['z0'], 0)}–{nb(z['z1'], 0)} over ferdig gulv — "
-        f"{z['name']}"
+        f"Sone {z['n']}:  {nb(z['z0'], 0)}–{nb(z['z1'], 0)} over ferdig gulv  "
+        f"=  {z['riss_txt']} — {z['name']}"
         + (f" ({z['count']} stk., ett felt i hvert hjørne)"
            if z["count"] > 1 else "")
         for z in M.zones
@@ -345,6 +355,10 @@ def notes(M, T):
             f"{nb(G.MEASURE_DATUM_Z, 0)} mm over ferdig gulv. Alle høyder på "
             f"dette arket er målt fra ferdig gulv, og på veggen måler du dem "
             f"ned eller opp fra risset — aldri fra gulvet.",
+            f"Derfor står hver høyde to ganger: over ferdig gulv, og i "
+            f"parentes det samme tallet minus {nb(G.MEASURE_DATUM_Z, 0)} — "
+            f"minus er under laserlinja, pluss er over. Gulvet er skjevt og "
+            f"risset er ikke, så det er parentesen du setter sonene etter.",
             f"Risset ligger på bar vegg mellom sone-toppen {nb(below, 0)} og "
             f"sone-bunnen {nb(above, 0)}, så det er synlig helt til sengen "
             f"står inntil. Det er en assert i modellen.",
@@ -452,6 +466,30 @@ def assert_zone_ink(path, M):
     return len(drawn)
 
 
+# X8b - AND THE SAME TREATMENT FOR THE SECOND NOTATION. Every height on the
+# ladder is written twice on this sheet - over the finished floor, and from
+# the height line - and the second one is only worth anything if it really is
+# the first one minus the datum. So the finished SVG is read back and the
+# subtraction is done on the INK: one line that disagrees, or a datum that
+# moved and took only one of the two with it, stops the build.
+_RISS_RE = re.compile(r">(\d+)   \(([-+]?\d+) fra risset\)")
+
+
+def assert_riss_ink(path, M):
+    with open(path, encoding="utf-8") as fh:
+        text = fh.read()
+    found = _RISS_RE.findall(text)
+    assert len(found) == len(ladder(M)), \
+        (f"{len(found)} høyder på arket er skrevet i begge notasjoner, men "
+         f"høydestigen har {len(ladder(M))} rader")
+    for z, r in found:
+        assert float(z) - float(r) == float(M.G.MEASURE_DATUM_Z), \
+            (f"høyden {z} er skrevet som {r} fra risset: differansen er "
+             f"{float(z) - float(r)}, og den SKAL være høyderisset selv, "
+             f"{M.G.MEASURE_DATUM_Z}")
+    return len(found)
+
+
 # ---------------------------------------------------------------------------
 
 def build(G, T):
@@ -492,8 +530,10 @@ def main(argv):
     sh, M = build(G, T)
     sh.write(out)
     n = assert_zone_ink(out, M)
+    nr = assert_riss_ink(out, M)
     print(f"wrote {out}  ({n} skraverte felt i "
-          f"{len(M.zones)} soner, {nb(M.z_top, 0)} mm vegg tegnet)")
+          f"{len(M.zones)} soner, {nb(M.z_top, 0)} mm vegg tegnet, "
+          f"{nr} høyder skrevet både over gulv og fra høyderisset)")
     return 0
 
 

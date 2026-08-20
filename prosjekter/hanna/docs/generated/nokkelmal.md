@@ -142,6 +142,19 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 | Hodehøyde over nedre soveflate | 1080 mm til køyespilene (982 mm under sidevangene) |
 | Ryggpute i sofastilling | står på høykant ytterst på hver benk: 100 mm tykk, 800 mm dyp, 332 mm høy, topp 752 mm. Ryggen mot bordbærelekta |
 
+## Kasserommet under benkene
+
+Under hver benk står det et rom som ikke er tegnet inn — det er bare det stubbeføttene lar bli igjen — og her er målene på det, målt på delene. **Kasser inntil 229 × 479 × 800 mm (H × B × D) går inn, én på hver side.** De skyves rett inn forfra, under benkevangen.
+
+| | Mål |
+|---|---:|
+| **Fri høyde** | **229 mm** — gulv til benkevangens underkant |
+| **Fri bredde** | **479 mm** — fra bakre hjørnestolpes innerside til stubbefotens ytterside (X 98–577 og 1413–1892) |
+| **Fri dybde** | **800 mm** — veggen til fremre benkevanges forside, altså hele benkens dybde. Benkevangen henger over kassa, ikke foran den |
+| Antall rom | 2 — ett under hver benk. Mellom dem er gulvet åpent foran stigen (X 645–1345), og der skal det ikke stå noe |
+| Hva som stjeler resten | de fire stubbeføttene (68 mm hver i X, innerst på hver benk) og de to bakre hjørnestolpene (98 mm hver, ytterst) |
+| Høyden er et minstemål | gulvet er skjevt og rammen bygges i vater fra høyderisset over gulvets HØYESTE punkt, så 229 mm er høyden akkurat der — ellers er det mer. Mål på stedet før du kapper en kasse i mannshøyde med tallet |
+
 
 ## Referansekroppen — hva sengen er til for
 

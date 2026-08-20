@@ -210,9 +210,11 @@ kappes ferdig på bukken.
 To ting må være på plass før kappingen:
 
 * **Spikerslag i veggen.** Senga ligger flatt mot veggen i noen få
-  høydebånd, ikke overalt. Sonene er regnet ut av modellen og står med høyder
-  fra ferdig gulv i
-  [byggesteg](generated/byggesteg.md#før-steg-0--mål-rommet). Legg dem mens
+  høydebånd, ikke overalt. Sonene er regnet ut av modellen og står i
+  [byggesteg](generated/byggesteg.md#før-steg-0--mål-rommet) — i **to
+  notasjoner**: over ferdig gulv, og som fortegnstall fra høyderisset (minus
+  er under laserlinja, pluss er over). Gulvet er skjevt og risset er ikke, så
+  det er den andre kolonnen du setter sonene etter. Legg dem mens
   veggen er åpen — etterpå kommer du ikke til.
 * **Et vannrett høyderiss rundt hele nisja.** Alt måles fra risset, aldri fra
   gulvet. Framgangsmåten — loddlinje midt i nisja, rutenett mot hver
@@ -950,6 +952,21 @@ hele lemmet går fritt, og de er prisen for at platen skal kunne senkes ned i
 bordstillingen uten å treffe blindt. Se tabellen over lovlige platebredder i
 [nøkkelmål](generated/nokkelmal.md#platebredden-er-kvantisert--lovlige-vinduer).
 
+### Under benken er det et rom, og nå er det målt
+
+Stubbeføttene bærer benkevangene på fire punkter i stedet for på en sokkel, og
+det de lar bli igjen er et **kasserom under hver benk**: **229 mm høyt × 479
+mm bredt × 800 mm dypt** — gulv til benkevangens underkant, bakre
+hjørnestolpes innerside til stubbefotens ytterside, og vegg til fremre
+benkevanges forside. Dybden er benkespilens egen lengde, for kassa skyves inn
+**under** vangen og ikke forbi den. To slike rom, ett under hver benk; mellom
+dem er gulvet åpent foran stigen, og der skal det ikke stå noe (D13). Både
+rommet og innkjøringen foran det er målt tomme på solidene.
+
+Høyden er et **minstemål**: rammen bygges i vater fra høyderisset over gulvets
+høyeste punkt, så 229 mm er høyden akkurat der og mer overalt ellers. Tallene
+står i [nøkkelmål](generated/nokkelmal.md#kasserommet-under-benkene).
+
 ### Hvor de ligger — og hvor de står
 
 **Sengestilling:** alle fire flatt, etter hverandre. Benkepute, ryggpute,
@@ -1143,6 +1160,23 @@ Dette er en opplysning om bruken, ikke et avvik: benken er 800 mm dyp og er
 underetasjens seng, ikke en spisebenk. Vil du ha et bord med knerom, må
 seteflaten ned eller platen opp, og platens to høyder er låst av mekanismen
 (K1/V2).
+
+**Og «platen opp» er prøvd — det er X8.** Byggherren ba om en **pult**:
+platetopp 700, altså 280 mm over puten, med knærne under. Referansen er IKEA
+SMÅSTAD-pulten på 730. Svaret er nei, og det er ikke en smakssak: platens
+forkant ligger alltid *under* et trinn (platen er 574 × 798, trinnene går X
+835–1155 i Y 720–788), og i bordstilling er det trinn 3 med underkant i
+**739**. På 700 er det 39 mm fri vei opp, mot de 48 styrelektene må ha for å
+komme fri av opplegget sitt — enheten kan ikke løftes av sitt eget sete. Og
+bæreklossene en 682-høy forkant måtte ha, ville stå midt i det frie båndet
+mellom trinn 2 (542) og trinn 3 (739) som enheten krysser stigen i; over dem
+må platetoppen opp i 768, og der står trinn 3. **Taket er 639 mm platetopp** —
+739 minus de 100 millimeterne rett løft modellen alltid har krevd. Det er 219
+over puten og 201 under, altså knerom, men det er ikke 700. Skal 700 gå, må
+trinn 3 opp 51 mm til 838, og da blir klatretrinnet 296 mm mot grensen på 280:
+**den jevne stigen og pulten vil ha de samme 51 millimeterne.** Taket er
+regnet på solidene og asserted, så neste forsøk møter tallet og ikke en
+kollisjon. Hele resonnementet står som X8 øverst i `generate_loftbed.py`.
 
 **8.3 Fri høyde over ansiktet til den som ligger nede: 902 mm.** Målt fra
 hodets overside til køyespilenes underside.
@@ -1546,7 +1580,7 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | Tegning | Innhold |
 |---|---|
 | [byggerekkefolge.svg](schematics/byggerekkefolge.svg) | Oversikt over byggerekkefølgen, med samme nummer som byggesteg og MONTERING |
-| [spikerslag.svg](schematics/spikerslag.svg) | Bakveggen som oppriss, X langs veggen og Z opp fra ferdig gulv: sonene som skal ha spikerslag, skravert i sin fulle bredde og høyde, høyderisset som tynn strek, og de seks veggfestene der de lander. Det eneste arket som ikke tegner sengen, men veggen — og det eneste som må leses før veggen lukkes. Sonene er modellens `WALL_ZONES` |
+| [spikerslag.svg](schematics/spikerslag.svg) | Bakveggen som oppriss, X langs veggen og Z opp fra ferdig gulv: sonene som skal ha spikerslag, skravert i sin fulle bredde og høyde, høyderisset som tynn strek, og de seks veggfestene der de lander. Hver høyde står to ganger — over ferdig gulv, og i parentes som fortegnstall fra høyderisset, som er den du faktisk måler fra på en skjev gulvflate. Det eneste arket som ikke tegner sengen, men veggen — og det eneste som må leses før veggen lukkes. Sonene er modellens `WALL_ZONES` |
 | [end-elevation.svg](schematics/end-elevation.svg) | Kortsiden: snitt A–A gjennom endebjelken, med veggen inntegnet. Hele dybden i ett bilde, hver etasje fra gulv til rekkverkstopp, og det arket som viser at sengen er usymmetrisk — bakre stolpe stopper i sengeflaten, fremre går helt opp til rekkverket |
 | [ladder-detail.svg](schematics/ladder-detail.svg) | Stigen: vanger, klosser, trinn, J3-skruene, hylla bak trinnet som platen hviler på, og sjaktene ved siden av trinnendene der avstivningslektene løper |
 | [bench-detail.svg](schematics/bench-detail.svg) | Benken: vangeenden mot hjørnestolpen uten kloss, vangebiten som ender på stubbefoten, benkespilene og platekanten. Egen plan gjennom J8-Bs sete og skruevinkel |

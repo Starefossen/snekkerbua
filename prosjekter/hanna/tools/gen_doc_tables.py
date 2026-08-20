@@ -1870,6 +1870,42 @@ def emit_nokkelmal(G, out_dir, rows):
              f"{G.BACK_CUSHION_LEN} mm høy, topp {G.BACKREST_Z1} mm. Ryggen "
              f"mot bordbærelekta |\n\n")
 
+    # X8c - KASSEROMMET. Målt på solidene (STORAGE_BAYS i generate_loftbed.py),
+    # ikke skrevet inn her: taket er benkevangens underkant, bredden er det de
+    # tingene som faktisk står på gulvet lar stå igjen, dybden er benkespilens
+    # egen lengde. Avsnittet finnes fordi et rom ingen har målt, er et rom
+    # ingen kjøper kasser til.
+    _bay_l, _bay_r = G.STORAGE_BAYS
+    L.append(f"## Kasserommet under benkene\n\n"
+             f"Under hver benk står det et rom som ikke er tegnet inn — det "
+             f"er bare det stubbeføttene lar bli igjen — og her er målene på "
+             f"det, målt på delene. **Kasser inntil "
+             f"{_fmt(G.STORAGE_BAY_H)} × {_fmt(G.STORAGE_BAY_W)} × "
+             f"{_fmt(G.STORAGE_BAY_D)} mm (H × B × D) går inn, én på hver "
+             f"side.** De skyves rett inn forfra, under benkevangen.\n\n"
+             f"| | Mål |\n|---|---:|\n")
+    L.append(f"| **Fri høyde** | **{_fmt(G.STORAGE_BAY_H)} mm** — gulv til "
+             f"benkevangens underkant |\n")
+    L.append(f"| **Fri bredde** | **{_fmt(G.STORAGE_BAY_W)} mm** — fra bakre "
+             f"hjørnestolpes innerside til stubbefotens ytterside "
+             f"(X {_fmt(_bay_l[1])}–{_fmt(_bay_l[2])} og "
+             f"{_fmt(_bay_r[1])}–{_fmt(_bay_r[2])}) |\n")
+    L.append(f"| **Fri dybde** | **{_fmt(G.STORAGE_BAY_D)} mm** — veggen til "
+             f"fremre benkevanges forside, altså hele benkens dybde. "
+             f"Benkevangen henger over kassa, ikke foran den |\n")
+    L.append(f"| Antall rom | {len(G.STORAGE_BAYS)} — ett under hver benk. "
+             f"Mellom dem er gulvet åpent foran stigen ("
+             f"X {_fmt(G.OPEN_FLOOR_X[0])}–{_fmt(G.OPEN_FLOOR_X[1])}), og "
+             f"der skal det ikke stå noe |\n")
+    L.append(f"| Hva som stjeler resten | de fire stubbeføttene "
+             f"({_fmt(G.LEG_W)} mm hver i X, innerst på hver benk) og de to "
+             f"bakre hjørnestolpene ({_fmt(G.POST_W)} mm hver, ytterst) |\n")
+    L.append(f"| Høyden er et minstemål | gulvet er skjevt og rammen bygges i "
+             f"vater fra høyderisset over gulvets HØYESTE punkt, så "
+             f"{_fmt(G.STORAGE_BAY_H)} mm er høyden akkurat der — ellers er "
+             f"det mer. Mål på stedet før du kapper en kasse i mannshøyde med "
+             f"tallet |\n\n")
+
     # REFERANSEKROPPEN. Tallene under er de eneste i nøkkelmål som er målt på
     # noe annet enn tre: fire barnekropper i modellen, hver bygget av 14
     # primitiver etter AnthroKids og posert i den stillingen raden handler om.
@@ -1955,13 +1991,17 @@ ROOM_TITLE = "Før steg 0 — mål rommet"
 
 
 def spikerslag_rows(G, idx):
-    """[(nr, "fra–til", vegg, del), ...] - the noggings the wall needs."""
+    """[(nr, "fra–til", "fra risset", vegg, del), ...] - the noggings the wall
+    needs, in both notations: over the finished floor and from the height line.
+    The second column is G.riss_span(), i.e. the first one minus
+    MEASURE_DATUM_Z - see the X8b block in generate_loftbed.py for why a wall
+    cannot be set off a floor nobody trusts."""
     out = []
     for i, zo in enumerate(G.WALL_ZONES, 1):
         z0, z1 = zo["z"]
         name = idx[zo["labels"][0]][0]
         n = len(zo["labels"])
-        out.append((i, f"{_fmt(z0)}–{_fmt(z1)}",
+        out.append((i, f"{_fmt(z0)}–{_fmt(z1)}", zo["riss_txt"],
                     "Hjørnene, mot endeveggene" if zo["corner"]
                     else "Bakveggen",
                     f"{name}" + (f" ({n} stk.)" if n > 1 else "")))
@@ -1969,10 +2009,17 @@ def spikerslag_rows(G, idx):
 
 
 def spikerslag_table(G, idx):
-    L = ["| Sone | Fra ferdig gulv | Vegg | Del som skal ha feste |\n",
-         "|---:|---|---|---|\n"]
-    for nr, z, wall, part in spikerslag_rows(G, idx):
-        L.append(f"| {nr} | **{z}** | {wall} | {part} |\n")
+    L = [f"| Sone | Fra ferdig gulv | Fra høyderisset ({G.MEASURE_DATUM_Z}) | "
+         "Vegg | Del som skal ha feste |\n",
+         "|---:|---|---|---|---|\n"]
+    for nr, z, r, wall, part in spikerslag_rows(G, idx):
+        L.append(f"| {nr} | **{z}** | **{r}** | {wall} | {part} |\n")
+    L.append(f"\nTo notasjoner, samme sone. **Målt fra ferdig gulv** er "
+             f"modellens egen Z. **Målt fra høyderisset** er den samme "
+             f"høyden minus {G.MEASURE_DATUM_Z} — minus er *under* "
+             f"laserlinja, pluss er *over* den. Gulvet er skjevt og risset er "
+             f"ikke: står du ved den åpne veggen med målebåndet på laserlinja, "
+             f"er det den andre kolonnen du setter sonene etter.\n")
     return "".join(L)
 
 
@@ -1989,7 +2036,8 @@ def room_first(G):
             "spikerslag i sonene under.** Etterpå kommer du ikke til.",
             f"Slå et vannrett høyderiss rundt hele nisja med linjelaser, "
             f"{G.MEASURE_DATUM_Z} mm over ferdig gulv. Alt måles fra risset, "
-            "aldri fra gulvet.",
+            "aldri fra gulvet — spikerslagsonene under står i begge "
+            "notasjoner, og det er riss-kolonnen du setter dem etter.",
             f"Sett laseren som loddlinje midt i nisja. Mål ut til hver "
             f"endevegg i rutenett: {G.MEASURE_GRID[0]} høyder × "
             f"{G.MEASURE_GRID[1]} dybder på hver vegg. Legg sammen paret i "
@@ -2021,7 +2069,8 @@ def room_first(G):
             "Gjør det ikke det, står laseren feil.",
             f"Er forskjellen mellom minste og største bredde større enn "
             f"{G.ROOM_OVER_WALL} mm, mål om. Kapp uansett etter den minste.",
-            "Sjekk at spikerslagene ligger i sonene før veggen lukkes.",
+            "Sjekk at spikerslagene ligger i sonene før veggen lukkes — "
+            "målt ned eller opp fra høyderisset, ikke opp fra gulvet.",
             "Hver hjørnestolpe skal stå i lodd begge veier. Vipper den "
             "fordi veggen buler, høvles bulen av — lys i fugen der veggen "
             "viker er greit og skal stå.",
@@ -2029,8 +2078,9 @@ def room_first(G):
     )
 
 
-ROOM_ZONE_NOTE = ("Målene er fra **ferdig gulv**. Legges gulvet etterpå, må "
-                  "påforingshøyden legges til.")
+ROOM_ZONE_NOTE = ("Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet "
+                  "etterpå, må påforingshøyden legges til — i begge "
+                  "kolonner, for risset slås fra ferdig gulv det også.")
 
 
 # THE ASSERT THAT READS THE INK. Every height band printed in the nogging
@@ -2042,13 +2092,27 @@ def assert_spikerslag_ink(G, idx, text):
         if not line.startswith("| ") or "**" not in line:
             continue
         c = [x.strip() for x in line.strip().strip("|").split("|")]
-        if len(c) != 4:
+        if len(c) != 5:
             continue
         m = re.fullmatch(r"\*\*([\d,]+)–([\d,]+)\*\*", c[1])
         if not m:
             continue
         z0, z1 = (float(v.replace(",", ".")) for v in m.groups())
-        part = re.sub(r" \(\d+ stk\.\)$", "", c[3])
+        # X8b - THE TWO COLUMNS ARE BOUND TOGETHER IN THE INK. The second
+        # notation is only usable if it is the first one minus the height
+        # line, and this reads both of them back off the printed row and
+        # subtracts. A hand-typed riss column, or a datum that moved and took
+        # one column with it, stops the build here.
+        r = re.fullmatch(r"\*\*([-+]?[\d,]+)\.\.([-+]?[\d,]+) "
+                         r"(?:under|over|krysser) risset\*\*", c[2])
+        assert r, (f"spikerslagsone {c[0]}: «{c[2]}» er ikke et sonebånd "
+                   "målt fra høyderisset")
+        r0, r1 = (float(v.replace(",", ".")) for v in r.groups())
+        assert z0 - r0 == z1 - r1 == G.MEASURE_DATUM_Z, (
+            f"spikerslagsone {c[0]} står på trykk som {c[1]} over ferdig gulv "
+            f"og {c[2]}: differansen er {z0 - r0} / {z1 - r1}, og den SKAL "
+            f"være høyderisset selv, {G.MEASURE_DATUM_Z}")
+        part = re.sub(r" \(\d+ stk\.\)$", "", c[4])
         hits = [p for p in G.CUT_PARTS
                 if idx[p.label][0] == part
                 and abs(p.extents[2][0] - z0) < 0.05

@@ -21,7 +21,7 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 **Slik gjør du:**
 
 1. Vent til vegger og gulv er ferdige. **Mens veggen er åpen: legg spikerslag i sonene under.** Etterpå kommer du ikke til.
-1. Slå et vannrett høyderiss rundt hele nisja med linjelaser, 1000 mm over ferdig gulv. Alt måles fra risset, aldri fra gulvet.
+1. Slå et vannrett høyderiss rundt hele nisja med linjelaser, 1000 mm over ferdig gulv. Alt måles fra risset, aldri fra gulvet — spikerslagsonene under står i begge notasjoner, og det er riss-kolonnen du setter dem etter.
 1. Sett laseren som loddlinje midt i nisja. Mål ut til hver endevegg i rutenett: 5 høyder × 3 dybder på hver vegg. Legg sammen paret i hvert punkt. **Minste sum er nisjas minste bredde.**
 1. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
 1. Gulv: mål ned fra risset i sengas fire hjørner og på midten. Merk det høyeste punktet på gulvet. Senga bygges ned fra det.
@@ -31,14 +31,16 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 
 **Spikerslag i veggen:**
 
-| Sone | Fra ferdig gulv | Vegg | Del som skal ha feste |
-|---:|---|---|---|
-| 1 | **0–1402** | Hjørnene, mot endeveggene | Hjørnestolpe, bak (veggside) (2 stk.) |
-| 2 | **229–297** | Bakveggen | Benkevange, bak (gjennomgående) |
-| 3 | **474–542** | Bakveggen | Bordbærelekt, bak |
-| 4 | **1402–1500** | Bakveggen | Sidevange, øvre |
+| Sone | Fra ferdig gulv | Fra høyderisset (1000) | Vegg | Del som skal ha feste |
+|---:|---|---|---|---|
+| 1 | **0–1402** | **-1000..+402 krysser risset** | Hjørnene, mot endeveggene | Hjørnestolpe, bak (veggside) (2 stk.) |
+| 2 | **229–297** | **-771..-703 under risset** | Bakveggen | Benkevange, bak (gjennomgående) |
+| 3 | **474–542** | **-526..-458 under risset** | Bakveggen | Bordbærelekt, bak |
+| 4 | **1402–1500** | **+402..+500 over risset** | Bakveggen | Sidevange, øvre |
 
-Målene er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøyden legges til.
+To notasjoner, samme sone. **Målt fra ferdig gulv** er modellens egen Z. **Målt fra høyderisset** er den samme høyden minus 1000 — minus er *under* laserlinja, pluss er *over* den. Gulvet er skjevt og risset er ikke: står du ved den åpne veggen med målebåndet på laserlinja, er det den andre kolonnen du setter sonene etter.
+
+Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøyden legges til — i begge kolonner, for risset slås fra ferdig gulv det også.
 
 Hva som kappes nå og hva som kappes på stedet: [kapplista](kappliste.md).
 
@@ -46,7 +48,7 @@ Hva som kappes nå og hva som kappes på stedet: [kapplista](kappliste.md).
 
 * Høyderisset skal gå hele veien rundt nisja og møte seg selv. Gjør det ikke det, står laseren feil.
 * Er forskjellen mellom minste og største bredde større enn 10 mm, mål om. Kapp uansett etter den minste.
-* Sjekk at spikerslagene ligger i sonene før veggen lukkes.
+* Sjekk at spikerslagene ligger i sonene før veggen lukkes — målt ned eller opp fra høyderisset, ikke opp fra gulvet.
 * Hver hjørnestolpe skal stå i lodd begge veier. Vipper den fordi veggen buler, høvles bulen av — lys i fugen der veggen viker er greit og skal stå.
 
 ## Steg 0 — Kapping, forboring og forsenking
