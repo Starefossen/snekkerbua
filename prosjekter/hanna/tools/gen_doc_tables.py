@@ -587,11 +587,12 @@ def build_steps(G):
             check=[
                 "Mål lysåpningen mellom stigevangene øverst og nederst — den "
                   "skal være lik.",
-                "Alle fire trinn i vater.",
+                f"Alle {len(G.RUNG_TOPS)} trinn i vater.",
                 "Stå på nederste trinn og kjenn etter. Sitter noe løst nå, "
                   "sitter det løst for alltid.",
             ],
-            joints={'J3': 2, 'J4': 8, 'J5': 8},
+            joints={'J3': 2, 'J4': 2 * len(G.RUNG_TOPS),
+                    'J5': 2 * len(G.RUNG_TOPS)},
         ),
         dict(
             n=7,
@@ -1088,6 +1089,23 @@ def buy_table(G):
         over = fit[1] if fit else 0
         by_section.setdefault(section, []).extend(
             [(no_name, length, over)] * qty)
+    # X5: THE JIGS ARE PIECES THE BOARD HAS TO HOLD. A shop aid is not part of
+    # the bed - not in `parts`, not in the cut list, not in the piece count -
+    # but it IS wood you have to saw off a board of that profile, and the
+    # shopping list is the one place where that distinction does not matter.
+    # Until v14 they were left out of the packing and the list claimed
+    # afterwards that they came off the offcut pile; that claim held only as
+    # long as some board happened to have 812 mm of rest lying about, and X2's
+    # fifth rung and X3's taller stub legs ate it. So they are packed with
+    # everything else now and the plan shows them by name: one rule - anything
+    # the saw has to cut is something the counter has to sell - instead of a
+    # claim that has to come out true again every round.
+    for _aid in G.SHOP_AIDS:
+        _sect = _aid["section"].replace("x", "×")
+        if _sect not in by_section:
+            continue
+        _nm = _aid["name"].split(" —")[0]
+        by_section[_sect].extend([(_nm, _aid["length"], 0)] * _aid["qty"])
     out = []
     for section, pieces in sorted(by_section.items()):
         if "plate" in section or "panel" in section:   # sheet, not a stick
@@ -1313,9 +1331,15 @@ def emit_kappliste(G, out_dir):
                  f"{aid['section'].replace('x', '×')} | "
                  f"**{_fmt(aid['length'])}** | {aid['qty']} | "
                  f"{aid['cut']} | {aid['use']} |\n")
+    # X5: they are not PARTS, but they are wood, and since v14 the buying list
+    # packs them like everything else. Saying "de kappes av restene" was true
+    # only while some board happened to have room; now the plan has a line for
+    # each of them and the sentence says where to look.
     L.append("\nDisse er ikke med i de "
-             f"{total} delene over og ikke i innkjøpslista — de kappes av "
-             "restene i steg 0.\n\n")
+             f"{total} delene over — de er ikke deler i senga, de er verktøy "
+             "du sager i steg 0. Virket til dem er likevel med i "
+             "[innkjøpslista](innkjopsliste.md): de står i kappeplanen for "
+             "sin egen dimensjon, som alt annet du må sage.\n\n")
 
     by_section = {}
     for no_name, section, length, qty, _sp, _en, _fit in rows:
@@ -1411,35 +1435,32 @@ def emit_innkjopsliste(G, out_dir):
             L.append(f"| {i} | {_fmt(b['buy'])} | {txt} | "
                      f"{_fmt(b['rest'])} |\n")
         L.append("\n")
-        # SHOP AIDS COME OFF THE OFFCUT PILE, and the manual says so in two
-        # places (kappliste, steg 0). That claim is only true if a board of
-        # the right profile actually has the rest to give, so it is checked
-        # here rather than hoped for.
-        # K5 made the jig two blocks of two plies each, so this is no longer
-        # "does one offcut hold one piece" but "does one offcut hold the whole
-        # pile, kerf between each" - the pieces are all the same length, so
-        # they come off the same rest in one row.
+        # SHOP AIDS ARE IN THE PLAN ABOVE (X5), not in a footnote hoping for a
+        # rest to turn up. What is checked here is that they really are: every
+        # jig piece of this profile has to appear on one of the boards, by
+        # name and in the right number, or the paragraph below is describing a
+        # cutting plan that does not contain it.
         mine = [a for a in G.SHOP_AIDS
                 if a["section"] == e["section"].replace("×", "x")]
         if mine:
-            # Resten er allerede resten etter romdelenes overmål - den er
-            # pakket inn. Jiggene spiser av det som da er igjen.
-            best = max(bb["rest"] for bb in e["boards"])
-            pieces = [(a["name"], a["length"])
-                      for a in mine for _ in range(a["qty"])]
-            need = sum(ln for _n, ln in pieces) + KERF * (len(pieces) - 1)
-            assert best >= need, (
-                f"the shop aids on {e['section']} come to {need} mm with "
-                f"{KERF} mm of kerf between them and the longest offcut on "
-                f"that profile is {best} mm - the manual says they come off "
-                f"the rest pile and they do not")
+            planned = [nm for bb in e["boards"]
+                       for nm, _ln, _ov in bb["pieces"]]
+            need = sum(a["length"] * a["qty"] for a in mine) \
+                + KERF * (sum(a["qty"] for a in mine) - 1)
+            for a in mine:
+                nm = a["name"].split(" —")[0]
+                assert planned.count(nm) == a["qty"], (
+                    f"the shop aids on {e['section']}: the cutting plan has "
+                    f"{planned.count(nm)} x '{nm}' and the manual asks for "
+                    f"{a['qty']} - a jig you were never given board for is a "
+                    f"jig you do not have when you need it")
             L.append("Hjelpedelene på denne dimensjonen — "
                      + " + ".join(
                          f"{a['qty']} × {_fmt(a['length'])} mm "
                          f"({a['name'].split(' —')[0]})" for a in mine)
-                     + f", til sammen {_fmt(need)} mm med sagsnitt — kappes "
-                     f"av resten over. Den lengste er {_fmt(best)} mm, så det "
-                     f"går av rest og du trenger ikke kjøpe bord til dem. "
+                     + f", til sammen {_fmt(need)} mm med sagsnitt — står i "
+                     f"kappeplanen over. De er ikke deler i senga, men de er "
+                     f"virke du må sage, og da er de kjøpt inn som alt annet. "
                      f"Se [kapplista](kappliste.md).\n\n")
 
     # MYKT. The mattress and the four cushions are the only things on the
@@ -1453,7 +1474,10 @@ def emit_innkjopsliste(G, out_dir):
     L.append("| Hva | Mål | Ant. | Merknad |\n|---|---|---:|---|\n")
     L.append(f"| Madrass, overkøye | 80 × 200 cm, **{G.MATTRESS_H} mm tykk** "
              f"| 1 | Vindu {G.MATTRESS_H_MIN:.0f}–{G.MATTRESS_H_MAX:.0f} mm. "
-             f"En vanlig 160 mm er ULOVLIG her — se nøkkelmål |\n")
+             f"Hyllevarene over vinduet — "
+             + ", ".join(f"{t}" for t in (140, 150, 160)
+                         if t > G.MATTRESS_H_MAX)
+             + f" mm — er ULOVLIGE her. Se nøkkelmål |\n")
     L.append(f"| **Benkepute**, underetasjen | "
              f"**{G.SEAT_CUSHION_LEN} × {G.LOWER_SLEEP_DEPTH} × "
              f"{G.CUSHION_T} mm** | 2 | Hakk {G.CUSHION_NOTCH[0]} × "
@@ -1541,6 +1565,14 @@ def emit_nokkelmal(G, out_dir, rows):
     L.append(f"| Dybde over alt | {G.OVERALL_DEPTH} |\n")
     L.append(f"| Høyde foran (stolpetopp) | {G.POST_HEIGHT} |\n")
     L.append(f"| Høyde ved veggen (bakre stolpe) | {G.BACK_POST_HEIGHT} |\n")
+    # X1: the room is a parameter now, and the two head rooms are what the
+    # whole round is about - they belong in the first table a reader meets.
+    L.append(f"| **Takhøyde i rommet senga er regnet for** | "
+             f"**{G.ROOM_H}** |\n")
+    L.append(f"| Klaring over høyeste del | {G.CEILING_CLEAR} |\n")
+    L.append(f"| **Fri høyde under senga (gulv til spilenes underside)** | "
+             f"**{G.SLAT_Z0}** |\n")
+    L.append(f"| Fri høyde over øvre madrass | {G.UPPER_SIT_HEADROOM} |\n")
     L.append(f"| Gjennomgående deler kappes til | {G.THROUGH_LEN} "
              f"(X {G.THROUGH_X0}..{G.THROUGH_X1}) |\n")
     L.append(f"| Klaring til hver vegg for disse | {G.THROUGH_X0} |\n\n")
@@ -1563,8 +1595,10 @@ def emit_nokkelmal(G, out_dir, rows):
                          "underside i bordstilling"),
         (G.PANEL_TOP_TABLE, "bordplate"),
         (G.BACKREST_Z1, "ryggputens topp i sofastilling (V13)"),
-        (G.RUNG_TOPS[2], "trinn 3"),
-        (G.RUNG_TOPS[3], "trinn 4"),
+        # X2: the rung count is derived now (even_climb), so the landmark
+        # rows are too - rungs 1 and 2 have their own lines above because they
+        # share a top with something else, and the rest are just steps.
+        *((z, f"trinn {i + 1}") for i, z in enumerate(G.RUNG_TOPS) if i >= 2),
         (G.END_BEAM_Z0, "endebjelkens underkant"),
         (G.RAIL_BOTTOM, "endebjelkens overkant = sidevangens underkant "
                         "(fri høyde under sengen)"),
@@ -1587,8 +1621,8 @@ def emit_nokkelmal(G, out_dir, rows):
     L.append(f"\nStigningen fra gulv til spilebunn: "
              + " + ".join(_fmt(s) for s in steps)
              + f" mm. Første stigning er benkevangens høyde — det er en "
-               f"avsats du trår opp på, ikke et klatretrinn. De fire "
-               f"klatretrinnene er {_fmt(min(steps[1:]))}–"
+               f"avsats du trår opp på, ikke et klatretrinn. De "
+               f"{len(steps) - 1} klatretrinnene er {_fmt(min(steps[1:]))}–"
                f"{_fmt(max(steps[1:]))} mm.\n\n")
 
     L.append("## Dybdeplan (Y)\n\n| Y | Hva |\n|---:|---|\n")
@@ -1772,8 +1806,12 @@ def emit_nokkelmal(G, out_dir, rows):
              f"{G.MAX_GUARD_OPENING} mm. Tynnere enn {G.MATTRESS_H_MIN} og "
              f"åpningen blir større enn {G.MAX_GUARD_OPENING}; **tykkere enn "
              f"{G.MATTRESS_H_MAX} og den faller ned i klemvinduet under "
-             f"{G.EN_LIMB_BAND[0]:.0f} mm**. En vanlig 160 mm madrass er "
-             f"altså ULOVLIG her. Modellen tegner {G.MATTRESS_H} mm, som gir "
+             f"{G.EN_LIMB_BAND[0]:.0f} mm**. Hyllevarene over vinduet — "
+             + ", ".join(f"{t}" for t in (140, 150, 160)
+                         if t > G.MATTRESS_H_MAX)
+             + f" mm — er altså ULOVLIGE her, og det er ikke en detalj: det er "
+             f"den ene tingen ved denne sengen du må huske i butikken. "
+             f"Modellen tegner {G.MATTRESS_H} mm, som gir "
              f"{G.GUARD_BAND_Z0[0] - G.MATTRESS_Z1} mm — midt i båndet |\n")
     L.append(f"| **Maks madrasstykkelse merkes på sengen** | "
              f"{G.MATTRESS_H_MAX} mm. EN 747 krever at maksmålet står "
@@ -1852,10 +1890,13 @@ def emit_nokkelmal(G, out_dir, rows):
     L.append(f"| Sittehøyde | {G.FIG_SITTING_H:.0f} mm (0,545 × H) over "
              f"seteflaten på {G.SEAT_FACE:.0f} mm |\n")
     L.append(f"| **Bordplaten over setet** | **{G.TABLE_OVER_SEAT:.0f} mm**, "
-             f"og bare {G.TABLE_UNDER_SEAT:.0f} mm under seg — ett lår er "
-             f"{2 * G.FIG_THIGH_R:.0f} mm. **Ingen knær går under denne "
-             f"platen.** Den er en lekeflate i fanghøyde mellom to sofahalvdeler, "
-             f"og man sitter i skredderstilling ved den |\n")
+             f"med {G.TABLE_UNDER_SEAT:.0f} mm under seg — ett lår er "
+             f"{2 * G.FIG_THIGH_R:.0f} mm, så et strakt bein går under platen "
+             f"(til og med v13 lå den 118 mm over setet og hadde 100 under seg; "
+             f"da gjorde det ikke det). Den er en lav flate mellom to "
+             f"sofahalvdeler, og figurene sitter i skredderstilling ved den — "
+             f"slik man sitter på en benk med bordet et halvt meter unna i "
+             f"lengderetningen |\n")
     L.append(f"| Foldet kne til platekant | {G.LEG_TO_TABLE:.0f} mm |\n")
     L.append(f"| Håndleddet over platen | {G.WRIST_OVER_TABLE:.0f} mm — "
              f"armen rekker fram når overkroppen lener seg |\n")
@@ -1889,6 +1930,10 @@ def emit_nokkelmal(G, out_dir, rows):
              f"{G.MIN_LADDER_CLEAR} |\n")
     L.append(f"| Største klatretrinn | {_fmt(max(steps[1:]))} | ≤ "
              f"{G.MAX_CLIMB_STEP} |\n")
+    L.append(f"| Hodehøyde over nedre soveflate | {G.LOWER_HEADROOM} | ≥ "
+             f"{G.MIN_SIT_HEADROOM} (én sittehøyde) |\n")
+    L.append(f"| Hodehøyde over øvre madrass | {G.UPPER_SIT_HEADROOM} | ≥ "
+             f"{G.MIN_LIE_HEADROOM} (køya er sovesone) |\n")
     write(os.path.join(out_dir, "nokkelmal.md"), "".join(L))
 
 
@@ -2141,13 +2186,16 @@ def _img(src, height, alt=""):
 # Målefiguren på forsteg-siden er tre visninger: nisja som rom til venstre,
 # oppriss og plan under hverandre til høyre. Høyden er i piksler som alle
 # andre bildehøyder her; build_pdf regner den om til millimeter på papiret.
-# 360 px er ca. 95 mm høyt og fyller satsbredden 180 mm - så bredt som siden
+# 406 px er ca. 107 mm høyt og fyller satsbredden 180 mm - så bredt som siden
 # tillater, og det er den bredden figurens egen typestørrelse er regnet for.
 # Tallet er ikke fritt: render_maalfigur.assert_fits_column() leser det herfra
 # og stopper tegningen hvis figurens egne proporsjoner ikke gir 180 mm ved
 # akkurat denne høyden - endrer du komposisjonen der, sier asserten hva tallet
 # skal være (se tools/render_maalfigur.py).
-ROOM_FIG_PX = 360
+# [v14/X1: 360 -> 406. Senga ble 150 mm høyere, så opprisset ble høyere i
+#  forhold til bredden og figuren smalere ved samme pikselhøyde - asserten
+#  fanget det og sa hvilket tall som gir 180 mm igjen.]
+ROOM_FIG_PX = 406
 
 
 # The glyphs are all drawn to ONE scale, and each carries that scale in the

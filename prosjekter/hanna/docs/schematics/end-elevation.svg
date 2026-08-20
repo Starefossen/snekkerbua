@@ -110,100 +110,100 @@
   <line x1="340" y1="410" x2="306" y2="376" class="ext"/>
   <line x1="340" y1="332.5" x2="306" y2="298.5" class="ext"/>
   <line x1="280" y1="2530" x2="1500" y2="2530" class="flr"/>
-  <rect x="385" y="2206.25" width="45" height="60" class="behind"/>
-  <rect x="385" y="2177.5" width="955" height="28.75" class="behind"/>
-  <rect x="340" y="1198.75" width="45" height="1331.25" class="behind"/>
-  <rect x="1340" y="405" width="45" height="2125" class="behind"/>
-  <rect x="340" y="1047.5" width="1000" height="28.75" class="brd"/>
-  <rect x="340" y="2206.25" width="60" height="85" class="wood"/>
-  <rect x="1280" y="2206.25" width="60" height="85" class="wood"/>
-  <rect x="340" y="2177.5" width="1000" height="28.75" class="brd"/>
-  <rect x="340" y="1198.75" width="1045" height="122.5" class="wood"/>
-  <rect x="1295" y="656.25" width="45" height="122.5" class="brd"/>
-  <rect x="1295" y="440" width="45" height="122.5" class="brd"/>
-  <rect x="340" y="1927.5" width="60" height="85" class="brd"/>
-  <rect x="340" y="1076.25" width="60" height="122.5" class="wood"/>
-  <rect x="1280" y="1076.25" width="60" height="122.5" class="wood"/>
-  <rect x="340" y="860" width="1000" height="187.5" class="soft"/>
-  <rect x="340" y="2052.5" width="1000" height="125" class="soft"/>
-  <rect x="400" y="1637.5" width="1000" height="415" class="soft"/>
-  <rect x="340" y="2052.5" width="1000" height="125" class="soft"/>
-  <rect x="340" y="2183.75" width="997.5" height="22.5" class="pnl1"/>
-  <rect x="340" y="1905" width="997.5" height="22.5" class="pnl2"/>
-  <line x1="430" y1="2236.25" x2="384" y2="2236.25" class="scrl"/>
-  <circle cx="430" cy="2236.25" r="6" class="scrp"/>
-  <line x1="362.5" y1="1076.25" x2="362.5" y2="1122.25" class="scrl"/>
-  <circle cx="362.5" cy="1076.25" r="6" class="scrp"/>
-  <line x1="407.5" y1="2177.5" x2="407.5" y2="2223.5" class="scrl"/>
-  <circle cx="407.5" cy="2177.5" r="6" class="scrp"/>
-  <line x1="1280" y1="2263.75" x2="1326" y2="2263.75" class="scrl"/>
-  <circle cx="1280" cy="2263.75" r="6" class="scrp"/>
-  <line x1="1280" y1="2233.75" x2="1326" y2="2233.75" class="scrl"/>
-  <circle cx="1280" cy="2233.75" r="6" class="scrp"/>
-  <line x1="1280" y1="1165" x2="1326" y2="1165" class="scrl"/>
-  <circle cx="1280" cy="1165" r="6" class="scrp"/>
-  <line x1="1280" y1="1110" x2="1326" y2="1110" class="scrl"/>
-  <circle cx="1280" cy="1110" r="6" class="scrp"/>
-  <line x1="1295" y1="750.625" x2="1341" y2="750.625" class="scrl"/>
-  <circle cx="1295" cy="750.625" r="6" class="scrp"/>
-  <line x1="1295" y1="684.375" x2="1341" y2="684.375" class="scrl"/>
-  <circle cx="1295" cy="684.375" r="6" class="scrp"/>
-  <line x1="1295" y1="534.375" x2="1341" y2="534.375" class="scrl"/>
-  <circle cx="1295" cy="534.375" r="6" class="scrp"/>
-  <line x1="1295" y1="468.125" x2="1341" y2="468.125" class="scrl"/>
-  <circle cx="1295" cy="468.125" r="6" class="scrp"/>
-  <line x1="1310" y1="2177.5" x2="1310" y2="2223.5" class="scrl"/>
-  <circle cx="1310" cy="2177.5" r="6" class="scrp"/>
-  <line x1="370" y1="1047.5" x2="370" y2="1093.5" class="scrl"/>
-  <circle cx="370" cy="1047.5" r="6" class="scrp"/>
-  <line x1="1310" y1="1047.5" x2="1310" y2="1093.5" class="scrl"/>
-  <circle cx="1310" cy="1047.5" r="6" class="scrp"/>
-  <line x1="362.5" y1="1076.25" x2="362.5" y2="1122.25" class="scrl"/>
-  <circle cx="362.5" cy="1076.25" r="6" class="scrp"/>
-  <line x1="430" y1="2236.25" x2="384" y2="2236.25" class="scrl"/>
-  <circle cx="430" cy="2236.25" r="6" class="scrp"/>
-  <circle cx="362.5" cy="2037.5" r="9" class="scro"/>
-  <circle cx="362.5" cy="2037.5" r="3.4" class="scrp"/>
-  <circle cx="362.5" cy="2012.5" r="9" class="scro"/>
-  <circle cx="362.5" cy="2012.5" r="3.4" class="scrp"/>
-  <circle cx="389.435" cy="2263.75" r="9" class="scro"/>
-  <circle cx="389.435" cy="2263.75" r="3.4" class="scrp"/>
-  <circle cx="389.435" cy="2233.75" r="9" class="scro"/>
-  <circle cx="389.435" cy="2233.75" r="3.4" class="scrp"/>
-  <line x1="362.5" y1="2012.5" x2="362.5" y2="1966.5" class="scrl"/>
-  <circle cx="362.5" cy="2012.5" r="6" class="scrp"/>
-  <circle cx="362.5" cy="1287.5" r="9" class="scro"/>
-  <circle cx="362.5" cy="1287.5" r="3.4" class="scrp"/>
-  <circle cx="362.5" cy="1232.5" r="9" class="scro"/>
-  <circle cx="362.5" cy="1232.5" r="3.4" class="scrp"/>
-  <circle cx="1362.5" cy="1287.5" r="9" class="scro"/>
-  <circle cx="1362.5" cy="1287.5" r="3.4" class="scrp"/>
-  <circle cx="1362.5" cy="1232.5" r="9" class="scro"/>
-  <circle cx="1362.5" cy="1232.5" r="3.4" class="scrp"/>
-  <line x1="370" y1="2177.5" x2="370" y2="2223.5" class="scrl"/>
-  <circle cx="370" cy="2177.5" r="6" class="scrp"/>
-  <line x1="1310" y1="2177.5" x2="1310" y2="2223.5" class="scrl"/>
-  <circle cx="1310" cy="2177.5" r="6" class="scrp"/>
-  <line x1="400" y1="1137.5" x2="354" y2="1137.5" class="scrl"/>
-  <circle cx="400" cy="1137.5" r="6" class="scrp"/>
-  <line x1="370" y1="1047.5" x2="370" y2="1093.5" class="scrl"/>
-  <circle cx="370" cy="1047.5" r="6" class="scrp"/>
-  <line x1="1310" y1="1047.5" x2="1310" y2="1093.5" class="scrl"/>
-  <circle cx="1310" cy="1047.5" r="6" class="scrp"/>
-  <line x1="370" y1="2177.5" x2="370" y2="2223.5" class="scrl"/>
-  <circle cx="370" cy="2177.5" r="6" class="scrp"/>
-  <line x1="1310" y1="2177.5" x2="1310" y2="2223.5" class="scrl"/>
-  <circle cx="1310" cy="2177.5" r="6" class="scrp"/>
+  <rect x="385" y="2158.75" width="45" height="60" class="behind"/>
+  <rect x="385" y="2130" width="955" height="28.75" class="behind"/>
+  <rect x="340" y="777.5" width="45" height="1752.5" class="behind"/>
+  <rect x="1340" y="-16.25" width="45" height="2546.25" class="behind"/>
+  <rect x="340" y="626.25" width="1000" height="28.75" class="brd"/>
+  <rect x="340" y="2158.75" width="60" height="85" class="wood"/>
+  <rect x="1280" y="2158.75" width="60" height="85" class="wood"/>
+  <rect x="340" y="2130" width="1000" height="28.75" class="brd"/>
+  <rect x="340" y="777.5" width="1045" height="122.5" class="wood"/>
+  <rect x="1295" y="272.5" width="45" height="122.5" class="brd"/>
+  <rect x="1295" y="56.25" width="45" height="122.5" class="brd"/>
+  <rect x="340" y="1852.5" width="60" height="85" class="brd"/>
+  <rect x="340" y="655" width="60" height="122.5" class="wood"/>
+  <rect x="1280" y="655" width="60" height="122.5" class="wood"/>
+  <rect x="340" y="476.25" width="1000" height="150" class="soft"/>
+  <rect x="340" y="2005" width="1000" height="125" class="soft"/>
+  <rect x="400" y="1590" width="1000" height="415" class="soft"/>
+  <rect x="340" y="2005" width="1000" height="125" class="soft"/>
+  <rect x="340" y="2136.25" width="997.5" height="22.5" class="pnl1"/>
+  <rect x="340" y="1830" width="997.5" height="22.5" class="pnl2"/>
+  <line x1="430" y1="2188.75" x2="384" y2="2188.75" class="scrl"/>
+  <circle cx="430" cy="2188.75" r="6" class="scrp"/>
+  <line x1="362.5" y1="655" x2="362.5" y2="701" class="scrl"/>
+  <circle cx="362.5" cy="655" r="6" class="scrp"/>
+  <line x1="407.5" y1="2130" x2="407.5" y2="2176" class="scrl"/>
+  <circle cx="407.5" cy="2130" r="6" class="scrp"/>
+  <line x1="1280" y1="2216.25" x2="1326" y2="2216.25" class="scrl"/>
+  <circle cx="1280" cy="2216.25" r="6" class="scrp"/>
+  <line x1="1280" y1="2186.25" x2="1326" y2="2186.25" class="scrl"/>
+  <circle cx="1280" cy="2186.25" r="6" class="scrp"/>
+  <line x1="1280" y1="743.75" x2="1326" y2="743.75" class="scrl"/>
+  <circle cx="1280" cy="743.75" r="6" class="scrp"/>
+  <line x1="1280" y1="688.75" x2="1326" y2="688.75" class="scrl"/>
+  <circle cx="1280" cy="688.75" r="6" class="scrp"/>
+  <line x1="1295" y1="366.875" x2="1341" y2="366.875" class="scrl"/>
+  <circle cx="1295" cy="366.875" r="6" class="scrp"/>
+  <line x1="1295" y1="300.625" x2="1341" y2="300.625" class="scrl"/>
+  <circle cx="1295" cy="300.625" r="6" class="scrp"/>
+  <line x1="1295" y1="150.625" x2="1341" y2="150.625" class="scrl"/>
+  <circle cx="1295" cy="150.625" r="6" class="scrp"/>
+  <line x1="1295" y1="84.375" x2="1341" y2="84.375" class="scrl"/>
+  <circle cx="1295" cy="84.375" r="6" class="scrp"/>
+  <line x1="1310" y1="2130" x2="1310" y2="2176" class="scrl"/>
+  <circle cx="1310" cy="2130" r="6" class="scrp"/>
+  <line x1="370" y1="626.25" x2="370" y2="672.25" class="scrl"/>
+  <circle cx="370" cy="626.25" r="6" class="scrp"/>
+  <line x1="1310" y1="626.25" x2="1310" y2="672.25" class="scrl"/>
+  <circle cx="1310" cy="626.25" r="6" class="scrp"/>
+  <line x1="362.5" y1="655" x2="362.5" y2="701" class="scrl"/>
+  <circle cx="362.5" cy="655" r="6" class="scrp"/>
+  <line x1="430" y1="2188.75" x2="384" y2="2188.75" class="scrl"/>
+  <circle cx="430" cy="2188.75" r="6" class="scrp"/>
+  <circle cx="362.5" cy="1962.5" r="9" class="scro"/>
+  <circle cx="362.5" cy="1962.5" r="3.4" class="scrp"/>
+  <circle cx="362.5" cy="1937.5" r="9" class="scro"/>
+  <circle cx="362.5" cy="1937.5" r="3.4" class="scrp"/>
+  <circle cx="389.435" cy="2216.25" r="9" class="scro"/>
+  <circle cx="389.435" cy="2216.25" r="3.4" class="scrp"/>
+  <circle cx="389.435" cy="2186.25" r="9" class="scro"/>
+  <circle cx="389.435" cy="2186.25" r="3.4" class="scrp"/>
+  <line x1="362.5" y1="1937.5" x2="362.5" y2="1891.5" class="scrl"/>
+  <circle cx="362.5" cy="1937.5" r="6" class="scrp"/>
+  <circle cx="362.5" cy="866.25" r="9" class="scro"/>
+  <circle cx="362.5" cy="866.25" r="3.4" class="scrp"/>
+  <circle cx="362.5" cy="811.25" r="9" class="scro"/>
+  <circle cx="362.5" cy="811.25" r="3.4" class="scrp"/>
+  <circle cx="1362.5" cy="866.25" r="9" class="scro"/>
+  <circle cx="1362.5" cy="866.25" r="3.4" class="scrp"/>
+  <circle cx="1362.5" cy="811.25" r="9" class="scro"/>
+  <circle cx="1362.5" cy="811.25" r="3.4" class="scrp"/>
+  <line x1="370" y1="2130" x2="370" y2="2176" class="scrl"/>
+  <circle cx="370" cy="2130" r="6" class="scrp"/>
+  <line x1="1310" y1="2130" x2="1310" y2="2176" class="scrl"/>
+  <circle cx="1310" cy="2130" r="6" class="scrp"/>
+  <line x1="400" y1="716.25" x2="354" y2="716.25" class="scrl"/>
+  <circle cx="400" cy="716.25" r="6" class="scrp"/>
+  <line x1="370" y1="626.25" x2="370" y2="672.25" class="scrl"/>
+  <circle cx="370" cy="626.25" r="6" class="scrp"/>
+  <line x1="1310" y1="626.25" x2="1310" y2="672.25" class="scrl"/>
+  <circle cx="1310" cy="626.25" r="6" class="scrp"/>
+  <line x1="370" y1="2130" x2="370" y2="2176" class="scrl"/>
+  <circle cx="370" cy="2130" r="6" class="scrp"/>
+  <line x1="1310" y1="2130" x2="1310" y2="2176" class="scrl"/>
+  <circle cx="1310" cy="2130" r="6" class="scrp"/>
   <text x="475" y="1137.5" class="smh" text-anchor="start">Sidevange, øvre — bak og front   48×98 × 1984</text>
   <text x="475" y="1260" class="smh" text-anchor="start">Endebjelke — henger i sine egne skruer   36×98 × 836</text>
   <text x="475" y="1002.5" class="smh" text-anchor="start">Køyespile — 14 like, én lengde   23×98 × 800</text>
   <line x1="461" y1="995.46" x2="461" y2="1062.5" class="ext"/>
-  <text x="475" y="905" class="smh" text-anchor="start">Madrass (referanse, ikke en del)   150×800 × 1990</text>
+  <text x="475" y="905" class="smh" text-anchor="start">Madrass (referanse, ikke en del)   120×800 × 1990</text>
   <text x="475" y="501.25" class="smh" text-anchor="start">Rekkverksbord, front — to bånd   36×98 × 832</text>
   <line x1="994.36" y1="494.21" x2="1295" y2="494.21" class="ext"/>
-  <text x="475" y="705" class="smh" text-anchor="start">Hjørnestolpe, front   36×98 × 1700</text>
+  <text x="475" y="705" class="smh" text-anchor="start">Hjørnestolpe, front   36×98 × 2037</text>
   <line x1="879.96" y1="697.96" x2="1340" y2="697.96" class="ext"/>
-  <text x="475" y="1455" class="smh" text-anchor="start">Hjørnestolpe, bak — i veggplanet   36×98 × 1065</text>
+  <text x="475" y="1455" class="smh" text-anchor="start">Hjørnestolpe, bak — i veggplanet   36×98 × 1402</text>
   <line x1="459" y1="1447.96" x2="385" y2="1447.96" class="ext"/>
   <text x="475" y="1970" class="smh" text-anchor="start">Bordbærelekt, bak   48×68 × 1794</text>
   <text x="475" y="2248.75" class="smh" text-anchor="start">Benkevange — bak gjennomgående, front i to biter   48×68 × 1794</text>
@@ -211,51 +211,49 @@
   <line x1="461" y1="2122.96" x2="461" y2="2190" class="ext"/>
   <text x="475" y="2072.5" class="smh" text-anchor="start">Benkepute   100×663 × 800</text>
   <text x="650" y="1830" class="smh" text-anchor="start">Ryggpute, på høykant i sofastilling   100×332 × 800</text>
-  <line x1="1409" y1="405" x2="1470" y2="405" class="ext"/>
-  <text x="1520" y="412.92" class="sml" text-anchor="start">1700   ok fremre stolpe</text>
-  <line x1="1409" y1="440" x2="1470" y2="440" class="ext"/>
-  <text x="1520" y="447.92" class="sml" text-anchor="start">1672   ok øvre rekkverksbånd</text>
-  <line x1="1409" y1="562.5" x2="1470" y2="562.5" class="ext"/>
-  <text x="1520" y="570.42" class="sml" text-anchor="start">1574   uk øvre rekkverksbånd</text>
-  <line x1="1409" y1="656.25" x2="1470" y2="656.25" class="ext"/>
-  <text x="1520" y="664.17" class="sml" text-anchor="start">1499   ok nedre rekkverksbånd</text>
-  <line x1="1409" y1="778.75" x2="1470" y2="778.75" class="ext"/>
-  <text x="1520" y="786.67" class="sml" text-anchor="start">1401   uk nedre rekkverksbånd</text>
-  <line x1="1409" y1="860" x2="1470" y2="860" class="ext"/>
-  <text x="1520" y="867.92" class="sml" text-anchor="start">1336   ok madrass (150 mm)</text>
-  <line x1="1409" y1="1047.5" x2="1470" y2="1047.5" class="ext"/>
-  <text x="1520" y="1055.42" class="sml" text-anchor="start">1186   spilebunn = uk madrass</text>
-  <line x1="1409" y1="1076.25" x2="1470" y2="1076.25" class="ext"/>
-  <polyline points="1470,1076.25 1496,1076.25 1522,1079.18" class="ext"/>
-  <text x="1520" y="1086.66" class="sml" text-anchor="start">1163   ok sidevange</text>
-  <line x1="1409" y1="1198.75" x2="1470" y2="1198.75" class="ext"/>
-  <text x="1520" y="1206.67" class="sml" text-anchor="start">1065   ok endebjelke = uk sidevange = ok bakre stolpe</text>
-  <line x1="1409" y1="1321.25" x2="1470" y2="1321.25" class="ext"/>
-  <text x="1520" y="1329.17" class="sml" text-anchor="start">967   uk endebjelke — står fritt</text>
-  <line x1="1409" y1="1332.5" x2="1470" y2="1332.5" class="ext"/>
-  <polyline points="1470,1332.5 1496,1332.5 1522,1352.93" class="ext"/>
-  <text x="1520" y="1360.41" class="sml" text-anchor="start">958   trinn 4</text>
-  <line x1="1409" y1="1630" x2="1470" y2="1630" class="ext"/>
-  <text x="1520" y="1637.92" class="sml" text-anchor="start">720   trinn 3</text>
-  <line x1="1409" y1="1637.5" x2="1470" y2="1637.5" class="ext"/>
-  <polyline points="1470,1637.5 1496,1637.5 1522,1661.68" class="ext"/>
-  <text x="1520" y="1669.16" class="sml" text-anchor="start">714   ryggputas topp i sofastilling</text>
-  <line x1="1409" y1="1905" x2="1470" y2="1905" class="ext"/>
-  <text x="1520" y="1912.92" class="sml" text-anchor="start">500   bordplate</text>
-  <line x1="1409" y1="1927.5" x2="1470" y2="1927.5" class="ext"/>
-  <polyline points="1470,1927.5 1496,1927.5 1522,1936.68" class="ext"/>
-  <text x="1520" y="1944.16" class="sml" text-anchor="start">482   ok bordbærelekt = trinn 2</text>
-  <line x1="1409" y1="2012.5" x2="1470" y2="2012.5" class="ext"/>
-  <text x="1520" y="2020.42" class="sml" text-anchor="start">414   uk bordbærelekt</text>
-  <line x1="1409" y1="2052.5" x2="1470" y2="2052.5" class="ext"/>
-  <text x="1520" y="2060.42" class="sml" text-anchor="start">382   puteoverside = sittehøyde = nedre soveflate</text>
-  <line x1="1409" y1="2177.5" x2="1470" y2="2177.5" class="ext"/>
-  <text x="1520" y="2185.42" class="sml" text-anchor="start">282   benkeflate uten pute</text>
-  <line x1="1409" y1="2206.25" x2="1470" y2="2206.25" class="ext"/>
-  <polyline points="1470,2206.25 1496,2206.25 1522,2209.18" class="ext"/>
-  <text x="1520" y="2216.66" class="sml" text-anchor="start">259   ok benkevange = trinn 1 = platen i sengestilling</text>
-  <line x1="1409" y1="2291.25" x2="1470" y2="2291.25" class="ext"/>
-  <text x="1520" y="2299.17" class="sml" text-anchor="start">191   uk benkevange</text>
+  <line x1="1409" y1="-16.25" x2="1470" y2="-16.25" class="ext"/>
+  <text x="1520" y="-8.33" class="sml" text-anchor="start">2037   ok fremre stolpe</text>
+  <line x1="1409" y1="56.25" x2="1470" y2="56.25" class="ext"/>
+  <text x="1520" y="64.17" class="sml" text-anchor="start">1979   ok øvre rekkverksbånd</text>
+  <line x1="1409" y1="178.75" x2="1470" y2="178.75" class="ext"/>
+  <text x="1520" y="186.67" class="sml" text-anchor="start">1881   uk øvre rekkverksbånd</text>
+  <line x1="1409" y1="272.5" x2="1470" y2="272.5" class="ext"/>
+  <text x="1520" y="280.42" class="sml" text-anchor="start">1806   ok nedre rekkverksbånd</text>
+  <line x1="1409" y1="395" x2="1470" y2="395" class="ext"/>
+  <text x="1520" y="402.92" class="sml" text-anchor="start">1708   uk nedre rekkverksbånd</text>
+  <line x1="1409" y1="476.25" x2="1470" y2="476.25" class="ext"/>
+  <text x="1520" y="484.17" class="sml" text-anchor="start">1643   ok madrass (150 mm)</text>
+  <line x1="1409" y1="626.25" x2="1470" y2="626.25" class="ext"/>
+  <text x="1520" y="634.17" class="sml" text-anchor="start">1523   spilebunn = uk madrass</text>
+  <line x1="1409" y1="655" x2="1470" y2="655" class="ext"/>
+  <polyline points="1470,655 1496,655 1522,657.93" class="ext"/>
+  <text x="1520" y="665.41" class="sml" text-anchor="start">1500   ok sidevange</text>
+  <line x1="1409" y1="777.5" x2="1470" y2="777.5" class="ext"/>
+  <text x="1520" y="785.42" class="sml" text-anchor="start">1402   ok endebjelke = uk sidevange = ok bakre stolpe</text>
+  <line x1="1409" y1="900" x2="1470" y2="900" class="ext"/>
+  <text x="1520" y="907.92" class="sml" text-anchor="start">1304   uk endebjelke — står fritt</text>
+  <line x1="1409" y1="1240" x2="1470" y2="1240" class="ext"/>
+  <text x="1520" y="1247.92" class="sml" text-anchor="start">1032   trinn 4</text>
+  <line x1="1409" y1="1546.25" x2="1470" y2="1546.25" class="ext"/>
+  <text x="1520" y="1554.17" class="sml" text-anchor="start">787   trinn 3</text>
+  <line x1="1409" y1="1590" x2="1470" y2="1590" class="ext"/>
+  <text x="1520" y="1597.92" class="sml" text-anchor="start">752   ryggputas topp i sofastilling</text>
+  <line x1="1409" y1="1830" x2="1470" y2="1830" class="ext"/>
+  <text x="1520" y="1837.92" class="sml" text-anchor="start">560   bordplate</text>
+  <line x1="1409" y1="1852.5" x2="1470" y2="1852.5" class="ext"/>
+  <polyline points="1470,1852.5 1496,1852.5 1522,1861.68" class="ext"/>
+  <text x="1520" y="1869.16" class="sml" text-anchor="start">542   ok bordbærelekt = trinn 2</text>
+  <line x1="1409" y1="1937.5" x2="1470" y2="1937.5" class="ext"/>
+  <text x="1520" y="1945.42" class="sml" text-anchor="start">474   uk bordbærelekt</text>
+  <line x1="1409" y1="2005" x2="1470" y2="2005" class="ext"/>
+  <text x="1520" y="2012.92" class="sml" text-anchor="start">420   puteoverside = sittehøyde = nedre soveflate</text>
+  <line x1="1409" y1="2130" x2="1470" y2="2130" class="ext"/>
+  <text x="1520" y="2137.92" class="sml" text-anchor="start">320   benkeflate uten pute</text>
+  <line x1="1409" y1="2158.75" x2="1470" y2="2158.75" class="ext"/>
+  <polyline points="1470,2158.75 1496,2158.75 1522,2161.68" class="ext"/>
+  <text x="1520" y="2169.16" class="sml" text-anchor="start">297   ok benkevange = trinn 1 = platen i sengestilling</text>
+  <line x1="1409" y1="2243.75" x2="1470" y2="2243.75" class="ext"/>
+  <text x="1520" y="2251.67" class="sml" text-anchor="start">229   uk benkevange</text>
   <line x1="1409" y1="2530" x2="1470" y2="2530" class="ext"/>
   <text x="1520" y="2537.92" class="sml" text-anchor="start">0   gulv</text>
   <line x1="400" y1="2626" x2="1280" y2="2626" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
@@ -264,29 +262,29 @@
   <text x="840" y="2757" class="dmh" text-anchor="middle">800  spilebunn = madrassbredden</text>
   <line x1="340" y1="2842" x2="1385" y2="2842" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="862.5" y="2865" class="dmh" text-anchor="middle">836  dybde over alt</text>
-  <line x1="1490" y1="860" x2="1490" y2="778.75" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1502.65" y="827.425" class="dmh" text-anchor="middle">65</text>
-  <line x1="1490" y1="656.25" x2="1490" y2="562.5" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1502.65" y="617.425" class="dmh" text-anchor="middle">75</text>
-  <text x="1520" y="770.75" class="sml" text-anchor="start">EN 747: begge åpninger i båndet 60–75</text>
+  <line x1="1490" y1="476.25" x2="1490" y2="395" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1502.65" y="443.675" class="dmh" text-anchor="middle">65</text>
+  <line x1="1490" y1="272.5" x2="1490" y2="178.75" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1502.65" y="233.675" class="dmh" text-anchor="middle">75</text>
+  <text x="1520" y="387" class="sml" text-anchor="start">EN 747: begge åpninger i båndet 60–75</text>
   <text x="2400" y="305" class="leg" text-anchor="start">ASYMMETRISK — SENGEN ER IKKE VENDBAR</text>
   <text x="2400" y="344" class="sml" text-anchor="start">Bakre langside står mot vegg, og VEGGEN er barrieren: det står ingen</text>
-  <text x="2400" y="373.7" class="sml" text-anchor="start">rekkverksbord bak. De to bakre hjørnestolpene er kappet i Z 1065, og den bakre</text>
-  <text x="2400" y="403.4" class="sml" text-anchor="start">sidevangen bærer rett ned på stolpens endeved. Foran går stolpene helt til 1700.</text>
+  <text x="2400" y="373.7" class="sml" text-anchor="start">rekkverksbord bak. De to bakre hjørnestolpene er kappet i Z 1402, og den bakre</text>
+  <text x="2400" y="403.4" class="sml" text-anchor="start">sidevangen bærer rett ned på stolpens endeved. Foran går stolpene helt til 2037.</text>
   <text x="2400" y="433.1" class="sml" text-anchor="start">Bakre stolpe ligger i veggplanet Y -48 … -12; vangen står 12 mm fram for den.</text>
   <text x="2400" y="462.8" class="sml" text-anchor="start">Ingenting stikker bak veggplanet.</text>
   <text x="2400" y="512.3" class="leg" text-anchor="start">SKRUERADER I RAMMELEDDENE</text>
   <text x="2400" y="551.3" class="sml" text-anchor="start">Ingen bolt går inn i en stolpe. En 36 mm stolpe gir en M8 bare 18 mm kantavstand</text>
   <text x="2400" y="581" class="sml" text-anchor="start">mot kravet 24 (3d); en forboret 6 mm treskrue trenger 18. Det finnes ikke et</text>
   <text x="2400" y="610.7" class="sml" text-anchor="start">forsenket boltehode i denne sengen.</text>
-  <text x="2400" y="640.4" class="sml" text-anchor="start">J1 endebjelke → stolpe: Z 994 og 1038, i planene Y -30 og 770</text>
-  <text x="2400" y="670.1" class="sml" text-anchor="start">J2 fremre sidevange → stolpe: Z 1092 og 1136, X 50,5 fra enden</text>
-  <text x="2400" y="699.8" class="sml" text-anchor="start">J8 fremre benkevange → stolpe: Z 213 og 237</text>
+  <text x="2400" y="640.4" class="sml" text-anchor="start">J1 endebjelke → stolpe: Z 1331 og 1375, i planene Y -30 og 770</text>
+  <text x="2400" y="670.1" class="sml" text-anchor="start">J2 fremre sidevange → stolpe: Z 1429 og 1473, X 50,5 fra enden</text>
+  <text x="2400" y="699.8" class="sml" text-anchor="start">J8 fremre benkevange → stolpe: Z 251 og 275</text>
   <text x="2400" y="729.5" class="sml" text-anchor="start">J2 og J8 er SNUDD: hodet ligger på vangens innside og skruen går utover i +Y inn</text>
   <text x="2400" y="759.2" class="sml" text-anchor="start">i stolpen. Ingen skruehoder står på noen flate framfor de fremre stolpene — det</text>
   <text x="2400" y="788.9" class="sml" text-anchor="start">er en assert i modellen.</text>
   <text x="2400" y="838.4" class="leg" text-anchor="start">INGEN BÆREKLOSS NOE STED I RAMMEN</text>
-  <text x="2400" y="877.4" class="sml" text-anchor="start">Endebjelkens underkant, Z 967, er fri. Bjelken henger i sine egne to skruer i</text>
+  <text x="2400" y="877.4" class="sml" text-anchor="start">Endebjelkens underkant, Z 1304, er fri. Bjelken henger i sine egne to skruer i</text>
   <text x="2400" y="907.1" class="sml" text-anchor="start">hver ende, og de tar hele vertikallasten: 4,0 kN i skjær mot under 1 kN</text>
   <text x="2400" y="936.8" class="sml" text-anchor="start">hjørnereaksjon. Det samme gjelder benkevangene.</text>
   <text x="2400" y="986.3" class="leg" text-anchor="start">J14 VEGGFESTE — OBLIGATORISK</text>
@@ -300,10 +298,10 @@
   <text x="2400" y="1262.3" class="sml" text-anchor="start">åpningen blir over 75; tykkere enn 155 og den faller ned i klemvinduet under 60.</text>
   <text x="2400" y="1292" class="sml" text-anchor="start">En vanlig 160 mm madrass er ulovlig her.</text>
   <text x="2400" y="1341.5" class="leg" text-anchor="start">BENKEN, PUTENE OG DEN LØSE PLATEN</text>
-  <text x="2400" y="1380.5" class="sml" text-anchor="start">Benkeflaten ligger på Z 282 og puteoversiden på 382. Det er FIRE puter, alle 100</text>
+  <text x="2400" y="1380.5" class="sml" text-anchor="start">Benkeflaten ligger på Z 320 og puteoversiden på 420. Det er FIRE puter, alle 100</text>
   <text x="2400" y="1410.2" class="sml" text-anchor="start">mm tykke og 800 mm dype: to benkeputer på 663 mm og to ryggputer på 332 mm. 663 +</text>
   <text x="2400" y="1439.9" class="sml" text-anchor="start">332 + 332 + 663 = 1990 — hele lengden.</text>
-  <text x="2400" y="1469.6" class="sml" text-anchor="start">I sofastilling står ryggputa på høykant ytterst på hver benk, med toppen på Z 714</text>
+  <text x="2400" y="1469.6" class="sml" text-anchor="start">I sofastilling står ryggputa på høykant ytterst på hver benk, med toppen på Z 752</text>
   <text x="2400" y="1499.3" class="sml" text-anchor="start">og ryggen mot bordbærelekta. Den er tegnet stiplet her.</text>
   <text x="2400" y="1529" class="sml" text-anchor="start">Ytterst mot veggenden ligger endespilen, 23×98 × 764, på sin endelist, 36×48 × 98</text>
   <text x="2400" y="1558.7" class="sml" text-anchor="start">(J17). Den starter på den bakre stolpens forside og lukker feltet helt ut til</text>

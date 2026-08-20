@@ -4,8 +4,8 @@
 The bed seen from its end - one vertical section through the left end beam,
 in the Y-Z plane, with the wall on the left and the room on the right. It is
 the only sheet in the folder that shows the bed's DEPTH as a whole, and the
-one thing it exists to say is that the bed is ASYMMETRIC: 1065 mm at the wall,
-1700 mm towards the room, no guard boards at the back because the wall is the
+one thing it exists to say is that the bed is ASYMMETRIC: 1402 mm at the wall,
+2037 mm towards the room, no guard boards at the back because the wall is the
 barrier. Every storey the bed has - stub foot, bench, cushion, table ledger,
 loft frame, slat bed, mattress, the two guard bands - stacks up in one column
 on this sheet, and the climb up to the bunk is the same column read as steps.

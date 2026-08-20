@@ -46,6 +46,117 @@ back corner posts into the back rail plane. Consequences you cannot ignore:
     (1700), which costs the 48 mm of depth v10 just won - and, on a 36 mm
     post, 36 rather than 48 of it. Flagged for the docs round.
 
+DESIGN INTENT (v14 - "both storeys seat an adult")
+--------------------------------------------------------------------------
+X1  THE UPPER DECK GOES UP 337 mm AND THE BENCH 38, AND THE ROOM BECOMES A
+    PARAMETER. RAIL_BOTTOM 1065 -> 1402 and BENCH_RAIL_TOP 259 -> 297 are the
+    whole change; everything else in this round is derived off one of those
+    two and rides along.
+
+    WHY, AND WHY THESE NUMBERS. The room is 2450 mm high, and that number is
+    now written down (ROOM_H) instead of living in the builder's head. Once it
+    is written down the whole question becomes arithmetic, because the two head
+    rooms share a FIXED POT: take the room, take out the things that are not
+    head room at all - the seat face the sitter starts from (420), the slat
+    (23) and the mattress on it (120) - and what is left is
+      2450 - 420 - 23 - 120 = 1887 mm
+    to be split between the storey below and the berth above. Nothing anyone
+    does to this bed changes that 1887; the platform is only the sliding wall
+    between the two halves of it, and every millimetre it goes up is a
+    millimetre the lower storey gains and the upper one loses. (The model
+    asserts the sum, so the pot cannot drift out from under the argument.)
+
+    v13 put the wall at 1163 and split the pot 781 / 1114. That is not a
+    compromise, it is an accident: it gave the MOST room to the storey where
+    people are lying down and the LEAST to the one where they live. v14 splits
+    it on purpose, and the split is deliberately lopsided the other way:
+      1080 mm below   the play, homework, sofa and table storey - the one the
+                      hours go in. 1500 mm from the floor to the slat
+                      underside. The bought bunk this was measured against,
+                      IKEA SMASTAD, gives 1420 there; HANNA gives 1500.
+      807 mm above    a BERTH. Nobody stands in it and nobody sits in it for
+                      long; what it needs is air to sit up, swing the legs out
+                      and get on the ladder. 807 is that, and the rule it is
+                      held to (MIN_LIE_HEADROOM, 750) is deliberately lower
+                      than the 900 the lower storey must clear.
+    THE RULE CHANGED BECAUSE THE INTENTION DID, and that is written out at the
+    assert rather than left as a relaxation nobody explains: until v14 both
+    storeys were held to the same sitting-height rule, on the unexamined
+    assumption that they were the same kind of place. They are not.
+
+    THE BENCH GOES UP 38 TOO, and that is the other half of the round. The
+    seat was 382 mm - a child's chair - and 420 is a grown chair, which is what
+    the lower storey has to be if it is a room and not a play box. Everything
+    on the bench datum moves with it: rails 191/259 -> 229/297, bench top
+    282 -> 320, seat face 382 -> 420, stub legs 191 -> 229, the bed-mode panel,
+    the cushions, the whole mechanism. The two 38 mm are why the lower head
+    room is 1080 and not 1118.
+
+    THE MATTRESS GOES 150 -> 120. A berth wants its sleeper as low in the
+    guard as it can put him, and 30 mm of foam is 30 mm of head room straight
+    back into the 807. The guard bands are re-dimensioned round the thinner
+    mattress by the file's own rule (see X1 RE-BANDING), so the legal window
+    moves 140..155 -> 110..125 and the EN 747 arithmetic above the sleeping
+    surface is unchanged: 65 / 75 mm of opening and 336 mm of barrier.
+
+    WHAT MOVES, AND WHAT DOES NOT. Off RAIL_BOTTOM: the rails (1402..1500),
+    the slat platform (1500..1523), the mattress (1523..1643), the end beams
+    (1304..1402), the back posts (1402, still the rail underside - W6), the
+    front posts and ladder uprights (1700 -> 2037, because they carry a guard
+    band) and the guard bands themselves. Off BENCH_RAIL_TOP: the bench, the
+    sofa, the panel in bed mode, the stub legs. The ladder spans both and is
+    re-derived (X2). Nothing horizontal changes LENGTH: the through members are
+    still 1984 and the walls are still 1990 apart.
+
+    THE CEILING IS A LIMIT NOW, LIKE THE TWO WALLS. Two rules, both measured
+    on the built solid rather than on constants: the tallest part must clear
+    2450 (2037 does, by 413), and the front frame must be able to be TILTED
+    upright under it - a rectangle swinging about its foot sweeps its own
+    diagonal, and 2037 x 836 sweeps 2202. See THE ROOM HAS A CEILING.
+X2  THE LADDER BECOMES A RULE, AND THE TABLE FOLLOWS IT.
+    D8 hand-set four rung tops against a platform that has moved twice since,
+    so the list had drifted out of true (the last step was 228 mm against
+    238s). A hand-set list cannot follow a platform, and X1 moves it 337 mm and
+    the foot of the ladder 38, so the tops are DERIVED: the fewest rungs that
+    keep every step inside the pitch limit, spaced as evenly as whole
+    millimetres allow, between the two heights that actually decide them -
+    rung 1 on the bench rail (297, where it has to be: it carries the bed-mode
+    panel) and the slat surface (1523). The climb is 1226 mm, which is FIVE
+    rungs rather than four, and the rule works that out on its own: 297 / 542 /
+    787 / 1032 / 1277, a climb of 297 + 245 + 245 + 245 + 245 + 246. The
+    evenest ladder this bed has had, to within one millimetre - and the fifth
+    rung is not a decision anybody typed, it is what 1226 mm and a 280 mm pitch
+    limit come to.
+
+    WHAT THE FIFTH RUNG COSTS, SAID OUT LOUD: one more 48x68 x 320 tread, two
+    more 36x48 blocks, four more screws. It is one of the two things that take
+    48x68 from two boards to three (the other is the shop jigs, X5).
+
+    X2 ALSO SETTLES WHO OWNS RUNG 2. Under D8 the answer was "the table": rung
+    2 was typed at 482 because the table-mode panel underside is 482, and the
+    back ledger was moved up to meet it. That is backwards - a ladder whose
+    rung spacing is set by a table top is a ladder with one step in the wrong
+    place - and after X1 it is not even possible. So the LADDER decides and the
+    TABLE FOLLOWS: rung 2 is 542, and PANEL_UNDER_TABLE and the back table
+    ledger ride up with it. Against a seat that also went up 38, the plate ends
+    up 140 mm over the seat cushion where v13 had 118 - close to where it was,
+    and the 122 mm under it is still a lap-height surface rather than a desk.
+    The reference figure leaning over the plate is re-posed to the new height.
+    On the WALL, the ledger's nogging zone moves with it: 414..482 -> 474..542,
+    and the bench rail's 191..259 -> 229..297.
+
+    THE PITCH LIMIT WAS RE-AIMED, 250 -> 280, AND NOT QUIETLY. 250 was this
+    file's own comfort number, written for a 1186 mm platform and a 259 mm
+    ladder foot. It is not a standard, and holding a moved platform to it would
+    have bought a SIXTH rung for no reason: at 1226 mm of climb, 280 gives five
+    rungs at 245 and 250 gives five as well - but the number that decides how
+    many rungs a climb needs should be the trade's, not one this file invented
+    for a bed that no longer exists. Portable-ladder practice (EN 131) puts
+    uniform rung pitch in the 250..300 band; 280 is inside it, and the rule
+    lands the actual pitch at 245, under both. The evenness rule
+    (MAX_CLIMB_SPREAD = 20) is untouched and is now met to within 1 mm, where
+    the old hand-set list used 15.
+
 DESIGN INTENT (v13 - "the mode change is a flat carry")
 --------------------------------------------------------------------------
 The mechanism film (v12) was built as a feasibility proof and it proved the
@@ -464,7 +575,7 @@ D13 FRONT FLOOR CLEARED + SLIM 320 LADDER. Two moves that belong together,
         it, and the other 37 stood in the panel's transfer slot.)
     The pair of them opens a walk-around passage on each side of the ladder,
     between the sofa end and the upright outer face, 151 mm clear and empty
-    from the floor to 482.
+    from the floor to 482. (v14/X2: to 542 - the passage ceiling IS rung 2.)
     STRUCTURAL CONSEQUENCE, flagged for the docs round: the ladder has LOST
     its low lateral restraint. See the LADDER section for the numbers.
 
@@ -743,10 +854,11 @@ WHAT CHANGED IN v5
       stays at 1065, end-beam top stays flush with it). Corner posts and
       ladder uprights 48x73 -> 48x48. Everything else keeps its stock.
 
-Upper level: a 1984 x 800 sleeping platform at 1065 mm underside height (the
+Upper level: a 1984 x 800 sleeping platform at 1402 mm underside height (the
 slats bridge both rails flush on top, D5; D12 shrank the depth 906 -> 800 so
-the 800 mm mattress is flush at both edges), carried by four corner posts -
-two 1700 mm ones at the front and, after v10/W6, two 1065 mm ones at the back
+the 800 mm mattress is flush at both edges; v14/X1 lifted the whole deck
+337 mm to put the slat underside on a round 1500), carried by four corner
+posts - two 2037 mm ones at the front and, after v10/W6, two 1402 mm at the back
 that stand IN the back rail plane and carry the back rail on their tops. The
 platform reaches the wall because the wall IS the back rail face now, so the
 wall is what stops the mattress on that side (v9/W5, v10/W7) and all 14 slats
@@ -769,7 +881,7 @@ of the front rail and are screwed through it. The rungs are 48x73 treads,
 uprights.
 
 Lower level: a convertible sofa / table / bed. The 48x73 bench rails sit at
-Z 186..259, carried at their ends by the corner posts (on their own end
+Z 229..297, carried at their ends by the corner posts (on their own end
 screws, J8-B behind and J8 in front - v12/V5 deleted the four bearing blocks
 that used to hang under them) and in between by four 48x73 stub legs (v9/W3,
 v11/U5). The BACK rail is one continuous 1794 mm
@@ -783,10 +895,11 @@ across its front corners (M5), RESTS on wood (D10). The two long battens run
 outboard of the rung ends and LOCATE it - wood on end grain, 2 mm of running
 clearance, and not one piece of steel in the mechanism (V3) - so it is LOWERED
 into either seat, and every gram of vertical load goes into wood:
-  * TABLE MODE  - on the back table ledger (top Z 482) and on ladder rung 2
-                  (top Z 482); panel top Z = 500.
-  * BED MODE    - on the back bench rail (top Z 259) and on ladder rung 1
-                  (top Z 259); panel top Z = 277, i.e. 18 mm below the bench
+  * TABLE MODE  - on the back table ledger (top Z 542) and on ladder rung 2
+                  (top Z 542); panel top Z = 560. (v14/X2: both were 482/500
+                  until the even ladder moved rung 2 and the ledger with it.)
+  * BED MODE    - on the back bench rail (top Z 297) and on ladder rung 1
+                  (top Z 297); panel top Z = 315, i.e. 5 mm below the bench
                   slats, the depth the fold-out cushions bridge.
 
 Everything is modelled as plain axis-aligned Boxes moved into place.
@@ -900,7 +1013,8 @@ UPRIGHT_T = 36       # ladder uprights, Y  [was 48] - the 36 mm front-plane dept
 # U5: THE FOUR BENCH STUB LEGS GO BACK ON THE BENCH RAIL'S OWN PROFILE.
 # The leg is an END BEARING under a bench rail, not a column. What it has to do
 # is (a) present enough face to the rail underside and (b) not buckle over its
-# own 186 mm. Buckling is a non-question at 186 mm (lambda ~13), so the section
+# own 229 mm (X3: was 186/191). Buckling is a non-question at 229 mm
+# (lambda ~17), so the section
 # is decided by the bearing and by the cut list.
 # HISTORY. v9/W3 took the leg from the rail profile to 48x48 for one reason
 # only: 48x48 was the corner-post section at the time, so the change
@@ -1015,12 +1129,27 @@ GROUP_ORDER = ["posts", "rails", "boards", "panel", "mattress", "figures"]
 # ENVELOPE
 # ---------------------------------------------------------------------------
 WALL_SPAN = 1990                 # X = 0 .. 1990, hard limit
+# X1: THE ROOM HAS A CEILING, AND IT IS A PARAMETER NOW. The niche was only
+# ever described sideways (WALL_SPAN) and downwards (floor at Z = 0); the third
+# wall of it - the ceiling - lived in nobody's head but the builder's. It is
+# 2450 mm in Hanna's room, and once it is written down the two heights that
+# matter can be CHECKED instead of assumed: the tallest thing in the bed has to
+# clear the ceiling with enough air to lift it into place, and the sleeper on
+# the top bunk has to be able to sit up. See the SITTING HEIGHT block after the
+# guard rails for both.
+ROOM_H = 2450                    # Z = 0 .. 2450, finished floor to ceiling
+# SITTING HEIGHT IS 0,545 OF STANDING HEIGHT. It is the one anthropometric
+# ratio this whole bed turns on - it is what decides whether a storey is a
+# place to sit or a place to stoop - and it is written once, here, for both of
+# the things that use it: the reference child's segment table (FIG_SITTING_H)
+# and the two head-room rules X1 checks against the room.
+SIT_RATIO = 0.545                # seat/floor -> crown, as a fraction of height
 MATTRESS_W = 800                 # 200x80 mattress
 # V7: 150 mm, og vinduet er 140..155. Se MATTRESS_H_MIN/MAX nedenfor: EN 747-1
 # gir ikke bare et tak på åpningen mellom madrassen og nederste rekkverksbord,
 # den gir et BÅND - 60..75 mm - og en madrass som er tykkere enn 155 lukker
 # åpningen ned i klemvinduet under 60. 150 legger den på 65, midt i båndet.
-MATTRESS_H = 150
+MATTRESS_H = 120
 
 # D12: the platform depth IS the mattress width. The slats run from the outer
 # face of the back rail to the outer face of the front rail, so the platform is
@@ -1057,8 +1186,16 @@ THROUGH_X1 = THROUGH_X0 + THROUGH_LEN           # 1987
 # between their inner faces drops 1894 -> 1794 - 5.3% - and the rail's bending
 # utilisation with it, ~0.73 -> ~0.65 (M ~ L^2), the deflection ~0.85 of what it
 # was. The wall screws through the back rail still mid-support it either way.
-RAIL_BOTTOM = 1065               # underside of the upper side rails (FIXED)
-RAIL_TOP = RAIL_BOTTOM + RAIL_H  # 1163
+# X1 (v14): THE WHOLE UPPER DECK GOES UP 337 mm, 1065 -> 1402. The number that
+# was actually chosen is the one below it - the slat UNDERSIDE, RAIL_TOP, on a
+# round 1500 off the floor - and 1402 is 1500 less one rail. Everything above
+# this line is derived off it and rides up with it. See the X1 note at the top
+# of the file for why (the short version: the two storeys share a fixed 1887 mm
+# of head room, v13 split it 781 / 1114 with the majority over a sleeper who is
+# lying down, and v14 splits it 1080 / 807 the other way, because the lower
+# storey is the room and the upper one is a berth).
+RAIL_BOTTOM = 1402               # underside of the upper side rails  [X1: was 1065]
+RAIL_TOP = RAIL_BOTTOM + RAIL_H  # 1500 == SLAT_Z0, the target [was 1163]
 
 # D12: the BACK plane is the fixed datum - it does not move. Everything in
 # front of it comes in by DEPTH_SHRINK = 106 mm.
@@ -1099,14 +1236,15 @@ FRONT_RAIL_Y1 = FRONT_RAIL_Y0 + RAIL_T   # 752  [was 858]
 # slat ends are ON it. So:
 #   * every upper slat is 36x98 x 800, Y -48..752 - the same piece as a bench
 #     slat again, no two-length split, no fitting clearance to keep;
-#   * no slat can foul a back post: the posts stop at the rail underside 1065
-#     and the slats start at the rail top 1163, 98 mm clear. Asserted anyway;
+#   * no slat can foul a back post: the posts stop at the rail underside 1402
+#     and the slats start at the rail top 1500, 98 mm clear. Asserted anyway;
 #   * the 14-slat field survives from W4 (the 13-slat one had 60.5 mm gaps);
 #     at this pitch the gap is 44.5 mm.
 WALL_Y = BACK_RAIL_Y0                    # -48, the mounting face against the
                                          # wall = the back rail's outer face (W7)
-SLAT_Z0 = RAIL_TOP                       # 1163, slats bear on top of the rails
-SLAT_Z1 = SLAT_Z0 + BED_SLAT_T           # 1199
+SLAT_Z0 = RAIL_TOP                       # 1500, slats bear on top of the rails
+                                         # - the round number X1 aimed at
+SLAT_Z1 = SLAT_Z0 + BED_SLAT_T           # 1523  [X1: was 1163..1186]
 SLAT_Y0 = BACK_RAIL_Y0                   # -48, outer face of the back rail
 SLAT_Y1 = FRONT_RAIL_Y1                  # 752, outer face of the front rail
 SLAT_LEN = SLAT_Y1 - SLAT_Y0             # 800  (the bench slat, same piece)
@@ -1123,7 +1261,7 @@ MAX_SLAT_GAP = 60
 MATTRESS_Z0 = SLAT_Z1                    # 1199
 MATTRESS_Y0 = SLAT_Y0                    # -48  [was 29]
 MATTRESS_Y1 = MATTRESS_Y0 + MATTRESS_W   # 752  [was 829] == SLAT_Y1
-MATTRESS_Z1 = MATTRESS_Z0 + MATTRESS_H   # 1339
+MATTRESS_Z1 = MATTRESS_Z0 + MATTRESS_H   # 1643  [X1: was 1186..1336 on 150]
 
 # ---------------------------------------------------------------------------
 # SHARED LOWER DATUM  (hoisted - the ladder needs it before it is "its" section)
@@ -1134,8 +1272,8 @@ MATTRESS_Z1 = MATTRESS_Z0 + MATTRESS_H   # 1339
 # declared down in LOWER CONVERTIBLE SECTION, which forced RUNG_TOPS[0] to
 # repeat the literal 259 and left two numbers to keep in step by hand. It is
 # hoisted here so every consumer derives from the one declaration.
-BENCH_RAIL_TOP = 259                                # fixed by the doc (J9, J13)
-BENCH_RAIL_BOTTOM = BENCH_RAIL_TOP - BENCH_RAIL_H   # 186
+BENCH_RAIL_TOP = 297                                # X3: was 259 (J9, J13)
+BENCH_RAIL_BOTTOM = BENCH_RAIL_TOP - BENCH_RAIL_H   # 229  [was 191]
 
 # ---------------------------------------------------------------------------
 # POSTS  (D1: SIX verticals in total - four corner posts, two ladder uprights)
@@ -1165,8 +1303,11 @@ BENCH_RAIL_BOTTOM = BENCH_RAIL_TOP - BENCH_RAIL_H   # 186
 # The W2 conclusion survives untouched and with room to spare: the post now tops
 # out 132 mm BELOW the mattress underside, so there is nothing of it above the
 # platform for any mattress at all. The tallest thing on a back post is the back
-# side rail sitting on it (1065..1163); the highest fastener is still the M8 tie
-# into the end beam (967..1065). Asserted further down (W2/W6 check).
+# side rail sitting on it (1402..1500); the highest fastener is still the M8 tie
+# into the end beam (1304..1402). Asserted further down (W2/W6 check).
+# [X1: those two bands were 1065..1163 and 967..1065 before the deck went up
+#  337 mm. The 121 mm of clear air over the post top is unchanged - the post,
+#  the rail and the platform all moved together.]
 #
 # U2 (v11): THE POST SECTION TURNS INTO A PLANK - 36 in Y, 98 in X. The BACK
 # post keeps its back face on the wall plane and gives up 12 mm at the front, so
@@ -1182,25 +1323,42 @@ BENCH_RAIL_BOTTOM = BENCH_RAIL_TOP - BENCH_RAIL_H   # 186
 # BUCKLING, 36x98, weak axis (the 36 mm dimension, buckling in Y):
 #   A = 3528 mm2; I_weak = 98*36^3/12 = 381 024 mm4, i = 10.39 mm
 #               ; I_strong = 36*98^3/12 = 2 823 576 mm4, i = 28.29 mm
-#   FRONT POST (1700). Y restraints: the front bench rail segment laps its face
-#   at 186..259, the end beam is fixed to its X-inner face at 967..1065 and the
-#   front side rail at 1065..1163, then the two guard bands at 1414 and 1587.
-#   Worst unbraced length is bench rail -> end beam, 967 - 259 = 708 mm, so
-#   lambda = 68, lambda_rel = 1.16, k_c = 0.58 and N_c,Rd = 3528 * 0.58 * 12.92
-#   = 26.4 kN against a corner reaction of well under 1.5 kN: utilisation ~0.05.
-#   (The old 48x48 over the same 708 mm: lambda 51, k_c 0.75, 22.3 kN. The
+#   X1 RE-CHECK. The lift makes both posts 150 mm taller and, worse, it puts
+#   150 mm into the ONE gap that governs each of them - the long unbraced run
+#   between the bench rail and the end beam - because everything below the
+#   bench rail stayed on the floor and everything above the end beam went up.
+#   So this is the one place in the bed where X1 has to be re-argued rather
+#   than re-typed. Both come out well inside, and both are written out below
+#   with the pre-X1 numbers beside them.
+#   FRONT POST (2037, was 1700). Y restraints: the front bench rail segment
+#   laps its face at 229..297, the end beam is fixed to its X-inner face at
+#   1304..1402 and the front side rail at 1402..1500, then the two guard bands
+#   at 1708 and 1881. Worst unbraced length is bench rail -> end beam,
+#   1304 - 297 = 1007 mm (was 708), so lambda = 97 (68), lambda_rel = 1.65
+#   (1.16), k_c = 0.33 (0.58) and N_c,Rd = 3528 * 0.33 * 12.92 = 15.0 kN (26.4)
+#   against a corner reaction of well under 1.5 kN: utilisation ~0.10 (~0.05).
+#   (The old 48x48 over the old 708 mm: lambda 51, k_c 0.75, 22.3 kN. The
 #   thinner post is the STRONGER column, because 53% more area beats the loss in
-#   radius of gyration.) The strong axis at the full 1700 is lambda = 60 - not
+#   radius of gyration.) The strong axis at the full 2037 is lambda = 72 - not
 #   the governing case even unbraced.
-#   BACK POST (1065). Take the Y restraints as the end beam alone (967..1065)
-#   and the base as pinned: unbraced 967 mm, lambda = 93, k_c = 0.35, N_c,Rd =
-#   15.8 kN against the corner reaction it carries in direct bearing off the
-#   rail top - utilisation ~0.10. The back bench rail and the ledger butt and
-#   screw to its X-inner face at 186..259 and 387..482, so the real unbraced
-#   length is shorter than that; 967 is the conservative reading.
-POST_HEIGHT = 1700                       # front posts + ladder uprights
-BACK_POST_HEIGHT = RAIL_BOTTOM           # 1065, the rail underside (W6)
-                                         # [was SLAT_Z1 = 1197, MATTRESS_Z1 1337]
+#   BACK POST (1402, was 1065). Take the Y restraints as the end beam alone
+#   (1304..1402) and the base as pinned: unbraced 1304 mm (was 967), lambda =
+#   126 (93), k_c = 0.20 (0.35), N_c,Rd = 3528 * 0.20 * 12.92 = 9.1 kN (15.8)
+#   against the corner reaction it carries in direct bearing off the rail top -
+#   utilisation ~0.17 (~0.10). The back bench rail and the ledger butt and
+#   screw to its X-inner face at 229..297 and 474..542, so the real unbraced
+#   length is shorter than that; 1304 is the conservative reading.
+#   X1 SAYS THIS OUT LOUD RATHER THAN BURYING IT: a 337 mm lift puts all 337
+#   into the ONE gap that governs each post - between the bench rail and the
+#   end beam - because everything below the bench stayed near the floor and
+#   everything above the end beam went up. Both posts stay well inside
+#   (0.10 and 0.17 against 1.0), but the frame is more slenderness-governed
+#   than it has ever been, and the docs round's real EC5 6.3.2 check should
+#   start here and at the ladder upright below (~0.26).
+POST_HEIGHT = 2037                       # front posts + ladder uprights [X1: was 1700]
+BACK_POST_HEIGHT = RAIL_BOTTOM           # 1402, the rail underside (W6)
+                                         # [X1: was 1065; SLAT_Z1 1197, MATTRESS_Z1
+                                         #  1337 before W6]
 BACK_POST_Y0 = BACK_RAIL_Y0              # -48, back face ON the wall plane (W6)
 BACK_POST_Y1 = BACK_POST_Y0 + POST_T     # -12  [was 0; -96..-48 before W6]
 FRONT_POST_Y0 = FRONT_RAIL_Y1            # 752 .. 788 (outer face of front rail)
@@ -1245,7 +1403,7 @@ assert WALL_Y == BACK_POST_Y0 == BACK_RAIL_Y0 == -48     # the mounting face
 # W6: THE BACK RAIL BEARS ON THE POST TOPS. Post top == rail underside is the
 # whole point of the round, so it is stated here as an identity and checked
 # against the real parts in the validation section.
-BACK_RAIL_ON_POST_Z = RAIL_BOTTOM        # 1065, post top == rail underside
+BACK_RAIL_ON_POST_Z = RAIL_BOTTOM        # 1402, post top == rail underside
 # The rail is set in 3 mm at each wall (C9), so of the post's 98 x 36 top face
 # the rail covers 95 x 36 = 3420 mm2 (U2; it was 45 x 48 = 2160 on the 48x48
 # post). Against f_c90,d ~ 1.53 MPa with k_c90 = 1.5 that is ~7.9 kN of bearing
@@ -1311,8 +1469,8 @@ END_BEAM_T = BOARD36_T                         # 36  [V6b: was RAIL_T = 48]
 END_BEAM_Y0 = BACK_POST_Y0                     # -48  [was -96, W6]
 END_BEAM_Y1 = FRONT_POST_Y1                    # 788  [was 800, 906]
 END_BEAM_LEN = END_BEAM_Y1 - END_BEAM_Y0       # 836  [was 848, 896, 1002]
-END_BEAM_Z1 = RAIL_BOTTOM                      # 1065, flush with rail underside
-END_BEAM_Z0 = END_BEAM_Z1 - RAIL_H             # 967
+END_BEAM_Z1 = RAIL_BOTTOM                      # 1402, flush with rail underside
+END_BEAM_Z0 = END_BEAM_Z1 - RAIL_H             # 1304  [X1: was 967..1065]
 # D4/U2 ripple: the posts are 98 wide in X now, so the beams slide out to the new
 # post inner faces X 98 / 1892 (they were at 48 / 1942 on a 48 mm post). The side
 # rails run X 3..1987 and still cover both beams completely - 48 mm of full
@@ -1333,8 +1491,8 @@ END_BEAM_X = [POST_W, WALL_SPAN - POST_W - END_BEAM_T]   # 98..134 / 1856..1892
 #     against <= 1 kN of corner reaction - utilisation 0.25, half the block's;
 #   * 18 mm (3d) of end distance along the grain to the beam's own end, which
 #     is the MIN_EDGE this file enforces everywhere else, and 27 mm (4.5d) of
-#     edge distance in the direction the load acts (Z 994/1038 in a beam that
-#     runs Z 967..1065). The perpendicular-to-grain loaded EDGE is what
+#     edge distance in the direction the load acts (Z 1331/1375 in a beam that
+#     runs Z 1304..1402). The perpendicular-to-grain loaded EDGE is what
 #     governs a screw pair like this, and it has 4.5d.
 # So the splitting story the block was bought to prevent is a 3d/4.5d lap
 # fixing in 48 x 98 mm of C24, in the ordinary pattern the rest of the frame
@@ -1380,8 +1538,8 @@ END_BEAM_X = [POST_W, WALL_SPAN - POST_W - END_BEAM_T]   # 98..134 / 1856..1892
 #     A = 1728 mm2; I (bending in Y, the 36 mm depth) = 48*36^3/12 = 186 624
 #     mm4, i_y = 10.39 mm; I (bending in X, the 48 mm width) = 36*48^3/12 =
 #     331 776 mm4, i_x = 13.86 mm.
-#   In the ladder plane (X) the rungs brace the upright at 259 / 482 / 720 /
-#   958, so the worst unbraced length there is the 259 mm floor-to-rung-1 and
+#   In the ladder plane (X) the rungs brace the upright at 297 / 542 / 787 /
+#   1032 / 1277 (X2), so the worst unbraced length there is the 245 mm pitch and
 #   lambda_x = 19 - irrelevant, and better than the 25 it was.
 #   OUT OF PLANE (Y) is the one that moved, twice. v7: restrained at the bench
 #   rail lap (top 259) and at the rail (1065), worst unbraced length 806 mm,
@@ -1390,6 +1548,9 @@ END_BEAM_X = [POST_W, WALL_SPAN - POST_W - END_BEAM_T]   # 98..134 / 1856..1892
 #   section, so the same 1065 mm runs on i = 10.39: lambda_y = 102,
 #   lambda_rel = 1.74, k_c = 0.29 and N_c,Rd = 1728 * 0.29 * 12.92 = 6.5 kN
 #   against the ~1 kN a climber puts down an upright - utilisation ~0.15.
+#   v14/X1 lifts the rail to 1402, so that same floor-to-rail run is 1402 mm:
+#   lambda_y = 135, lambda_rel = 2.30, k_c = 0.17 and N_c,Rd = 1728 * 0.17 *
+#   12.92 = 3.8 kN against the same ~1 kN - utilisation ~0.26.
 #   Ample, but this is now firmly a slenderness-governed member and the base is
 #   still unrestrained in Y: the docs round must run the real EC5 6.3.2 check
 #   and decide whether to add a floor-level tie back to the front corner posts.
@@ -1431,12 +1592,62 @@ RUNG_D = TREAD_D                         # 68, tread depth (Y)
 RUNG_Y1 = LADDER_Y1                      # 788, flush with the upright front
 RUNG_Y0 = RUNG_Y1 - RUNG_D               # 715  [was 727]
 RUNG_REST_LEDGE = LADDER_Y0 - RUNG_Y0    # 37, the bit behind the upright plane
-# D8: an even climb. See the design-intent note - rung 1 shares its top with
-# the bench rails (259) and rung 2 with the table-mode panel underside (482);
-# 720 and 958 even out the rest of the way to the 1197 platform.
-RUNG_TOPS = [BENCH_RAIL_TOP, 482, 720, 958]
-MAX_CLIMB_STEP = 250             # comfort limit, rung 1 upwards
+# D8: an even climb. Rung 1 shares its top with the bench rails (259), which is
+# not a climbing step but the seat-height ledge you step onto; the rest of the
+# rungs even out the way from there to the platform.
+#
+# X2 (v14): THE CLIMB IS A RULE NOW, NOT A LIST. D8 hand-set the four tops
+# 259 / 482 / 720 / 958 against a 1197 mm platform, and the list has been drifting
+# out of true ever since: V6's thinner slat took the platform to 1186 without
+# re-evening anything, so the last step had quietly become 228 against 238s. A
+# hand-set list cannot follow a platform that moves - and X1 moves it 337 mm - so
+# the tops are DERIVED here instead, from the two things that actually decide
+# them: where the climb starts (rung 1, on the bench rail) and where it ends (the
+# slat surface). Fewest rungs that keep every step under the pitch limit, spaced
+# as evenly as whole millimetres allow, and the asserts below judge the result.
+#
+# X2 also settles WHO OWNS RUNG 2. Under D8 the answer was "the table": rung 2
+# was typed at 482 because the table-mode panel underside is 482, and the back
+# ledger was moved up to meet it. That is backwards - a ladder whose rung
+# spacing is set by a table top is a ladder with one step in the wrong place -
+# and after X1 it is not even possible. So the ladder decides, and the TABLE
+# FOLLOWS: rung 2 is 542 now, and PANEL_UNDER_TABLE and the back table ledger
+# ride up with it. The builder's call, and it is an aesthetic one - an even
+# ladder is what he wants to look at - so the price is stated out loud in the
+# X-note at the top of the file: against a seat that went up 38 as well, the
+# plate lands 140 mm over the cushion where v13 had 118.
+#
+# X2 PITCH LIMIT, 250 -> 280. The old 250 was this file's own comfort number,
+# not a standard, and it was written for a 1186 mm platform where four rungs got
+# there in 238 mm steps with room to spare. The climb is 1226 mm now (297 to
+# 1523) and it takes FIVE rungs at either limit - the fifth rung is bought by
+# the lift, not by the limit. What 280 buys is the right REASON for the count:
+# a number the ladder trade uses rather than one this file invented for a bed
+# that no longer exists. Portable-ladder practice (EN 131) puts uniform rung
+# pitch in the 250..300 band; 280 is inside it, and the rule lands the pitch at
+# 245, under both. The fifth tread and its two blocks are on the cut list.
+# This is a rule being RE-AIMED, in the open, not an assert being bent to fit a
+# result - the derivation below still has to satisfy it, and the evenness rule
+# (MAX_CLIMB_SPREAD) is untouched and is now met to within one millimetre.
+MAX_CLIMB_STEP = 280             # pitch limit, rung 1 upwards  [X2: was 250]
 MAX_CLIMB_SPREAD = 20            # how uneven the climb proper may be
+
+
+def even_climb(first_rung_top, surface, max_step):
+    """Ladder rung tops from `first_rung_top` up to `surface`.
+
+    The first rung is given - it is fixed by what it shares its top with - and
+    the rest are the FEWEST that keep every step at or under `max_step`, spaced
+    as evenly as whole millimetres allow. The last step is the one onto
+    `surface` itself, so `surface` is not a rung and is not in the result."""
+    span = surface - first_rung_top
+    n = -(-span // max_step)                 # ceil: how many steps it takes
+    return [first_rung_top] + [first_rung_top + span * i // n
+                               for i in range(1, n)]
+
+
+RUNG_TOPS = even_climb(BENCH_RAIL_TOP, SLAT_Z1, MAX_CLIMB_STEP)
+#          X1/X2: [297, 542, 787, 1032, 1277]   [was 259, 482, 720, 958]
 
 # Cleat blocks under every rung end, screwed to the inner faces of the
 # uprights; the rung sits on them and is screwed down from above.
@@ -1535,7 +1746,30 @@ RUNG_BLOCK_X = [LADDER_INNER_L,                          # 835 .. 871
 # is again the only one that changes, because it closes against the FIXED 1700
 # post tops: it ABSORBS the 13 mm and grows 15 -> 28. Nothing about the mattress
 # the reader buys changes; the bed just got 13 mm of build-up cheaper.
-GUARD_BAND_Z0 = [1401, 1574]             # [was 1414, 1587 - V6, -13]
+#
+# X1 RE-BANDING, and this time the mattress moved as well as the platform. The
+# rule is the one U1 and V6 used and it has not changed: THE BANDS ARE
+# DIMENSIONED OFF THE SLEEPING SURFACE. What is new is that X1 does two things
+# to that surface at once - it lifts the slat top 1186 -> 1523, and it thins
+# the mattress 150 -> 120 - so the bands do not simply travel with the deck.
+# They are re-struck off the new sleeping surface by the same arithmetic that
+# has always set them: band 1 sits 65 mm above the mattress top (mid-band in
+# EN 747's 60..75, which is where V7 put it and why), band 2 sits 75 above
+# band 1's top, and the mattress WINDOW falls out of band 1's position:
+#     1643 -> 1708   65 mm   (mattress top to the underside of band 1)
+#     1806 -> 1881   75 mm   (between the bands)
+#     1979 -> 2037   58 mm   (band 2 to the top of the FRONT posts)
+# The barrier top is 1979 - 1643 = 336 mm above the mattress - the same 336 the
+# bed has had since D6 - and the legal mattress window moves with the modelled
+# thickness, 140..155 -> 110..125, which is what a 120 mm mattress means. The
+# THIRD opening is the only one that is not the same number it was: the post
+# tops are set by the lift (2037) and the bands by the mattress, so the two no
+# longer arrive at the same place and the remainder, 28 -> 58 mm, shows up
+# there. It is still an opening above the sleeping surface and it is still
+# under the 75 mm limit, which is the only thing EN 747 asks of it. Nothing about the guard detail,
+# the mattress the reader buys or the EN 747 arithmetic changes with the lift;
+# the whole assembly simply stands 150 mm further off the floor.
+GUARD_BAND_Z0 = [1708, 1881]             # [X1/X3: was 1401, 1574]
 MAX_GUARD_OPENING = 75           # EN 747 entrapment limit, above the mattress
 MIN_GUARD_OVER_MATTRESS = 160    # EN 747 barrier height above the mattress
 # D14: the guards hang inboard of the verticals now, so they overhang the
@@ -1578,7 +1812,7 @@ MAX_MATTRESS_GAP = MATTRESS_WANDER         # 0, the mattress is pinned
 # was at utilisation 1.99 - a failure - and 34x98 (W = 18 883 mm3) brought the
 # 0.54 kN/m barrier line load down to ~12.9 MPa against f_m,d = 16.6 MPa, i.e.
 # ~0.78. Those numbers still stand if anyone ever puts them back; the geometry
-# they need is two full-height (1700) back corner posts, which is the OTHER half
+# they need is two full-height (2037) back corner posts, which is the OTHER half
 # of the retrofit. Nothing else in the model has to move.
 #
 # D2: the front boards are cut in two so the ladder opening carries on past
@@ -1737,7 +1971,8 @@ BENCH_SLAT_X_START = POST_W                    # 98, clear of the back post (W9)
 BENCH_SLAT_PITCH = (BENCH_LEN - BENCH_SLAT_X_START - BENCH_SLAT_W) / \
     (BENCH_SLAT_COUNT - 1)                     # 112.25  [was 124.75, 137.5]
 MAX_BENCH_SLAT_GAP = MAX_SLAT_GAP              # 60, the same seat/platform limit
-STUB_LEG_H = BENCH_RAIL_BOTTOM                 # 186, floor to bench rail underside
+STUB_LEG_H = BENCH_RAIL_BOTTOM                 # 229, floor to bench rail underside
+                                               # [X3: was 191 - the bench went up 38]
 # The RULE, unchanged since W3 and re-derived here for U5: the leg's INNER face
 # is on the inner end of its bench - X 645 on the left bench, X 1345 on the
 # right - and the leg runs OUTWARD from there, away from the open floor, so it
@@ -1864,12 +2099,12 @@ PANEL_LEN = PANEL_Y1 - PANEL_Y0                # 798  [was 800]
 # D10: NO HOOKS. The panel is a loose board that LIES on wood, and the geometry
 # below is what makes that true in both modes:
 #
-#   BED MODE    underside 259 = the bench rail tops = rung 1 top. It lands on
+#   BED MODE    underside 297 = the bench rail tops = rung 1 top. It lands on
 #               the back bench rail (680 x 48 = 32 640 mm2) and on rung 1
 #               (320 x 25 = 8 000 mm2). Top 277 - see PANEL_BENCH_DIP.
-#   TABLE MODE  underside 482 = the back ledger top = rung 2 top. It lands on
-#               the ledger (680 x 21 = 14 280 mm2) and on rung 2 (320 x 25 =
-#               8 000 mm2). Top 500.
+#   TABLE MODE  underside 542 = the back ledger top = rung 2 top (X2 moved all
+#               three together). It lands on the ledger (680 x 21 = 14 280 mm2)
+#               and on rung 2 (320 x 25 = 8 000 mm2). Top 560.
 #
 # D13 changed the bed-mode case: the front bench rail used to reach into the
 # panel's X range and offer 260 x 48 mm under the two front corners, but it now
@@ -1898,7 +2133,7 @@ PANEL_LEN = PANEL_Y1 - PANEL_Y0                # 798  [was 800]
 #                           under the panel just outboard of a rung end, with
 #                           its second flange standing down the rung's END FACE
 #                           PANEL_FIT clear of it. The rung ends are 320 apart
-#                           in BOTH modes (rung 1 at Z 259, rung 2 at Z 482,
+#                           in BOTH modes (rung 1 at Z 297, rung 2 at Z 542,
 #                           same X), so one bracket geometry serves both.
 #   WHAT HOLDS IT IN Rz     the same two. Rotation about Z drives both front
 #                           brackets the same way in X, so one of the two jams
@@ -1917,9 +2152,11 @@ PANEL_LEN = PANEL_Y1 - PANEL_Y0                # 798  [was 800]
 # out, in both modes, straight up. A bed-mode lock was the candidate answer;
 # V4 decides against fitting one (accepted deviation, vedlegg B avvik 4) and
 # keeps the wood-to-wood geometry as the retrofit point.
-PANEL_UNDER_BED = BENCH_RAIL_TOP               # 259, rests on the rails/rung 1
+PANEL_UNDER_BED = BENCH_RAIL_TOP               # 297, rests on the rails/rung 1
 PANEL_TOP_BED = PANEL_UNDER_BED + PANEL_T      # 277
-PANEL_UNDER_TABLE = RUNG_TOPS[1]               # 482, rests on rung 2/the ledger
+PANEL_UNDER_TABLE = RUNG_TOPS[1]               # 542, rests on rung 2/the ledger
+                                               # [X2: was 482 - the even ladder
+                                               #  moved rung 2 and this with it]
 PANEL_TOP_TABLE = PANEL_UNDER_TABLE + PANEL_T  # 500
 # The whole move, in one number: the two seats are this far apart and the panel
 # sub-assembly - sheet, battens, screws - is the same object at both of them.
@@ -1957,21 +2194,21 @@ PANEL_MODE_LIFT = PANEL_UNDER_TABLE - PANEL_UNDER_BED       # 223
 #
 # GEOMETRY - the constraints, in the order they bite:
 #   X  the batten's INBOARD face is PANEL_FIT off the rung's end face, and the
-#      rung ends are at X 835 / 1155 at BOTH heights (rung 1 at Z 259, rung 2
-#      at Z 482), so one pair of battens guides the panel in both modes. The
+#      rung ends are at X 835 / 1155 at BOTH heights (rung 1 at Z 297, rung 2
+#      at Z 542), so one pair of battens guides the panel in both modes. The
 #      pair lands at X 785..833 and 1157..1205, symmetric about the ladder /
 #      panel centreline X 995 (centres 809 and 1181, i.e. +/- 186). Outboard
 #      of the rung end there is nothing at any height in the batten's Y band
 #      - the ladder uprights start at Y 752 - so the shaft is open top to
 #      bottom and the assembly goes straight down it.
-#   Y  rear: the back bench rail occupies Y -48..0 at Z 186..259, which is
+#   Y  rear: the back bench rail occupies Y -48..0 at Z 229..297, which is
 #      exactly the bed-mode batten band, so Y0 = 0 (the back ledger at Y -48..0
 #      is the same plane in table mode). Front: Y1 = PANEL_Y1 = 750, flush with
 #      the panel's own front edge and the same 2 mm off the uprights the panel
 #      already keeps. The last 35 mm of that - Y 715..750 - is the batten IN
 #      the shaft, alongside the rung end.
 #   Z  the batten TOP is the panel underside, so the battens hang BELOW it:
-#      186..259 in bed mode, 409..482 in table mode. 186 is the bench rail
+#      229..297 in bed mode, 474..542 in table mode. 229 is the bench rail
 #      underside, which is the floor of the ladder-bay walking zone - the
 #      battens sit at its ceiling and never enter it. Asserted below.
 #
@@ -1992,7 +2229,7 @@ BATTEN_Y1 = PANEL_Y1                           # 750, the panel's own front edge
 BATTEN_LEN = BATTEN_Y1 - BATTEN_Y0             # 750  [was 713]
 BATTEN_X = [LADDER_INNER_L - PANEL_FIT - BATTEN_W,   # 785 .. 833
             LADDER_INNER_R + PANEL_FIT]              # 1157 .. 1205
-BATTEN_Z0_BED = PANEL_UNDER_BED - BATTEN_H     # 186 == BENCH_RAIL_BOTTOM
+BATTEN_Z0_BED = PANEL_UNDER_BED - BATTEN_H     # 229 == BENCH_RAIL_BOTTOM
 BATTEN_Z0_TABLE = PANEL_UNDER_TABLE - BATTEN_H # 409
 # THE SHAFT the batten runs in, and how much of it it uses. 48 mm of rung
 # thickness in Z, 37 mm of rung rest ledge in Y (the bit of the rung that
@@ -2221,7 +2458,7 @@ NOSE_CRIT_H = NOSE_TIP_H * 2                                          # 54
 #   the FRONT CROSS BATTEN's outboard end face   X 669 / 1321, Y 702..750
 #   the FRONT BENCH RAIL's end face              X 645 / 1345, Y 704..752
 #
-# In bed mode both are in the Z band 186..259 and 24 mm apart across the side
+# In bed mode both are in the Z band 229..297 and 24 mm apart across the side
 # gap - two 48x73 end faces looking straight at each other. In table mode the
 # cross batten is 223 mm higher and there is nothing beside it at all, so a
 # lock fitted here is a BED-MODE lock by geometry and not by instruction: it
@@ -2233,7 +2470,7 @@ LOCK_GAP = PANEL_SIDE_GAP                      # 24, the side gap itself
 
 # The walking zone under the ladder bay: floor to the bench rail underside. The
 # battens are not allowed into it in either mode.
-WALK_ZONE_Z = (0, BENCH_RAIL_BOTTOM)           # 0 .. 186
+WALK_ZONE_Z = (0, BENCH_RAIL_BOTTOM)           # 0 .. 229  [X3: was 0 .. 191]
 
 # D10: the bed-mode panel top is deliberately 16 mm BELOW the bench tops. The
 # fold-out seat cushions are what turn the three zones into one sleeping
@@ -2245,7 +2482,7 @@ WALK_ZONE_Z = (0, BENCH_RAIL_BOTTOM)           # 0 .. 186
 # 574 mm of panel with a 63 mm open strip down each side, running the full
 # 798 mm from the wall to the ladder. The strips are not holes in the platform
 # - they are the same recess, 18 mm deeper - but they are open: the back
-# 48 mm of each one looks down onto the back bench rail's top at 259, and the
+# 48 mm of each one looks down onto the back bench rail's top at 297, and the
 # rest of it onto the walk zone and the floor. What closes them is the seat
 # cushion, which is what closes the recess in the first place. A cushion that
 # spans a 700 mm zone bridges a 63 mm strip at its edge the way any foam
@@ -2299,7 +2536,7 @@ PANEL_SIDE_STRIP_LEN = PANEL_LEN               # 798, the strip runs the depth
 # end fixing into the 36 mm post face goes 21x95 = 1995 mm2 to 36x73 = 2628.
 LEDGER_BACK_T = BENCH_RAIL_T                   # 48 (Y)  [was BOARD_T = 21]
 LEDGER_BACK_H = BENCH_RAIL_H                   # 68 (Z)  [was BOARD_W = 95]
-LEDGER_BACK_Z1 = PANEL_UNDER_TABLE             # 482
+LEDGER_BACK_Z1 = PANEL_UNDER_TABLE             # 542  [X2: was 482]
 LEDGER_BACK_Z0 = LEDGER_BACK_Z1 - LEDGER_BACK_H     # 409  [was 387]
 LEDGER_BACK_Y0 = BACK_RAIL_Y0                  # -48 .. 0, on the wall plane
 
@@ -2349,7 +2586,7 @@ END_SLAT_GAP = END_SLAT_X[0] + BENCH_SLAT_W - BENCH_SLAT_X_START   # 0
 # back bench rail lies at Y -48..0 and BUTTS the post's inner face at X 98
 # (W9/U2), and the 12 mm of Y that is left in front of the post between there
 # and the rail plane is not a bearing. What the end zone does have is the back
-# post's FRONT FACE - 98 x 1065 of clean side grain, untouched by any other
+# post's FRONT FACE - 98 x 1402 of clean side grain, untouched by any other
 # joint - so the bearing is a cleat screwed flat to it.
 #
 # 36x48, on the flat: 36 mm of Y (the bearing depth the slat end lands on) and
@@ -2362,7 +2599,7 @@ END_SLAT_GAP = END_SLAT_X[0] + BENCH_SLAT_W - BENCH_SLAT_X_START   # 0
 END_CLEAT_T = BLOCK_T                              # 36 (Y), the bearing depth
 END_CLEAT_H = BLOCK_H                              # 48 (Z)
 END_CLEAT_LEN = BENCH_SLAT_W                       # 98 (X), the end zone
-END_CLEAT_Z1 = BENCH_RAIL_TOP                      # 259, the slat underside
+END_CLEAT_Z1 = BENCH_RAIL_TOP                      # 297, the slat underside
 END_CLEAT_Z0 = END_CLEAT_Z1 - END_CLEAT_H          # 211
 END_CLEAT_Y0 = BACK_POST_Y1                        # -12, on the post face
 END_CLEAT_Y1 = END_CLEAT_Y0 + END_CLEAT_T          # 24
@@ -2422,19 +2659,24 @@ BACK_CUSHION_LEN = (LOWER_SLEEP_LEN - 2 * SEAT_CUSHION_LEN) // 2   # 332
 #     length, so all four cushions are ONE standard mattress cut in four, with
 #     one crosscut of waste. 120 mm foam is sold the same way and would work;
 #     100 is the thickness the cheap sheet actually comes in.
-#   * seat height goes 282 -> 382, a child's chair.
-#   * the table plate top stays 118 mm above the seat cushion and its underside
-#     100 mm - at 120 mm foam those become 98 and 80.
-#   * head room under the upper bunk's slats stays 781 mm.
+#   * seat height goes 320 -> 420 on the same 100 mm of foam (X3 took the
+#     bench up 38): a grown chair, not a child's one.
+#   * seat height goes 320 -> 420 (X3 raised the bench 38 and the cushion is
+#     the same 100): a grown chair, not a child's one.
+#   * the table plate top is 140 mm above the seat cushion and its underside
+#     122 mm - at 120 mm foam those become 120 and 102. (X2 raised the plate
+#     with rung 2 and X3 raised the seat under it; v13 had 118 / 100.)
+#   * head room under the upper bunk's slats is 1080 mm after X1 (was 781) -
+#     the lower storey is a room you stand in now, which is the whole round.
 CUSHION_T = 100
-CUSHION_TOP_BENCH = BENCH_TOP + CUSHION_T              # 382, over the benches
-CUSHION_TOP_PANEL = PANEL_TOP_BED + CUSHION_T          # 377, over the panel
+CUSHION_TOP_BENCH = BENCH_TOP + CUSHION_T              # 420, over the benches [X3]
+CUSHION_TOP_PANEL = PANEL_TOP_BED + CUSHION_T          # 415, over the panel [X3]
 MIN_LOWER_HEADROOM = 700           # own rule: a child sits up in the lower bunk
-LOWER_HEADROOM = SLAT_Z0 - CUSHION_TOP_BENCH           # 781, to the slats
-LOWER_HEADROOM_RAIL = RAIL_BOTTOM - CUSHION_TOP_BENCH  # 683, under the rails
+LOWER_HEADROOM = SLAT_Z0 - CUSHION_TOP_BENCH           # 1080, to the slats [X1: 781]
+LOWER_HEADROOM_RAIL = RAIL_BOTTOM - CUSHION_TOP_BENCH  # 982, under the rails [683]
 EN_GUARD_TRIGGER_H = 600           # EN 747: over this, a bed base needs guards
-TABLE_OVER_CUSHION = PANEL_TOP_TABLE - CUSHION_TOP_BENCH           # 118
-TABLE_UNDER_OVER_CUSHION = PANEL_UNDER_TABLE - CUSHION_TOP_BENCH   # 100
+TABLE_OVER_CUSHION = PANEL_TOP_TABLE - CUSHION_TOP_BENCH           # 140  [X2: 118]
+TABLE_UNDER_OVER_CUSHION = PANEL_UNDER_TABLE - CUSHION_TOP_BENCH   # 122  [X2: 100]
 # The foam sheet the four of them come out of, and what is left of it.
 CUSHION_SHEET = (800, 2000)                            # a 80 x 200 foam slab
 CUSHION_SHEET_WASTE = CUSHION_SHEET[1] - LOWER_SLEEP_LEN           # 10
@@ -2476,10 +2718,13 @@ BAY_AT_CUSHION_H = PANEL_OPENING - 2 * SEAT_CUSHION_OVERHANG               # 664
 # bed at all. Stand one up against the back wall and that 800 has to go
 # somewhere, and there are only two directions:
 #   * ALONG X - and a bench offers 645 mm of back wall before the ladder bay
-#     starts, with the TABLE PLATE standing at Z 482..500 from X 708 on. It
+#     starts, with the TABLE PLATE standing at Z 542..560 from X 708 on. It
 #     does not fit, on either bench, by 155 mm.
-#   * STRAIGHT UP - 382 + 800 = 1182, and the upper side rail's underside is
-#     1065. It does not fit by 117 mm.
+#   * STRAIGHT UP - 420 + 800 = 1220, and the upper side rail's underside is
+#     1402. IT FITS NOW, by 182 mm: X1's lift is the first round in which an
+#     800 mm dimension can be stood upright on the bench at all. The backrest
+#     still lies across the bench end, because that is what makes the sofa a
+#     sofa, but the reason is no longer that there is nowhere else for it.
 # So the one place an 800 mm dimension stands up in this bed is ACROSS THE
 # BENCH, at its end - which is also the answer to what this sofa is: two seats
 # either side of a low table, each with its back at the outer end. The bench is
@@ -2487,7 +2732,7 @@ BAY_AT_CUSHION_H = PANEL_OPENING - 2 * SEAT_CUSHION_OVERHANG               # 664
 # two abreast if you like.
 #
 # TWO THINGS HOLD IT. Its Y0 is the BACK TABLE LEDGER's front face: the ledger
-# runs the whole length at Y -48..0, Z 414..482, so a cushion standing in the
+# runs the whole length at Y -48..0, Z 474..542, so a cushion standing in the
 # wall plane would drive straight through it - and standing 48 mm forward of the
 # wall instead, it LEANS ON IT, 100 x 68 mm of contact right at the small of the
 # back. The corner post's inner face takes the sideways direction. The price is
@@ -2498,7 +2743,7 @@ BAY_AT_CUSHION_H = PANEL_OPENING - 2 * SEAT_CUSHION_OVERHANG               # 664
 BACKREST_Y0 = LEDGER_BACK_Y0 + LEDGER_BACK_T           # 0, the ledger's face
 BACKREST_Y1 = BACKREST_Y0 + LOWER_SLEEP_DEPTH          # 800
 BACKREST_PROUD = BACKREST_Y1 - FRONT_POST_Y1           # 12, past the front plane
-BACKREST_Z0 = CUSHION_TOP_BENCH                        # 382, on the seat cushion
+BACKREST_Z0 = CUSHION_TOP_BENCH                        # 420, on the seat cushion
 BACKREST_Z1 = BACKREST_Z0 + BACK_CUSHION_LEN           # 714
 BACKREST_X = [POST_W,                                  # 98..198
               WALL_SPAN - POST_W - CUSHION_T]          # 1792..1892
@@ -2668,8 +2913,8 @@ mattress = block(0, MATTRESS_Y0, MATTRESS_Z0, WALL_SPAN, MATTRESS_W, MATTRESS_H,
 
 # ---------------------------------------------------------------------------
 # POSTS  (four corner posts - D1 deleted the two intermediate back posts)
-# W6: the back pair stands IN the back rail plane (Y -48..0) and stops at 1065,
-# the rail underside, so the rail bears on it; the front pair is 1700 (guard
+# W6: the back pair stands IN the back rail plane (Y -48..0) and stops at 1402,
+# the rail underside, so the rail bears on it; the front pair is 2037 (guard
 # bands). Same 36x98 section, two different cut lengths, two cut-list lines.
 # ---------------------------------------------------------------------------
 for i, x0 in enumerate(CORNER_POST_X):
@@ -2749,7 +2994,7 @@ for i, z0 in enumerate(GUARD_BAND_Z0):
 # ---------------------------------------------------------------------------
 # LOWER SECTION: BENCHES
 # ---------------------------------------------------------------------------
-# C5: 48x73 bench rails at Z 186..259, one per Y plane, each carried at its ends
+# C5: 48x68 bench rails at Z 229..297, one per Y plane, each carried at its ends
 # by a corner post - on its own end screws since V5, J8-B behind and J8 in
 # front - and in between by two stub legs.
 # They give the loose panel an edge to rest on in bed mode and give the ladder
@@ -3428,8 +3673,10 @@ JOINTS = [
               "inn i stigevangen. Stigevangens forside er urørt",
          contacts=[dict(a="upright", b="rail_front", axis=1, drives=[
              drive("Treskrue 6×80 forsenket Torx", 3, frm="rail_front")])]),
+    # X2: two per rung end, and the RUNG COUNT is derived (even_climb), so the
+    # joint count has to be derived off the same list rather than typed 8.
     dict(id="J4", title="Rungetrinn → stigekloss og stigevange "
-                        "(per trinnende)", n=8,
+                        "(per trinnende)", n=2 * len(RUNG_TOPS),
          drill="⌀6 gjennom stigevangen inn i trinnenden; ⌀3,5 ned gjennom "
                "trinnet i klossen",
          side="6×120 fra utsiden av stigevangen; 5×60 ovenfra ned i klossen",
@@ -3438,7 +3685,7 @@ JOINTS = [
                  drive("Treskrue 6×120 forsenket Torx", 1, frm="upright")]),
              dict(a="rung", b="rung_blk", axis=2, drives=[
                  drive("Treskrue 5×60 forsenket Torx", 1, frm="rung")])]),
-    dict(id="J5", title="Stigekloss → stigevange", n=8,
+    dict(id="J5", title="Stigekloss → stigevange", n=2 * len(RUNG_TOPS),
          drill="⌀3,5 gjennom klossen, ⌀3 i vangen",
          side="Fra stigeåpningen, inn i vangens innside",
          contacts=[dict(a="upright", b="rung_blk", axis=0, drives=[
@@ -4109,7 +4356,7 @@ def screw_rows():
         # it off `into` alone is only right when the target is the shorter
         # member in this axis - it is for J2 and J8 (post into rail), and it is
         # NOT for J1, where the screws go through the beam INTO the post and
-        # the post runs 0..1065, printing a 994 mm "edge distance" off the
+        # the post runs 0..1402, printing a 1331 mm "edge distance" off the
         # floor instead of the 27 mm up from the beam's own underside.
         band = patch_window(fs[0]["contact"])[axis]
         zs = sorted({round(f["anchor"][axis], 3) for f in fs})
@@ -4709,7 +4956,7 @@ else:
 # THE BUG THIS KILLS, written down because it shipped: the fasteners are
 # modelled ONCE, in bed mode, and `display_parts` used to hand that one list to
 # both modes. The wood of the panel assembly is built per mode - panel_bed at
-# Z 259, panel_table at Z 482 - but its screws were not, so in table mode the
+# Z 297, panel_table at Z 542 - but its screws were not, so in table mode the
 # exported .usdz showed the panel 223 mm up and its own screws still down at
 # bed height, hanging in the air under it. Every other fastener in the bed ties
 # two FIXED members and is right in both modes; the J13 family ties two members
@@ -4855,7 +5102,7 @@ FIG_HIP_Y = _fh(0.050)       # 60
 FIG_SINK = 12                # mm the body settles into 100 mm of foam
 
 # The five reference dimensions the table is calibrated on.
-FIG_SITTING_H = _fh(0.545)   # 654  seat -> crown
+FIG_SITTING_H = _fh(SIT_RATIO)   # 654  seat -> crown
 FIG_POPLITEAL = _fh(0.28)    # 336  floor -> knee hollow, seated
 FIG_KNEE_SIT = _fh(0.30)     # 360  floor -> top of knee, seated
 FIG_SHOULDER_W = _fh(0.21)   # 252
@@ -4961,19 +5208,25 @@ FIG_BENCH_Y = (LOWER_SLEEP_Y0 + LOWER_SLEEP_Y0 + LOWER_SLEEP_DEPTH) / 2  # 352
 # not chosen, it is solved: SIT_RISE is what puts the crown exactly one
 # sitting height (0.545 H) above the seat.
 FIG_SIT_RISE = FIG_SITTING_H - FIG_TORSO_L - FIG_NECK_L - 2 * FIG_HEAD_R  # 78
-SEAT_FACE = BENCH_TOP + CUSHION_T                      # 382, the sofa seat
-FIG_SIT_Z = SEAT_FACE + FIG_SIT_RISE                   # 460, hip joint
+SEAT_FACE = BENCH_TOP + CUSHION_T                      # 420, the sofa seat [X3: 382]
+FIG_SIT_Z = SEAT_FACE + FIG_SIT_RISE                   # 498, hip joint
 
-# CROSS-LEGGED, and it is the table that says so. The plate is 118 mm above
-# the seat face and there is 100 mm between the seat face and the plate's
-# underside - one thigh. Nothing goes under this table: it is a lap-height
-# play surface between two sofa halves, and the way a child sits at one is
-# with the legs folded up on the bench. The pose is therefore the answer to a
-# measurement, and the measurement is printed below.
+# CROSS-LEGGED, and it is the table that says so. Through v13 the plate was
+# 118 mm above the seat face with 100 mm under it - ONE THIGH (115 mm did not
+# quite go), so nothing at all could get beneath it and the only way to sit at
+# it was with the legs folded up on the bench. v14 raises the plate with rung 2 (X2)
+# and the seat under it with the bench (X3), and the two nearly cancel: 140
+# above the seat face and 122 under it, which a straight leg (115) now just
+# clears where 100 did not. The pose is UNCHANGED and it is still the pose the drawings
+# dimension - a child sits sideways on the bench facing a plate that starts
+# 420 mm away in X, and folded legs is how that is done - but it has stopped
+# being the only option, and the printed clearance says so rather than the
+# comment claiming it.
 # 30 degrees of splay: enough that the knees clear each other and the drawing
 # reads as folded legs seen from the side, little enough that the knee stays
-# well inside the bench in Y - the back table ledger's underside is at Z 414,
-# which is exactly the height a folded knee sits at.
+# well inside the bench in Y. The folded knee tops out at Z 524 (the hip rode
+# up with the seat), so it clears the back table ledger's underside (474 after
+# X2/X3, 414 before them) - the two moved almost together.
 _CROSS_LEG = ((30, -6), (-110, 0), (-110, 0))
 FIG_SEAT_X = BACKREST_X[0] + CUSHION_T + FIG_TORSO_R   # 288 -> back on the pad
 
@@ -4983,8 +5236,15 @@ figure_seated_left = child(
     # leaning 25 degrees over the plate: sat up straight against the back
     # cushion the arm is 500 mm from the plate and reaches 396 - so the model
     # leans the torso exactly as far as it takes to put the wrists down.
+    # X2/X3: the plate is 60 mm higher and the seat 38, so the REACH argument
+    # sets the 25 degree lean is unchanged - the hands still cannot get there
+    # sitting upright - but the arm hangs 22 mm less far down. The upper arm
+    # comes up 38 -> 30 degrees below horizontal and the forearm keeps its 26,
+    # which puts the wrist back on the plate with a few millimetres of air. This is
+    # the figure being re-posed to a bed that moved, not to a number that was
+    # wanted: the clearance it measures is printed below, not asserted.
     torso=(0, 65), head=(0, 65),
-    arms=(((0, -38), (0, -26)), ((0, -38), (0, -26))),
+    arms=(((0, -30), (0, -26)), ((0, -30), (0, -26))),
     legs=((_CROSS_LEG[0], (-110, 2), (-110, 2)),
           (_CROSS_LEG[0], (-110, -2), (-110, -2))))
 
@@ -5007,7 +5267,7 @@ figure_seated_right = child(
 _LIE_ARMS = (((180 - 14, -3), (180 - 10, 0)), ((180 - 14, -3), (180 - 10, 0)))
 _LIE_LEGS = ((((180 - 4), 0), ((180 - 2), 0), ((180 - 2), 55)),
              (((180 - 4), 0), ((180 - 2), 0), ((180 - 2), 55)))
-MATTRESS_TOP = mattress.extents[2][1]                  # 1336
+MATTRESS_TOP = mattress.extents[2][1]                  # 1643
 
 # UPPER BUNK: head at the left wall, feet toward the middle. 120 cm of child
 # in 199 cm of bed - the room to grow is the point, so it is drawn.
@@ -5501,16 +5761,16 @@ print(f"OK  C9/W9: no horizontal member exceeds {THROUGH_LEN} mm; all "
 # D1: exactly SIX verticals - 4 corner posts + 2 ladder uprights - each one
 # standing on the floor and running at least to the platform, which is what
 # makes it a vertical of the FRAME rather than a stub leg (the tallest stub leg
-# is 186).
+# is 229).
 # W2/W6 ripple: "floor to top" is no longer one height. The back pair stops at
-# BACK_POST_HEIGHT = 1065 (the rail underside, which they carry) and the other
-# four go on to 1700, so the membership test is the RAIL UNDERSIDE - the height
-# at which a vertical is holding the platform up - not the literal 1700 and not
+# BACK_POST_HEIGHT = 1402 (the rail underside, which they carry) and the other
+# four go on to 2037, so the membership test is the RAIL UNDERSIDE - the height
+# at which a vertical is holding the platform up - not the literal 2037 and not
 # the platform surface either, which the back pair no longer reaches.
 VERTICAL_HEIGHTS = {
-    "Corner Post Back": BACK_POST_HEIGHT,        # 1065, W6
-    "Corner Post Front": POST_HEIGHT,            # 1700
-    "Ladder Upright": POST_HEIGHT,               # 1700
+    "Corner Post Back": BACK_POST_HEIGHT,        # 1402, W6
+    "Corner Post Front": POST_HEIGHT,            # 2037
+    "Ladder Upright": POST_HEIGHT,               # 2037
 }
 
 
@@ -5535,8 +5795,8 @@ assert len(back_posts) == 2 and len(front_posts) == 2
 assert not any(p.label.startswith("Back Post Mid") for p in parts), \
     "D1: the intermediate back posts are supposed to be gone"
 # D13/W2/W6: the three families share neither section nor length any more -
-# 2 x front corner post 36x98 x 1700, 2 x back corner post 36x98 x 1065 (U2;
-# both were 48x48 up to v10), 2 x ladder upright 36x48 x 1700 (U2 turned them:
+# 2 x front corner post 36x98 x 2037, 2 x back corner post 36x98 x 1402 (U2;
+# both were 48x48 up to v10), 2 x ladder upright 36x48 x 2037 (U2 turned them:
 # 48 in X, 36 in Y, so the whole front plane is one 36 mm layer).
 for p in verticals:
     (x0, x1), (y0, y1), (z0, z1) = p.extents
@@ -5656,7 +5916,7 @@ highest = max(back_post_neighbours, key=lambda p: p.extents[2][1])
 assert highest is back_rail and highest.extents[2][1] == RAIL_TOP, \
     f"W6: the highest WOOD on a back post is '{highest.label}' at " \
     f"{highest.extents[2][1]}, expected the back side rail top {RAIL_TOP}"
-# The M8 ties into the end beam (967..1065) are the highest fastener and they
+# The M8 ties into the end beam (1304..1402) are the highest fastener and they
 # stop exactly at the cut, where the beam top is flush with the rail underside.
 assert END_BEAM_Z1 == BACK_POST_HEIGHT, \
     "W6: the end beam top and the post top are both the rail underside"
@@ -5674,7 +5934,8 @@ assert max(p.extents[2][1] for p in wall_side) == SLAT_Z1, \
 assert BACK_POST_HEIGHT < SLAT_Z1, \
     f"W6: {BACK_POST_HEIGHT - SLAT_Z1} mm of post above the platform"
 print(f"OK  W2/W6/U2: back posts {POST_HEIGHT} -> {BACK_POST_HEIGHT} = the RAIL "
-      f"UNDERSIDE (was 1197, the platform top; 1337 before that), standing in "
+      f"UNDERSIDE (X1 took it 1065 -> {BACK_POST_HEIGHT} with the deck; it was "
+      f"1197, the platform top, and 1337 before that), standing in "
       f"the rail's own plane at Y {BACK_POST_Y0}..{BACK_POST_Y1} of "
       f"{BACK_RAIL_Y0}..{BACK_RAIL_Y1}. The back side "
       f"rail BEARS on both post tops - {POST_W - THROUGH_X0} x {POST_T} = "
@@ -5733,33 +5994,42 @@ print(f"OK  D4: posts flush with the walls at X 0..{POST_W} / "
 
 # Fixed heights. Everything below the platform is untouched by D5/D6/D7; the
 # platform stack itself is the thing that moved.
-assert RAIL_BOTTOM == 1065 and RAIL_TOP == 1163
+# X1/X3: v14 moves BOTH datums - the platform up 337 mm to put the slat
+# underside on a round 1500, and the bench up 38 to a 320 mm bench top / 420 mm
+# seat - so unlike every round before it, there is no half of this block that
+# stayed still. The point of the block is unchanged: these are the heights a
+# tape measure finds on the finished bed, typed out once so a derivation that
+# drifts is caught here rather than in a drawing.
+assert RAIL_BOTTOM == 1402 and RAIL_TOP == SLAT_Z0 == 1500
 # V13 narrowed the match: there IS a cleat in this bed now (the bench end
 # cleat), and the thing D5 deleted was the SLAT cleat under the upper
 # platform. The guard names it.
 assert not any("Slat Cleat" in p.label for p in parts), \
     "D5: the slat cleats must be gone"
-assert (SLAT_Z0, SLAT_Z1) == (1163, 1186), "D5/U1/V6: slats not flush on top of the rails"
-assert (MATTRESS_Z0, MATTRESS_Z1) == (1186, 1336)
-assert (BENCH_RAIL_BOTTOM, BENCH_RAIL_TOP) == (191, 259)
-assert BENCH_TOP == 282 and PANEL_TOP_BED == 277 and PANEL_UNDER_BED == 259
-assert PANEL_TOP_TABLE == 500 and PANEL_UNDER_TABLE == 482
-assert RUNG_TOPS == [259, 482, 720, 958] and POST_HEIGHT == 1700
-assert BACK_POST_HEIGHT == 1065, "W6: the back posts must stop at the rail underside"
-assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (414, 482), \
-    "V2: the ledger is a bench-rail profile, so its underside is 414"
-assert STUB_LEG_H == 191, "W3: the stub legs reach the bench rail underside"
+assert (SLAT_Z0, SLAT_Z1) == (1500, 1523), "D5/U1/V6: slats not flush on top of the rails"
+assert (MATTRESS_Z0, MATTRESS_Z1) == (1523, 1643)
+assert (BENCH_RAIL_BOTTOM, BENCH_RAIL_TOP) == (229, 297)
+assert BENCH_TOP == 320 and PANEL_TOP_BED == 315 and PANEL_UNDER_BED == 297
+assert PANEL_TOP_TABLE == 560 and PANEL_UNDER_TABLE == 542
+assert RUNG_TOPS == [297, 542, 787, 1032, 1277] and POST_HEIGHT == 2037
+assert BACK_POST_HEIGHT == 1402, "W6: the back posts must stop at the rail underside"
+assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (474, 542), \
+    "V2: the ledger is a bench-rail profile, so its underside is 68 below its top"
+assert STUB_LEG_H == 229, "W3: the stub legs reach the bench rail underside"
 print(f"OK  invariant heights held: rail underside {RAIL_BOTTOM}, rail top "
       f"{RAIL_TOP}, no cleats, slats {SLAT_Z0}..{SLAT_Z1} (flush on the rails, "
-      f"U1: the {BED_SLAT_T} mm board took the platform 1197 -> {SLAT_Z1}), "
-      f"mattress {MATTRESS_Z0}..{MATTRESS_Z1} (was 1197..1337), bench "
-      f"{BENCH_RAIL_BOTTOM}/{BENCH_RAIL_TOP}/{BENCH_TOP} (seat was 293), ledger "
+      f"U1 took the platform 1197 -> 1186 on the {BED_SLAT_T} mm board and X1 "
+      f"lifted it 337 so the slat UNDERSIDE lands on {SLAT_Z0}), "
+      f"mattress {MATTRESS_Z0}..{MATTRESS_Z1} ({MATTRESS_H} mm, was 150 on "
+      f"1186..1336), bench "
+      f"{BENCH_RAIL_BOTTOM}/{BENCH_RAIL_TOP}/{BENCH_TOP} (X3: +38, was "
+      f"191/259/282), ledger "
       f"{LEDGER_BACK_Z0}..{LEDGER_BACK_Z1}, rungs "
       + "/".join(str(t) for t in RUNG_TOPS)
       + f", panel {PANEL_UNDER_BED}..{PANEL_TOP_BED} (bed) / "
         f"{PANEL_UNDER_TABLE}..{PANEL_TOP_TABLE} (table), total {POST_HEIGHT} "
         f"at the front / {BACK_POST_HEIGHT} at the wall side (W6: the rail "
-        f"underside, was 1197, 1337)")
+        f"underside; X1: 1700 / 1065 before the lift)")
 
 # D12/W6: the depth planes, with their provenance.
 #
@@ -5816,8 +6086,8 @@ assert BACK_POST_Y0 == BACK_RAIL_Y0 and BACK_POST_Y1 <= BACK_RAIL_Y1, \
     "W6: the back posts must sit inside the back rail's plane, back face first"
 assert BACK_RAIL_Y1 - BACK_POST_Y1 == POST_THIN, \
     f"U2: the rail should overhang the post by {POST_THIN} mm on the room side"
-assert BACK_POST_HEIGHT == 1065 and BACK_POST_HEIGHT == RAIL_BOTTOM, \
-    f"W6: the back posts run 0..{BACK_POST_HEIGHT}, want 0..1065"
+assert BACK_POST_HEIGHT == 1402 and BACK_POST_HEIGHT == RAIL_BOTTOM, \
+    f"W6/X1: the back posts run 0..{BACK_POST_HEIGHT}, want 0..1402"
 assert WALL_Y == -48 and WALL_Y == BACK_RAIL_Y0, \
     f"W7: the wall plane is {WALL_Y}, want the back rail face -48"
 assert (END_BEAM_Y0, END_BEAM_Y1, END_BEAM_LEN) == (-48, 788, 836), \
@@ -6198,8 +6468,8 @@ MATTRESS_H_MAX = int(GUARD_BAND_Z0[0] - SLAT_Z1 - EN_LIMB_BAND[0])
 MATTRESS_H_MAX_BARRIER = GUARD_TOP - SLAT_Z1 - MIN_GUARD_OVER_MATTRESS
 assert MATTRESS_H_MAX < MATTRESS_H_MAX_BARRIER, \
     "V7: the band bound is supposed to be the governing one"
-assert (MATTRESS_H_MIN, MATTRESS_H_MAX) == (140, 155), \
-    f"V7: the mattress window is {MATTRESS_H_MIN}..{MATTRESS_H_MAX}, want 140..155"
+assert (MATTRESS_H_MIN, MATTRESS_H_MAX) == (110, 125), \
+    f"V7/X4: the mattress window is {MATTRESS_H_MIN}..{MATTRESS_H_MAX}, want 110..125"
 assert MATTRESS_H_MIN <= MATTRESS_H <= MATTRESS_H_MAX, \
     f"the modelled {MATTRESS_H} mm mattress is outside its own legal band " \
     f"{MATTRESS_H_MIN}..{MATTRESS_H_MAX} mm"
@@ -6258,9 +6528,11 @@ print(f"OK  D14 collision sweep: Y {sweep_y[0]}..{sweep_y[1]} above Z "
 # because W1 removed boards, it did not move any. The back side's EN 747 case
 # is the 48 mm mattress gap checked in the W1/W5 block above; the two of them
 # together are the complete entrapment argument for this bed.
-# The third opening closes against the FRONT post tops (1700). The back posts
-# stop at 1197 (W2) and take no part in this check - on that side the "barrier"
-# is a wall that runs to the ceiling.
+# The third opening closes against the FRONT post tops (2037 after X1). The
+# posts are set by the lift and the bands by the mattress, so this opening is
+# the remainder between them: 28 -> 58 mm, still inside the 75 mm limit.
+# The back posts stop at 1402 (W2/W6) and take no part in this check - on
+# that side the "barrier" is a wall that runs to the ceiling.
 guard_openings = [
     ("mattress top -> band 1", GUARD_BAND_Z0[0] - MATTRESS_Z1),
     ("band 1 -> band 2", GUARD_BAND_Z0[1] - (GUARD_BAND_Z0[0] + GUARD_W)),
@@ -6274,7 +6546,7 @@ guard_over_mattress = GUARD_BAND_Z0[1] + GUARD_W - MATTRESS_Z1
 assert guard_over_mattress >= MIN_GUARD_OVER_MATTRESS, \
     f"barrier only {guard_over_mattress} mm above the mattress"
 # every guard board must be in one of those bands - and, after W1, be a front
-# segment carried by the front posts, which are the ones that reach 1700.
+# segment carried by the front posts, which are the ones that reach 2037.
 # D14: "front" is no longer "outboard". The board hangs on the INNER faces of
 # those posts, so the test is that its outer face IS the post inner plane 752 -
 # far from the back half of the bed either way (the back rail ends at Y 0).
@@ -6296,6 +6568,106 @@ print(f"OK  D6/W1 (front side): guard bands Z "
       + f" mm (limit {MAX_GUARD_OPENING}), barrier {guard_over_mattress} mm "
       f"above the mattress (min {MIN_GUARD_OVER_MATTRESS}); back side: no "
       f"boards, a {MAX_MATTRESS_GAP} mm worst-case mattress gap instead (W5)")
+
+# ---------------------------------------------------------------------------
+# THE ROOM HAS A CEILING  (X1)
+# ---------------------------------------------------------------------------
+# X1. Until v14 the niche was described in two directions - sideways by
+# WALL_SPAN and upwards by nothing at all - and the third one, the ceiling, was
+# the number the builder carried in his head while he decided how high to put
+# the bunk. ROOM_H writes it down (2450 mm in Hanna's room), and once it is
+# written down it can do the two jobs a limit is for.
+#
+#   1. IT IS A CEILING. Nothing may reach it, and the bed must be able to be
+#      SWUNG UP into place under it: the front frame goes together lying on the
+#      floor and is tilted upright, and a rectangle tilting about its foot
+#      sweeps its own DIAGONAL, not its height. Both are measured off the built
+#      solid below - the height off the tallest part, the depth off the
+#      envelope - so neither can be argued with.
+#
+#   2. IT IS A HEAD ROOM BUDGET, AND IT IS THE REASON THE BUNK MOVED. The two
+#      storeys share a FIXED POT: the room, less the seat face the sitter
+#      starts from, less the slat and the mattress on it - 2450 - 420 - 23 -
+#      120 = 1887 mm - and the platform is only the sliding wall between the
+#      two halves of it. Nothing anyone does to this bed changes the pot; the
+#      only question is where the wall goes, and THAT is a question about what
+#      each storey is FOR.
+#
+#      v13 answered it by accident and got 781 below / 1114 above: one sitting
+#      height for a 1433 mm child in the storey the family actually lives in,
+#      and 300 mm of unused ceiling over a sleeper who is lying down. v14
+#      answers it on purpose, and the answer is NOT an even split:
+#        * THE LOWER STOREY IS THE ROOM. Play, homework, sofa, the table, two
+#          children and an adult on the floor - it is where the hours go, and
+#          the thing that decides whether it feels like a room or a den is
+#          standing head room, not sitting head room. 1080 mm to the slat
+#          underside is what X1 buys it (1500 off the floor, less the 420 mm
+#          seat). For comparison, the shop-bought bunk this design was measured
+#          against - IKEA SMÅSTAD - gives 1420 mm floor to slat; HANNA gives
+#          1500.
+#        * THE UPPER STOREY IS A BED, AND NOTHING ELSE. Nobody stands in it and
+#          nobody sits in it for long: what it needs is enough air to sit up,
+#          swing the legs out and get down the ladder. That is one sitting
+#          height for a child, not for an adult - so the rule over the mattress
+#          is MIN_LIE_HEADROOM (750), deliberately lower than the 900 the lower
+#          storey has to clear, and 807 is what it gets.
+#      THE INTENTION CHANGED, AND THAT IS WHY THE RULE CHANGED. This is worth
+#      saying plainly because an assert that gets relaxed is normally a smell:
+#      until v14 both storeys were held to the same 900 mm sitting rule, on the
+#      unexamined assumption that they were the same kind of place. They are
+#      not. The upper storey is a sleeping berth and it is now dimensioned as
+#      one; the lower storey took the difference and is dimensioned as a room.
+#      The pot assert below is what keeps that honest - it makes the trade
+#      visible instead of letting both numbers drift up.
+MIN_CEILING_CLEAR = 200          # over the tallest part of the finished bed
+MIN_SIT_HEADROOM = 900           # LOWER storey: one sitting height, 1650 mm person
+MIN_LIE_HEADROOM = 750           # UPPER storey: a berth - sit up, swing out, climb down
+# Measured, not typed: the top of the tallest piece of wood in the bed and the
+# top of the mattress it is drawn around, both read off the solids.
+BUILT_TOP_Z = max(p.extents[2][1] for p in parts)              # 2037
+BUILT_MATTRESS_TOP_Z = mattress.extents[2][1]                  # 1643
+CEILING_CLEAR = ROOM_H - BUILT_TOP_Z                           # 413
+TILT_SWEEP = math.hypot(BUILT_TOP_Z, OVERALL_DEPTH)            # 2202
+UPPER_SIT_HEADROOM = ROOM_H - BUILT_MATTRESS_TOP_Z             # 807
+assert CEILING_CLEAR >= MIN_CEILING_CLEAR, \
+    f"X1: the bed tops out at {BUILT_TOP_Z} in a {ROOM_H} mm room - " \
+    f"{CEILING_CLEAR} mm of ceiling clearance, want {MIN_CEILING_CLEAR}"
+assert TILT_SWEEP <= ROOM_H, \
+    f"X1: tilting the {BUILT_TOP_Z} x {OVERALL_DEPTH} mm front frame upright " \
+    f"sweeps {TILT_SWEEP:.0f} mm, and the ceiling is at {ROOM_H}"
+assert UPPER_SIT_HEADROOM >= MIN_LIE_HEADROOM, \
+    f"X1: {UPPER_SIT_HEADROOM} mm from the upper mattress top to the ceiling, " \
+    f"want {MIN_LIE_HEADROOM} - you cannot sit up and swing out of the berth"
+assert LOWER_HEADROOM >= MIN_SIT_HEADROOM, \
+    f"X1: {LOWER_HEADROOM} mm over the lower sleeping surface, want " \
+    f"{MIN_SIT_HEADROOM} - the sofa is a crawl space, not a seat"
+# THE POT, AND WHICH WAY IT LEANS. The two head rooms and the stack between them
+# add up to the room - that is what makes the split a zero-sum choice rather
+# than a wish - and v14's choice is that the LIVING storey gets the larger half.
+# Both halves of that sentence are asserted: the sum, so the pot cannot drift,
+# and the direction, so no later round can quietly hand the majority back to a
+# storey nobody stands up in.
+HEADROOM_POT = LOWER_HEADROOM + UPPER_SIT_HEADROOM             # 1887
+assert (HEADROOM_POT + (SLAT_Z1 - SLAT_Z0) + MATTRESS_H
+        + CUSHION_TOP_BENCH) == ROOM_H, \
+    "X1: the two storeys and the platform stack do not add up to the room"
+assert LOWER_HEADROOM > UPPER_SIT_HEADROOM, \
+    f"X1: the {HEADROOM_POT} mm of head room is split "\
+    f"{LOWER_HEADROOM} below / {UPPER_SIT_HEADROOM} above - the storey people "\
+    f"live in is supposed to have the bigger half"
+print(f"OK  X1 rommet: {ROOM_H} mm fra gulv til tak. Høyeste del {BUILT_TOP_Z} "
+      f"(stolpetopp), {CEILING_CLEAR} mm klaring til taket (krav "
+      f"{MIN_CEILING_CLEAR}), og fronten - {BUILT_TOP_Z} x {OVERALL_DEPTH} - "
+      f"sveiper {TILT_SWEEP:.0f} mm når den vippes opp. POTTEN er "
+      f"{HEADROOM_POT} mm og den er fast. NEDE (leke- og oppholdssonen, den "
+      f"store halvdelen): {LOWER_HEADROOM} mm fri høyde over soveflaten "
+      f"({LOWER_HEADROOM_RAIL} under sidevangene), {SLAT_Z0} mm fra gulvet til "
+      f"spilenes underside - krav {MIN_SIT_HEADROOM} "
+      f"({MIN_SIT_HEADROOM / SIT_RATIO:.0f} mm person), margin "
+      f"{LOWER_HEADROOM - MIN_SIT_HEADROOM} mm. OPPE (ren sovekøye): "
+      f"{UPPER_SIT_HEADROOM} mm over madrassen - krav {MIN_LIE_HEADROOM}, "
+      f"margin {UPPER_SIT_HEADROOM - MIN_LIE_HEADROOM} mm. v13 delte den "
+      f"781/1114 - stikk motsatt vei")
 
 # C3/C5/D11: 34x98 bench slats on the bench rails - one continuous rail at the
 # back, two lapped segments at the front - and the bed-mode panel sitting one
@@ -6347,7 +6719,7 @@ assert end_fixings["Bench Rail Back (continuous)"] == POST_T * BENCH_RAIL_H \
 # of post face the bench rail does - 2628 mm2 instead of the 21x95's 1995.
 assert end_fixings["Table Ledger Back"] == POST_T * LEDGER_BACK_H == 2448, \
     "V2: the back ledger is 48 deep now, so 36 of it butts the post face"
-assert BENCH_TOP == BENCH_RAIL_TOP + BENCH_SLAT_T == 282
+assert BENCH_TOP == BENCH_RAIL_TOP + BENCH_SLAT_T == 320   # [X3: was 282]
 # D10/U1: the cushion recess. The bench slat got 2 mm thicker and the panel did
 # not (it is an 18 mm sheet on a rail top that has not moved), so the dip the
 # fold-out cushions fold into grows 16 -> 18 mm. That is the right direction:
@@ -6595,12 +6967,12 @@ assert BACKREST_Y0 == LEDGER_BACK_Y0 + LEDGER_BACK_T, \
     "V13: the backrest stands on the back table ledger's front face"
 # THE CUSHIONS COME OFF FIRST, AND THE MODEL SAYS SO RATHER THAN THE MANUAL
 # REMEMBERING IT. The mode change carries the panel unit SIDEWAYS over the
-# bench, in the shaft between the bench slat tops (282) and the back table
-# ledger's underside (414). A 100 mm cushion lying on that bench fills the
-# bottom 100 of those 132 mm. So this is not a tidiness instruction: the change
+# bench, in the shaft between the bench slat tops (320) and the back table
+# ledger's underside (474). A 100 mm cushion lying on that bench fills the
+# bottom 100 of those 154 mm. So this is not a tidiness instruction: the change
 # -over is BLOCKED with the cushions on, and it is derived here.
-CARRY_BAND = (BENCH_TOP, LEDGER_BACK_Z0)                     # 282..414
-CARRY_BAND_H = CARRY_BAND[1] - CARRY_BAND[0]                 # 132
+CARRY_BAND = (BENCH_TOP, LEDGER_BACK_Z0)                     # 320..474  [X2/X3]
+CARRY_BAND_H = CARRY_BAND[1] - CARRY_BAND[0]                 # 154  [was 132]
 assert CUSHION_TOP_BENCH > CARRY_BAND[0] + TOL, \
     "V13: a seat cushion that did not reach into the carry band would make " \
     "this note pointless - check the geometry before deleting it"
@@ -6748,9 +7120,9 @@ assert abs(bay_gap - (OPEN_FLOOR_X[1] - OPEN_FLOOR_X[0])) < TOL, \
 # zone at RUNG_Y0 takes exactly "the ladder itself" out and nothing else.
 # M4 NOTE: this loop runs over `parts` - the FIXED structure - and the stiffener
 # battens are deliberately not in it, because they belong to the panel and lift
-# out with it. They do occupy the top 73 mm of this box in bed mode (Z 186..259)
+# out with it. They do occupy the top 68 mm of this box in bed mode (Z 229..297)
 # by design: they hang under the panel, which is itself the ceiling of the bay
-# at 259. What must stay empty for them is the WALKING zone, floor to Z 186 -
+# at 297. What must stay empty for them is the WALKING zone, floor to Z 229 -
 # checked separately in the M4 block above.
 BAY = (OPEN_FLOOR_X, (BACK_RAIL_Y1, RUNG_Y0), (0, BENCH_RAIL_TOP))
 for p in parts:
@@ -6829,18 +7201,18 @@ print(f"OK  U5: 4 stub legs {sec(LEG_T, LEG_W)} x {STUB_LEG_H} (was "
 
 # D13: WALK-AROUND. There must be a real passage on each side of the ladder,
 # between the sofa end and the upright outer face, clear from the floor up to
-# the table-mode panel line (482) across the whole front zone.
+# the table-mode panel line (542) across the whole front zone.
 #
 # The clear width is measured against FIXED STRUCTURE (`parts`). The loose panel
-# is handled separately below: it is the seat / table surface, it lies at 259 in
-# bed mode and 482 in table mode, and it does bridge the passage at that height
+# is handled separately below: it is the seat / table surface, it lies at 297 in
+# bed mode and 542 in table mode, and it does bridge the passage at that height
 # by design - what matters is that it never touches the floor level you actually
 # stand and put your feet in, which is checked explicitly afterwards.
 # D14 ripple: the front edge of the zone used to be the guard face (834). The
 # guards went inboard, so it is the post plane now - the same 800 mm of front
 # zone the check has always swept, minus the 34 mm that no longer exists.
 PASSAGE_Y = (BACK_RAIL_Y1, FRONT_POST_Y1)            # 0 .. 800, front zone
-PASSAGE_Z = (0, RUNG_TOPS[1])                        # 0 .. 482
+PASSAGE_Z = (0, RUNG_TOPS[1])                        # 0 .. 542
 PASSAGE_BANDS = [("left", OPEN_FLOOR_X[0], up[0].extents[0][0]),
                  ("right", up[1].extents[0][1], OPEN_FLOOR_X[1])]
 passages = []
@@ -6922,12 +7294,12 @@ print("OK  D13/U2: walk-around beside the ladder - "
 # The result, and it is the reason avvik 2 stays open:
 #   OUT  the nearest thing in the stile's own Y band is the FRONT CORNER POST,
 #        the whole length of the bench away. Between them lies the D13
-#        walk-around, required clear from the floor to Z 482.
+#        walk-around, required clear from the floor to Z 542.
 #   IN   the other stile, across the ladder opening, which EN 747 requires to
 #        stay >= 300 mm clear. Tying the two stiles together adds nothing in Y
 #        anyway - they move as one frame.
 #   BACK the back bench rail, three quarters of a metre away across the D11
-#        open bay, which is required clear to Z 259 - and above Z 186 the same
+#        open bay, which is required clear to Z 297 - and above Z 229 the same
 #        column is the panel's own insertion shaft.
 #   FWD  NOTHING. There is no member in front of the ladder at all, and there
 #        cannot be: U3 fixes the front face at Y = 788 and asserts Y 788..800
@@ -6935,7 +7307,7 @@ print("OK  D13/U2: walk-around beside the ladder - "
 # So every direction out of the foot is either a protected void or the room,
 # and the tie is not a detail this geometry can have as it stands. What it
 # would cost to have one anyway is written up in vedlegg B.
-FOOT_TIE_Z = (0, BENCH_RAIL_TOP)                 # 0..259, the foot proper
+FOOT_TIE_Z = (0, BENCH_RAIL_TOP)                 # 0..297, the foot proper
 
 
 def _nearest_fixed(box, axis, sign, exclude):
@@ -7955,7 +8327,7 @@ print(f"OK  D12/W8: the {MATTRESS_W} mm mattress is exactly the "
 # is zero-play again, made by a wall on one side and four verticals on the other.
 # What has to be true:
 #   (a) the front stop is real - four verticals in the plane Y 752, each one
-#       covering the mattress band 1197..1337 in full;
+#       covering the mattress band 1523..1643 in full;
 #   (b) NO vertical is left in that band on the back side. The back posts stop
 #       132 mm below the mattress underside, so the back stop is the wall and
 #       nothing else - which is what makes the fit independent of the mattress's
@@ -8180,8 +8552,8 @@ for _mode, _panel in MODES.items():
 SIT_HEADROOM = FIGURE_CLEAR["Child Seated Right (table mode)"]["room"]
 SIT_HEAD_OVER = FIGURE_CLEAR["Child Seated Right (table mode)"]["over"]
 SIT_CROWN_Z = figure_seated_right.pose["crown"][2]
-TABLE_OVER_SEAT = PANEL_TOP_TABLE - SEAT_FACE          # 118
-TABLE_UNDER_SEAT = PANEL_UNDER_TABLE - SEAT_FACE       # 100, one thigh
+TABLE_OVER_SEAT = PANEL_TOP_TABLE - SEAT_FACE          # 140  [X2/X3: was 118]
+TABLE_UNDER_SEAT = PANEL_UNDER_TABLE - SEAT_FACE       # 122  [was 100, one thigh]
 # OCC solid-to-solid, both of them: the right-hand child is folded up clear of
 # the plate, the left-hand one has reached over it.
 LEG_TO_TABLE = figure_seated_right.distance(panel_table)
@@ -8198,9 +8570,12 @@ print(f"OK  bordstilling: den som sitter rett opp har {SIT_HEADROOM:.0f} mm "
       f"over hodet (kronen Z {SIT_CROWN_Z:.0f}, '{SIT_HEAD_OVER}' over) - et "
       f"barn på {FIGURE_H:.0f} mm kan sitte helt oppreist i sofaen")
 print(f"OK  bordstilling: plata ligger {TABLE_OVER_SEAT:.0f} mm over "
-      f"seteflaten og har {TABLE_UNDER_SEAT:.0f} mm under seg - ETT lår "
-      f"({2 * FIG_THIGH_R:.0f} mm). Ingen knær går under dette bordet, og "
-      f"figurene sitter derfor i skredderstilling: det foldede kneet stopper "
+      f"seteflaten og har {TABLE_UNDER_SEAT:.0f} mm under seg - ett lår er "
+      f"{2 * FIG_THIGH_R:.0f} mm, så etter X2 går et strakt bein under plata; "
+      f"til og med v13 gjorde det ikke det ({118 - 18} mm den gang). "
+      f"Figurene sitter likevel i skredderstilling - det er slik man sitter på "
+      f"en benk med bordet {int(PANEL_X0 - (FIG_SEAT_X + 2))} mm unna i X: "
+      f"det foldede kneet stopper "
       f"{LEG_TO_TABLE:.0f} mm fra platekanten, håndleddet lander "
       f"{WRIST_OVER_TABLE:.0f} mm over plata")
 print(f"OK  sengestilling: over den som ligger i køya står ingenting - "
@@ -8459,7 +8834,8 @@ print(f"Note (W1): *** WALL-SIDE BED - NOT REVERSIBLE. *** The back long side "
       f"out into a layer of their own - flagged for the docs round.")
 print(f"Note (W6): the two BACK corner posts stand IN the back rail plane "
       f"(Y {BACK_POST_Y0}..{BACK_POST_Y1}, was -96..-48) and are cut to "
-      f"{BACK_POST_HEIGHT} mm (was 1197, 1337) - the RAIL UNDERSIDE. The back "
+      f"{BACK_POST_HEIGHT} mm (X1 lifted the whole deck 150: was 1065, and "
+      f"1197 / 1337 before W6) - the RAIL UNDERSIDE. The back "
       f"side rail bears straight down on the post tops, "
       f"{POST_W - THROUGH_X0} x {POST_T} = {BACK_RAIL_POST_BEARING} mm2 of end "
       f"grain per corner, so the corner reaction goes rail -> post -> floor with "
@@ -8525,14 +8901,13 @@ print(f"Note (U1): the board profile is {sec(BOARD36_T, BOARD36_W)}, not 34x98. 
       f"34x98 was a drawing dimension; {sec(BOARD36_T, BOARD36_W)} is the shelf "
       f"item. The board is 2 mm thicker and nothing else about it changes - same "
       f"{BOARD36_W} mm width, same lengths, same pieces - but the 2 mm shows up "
-      f"in every stack a board is IN: platform top 1197 -> {SLAT_Z1}, mattress "
-      f"{MATTRESS_Z0}..{MATTRESS_Z1}, bench top 293 -> {BENCH_TOP}, cushion "
+      f"in every stack a board is IN: platform top 1197 -> 1186, mattress "
+      f"1186..1336, bench top 293 -> {BENCH_TOP}, cushion "
       f"recess under the bed-mode panel 16 -> {PANEL_BENCH_DIP} mm, guard bands "
-      f"up 2 to {GUARD_BAND_Z0[0]}..{GUARD_BAND_Z0[0] + GUARD_W} and "
-      f"{GUARD_BAND_Z0[1]}..{GUARD_BAND_Z0[1] + GUARD_W}. The EN 747 openings "
-      f"above the mattress are unchanged at 75 / 75 and the third closes "
-      f"against the fixed {POST_HEIGHT} post tops: 17 -> "
-      f"{POST_HEIGHT - (GUARD_BAND_Z0[1] + GUARD_W)} mm.")
+      f"up 2 to 1401..1499 and 1574..1672. The EN 747 openings "
+      f"above the mattress are unchanged at 75 / 75 and the third closed "
+      f"against the then-fixed 1700 post tops: 17 -> 28 mm. (v14/X1 has since "
+      f"lifted every one of those upper numbers by 150 - see the X1 note.)")
 print(f"Note (U2): the four CORNER POSTS are {sec(POST_T, POST_W)} as well - "
       f"the same plank as the boards, turned thin-face-to-the-room ({POST_T} in "
       f"Y, {POST_W} in X). 48x48 leaves the frame; the four bench stub legs were "

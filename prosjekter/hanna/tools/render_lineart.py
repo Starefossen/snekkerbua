@@ -3941,7 +3941,7 @@ def crop_to_subject(view, page_box, new_parts):
 
     Every page is cut from the FINISHED bed, so nothing jumps between drawings
     - and that is right for the ten steps that build across the whole 1990 mm
-    of it. The ladder is not one of them: it is 416 mm wide and 1700 tall, and
+    of it. The ladder is not one of them: it is 416 mm wide and 2037 tall, and
     on a bed-wide page it comes out as a sliver with four badges fighting for
     the 320 mm between its stiles. So that step asks for a page of its own,
     cut round its parts - the scale goes up, the badges stay the size they

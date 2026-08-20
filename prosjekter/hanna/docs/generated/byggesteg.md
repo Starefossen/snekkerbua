@@ -26,10 +26,10 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 
 | Sone | Fra ferdig gulv | Vegg | Del som skal ha feste |
 |---:|---|---|---|
-| 1 | **0–1065** | Hjørnene, mot endeveggene | Hjørnestolpe, bak (veggside) (2 stk.) |
-| 2 | **191–259** | Bakveggen | Benkevange, bak (gjennomgående) |
-| 3 | **414–482** | Bakveggen | Bordbærelekt, bak |
-| 4 | **1065–1163** | Bakveggen | Sidevange, øvre |
+| 1 | **0–1402** | Hjørnene, mot endeveggene | Hjørnestolpe, bak (veggside) (2 stk.) |
+| 2 | **229–297** | Bakveggen | Benkevange, bak (gjennomgående) |
+| 3 | **474–542** | Bakveggen | Bordbærelekt, bak |
+| 4 | **1402–1500** | Bakveggen | Sidevange, øvre |
 
 Målene er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøyden legges til.
 
@@ -77,7 +77,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 
 Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannrette deler i samme plan. Det laget er monteringsflaten mot veggen. Og det MÅ bygges som én ramme: den bakre benkevangen og bordbærelekta er kappet til å fylle nøyaktig mellom de to stolpene, så de lar seg ikke tre inn etterpå.
 
-**Deler:** 1× Benkevange, bak (gjennomgående) 48×68 × 1794 · 1× Bordbærelekt, bak 48×68 × 1794 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1065 · 1× Sidevange, øvre 48×98 × 1984
+**Deler:** 1× Benkevange, bak (gjennomgående) 48×68 × 1794 · 1× Bordbærelekt, bak 48×68 × 1794 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1402 · 1× Sidevange, øvre 48×98 × 1984
 
 **Festemidler:** 4× Treskrue 5×40 forsenket Torx · 4× Treskrue 6×120 forsenket Torx · 4× Treskrue 6×80 forsenket Torx · 2× Vinkelbeslag 40×40×20
 
@@ -123,7 +123,7 @@ Sengen festes til veggen gjennom den bakre sidevangen. Vangen ligger flatt mot v
 
 Nå bygges de to endene ut fra bakrammen. Endebjelken går fra den bakre stolpen til den fremre og bærer begge sidevanger.
 
-**Deler:** 2× Endebjelke 36×98 × 836 · 2× Hjørnestolpe, front 36×98 × 1700
+**Deler:** 2× Endebjelke 36×98 × 836 · 2× Hjørnestolpe, front 36×98 × 2037
 
 **Festemidler:** 8× Treskrue 6×80 forsenket Torx
 
@@ -167,7 +167,7 @@ Den fremre vangen lukker rammen i overetasjen. Den hviler på begge endebjelker 
 
 Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gulvet foran stigen er helt fritt. Endelisten hører hjemme i dette steget og ikke blant spilene: den er bæreverk som vangene, den står i samme høyde som dem, og den skal stå ferdig før noe legges oppå.
 
-**Deler:** 2× Benkevange, front (bit) 48×68 × 642 · 2× Endelist 36×48 × 98 · 4× Stubbefot 48×68 × 191
+**Deler:** 2× Benkevange, front (bit) 48×68 × 642 · 2× Endelist 36×48 × 98 · 4× Stubbefot 48×68 × 229
 
 **Festemidler:** 16× Treskrue 5×40 forsenket Torx · 8× Treskrue 5×60 forsenket Torx · 4× Treskrue 6×80 forsenket Torx · 4× Vinkelbeslag 90×90×40×2,5 varmforsinket
 
@@ -179,7 +179,7 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 1. Sett en stubbefot under den innerste enden av hver vangebit. Vangebiten skal slutte akkurat der foten står — ingen utstikk forbi foten.
 1. Sett de to bakre stubbeføttene under den bakre benkevangen, rett under de samme punktene.
 1. Fest alle fire føtter etter J10. Den ene 5×60 per fot er en skråskrue nedenfra og opp i vangen, og setet er boret i steg 0 — ⌀18 flatbunnet lomme 18 mm ned langs aksen, 30° på fotens innerside. Skru beslaget først, skråskruen sist.
-1. ENDELISTEN, én i hver ende: skru den flatt på FORSIDEN av den bakre hjørnestolpen, med overkanten i flukt med benkevangens overkant (259 mm over gulvet). To 5×60 ved siden av hverandre (J17) — 36 mm gjennom listen og 24 mm inn i stolpen, så det står 12 mm igjen til veggflaten bak. Ikke bruk lengre skrue.
+1. ENDELISTEN, én i hver ende: skru den flatt på FORSIDEN av den bakre hjørnestolpen, med overkanten i flukt med benkevangens overkant (297 mm over gulvet). To 5×60 ved siden av hverandre (J17) — 36 mm gjennom listen og 24 mm inn i stolpen, så det står 12 mm igjen til veggflaten bak. Ikke bruk lengre skrue.
 
 **Sjekk før du går videre:**
 
@@ -193,9 +193,9 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 
 Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre sidevangen.
 
-**Deler:** 4× Rungetrinn 48×68 × 320 · 8× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 1700
+**Deler:** 5× Rungetrinn 48×68 × 320 · 10× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 2037
 
-**Festemidler:** 16× Treskrue 5×60 forsenket Torx · 8× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×80 forsenket Torx
+**Festemidler:** 20× Treskrue 5×60 forsenket Torx · 10× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×80 forsenket Torx
 
 **Ledd:** J3, J4, J5 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
@@ -209,7 +209,7 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 **Sjekk før du går videre:**
 
 * Mål lysåpningen mellom stigevangene øverst og nederst — den skal være lik.
-* Alle fire trinn i vater.
+* Alle 5 trinn i vater.
 * Stå på nederste trinn og kjenn etter. Sitter noe løst nå, sitter det løst for alltid.
 
 ## Steg 7 — Benkespiler og endespiler
@@ -308,9 +308,9 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke 
 
 ## Steg 11 — Madrass og puter
 
-Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er TYKKELSEN, og der er det bare ett riktig svar: 150 mm. Vinduet er 140–155 mm, og en helt vanlig 160 mm madrass er ULOVLIG i denne sengen — den legger spalten opp til rekkverket midt i klemvinduet.
+Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er TYKKELSEN, og der er det bare ett riktig svar: 120 mm. Vinduet er 110–125 mm, og en helt vanlig 160 mm madrass er ULOVLIG i denne sengen — den legger spalten opp til rekkverket midt i klemvinduet.
 
-**Deler:** 2× Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten) · 1× Madrass 80 × 200 cm, **150 mm tykk** (vindu 140–155 mm) · 2× Ryggpute, skum **100 mm** (332 × 800 mm)
+**Deler:** 2× Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten) · 1× Madrass 80 × 200 cm, **120 mm tykk** (vindu 110–125 mm) · 2× Ryggpute, skum **100 mm** (332 × 800 mm)
 
 **Slik gjør du:**
 
@@ -318,8 +318,8 @@ Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikk
 1. UNDERETASJEN: fire puter, alle 100 mm tykke og 800 mm dype. To benkeputer på 663 mm og to ryggputer på 332 mm — lagt etter hverandre dekker de nedre soveflate nøyaktig, 663 + 332 + 332 + 663 = 1990 mm.
 1. Skjær et 98 × 36 mm hakk i veggkanten på hver av de to benkeputene, der den bakre hjørnestolpen står. Brødkniv.
 1. SOFASTILLING: benkeputene ligger der de ligger — de flyttes aldri. Ryggputene reises på høykant ytterst på hver benk, med ryggen mot bordbærelekta.
-1. MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er ikke en tusjstrek som skal kunne tørkes bort: skriv «MAKS MADRASS 155 MM» på innsiden av en fremre stolpe, i høyden 1341 mm over gulvet. Den som bytter madrass om ti år skal kunne lese grensen av sengen selv.
-1. Skriv nedre grense, 140 mm, ved siden av. For tynn madrass åpner spalten under nederste rekkverksbord; for tykk lukker den seg ned i klemvinduet.
+1. MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er ikke en tusjstrek som skal kunne tørkes bort: skriv «MAKS MADRASS 125 MM» på innsiden av en fremre stolpe, i høyden 1648 mm over gulvet. Den som bytter madrass om ti år skal kunne lese grensen av sengen selv.
+1. Skriv nedre grense, 110 mm, ved siden av. For tynn madrass åpner spalten under nederste rekkverksbord; for tykk lukker den seg ned i klemvinduet.
 
 **Sjekk før du går videre:**
 

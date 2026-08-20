@@ -52,7 +52,7 @@ below the bar and points back at it with a leader.
 
 THE ZOOM BAND
 -------------
-One board defeats the per-piece rule outright: the 36x48 carries 2 x 1700 and
+One board defeats the per-piece rule outright: the 36x48 carries 2 x 2037 and
 then sixteen small pieces - 8 x 73 and 8 x 48 - in its last metre. Printed,
 those are 3,4 and 2,3 mm wide and read as a row of screw holes. So a board
 with pieces too narrow to write on gets a MAGNIFIED SUB-STRIP: the dense
