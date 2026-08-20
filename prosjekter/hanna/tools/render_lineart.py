@@ -1504,12 +1504,25 @@ class Page:
             f'<circle cx="{_f(c[0])}" cy="{_f(-c[1])}" r="{_f(r)}" '
             f'fill="{colour}"/>')
 
-    def text(self, p, s, size, anchor="start", weight="normal", colour=INK):
+    def text(self, p, s, size, anchor="start", weight="normal", colour=INK,
+             rotate=None, halo=None):
+        """One line of type. `rotate` turns it about its own anchor - degrees,
+        clockwise on the page, so a dimension figure can lie along its axis in
+        an axonometric - and `halo` knocks the line work out from under it
+        with a white stroke of that width. Both are opt-in and neither changes
+        a byte of the tag when it is not asked for."""
         s = (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+        extra = ""
+        if halo:
+            extra += (f' paint-order="stroke" stroke="#ffffff" '
+                      f'stroke-width="{_f(halo)}" stroke-linejoin="round"')
+        if rotate is not None:
+            extra += (f' transform="rotate({_f(rotate)} {_f(p[0])} '
+                      f'{_f(-p[1])})"')
         self.body.append(
             f'<text x="{_f(p[0])}" y="{_f(-p[1])}" font-family="{FONT}" '
             f'font-size="{_f(size)}" font-weight="{weight}" '
-            f'text-anchor="{anchor}" fill="{colour}">{s}</text>')
+            f'text-anchor="{anchor}" fill="{colour}"{extra}>{s}</text>')
 
     def arrow(self, tail, head, colour=INK, width=None, head_len=None):
         """A plain open arrowhead - no markers, so it survives any renderer."""
@@ -1524,6 +1537,141 @@ class Page:
             by = math.sin(turn) * ux + math.cos(turn) * uy
             self.line(head, (head[0] + bx * head_len, head[1] + by * head_len),
                       colour, width)
+
+    # -- TYPE THAT HAS TO FIT ----------------------------------------------
+    # 0.52 em per character is the same average the schematics family measures
+    # its notes with (tools/schematic.py). It is an average and it is meant to
+    # be: a note that runs off the sheet is the one drawing fault a proof
+    # render always shows and a code review never does, and the only way to
+    # not have it is to ask how wide the column is before the line is written.
+    CHAR_W = 0.52
+
+    def wrap(self, text, width, size):
+        """Greedy wrap to a column measured in PAGE UNITS, not characters."""
+        cw = size * self.CHAR_W
+        out, row = [], ""
+        for word in text.split():
+            cand = (row + " " + word).strip()
+            if row and len(cand) * cw > width:
+                out.append(row)
+                row = word
+            else:
+                row = cand
+        if row:
+            out.append(row)
+        return out
+
+    # -- A DIMENSION, AND IT IS THE ONLY WAY THIS HOUSE DRAWS ONE ----------
+    # The idiom is the one a flat-pack sheet uses, and it is four rules:
+    #   * a DOUBLE arrow - a solid head at each end of one line, so the figure
+    #     is a span and not a leader pointing at something;
+    #   * THIN, DASHED witness lines that run out along an AXIS of the
+    #     drawing, never square to the paper. In an axonometric the paper has
+    #     no axes of its own, so a helper line that does not follow one of the
+    #     model's three is a line the reader cannot place in space;
+    #   * the figure BIG, BOLD, WITH ITS UNIT, sitting on the arrow itself
+    #     with the line knocked out from under it; and
+    #   * the figure LYING ALONG ITS OWN AXIS, so a width reads along the
+    #     width and a height stands up.
+    # `p0`/`p1` are the two ends of the thing being measured, in the page's
+    # own frame; `axis` is the page-space direction the witness lines run out
+    # along and `off` how far out along it the dimension line stands. off = 0
+    # is the local detail dimension - no witness lines, the arrow drawn on the
+    # part itself.
+    #
+    # It returns a RECORD, and the record is the point: it carries the indices
+    # of the two elements that were emitted, so the assert that checks this
+    # drawing reads the ink rather than the intention.
+    def dimension(self, p0, p1, label, axis=None, off=0.0, size=None,
+                  colour=INK, weight="bold", at=0.5):
+        size = T.S_DIM if size is None else size
+        dx, dy = p1[0] - p0[0], p1[1] - p0[1]
+        span = math.hypot(dx, dy)
+        if span < 1e-9:
+            return None
+        ux, uy = dx / span, dy / span
+        if axis is None:
+            nx, ny = -uy, ux
+        else:
+            an = math.hypot(axis[0], axis[1]) or 1.0
+            nx, ny = axis[0] / an, axis[1] / an
+        a = (p0[0] + nx * off, p0[1] + ny * off)
+        b = (p1[0] + nx * off, p1[1] + ny * off)
+        w_dim = size * 0.085
+        if abs(off) > 1e-9:
+            s = 1.0 if off >= 0.0 else -1.0
+            gap, over = size * 0.30, size * 0.60
+            dash = f"{_f(size * 0.34)} {_f(size * 0.30)}"
+            for tip, foot in ((p0, a), (p1, b)):
+                self.line((tip[0] + nx * gap * s, tip[1] + ny * gap * s),
+                          (foot[0] + nx * over * s, foot[1] + ny * over * s),
+                          colour, w_dim * 0.60, dash=dash)
+        head = size * 0.95
+        # THE FIGURE SITS IN THE LINE, NOT ON IT. A white halo hides the
+        # stroke under a glyph and cannot hide it in the SPACE between two
+        # words - which is exactly where "1990 mm" has one - so the line is
+        # cut instead, and the halo is left as a small courtesy to whatever
+        # else the arrow happens to cross. One <path> either way: the assert
+        # that measures this arrow reads its first and last point.
+        half = len(label) * size * self.CHAR_W * 0.5
+        # `at` is where along the arrow the figure sits, and it is a fraction
+        # rather than the middle because the middle is sometimes where a post
+        # is. dim_seat() picks it; the default is the middle.
+        mid = (a[0] + ux * span * at, a[1] + uy * span * at)
+        cut = half + size * 0.36
+        i_line = len(self.body)
+        room = min(at, 1.0 - at) * span > cut + head
+        if room:
+            self.polylines([[a, (mid[0] - ux * cut, mid[1] - uy * cut)],
+                            [(mid[0] + ux * cut, mid[1] + uy * cut), b]],
+                           colour, w_dim)
+        else:
+            self.line(a, b, colour, w_dim)
+        # Point OUT: the head's tip sits on the witness line and its body lies
+        # inside the span, so the pair reads |<--->| and not >--< .
+        for tip, sgn in ((a, -1.0), (b, 1.0)):
+            self._dim_head(tip, (ux * sgn, uy * sgn), head, colour)
+        # The figure reads left to right whatever the axis does, so the
+        # direction is folded into the right half-plane before it is used.
+        rx, ry = (ux, uy) if ux >= 0.0 else (-ux, -uy)
+        i_text = len(self.body)
+        # A span too short to cut keeps its line whole and the figure steps
+        # ASIDE - the drawing office's own answer, and the only one that
+        # works: a white halo hides the stroke under a glyph and cannot hide
+        # it in the space between two words.
+        drop = size * (0.34 if room else 1.05)
+        base = (mid[0] + ry * drop, mid[1] - rx * drop)
+        self.text(base, label, size, anchor="middle", weight=weight,
+                  colour=colour, rotate=-math.degrees(math.atan2(ry, rx)),
+                  halo=size * 0.22)
+        # WHAT THIS DIMENSION PUT ON THE PAPER, so the next one can be told to
+        # keep off it: the arrow, and the four corners of the box the figure
+        # occupies - round where the figure actually ENDED UP, which is not
+        # the middle of the arrow when it had to step aside.
+        step = drop - size * 0.34
+        c = (mid[0] + ry * step, mid[1] - rx * step)
+        return {"line": i_line, "text": i_text, "a": a, "b": b,
+                "label": label, "u": (ux, uy),
+                "ink": [[a, b],
+                        [(c[0] - rx * half - ry * size,
+                          c[1] - ry * half + rx * size),
+                         (c[0] + rx * half - ry * size,
+                          c[1] + ry * half + rx * size),
+                         (c[0] + rx * half + ry * size,
+                          c[1] + ry * half - rx * size),
+                         (c[0] - rx * half + ry * size,
+                          c[1] - ry * half - rx * size)]]}
+
+    def _dim_head(self, tip, direction, length, colour):
+        """A solid arrow head - the flat-pack kind, not the open one a wood
+        part being brought together gets."""
+        ux, uy = direction
+        back = (tip[0] - ux * length, tip[1] - uy * length)
+        wing = length * 0.30
+        self.poly([tip,
+                   (back[0] - uy * wing, back[1] + ux * wing),
+                   (back[0] + uy * wing, back[1] - ux * wing)],
+                  fill=colour, stroke=colour, width=length * 0.06)
 
     def embed_svg(self, path, x, y, w, h):
         """Drop one of the fastener glyphs in, at its own aspect ratio."""
@@ -1601,6 +1749,130 @@ class Page:
                      + "\n</svg>\n")
 
 
+# ---------------------------------------------------------------------------
+# WHERE A DIMENSION LINE STANDS, AND WHY IT IS NOT A NUMBER SOMEBODY LIKED
+# ---------------------------------------------------------------------------
+# A dimension stands off the drawing far enough to clear it and no further.
+# That is a measurement, not a taste, and it is made here: how far out along
+# the witness axis the far side of the line work reaches, WITHIN the stretch
+# the dimension actually spans, plus one margin. Anything outside that stretch
+# is not in the way - a post top two metres along the bed has nothing to say
+# about where a floor dimension at the other end may sit - and leaving it out
+# is the whole difference between a snug sheet and one with a hand's width of
+# white round it.
+#
+# `art` grows as the sheet is drawn: every dimension already placed goes back
+# in, so the next one clears its neighbour by the same rule that cleared it of
+# the bed. Nothing on the sheet is positioned by hand.
+def dim_offset(art, p0, p1, axis, margin, slack=0.0):
+    ux, uy = p1[0] - p0[0], p1[1] - p0[1]
+    n = math.hypot(ux, uy) or 1.0
+    ux, uy = ux / n, uy / n
+    an = math.hypot(axis[0], axis[1]) or 1.0
+    nx, ny = axis[0] / an, axis[1] / an
+    lo = min(ux * p0[0] + uy * p0[1], ux * p1[0] + uy * p1[1]) - slack
+    hi = max(ux * p0[0] + uy * p0[1], ux * p1[0] + uy * p1[1]) + slack
+    base = max(nx * p0[0] + ny * p0[1], nx * p1[0] + ny * p1[1])
+    out = base
+    # SEGMENTS, not vertices. Almost every edge in this bed is a straight line
+    # and therefore two points, so a 1990 mm rail that runs clean through the
+    # stretch a dimension spans has NEITHER END in it - ask the vertices and
+    # the rail is not there, and the dimension line lands on top of it.
+    for pl in art:
+        for a, b in zip(pl, pl[1:]):
+            ta, tb = ux * a[0] + uy * a[1], ux * b[0] + uy * b[1]
+            va, vb = nx * a[0] + ny * a[1], nx * b[0] + ny * b[1]
+            d = tb - ta
+            if abs(d) < 1e-12:
+                if not (lo <= ta <= hi):
+                    continue
+                cand = max(va, vb)
+            else:
+                s0, s1 = (lo - ta) / d, (hi - ta) / d
+                if s0 > s1:
+                    s0, s1 = s1, s0
+                s0, s1 = max(0.0, s0), min(1.0, s1)
+                if s1 < s0:
+                    continue
+                cand = max(va + (vb - va) * s0, va + (vb - va) * s1)
+            if cand > out:
+                out = cand
+    return out - base + margin
+
+
+# WHERE ALONG THE ARROW THE FIGURE SITS. The middle, unless a post is in the
+# middle. This is the same scoring loop layout.place() is: a FIXED, ORDERED
+# list of candidates, one cost each - how many edges of the drawing cross the
+# box the figure would occupy - and `min` over (score, index), so the middle
+# wins every tie and the sheet comes out the same way twice.
+#
+# It is here rather than in the caller because it is a rule about dimensions
+# and not about beds: an outboard dimension standing in clear paper scores
+# zero everywhere and keeps the middle, and a local one drawn across the work
+# steps aside by exactly as much as it has to.
+DIM_SEATS = (0.5, 0.62, 0.38, 0.74, 0.26)
+
+
+def dim_seat(art, p0, p1, w, h, fracs=DIM_SEATS):
+    ux, uy = p1[0] - p0[0], p1[1] - p0[1]
+    span = math.hypot(ux, uy)
+    if span < 1e-9:
+        return 0.5
+    ux, uy = ux / span, uy / span
+    nx, ny = -uy, ux
+    best = None
+    for i, frac in enumerate(fracs):
+        c = (p0[0] + ux * span * frac, p0[1] + uy * span * frac)
+        t_c, v_c = ux * c[0] + uy * c[1], nx * c[0] + ny * c[1]
+        t0, t1 = t_c - w / 2.0, t_c + w / 2.0
+        v0, v1 = v_c - h / 2.0, v_c + h / 2.0
+        score = 0
+        for pl in art:
+            for a, b in zip(pl, pl[1:]):
+                ta, tb = ux * a[0] + uy * a[1], ux * b[0] + uy * b[1]
+                va, vb = nx * a[0] + ny * a[1], nx * b[0] + ny * b[1]
+                d = tb - ta
+                if abs(d) < 1e-12:
+                    if not (t0 <= ta <= t1):
+                        continue
+                    lo, hi = min(va, vb), max(va, vb)
+                else:
+                    s0, s1 = (t0 - ta) / d, (t1 - ta) / d
+                    if s0 > s1:
+                        s0, s1 = s1, s0
+                    s0, s1 = max(0.0, s0), min(1.0, s1)
+                    if s1 < s0:
+                        continue
+                    ea, eb = va + (vb - va) * s0, va + (vb - va) * s1
+                    lo, hi = min(ea, eb), max(ea, eb)
+                if hi >= v0 and lo <= v1:
+                    score += 1
+        if best is None or score < best[0]:
+            best = (score, i, frac)
+    return best[2]
+
+
+_DIM_PT = re.compile(r"(-?[\d.]+),(-?[\d.]+)")
+
+
+def dim_ink(page, rec):
+    """The two ends of a dimension line, taken back OUT of the emitted tag.
+
+    Page draws with y flipped, so it is flipped back: what comes out is the
+    arrow as it will be on paper, in the drawing's own frame, and it is the
+    only thing an assert about this sheet is allowed to measure."""
+    el = page.body[rec["line"]]
+    i = el.index('d="') + 3
+    d = el[i:el.index('"', i)]
+    return [(float(a), -float(b)) for a, b in _DIM_PT.findall(d)]
+
+
+def dim_figure(page, rec):
+    """...and the number, out of the emitted <text>."""
+    el = page.body[rec["text"]]
+    return el[el.index(">", el.index("<text")) + 1:el.index("</text>")]
+
+
 def glyph_dims(path):
     with open(path, encoding="utf-8") as fh:
         m = re.search(r'viewBox="[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)"',
@@ -1674,6 +1946,19 @@ def full_bed(G):
     from build123d import Compound
     return Compound(children=list(G.parts) + [G.panel_bed]
                     + list(G.battens_bed))
+
+
+def table_bed(G):
+    """The same bed with the panel up at 700 - the desk standing.
+
+    The bed is one bed in two positions and the frame does not move; the
+    difference is the plate and its four battens. This is the position the
+    front of the book shows, because it is the one a still picture of the
+    other position cannot tell you about (X9).
+    """
+    from build123d import Compound
+    return Compound(children=list(G.parts) + [G.panel_table]
+                    + list(G.battens_table))
 
 
 def comp(parts):
@@ -4047,9 +4332,16 @@ def render_all(G, data, out_dir, width, only):
     return made
 
 
+# THE COVER DRAWING IS IN TABLE MODE, and that is the builder's call: "the
+# cover picture ought to be table mode". It is the right one. The frame is the
+# same frame in both positions, so a cover in bed mode shows a loft bed with a
+# board lying in the sofa - and hides the one thing that makes this bed worth
+# building, which is that the board goes UP and becomes a desk at 700. The
+# dimension sheet on the page after it stands in the same position, so the two
+# front pages are the same bed and the reader never has to re-learn it.
 def render_hero(G, out_dir, width, az=330, elev=22):
     use_model(G)
-    bed = full_bed(G)
+    bed = table_bed(G)
     look_at = bed.bounding_box().center()
     view = View(camera_direction(az, elev), look_at)
     plines = project(view, [("all", bed)])["all"]
@@ -4087,46 +4379,52 @@ BRUK_SHEETS = {
 
 
 def _bruk_dims(G, mode):
-    """[(kind, along, from, to, text, where)] - the dimension lines.
+    """[(kind, along, from, to, mm, words, where)] - the dimension lines.
 
     'v' is a vertical dimension standing at model X = `along`, 'h' a
-    horizontal one at model Z = `along`. `where` puts the label clear of the
+    horizontal one at model Z = `along`. `where` puts the WORDS clear of the
     line work - "top", "bot" or "side" - and it is chosen per dimension
-    because the page is a drawing, not a table. Every number in a label comes
-    out of the model's measured-clearance block; not one is typed here.
+    because the page is a drawing, not a table. Every number comes out of the
+    model's measured-clearance block; not one is typed here.
+
+    THE NUMBER AND THE WORDS ARE TWO THINGS. They used to be one string with
+    the figure glued to the front of it, drawn beside the arrow - which meant
+    the one thing on the page that had to be read at a glance was set in the
+    same weight as the sentence explaining it. The figure goes ON the arrow
+    now, bold and with its unit, by the same Page.dimension() the measurement
+    sheet uses; the sentence stays where it was and says what the figure
+    means. Neither carries the other's job.
     """
     if mode == "bed_mode":
         up, lo = G.figure_lying_upper, G.figure_lying_lower
         return [
             ("v", up.pose["head"][0], up.pose["head"][2] + G.FIG_HEAD_R,
-             G.GUARD_TOP, f"{G.GUARD_OVER_FACE:.0f} rekkverk over ansiktet",
-             "top"),
+             G.GUARD_TOP, G.GUARD_OVER_FACE, "rekkverk over ansiktet", "top"),
             ("v", up.extents[0][1] - 60, up.extents[2][1], G.GUARD_TOP,
-             f"{G.GUARD_OVER_BODY:.0f} over kroppen", "top"),
+             G.GUARD_OVER_BODY, "over kroppen", "top"),
             ("h", G.GUARD_TOP + 55, up.extents[0][1], G.WALL_SPAN,
-             f"{G.WALL_SPAN - up.extents[0][1]:.0f} madrass igjen bak føttene",
+             G.WALL_SPAN - up.extents[0][1], "madrass igjen bak føttene",
              "top"),
             ("v", lo.pose["head"][0], lo.pose["head"][2] + G.FIG_HEAD_R,
              G.SLAT_Z1 - G.BED_SLAT_T,
-             f"{G.LIE_LOWER_FACE:.0f} fri høyde over ansiktet nede", "side"),
+             G.LIE_LOWER_FACE, "fri høyde over ansiktet nede", "side"),
         ]
     right = G.figure_seated_right
     return [
         ("v", right.pose["crown"][0], right.pose["crown"][2],
          G.SLAT_Z1 - G.BED_SLAT_T,
-         f"{G.SIT_HEADROOM:.0f} over hodet — man sitter helt rett opp",
-         "side"),
+         G.SIT_HEADROOM, "over hodet — man sitter helt rett opp", "side"),
         ("v", right.pose["crown"][0] - 250, G.SEAT_FACE,
          right.pose["crown"][2],
-         f"{G.FIG_SITTING_H:.0f} sittehøyde (0,545 H)", "top"),
+         G.FIG_SITTING_H, "sittehøyde (0,545 H)", "top"),
         ("v", G.PANEL_X0 + G.PANEL_W / 2, G.SEAT_FACE, G.PANEL_TOP_TABLE,
-         f"{G.TABLE_OVER_SEAT:.0f} plate over sete", "top"),
+         G.TABLE_OVER_SEAT, "plate over sete", "top"),
         # The knee gap is a short dimension in a narrow gap, so it carries the
         # number alone - what it means is one line down in the caption. X9:
         # the knees are UNDER the plate now, so what this measures is the
         # nearest approach of body to plate, not a folded leg stopping short.
         ("h", G.FIG_SIT_Z + 20, G.panel_table.extents[0][1],
-         right.extents[0][0], f"{G.LEG_TO_TABLE:.0f}", "top"),
+         right.extents[0][0], G.LEG_TO_TABLE, "", "top"),
     ]
 
 
@@ -4167,47 +4465,67 @@ def render_bruk(G, out_dir, width):
         page.polylines(fig_lines, INK, T.W_NEW * 0.5)
 
         tick, size = T.BADGE_R * 0.55, T.BADGE_R * 0.78
-        for kind, along, a, b, label, where in _bruk_dims(G, mode):
+        dim_sz = T.BADGE_R * 0.95
+        for kind, along, a, b, mm, words, where in _bruk_dims(G, mode):
             if kind == "v":
                 p0, p1 = view.xy((along, 0, a)), view.xy((along, 0, b))
             else:
                 p0, p1 = view.xy((a, 0, along)), view.xy((b, 0, along))
             mid = ((p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2)
+            # The end marks stay: with no offset there are no witness lines,
+            # and a dimension has to show WHERE it stopped.
             for end in (p0, p1):
                 page.line((end[0] - tick, end[1]) if kind == "v"
                           else (end[0], end[1] - tick),
                           (end[0] + tick, end[1]) if kind == "v"
                           else (end[0], end[1] + tick), GREY, T.W_LEAD)
-                page.arrow(mid, end, INK, T.W_LEAD, T.BADGE_R * 0.5)
-            # A number written across a child is a number nobody reads, so
-            # every label says for itself which way it steps out of the way.
+            page.dimension(p0, p1, f"{mm:.0f} mm", size=dim_sz)
+            if not words:
+                continue
+            # A sentence written across a child is a sentence nobody reads, so
+            # every one of them says for itself which way it steps out of the
+            # way.
             hi = p0 if p0[1] >= p1[1] else p1
             lo = p0 if p0[1] < p1[1] else p1
             if where == "top":
-                page.text((hi[0], hi[1] + size * 0.6), label, size,
+                page.text((hi[0], hi[1] + size * 0.6), words, size,
                           anchor="middle")
             elif where == "bot":
-                page.text((lo[0], lo[1] - size * 1.35), label, size,
+                page.text((lo[0], lo[1] - size * 1.35), words, size,
                           anchor="middle")
             else:
-                page.text((mid[0] + tick * 1.4, mid[1] - size * 0.32), label,
-                          size)
+                page.text((mid[0] + dim_sz * 0.9, mid[1] - size * 0.32),
+                          words, size)
 
         top = page.y1 - T.BADGE_R * 1.4
         page.text((page.x0 + T.BADGE_R, top), head, T.BADGE_R * 1.5,
                   weight="bold")
-        page.text((page.x0 + T.BADGE_R, top - T.BADGE_R * 1.7),
-                  f"Referansekroppen er et barn på {G.FIGURE_H:.0f} mm "
-                  f"(EN 747, alder 6+), bygget som én solid av 14 primitiver "
-                  f"etter AnthroKids (Snyder m.fl. 1977). Grått = sengen, "
-                  f"svart = kroppen. Kroppen er ikke en del: den kappes ikke, "
-                  f"bærer ingenting og står i ingen liste — men hvert mål på "
-                  f"arket er målt på den.", T.BADGE_R * 0.72)
-        page.text((page.x0 + T.BADGE_R, top - T.BADGE_R * 2.65),
-                  BRUK_NOTE[mode].format(
-                      over=G.TABLE_OVER_SEAT, under=G.TABLE_UNDER_SEAT,
-                      thigh=2 * G.FIG_THIGH_R, leg=G.LEG_TO_TABLE),
-                  T.BADGE_R * 0.72)
+        # THE NOTES ARE WRAPPED TO THE SHEET, not written and hoped for. The
+        # first of them is 286 characters and ran a third of its length off
+        # the right-hand edge for as long as it has existed - which is the one
+        # drawing fault a proof render always shows and a code review never
+        # does. Page.wrap() measures the column in the page's own units, so
+        # the answer follows the sheet whatever size the bed is.
+        note_sz = T.BADGE_R * 0.72
+        col = page.w - T.BADGE_R * 2.0
+        rows = page.wrap(
+            f"Referansekroppen er et barn på {G.FIGURE_H:.0f} mm "
+            f"(EN 747, alder 6+), bygget som én solid av 14 primitiver "
+            f"etter AnthroKids (Snyder m.fl. 1977). Grått = sengen, "
+            f"svart = kroppen. Kroppen er ikke en del: den kappes ikke, "
+            f"bærer ingenting og står i ingen liste — men hvert mål på "
+            f"arket er målt på den.", col, note_sz)
+        rows += page.wrap(
+            BRUK_NOTE[mode].format(
+                over=G.TABLE_OVER_SEAT, under=G.TABLE_UNDER_SEAT,
+                thigh=2 * G.FIG_THIGH_R, leg=G.LEG_TO_TABLE), col, note_sz)
+        y = top - T.BADGE_R * 1.7
+        for row in rows:
+            page.text((page.x0 + T.BADGE_R, y), row, note_sz)
+            y -= note_sz * 1.35
+        assert y > page.y1 - T.PAD * 1.6 - T.BADGE_R * 4.2 * 1.6, \
+            (f"bruksarkets {len(rows)} notatlinjer går ned i tegningen - "
+             f"marginen over motivet må vokse")
         svg = os.path.join(out_dir, f"{stem}.svg")
         png = os.path.join(out_dir, f"{stem}.png")
         page.write(svg, width)
@@ -4259,6 +4577,12 @@ def main(argv):
         # them rather than in a chain of its own.
         import render_maalfigur
         made.append(render_maalfigur.render(G, out_dir, width))
+        # ...and the bed's own dimensions, drawn with the same pen from the
+        # cover's own camera. Same reason it is made here: it is a projection
+        # of this model through this file's View, and it lands in the same
+        # folder as the pages it stands in front of.
+        import render_maaltegning
+        made.append(render_maaltegning.render(G, out_dir, width))
     if proof:
         preview = os.path.join(ROOT, "docs", "preview")
         # The sheets are rastered at the LARGEST page scale so their own type

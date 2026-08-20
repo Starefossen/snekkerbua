@@ -199,6 +199,14 @@ def build_manual(marks: PageMarks) -> tuple[list[str], list[tuple[str, str]]]:
             key = "prep"
             toc.append((key, "Før du begynner"))
             pages.append(simple_page(section, marks, key, css="prep"))
+        elif head == "# Sengen i mål":
+            # Maltegningen: en tegning som fyller satsbredden og tre korte
+            # avsnitt under den. Samme mal som forsteg-siden - figuren er
+            # allerede nøyaktig 180 mm bred (render_maaltegning), sa den
+            # trenger ingen egen CSS.
+            key = "maal"
+            toc.append((key, "Sengen i mål"))
+            pages.append(simple_page(section, marks, key, css="prep"))
         elif head == "# Mål rommet først":
             # Forsteget: nisja males for noe kappes. Ren tekst og en liten
             # tabell, sa den gar pa prep-malen.

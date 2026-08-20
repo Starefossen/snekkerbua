@@ -2485,6 +2485,13 @@ def _img(src, height, alt=""):
 #  fanget det og sa hvilket tall som gir 180 mm igjen.]
 ROOM_FIG_PX = 406
 
+# Måltegningen av senga selv - side 2, rett etter forsiden. Samme regnestykke
+# og samme kontrakt som over: tallet er høyden i piksler som gir figuren
+# satsbredden 180 mm, og render_maaltegning.assert_fits_column() leser det
+# herfra og stopper tegningen hvis komposisjonen har endret proporsjonene.
+# Den er nesten kvadratisk, så den er nesten dobbelt så høy som romfiguren.
+MAAL_FIG_PX = 673
+
 
 # The glyphs are all drawn to ONE scale, and each carries that scale in the
 # height of its viewBox - a wood screw is 120 units tall, the big angle
@@ -2506,8 +2513,9 @@ def _glyph_height(path, screw_px, cap=None):
 def emit_montering(G, root, steps, idx):
     """docs/MONTERING.md - the pictorial manual. Same steps, same numbers.
 
-    Page 1 is the cover, page 2 the preparation pictograms, page 3 the
-    hardware inventory, page 4 the part inventory, then one page per step.
+    Page 1 is the cover, page 2 the bed's own six dimensions, page 3 the
+    room, page 4 the preparation pictograms, page 5 the hardware inventory,
+    page 6 the part inventory, then one page per step.
     Everything on those pages is derived: the drawings from the model, the
     counts from JOINTS and the cut list, the step order from build_steps().
     """
@@ -2589,7 +2597,32 @@ def emit_montering(G, root, steps, idx):
          "Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). "
          "Full steg-for-steg-tekst: [byggesteg](generated/byggesteg.md).\n\n"]
 
-    # ----- page 2: the room ------------------------------------------------
+    # ----- page 2: the bed's own dimensions --------------------------------
+    # Forsiden viser senga; denne siden svarer på hvor stor den er, og den
+    # står FØR «Mål rommet først» med vilje: den som skal måle nisja må vite
+    # hva den skal måle den mot. Seks mål, ikke flere - resten er nøkkelmål.
+    # Tegningen lages av tools/render_maaltegning.py under `mise run
+    # montering`; denne fila skriver bare taggen og teksten under den.
+    L.append("---\n\n# Sengen i mål\n\n")
+    L.append(_img("img/hanna-maal.png", MAAL_FIG_PX,
+                  f"Senga i bordstilling, sett på skrå, med seks mål: "
+                  f"{G.WALL_SPAN} mm bredde, {G.OVERALL_DEPTH} mm dybde, "
+                  f"{G.POST_HEIGHT} mm høyde, {G.SLAT_Z0} mm fri høyde "
+                  f"under, {G.PANEL_TOP_TABLE} mm pulthøyde og "
+                  f"{G.SLAT_LEN} mm soveflate på tvers") + "\n\n")
+    L.append(f"**{G.WALL_SPAN} × {G.OVERALL_DEPTH} × {G.POST_HEIGHT} mm.** "
+             f"Bredden er rommets tall og ikke sengas: senga fyller nisja "
+             f"vegg til vegg, og hver gjennomgående del kappes til "
+             f"{G.THROUGH_LEN} mm for å komme inn i den.\n\n")
+    L.append(f"Under senga står **{G.SLAT_Z0} mm** fritt. Platen er tegnet i "
+             f"bordstilling, på **{G.PANEL_TOP_TABLE} mm** — den samme platen "
+             f"ligger nede på {G.PANEL_TOP_BED} mm som sengebunn. Soveflaten "
+             f"oppe er {G.THROUGH_LEN} × **{G.SLAT_LEN} mm**: en standard "
+             f"madrass på 80 × 200 cm.\n\n")
+    L.append("Alle mål i mm, målt fra ferdig gulv. Resten av tallene står i "
+             "[nøkkelmål](generated/nokkelmal.md).\n\n")
+
+    # ----- page 3: the room ------------------------------------------------
     # Denne siden står før alt annet fordi arbeidet gjør det: nisja må være
     # ferdig og målt før halve kapplista kan kappes. Samme tekst som i
     # byggesteg.md - den står ett sted, i room_first().
@@ -2624,7 +2657,7 @@ def emit_montering(G, root, steps, idx):
     for c in room["check"][:1]:
         L.append(f"⚠️ {c}\n\n")
 
-    # ----- page 3: before you start ---------------------------------------
+    # ----- page 4: before you start ---------------------------------------
     L.append("---\n\n# Før du begynner\n\n")
     L.append("**Svart strek** er delen du setter opp nå. "
              "**Grå strek** er det som allerede står.\n\n")
@@ -2672,7 +2705,7 @@ def emit_montering(G, root, steps, idx):
         L.append(f"| {yes} | {no} | {line} |\n")
     L.append("\n")
 
-    # ----- page 4: hardware -----------------------------------------------
+    # ----- page 5: hardware -----------------------------------------------
     # The legend first: nothing on this page says what the two numbers in
     # "5×60" are, or what the "100x" counts. One measured exemplar does.
     L.append("---\n\n# Beslag\n\n")
@@ -2697,7 +2730,7 @@ def emit_montering(G, root, steps, idx):
              "enkelt drives, og hvorfor: "
              "[skrueretninger](generated/skrueretninger.md).\n\n")
 
-    # ----- page 5: parts ---------------------------------------------------
+    # ----- page 6: parts ---------------------------------------------------
     L.append("---\n\n# Delene\n\n")
     L.append("| Del | Dim. | Lengde | Ant. | Kapp |\n|---|---|---:|---:|---|\n")
     for no_name, section, length, qty, _sp, _en, fit in parts_rows:

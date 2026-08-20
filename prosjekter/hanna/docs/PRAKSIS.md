@@ -24,7 +24,8 @@ Kilden her er `generate_loftbed.py`, og dette er veien ut av den:
       ├─ tools/render_lineart.py leser modellen → docs/img/steg-NN.svg/.png
       │    ├─ tools/render_cutpage.py   steg 0 (kappeplanen)
       │    ├─ tools/render_panel.py     steg 10 (den løse platen)
-      │    └─ tools/render_maalfigur.py forsteget (målefiguren av nisja)
+      │    ├─ tools/render_maalfigur.py forsteget (målefiguren av nisja)
+      │    └─ tools/render_maaltegning.py side 2 (senga i mål)
       ├─ tools/render_setedetalj.py  → docs/schematics/setedetalj.svg
       ├─ tools/render_endelevation.py → docs/schematics/end-elevation.svg
       ├─ tools/render_spikerslag.py  → docs/schematics/spikerslag.svg

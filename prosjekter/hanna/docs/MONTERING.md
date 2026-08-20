@@ -20,6 +20,18 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 
 ---
 
+# Sengen i mål
+
+<img src="img/hanna-maal.png" alt="Senga i bordstilling, sett på skrå, med seks mål: 1990 mm bredde, 836 mm dybde, 2037 mm høyde, 1500 mm fri høyde under, 700 mm pulthøyde og 800 mm soveflate på tvers" height="673">
+
+**1990 × 836 × 2037 mm.** Bredden er rommets tall og ikke sengas: senga fyller nisja vegg til vegg, og hver gjennomgående del kappes til 1984 mm for å komme inn i den.
+
+Under senga står **1500 mm** fritt. Platen er tegnet i bordstilling, på **700 mm** — den samme platen ligger nede på 315 mm som sengebunn. Soveflaten oppe er 1984 × **800 mm**: en standard madrass på 80 × 200 cm.
+
+Alle mål i mm, målt fra ferdig gulv. Resten av tallene står i [nøkkelmål](generated/nokkelmal.md).
+
+---
+
 # Mål rommet først
 
 Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Senga er referansen, ikke rommet — bygg i vater og lodd, og ta skjevheten i delene som møter vegg og gulv.**
