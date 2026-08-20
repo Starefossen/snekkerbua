@@ -7,6 +7,13 @@ Rekkefølgen er ikke fri. Sengen står inntil bakveggen og inntil begge sidevegg
 
 Bildeversjonen av de samme stegene, med samme nummer, ligger i [MONTERING.md](../MONTERING.md). Mål slår du opp i [nøkkelmål](nokkelmal.md) og [kappliste](kappliste.md); leddene står i J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene), med antall og forboring i [beslaglista](beslagliste.md).
 
+**Hvert steg har en «festeplassering»-tabell**, og den er svaret på hvor langt inn og hvor langt opp på materialet et feste skal stå. Hullet er oppgitt i DELENS egne mål — så mange mm inn fra en navngitt ende, så mange mm inn fra en navngitt kant, og senteravstand mellom hullene i samme rad. Ta tabellene med til steg 0: det er der du merker opp og borer, mens delene ennå ligger løse på bukken.
+
+* **Ytterenden** er den enden av delen som peker mot nærmeste endevegg, **innerenden** den som peker inn mot sengas midte. Derfor gjelder ett mål begge sider av senga — og modellen måler at de to halvdelene faktisk projiserer til samme tall før det skrives.
+* **Stående deler måles ovenfra.** Foten kappes i vater etter at rammen står, så den enden finnes ikke ennå når du borer.
+* **«midt på» er senterlinjen.** Riss den opp med senterlinjal eller med to diagonaler — ikke mål fra den ene siden.
+* Målene er senter av hullet. Retningen skruen drives, og hvorfor akkurat den veien, står i [skrueretninger](skrueretninger.md).
+
 ## Før steg 0 — mål rommet
 
 Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Senga er referansen, ikke rommet — bygg i vater og lodd, og ta skjevheten i delene som møter vegg og gulv.**
@@ -83,6 +90,16 @@ Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannret
 
 **Ledd:** J2-B, J8-B, J12 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
+**Festeplassering — mål på delen:**
+
+| Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
+|---|---|---|---|---:|
+| **J2-B** 2× Treskrue 6×120 | bakre sidevange 48×98 × 1984, oversiden | 27 / 68 mm fra ytterenden | 18 mm fra bakkanten | 41 |
+| **J8-B** 2× Treskrue 6×80 | bakre benkevange 48×68 × 1794, forsiden (mot rommet) | 34 mm fra ytterenden | 22 mm fra under- og overkanten | 24 |
+| **J12** 1× Treskrue 5×40 | bakre hjørnestolpe 36×98 × 1402, innersiden (mot sengas midte) | 948 mm fra toppen | midt på (18 mm fra hver side) | — |
+| **J12** 1× Treskrue 5×40 | bordbærelekt 48×68 × 1794, undersiden | 20 mm fra ytterenden | 18 mm fra bakkanten | — |
+| **J12** 1× Vinkelbeslag 40×40×20 | bakre hjørnestolpe 36×98 × 1402, innersiden (mot sengas midte) | 928 mm fra toppen | midt på (18 mm fra hver side) | — |
+
 **Slik gjør du:**
 
 1. Legg de to bakre stolpene ut i riktig avstand. De er de korte — de stopper under sidevangen.
@@ -129,6 +146,12 @@ Nå bygges de to endene ut fra bakrammen. Endebjelken går fra den bakre stolpen
 
 **Ledd:** J1 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
+**Festeplassering — mål på delen:**
+
+| Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
+|---|---|---|---|---:|
+| **J1** 2× Treskrue 6×80 | endebjelke 36×98 × 836, innersiden (mot sengas midte) | 18 mm fra vegg- og romenden | 27 mm fra under- og overkanten | 44 |
+
 **Slik gjør du:**
 
 1. Reis den fremre stolpen på plass mot sideveggen.
@@ -152,6 +175,12 @@ Den fremre vangen lukker rammen i overetasjen. Den hviler på begge endebjelker 
 
 **Ledd:** J2 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
+**Festeplassering — mål på delen:**
+
+| Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
+|---|---|---|---|---:|
+| **J2** 2× Treskrue 6×80 | fremre sidevange 48×98 × 1984, baksiden (mot veggen) | 47,5 mm fra ytterenden | 27 mm fra under- og overkanten | 44 |
+
 **Slik gjør du:**
 
 1. Løft vangen opp på endebjelkene, på utsiden av dem.
@@ -172,6 +201,18 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 **Festemidler:** 16× Treskrue 5×40 forsenket Torx · 8× Treskrue 5×60 forsenket Torx · 4× Treskrue 6×80 forsenket Torx · 4× Vinkelbeslag 90×90×40×2,5 varmforsinket
 
 **Ledd:** J8, J10, J17 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+
+**Festeplassering — mål på delen:**
+
+| Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
+|---|---|---|---|---:|
+| **J8** 2× Treskrue 6×80 | fremre benkevange 48×68 × 642, baksiden (mot veggen) | 47,5 mm fra ytterenden | 22 mm fra under- og overkanten | 24 |
+| **J10** 2× Treskrue 5×40 | stubbefot 48×68 × 229, yttersiden (mot sideveggen) | 22,5 / 67,5 mm fra toppen | midt på (24 mm fra hver side) | 45 |
+| **J10** 2× Treskrue 5×40 | benkevange 48×68 × 1794, undersiden | 411,5 / 456,5 mm fra ytterenden | midt på (24 mm fra hver side) | 45 |
+| **J10** 2× Treskrue 5×40 | benkevange 48×68 × 642, undersiden | 90,5 / 135,5 mm fra innerenden | midt på (24 mm fra hver side) | 45 |
+| **J10** 1× Treskrue 5×60 | stubbefot 48×68 × 229, innersiden (mot sengas midte) | 35 mm fra toppen | midt på (24 mm fra hver side) | — |
+| **J10** 1× Vinkelbeslag 90×90×40×2,5 | stubbefot 48×68 × 229, yttersiden (mot sideveggen) | i flukt med toppen | midt på (24 mm fra hver side) | — |
+| **J17** 2× Treskrue 5×60 | endelist 36×48 × 98, forsiden (mot rommet) | 22,5 mm fra begge ender | midt på (24 mm fra hver side) | 53 |
 
 **Slik gjør du:**
 
@@ -199,6 +240,15 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 
 **Ledd:** J3, J4, J5 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
+**Festeplassering — mål på delen:**
+
+| Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
+|---|---|---|---|---:|
+| **J3** 3× Treskrue 6×80 | fremre sidevange 48×98 × 1984, baksiden (mot veggen) | 808 mm fra ytterenden | 25 / 49 / 73 mm fra underkanten | 24 |
+| **J4** 1× Treskrue 5×60 | rungetrinn 48×68 × 320, oversiden | 18 mm fra ytterenden | 18 mm fra forkanten | — |
+| **J4** 1× Treskrue 6×120 | stigevange 36×48 × 2037, yttersiden (mot sideveggen) | 784 / 1029 / 1274 / 1519 / 1764 mm fra toppen | midt på (18 mm fra hver side) | 245 |
+| **J5** 1× Treskrue 5×60 | stigekloss 36×48 × 36, innersiden (mot sengas midte) | midt på (24 mm fra hver ende) | midt på (18 mm fra hver side) | — |
+
 **Slik gjør du:**
 
 1. Skru stigeklossene på innsiden av hver stigevange (J5). Klossen er 36 mm lang — nøyaktig så dyp som stigevangen — og skal ligge i flukt med vangens for- og bakkant, ikke stikke bakover slik trinnet gjør. Klosshøyden er trinnhøyden — mål to ganger.
@@ -221,6 +271,14 @@ Fem spiler per benk, lagt oppå benkevangene — og helt ute ved hver vegg en 76
 **Festemidler:** 24× Treskrue 5×60 forsenket Torx
 
 **Ledd:** J11, J11-E, J16 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+
+**Festeplassering — mål på delen:**
+
+| Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
+|---|---|---|---|---:|
+| **J11** 1× Treskrue 5×60 | benkespile 23×98 × 800, oversiden | 24 mm fra vegg- og romenden | midt på (49 mm fra hver side) | — |
+| **J11-E** 1× Treskrue 5×60 | endespile 23×98 × 764, oversiden | 24 mm fra romenden | 47,5 mm fra innerkanten | — |
+| **J16** 1× Treskrue 5×60 | endespile 23×98 × 764, oversiden | 18 mm fra veggenden | midt på (49 mm fra hver side) | — |
 
 **Slik gjør du:**
 
@@ -245,6 +303,12 @@ Spilene ligger OPPÅ begge sidevanger — ikke i et spor og ikke på en lekt. Al
 
 **Ledd:** J6 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
+**Festeplassering — mål på delen:**
+
+| Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
+|---|---|---|---|---:|
+| **J6** 1× Treskrue 5×60 | køyespile 23×98 × 800, oversiden | 24 mm fra vegg- og romenden | midt på (49 mm fra hver side) | — |
+
 **Slik gjør du:**
 
 1. Legg ut alle spilene løst først og fordel dem etter kapplista, før du skrur noe.
@@ -267,6 +331,12 @@ To bånd, hvert delt i to bord, med klatreåpningen i midten. Man klatrer GJENNO
 
 **Ledd:** J7 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
+**Festeplassering — mål på delen:**
+
+| Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
+|---|---|---|---|---:|
+| **J7** 2× Treskrue 5×60 | rekkverksbord 36×98 × 832, baksiden (mot veggen) | 47,5 mm fra ytterenden · 24 mm fra innerenden | 22,5 mm fra under- og overkanten | 53 |
+
 **Slik gjør du:**
 
 1. Legg det nederste båndet an mot innsiden av hjørnestolpen og stigevangen, i flukt med stolpenes innerplan.
@@ -287,6 +357,13 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke 
 **Festemidler:** 16× Treskrue 5×40 forsenket Torx
 
 **Ledd:** J13a, J13b — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+
+**Festeplassering — mål på delen:**
+
+| Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
+|---|---|---|---|---:|
+| **J13a** 6× Treskrue 5×40 | avstivningslekt 48×68 × 750, undersiden | 22,5 / 163,5 / 304,5 mm fra vegg- og romenden | midt på (24 mm fra hver side) | 141 |
+| **J13b** 2× Treskrue 5×40 | fremre kilelekt 48×68 × 77, undersiden | 22,5 mm fra begge ender | midt på (24 mm fra hver side) | 32 |
 
 **Slik gjør du:**
 

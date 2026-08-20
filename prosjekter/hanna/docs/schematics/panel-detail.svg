@@ -58,15 +58,15 @@
   <text x="90" y="262" class="sub">Samme plate, samme to avstivningslekter og samme to kilelekter i begge stillinger · ingen ståldel i mekanismen · snitt A og B ved X = 809, gjennom venstre avstivningslekt · veggplan Y = −48 · alle mål i mm</text>
 
   <!-- ================================================== A  SENGESTILLING -->
-  <text x="330" y="470" class="pt" text-anchor="start">A · SENGESTILLING – snitt ved X = 809 (Y–Z), 1,3:1</text>
-  <rect x="392.6" y="492.5" width="117" height="786.5" class="wall"/>
-  <line x1="509.6" y1="492.5" x2="509.6" y2="1279" class="wallface"/>
-  <text x="397.8" y="538" class="sml" text-anchor="start">VEGG</text>
-  <!-- bakre benkevange 48x68, Y -48..0, Z 191..259 -->
-  <rect x="509.6" y="903.3" width="62.4" height="88.4" class="rai"/>
-  <!-- benkeflatens nivaa 282 (benken staar i et annet X-snitt) -->
-  <polyline points="494,873.4 1500,873.4" class="ghol"/>
-  <text x="700" y="866" class="sml" text-anchor="start">benkeflatens nivå 282</text>
+  <text x="330" y="420" class="pt" text-anchor="start">A · SENGESTILLING – snitt ved X = 809 (Y–Z), 1,3:1</text>
+  <rect x="392.6" y="445" width="117" height="834" class="wall"/>
+  <line x1="509.6" y1="445" x2="509.6" y2="1279" class="wallface"/>
+  <text x="397.8" y="490.5" class="sml" text-anchor="start">VEGG</text>
+  <!-- bakre benkevange 48x68, Y -48..0, Z 229..297 -->
+  <rect x="509.6" y="853.9" width="62.4" height="88.4" class="rai"/>
+  <!-- benkeflatens nivaa 320 (benken staar i et annet X-snitt) -->
+  <polyline points="494,824 1500,824" class="ghol"/>
+  <text x="700" y="816.6" class="sml" text-anchor="start">benkeflatens nivå 320</text>
   <!-- gulv -->
   <line x1="392.6" y1="1240" x2="1651" y2="1240" class="grd"/>
   <line x1="392" y1="1240" x2="375" y2="1257" class="ext"/>
@@ -103,33 +103,33 @@
   <line x1="1570" y1="1240" x2="1553" y2="1257" class="ext"/>
   <line x1="1608" y1="1240" x2="1591" y2="1257" class="ext"/>
   <line x1="1646" y1="1240" x2="1629" y2="1257" class="ext"/>
-  <!-- avstivningslekt 48x68 x 750, Y 0..750, Z 191..259 -->
-  <rect x="572" y="903.3" width="975" height="88.4" class="bat"/>
-  <!-- loes plate 18 mm, Y -48..750, Z 259..277 -->
-  <rect x="509.6" y="879.9" width="1037.4" height="23.4" class="pnl"/>
+  <!-- avstivningslekt 48x68 x 750, Y 0..750, Z 229..297 -->
+  <rect x="572" y="853.9" width="975" height="88.4" class="bat"/>
+  <!-- loes plate 18 mm, Y -48..750, Z 297..315 -->
+  <rect x="509.6" y="830.5" width="1037.4" height="23.4" class="pnl"/>
   <!-- stigevange 36x48, Y 752..788 -->
-  <rect x="1549.6" y="492.5" width="46.8" height="747.5" class="pstb"/>
+  <rect x="1549.6" y="445" width="46.8" height="795" class="pstb"/>
   <!-- trinn 1 staar i planet bak snittet (X 835..1155) -->
-  <rect x="1508" y="903.3" width="88.4" height="62.4" class="gho"/>
+  <rect x="1508" y="853.9" width="88.4" height="62.4" class="gho"/>
   <!-- J13a: 6 x 5x40 nedenfra, hodet 41 mm inne i lekta -->
-  <rect x="593.45" y="938.4" width="15.6" height="53.3" class="cb"/>
-  <line x1="601.25" y1="938.4" x2="601.25" y2="886.4" class="scrl"/>
-  <circle cx="601.25" cy="938.4" r="7" class="scr"/>
-  <rect x="776.75" y="938.4" width="15.6" height="53.3" class="cb"/>
-  <line x1="784.55" y1="938.4" x2="784.55" y2="886.4" class="scrl"/>
-  <circle cx="784.55" cy="938.4" r="7" class="scr"/>
-  <rect x="960.05" y="938.4" width="15.6" height="53.3" class="cb"/>
-  <line x1="967.85" y1="938.4" x2="967.85" y2="886.4" class="scrl"/>
-  <circle cx="967.85" cy="938.4" r="7" class="scr"/>
-  <rect x="1143.35" y="938.4" width="15.6" height="53.3" class="cb"/>
-  <line x1="1151.15" y1="938.4" x2="1151.15" y2="886.4" class="scrl"/>
-  <circle cx="1151.15" cy="938.4" r="7" class="scr"/>
-  <rect x="1326.65" y="938.4" width="15.6" height="53.3" class="cb"/>
-  <line x1="1334.45" y1="938.4" x2="1334.45" y2="886.4" class="scrl"/>
-  <circle cx="1334.45" cy="938.4" r="7" class="scr"/>
-  <rect x="1509.95" y="938.4" width="15.6" height="53.3" class="cb"/>
-  <line x1="1517.75" y1="938.4" x2="1517.75" y2="886.4" class="scrl"/>
-  <circle cx="1517.75" cy="938.4" r="7" class="scr"/>
+  <rect x="593.45" y="889" width="15.6" height="53.3" class="cb"/>
+  <line x1="601.25" y1="889" x2="601.25" y2="837" class="scrl"/>
+  <circle cx="601.25" cy="889" r="7" class="scr"/>
+  <rect x="776.75" y="889" width="15.6" height="53.3" class="cb"/>
+  <line x1="784.55" y1="889" x2="784.55" y2="837" class="scrl"/>
+  <circle cx="784.55" cy="889" r="7" class="scr"/>
+  <rect x="960.05" y="889" width="15.6" height="53.3" class="cb"/>
+  <line x1="967.85" y1="889" x2="967.85" y2="837" class="scrl"/>
+  <circle cx="967.85" cy="889" r="7" class="scr"/>
+  <rect x="1143.35" y="889" width="15.6" height="53.3" class="cb"/>
+  <line x1="1151.15" y1="889" x2="1151.15" y2="837" class="scrl"/>
+  <circle cx="1151.15" cy="889" r="7" class="scr"/>
+  <rect x="1326.65" y="889" width="15.6" height="53.3" class="cb"/>
+  <line x1="1334.45" y1="889" x2="1334.45" y2="837" class="scrl"/>
+  <circle cx="1334.45" cy="889" r="7" class="scr"/>
+  <rect x="1509.95" y="889" width="15.6" height="53.3" class="cb"/>
+  <line x1="1517.75" y1="889" x2="1517.75" y2="837" class="scrl"/>
+  <circle cx="1517.75" cy="889" r="7" class="scr"/>
 
   <!-- maal under A -->
   <line x1="509.6" y1="1240" x2="509.6" y2="1420" class="ext"/>
@@ -145,43 +145,43 @@
   <line x1="509.6" y1="1400" x2="1547" y2="1400" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="1028" y="1428" class="dm" text-anchor="middle">798  platedybde (Y −48 … 750)</text>
   <!-- maal til hoeyre i A -->
-  <line x1="1596.4" y1="991.7" x2="1695" y2="991.7" class="ext"/>
-  <line x1="1596.4" y1="903.3" x2="1695" y2="903.3" class="ext"/>
-  <line x1="1596.4" y1="879.9" x2="1695" y2="879.9" class="ext"/>
-  <line x1="1685" y1="903.3" x2="1685" y2="991.7" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1697" y="955" class="dm" text-anchor="start">68</text>
-  <line x1="1685" y1="879.9" x2="1685" y2="903.3" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1697" y="890" class="dm" text-anchor="start">18</text>
+  <line x1="1596.4" y1="942.3" x2="1695" y2="942.3" class="ext"/>
+  <line x1="1596.4" y1="853.9" x2="1695" y2="853.9" class="ext"/>
+  <line x1="1596.4" y1="830.5" x2="1695" y2="830.5" class="ext"/>
+  <line x1="1685" y1="853.9" x2="1685" y2="942.3" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1697" y="905.6" class="dm" text-anchor="start">68</text>
+  <line x1="1685" y1="830.5" x2="1685" y2="853.9" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1697" y="840.6" class="dm" text-anchor="start">18</text>
   <!-- 5 mm dypp for putene -->
-  <polyline points="1112,812 1094,876" class="ldr" marker-end="url(#aE)"/>
-  <text x="1118" y="805" class="sml" text-anchor="start">5 mm dypp for putene</text>
+  <polyline points="1112,762.6 1094,826.6" class="ldr" marker-end="url(#aE)"/>
+  <text x="1118" y="755.6" class="sml" text-anchor="start">5 mm dypp for putene</text>
   <!-- 2 mm mot stigevanga -->
-  <polyline points="1620,772 1548,874" class="ldr" marker-end="url(#aE)"/>
-  <text x="1628" y="765" class="sml" text-anchor="start">2 mm til</text>
-  <text x="1628" y="797" class="sml" text-anchor="start">stigevanga</text>
+  <polyline points="1620,722.6 1548,824.6" class="ldr" marker-end="url(#aE)"/>
+  <text x="1628" y="715.6" class="sml" text-anchor="start">2 mm til</text>
+  <text x="1628" y="747.6" class="sml" text-anchor="start">stigevanga</text>
   <!-- trinn bak snittet -->
-  <polyline points="1655,1070 1575,962" class="ldr" marker-end="url(#aE)"/>
+  <polyline points="1655,1070 1575,912" class="ldr" marker-end="url(#aE)"/>
   <text x="1600" y="1090" class="sml" text-anchor="start">trinn 1</text>
   <text x="1600" y="1122" class="sml" text-anchor="start">(X 835–1155)</text>
   <text x="1600" y="1154" class="sml" text-anchor="start">bak snittet</text>
   <text x="1160" y="1045" class="jl" text-anchor="start">J13a</text>
-  <polyline points="1180,1055 1153,1000" class="ldr" marker-end="url(#aE)"/>
+  <polyline points="1180,1055 1153,950" class="ldr" marker-end="url(#aE)"/>
   <text x="620" y="1090" class="sml" text-anchor="start">Avstivningslekt 48×68 på høykant, limt og skrudd nedenfra</text>
-  <text x="620" y="1128" class="sml" text-anchor="start">platas uk 259 · ok 277 · lektas uk 191</text>
-  <text x="620" y="1166" class="sml" text-anchor="start">fri gangsone under: gulv → Z 191</text>
+  <text x="620" y="1128" class="sml" text-anchor="start">platas uk 297 · ok 315 · lektas uk 229</text>
+  <text x="620" y="1166" class="sml" text-anchor="start">fri gangsone under: gulv → Z 229</text>
   <text x="330" y="1490" class="sml" text-anchor="start">Platen ligger på TRE – ingenting av stål bærer. Bakkanten hviler på den bakre</text>
-  <text x="330" y="1522" class="sml" text-anchor="start">benkevangen (ok 259), forkanten på trinn 1 (ok 259), som står i planet bak snittet.</text>
+  <text x="330" y="1522" class="sml" text-anchor="start">benkevangen (ok 297), forkanten på trinn 1 (ok 297), som står i planet bak snittet.</text>
   <text x="330" y="1554" class="sml" text-anchor="start">Opplegg 574 × 48 mm bak og 320 × 30 mm foran.</text>
-  <text x="330" y="1586" class="sml" text-anchor="start">Overkant 277 = 5 mm under benkeflaten 282. De fire putene er 100 mm og like</text>
-  <text x="330" y="1618" class="sml" text-anchor="start">tykke; skummet tar de 5 mm, så hele soveflaten nede ligger på 382.</text>
+  <text x="330" y="1586" class="sml" text-anchor="start">Overkant 315 = 5 mm under benkeflaten 320. De fire putene er 100 mm og like</text>
+  <text x="330" y="1618" class="sml" text-anchor="start">tykke; skummet tar de 5 mm, så hele soveflaten nede ligger på 420.</text>
 
   <!-- ================================================== B  BORDSTILLING -->
-  <text x="1730" y="470" class="pt" text-anchor="start">B · BORDSTILLING – snitt ved X = 809 (Y–Z), 1,3:1</text>
-  <rect x="1793" y="492.5" width="117" height="786.5" class="wall"/>
-  <line x1="1910" y1="492.5" x2="1910" y2="1279" class="wallface"/>
-  <text x="1798" y="538" class="sml" text-anchor="start">VEGG</text>
-  <rect x="1910" y="903.3" width="62.4" height="88.4" class="rai"/>
-  <text x="2100" y="848" class="sml" text-anchor="start">benkene (benkeflate 282, 382 med pute) er sitteplassene</text>
+  <text x="1730" y="420" class="pt" text-anchor="start">B · BORDSTILLING – snitt ved X = 809 (Y–Z), 1,3:1</text>
+  <rect x="1793" y="445" width="117" height="834" class="wall"/>
+  <line x1="1910" y1="445" x2="1910" y2="1279" class="wallface"/>
+  <text x="1798" y="490.5" class="sml" text-anchor="start">VEGG</text>
+  <rect x="1910" y="853.9" width="62.4" height="88.4" class="rai"/>
+  <text x="2100" y="798.6" class="sml" text-anchor="start">benkene (benkeflate 320, 420 med pute) er sitteplassene</text>
   <line x1="1793" y1="1240" x2="3051" y2="1240" class="grd"/>
   <line x1="1792" y1="1240" x2="1775" y2="1257" class="ext"/>
   <line x1="1830" y1="1240" x2="1813" y2="1257" class="ext"/>
@@ -218,41 +218,41 @@
   <line x1="3008" y1="1240" x2="2991" y2="1257" class="ext"/>
   <line x1="3046" y1="1240" x2="3029" y2="1257" class="ext"/>
   <!-- plateenheten i sengestilling, stiplet -->
-  <rect x="1910" y="879.9" width="1037.4" height="23.4" class="gho"/>
-  <rect x="1972.4" y="903.3" width="975" height="88.4" class="gho"/>
-  <!-- bordbaerelekt 48x68, Y -48..0, Z 414..482 -->
-  <rect x="1910" y="613.4" width="62.4" height="88.4" class="brd"/>
-  <!-- avstivningslekt i bordstilling, Z 414..482 -->
-  <rect x="1972.4" y="613.4" width="975" height="88.4" class="bat"/>
-  <!-- loes plate, Z 482..500 -->
-  <rect x="1910" y="590" width="1037.4" height="23.4" class="pnl"/>
-  <rect x="2950" y="492.5" width="46.8" height="747.5" class="pstb"/>
+  <rect x="1910" y="830.5" width="1037.4" height="23.4" class="gho"/>
+  <rect x="1972.4" y="853.9" width="975" height="88.4" class="gho"/>
+  <!-- bordbaerelekt 48x68, Y -48..0, Z 474..542 -->
+  <rect x="1910" y="535.4" width="62.4" height="88.4" class="brd"/>
+  <!-- avstivningslekt i bordstilling, Z 474..542 -->
+  <rect x="1972.4" y="535.4" width="975" height="88.4" class="bat"/>
+  <!-- loes plate, Z 542..560 -->
+  <rect x="1910" y="512" width="1037.4" height="23.4" class="pnl"/>
+  <rect x="2950" y="445" width="46.8" height="795" class="pstb"/>
   <!-- trinn 2 bak snittet -->
-  <rect x="2908.4" y="613.4" width="88.4" height="62.4" class="gho"/>
+  <rect x="2908.4" y="535.4" width="88.4" height="62.4" class="gho"/>
   <!-- J13a i bordstilling -->
-  <rect x="1993.85" y="648.5" width="15.6" height="53.3" class="cb"/>
-  <line x1="2001.65" y1="648.5" x2="2001.65" y2="596.5" class="scrl"/>
-  <circle cx="2001.65" cy="648.5" r="7" class="scr"/>
-  <rect x="2177.15" y="648.5" width="15.6" height="53.3" class="cb"/>
-  <line x1="2184.95" y1="648.5" x2="2184.95" y2="596.5" class="scrl"/>
-  <circle cx="2184.95" cy="648.5" r="7" class="scr"/>
-  <rect x="2360.45" y="648.5" width="15.6" height="53.3" class="cb"/>
-  <line x1="2368.25" y1="648.5" x2="2368.25" y2="596.5" class="scrl"/>
-  <circle cx="2368.25" cy="648.5" r="7" class="scr"/>
-  <rect x="2543.75" y="648.5" width="15.6" height="53.3" class="cb"/>
-  <line x1="2551.55" y1="648.5" x2="2551.55" y2="596.5" class="scrl"/>
-  <circle cx="2551.55" cy="648.5" r="7" class="scr"/>
-  <rect x="2727.05" y="648.5" width="15.6" height="53.3" class="cb"/>
-  <line x1="2734.85" y1="648.5" x2="2734.85" y2="596.5" class="scrl"/>
-  <circle cx="2734.85" cy="648.5" r="7" class="scr"/>
-  <rect x="2910.35" y="648.5" width="15.6" height="53.3" class="cb"/>
-  <line x1="2918.15" y1="648.5" x2="2918.15" y2="596.5" class="scrl"/>
-  <circle cx="2918.15" cy="648.5" r="7" class="scr"/>
-  <!-- loeftet 223 -->
-  <line x1="2100" y1="613.4" x2="2100" y2="903.3" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="2112" y="770" class="dmh" text-anchor="start">223  løftet</text>
-  <text x="2470" y="812" class="jl" text-anchor="start">J13a</text>
-  <polyline points="2510,790 2549,702" class="ldr" marker-end="url(#aE)"/>
+  <rect x="1993.85" y="570.5" width="15.6" height="53.3" class="cb"/>
+  <line x1="2001.65" y1="570.5" x2="2001.65" y2="518.5" class="scrl"/>
+  <circle cx="2001.65" cy="570.5" r="7" class="scr"/>
+  <rect x="2177.15" y="570.5" width="15.6" height="53.3" class="cb"/>
+  <line x1="2184.95" y1="570.5" x2="2184.95" y2="518.5" class="scrl"/>
+  <circle cx="2184.95" cy="570.5" r="7" class="scr"/>
+  <rect x="2360.45" y="570.5" width="15.6" height="53.3" class="cb"/>
+  <line x1="2368.25" y1="570.5" x2="2368.25" y2="518.5" class="scrl"/>
+  <circle cx="2368.25" cy="570.5" r="7" class="scr"/>
+  <rect x="2543.75" y="570.5" width="15.6" height="53.3" class="cb"/>
+  <line x1="2551.55" y1="570.5" x2="2551.55" y2="518.5" class="scrl"/>
+  <circle cx="2551.55" cy="570.5" r="7" class="scr"/>
+  <rect x="2727.05" y="570.5" width="15.6" height="53.3" class="cb"/>
+  <line x1="2734.85" y1="570.5" x2="2734.85" y2="518.5" class="scrl"/>
+  <circle cx="2734.85" cy="570.5" r="7" class="scr"/>
+  <rect x="2910.35" y="570.5" width="15.6" height="53.3" class="cb"/>
+  <line x1="2918.15" y1="570.5" x2="2918.15" y2="518.5" class="scrl"/>
+  <circle cx="2918.15" cy="570.5" r="7" class="scr"/>
+  <!-- loeftet 245 -->
+  <line x1="2100" y1="535.4" x2="2100" y2="853.9" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="2112" y="706.3" class="dmh" text-anchor="start">245  løftet</text>
+  <text x="2470" y="734" class="jl" text-anchor="start">J13a</text>
+  <polyline points="2510,712 2549,624" class="ldr" marker-end="url(#aE)"/>
 
   <line x1="1910" y1="1240" x2="1910" y2="1420" class="ext"/>
   <line x1="1972.4" y1="1240" x2="1972.4" y2="1310" class="ext"/>
@@ -266,22 +266,22 @@
   <text x="2927" y="1370" class="dm" text-anchor="middle">30</text>
   <line x1="1910" y1="1400" x2="2947.4" y2="1400" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="2428" y="1428" class="dm" text-anchor="middle">798  platedybde (Y −48 … 750)</text>
-  <line x1="2996.8" y1="701.8" x2="3095" y2="701.8" class="ext"/>
-  <line x1="2996.8" y1="613.4" x2="3095" y2="613.4" class="ext"/>
-  <line x1="2996.8" y1="590" x2="3095" y2="590" class="ext"/>
-  <line x1="3085" y1="613.4" x2="3085" y2="701.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="3097" y="665" class="dm" text-anchor="start">68</text>
-  <line x1="3085" y1="590" x2="3085" y2="613.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="3097" y="600" class="dm" text-anchor="start">18</text>
-  <text x="3145" y="530" class="sml" text-anchor="start">ok 500 = bordhøyde</text>
-  <text x="3145" y="562" class="sml" text-anchor="start">uk 482 = ok bordbærelekt</text>
-  <text x="3145" y="594" class="sml" text-anchor="start">= ok trinn 2</text>
+  <line x1="2996.8" y1="623.8" x2="3095" y2="623.8" class="ext"/>
+  <line x1="2996.8" y1="535.4" x2="3095" y2="535.4" class="ext"/>
+  <line x1="2996.8" y1="512" x2="3095" y2="512" class="ext"/>
+  <line x1="3085" y1="535.4" x2="3085" y2="623.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="3097" y="587" class="dm" text-anchor="start">68</text>
+  <line x1="3085" y1="512" x2="3085" y2="535.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="3097" y="522" class="dm" text-anchor="start">18</text>
+  <text x="3145" y="452" class="sml" text-anchor="start">ok 560 = bordhøyde</text>
+  <text x="3145" y="484" class="sml" text-anchor="start">uk 542 = ok bordbærelekt</text>
+  <text x="3145" y="516" class="sml" text-anchor="start">= ok trinn 2</text>
   <text x="2020" y="1030" class="sml" text-anchor="start">stiplet: plateenheten i sengestilling (A)</text>
   <text x="2020" y="1080" class="sml" text-anchor="start">Samme plate, samme to lekter og samme seksten skruer – bare løftet</text>
-  <text x="2020" y="1118" class="sml" text-anchor="start">223 mm og lagt på et annet par opplegg.</text>
-  <text x="2020" y="1156" class="sml" text-anchor="start">fri gangsone under: gulv → Z 191</text>
-  <text x="2020" y="1194" class="sml" text-anchor="start">ryggputa 332×800×100 står på høykant mot bordbærelekta – topp 714</text>
-  <text x="1730" y="1490" class="sml" text-anchor="start">Bakkanten hviler på bordbærelekta 48×68 (ok 482), forkanten på trinn 2 (ok 482).</text>
+  <text x="2020" y="1118" class="sml" text-anchor="start">245 mm og lagt på et annet par opplegg.</text>
+  <text x="2020" y="1156" class="sml" text-anchor="start">fri gangsone under: gulv → Z 229</text>
+  <text x="2020" y="1194" class="sml" text-anchor="start">ryggputa 332×800×100 står på høykant mot bordbærelekta – topp 752</text>
+  <text x="1730" y="1490" class="sml" text-anchor="start">Bakkanten hviler på bordbærelekta 48×68 (ok 542), forkanten på trinn 2 (ok 542).</text>
   <text x="1730" y="1522" class="sml" text-anchor="start">Opplegg 574 × 48 mm bak og 320 × 30 mm foran – nøyaktig som i sengestilling.</text>
   <text x="1730" y="1554" class="sml" text-anchor="start">Ingen kile, ingen lås og ingen nedholder: et bord belastes nedover, og de to</text>
   <text x="1730" y="1586" class="sml" text-anchor="start">avstivningslektene tar sidekreftene mot trinnenden i begge stillinger.</text>
@@ -400,9 +400,9 @@
   <!-- ================================================== D  GLIDESJAKT OG KILE -->
   <text x="2200" y="1700" class="pt" text-anchor="start">D · GLIDESJAKTEN OG KILEN – snitt ved Y = 726 (X–Z), 2:1</text>
   <text x="2200" y="1738" class="sml" text-anchor="start">venstre side i sengestilling; høyre side er speilvendt</text>
-  <!-- benkespile 23x98, Z 259..282, brutt til venstre -->
+  <!-- benkespile 23x98, Z 297..320, brutt til venstre -->
   <polygon points="2390,1818 2300,1818 2310,1829.5 2290,1841 2310,1852.5 2300,1864 2390,1864" class="brd"/>
-  <!-- fremre benkevange 48x68, Z 191..259, brutt til venstre -->
+  <!-- fremre benkevange 48x68, Z 229..297, brutt til venstre -->
   <polygon points="2390,1864 2300,1864 2310,1887 2290,1910 2310,1933 2290,1956 2310,1979 2300,2000 2390,2000" class="rai"/>
   <!-- plata, brutt til hoeyre -->
   <polygon points="2516,1828 3120,1828 3130,1840 3110,1852 3120,1864 2516,1864" class="pnl"/>
@@ -410,7 +410,7 @@
   <polygon points="2516,1864 2670,1864 2670,2000 2516,1918" class="bat"/>
   <!-- avstivningslekt 48x68 -->
   <rect x="2670" y="1864" width="96" height="136" class="bat"/>
-  <!-- trinn 1, Z 211..259, brutt til hoeyre -->
+  <!-- trinn 1, Z 249..297, brutt til hoeyre -->
   <polygon points="2770,1864 3120,1864 3130,1888 3110,1912 3130,1936 3120,1960 2770,1960" class="brd"/>
   <!-- J13b: 2 skruer (X 730,5 og 762,5), kontraboret grunner ut mot tuppen -->
   <polyline points="2549,1935.6 2549,1918 2573,1918 2573,1948.4" class="cbf"/>
@@ -451,9 +451,9 @@
 
   <!-- ================================================== E  SKRUEN -->
   <text x="2200" y="2270" class="pt" text-anchor="start">E · J13a/J13b – SKRUEN NEDENFRA, 3:1</text>
-  <!-- plateskive, Z 259..277 -->
+  <!-- plateskive, Z 297..315 -->
   <polygon points="2360,2287 2540,2287 2540,2341 2360,2341" class="pnl"/>
-  <!-- lektskive, Z 191..259, brutt begge veier -->
+  <!-- lektskive, Z 229..297, brutt begge veier -->
   <polygon points="2360,2341 2370,2375 2350,2409 2370,2443 2350,2477 2370,2511 2360,2545 2540,2545 2530,2511 2550,2477 2530,2443 2550,2409 2530,2375 2540,2341" class="bat"/>
   <line x1="2360" y1="2341" x2="2540" y2="2341" class="glue"/>
   <rect x="2432" y="2422" width="36" height="123" class="cb"/>

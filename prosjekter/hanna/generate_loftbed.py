@@ -1334,9 +1334,11 @@ BENCH_RAIL_BOTTOM = BENCH_RAIL_TOP - BENCH_RAIL_H   # 229  [was 191]
 #   laps its face at 229..297, the end beam is fixed to its X-inner face at
 #   1304..1402 and the front side rail at 1402..1500, then the two guard bands
 #   at 1708 and 1881. Worst unbraced length is bench rail -> end beam,
-#   1304 - 297 = 1007 mm (was 708), so lambda = 97 (68), lambda_rel = 1.65
-#   (1.16), k_c = 0.33 (0.58) and N_c,Rd = 3528 * 0.33 * 12.92 = 15.0 kN (26.4)
-#   against a corner reaction of well under 1.5 kN: utilisation ~0.10 (~0.05).
+#   1304 - 297 = 1007 mm (was 708), so lambda = 97 (68), lambda_rel = 1.64
+#   (1.16), k_c = 0.32 (0.58) and N_c,Rd = 3528 * 0.32 * 12.92 = 14.7 kN (26.4)
+#   against a corner reaction of well under 1.5 kN: utilisation 0.10 (~0.05).
+#   (v14/X7 COMPUTES this row now - see THE REAL EC5 6.3.2 in the load
+#   section - so the figures here are a reading of the assert, not a rival.)
 #   (The old 48x48 over the old 708 mm: lambda 51, k_c 0.75, 22.3 kN. The
 #   thinner post is the STRONGER column, because 53% more area beats the loss in
 #   radius of gyration.) The strong axis at the full 2037 is lambda = 72 - not
@@ -1345,16 +1347,19 @@ BENCH_RAIL_BOTTOM = BENCH_RAIL_TOP - BENCH_RAIL_H   # 229  [was 191]
 #   (1304..1402) and the base as pinned: unbraced 1304 mm (was 967), lambda =
 #   126 (93), k_c = 0.20 (0.35), N_c,Rd = 3528 * 0.20 * 12.92 = 9.1 kN (15.8)
 #   against the corner reaction it carries in direct bearing off the rail top -
-#   utilisation ~0.17 (~0.10). The back bench rail and the ledger butt and
+#   utilisation 0.16 (~0.10) at the 1.5 kN X7 stands over the corner. The
+#   back bench rail and the ledger butt and
 #   screw to its X-inner face at 229..297 and 474..542, so the real unbraced
 #   length is shorter than that; 1304 is the conservative reading.
 #   X1 SAYS THIS OUT LOUD RATHER THAN BURYING IT: a 337 mm lift puts all 337
 #   into the ONE gap that governs each post - between the bench rail and the
 #   end beam - because everything below the bench stayed near the floor and
 #   everything above the end beam went up. Both posts stay well inside
-#   (0.10 and 0.17 against 1.0), but the frame is more slenderness-governed
-#   than it has ever been, and the docs round's real EC5 6.3.2 check should
-#   start here and at the ladder upright below (~0.26).
+#   (0.10 and 0.16 against the 0.5 gate), but the frame is more
+#   slenderness-governed than it has ever been - which is why v14/X7 stops
+#   arguing these in prose and RUNS EN 1995-1-1 6.3.2 on all four slender
+#   members, this pair and the ladder's two axes, off the built solids and
+#   against an assert. See THE REAL EC5 6.3.2 in the load section.
 POST_HEIGHT = 2037                       # front posts + ladder uprights [X1: was 1700]
 BACK_POST_HEIGHT = RAIL_BOTTOM           # 1402, the rail underside (W6)
                                          # [X1: was 1065; SLAT_Z1 1197, MATTRESS_Z1
@@ -1549,12 +1554,16 @@ END_BEAM_X = [POST_W, WALL_SPAN - POST_W - END_BEAM_T]   # 98..134 / 1856..1892
 #   lambda_rel = 1.74, k_c = 0.29 and N_c,Rd = 1728 * 0.29 * 12.92 = 6.5 kN
 #   against the ~1 kN a climber puts down an upright - utilisation ~0.15.
 #   v14/X1 lifts the rail to 1402, so that same floor-to-rail run is 1402 mm:
-#   lambda_y = 135, lambda_rel = 2.30, k_c = 0.17 and N_c,Rd = 1728 * 0.17 *
-#   12.92 = 3.8 kN against the same ~1 kN - utilisation ~0.26.
+#   lambda_y = 135, lambda_rel = 2.29, k_c = 0.17 and N_c,Rd = 1728 * 0.17 *
+#   12.92 = 3.9 kN against the same ~1 kN - utilisation 0.26.
 #   Ample, but this is now firmly a slenderness-governed member and the base is
-#   still unrestrained in Y: the docs round must run the real EC5 6.3.2 check
-#   and decide whether to add a floor-level tie back to the front corner posts.
-#   (The panel's front U-brackets are that tie today - see M4/F1.)
+#   still unrestrained in Y - so v14/X7 takes the arithmetic out of this
+#   comment and puts it under an assert: EN 1995-1-1 6.3.2 by the k_c method,
+#   on the built solids, against a 0.5 gate, and with THIS row MEASURED to be
+#   the worst of the four. See THE REAL EC5 6.3.2 in the load section. The
+#   floor-level tie back to the front corner posts stays unbuilt because 0.26
+#   does not ask for it; the check is what will say when it does. (The panel's
+#   front U-brackets are that tie today - see M4/F1.)
 LADDER_Y0 = FRONT_RAIL_Y1                # 752, outer face of the front rail
 LADDER_Y1 = LADDER_Y0 + UPRIGHT_T        # 788, same plane as the front posts
 LADDER_CLEAR = 320                       # clear width between the uprights
@@ -4133,7 +4142,7 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift, side=None):
             p[row] = corner
             return [dict(kind="plate", bracket=dr["bracket"], anchor=at(p),
                          direction=_unit(axis, sign), run=_unit(row, rsign),
-                         reach=reach, width=width,
+                         reach=reach, width=width, row_axis=row,
                          t=BRACKETS[dr["bracket"]]["t"], through=None,
                          into=target,
                          bears=(_member(crow, dr["bears"], pa, pb)
@@ -4144,7 +4153,8 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift, side=None):
             p[row] = v
             out.append(dict(kind="screw", anchor=at(list(p)),
                             direction=_unit(axis, sign), length=length, d=d,
-                            face=(axis, face), through=None, into=target))
+                            face=(axis, face), through=None, into=target,
+                            row_axis=row))
         return out
 
     axis, sign, entry, target = drive_axis_sign(contact, crow, pa, pb, dr,
@@ -4185,7 +4195,7 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift, side=None):
             out.append(dict(kind="screw", anchor=at(p), direction=vec,
                             length=length, d=d, face=(f_ax, seat_face),
                             through=entry, into=target, toe=True,
-                            seat=seat, seat_d=TOE_SEAT_D,
+                            seat=seat, seat_d=TOE_SEAT_D, row_axis=row,
                             seat_face=(f_ax, f_sign, face)))
         return out
 
@@ -4216,7 +4226,7 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift, side=None):
         p[row] = corner
         return [dict(kind="plate", bracket=dr["bracket"], anchor=at(p),
                      direction=_unit(axis, sign), run=_unit(row, rsign),
-                     reach=reach, width=b["width"], t=b["t"],
+                     reach=reach, width=b["width"], t=b["t"], row_axis=row,
                      through=entry, into=target)]
     out = []
     for v in row_positions(lo, hi, dr["per"], d, what):
@@ -4224,7 +4234,7 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift, side=None):
         out.append(dict(kind="screw", anchor=at(list(p)),
                         direction=_unit(axis, sign), length=length, d=d,
                         face=(axis, face), through=entry,
-                        into=target, grips=target))
+                        into=target, grips=target, row_axis=row))
     return out
 
 
@@ -4257,7 +4267,7 @@ def fastener_specs(all_parts):
                 f"{crow['a']} meets {crow['b']} across axis {crow['axis']}, "
                 f"and the table says the bed has {j['n']} of the joint")
             crow["_repeat"] = j["n"] // got
-    for j, crow, c, pa, pb in inst:
+    for _n, (j, crow, c, pa, pb) in enumerate(inst):
         rep = crow["_repeat"]
         spread = j.get("spread")
         if rep == 1:
@@ -4278,11 +4288,18 @@ def fastener_specs(all_parts):
                 assert win[a][0] < mid < win[a][1], (
                     f"{j['id']}: spread {s[a]:+g} puts one of them at "
                     f"{a}={mid:g}, off the joint")
-        for s in offsets:
+        # X6: WHICH ONE OF THEM. A joint's screws are laid out in ROWS, and a
+        # row's c/c is only meaningful inside one instance of the joint - the
+        # two J12 screws at either end of a 1794 mm ledger are one screw in
+        # each of two joints, not a row 1754 mm wide. `inst` is that identity,
+        # and a spread (a mirrored joint, two fastenings on one contact patch)
+        # counts as its own instance for the same reason.
+        for _k, s in enumerate(offsets):
             for dr in crow["drives"]:
                 for f in _place_drive(j, crow, c, pa, pb, dr, s):
                     f.update(jid=j["id"], name=dr["name"], drive=dr,
-                             joint=j, crow=crow, contact=c, pa=pa, pb=pb)
+                             joint=j, crow=crow, contact=c, pa=pa, pb=pb,
+                             inst=(_n, _k))
                     specs.append(f)
     return specs
 
@@ -5618,6 +5635,415 @@ print(f"OK  ROMDELER: {len(ROOM_FIT)} of {len(CUT_PARTS)} pieces in "
       + f"; the foot allowance {ROOM_OVER_FLOOR} clears the lowest joint on a "
       f"standing part (Z {_lowest:g}); {len(_scribed_sides)} of them stand in "
       f"the wall plane with no clearance and get the side scribed too")
+
+# ---------------------------------------------------------------------------
+# X6 - WHERE THE HOLE GOES ON THE PIECE
+# ---------------------------------------------------------------------------
+# The joint table says WHAT is driven, and the direction sheet says WHICH WAY.
+# Neither says the one thing a man with a piece of wood in the vice actually
+# needs: how far in from the end the hole is, how far up from the edge, and
+# how far apart two of them stand. Without those three numbers nothing can be
+# made square, level or the same on both sides - the parts can only be offered
+# up and hoped at, and hoping is how a bed ends up with one rail 4 mm higher
+# than the other.
+#
+# The numbers exist already. Every fastener in this bed is a solid at an
+# absolute (x, y, z), and that is exactly what a bench cannot use. So it is
+# PROJECTED BACK INTO THE PIECE IT IS DRIVEN FROM and reported as the two
+# measurements a tape can take on a trestle, plus the spacing:
+#
+#     <d> mm from a named END      along the piece's sawn length
+#     <d> mm from a named EDGE     across its section
+#     c/c <s>                      between the holes of one row
+#
+# THREE RULES PICK THE REFERENCES. They are rules and not a list of joints,
+# because a list of joints is the thing that goes out of date.
+#
+#   1. THE PIECE IS THE FRAME OF REFERENCE, NOT THE BED. The datum is an end
+#      or an edge of the piece the head sits on. Heights above the floor are
+#      in nokkelmal.md and are no use to a man at a trestle.
+#   2. AN END THAT DOES NOT EXIST YET IS NOT A DATUM. Steg 0 bores everything
+#      while the pieces are loose, and at that moment exactly one kind of end
+#      is still oversize: the FOOT of a standing part, trimmed in vater after
+#      the frame is up (ROOM_OVER_FLOOR). Marks on a post or a ladder stile
+#      are therefore taken from the TOP - and that is why the ladder's five
+#      rung holes come out as a count down from 2037 rather than up from a
+#      floor line that is still 15 mm of waste. Wall ends are fine-cut off the
+#      measured niche in the same breath as the cutting, before the drill
+#      comes out, so they are datums like any other.
+#   3. ALONG THE WALL, NAME THE MIDDLE OF THE BED - NOT LEFT AND RIGHT. On X
+#      an end or a face is `ytre` or `indre` according to which way it points
+#      relative to the middle of the bed. That is what lets ONE line serve a
+#      joint and its mirror image: the left stile's outer face and the right
+#      stile's outer face are the same face of the same piece, and the man
+#      holding one of them does not care which half of the room he is in. Y
+#      and Z need no such trick - this bed is symmetric in neither, so
+#      back/front and under/over each mean one thing.
+#
+# And the symmetry that rule 3 buys is MEASURED, not assumed: the mirror
+# assert below projects both halves of the bed into their own pieces and
+# compares the projections. Nothing in this model forces the two ends of the
+# bed to agree; the day they stop agreeing, the single line that claims to
+# serve both is a lie, and it is the assert that has to say so.
+PLACE_TOL = 0.51        # a hair over half a mm - finer than a tape can read
+
+
+def _length_axis(p):
+    """The axis the piece's SAWN LENGTH runs along - the axis that has ENDS.
+
+    The other two are the section, and they have EDGES. A square section
+    leaves the length fitting two sides (the rung block is 36 x 36 x 48 with a
+    36 mm cut length); there is nothing to choose between them on a bench, so
+    the longest side is called the length and both others are edges.
+    """
+    axes = _cut_axes(p)
+    return (next(iter(axes)) if len(axes) == 1
+            else max(range(3), key=lambda j: p.extents[j][1] - p.extents[j][0]))
+
+
+def _end_is_datum(p, axis, which):
+    """Is this end of this piece sawn to size BEFORE the holes are bored?"""
+    fit = ROOM_FIT.get(p.label)
+    return not (which == 0 and axis == 2
+                and fit is not None and fit["kind"].startswith("gulv"))
+
+
+def _ref_id(p, axis, which):
+    """The name of one end / edge / face of a piece. See rule 3 for X."""
+    if axis == 1:
+        return ("bak", "fram")[which]
+    if axis == 2:
+        return ("ned", "opp")[which]
+    lo, hi = p.extents[0]
+    here, there = (lo, hi) if which == 0 else (hi, lo)
+    return ("ytre" if abs(here - BED_CENTRE[0]) >= abs(there - BED_CENTRE[0])
+            else "indre")
+
+
+def _mark_point(f):
+    """WHERE THE PENCIL GOES. For an ordinary screw that is the anchor - the
+    head, on the face it is driven from. For a TOE SCREW it is not: the
+    anchor is the flat bottom of the ⌀18 pocket, `seat` millimetres down the
+    screw's own slanted axis, and what the builder marks is the MOUTH of that
+    pocket on the face, because that is what he lines the jig's hole up with
+    (steg 0: «hullet rett over merket»). Marking the seat bottom would put
+    every skew hole 9 mm out."""
+    seat = f.get("seat")
+    if not seat:
+        return f["anchor"]
+    return tuple(a - seat * v for a, v in zip(f["anchor"], f["direction"]))
+
+
+def _project(f, e, j):
+    """(datum name, mm, centred) - one fastener in one piece along one axis.
+
+    A hole the same distance from both sides of a piece is not "so many from
+    an edge", it is ON THE CENTRE LINE, and that is how it has to be named:
+    the two bench slats at either end of the bed are the same piece with the
+    same hole in the middle of it, and calling it 49 mm from the outer edge
+    on one and 49 from the inner on the other would make the mirror look
+    broken when it is not.
+    """
+    lo, hi = e.extents[j]
+    m = _mark_point(f)[j]
+    d = (m - lo, hi - m)
+    if abs(d[0] - d[1]) < PLACE_TOL:
+        return "midt", d[0], True
+    allowed = [w for w in (0, 1) if _end_is_datum(e, j, w)]
+    assert allowed, (
+        f"{f['jid']}: neither end of '{e.label}' along axis {j} is sawn to "
+        f"size before the holes are bored")
+    w = min(allowed, key=lambda k: d[k])
+    return _ref_id(e, j, w), d[w], False
+
+
+def _entry_of(f):
+    """The piece the mark is made on: the one the head sits in, or - for a
+    screw through a bracket flange - the one it is driven into."""
+    return f["through"] if f["through"] is not None else f["into"]
+
+
+def _mark_face(f):
+    """(axis, 0|1) - which face of that piece the mark is made on.
+
+    `face` is the face the model already drives the screw from (the bottom of
+    a counterbore or of a toe screw's seat is that face, by the same contract
+    the flush-head assert uses), so this is a reading and not a second guess.
+    """
+    axis = (f["face"][0] if "face" in f
+            else max(range(3), key=lambda j: abs(f["direction"][j])))
+    return axis, (0 if f["direction"][axis] > 0 else 1)
+
+
+def _uniform_step(vals):
+    """The one spacing a sorted row is laid out on, or None if it is not one."""
+    if len(vals) < 2:
+        return None
+    steps = [b - a for a, b in zip(vals, vals[1:])]
+    return steps[0] if max(steps) - min(steps) < PLACE_TOL else None
+
+
+def _row_pitch(fs, axis):
+    """c/c along `axis` inside ONE row: two fasteners of the same drive, in
+    the same INSTANCE of the joint, on the same piece. Both qualifications
+    are recorded when the fastener is placed, so this cannot pick up two
+    holes that merely happen to line up at opposite ends of a long member."""
+    best = None
+    row = [f for f in fs if f.get("row_axis") == axis]
+    for i, a in enumerate(row):
+        for b in row[i + 1:]:
+            if a["inst"] != b["inst"] or _entry_of(a) is not _entry_of(b):
+                continue
+            d = abs(_mark_point(a)[axis] - _mark_point(b)[axis])
+            best = d if best is None or d < best else best
+    return best
+
+
+def fastener_placements():
+    """One record per line of the placement table - the fastener in the frame
+    of the piece it is marked on, grouped exactly the way the direction sheet
+    groups it, so the two fragments are one row for one row."""
+    order = {j["id"]: i for i, j in enumerate(JOINTS)}
+    groups, seq = {}, []
+    for f in FASTENER_SPECS:
+        if f["drive"] is None or _entry_of(f) is None:
+            continue
+        # The cut-list line is part of the key: J10 is the same drive on
+        # two different pieces of wood - the continuous back bench rail and a
+        # 642 mm front segment - and the hole is not in the same place on
+        # them. One line of placement, one piece.
+        key = (f["jid"], f["name"], f["kind"], id(f["drive"]),
+               _entry_of(f).cut)
+        if key not in groups:
+            groups[key] = []
+            seq.append(key)
+        groups[key].append(f)
+    seq.sort(key=lambda k: (order[k[0]], k[1], k[2]))
+
+    out = []
+    for key in seq:
+        fs = groups[key]
+        f0 = fs[0]
+        e0 = _entry_of(f0)
+        crow = f0["crow"]
+        f_ax, f_side = _mark_face(f0)
+        assert all(_mark_face(f)[0] == f_ax for f in fs), \
+            f"{f0['jid']}: {f0['name']} is marked on two different faces"
+        L = _length_axis(e0)
+        axes = []
+        for j in range(3):
+            if j == f_ax:
+                continue
+            buckets = {}
+            for f in fs:
+                ref, dist, centred = _project(f, _entry_of(f), j)
+                b = buckets.setdefault(ref, dict(at=set(), centred=centred))
+                b["at"].add(round(dist, 1))
+                b["centred"] &= centred
+            pitch = _row_pitch(fs, j)
+            steps = set()
+            for b in buckets.values():
+                b["at"] = sorted(b["at"])
+                s = _uniform_step(b["at"])
+                if s is not None:
+                    steps.add(round(s, 1))
+            assert len(steps) <= 1, (
+                f"{f0['jid']}: the holes along axis {j} are laid out on "
+                f"{sorted(steps)} - one row, one pitch")
+            step = next(iter(steps)) if steps else None
+            if pitch is not None and step is not None:
+                assert abs(pitch - step) < PLACE_TOL, (
+                    f"{f0['jid']}: the row is drilled at c/c {pitch:g} but "
+                    f"the marks read {step:g} apart from the datum")
+            # Two datums with the same list of distances is the SAME hole
+            # measured from either end of the piece - one line, said once.
+            names = sorted(buckets)
+            both = (len(names) == 2
+                    and buckets[names[0]]["at"] == buckets[names[1]]["at"])
+            if both:
+                # ...and the two ends have to carry the SAME NUMBER of holes,
+                # not just the same list of distances. A line that says «18 mm
+                # fra begge ender» is claiming a pair, and a pair with three
+                # at one end and one at the other reads identically off the
+                # distances alone. Counted, so it cannot.
+                tally = [sum(1 for f in fs
+                             if _project(f, _entry_of(f), j)[0] == n)
+                         for n in names]
+                assert tally[0] == tally[1], (
+                    f"{f0['jid']}: axis {j} has {tally[0]} holes off the "
+                    f"'{names[0]}' end and {tally[1]} off '{names[1]}' - one "
+                    f"line cannot say «fra begge ender» about that")
+            widths = {round(_entry_of(f).extents[j][1]
+                             - _entry_of(f).extents[j][0], 1) for f in fs}
+            assert len(widths) == 1, (
+                f"{f0['jid']}: the pieces this line serves are "
+                f"{sorted(widths)} mm across on axis {j} - one line cannot "
+                f"measure two different widths")
+            axes.append(dict(
+                axis=j, role="ende" if j == L else "kant", both=both,
+                width=next(iter(widths)),
+                cc=(pitch if pitch is not None else step),
+                refs=[dict(ref=n, at=buckets[n]["at"],
+                           centred=buckets[n]["centred"]) for n in names]))
+        out.append(dict(
+            jid=f0["jid"], name=f0["name"], kind=f0["kind"],
+            per=f0["drive"]["per"],
+            member=(crow["a"] if e0 is f0["pa"] else crow["b"]),
+            section=e0.cut[1].replace("x", "×"), piece_len=e0.cut[2],
+            n=len(fs), pieces=len({id(_entry_of(f)) for f in fs}),
+            face=(f_ax, _ref_id(e0, f_ax, f_side)), axes=axes))
+    return out
+
+
+FASTENER_PLACEMENTS = fastener_placements()
+
+
+# THE MIRROR, MEASURED. Every line above claims to serve both halves of the
+# bed. This walks the two halves separately, projects each fastener into its
+# own piece exactly as the line does, and demands the two descriptions come
+# out identical - a comparison of two independently measured sets of
+# coordinates, not of a constant against itself. A screw 27 mm up in the left
+# end and 28 in the right would pass every other assert in this file.
+def _local_of(f):
+    e = _entry_of(f)
+    f_ax, f_side = _mark_face(f)
+    who = [(f_ax, _ref_id(e, f_ax, f_side), 0.0)]
+    for j in range(3):
+        if j == f_ax:
+            continue
+        ref, dist, _c = _project(f, e, j)
+        who.append((j, ref, round(dist, 1)))
+    return (f["jid"], f["name"], e.cut, tuple(who))
+
+
+_halves = {-1: [], 1: []}
+for _f in FASTENER_SPECS:
+    if _f["drive"] is None or _entry_of(_f) is None:
+        continue
+    _s = _f["anchor"][0] - BED_CENTRE[0]
+    if abs(_s) > TOL:
+        _halves[1 if _s > 0 else -1].append(_local_of(_f))
+_left, _right = sorted(_halves[-1]), sorted(_halves[1])
+assert _left == _right, (
+    "SPEILET: the two halves of the bed do not project to the same "
+    "placements. Only in one half: "
+    + "; ".join(str(x) for x in sorted(set(_left) ^ set(_right))[:4]))
+print(f"OK  X6 festeplassering: {len(FASTENER_PLACEMENTS)} linjer dekker "
+      f"{len([f for f in FASTENER_SPECS if f['drive'] is not None])} "
+      f"festemidler; speilprøven: {len(_left)} plasseringer i hver halvdel av "
+      f"senga projiserer til samme mål i delenes egne koordinater, så ett mål "
+      f"gjelder begge sider")
+
+
+# ---------------------------------------------------------------------------
+# X6 - EDGE DISTANCE, MEASURED ON BOTH PIECES
+# ---------------------------------------------------------------------------
+# The fits-the-face rule ((n-1)x4d + 2x3d, see MIN_EDGE) sizes a row inside
+# the CONTACT PATCH - the overlap of the two members. That is the right face
+# to lay a row out on and the wrong one to judge a split by: the patch is not
+# an edge, and a screw with 3d of patch either side of it can still stand
+# 8 mm from the real end of the wider piece. So this measures the thing
+# itself, on BOTH pieces of every joint, off the placed solids:
+#
+#   * EDGE DISTANCE IS MEASURED SQUARE TO THE SCREW. The axes the screw
+#     TRAVELS on carry depth, not edge - how deep the head sits and whether
+#     the tip comes out the far side are different questions, and this file
+#     already asks both of them. So the axes with a component of the drive
+#     vector in them are dropped, and what is left is the wood standing round
+#     the shank. On those axes the screw's position does not change along its
+#     length, so the anchor IS the measurement - no sampling, no tolerance.
+#   * A SKEW SCREW travels on two axes and is therefore judged on the one
+#     axis square to it. That is the honest reading: the other two are the
+#     seat's own depth and the joint's own reach.
+#   * the answer is the smallest of those, over BOTH members - the nearest
+#     edge or end of either piece, whichever it turns out to be.
+#
+# TWO YARDSTICKS, AND ONLY ONE OF THEM IS THIS FILE'S. 3d is EC5 for a
+# pre-drilled screw with an unloaded edge and is what the whole bed is laid
+# out to (MIN_EDGE); that one is asserted and must hold. 4d is the shop rule
+# of thumb the docs round asked to be measured, and it is REPORTED, not
+# enforced: moving a screw is a design change and belongs to the round that
+# owns the joint, not to the round that noticed. Every row under it is listed
+# by name in the build log so the reader can see exactly which ones sit
+# between the two numbers.
+EDGE_RULE_OF_THUMB_D = 4
+
+
+def screw_cross_axes(f):
+    """The axes square to the screw - the ones an edge distance lives on."""
+    cross = [j for j in range(3) if abs(f["direction"][j]) < 1e-9]
+    return cross or [min(range(3), key=lambda j: abs(f["direction"][j]))]
+
+
+def screw_edge_distance(f, member):
+    """(mm, axis) - the nearest edge or end of `member` square to this screw,
+    or (None, None) when the member is not in the joint."""
+    if member is None:
+        return None, None
+    out = []
+    for j in screw_cross_axes(f):
+        lo, hi = member.extents[j]
+        out.append((min(f["anchor"][j] - lo, hi - f["anchor"][j]), j))
+    return min(out)
+
+
+EDGE_REPORT = []
+for _f in FASTENER_SPECS:
+    if _f["kind"] != "screw" or _f.get("wall") or not _f["name"].startswith(
+            "Treskrue"):
+        continue
+    for _m in (_f.get("through"), _f.get("into")):
+        _e, _j = screw_edge_distance(_f, _m)
+        if _e is None:
+            continue
+        _w = _m.extents[_j][1] - _m.extents[_j][0]
+        EDGE_REPORT.append((round(_e, 2), _f["jid"], _f["name"], _m.label,
+                            _f["d"], _j, round(_w, 2),
+                            abs(_w / 2 - _e) < PLACE_TOL))
+EDGE_REPORT.sort()
+for _e, _jid, _name, _label, _d, _j, _w, _mid in EDGE_REPORT:
+    assert _e >= min_edge(_d) - TOL, (
+        f"{_jid}: {_name} stands {_e:g} mm from the nearest edge of "
+        f"'{_label}' on axis {_j} - EC5 wants {min_edge(_d):g} mm (3d) round "
+        f"a pre-drilled screw, and this file lays every row out to it")
+EDGE_WORST = {}
+for _e, _jid, _name, _label, _d, _j, _w, _mid in EDGE_REPORT:
+    EDGE_WORST.setdefault((_jid, _label), (_e, _d, _j, _w, _mid))
+EDGE_THIN = [(k, v) for k, v in sorted(EDGE_WORST.items())
+             if v[0] < EDGE_RULE_OF_THUMB_D * v[1] - TOL]
+# AND THE ONE DISTINCTION THAT MAKES THE LIST USEFUL. A row between 3d and 4d
+# is one of two quite different things:
+#   ON THE CENTRE LINE - the screw is already as far from both edges as the
+#       piece allows, and 4d is arithmetically impossible in that dimension: a
+#       6 mm screw wants 48 mm of width for it and this bed's frame board is
+#       36. Nothing can be moved; only the SECTION could change, and that is
+#       a different bed.
+#   OFF CENTRE - the screw could be moved and 4d would be reachable. Those
+#       are the only ones worth a design round.
+# The split is measured, not sorted by hand: `mid` is the screw sitting half
+# the piece's own width from either side.
+EDGE_THIN_MID = [x for x in EDGE_THIN if x[1][4]]
+EDGE_THIN_OFF = [x for x in EDGE_THIN if not x[1][4]]
+# TODO (design round, not this one): every row in EDGE_THIN_OFF could be
+# opened to 4d by moving a screw. Moving a screw moves the joint, and that is
+# the decision of the round that owns the joint, not of the round that
+# noticed - so it is measured and named here and left alone:
+#     assert not EDGE_THIN_OFF, EDGE_THIN_OFF
+print(f"OK  X6 kantavstand målt på BEGGE delene i hvert ledd, vinkelrett på "
+      f"skruen: minste {EDGE_REPORT[0][0]:g} mm ({EDGE_REPORT[0][1]} i "
+      f"'{EDGE_REPORT[0][3]}', d{EDGE_REPORT[0][4]:g} → "
+      f"{EDGE_REPORT[0][0] / EDGE_REPORT[0][4]:.1f}d), krav 3d overholdt av "
+      f"alle {len(EDGE_REPORT)} målingene")
+print(f"    {len(EDGE_THIN)} av {len(EDGE_WORST)} rader ligger mellom 3d og "
+      f"tommelfingerregelens {EDGE_RULE_OF_THUMB_D}d — "
+      f"{len(EDGE_THIN_MID)} av dem står PÅ SENTERLINJEN (4d er umulig i den "
+      f"dimensjonen), {len(EDGE_THIN_OFF)} står ikke på senter:")
+for _tag, _rows in (("senter", EDGE_THIN_MID), ("ikke senter", EDGE_THIN_OFF)):
+    for (_jid, _label), (_e, _d, _j, _w, _mid) in _rows:
+        print(f"      {_jid:5s} {_label:34s} {_e:5.1f} mm = "
+              f"{_e / _d:.1f}d i {_w:g} mm ({_tag}), d{_d:g}, "
+              f"4d = {EDGE_RULE_OF_THUMB_D * _d:g}")
+
 
 # ---------------------------------------------------------------------------
 # WHERE THE WALL NEEDS NOGGINGS
@@ -7945,9 +8371,9 @@ TRANSFER_CEILING, TRANSFER_CEILING_WHO = min(
 TRANSFER_FLOOR, TRANSFER_FLOOR_WHO = max(
     (p.extents[2][1], p.label) for p in _corridor
     if p.extents[2][1] <= TRANSFER_CEILING + TOL)
-TRANSFER_SLOT = TRANSFER_CEILING - TRANSFER_FLOOR          # 114
-PANEL_UNIT_H = PANEL_TOP_BED - BATTEN_Z0_BED               # 91
-TRANSFER_CLEAR = TRANSFER_SLOT - PANEL_UNIT_H              # 23
+TRANSFER_SLOT = TRANSFER_CEILING - TRANSFER_FLOOR          # 154  [X1: 114]
+PANEL_UNIT_H = PANEL_TOP_BED - BATTEN_Z0_BED               # 86   [X3: 91]
+TRANSFER_CLEAR = TRANSFER_SLOT - PANEL_UNIT_H              # 68   [X1: 23]
 # The gate. Under 15 mm the unit has to be tipped to get through, and a tipped
 # unit is a two-person move over a bench - that is what the comfort round was
 # opened to get rid of.
@@ -8013,6 +8439,151 @@ print(f"OK  K1 stigeklossen 36x48 x {RUNG_BLOCK_LEN} (var {RUNG_D}): flate mot "
       f"MPa mot {FC90_D:g} på tvers av fiberretningen → "
       f"{RUNG_BLOCK_BEAR_UTIL:.2f}; skruen sitter nå på Y {RUNG_BLOCK_Y0 + RUNG_BLOCK_LEN / 2:g}, "
       f"midt i vangen")
+
+
+# ---------------------------------------------------------------------------
+# X7 - THE REAL EC5 6.3.2, ON THE MEMBER THE LIFT MADE THE WORST
+# ---------------------------------------------------------------------------
+# Every buckling number in this file up to here has been an argument in a
+# comment: a slenderness worked out by hand in the LADDER note, a k_c read off
+# a curve, a capacity multiplied out and compared with a kilonewton. That was
+# fine while the frame had slack. X1 took the slack: lifting the platform 337
+# mm ran the ladder stile's out-of-plane length from 1065 to 1402 mm on a
+# 10,39 mm radius of gyration, which is lambda ~135 - the most slender member
+# in the bed by a distance, and slender enough that the answer now depends on
+# WHICH curve you read. So the curve is computed here instead, EN 1995-1-1
+# 6.3.2 in full, off the built solids:
+#
+#     lambda      = l_ef / i                       i = h / sqrt(12) for a
+#                                                  rectangle
+#     lambda_rel  = lambda/pi * sqrt(f_c,0,k / E_0,05)
+#     k           = 0,5 (1 + beta_c (lambda_rel - 0,3) + lambda_rel^2)
+#     k_c         = 1 / (k + sqrt(k^2 - lambda_rel^2))     (1,0 below 0,3)
+#     N_c,Rd      = k_c * A * f_c,0,d
+#
+# THE MATERIAL IS THE ONE THE REST OF THE FILE ALREADY USES. C24 to EN 338:
+# f_c,0,k = 21 N/mm2 and E_0,05 = 7400 N/mm2, over gamma_M 1,3, service class
+# 1. beta_c is 0,2, EC5's value for solid timber; laminated members get 0,1
+# and there are none in this bed.
+#
+# AND k_mod IS 0,8 HERE ON PURPOSE, WHICH IS NOT THE 0,9 VEDLEGG A.6 ARGUES.
+# A.6's case is a 2 kN drop on a slat - short term, k_mod 0,9. A column under
+# a climber is the same kind of event and 0,9 would be defensible, but every
+# buckling figure this file has ever quoted has been worked on 12,92 N/mm2,
+# i.e. 0,8, and the two must not disagree by a silent 12%. So 0,8 stays, the
+# choice is the CONSERVATIVE one of the two, and the price of it is measured
+# rather than waved at: the print below carries the same utilisation worked
+# on 0,9 beside it, so anybody who wants the other class can see exactly what
+# it buys (the ladder stile 0,26 -> 0,23) without re-deriving anything.
+#
+# THE LOAD IS THE ONE THE FILE ALREADY CARRIES. CLIMBER_KN, 1 kN, the person
+# on the ladder - and it is put down ONE stile, not shared over two. A rung
+# end actually delivers RUNG_END_KN, half of it; standing the whole climber on
+# one stile is the same worst-placement convention MAX_BLOCKLESS_UTIL uses,
+# and it is what makes this a check rather than an average. The corner posts
+# are run through the same machine on the corner reactions the block-less
+# corner table (V5) already argues, so all four members are judged on loads
+# this file had before X7 and not on new ones.
+#
+# WHAT THE CHECK IS ALLOWED TO CONCLUDE. It reports; it does not move wood.
+# The gate is 0,5, and it is set there rather than at the 0,8 the screw rows
+# use because a slenderness-governed member fails differently: a screw row
+# that is 0,8 utilised bends and complains first, and an Euler column does
+# not. If the ladder stile ever crosses it, the answer is the floor-level tie
+# back to the front corner posts the D13 note has been flagging - not a
+# thicker stile.
+C24_FC0K = 21.0                  # N/mm2, EN 338, compression along the grain
+C24_E005 = 7400.0                # N/mm2, EN 338, 5-percentile modulus
+K_MOD_MEDIUM = 0.8               # medium-term load, service class 1
+GAMMA_M_TIMBER = 1.3
+BETA_C_SOLID = 0.2               # EC5 6.3.2(4), solid timber
+FC0_D = C24_FC0K * K_MOD_MEDIUM / GAMMA_M_TIMBER          # 12.92 N/mm2
+MAX_BUCKLING_UTIL = 0.5
+
+
+def ec5_kc(lam):
+    """(lambda_rel, k_c) for a C24 solid-timber column - EN 1995-1-1 6.3.2."""
+    rel = lam / math.pi * math.sqrt(C24_FC0K / C24_E005)
+    if rel <= 0.3:
+        return rel, 1.0           # 6.3.2(2): no reduction below 0,3
+    k = 0.5 * (1 + BETA_C_SOLID * (rel - 0.3) + rel ** 2)
+    return rel, 1.0 / (k + math.sqrt(k * k - rel * rel))
+
+
+def ec5_column(width, depth, l_ef, n_kn):
+    """One column, one axis: everything 6.3.2 has to say about it.
+
+    `depth` is the dimension it bends in, `width` the other one. Both come off
+    the part, and l_ef off the distance between the things that actually hold
+    it - see the table below, where each row says what those are.
+    """
+    area = width * depth
+    i = depth / math.sqrt(12)
+    lam = l_ef / i
+    rel, kc = ec5_kc(lam)
+    cap = kc * area * FC0_D / 1000.0
+    return dict(a=area, i=i, lam=lam, rel=rel, kc=kc, cap=cap,
+                util=n_kn / cap, l=l_ef, n=n_kn)
+
+
+# WHERE EACH COLUMN IS HELD. The buckling length is not a number anybody
+# types: it is the biggest gap between the things that really hold the member
+# in the direction it would go. So each row below lists the HOLDS - heights
+# read off the model - and the length is the widest gap between two of them.
+# Which contacts count as a hold is a judgement and is therefore written out
+# per row rather than guessed from the geometry: a rung block touches the
+# stile, but what it ties the stile to is the other stile, in the ladder's own
+# plane, and it does nothing at all out of plane.
+_upright = min(uprights, key=lambda p: p.extents[0][0])
+_rung_mid = sorted(sum(p.extents[2]) / 2 for p in rungs)
+
+# (name, width, depth it bends in, [holds], axial kN, what the holds are)
+BUCKLING_MEMBERS = [
+    ("stigevange, ut av planet", UPRIGHT_W, UPRIGHT_T,
+     [0, front_rail.extents[2][0]], CLIMBER_KN,
+     "gulv → fremre sidevanges underkant (J3), og ingenting imellom: D13 tok "
+     "benkevangeomlegget og X1 løftet vangen"),
+    ("stigevange, i stigeplanet", UPRIGHT_T, UPRIGHT_W,
+     [0] + _rung_mid + [front_rail.extents[2][0]], CLIMBER_KN,
+     "gulv → første trinn; over det avstiver trinnene hverandre hver 245 mm"),
+    ("fremre hjørnestolpe", POST_W, POST_T,
+     [0, BENCH_RAIL_TOP, END_BEAM_Z0], 1.5,
+     "gulv → fremre benkevangeomlegg (229..297) → endebjelken (1304..1402); "
+     "verste gap er benkevange → endebjelke"),
+    ("bakre hjørnestolpe", POST_W, POST_T, [0, END_BEAM_Z0], 1.5,
+     "gulv → endebjelken alene. Den bakre benkevangen og bordbærelekta "
+     "støter og skrus i stolpens X-innerflate på 229..297 og 474..542, så "
+     "den virkelige lengden er kortere; dette er den konservative lesningen"),
+]
+BUCKLING = [(name, ec5_column(w, d, max(b - a for a, b in zip(h, h[1:])), n),
+             why) for name, w, d, h, n, why in BUCKLING_MEMBERS]
+for _name, _r, _why in BUCKLING:
+    assert _r["util"] <= MAX_BUCKLING_UTIL, (
+        f"X7: {_name} is {_r['util']:.2f} utilised in EC5 6.3.2 buckling "
+        f"(lambda {_r['lam']:.0f}, lambda_rel {_r['rel']:.2f}, k_c "
+        f"{_r['kc']:.2f}, N_c,Rd {_r['cap']:.1f} kN against {_r['n']:.1f}) - "
+        f"over the {MAX_BUCKLING_UTIL:g} gate a slenderness-governed member "
+        f"is held to. Brace it; do not thicken it")
+# And the claim the LADDER note makes out loud - that the lift made the stile
+# the worst member in the bed - is a comparison, so it is compared.
+BUCKLING_WORST = max(BUCKLING, key=lambda r: r[1]["util"])
+assert BUCKLING_WORST[0].startswith("stigevange, ut av planet"), (
+    f"X7: the worst buckling row is '{BUCKLING_WORST[0]}', not the ladder "
+    f"stile out of plane - the LADDER note says otherwise and one of the two "
+    f"is now wrong")
+K_MOD_SHORT = 0.9                # what vedlegg A.6 argues for a 2 kN drop
+print(f"OK  X7 EC5 6.3.2 (k_c-metoden, C24: f_c,0,k {C24_FC0K:g}, E_0,05 "
+      f"{C24_E005:g}, k_mod {K_MOD_MEDIUM:g}/gamma_M {GAMMA_M_TIMBER:g} → "
+      f"f_c,0,d {FC0_D:.2f} N/mm², beta_c {BETA_C_SOLID:g}), grense "
+      f"{MAX_BUCKLING_UTIL:g} — «(k_mod 0,9)» er det samme regnet på "
+      f"vedlegg A.6-klassen, altså hva den konservative 0,8-en koster:")
+for _name, _r, _why in BUCKLING:
+    print(f"      {_name:28s} l {_r['l']:6.0f}  i {_r['i']:5.2f}  λ "
+          f"{_r['lam']:5.1f}  λrel {_r['rel']:4.2f}  k_c {_r['kc']:4.2f}  "
+          f"N_c,Rd {_r['cap']:5.1f} kN mot {_r['n']:.1f} → "
+          f"{_r['util']:.2f} ({_r['util'] * K_MOD_MEDIUM / K_MOD_SHORT:.2f} "
+          f"med k_mod {K_MOD_SHORT:g})   [{_why}]")
+
 
 # 2 - EVERY DIRECTION HAS A BLOCKER, AND THE BLOCKER IS WOOD NOW.
 # The five ways a seated panel can move without leaving its seat, and what

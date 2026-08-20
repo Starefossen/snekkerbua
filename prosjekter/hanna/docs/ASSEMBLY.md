@@ -566,11 +566,11 @@ vanlig benkespile der.
 
 **J17 — endelist → bakre hjørnestolpe.** Listen er 36×48 × 98 mm og skrus
 **flatt på stolpens forside**, med overkanten i flukt med benkevangens overkant
-(259 mm over gulvet). To 5×60 ved siden av hverandre langs listen. Regn på
+(297 mm over gulvet). To 5×60 ved siden av hverandre langs listen. Regn på
 skruelengden før du bytter den ut: 36 mm går gjennom listen og 24 mm inn i en
 stolpe som er 36 mm tykk, så det står 12 mm igjen til baksiden — og baksiden av
 den stolpen **er veggflaten**. En 6×80 går tvers igjennom. Dette er det eneste
-leddet i sengen som går inn i den bakre stolpens forside; flaten er 98 × 1065 mm
+leddet i sengen som går inn i den bakre stolpens forside; flaten er 98 × 1402 mm
 og helt ubrukt ellers.
 
 **J16 — endespile → endelist** og **J11-E — endespile → fremre benkevange.**
@@ -630,9 +630,9 @@ forkant (750 mm). To ting på én gang:
 * **de gjør platen stiv.** Uten dem holder ikke den 18 mm plata når noen setter
   seg på den; med dem er platen to T-bjelker. Se lasttabellen i vedlegg A.
 * **de er hele sidestyringen.** De ligger 77 mm inn fra hver sidekant, som er
-  nøyaktig **2 mm utenfor trinnenden**. De siste 35 mm av hver lekt står i den
-  frie sjakten ved siden av trinnet — 48 mm høy og 37 mm dyp, den biten av
-  trinnet som stikker bak stigevangen — så det er 48 × 35 mm tre mot endeved
+  nøyaktig **2 mm utenfor trinnenden**. De siste 30 mm av hver lekt står i den
+  frie sjakten ved siden av trinnet — 48 mm høy og 32 mm dyp, den biten av
+  trinnet som stikker bak stigevangen — så det er 48 × 30 mm tre mot endeved
   som stopper platen sidelengs, ikke en 2 mm stålflik.
 
 Trinn 1 og trinn 2 ender på nøyaktig samme sted i lengderetningen, så det samme
@@ -763,9 +763,9 @@ i byggeporten.
 
 **Innsettingsveien er målt, ikke antatt.** Modellen sveiper hele enheten — plate,
 to styrelekter, to kiler og seksten skruer — rett opp fra begge seter og krever at
-ingenting treffer noe: **132 mm** fri vei i sengestilling og **172 mm** i
+ingenting treffer noe: **159 mm** fri vei i sengestilling og **179 mm** i
 bordstilling. Det skal 48 mm til for å løfte styrelektene fri av trinnenden, så
-det er nesten tre ganger så mye vei som mekanismen trenger. Taket er
+det er mer enn tre ganger så mye vei som mekanismen trenger. Taket er
 bordbærelekta i sengestilling og trinn 3 i bordstilling — begge deler er tre som
 *må* være der. (Fram til K1 var det en stigekloss i begge tilfeller, med 109 og
 124 mm; de klossene var 37 mm for lange og hang inn i veien uten å gjøre noen
@@ -779,14 +779,14 @@ ramme (`mise run film-mekanisme`), og filmen under **er** den prøven — ikke e
 tegning av den:
 
 0. **Ta av alle fire putene først.** Dette er ikke ryddighet: enheten bæres
-   sidelengs i sjakten mellom benkespilenes overkant (282) og bordbærelektas
-   underside (414), 132 mm, og en 100 mm pute som ligger på benken fyller 100
+   sidelengs i sjakten mellom benkespilenes overkant (320) og bordbærelektas
+   underside (474), 154 mm, og en 100 mm pute som ligger på benken fyller 100
    av dem. Med putene på er ombyggingen fysisk sperret.
-1. **Løft rett opp**, ca. 12 cm, til enheten står midt i overføringssjakten.
+1. **Løft rett opp**, ca. 13 cm, til enheten står midt i overføringssjakten.
 2. **Skyv platen sidelengs** inn over benken, til den er klar av stigen —
-   **vannrett hele veien**. Sjakten mellom benkespilenes overkant (282) og
-   undersiden av bordbærelekta (414) er 132 mm høy og enheten er 86: det står
-   23 mm luft over og under den under hele bæringen.
+   **vannrett hele veien**. Sjakten mellom benkespilenes overkant (320) og
+   undersiden av bordbærelekta (474) er 154 mm høy og enheten er 86: det står
+   34 mm luft over og under den under hele bæringen.
 3. **Trekk den litt fram**, så bakkanten står av bordbærelekta.
 4. **Løft den opp** forbi lekta og trinn 2 — der er banen fri.
 5. **Skyv den inn igjen** til bakkanten står over setelinjen.
@@ -855,7 +855,7 @@ sengen som er bygd etter madrassen. Rommet er noen millimeter smalere enn
 200 cm, så madrassen presses de siste millimeterne inn mellom veggene. Det er
 meningen: da ligger den i ro.
 
-**Tykkelsen er 150 mm, og vinduet er smalt: 140–155.** Dette er ikke en
+**Tykkelsen er 120 mm, og vinduet er smalt: 110–125.** Dette er ikke en
 smakssak, og det er den ene grensen i sengen som er lett å bryte uten å vite
 det. Spalten mellom madrassens overside og undersiden av det nederste
 rekkverksbordet skal ligge i EN 747-båndet **60–75 mm**:
@@ -864,8 +864,8 @@ rekkverksbordet skal ligge i EN 747-båndet **60–75 mm**:
 * **For tykk** madrass lukker den ned under 60 mm — inn i det gapet et lem
   kiler seg fast i i stedet for å gå igjennom.
 
-**En vanlig 160 mm madrass er ulovlig i denne sengen.** Den legger spalten på
-55 mm. Kjøp 15 cm; da ligger den på 65, midt i båndet, med margin begge veier.
+**En vanlig 150 mm madrass er ulovlig i denne sengen.** Den legger spalten på
+35 mm. Kjøp 12 cm; da ligger den på 65, midt i båndet, med margin begge veier.
 Hele resonnementet og det tekniske unntaket for svært tykke madrasser står i
 avsnitt 7.3 og vedlegg B.
 
@@ -921,18 +921,19 @@ Valget av nettopp 100 mm står på fire tall:
   flatens dybde og 2000 er 10 mm mer enn lengden. Fire tverrkapp, og du er
   ferdig. Det gjelder like godt for en billig skummadrass 80 × 200 som for en
   plate fra en skumforretning.
-* **Sittehøyden** blir 282 + 100 = **382 mm**. Det er en barnestol.
-* **Bordplaten** ligger 118 mm over seteputen, undersiden 100 mm. Går du til
-  120 mm skum blir de 98 og 80, og bordet begynner å ligge i fanget.
-* **Hodehøyden** over soveflaten nede er 781 mm opp til køyespilene (683 under
-  sidevangene). Det er sitte-opp-høyde for et barn.
+* **Sittehøyden** blir 320 + 100 = **420 mm**. Det er en voksen stolhøyde.
+* **Bordplaten** ligger 140 mm over seteputen, undersiden 122 mm — ett lår er
+  115 mm, så et strakt bein går under. Går du til 120 mm skum blir de 120 og
+  102, og da gjør det ikke det lenger.
+* **Hodehøyden** over soveflaten nede er 1080 mm opp til køyespilene (982 under
+  sidevangene). Det er god sitte-opp-høyde for et barn.
 
 120 mm skum finnes i samme handel og ville også virket — det er mykere å sitte
 på og strammere mot bordet. Da må **alle fire** være 120.
 
 ### Midtsonen ligger 5 mm lavere, og putene er like tykke likevel
 
-Platen i midten ligger 5 mm under benkeflaten (277 mot 282). Den gamle regelen
+Platen i midten ligger 5 mm under benkeflaten (315 mot 320). Den gamle regelen
 var at midtputen skulle være de 5 millimeterne tykkere. Den regelen er ute, av
 to grunner: alle fire skal være like tykke, og **ingen puteskjøt ligger lenger
 på en sonegrense** — skjøtene faller på 663 og 1327, mens sonene skifter på 645
@@ -957,19 +958,19 @@ ryggpute, benkepute, fra vegg til vegg.
 **Sofastilling:** de to benkeputene ligger **nøyaktig der de lå** — de flyttes
 aldri. De to ryggputene reises på høykant ytterst på hver benk, oppå seteputen,
 med den 800 mm lange kanten inn i dybden: 100 mm tykke, 800 mm dype, 332 mm
-høye, topp 714 mm over gulvet. Ombygging er altså **to puter, ikke fire**.
+høye, topp 752 mm over gulvet. Ombygging er altså **to puter, ikke fire**.
 
 Ryggputen står der den står fordi det er det eneste stedet den får plass.
 Ryggen mot bakveggen — det opplagte — går ikke: puten er 800 mm i sin andre
 retning, og bak benken er det bare 645 mm vegg før gangbukta begynner, og fra
-X 708 står bordplaten i veien. Stilt på høykant blir den 800 mm høy og treffer
-undersiden av sidevangen på 1065. Det ene stedet 800 mm står oppreist her, er
+X 708 står bordplaten i veien. Stilt på høykant blir den 800 mm høy og rekker
+til Z 1220 — det er ikke en sofarygg. Det ene stedet 800 mm står oppreist her, er
 **på tvers av benken**, altså i enden — og da er svaret på hva denne sofaen er
 også gitt: to seter som vender inn mot et lavt bord, med ryggen i hver sin ende.
 Benken er 800 mm dyp, ryggen er 800 mm bred, og det er plass til to i bredden.
 
 To ting holder den: **bordbærelekta**, som går langs hele bakveggen på Z
-414–482 og som ryggputen lener seg mot over 100 × 68 mm, og hjørnestolpens
+474–542 og som ryggputen lener seg mot over 100 × 68 mm, og hjørnestolpens
 innerflate sideveis. Puten står derfor 48 mm fram fra veggplanet, og forkanten
 lander 12 mm utenfor sengens forkant. Det er en løs skumpute i én stilling, ikke
 sengens dybde — sengen er 836 mm dyp som før.
@@ -977,7 +978,7 @@ sengens dybde — sengen er 836 mm dyp som før.
 ### Putene av FØR du bygger om
 
 Plateenheten bæres **sidelengs inn over benken** i sjakten mellom benkespilenes
-overkant (282) og bordbærelektas underside (414) — 132 mm. En 100 mm pute som
+overkant (320) og bordbærelektas underside (474) — 154 mm. En 100 mm pute som
 ligger på benken fyller 100 av dem. Ombyggingen er altså fysisk sperret med
 putene på, og modellen regner det ut selv. Første steg i begge retninger:
 **ta av alle fire putene.**
@@ -1050,7 +1051,7 @@ tatt.
 **7.2 Rekkverket foran har en klatreåpning.** Man klatrer gjennom, ikke over
 toppbordet. Åpningen er like bred som stigen og ligger rett over den.
 
-**7.3 Madrasstykkelsen skal være 140–155 mm, og 150 er anbefalt.** Dette er
+**7.3 Madrasstykkelsen skal være 110–125 mm, og 120 er anbefalt.** Dette er
 den viktigste tallgrensen i hele sengen, og den er ikke et tak — den er et
 **bånd**. EN 747-1 krever at åpningen mellom madrassens overflate og
 undersiden av det nederste rekkverksbordet enten er **≤ 5 mm** eller ligger
@@ -1061,14 +1062,14 @@ Madrassen er det eneste som styrer den åpningen:
 
 | Madrass | Åpning | Dom |
 |---:|---:|---|
-| 140 mm | 75 mm | lovlig, men **nøyaktig på grensen** — ingen margin |
-| **150 mm** | **65 mm** | ✓ **anbefalt, midt i båndet** |
-| 155 mm | 60 mm | lovlig, på den andre grensen |
-| 156–205 mm | 59–10 mm | ✗ **FORBUDT** — klemvinduet |
-| 210 mm og over | ≤ 5 mm | teknisk lovlig, se vedlegg B |
+| 110 mm | 75 mm | lovlig, men **nøyaktig på grensen** — ingen margin |
+| **120 mm** | **65 mm** | ✓ **anbefalt, midt i båndet** |
+| 125 mm | 60 mm | lovlig, på den andre grensen |
+| 126–175 mm | 59–10 mm | ✗ **FORBUDT** — klemvinduet |
+| 180 mm og over | ≤ 5 mm | teknisk lovlig, se vedlegg B |
 
-**Kjøp 15 cm.** En helt vanlig 16 cm madrass er *ulovlig* i denne sengen — den
-legger åpningen på 55 mm, midt i klemvinduet. Det er ikke opplagt, og det er
+**Kjøp 12 cm.** En helt vanlig 15 cm madrass er *ulovlig* i denne sengen — den
+legger åpningen på 35 mm, midt i klemvinduet. Det er ikke opplagt, og det er
 grunnen til at maksmålet skal merkes permanent på sengen (steg 11).
 
 **7.4 Ikke sett hele vekten på én bar spile.** Å gå på bar spilebunn er greit —
@@ -1124,25 +1125,26 @@ eller stål. Skummet er unntatt: en pute på 100 mm tar rumpa 12 mm inn og hodet
 Det de er til for, er tallene. Alle er **målt på solidene**, ikke skrevet inn,
 og hele lista står i [nøkkelmål](generated/nokkelmal.md#referansekroppen--hva-sengen-er-til-for).
 
-**8.1 Man kan sitte helt rett opp i sofaen.** Kronen står i Z 1036 — seteflaten
-382 pluss sittehøyden 654 — og køyespilenes underside i 1163. **127 mm** over
-hodet. Det er ikke mye, men det er positivt, og det er målt på en kropp og ikke
-på en påstand.
+**8.1 Man kan sitte helt rett opp i sofaen.** Kronen står i Z 1074 — seteflaten
+420 pluss sittehøyden 654 — og køyespilenes underside i 1500. **426 mm** over
+hodet. Det er rikelig, og det er målt på en kropp og ikke på en påstand.
 
-**8.2 Ingen knær går under bordplaten.** Platen ligger **118 mm** over
-seteflaten og har **100 mm** under seg. Ett barnelår er 115 mm. Bordet i
-bordstilling er derfor ikke et spisebord: det er en **lekeflate i fanghøyde
-mellom to sofahalvdeler**, og måten man sitter ved den på, er i
-skredderstilling med beina oppe på benken. Det er slik figurene sitter, og det
-foldede kneet stopper 130 mm fra platekanten. Armen rekker fram når
-overkroppen lener seg — håndleddet lander 5 mm over platen.
+**8.2 Et strakt bein går så vidt under bordplaten.** Platen ligger **140 mm**
+over seteflaten og har **122 mm** under seg. Ett barnelår er 115 mm, så beinet
+går under — med 7 mm å gå på. Til og med v13 lå platen 118 mm over setet og
+hadde 100 under seg, og da gjorde det ikke det. Bordet i bordstilling er
+likevel ikke et spisebord: det er en **lekeflate i fanghøyde mellom to
+sofahalvdeler**, og måten man sitter ved den på, er i skredderstilling med
+beina oppe på benken. Det er slik figurene sitter, og det foldede kneet stopper
+138 mm fra platekanten. Armen rekker fram når overkroppen lener seg —
+håndleddet lander 7 mm over platen.
 
 Dette er en opplysning om bruken, ikke et avvik: benken er 800 mm dyp og er
 underetasjens seng, ikke en spisebenk. Vil du ha et bord med knerom, må
 seteflaten ned eller platen opp, og platens to høyder er låst av mekanismen
 (K1/V2).
 
-**8.3 Fri høyde over ansiktet til den som ligger nede: 603 mm.** Målt fra
+**8.3 Fri høyde over ansiktet til den som ligger nede: 902 mm.** Målt fra
 hodets overside til køyespilenes underside.
 
 **8.4 Over den som ligger i køya står ingenting.** Køya er åpen oppover — det
@@ -1190,6 +1192,16 @@ setter seg ned. Lasttilfellet her er en kortvarig topplast, og 0,9 er klassen
 for det. Kombinasjonen som styrer er 2 kN med k<sub>mod</sub> = 0,9, ikke 1 kN
 vedvarende med 0,8. Vi bruker altså ikke 1,1 noe sted, og det er et bevisst
 valg og ikke en forglemmelse.
+
+**Knekkeradene er likevel regnet med k<sub>mod</sub> = 0,8, og det er den
+konservative siden.** Alle knekketall i A.1–A.3 kommer av
+f<sub>c,0,d</sub> = 21 · 0,8 / 1,3 = 12,92 N/mm², som er tallet modellen har
+regnet knekking på i hele sin historie. Å sette 0,9 inn der ville hevet
+f<sub>c,0,d</sub> til 14,5 og senket hver utnyttelse med 11 % — stigevangen fra
+0,26 til 0,23. Vi lar 0,8 stå, både for å slippe to sett knekketall som ikke
+er enige, og fordi det er den strenge av de to. Modellen skriver begge tall i
+byggeloggen (EC5 6.3.2-blokken), så ingen trenger å regne det om for å se hva
+valget koster.
 
 **Skjær regnes med sprekkfaktoren k<sub>cr</sub> = 0,67.** Eurokode 5 krever at
 skjærbredden reduseres for opptørkingssprekker: τ = 1,5·V/(k<sub>cr</sub>·b·h).
@@ -1260,8 +1272,8 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | Endebjelke 36×98 | Bøyning. **Rammebinderen i hver ende:** begge sidevanger lander på den, så den tar reaksjonen deres tvers over enden. Regnet konservativt som hele designlasten midt på det frie spennet mellom stolpene | 836 mm | 2 kN | **0,40** | ✓ σ ≈ 7,3 MPa mot 18,1. W = 57 624 mm³ — 98 mm er bæreretningen uansett tykkelse, de 12 mm koster bare bredden |
 | Endebjelke → hjørnestolpe (J1) | Skruskjær, 2 × 6 mm — hele endefestet, det står ingen kloss under | 4,0 kN | ≤ 1 kN | **0,25** | ✓ Med hele designlasten stående rett over hjørnet: 0,50 |
 | Samme ledd, **kantavstander** | 18 mm (3d) til bjelkens ende langs fiberretningen, 27 mm (4,5d) til kanten i lastretningen, i 48 × 98 C24 | krav 3d = 18 mm | — | — | ✓ Et vanlig omlegg, ikke en sprø endeskjøt. Målt på modellen |
-| Fremre hjørnestolpe 36×98 | Knekking om svak akse, verste frie lengde 708 mm | N<sub>c,Rd</sub> ≈ **26,4 kN** | ≈ 1 kN | **0,05** | ✓ Svak akse er dimensjonerende, og margin er likevel svært god |
-| Bakre hjørnestolpe 36×98 | Knekking, kortere stolpe, avstivet av benkevange og bordbærelekt | ≫ 26 kN | ≈ 1 kN | < 0,05 | ✓ |
+| Fremre hjørnestolpe 36×98 | Knekking om svak akse, verste frie lengde 1007 mm — X1 la hele løftet inn i det ene spennet benkevange → endebjelke | λ = 97, k<sub>c</sub> = 0,32 → N<sub>c,Rd</sub> ≈ **14,7 kN** | ≈ 1,5 kN | **0,10** | ✓ Svak akse er dimensjonerende, og margin er likevel god |
+| Bakre hjørnestolpe 36×98 | Knekking, kortere stolpe, avstivet av benkevange og bordbærelekt. Fri lengde 1304 mm regnet konservativt, som om bare endebjelken holder | λ = 126, k<sub>c</sub> = 0,20 → N<sub>c,Rd</sub> ≈ **9,1 kN** | ≈ 1,5 kN | **0,16** | ✓ |
 | Stolpe → gulv | Endeved mot gulv | 45 kN i treet | 1 kN | 0,02 | ✓ |
 
 ### A.2 Stigen
@@ -1274,9 +1286,9 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | Samme hjørne, **kombinert skjærvei** | Klossens skrue + trinnendens 6×120 gjennom stigevangen | 3,5 kN | 0,5 kN | 0,14 | ✓ Trinnet låser også klossen mot å rotere om sin ene skrue |
 | Skrue i trinnenden | Bærer ingen vertikal last | — | ≈ 0 | — | ✓ Riktig utformet |
 | Stigevange → gulv | Ren søyle helt ned til gulvet | — | 1 kN | — | ✓ Ingen festemiddel i klatrelastens vei nedover |
-| Stigevange, knekking **ut av planet** | Fri lengde gulv → fremre sidevange | λ ≈ 102, k<sub>c</sub> ≈ 0,29 → 6,5 kN | 1 kN | **0,15** | ✓ men se vedlegg B, avvik 2. Vangen står med den tynne siden ut av planet |
+| Stigevange, knekking **ut av planet** | Fri lengde gulv → fremre sidevange, 1402 mm etter X1 | λ ≈ 135, k<sub>c</sub> ≈ 0,17 → 3,9 kN | 1 kN | **0,26** | ✓ men se vedlegg B, avvik 2. Vangen står med den tynne siden ut av planet |
 | Stigevange → fremre sidevange (J3) | Skruskjær, 3 × 6 mm — 98 mm omlegg tar ikke fire i rad | 6,0 kN | < 1 kN | 0,17 | ✓ Samme detalj som hele rammen bruker |
-| Stigens stivhet i eget plan | Rammevirkning: to vanger + fire trinn | — | — | — | ✓ |
+| Stigens stivhet i eget plan | Rammevirkning: to vanger + fem trinn | — | — | — | ✓ |
 
 ### A.3 Underetasjen
 
@@ -1292,7 +1304,7 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | Benkevange → stubbefot | **Trelagring** 48 × 68 | 3264 mm² → 7,5 kN | 0,5 kN | 0,07 | ✓ |
 | Bakre benkevange → bakre stolpe (J8-B) | Skruskjær, 2 × 6 mm skråskruer — hele endefestet. Skruene står skrått i planet, lasten står loddrett på dem uansett | 4,0 kN | 0,5 kN | **0,13** | ✓ Ytre spenn stolpe → stubbefot ≈ 510 mm. Med hele kilonewtonen rett over hjørnet: 0,25 |
 | Fremre benkevangebit → fremre stolpe (J8) | Skruskjær, 2 × 6 mm — hele endefestet | 4,0 kN | 0,5 kN | **0,13** | ✓ Samme sak, og med samme verste tall 0,25 |
-| Stubbefot 48×68 | Knekking over 191 mm | λ ≈ 13 | 0,5 kN | ≈ 0 | ✓ Ikke en søyle, et opplegg |
+| Stubbefot 48×68 | Knekking over 229 mm | λ ≈ 17 | 0,5 kN | ≈ 0 | ✓ Ikke en søyle, et opplegg |
 
 ### A.4 Plate og rekkverk
 
@@ -1335,12 +1347,13 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | Bordbærelekt på høykant, ren bordlast | 0,34 |
 | Stigekloss → stigevange, klossens ene skrue regnet alene | **0,33** |
 | Avstivningslekt under platen, 1 kN på hver | 0,26 |
+| Stigevange, knekking ut av planet | **0,26** |
 | Endebjelke → hjørnestolpe (J1), to skruer i skjær | **0,25** |
 | Vange → endebjelke (trelagring) | 0,25 |
 | Stigevange → fremre sidevange (J3) | 0,17 |
 | Trinn → stigekloss (trelagring) | 0,17 |
+| Bakre hjørnestolpe, knekking | 0,16 |
 | Rungetrinn, bøyning | 0,15 |
-| Stigevange, knekking ut av planet | 0,15 |
 | Kilelekt under platehjørnet, bøyning i det kritiske snittet | 0,13 |
 | Benkevangeendene → stolpe (J8, J8-B), to skruer i skjær | 0,13 |
 | Bakre benkevange over åpningen mellom stubbeføttene | 0,12 |
@@ -1368,7 +1381,7 @@ fra NS-EN 338. Kravene i avsnitt 7 er fra EN 747:
 
 **Et ærlig forbehold om utgaven.** Den fritt tilgjengelige samplen av
 EN 747-1:2024 stopper før kravkapitlet, så de eksakte millimeterne i
-2024-utgaven er **ikke** verifisert her. Madrassvinduet 140–155 mm er valgt
+2024-utgaven er **ikke** verifisert her. Madrassvinduet 110–125 mm er valgt
 fordi det er lovlig under begge utgavene vi *kan* lese, og fordi det er den
 strengeste av de to lesningene. Skulle 2024-teksten vise seg å være mildere,
 er sengen fortsatt riktig bygget; er den strengere, er dette stedet å se etter.
@@ -1399,12 +1412,12 @@ monteres.
 Her står de bevisste valgene som ikke er det lærebokrene, med begrunnelsen,
 slik at den som bygger vet hva han går med på.
 
-**Avvik 0 — de 28 mm over rekkverket er ikke en åpning, og her er hvorfor.**
+**Avvik 0 — de 58 mm over rekkverket er ikke en åpning, og her er hvorfor.**
 De fire loddrette delene i fronten — to hjørnestolper og to stigevanger — går
-til 1700, og det øverste rekkverksbordet slutter på 1672. Mellom dem står det
-28 mm, og det tallet ligger i klemvinduet. Det er likevel ikke en åpning i
+til 2037, og det øverste rekkverksbordet slutter på 1979. Mellom dem står det
+58 mm, og det tallet ligger i klemvinduet. Det er likevel ikke en åpning i
 standardens forstand, og påstanden er målt og ikke antatt: **det finnes ingen
-del i hele sengen i høydebåndet 1672–1700 utenom de fire stolpeendene selv.**
+del i hele sengen i høydebåndet 1979–2037 utenom de fire stolpeendene selv.**
 Rommet er avgrenset nedenfra av rekkverksbordet og på sidene av stolpene, og
 **ikke av noe som helst ovenfra** — det er åpent rett opp i rommet.
 
@@ -1412,17 +1425,17 @@ En åpning som kan klemme, må være omsluttet. EN 747-1:2024 skiller uttrykkeli
 mellom «completely bound» og «partially bound» åpninger (def. 3.8/3.9), og
 dette er ikke engang delvis omsluttet oppover. Et lem som føres inn der er ikke
 fanget; det er over rekkverket, i fri luft. Det som faktisk står der, er at
-**stolpene rager 28 mm over rekkverket** — en kantbrytingssak (avsnitt 3), ikke
-en klemsak. Derfor står de 28 millimeterne ikke i åpningstabellen i
+**stolpene rager 58 mm over rekkverket** — en kantbrytingssak (avsnitt 3), ikke
+en klemsak. Derfor står de 58 millimeterne ikke i åpningstabellen i
 nøkkelmålene.
 
 **Avvik 4b — den tykke madrassen er teknisk lovlig, og frarådes likevel.**
 Åpningen mellom madrass og nederste rekkverksbord er lovlig både i 60–75-båndet
-og når den er lukket til ≤ 5 mm. Det siste inntreffer ved madrasser fra 210 mm
+og når den er lukket til ≤ 5 mm. Det siste inntreffer ved madrasser fra 180 mm
 og oppover, der madrassen rekker opp til bordets underkant. Det er en gyldig
 lesning av kravet, men den er ikke tegnet, ikke målt på en bygget seng, og den
 flytter liggeflaten 60 mm opp med det rekkverkshøyden det koster. **Bygg etter
-140–155 mm.** Det øvre vinduet står her fordi det er sant, ikke fordi det er en
+110–125 mm.** Det øvre vinduet står her fordi det er sant, ikke fordi det er en
 anbefaling, og det er med vilje holdt ute av billedmanualen.
 
 **Avvik 1 — veggen erstatter det bakre rekkverket.**
@@ -1451,18 +1464,18 @@ den fremre sidevangen (J3).
 *Og nå er det målt hvorfor det ikke står en kloss der.* Avviket har siden V2
 pekt på «et eget bånd fra stigefoten til rammen» som svaret. Denne runden lette
 etter et sted å sette det. Modellen svarer nå, retning for retning ut av
-stigevangens eget fotavtrykk (Z 0..259), med avstanden til nærmeste faste del
+stigevangens eget fotavtrykk (Z 0..297), med avstanden til nærmeste faste del
 og hva som ligger imellom:
 
 * **utover: 689 mm** til den fremre hjørnestolpen. Mellomrommet er D13s
   gangpassasje, som skal stå fri i 142 mm bredde fra gulvet og helt opp til
-  Z 482.
+  Z 542 — taket i passasjen ER trinn 2.
 * **innover: 1057 mm** til den andre fremre hjørnestolpen. Mellomrommet er
   stigeåpningen, 320 mm fri mot EN 747s minimum på 300. (Å binde de to
   stigevangene til hverandre gir dessuten ingenting i dybden — de er én ramme
   og flytter seg sammen.)
 * **bakover: 752 mm** til den bakre benkevangen. Mellomrommet er D11s åpne bod,
-  som skal stå fri opp til Z 259 — og over Z 186 er den samme søylen platens
+  som skal stå fri opp til Z 297 — og over Z 229 er den samme søylen platens
   egen innsettingssjakt.
 * **framover: INGENTING.** Det står ingen del foran stigen i det hele tatt, og
   det kan ikke stå noen: U3 fester forflaten i Y = 788, asserter at Y 788..800
@@ -1478,8 +1491,8 @@ kjent på forhånd:
   gangpassasjen ikke lenger er fri fra gulvet: du får en 48 mm terskel å tråkke
   over, og D13 må endres.
 * **(ii) En kloss i benkevangens eget plan og høydebånd** (Y 704..752,
-  Z 186..259) som fortsetter den fremre benkevangen de siste 142 mm inn til
-  stigen. Tåspalten under (Z 0..186) er urørt, men døråpningen inn i boden ved
+  Z 229..297) som fortsetter den fremre benkevangen de siste 142 mm inn til
+  stigen. Tåspalten under (Z 0..229) er urørt, men døråpningen inn i boden ved
   gulvnivå smalner fra 700 mm til stigeåpningens 320.
 * **(iii) La den være** — dagens tilstand: platen som énveis stiver, J3
   framover, og veggfestet som holder rammen.
@@ -1517,8 +1530,8 @@ det står ingen lås i beslaglista, og det skal det ikke gjøre.
 * **Madrassen ligger oppå platen** og må fjernes før platen kan løftes. Det er
   en de-facto forrigling: du kommer ikke til platen uten først å ta av det
   barnet ligger på.
-* **Dette er underetasjen.** Fallhøyden fra platens overside (277 mm) til gulvet
-  er ~26 cm. Det er ikke fra køyehøyde.
+* **Dette er underetasjen.** Fallhøyden fra platens overside (315 mm) til gulvet
+  er ~32 cm. Det er ikke fra køyehøyde.
 * **Platen er en enhet på 6,3 kg** (4,1 kg plate + 2,2 kg lekt, regnet av
   kroppene i modellen, ikke sitert), og styrelektene tar alle sidelengs
   frihetsgrader. Den kan bare gå rett opp, og den går ikke rett opp av seg selv.
@@ -1542,15 +1555,15 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | [bruk-sengestilling.svg](img/bruk-sengestilling.svg) | Sengestillingen i bruk: én som sover i køya og én på nedre soveflate, med rekkverket over kroppen, fri høyde over ansiktet nede og madrassen som er igjen bak føttene. Rett oppriss av langsiden — stolper, stigevanger og trinn, sidevange, begge rekkverksbånd, benkevanger og stubbeføtter står der som de står i modellen, og hver målpil er differansen mellom to Z |
 | [bruk-bordstilling.svg](img/bruk-bordstilling.svg) | Bordstillingen i bruk: to i skredderstilling på hver sin benkepute, vendt mot platen. Fri høyde over hodet, sittehøyde, plate over sete og kne til platekant |
 
-**Arkene er tegnet om mot V13-geometrien.** De viser 574×798-platen, 750 mm
+**Arkene er tegnet om mot V14-geometrien.** De viser 574×798-platen, 750 mm
 avstivningslekter, de to skråkappede kilelektene, bordbærelekta som 48×68 på
-høykant (Z 414–482), navnene sengestilling/bordstilling — og ingen
+høykant (Z 474–542), navnene sengestilling/bordstilling — og ingen
 bæreklosser, ingen U-brakett, ingen krokplate og ikke én M6, fordi ingen av
 delene finnes. J2, J3 og J8 er tegnet med hodet på vangens innside, slik de
 skrus.
 
-**To av arkene regenereres av modellen: `setedetalj.svg` og
-`end-elevation.svg`.** De fire andre er håndtegnet. De er gått gjennom mot
+**Tre av arkene regenereres av modellen: `setedetalj.svg`, `end-elevation.svg`
+og `spikerslag.svg`.** De fire andre er håndtegnet. De er gått gjennom mot
 `docs/generated/` og stemmer nå — spilene 23×98, lektene og vangene 48×68,
 endebjelken 36×98, kontraboret 41 mm, endespiler og endelister inntegnet, fire
 puter à 100 mm — men de har ingen port som holder dem der. Regelen står

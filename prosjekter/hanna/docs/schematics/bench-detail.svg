@@ -58,22 +58,22 @@
 
   <!-- ============================================================ A -->
   <text x="300" y="360" class="pt" text-anchor="start">A · VENSTRE BENK SETT FORFRA (X–Z), 1,5:1</text>
-  <rect x="567" y="591.5" width="1203" height="102" class="raig"/>
-  <rect x="424.5" y="591.5" width="963" height="102" class="rai"/>
-  <rect x="1285.5" y="693.5" width="102" height="286.5" class="pst"/>
-  <rect x="567" y="557" width="147" height="34.5" class="brd"/>
-  <rect x="735.375" y="557" width="147" height="34.5" class="brd"/>
-  <rect x="903.75" y="557" width="147" height="34.5" class="brd"/>
-  <rect x="1072.125" y="557" width="147" height="34.5" class="brd"/>
-  <rect x="1240.5" y="557" width="147" height="34.5" class="brd"/>
-  <rect x="1482" y="564.5" width="288" height="27" class="pnl"/>
-  <rect x="420" y="455" width="147" height="525" class="pst"/>
-  <!-- endespile X 0..98, Z 259..282 og endelist X 0..98, Z 211..259 - begge bak den fremre stolpen -->
-  <rect x="420" y="557" width="147" height="34.5" class="raig"/>
-  <rect x="420" y="591.5" width="147" height="72" class="raig"/>
-  <polyline points="417,476 441,452 465,485 495,458 519,485 543,452 567,476" class="brk"/>
-  <polyline points="1755,693.5 1770,672 1755,650 1770,629 1755,607 1770,591.5" class="brk"/>
-  <polyline points="1755,591.5 1770,578 1755,564.5" class="brk"/>
+  <rect x="567" y="534.5" width="1203" height="102" class="raig"/>
+  <rect x="424.5" y="534.5" width="963" height="102" class="rai"/>
+  <rect x="1285.5" y="636.5" width="102" height="343.5" class="pst"/>
+  <rect x="567" y="500" width="147" height="34.5" class="brd"/>
+  <rect x="735.375" y="500" width="147" height="34.5" class="brd"/>
+  <rect x="903.75" y="500" width="147" height="34.5" class="brd"/>
+  <rect x="1072.125" y="500" width="147" height="34.5" class="brd"/>
+  <rect x="1240.5" y="500" width="147" height="34.5" class="brd"/>
+  <rect x="1482" y="507.5" width="288" height="27" class="pnl"/>
+  <rect x="420" y="440" width="147" height="540" class="pst"/>
+  <!-- endespile X 0..98, Z 297..320 og endelist X 0..98, Z 249..297 - begge bak den fremre stolpen -->
+  <rect x="420" y="500" width="147" height="34.5" class="raig"/>
+  <rect x="420" y="534.5" width="147" height="72" class="raig"/>
+  <polyline points="417,461 441,437 465,470 495,443 519,470 543,437 567,461" class="brk"/>
+  <polyline points="1755,636.5 1770,615 1755,593 1770,572 1755,550 1770,534.5" class="brk"/>
+  <polyline points="1755,534.5 1770,521 1755,507.5" class="brk"/>
   <line x1="292" y1="980" x2="1810" y2="980" class="grd"/>
   <line x1="304" y1="980" x2="286" y2="998" class="ext"/>
   <line x1="344" y1="980" x2="326" y2="998" class="ext"/>
@@ -113,33 +113,33 @@
   <line x1="1704" y1="980" x2="1686" y2="998" class="ext"/>
   <line x1="1744" y1="980" x2="1726" y2="998" class="ext"/>
   <line x1="1784" y1="980" x2="1766" y2="998" class="ext"/>
-  <!-- J8: 2 x treskrue 6x80 langs +Y, Z 213 og 237, drevet fra vangens innside -->
-  <circle cx="493.5" cy="660.5" r="11" class="scrg"/>
-  <circle cx="493.5" cy="624.5" r="11" class="scrg"/>
+  <!-- J8: 2 x treskrue 6x80 langs +Y, Z 251 og 275, drevet fra vangens innside -->
+  <circle cx="493.5" cy="603.5" r="11" class="scrg"/>
+  <circle cx="493.5" cy="567.5" r="11" class="scrg"/>
   <!-- J11: 5x60 ned gjennom hver benkespile -->
-  <line x1="640.5" y1="557" x2="640.5" y2="647" class="scrl"/>
-  <circle cx="640.5" cy="557" r="7" class="scr"/>
-  <line x1="808.875" y1="557" x2="808.875" y2="647" class="scrl"/>
-  <circle cx="808.875" cy="557" r="7" class="scr"/>
-  <line x1="977.25" y1="557" x2="977.25" y2="647" class="scrl"/>
-  <circle cx="977.25" cy="557" r="7" class="scr"/>
-  <line x1="1145.625" y1="557" x2="1145.625" y2="647" class="scrl"/>
-  <circle cx="1145.625" cy="557" r="7" class="scr"/>
-  <line x1="1314" y1="557" x2="1314" y2="647" class="scrl"/>
-  <circle cx="1314" cy="557" r="7" class="scr"/>
-  <!-- J10: vinkelbeslag i hjornet fotens utside (X 577) / vangens underside (Z 191) -->
-  <polyline points="1150.5,693.5 1285.5,693.5 1285.5,828.5" class="steelw"/>
-  <line x1="1184.25" y1="693.5" x2="1184.25" y2="638" class="scrl"/>
-  <circle cx="1184.25" cy="693.5" r="7" class="scr"/>
-  <line x1="1251.75" y1="693.5" x2="1251.75" y2="638" class="scrl"/>
-  <circle cx="1251.75" cy="693.5" r="7" class="scr"/>
-  <line x1="1285.5" y1="727.25" x2="1341.75" y2="727.25" class="scrl"/>
-  <circle cx="1285.5" cy="727.25" r="7" class="scr"/>
-  <line x1="1285.5" y1="794.75" x2="1341.75" y2="794.75" class="scrl"/>
-  <circle cx="1285.5" cy="794.75" r="7" class="scr"/>
-  <polygon points="1387.5,773 1362.315,729.365 1385.685,715.865 1387.5,719" class="seat"/>
-  <line x1="1374" y1="722.615" x2="1342.5" y2="668.06" class="scrl"/>
-  <circle cx="1374" cy="722.615" r="7" class="scr"/>
+  <line x1="640.5" y1="500" x2="640.5" y2="590" class="scrl"/>
+  <circle cx="640.5" cy="500" r="7" class="scr"/>
+  <line x1="808.875" y1="500" x2="808.875" y2="590" class="scrl"/>
+  <circle cx="808.875" cy="500" r="7" class="scr"/>
+  <line x1="977.25" y1="500" x2="977.25" y2="590" class="scrl"/>
+  <circle cx="977.25" cy="500" r="7" class="scr"/>
+  <line x1="1145.625" y1="500" x2="1145.625" y2="590" class="scrl"/>
+  <circle cx="1145.625" cy="500" r="7" class="scr"/>
+  <line x1="1314" y1="500" x2="1314" y2="590" class="scrl"/>
+  <circle cx="1314" cy="500" r="7" class="scr"/>
+  <!-- J10: vinkelbeslag i hjornet fotens utside (X 577) / vangens underside (Z 229) -->
+  <polyline points="1150.5,636.5 1285.5,636.5 1285.5,771.5" class="steelw"/>
+  <line x1="1184.25" y1="636.5" x2="1184.25" y2="581" class="scrl"/>
+  <circle cx="1184.25" cy="636.5" r="7" class="scr"/>
+  <line x1="1251.75" y1="636.5" x2="1251.75" y2="581" class="scrl"/>
+  <circle cx="1251.75" cy="636.5" r="7" class="scr"/>
+  <line x1="1285.5" y1="670.25" x2="1341.75" y2="670.25" class="scrl"/>
+  <circle cx="1285.5" cy="670.25" r="7" class="scr"/>
+  <line x1="1285.5" y1="737.75" x2="1341.75" y2="737.75" class="scrl"/>
+  <circle cx="1285.5" cy="737.75" r="7" class="scr"/>
+  <polygon points="1387.5,716 1362.315,672.365 1385.685,658.865 1387.5,662" class="seat"/>
+  <line x1="1374" y1="665.615" x2="1342.5" y2="611.06" class="scrl"/>
+  <circle cx="1374" cy="665.615" r="7" class="scr"/>
   <line x1="420" y1="980" x2="420" y2="1122" class="ext"/>
   <line x1="567" y1="980" x2="567" y2="1122" class="ext"/>
   <line x1="1285.5" y1="980" x2="1285.5" y2="1122" class="ext"/>
@@ -156,70 +156,70 @@
   <text x="903.75" y="1134" class="dm" text-anchor="middle">645  benkelengde</text>
   <line x1="1387.5" y1="1108" x2="1770" y2="1108" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="1578.75" y="1134" class="dm" text-anchor="middle">→ fri gulvflate; 142 mm gangpassasje fram til stigevangen</text>
-  <line x1="567" y1="557" x2="567" y2="500" class="ext"/>
-  <line x1="714" y1="557" x2="714" y2="500" class="ext"/>
-  <line x1="735.375" y1="557" x2="735.375" y2="500" class="ext"/>
-  <line x1="567" y1="512" x2="714" y2="512" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="640.5" y="502" class="dm" text-anchor="middle">98</text>
-  <line x1="714" y1="512" x2="735.375" y2="512" class="dim"/>
-  <text x="747.375" y="504" class="dm" text-anchor="start">14,25  glipe</text>
-  <text x="880" y="440" class="sml" text-anchor="start">5 benkespiler 23×98 × 800 per benk, X 98–645, s/s 112,25 · 1 endespile 764 ytterst</text>
-  <polyline points="452,570 352,470" class="ldr" marker-start="url(#aE)"/>
+  <line x1="567" y1="500" x2="567" y2="443" class="ext"/>
+  <line x1="714" y1="500" x2="714" y2="443" class="ext"/>
+  <line x1="735.375" y1="500" x2="735.375" y2="443" class="ext"/>
+  <line x1="567" y1="455" x2="714" y2="455" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="640.5" y="445" class="dm" text-anchor="middle">98</text>
+  <line x1="714" y1="455" x2="735.375" y2="455" class="dim"/>
+  <text x="747.375" y="447" class="dm" text-anchor="start">14,25  glipe</text>
+  <text x="880" y="400" class="sml" text-anchor="start">5 benkespiler 23×98 × 800 per benk, X 98–645, s/s 112,25 · 1 endespile 764 ytterst</text>
+  <polyline points="452,513 352,470" class="ldr" marker-start="url(#aE)"/>
   <text x="344" y="404" class="sml" text-anchor="end">endespile 23×98 × 764</text>
   <text x="344" y="432" class="sml" text-anchor="end">endelist 36×48 × 98 · J17</text>
   <text x="344" y="460" class="sml" text-anchor="end">ligger bak stolpen</text>
   <line x1="420" y1="980" x2="292" y2="980" class="ext"/>
-  <line x1="420" y1="693.5" x2="292" y2="693.5" class="ext"/>
-  <line x1="420" y1="591.5" x2="292" y2="591.5" class="ext"/>
-  <line x1="420" y1="557" x2="292" y2="557" class="ext"/>
-  <line x1="284" y1="980" x2="284" y2="693.5" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="272" y="844.75" class="dm" text-anchor="end">191</text>
-  <line x1="284" y1="693.5" x2="284" y2="591.5" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="272" y="650.5" class="dm" text-anchor="end">68</text>
-  <line x1="284" y1="591.5" x2="284" y2="557" class="dim"/>
-  <text x="272" y="582.25" class="dm" text-anchor="end">23</text>
-  <text x="180" y="701.5" class="sml" text-anchor="end">191  uk vange</text>
-  <text x="180" y="599.5" class="sml" text-anchor="end">259  ok vange</text>
-  <text x="180" y="543" class="sml" text-anchor="end">282  benketopp</text>
-  <polyline points="500,530 1838,454" class="ldr" marker-start="url(#aE)"/>
-  <text x="1850" y="462" class="lbl" text-anchor="start">Hjørnestolpe, front 36×98 × 1700 – 98 mm bred i X, 36 mm dyp i Y (Y 752–788).</text>
+  <line x1="420" y1="636.5" x2="292" y2="636.5" class="ext"/>
+  <line x1="420" y1="534.5" x2="292" y2="534.5" class="ext"/>
+  <line x1="420" y1="500" x2="292" y2="500" class="ext"/>
+  <line x1="284" y1="980" x2="284" y2="636.5" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="272" y="808.25" class="dm" text-anchor="end">229</text>
+  <line x1="284" y1="636.5" x2="284" y2="534.5" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="272" y="593.5" class="dm" text-anchor="end">68</text>
+  <line x1="284" y1="534.5" x2="284" y2="500" class="dim"/>
+  <text x="272" y="525.25" class="dm" text-anchor="end">23</text>
+  <text x="180" y="644.5" class="sml" text-anchor="end">229  uk vange</text>
+  <text x="180" y="542.5" class="sml" text-anchor="end">297  ok vange</text>
+  <text x="180" y="486" class="sml" text-anchor="end">320  benketopp</text>
+  <polyline points="500,470 1838,454" class="ldr" marker-start="url(#aE)"/>
+  <text x="1850" y="462" class="lbl" text-anchor="start">Hjørnestolpe, front 36×98 × 2037 – 98 mm bred i X, 36 mm dyp i Y (Y 752–788).</text>
   <text x="1850" y="492" class="sml" text-anchor="start">Benkevangen støter mot stolpens innerflate; stolpens forside er urørt.</text>
-  <polyline points="950,565 1838,554" class="ldr" marker-start="url(#aE)"/>
+  <polyline points="950,508 1838,554" class="ldr" marker-start="url(#aE)"/>
   <text x="1850" y="562" class="lbl" text-anchor="start">Benkespile 23×98 × 800 – 10 stk., 5 per benk, X 98–645, s/s 112,25, glipe 14,25.</text>
   <text x="1850" y="592" class="sml" text-anchor="start">J11: 1 × treskrue 5×60 ned i vangen i hver ende. Forsenk hodet – dette er en sitteflate.</text>
-  <polyline points="1560,578 1838,654" class="ldr" marker-start="url(#aE)"/>
-  <text x="1850" y="662" class="lbl" text-anchor="start">Løs plate 574 × 798 × 18, X 708–1282 – overkant Z 277 i sengestilling,</text>
-  <text x="1850" y="692" class="sml" text-anchor="start">5 mm under benketoppen 282. 63 mm klaring til benkeenden (X 645 → 708).</text>
-  <polyline points="520,645 1838,754" class="ldr" marker-start="url(#aE)"/>
-  <text x="1850" y="762" class="lbl" text-anchor="start">J8: 2 × treskrue 6×80 langs +Y, Z 213 og 237 – 24 mm s/s, stablet oppover stolpen.</text>
+  <polyline points="1560,521 1838,654" class="ldr" marker-start="url(#aE)"/>
+  <text x="1850" y="662" class="lbl" text-anchor="start">Løs plate 574 × 798 × 18, X 708–1282 – overkant Z 315 i sengestilling,</text>
+  <text x="1850" y="692" class="sml" text-anchor="start">5 mm under benketoppen 320. 63 mm klaring til benkeenden (X 645 → 708).</text>
+  <polyline points="520,588 1838,754" class="ldr" marker-start="url(#aE)"/>
+  <text x="1850" y="762" class="lbl" text-anchor="start">J8: 2 × treskrue 6×80 langs +Y, Z 251 og 275 – 24 mm s/s, stablet oppover stolpen.</text>
   <text x="1850" y="792" class="sml" text-anchor="start">Drives fra vangens INNSIDE (Y 704) inn i stolpen – ingen skruehoder på forsiden.</text>
-  <polyline points="1050,645 1838,854" class="ldr" marker-start="url(#aE)"/>
+  <polyline points="1050,588 1838,854" class="ldr" marker-start="url(#aE)"/>
   <text x="1850" y="862" class="lbl" text-anchor="start">Benkevange, front 48×68 × 642, X 3–645 – to like biter per seng.</text>
   <text x="1850" y="892" class="sml" text-anchor="start">Ingen utkraging: den indre enden slutter rett over stubbefoten.</text>
   <polyline points="1330,900 1838,954" class="ldr" marker-start="url(#aE)"/>
-  <text x="1850" y="962" class="lbl" text-anchor="start">Stubbefot 48×68 × 191 – 4 stk., X 577–645 og 1345–1413.</text>
+  <text x="1850" y="962" class="lbl" text-anchor="start">Stubbefot 48×68 × 229 – 4 stk., X 577–645 og 1345–1413.</text>
   <text x="1850" y="992" class="sml" text-anchor="start">J10: 1 vinkelbeslag 90×90×40×2,5 + 4 × 5×40 + 1 skråskrue 5×60 nedenfra. Se D.</text>
-  <text x="700" y="820" class="sml" text-anchor="start">Åpent under benken – fri gangsone fra gulv til Z 191.</text>
-  <text x="516" y="704" class="jl" text-anchor="start">J8</text>
-  <text x="662" y="582" class="jl" text-anchor="start">J11</text>
-  <text x="1150" y="742" class="jl" text-anchor="start">J10</text>
+  <text x="700" y="820" class="sml" text-anchor="start">Åpent under benken – fri gangsone fra gulv til Z 229.</text>
+  <text x="516" y="647" class="jl" text-anchor="start">J8</text>
+  <text x="662" y="525" class="jl" text-anchor="start">J11</text>
+  <text x="1150" y="685" class="jl" text-anchor="start">J10</text>
 
   <text x="90" y="1176" class="lbl" text-anchor="start">Endespile 23×98 × 764, X 0–98 og 1892–1990, Y −12 … 752 – 1 per benk, ytterst mot veggen, i samme plan som benkespilene.</text>
   <text x="90" y="1205" class="sml" text-anchor="start">Kortere fordi den starter på den bakre stolpens forside; spalten inn til nabospilen er 0 mm, og soveflaten nede går helt ut til veggen. J16 ned i endelisten, J11-E ned i den fremre benkevangen.</text>
-  <text x="90" y="1243" class="lbl" text-anchor="start">Endelist 36×48 × 98, X 0–98 og 1892–1990, Z 211–259 – ligger flatt på den bakre hjørnestolpens forside, overkant i flukt med benkevangen.</text>
+  <text x="90" y="1243" class="lbl" text-anchor="start">Endelist 36×48 × 98, X 0–98 og 1892–1990, Z 249–297 – ligger flatt på den bakre hjørnestolpens forside, overkant i flukt med benkevangen.</text>
   <text x="90" y="1272" class="sml" text-anchor="start">J17: 2 × treskrue 5×60 ved siden av hverandre, rett inn i stolpens forside fra benkerommet – 36 mm gjennom listen, 24 mm inn i stolpen, 12 mm igjen til veggflaten.</text>
 
   <!-- ============================================================ B -->
   <text x="230" y="1330" class="pt" text-anchor="start">B · SNITT D–D VED X = 611, gjennom stubbeføttene (Y–Z), 1,3:1</text>
-  <rect x="226" y="1474" width="184.6" height="676" class="wall"/>
-  <line x1="410.6" y1="1474" x2="410.6" y2="2150" class="wallface"/>
-  <text x="232" y="1522" class="big" text-anchor="start">VEGG</text>
-  <rect x="410.6" y="1523.4" width="62.4" height="88.4" class="brd"/>
-  <rect x="410.6" y="1813.3" width="62.4" height="88.4" class="rai"/>
-  <rect x="1388.2" y="1813.3" width="62.4" height="88.4" class="rai"/>
-  <rect x="410.6" y="1901.7" width="62.4" height="248.3" class="pst"/>
-  <rect x="1388.2" y="1901.7" width="62.4" height="248.3" class="pst"/>
-  <rect x="410.6" y="1783.4" width="1040" height="29.9" class="brd"/>
+  <rect x="226" y="1400" width="184.6" height="750" class="wall"/>
+  <line x1="410.6" y1="1400" x2="410.6" y2="2150" class="wallface"/>
+  <text x="232" y="1448" class="big" text-anchor="start">VEGG</text>
+  <rect x="410.6" y="1445.4" width="62.4" height="88.4" class="brd"/>
+  <rect x="410.6" y="1763.9" width="62.4" height="88.4" class="rai"/>
+  <rect x="1388.2" y="1763.9" width="62.4" height="88.4" class="rai"/>
+  <rect x="410.6" y="1852.3" width="62.4" height="297.7" class="pst"/>
+  <rect x="1388.2" y="1852.3" width="62.4" height="297.7" class="pst"/>
+  <rect x="410.6" y="1734" width="1040" height="29.9" class="brd"/>
   <line x1="226" y1="2150" x2="1560" y2="2150" class="grd"/>
   <line x1="238" y1="2150" x2="220" y2="2168" class="ext"/>
   <line x1="278" y1="2150" x2="260" y2="2168" class="ext"/>
@@ -254,16 +254,16 @@
   <line x1="1438" y1="2150" x2="1420" y2="2168" class="ext"/>
   <line x1="1478" y1="2150" x2="1460" y2="2168" class="ext"/>
   <line x1="1518" y1="2150" x2="1500" y2="2168" class="ext"/>
-  <line x1="441.8" y1="1783.4" x2="441.8" y2="1861.4" class="scrl"/>
-  <circle cx="441.8" cy="1783.4" r="7" class="scr"/>
-  <line x1="1419.4" y1="1783.4" x2="1419.4" y2="1861.4" class="scrl"/>
-  <circle cx="1419.4" cy="1783.4" r="7" class="scr"/>
-  <text x="456" y="1800" class="jl" text-anchor="start">J11</text>
-  <text x="492" y="1578" class="sml" text-anchor="start">bordbærelekt 48×68, Z 414–482</text>
-  <text x="700" y="1766.5" class="sml" text-anchor="start">benkespile 23×98 × 800</text>
-  <text x="492" y="1870.5" class="sml" text-anchor="start">bakre benkevange 48×68</text>
-  <text x="1383" y="1870.5" class="sml" text-anchor="end">fremre benkevange 48×68</text>
-  <text x="492" y="2026.5" class="sml" text-anchor="start">stubbefot 48×68 × 191</text>
+  <line x1="441.8" y1="1734" x2="441.8" y2="1812" class="scrl"/>
+  <circle cx="441.8" cy="1734" r="7" class="scr"/>
+  <line x1="1419.4" y1="1734" x2="1419.4" y2="1812" class="scrl"/>
+  <circle cx="1419.4" cy="1734" r="7" class="scr"/>
+  <text x="456" y="1750.5" class="jl" text-anchor="start">J11</text>
+  <text x="492" y="1500" class="sml" text-anchor="start">bordbærelekt 48×68, Z 474–542</text>
+  <text x="700" y="1717" class="sml" text-anchor="start">benkespile 23×98 × 800</text>
+  <text x="492" y="1821.1" class="sml" text-anchor="start">bakre benkevange 48×68</text>
+  <text x="1383" y="1821.1" class="sml" text-anchor="end">fremre benkevange 48×68</text>
+  <text x="492" y="2026.5" class="sml" text-anchor="start">stubbefot 48×68 × 229</text>
   <line x1="410.6" y1="2150" x2="410.6" y2="2270" class="ext"/>
   <line x1="473" y1="2150" x2="473" y2="2270" class="ext"/>
   <line x1="1388.2" y1="2150" x2="1388.2" y2="2270" class="ext"/>
@@ -277,53 +277,53 @@
   <line x1="410.6" y1="2254" x2="1450.6" y2="2254" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="930.6" y="2281" class="dm" text-anchor="middle">800  benkespile (Y −48 … 752)</text>
   <line x1="1450.6" y1="2150" x2="1563" y2="2150" class="ext"/>
-  <line x1="1450.6" y1="1901.7" x2="1563" y2="1901.7" class="ext"/>
-  <line x1="1450.6" y1="1813.3" x2="1563" y2="1813.3" class="ext"/>
-  <line x1="1450.6" y1="1783.4" x2="1563" y2="1783.4" class="ext"/>
-  <line x1="1450.6" y1="1611.8" x2="1563" y2="1611.8" class="ext"/>
-  <line x1="1450.6" y1="1523.4" x2="1563" y2="1523.4" class="ext"/>
-  <line x1="1553" y1="2150" x2="1553" y2="1901.7" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1565" y="2033.85" class="dm" text-anchor="start">191</text>
-  <line x1="1553" y1="1901.7" x2="1553" y2="1813.3" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1565" y="1865.5" class="dm" text-anchor="start">68</text>
-  <line x1="1553" y1="1813.3" x2="1553" y2="1783.4" class="dim"/>
-  <text x="1565" y="1806.35" class="dm" text-anchor="start">23</text>
-  <line x1="1553" y1="1783.4" x2="1553" y2="1611.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1565" y="1705.6" class="dm" text-anchor="start">132</text>
-  <line x1="1553" y1="1611.8" x2="1553" y2="1523.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1565" y="1575.6" class="dm" text-anchor="start">68</text>
+  <line x1="1450.6" y1="1852.3" x2="1563" y2="1852.3" class="ext"/>
+  <line x1="1450.6" y1="1763.9" x2="1563" y2="1763.9" class="ext"/>
+  <line x1="1450.6" y1="1734" x2="1563" y2="1734" class="ext"/>
+  <line x1="1450.6" y1="1533.8" x2="1563" y2="1533.8" class="ext"/>
+  <line x1="1450.6" y1="1445.4" x2="1563" y2="1445.4" class="ext"/>
+  <line x1="1553" y1="2150" x2="1553" y2="1852.3" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1565" y="2009.15" class="dm" text-anchor="start">229</text>
+  <line x1="1553" y1="1852.3" x2="1553" y2="1763.9" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1565" y="1816.1" class="dm" text-anchor="start">68</text>
+  <line x1="1553" y1="1763.9" x2="1553" y2="1734" class="dim"/>
+  <text x="1565" y="1756.95" class="dm" text-anchor="start">23</text>
+  <line x1="1553" y1="1734" x2="1553" y2="1533.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1565" y="1641.9" class="dm" text-anchor="start">154</text>
+  <line x1="1553" y1="1533.8" x2="1553" y2="1445.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1565" y="1497.6" class="dm" text-anchor="start">68</text>
   <text x="230" y="2350" class="lbl" text-anchor="start">Benkevange, bak 48×68 × 1794, X 98–1892 – gjennomgående, butter mot begge bakre stolper.</text>
   <text x="230" y="2381" class="sml" text-anchor="start">Ryggen (Y −48) ligger i veggplanet, så den løse platen får en ubrutt kant å hvile på.</text>
-  <text x="230" y="2422" class="lbl" text-anchor="start">Bordbærelekt, bak 48×68 × 1794 PÅ HØYKANT, Z 414–482 – bærer platen i bordstilling.</text>
+  <text x="230" y="2422" class="lbl" text-anchor="start">Bordbærelekt, bak 48×68 × 1794 PÅ HØYKANT, Z 474–542 – bærer platen i bordstilling.</text>
   <text x="230" y="2453" class="sml" text-anchor="start">Samme lengde og samme X som den bakre vangen; henger i J12-beslaget mot stolpen.</text>
   <text x="230" y="2494" class="lbl" text-anchor="start">Benkespile 23×98 × 800, Y −48 … 752 – dekker begge vangene, 48 mm opplegg i hver ende.</text>
-  <text x="230" y="2525" class="sml" text-anchor="start">Løs plate ok Z 277 ligger 5 mm under benketoppen 282 – skummet i puta tar de 5 mm, og ingen puteskjøt ligger på sonegrensen.</text>
-  <text x="230" y="2566" class="lbl" text-anchor="start">Stubbefot 48×68 × 191 – én under hvert vangeplan, X 577–645 og 1345–1413.</text>
+  <text x="230" y="2525" class="sml" text-anchor="start">Løs plate ok Z 315 ligger 5 mm under benketoppen 320 – skummet i puta tar de 5 mm, og ingen puteskjøt ligger på sonegrensen.</text>
+  <text x="230" y="2566" class="lbl" text-anchor="start">Stubbefot 48×68 × 229 – én under hvert vangeplan, X 577–645 og 1345–1413.</text>
   <text x="230" y="2597" class="sml" text-anchor="start">Vinkelbeslaget og skråskruen i J10 ligger i X-planene 577 og 645 – de vises i D.</text>
-  <text x="230" y="2634" class="sml" text-anchor="start">Puter: 2 benkeputer 663 × 800 × 100 ligger flatt, 2 ryggputer 332 × 800 × 100 står på høykant (topp 714). Benkeputa har et 98 × 36 hakk der den bakre stolpen står. Sittehøyde med pute 382.</text>
+  <text x="230" y="2634" class="sml" text-anchor="start">Puter: 2 benkeputer 663 × 800 × 100 ligger flatt, 2 ryggputer 332 × 800 × 100 står på høykant (topp 752). Benkeputa har et 98 × 36 hakk der den bakre stolpen står. Sittehøyde med pute 420.</text>
 
   <!-- ============================================================ D -->
   <text x="1650" y="1330" class="pt" text-anchor="start">D · DETALJ F – J10 VED STUBBEFOTEN</text>
   <text x="1650" y="1368" class="sml" text-anchor="start">snitt ved Y = 728, gjennom fremre fot (X–Z), 2,5:1</text>
   <rect x="1662.5" y="1415" width="407.5" height="57.5" class="brd"/>
   <rect x="1632.5" y="1472.5" width="437.5" height="170" class="rai"/>
-  <rect x="1900" y="1642.5" width="170" height="477.5" class="pst"/>
+  <rect x="1900" y="1642.5" width="170" height="572.5" class="pst"/>
   <polyline points="1662.5,1472.5 1632.5,1500 1662.5,1527.5 1632.5,1555 1662.5,1582.5 1632.5,1610 1662.5,1642.5" class="brk"/>
   <polyline points="1662.5,1415 1632.5,1435 1662.5,1455 1632.5,1472.5" class="brk"/>
-  <line x1="1620" y1="2120" x2="2150" y2="2120" class="grd"/>
-  <line x1="1632" y1="2120" x2="1614" y2="2138" class="ext"/>
-  <line x1="1672" y1="2120" x2="1654" y2="2138" class="ext"/>
-  <line x1="1712" y1="2120" x2="1694" y2="2138" class="ext"/>
-  <line x1="1752" y1="2120" x2="1734" y2="2138" class="ext"/>
-  <line x1="1792" y1="2120" x2="1774" y2="2138" class="ext"/>
-  <line x1="1832" y1="2120" x2="1814" y2="2138" class="ext"/>
-  <line x1="1872" y1="2120" x2="1854" y2="2138" class="ext"/>
-  <line x1="1912" y1="2120" x2="1894" y2="2138" class="ext"/>
-  <line x1="1952" y1="2120" x2="1934" y2="2138" class="ext"/>
-  <line x1="1992" y1="2120" x2="1974" y2="2138" class="ext"/>
-  <line x1="2032" y1="2120" x2="2014" y2="2138" class="ext"/>
-  <line x1="2072" y1="2120" x2="2054" y2="2138" class="ext"/>
-  <line x1="2112" y1="2120" x2="2094" y2="2138" class="ext"/>
+  <line x1="1620" y1="2215" x2="2150" y2="2215" class="grd"/>
+  <line x1="1632" y1="2215" x2="1614" y2="2233" class="ext"/>
+  <line x1="1672" y1="2215" x2="1654" y2="2233" class="ext"/>
+  <line x1="1712" y1="2215" x2="1694" y2="2233" class="ext"/>
+  <line x1="1752" y1="2215" x2="1734" y2="2233" class="ext"/>
+  <line x1="1792" y1="2215" x2="1774" y2="2233" class="ext"/>
+  <line x1="1832" y1="2215" x2="1814" y2="2233" class="ext"/>
+  <line x1="1872" y1="2215" x2="1854" y2="2233" class="ext"/>
+  <line x1="1912" y1="2215" x2="1894" y2="2233" class="ext"/>
+  <line x1="1952" y1="2215" x2="1934" y2="2233" class="ext"/>
+  <line x1="1992" y1="2215" x2="1974" y2="2233" class="ext"/>
+  <line x1="2032" y1="2215" x2="2014" y2="2233" class="ext"/>
+  <line x1="2072" y1="2215" x2="2054" y2="2233" class="ext"/>
+  <line x1="2112" y1="2215" x2="2094" y2="2233" class="ext"/>
   <polyline points="1675,1642.5 1900,1642.5 1900,1867.5" class="steelw"/>
   <line x1="1731.25" y1="1642.5" x2="1731.25" y2="1548.75" class="scrl"/>
   <circle cx="1731.25" cy="1642.5" r="7" class="scr"/>
@@ -339,13 +339,13 @@
   <line x1="2070" y1="1730" x2="2135" y2="1842.6" class="ext"/>
   <path d="M 2070,1825 A 95,95 0 0 0 2117.5,1812.3" class="dim"/>
   <text x="2145" y="1846" class="dm" text-anchor="start">30°</text>
-  <line x1="1675" y1="2120" x2="1675" y2="2230" class="ext"/>
-  <line x1="1900" y1="2120" x2="1900" y2="2230" class="ext"/>
-  <line x1="2070" y1="2120" x2="2070" y2="2230" class="ext"/>
-  <line x1="1675" y1="2180" x2="1900" y2="2180" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1787.5" y="2206" class="dm" text-anchor="middle">90  beslagflik</text>
-  <line x1="1900" y1="2180" x2="2070" y2="2180" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1985" y="2206" class="dm" text-anchor="middle">68</text>
+  <line x1="1675" y1="2215" x2="1675" y2="2325" class="ext"/>
+  <line x1="1900" y1="2215" x2="1900" y2="2325" class="ext"/>
+  <line x1="2070" y1="2215" x2="2070" y2="2325" class="ext"/>
+  <line x1="1675" y1="2275" x2="1900" y2="2275" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1787.5" y="2301" class="dm" text-anchor="middle">90  beslagflik</text>
+  <line x1="1900" y1="2275" x2="2070" y2="2275" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1985" y="2301" class="dm" text-anchor="middle">68</text>
   <line x1="2070" y1="1642.5" x2="2130" y2="1642.5" class="ext"/>
   <line x1="2070" y1="1730" x2="2130" y2="1730" class="ext"/>
   <line x1="2110" y1="1642.5" x2="2110" y2="1730" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
@@ -355,15 +355,15 @@
   <line x1="2195" y1="1685" x2="2195" y2="1775" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="2207" y="1738" class="dm" text-anchor="start">36  munning</text>
   <text x="1700" y="1560" class="jl" text-anchor="start">J10</text>
-  <text x="1660" y="2007.5" class="sml" text-anchor="start">stubbefot 48×68 × 191</text>
-  <text x="1650" y="2290" class="lbl" text-anchor="start">J10 – stubbefoten festes to ganger</text>
-  <text x="1650" y="2322" class="sml" text-anchor="start">Vinkelbeslag 90×90×40×2,5 varmforsinket i hjørnet mellom</text>
-  <text x="1650" y="2354" class="sml" text-anchor="start">fotens utside (X 577) og vangens underside (Z 191):</text>
-  <text x="1650" y="2386" class="sml" text-anchor="start">2 × treskrue 5×40 inn i foten og 2 × 5×40 opp i vangen.</text>
-  <text x="1650" y="2450" class="sml" text-anchor="start">PLUSS 1 × treskrue 5×60 SKRÅSKRUE nedenfra: fra fotens</text>
-  <text x="1650" y="2482" class="sml" text-anchor="start">innerside, 30° på flaten, munning 35 mm under fotens topp,</text>
-  <text x="1650" y="2514" class="sml" text-anchor="start">i et flatbunnet ⌀18 sete boret 18 mm ned langs skruens akse.</text>
-  <text x="1650" y="2546" class="sml" text-anchor="start">Munningen er en ellipse 36 × 18 mm. Bruk 30°-vinkelklossen.</text>
+  <text x="1660" y="2007.5" class="sml" text-anchor="start">stubbefot 48×68 × 229</text>
+  <text x="1650" y="2360" class="lbl" text-anchor="start">J10 – stubbefoten festes to ganger</text>
+  <text x="1650" y="2392" class="sml" text-anchor="start">Vinkelbeslag 90×90×40×2,5 varmforsinket i hjørnet mellom</text>
+  <text x="1650" y="2424" class="sml" text-anchor="start">fotens utside (X 577) og vangens underside (Z 229):</text>
+  <text x="1650" y="2456" class="sml" text-anchor="start">2 × treskrue 5×40 inn i foten og 2 × 5×40 opp i vangen.</text>
+  <text x="1650" y="2520" class="sml" text-anchor="start">PLUSS 1 × treskrue 5×60 SKRÅSKRUE nedenfra: fra fotens</text>
+  <text x="1650" y="2552" class="sml" text-anchor="start">innerside, 30° på flaten, munning 35 mm under fotens topp,</text>
+  <text x="1650" y="2584" class="sml" text-anchor="start">i et flatbunnet ⌀18 sete boret 18 mm ned langs skruens akse.</text>
+  <text x="1650" y="2616" class="sml" text-anchor="start">Munningen er en ellipse 36 × 18 mm. Bruk 30°-vinkelklossen.</text>
 
   <!-- ============================================================ C -->
   <text x="2380" y="1240" class="pt" text-anchor="start">C · DETALJ E – BAKRE BENKEVANGES ENDE</text>
@@ -422,7 +422,7 @@
   <text x="2848" y="1986" class="dm" text-anchor="middle">42,6  munningens lengde</text>
   <polyline points="2790,1660 2600,2040" class="ldr" marker-start="url(#aE)"/>
   <text x="2380" y="2062" class="sml" text-anchor="start">Hodet ligger i bunnen av lommen, 3,11 mm under treet.</text>
-  <text x="2380" y="2170" class="big" text-anchor="start">PLAN VED Z = 213 – SETET OG SKRUEVINKELEN (X–Y), 3:1</text>
+  <text x="2380" y="2170" class="big" text-anchor="start">PLAN VED Z = 251 – SETET OG SKRUEVINKELEN (X–Y), 3:1</text>
   <rect x="2386" y="2272" width="636" height="48" class="wall"/>
   <rect x="2386" y="2320" width="66" height="190" class="wall"/>
   <line x1="2452" y1="2320" x2="3022" y2="2320" class="wallface"/>
@@ -453,7 +453,7 @@
   <text x="2380" y="2690" class="sml" text-anchor="start">bakflaten ER veggflaten. Bakre benkevange og bordbærelekt går stolpe til stolpe,</text>
   <text x="2380" y="2720" class="sml" text-anchor="start">X 98–1892 = 1794 mm, og BUTTER mot stolpenes innerflate – de kan ikke tres inn</text>
   <text x="2380" y="2750" class="sml" text-anchor="start">etterpå, så bakrammen må bygges flat på gulvet.</text>
-  <text x="2380" y="2810" class="sml" text-anchor="start">J8-B: 2 × treskrue 6×80 SKRÅTT, 25° på vangens forside, ved Z 213 og 237 (24 mm s/s).</text>
+  <text x="2380" y="2810" class="sml" text-anchor="start">J8-B: 2 × treskrue 6×80 SKRÅTT, 25° på vangens forside, ved Z 251 og 275 (24 mm s/s).</text>
   <text x="2380" y="2840" class="sml" text-anchor="start">Bor setet FØRST med vinkelklossen: ⌀18 forstner 20 mm ned LANGS skruens akse, så</text>
   <text x="2380" y="2870" class="sml" text-anchor="start">⌀6 skrått videre gjennom vangen og ⌀4 i stolpen – forbor hele veien. 60 mm av</text>
   <text x="2380" y="2900" class="sml" text-anchor="start">skruen står igjen etter setet. Munningens nærmeste kant står 12,7 mm fra ende-</text>

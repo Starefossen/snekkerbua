@@ -138,7 +138,8 @@ run = "python tools/render_setedetalj.py"
 [tasks.endelevation]
 description = "Kortsnittet: sengen sett fra enden, snitt A-A i Y-Z gjennom endebjelken (docs/schematics/end-elevation.svg)"
 # Det eneste arket som viser sengens DYBDE i sin helhet, og det som sier at
-# den er asymmetrisk: 1065 mot veggen, 1700 mot rommet.
+# den er asymmetrisk: 1402 mot veggen, 2037 mot rommet (v14/X1 - var 1065
+# og 1700).
 depends = ["build"]
 run = "python tools/render_endelevation.py"
 

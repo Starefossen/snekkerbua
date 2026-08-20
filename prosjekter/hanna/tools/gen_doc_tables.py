@@ -1668,7 +1668,11 @@ def emit_nokkelmal(G, out_dir, rows):
     L.append(f"| Stigevanger | {_rng(G.LADDER_LEFT_X, G.LADDER_LEFT_X + G.UPRIGHT_W)}"
              f" og {_rng(G.LADDER_RIGHT_X, G.LADDER_RIGHT_X + G.UPRIGHT_W)} |\n")
     L.append(f"| Fri åpning mellom stigevangene | **{G.LADDER_CLEAR}** |\n")
-    L.append(f"| Trinn (4 stk.) | {_rng(G.LADDER_INNER_L, G.LADDER_INNER_R)}"
+    # X2 made the rung COUNT a derivation (even_climb), and this line was
+    # still typing 4 - it went on saying four rungs for a whole round after
+    # the model built five. Counted off RUNG_TOPS like everything else.
+    L.append(f"| Trinn ({len(G.RUNG_TOPS)} stk.) | "
+             f"{_rng(G.LADDER_INNER_L, G.LADDER_INNER_R)}"
              f", {G.RUNG_LEN} mm lange |\n")
     L.append(f"| Stigeklosser | {_rng(G.RUNG_BLOCK_X[0], G.RUNG_BLOCK_X[0] + G.RUNG_BLOCK_T)}"
              f" og {_rng(G.RUNG_BLOCK_X[1], G.RUNG_BLOCK_X[1] + G.RUNG_BLOCK_T)} |\n")
@@ -2056,6 +2060,188 @@ def assert_spikerslag_ink(G, idx, text):
         f"{seen} soner på trykk mot {len(G.WALL_ZONES)} i modellen"
 
 
+# ---------------------------------------------------------------------------
+# WHERE THE HOLE GOES ON THE PIECE - the table a man at a trestle can use
+# ---------------------------------------------------------------------------
+# The model projects every fastener back into the piece it is marked on (see
+# X6 in generate_loftbed.py); this puts the projection into Norwegian. Two
+# numbers and a pitch per line, and not one of them typed: the words below
+# are the only thing this file adds.
+#
+# The datum names are deliberately NOT «venstre» and «høyre». Along the wall
+# a piece has an OUTER end - the one pointing at the nearest side wall - and
+# an INNER one, and naming them that way is what lets one line serve a joint
+# and its mirror image. The model asserts that the two halves of the bed
+# really do project to the same numbers before this prints a word of it.
+PLACE_END_NO = {
+    (0, "ytre"): "ytterenden", (0, "indre"): "innerenden",
+    (1, "bak"): "veggenden", (1, "fram"): "romenden",
+    (2, "ned"): "nedre ende", (2, "opp"): "toppen",
+}
+PLACE_EDGE_NO = {
+    (0, "ytre"): "ytterkanten", (0, "indre"): "innerkanten",
+    (1, "bak"): "bakkanten", (1, "fram"): "forkanten",
+    (2, "ned"): "underkanten", (2, "opp"): "overkanten",
+}
+PLACE_BOTH_NO = {
+    (0, "ende"): "begge ender", (0, "kant"): "begge langkanter",
+    (1, "ende"): "vegg- og romenden", (1, "kant"): "bak- og forkanten",
+    (2, "ende"): "begge ender", (2, "kant"): "under- og overkanten",
+}
+PLACE_FACE_NO = {
+    (0, "ytre"): "yttersiden (mot sideveggen)",
+    (0, "indre"): "innersiden (mot sengas midte)",
+    (1, "bak"): "baksiden (mot veggen)",
+    (1, "fram"): "forsiden (mot rommet)",
+    (2, "ned"): "undersiden", (2, "opp"): "oversiden",
+}
+# Deterministic order for the datums of one axis - and the order a builder
+# reads them in: from the wall out, from the floor up, from the side wall in.
+PLACE_AXIS_ORDER = {0: ("ytre", "midt", "indre"), 1: ("bak", "midt", "fram"),
+                    2: ("ned", "midt", "opp")}
+
+
+def _place_one_datum(a):
+    """(datum, [mm, ...]) - a row that has a pitch is ONE row, so it is said
+    from ONE end, not half from each. The datum is the nearest one; the far
+    figures are turned round on the piece's own width."""
+    best = min(r["at"][0] for r in a["refs"])
+    target = next(n for n in PLACE_AXIS_ORDER[a["axis"]]
+                  if any(r["ref"] == n and abs(r["at"][0] - best) < 1e-9
+                         for r in a["refs"]))
+    vals = set()
+    for r in a["refs"]:
+        for v in r["at"]:
+            vals.add(round(v if r["ref"] == target
+                           else (a["width"] / 2 if r["ref"] == "midt"
+                                 else a["width"] - v), 1))
+    return target, sorted(vals)
+
+
+def _place_ref(axis, role, ref, at):
+    where = (PLACE_END_NO if role == "ende" else PLACE_EDGE_NO)[(axis, ref)]
+    if at == [0]:
+        return f"i flukt med {where}"      # a bracket corner, not a hole
+    return f"{' / '.join(_fmt(v) for v in at)} mm fra {where}"
+
+
+def _place_cell(a):
+    """One axis of one placement line, as a measurement and nothing else."""
+    axis, role, refs = a["axis"], a["role"], a["refs"]
+    if a["both"]:
+        txt = (f"{' / '.join(_fmt(v) for v in refs[0]['at'])} mm fra "
+               f"{PLACE_BOTH_NO[(axis, role)]}")
+    elif len(refs) == 1 and refs[0]["ref"] == "midt":
+        side = "ende" if role == "ende" else "side"
+        txt = f"midt på ({_fmt(refs[0]['at'][0])} mm fra hver {side})"
+    elif len(refs) > 1 and a["cc"] is not None:
+        target, vals = _place_one_datum(a)
+        txt = _place_ref(axis, role, target, vals)
+    elif len(refs) > 1:
+        order = PLACE_AXIS_ORDER[axis]
+        txt = " · ".join(
+            (f"midt på ({_fmt(r['at'][0])} mm fra hver side)"
+             if r["ref"] == "midt" else _place_ref(axis, role, r["ref"],
+                                                   r["at"]))
+            for r in sorted(refs, key=lambda r: order.index(r["ref"])))
+    else:
+        txt = _place_ref(axis, role, refs[0]["ref"], refs[0]["at"])
+    return txt
+
+
+def placement_rows(G, st, idx):
+    """[(ledd, merkes-opp-på, fra enden, fra kanten, c/c)] for one step."""
+    out = []
+    for pl in G.FASTENER_PLACEMENTS:
+        if pl["jid"] not in st["joints"]:
+            continue
+        cells = {"ende": [], "kant": []}
+        for a in pl["axes"]:
+            cells[a["role"]].append(_place_cell(a))
+        cc = [_fmt(a["cc"]) for a in pl["axes"] if a["cc"] is not None]
+        piece = (f"{PART_NO[pl['member']]} "
+                 f"{_no_section(G, pl['section'].replace('×', 'x'))} × "
+                 f"{_fmt(pl['piece_len'])}")
+        out.append((f"**{pl['jid']}** {pl['per']}× {_fast_short(pl['name'])}",
+                    f"{piece}, {PLACE_FACE_NO[pl['face']]}",
+                    " · ".join(cells["ende"]) or "—",
+                    " · ".join(cells["kant"]) or "—",
+                    " / ".join(cc) or "—"))
+    return out
+
+
+# The rules are explained ONCE, at the top of the guide; a step page only
+# gets the table. Repeating five lines of convention twelve times is how a
+# manual stops being read.
+PLACE_INTRO = "**Festeplassering — mål på delen:**\n"
+PLACE_RULES = (
+    "**Hvert steg har en «festeplassering»-tabell**, og den er svaret på "
+    "hvor langt inn og hvor langt opp på materialet et feste skal stå. "
+    "Hullet er oppgitt i DELENS egne mål — så mange mm inn fra en navngitt "
+    "ende, så mange mm inn fra en navngitt kant, og senteravstand mellom "
+    "hullene i samme rad. Ta tabellene med til steg 0: det er der du merker "
+    "opp og borer, mens delene ennå ligger løse på bukken.\n\n"
+    "* **Ytterenden** er den enden av delen som peker mot nærmeste "
+    "endevegg, **innerenden** den som peker inn mot sengas midte. Derfor "
+    "gjelder ett mål begge sider av senga — og modellen måler at de to "
+    "halvdelene faktisk projiserer til samme tall før det skrives.\n"
+    "* **Stående deler måles ovenfra.** Foten kappes i vater etter at rammen "
+    "står, så den enden finnes ikke ennå når du borer.\n"
+    "* **«midt på» er senterlinjen.** Riss den opp med senterlinjal eller "
+    "med to diagonaler — ikke mål fra den ene siden.\n"
+    "* Målene er senter av hullet. Retningen skruen drives, og hvorfor akkurat "
+    "den veien, står i [skrueretninger](skrueretninger.md).\n\n")
+
+
+def assert_placement_ink(G, bygg, retn):
+    """Every fastener on the direction sheet has a line that says WHERE.
+
+    Read off the two emitted fragments, not off the data that made them: the
+    direction sheet and the placement tables are two readings of one set of
+    solids, and a fastener that lost its placement line - a joint that fell
+    out of a step, a drive nobody printed - is exactly the kind of silent
+    hole this pair of tables exists to close.
+    """
+    def cells(text):
+        for line in text.split("\n"):
+            if line.startswith("| **J"):
+                yield [x.strip() for x in line.strip().strip("|").split("|")]
+
+    # The direction sheet: the joint is its own column, the fastener is
+    # «2× Treskrue 6×80 forsenket Torx» in the next one.
+    driven = set()
+    for c in cells(retn):
+        jid = re.fullmatch(r"\*\*(J[\w-]+)\*\*", c[0]).group(1)
+        driven.add((jid, _fast_short(re.sub(r"^\d+× ", "", c[1]))))
+    # The placement tables: joint and fastener share the first column.
+    placed = {}
+    for c in cells(bygg):
+        m = re.fullmatch(r"\*\*(J[\w-]+)\*\* \d+× (.+)", c[0])
+        if not m:
+            continue
+        key = (m.group(1), m.group(2))
+        placed[key] = placed.get(key, 0) + 1
+    missing = driven - set(placed)
+    extra = set(placed) - driven
+    assert not missing and not extra, (
+        f"festeplassering: {sorted(missing)} står i skrueretningene uten en "
+        f"plasseringslinje, og {sorted(extra)} står plassert uten å være "
+        f"drevet")
+    # ...and the lines have to add up to the whole bed, not just to each
+    # other: every fastener the model placed is inside one of them.
+    n_lines = sum(placed.values())
+    assert n_lines == len(G.FASTENER_PLACEMENTS), (
+        f"{n_lines} plasseringslinjer på trykk mot "
+        f"{len(G.FASTENER_PLACEMENTS)} i modellen")
+    n_fast = sum(pl["n"] for pl in G.FASTENER_PLACEMENTS)
+    driven_total = len([f for f in G.FASTENER_SPECS if f["drive"] is not None])
+    assert n_fast == driven_total, \
+        f"{n_fast} festemidler dekket av plasseringslinjene mot {driven_total}"
+    print(f"  festeplassering: {n_lines} linjer, {len(driven)} "
+          f"skrueretninger, {n_fast} festemidler - én linje per rad, ingen "
+          f"rad uten linje")
+
+
 def emit_byggesteg(G, out_dir, steps, idx):
     L = [HEAD, "# Steg for steg\n\n",
          "Rekkefølgen er ikke fri. Sengen står inntil bakveggen og inntil "
@@ -2067,7 +2253,8 @@ def emit_byggesteg(G, out_dir, steps, idx):
          "[nøkkelmål](nokkelmal.md) og [kappliste](kappliste.md); "
          "leddene står i J-oversikten i "
          "[ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene), med antall og forboring "
-         "i [beslaglista](beslagliste.md).\n\n"]
+         "i [beslaglista](beslagliste.md).\n\n",
+         PLACE_RULES]
 
     # Før steg 0: rommet. Steg 0 kapper, og halve kapplista kan ikke kappes
     # ferdig før nisja er målt - så dette står foran, ikke i en merknad.
@@ -2103,6 +2290,14 @@ def emit_byggesteg(G, out_dir, steps, idx):
                      + " — se J-oversikten i "
                        "[ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og "
                        "[beslagliste](beslagliste.md)\n\n")
+        place = placement_rows(G, st, idx)
+        if place:
+            L.append(PLACE_INTRO + "\n")
+            L.append("| Ledd | Merkes opp på | Fra enden | Fra kanten | "
+                     "c/c |\n|---|---|---|---|---:|\n")
+            for row in place:
+                L.append("| " + " | ".join(row) + " |\n")
+            L.append("\n")
         L.append("**Slik gjør du:**\n\n")
         for d in st["do"]:
             L.append(f"1. {d}\n")
@@ -2113,6 +2308,7 @@ def emit_byggesteg(G, out_dir, steps, idx):
     text = "".join(L)
     assert_spikerslag_ink(G, idx, text)
     write(os.path.join(out_dir, "byggesteg.md"), text)
+    return text
 
 
 MONTERING_HEAD = (
@@ -2573,6 +2769,13 @@ def emit_skrueretninger(G, out_dir, idx):
          "den. Ledd som griper i en del i det laget skrus derfor innenfra og "
          "ut, og linjene under sier det. Modellen asserter det: ingen "
          "festemiddelhoder på en romvendt flate.\n\n",
+         "**Hvor på delen hullet står** — så mange mm inn fra en navngitt "
+         "ende og en navngitt kant, og senteravstanden mellom hullene — står "
+         "i «festeplassering»-tabellen i det steget som eier leddet, i "
+         "[byggesteg](byggesteg.md). Det er én plasseringslinje per rad i "
+         "tabellen under, og den bijeksjonen er en assert på det ferdige "
+         "blekket: en retning uten plassering, eller en plassering uten "
+         "retning, feller bygget.\n\n",
          "| Ledd | Festemiddel | Retning | Grunnlag |\n",
          "|---|---|---|---|\n"]
 
@@ -2676,7 +2879,9 @@ def emit_skrueretninger(G, out_dir, idx):
     L.append("Veggfestet (J14) står ikke her — det går rett gjennom den bakre "
              "sidevangen og inn i veggen, og har ingen andre del å gå inn "
              "i.\n")
-    write(os.path.join(out_dir, "skrueretninger.md"), "".join(L))
+    text = "".join(L)
+    write(os.path.join(out_dir, "skrueretninger.md"), text)
+    return text
 
 
 def emit_beslagliste(out_dir, steps):
@@ -2857,9 +3062,10 @@ def emit(ns):
     emit_kappliste(G, out_dir)
     emit_innkjopsliste(G, out_dir)
     emit_nokkelmal(G, out_dir, rows)
-    emit_byggesteg(G, out_dir, steps, idx)
+    bygg = emit_byggesteg(G, out_dir, steps, idx)
     emit_beslagliste(out_dir, steps)
-    emit_skrueretninger(G, out_dir, idx)
+    retn = emit_skrueretninger(G, out_dir, idx)
+    assert_placement_ink(G, bygg, retn)
     emit_montering(G, G.OUT_DIR, steps, idx)
     emit_json(G, out_dir, steps, idx, rows)
     emit_step_meshes(G, steps, G.GROUP_DIR)

@@ -74,7 +74,7 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | Stigens senterlinje | 995 |
 | Stigevanger | 787..835 og 1155..1203 |
 | Fri åpning mellom stigevangene | **320** |
-| Trinn (4 stk.) | 835..1155, 320 mm lange |
+| Trinn (5 stk.) | 835..1155, 320 mm lange |
 | Stigeklosser | 835..871 og 1119..1155 |
 | Rekkverksbord | 3..835 og 1155..1987 |
 | Klatreåpning i begge rekkverksbånd | **320** |

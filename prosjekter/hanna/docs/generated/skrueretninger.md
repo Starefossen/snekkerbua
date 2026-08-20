@@ -9,6 +9,8 @@ Hvilken vei hver skrue drives, og hvorfor akkurat den veien. Hvert festemiddel i
 
 **Der begge veier holder målene, avgjør fronten.** Sengens front — alt fra vangenes ytterflate og fram til stolpeplanet — er den eneste flaten noen ser på, og det skal ikke stå et skruehode i den. Ledd som griper i en del i det laget skrus derfor innenfra og ut, og linjene under sier det. Modellen asserter det: ingen festemiddelhoder på en romvendt flate.
 
+**Hvor på delen hullet står** — så mange mm inn fra en navngitt ende og en navngitt kant, og senteravstanden mellom hullene — står i «festeplassering»-tabellen i det steget som eier leddet, i [byggesteg](byggesteg.md). Det er én plasseringslinje per rad i tabellen under, og den bijeksjonen er en assert på det ferdige blekket: en retning uten plassering, eller en plassering uten retning, feller bygget.
+
 | Ledd | Festemiddel | Retning | Grunnlag |
 |---|---|---|---|
 | **J1** | 2× Treskrue 6×80 forsenket Torx | **Treskrue 6×80 forsenket Torx** gjennom endebjelke (36×98) → inn i hjørnestolpe (36×98), mot venstre vegg (speilvendt i den andre enden) | utledet av tykkelsene |
