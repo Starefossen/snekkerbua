@@ -35,7 +35,7 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 |---:|---|---|---|---|
 | 1 | **0–1402** | **-1000..+402 krysser risset** | Hjørnene, mot endeveggene | Hjørnestolpe, bak (veggside) (2 stk.) |
 | 2 | **229–297** | **-771..-703 under risset** | Bakveggen | Benkevange, bak (gjennomgående) |
-| 3 | **474–542** | **-526..-458 under risset** | Bakveggen | Bordbærelekt, bak |
+| 3 | **614–682** | **-386..-318 under risset** | Bakveggen | Bordbærelekt, bak |
 | 4 | **1402–1500** | **+402..+500 over risset** | Bakveggen | Sidevange, øvre |
 
 To notasjoner, samme sone. **Målt fra ferdig gulv** er modellens egen Z. **Målt fra høyderisset** er den samme høyden minus 1000 — minus er *under* laserlinja, pluss er *over* den. Gulvet er skjevt og risset er ikke: står du ved den åpne veggen med målebåndet på laserlinja, er det den andre kolonnen du setter sonene etter.
@@ -98,9 +98,9 @@ Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannret
 |---|---|---|---|---:|
 | **J2-B** 2× Treskrue 6×120 | bakre sidevange 48×98 × 1984, oversiden | 27 / 68 mm fra ytterenden | 18 mm fra bakkanten | 41 |
 | **J8-B** 2× Treskrue 6×80 | bakre benkevange 48×68 × 1794, forsiden (mot rommet) | 34 mm fra ytterenden | 22 mm fra under- og overkanten | 24 |
-| **J12** 1× Treskrue 5×40 | bakre hjørnestolpe 36×98 × 1402, innersiden (mot sengas midte) | 948 mm fra toppen | midt på (18 mm fra hver side) | — |
+| **J12** 1× Treskrue 5×40 | bakre hjørnestolpe 36×98 × 1402, innersiden (mot sengas midte) | 808 mm fra toppen | midt på (18 mm fra hver side) | — |
 | **J12** 1× Treskrue 5×40 | bordbærelekt 48×68 × 1794, undersiden | 20 mm fra ytterenden | 18 mm fra bakkanten | — |
-| **J12** 1× Vinkelbeslag 40×40×20 | bakre hjørnestolpe 36×98 × 1402, innersiden (mot sengas midte) | 928 mm fra toppen | midt på (18 mm fra hver side) | — |
+| **J12** 1× Vinkelbeslag 40×40×20 | bakre hjørnestolpe 36×98 × 1402, innersiden (mot sengas midte) | 788 mm fra toppen | midt på (18 mm fra hver side) | — |
 
 **Slik gjør du:**
 
@@ -236,11 +236,11 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 
 Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre sidevangen.
 
-**Deler:** 5× Rungetrinn 48×68 × 320 · 10× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 2037
+**Deler:** 2× Bordkloss 36×48 × 108 · 5× Rungetrinn 48×68 × 320 · 10× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 2037
 
-**Festemidler:** 20× Treskrue 5×60 forsenket Torx · 10× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×80 forsenket Torx
+**Festemidler:** 20× Treskrue 5×60 forsenket Torx · 10× Treskrue 6×120 forsenket Torx · 8× Treskrue 6×80 forsenket Torx
 
-**Ledd:** J3, J4, J5 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+**Ledd:** J3, J4, J5, J5-B — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
 **Festeplassering — mål på delen:**
 
@@ -248,13 +248,15 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 |---|---|---|---|---:|
 | **J3** 3× Treskrue 6×80 | fremre sidevange 48×98 × 1984, baksiden (mot veggen) | 808 mm fra ytterenden | 25 / 49 / 73 mm fra underkanten | 24 |
 | **J4** 1× Treskrue 5×60 | rungetrinn 48×68 × 320, oversiden | 18 mm fra ytterenden | 18 mm fra forkanten | — |
-| **J4** 1× Treskrue 6×120 | stigevange 36×48 × 2037, yttersiden (mot sideveggen) | 784 / 1029 / 1274 / 1519 / 1764 mm fra toppen | midt på (18 mm fra hver side) | 245 |
+| **J4** 1× Treskrue 6×120 | stigevange 36×48 × 2037, yttersiden (mot sideveggen) | 763 / 988 / 1213 / 1489 / 1764 mm fra toppen | midt på (18 mm fra hver side) | — |
 | **J5** 1× Treskrue 5×60 | stigekloss 36×48 × 36, innersiden (mot sengas midte) | midt på (24 mm fra hver ende) | midt på (18 mm fra hver side) | — |
+| **J5-B** 1× Treskrue 6×80 | stigevange 36×48 × 2037, yttersiden (mot sideveggen) | 1379 mm fra toppen | midt på (18 mm fra hver side) | — |
 
 **Slik gjør du:**
 
 1. Skru stigeklossene på innsiden av hver stigevange (J5). Klossen er 36 mm lang — nøyaktig så dyp som stigevangen — og skal ligge i flukt med vangens for- og bakkant, ikke stikke bakover slik trinnet gjør. Klosshøyden er trinnhøyden — mål to ganger.
 1. Legg trinnene på klossene og fest dem (J4).
+1. Skru de to BORDKLOSSENE på (J5-B) mens stigen ennå ligger flatt. De er 108 mm lange, står i samme X som stigeklossene og har overkanten på 682 — det er bordplatens underside. De skrus fra stigevangens UTSIDE, én 6x80 hver, og de stikker 70 mm BAKOVER forbi vangen: det er hylla bordplaten hviler på i bordstilling. Forkanten flukter med vangens forkant, som trinnene.
 1. Reis stigen mot den fremre sidevangen. Trinnenes forkant skal ligge i flukt med stigevangenes forkant — trinnene stikker BAKOVER, ikke framover. Det som stikker bakover er hylla den løse platen skal hvile på.
 1. Skru stigen fast til vangen etter J3 — **innenfra**, gjennom sidevangen og inn i stigevangen, så stigevangens forside blir uten skruehoder. Klem stigen fast mot vangen først; du står på den andre siden når du skrur. Gjennomgangshullene er boret i steg 0.
 
@@ -262,6 +264,7 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 
 * Mål lysåpningen mellom stigevangene øverst og nederst — den skal være lik.
 * Alle 5 trinn i vater.
+* Mål høyden på bordklossenes overkant fra stigefoten: 682 mm, begge to, og i vater med hverandre. Bordplaten hviler på dem og på bordbærelekta samtidig — står de skjevt, vipper platen.
 * Stå på nederste trinn og kjenn etter. Sitter noe løst nå, sitter det løst for alltid.
 
 ## Steg 7 — Benkespiler og endespiler
@@ -375,7 +378,7 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke 
 1. Samme sak for de to kilelektene, i flukt med platens forkant og med den HØYE enden mot den lange lekta (J13b) — den skråkappede tuppen peker ut mot platekanten. De bærer hjørnet trinnet ikke rekker fram til.
 1. Ingenting går gjennom platens overside. Har du et hull der, har du boret feil vei.
 1. Legg platen i sengestilling: senk den rett ned mellom benkene, bakkanten på den bakre benkevangen, forkanten på trinn 1. De to lange lektene skal gli ned på hver side av trinnenden uten å tvinges.
-1. Prøv bordstilling: samme plate, samme lekter, rett ned på bordbærelekta og trinn 2. Trinn 1 og trinn 2 ender på samme sted i lengderetningen, så lektene finner trinnenden i begge stillinger.
+1. Prøv bordstilling: samme plate, samme lekter, rett ned på bordbærelekta og de to BORDKLOSSENE. Klossene har endeflaten i nøyaktig samme lengderetning som trinnendene, så de to lektene finner dem på samme måte — bare 70 mm dypere inn.
 
 **Sjekk før du går videre:**
 

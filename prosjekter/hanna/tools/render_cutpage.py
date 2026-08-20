@@ -604,8 +604,20 @@ def render(G, out_dir, width, glyph_dir):
     # --- the boards -------------------------------------------------------
     sale_x = MARGIN + BUY_COL - 20.0
 
-    def _strip(x, y, h, w, segs, mm0, sc, marks, label_size=None):
-        """One run of bar: outline, cut marks, and a length on every piece."""
+    def _strip(x, y, h, w, segs, mm0, sc, marks, label_size=None,
+               zoomed=False):
+        """One run of bar: outline, cut marks, and a length on every piece.
+
+        `zoomed` says WHICH strip this is, and it is the whole of the rule
+        about who draws what twice: a run that lives in the zoom strip is
+        named, numbered and capped DOWN THERE, once, and left blank up on the
+        bar. The flag that decides is `inzoom`, which is the same flag the
+        names already used - it is set on every run inside the zoom window,
+        not only on the tiny ones that opened it. Reading `mode == "zoom"`
+        here instead was a bug you could only see when a full-size run
+        happened to sit between two small ones: it got its dashed overlength
+        cap drawn on both strips, and the cap count stopped matching the cut
+        list."""
         page.rect(x, y, w, h, fill="none", stroke=RL.INK,
                   width=RL.T.W_NEW * 0.42)
         for m, boundary in marks:
@@ -615,7 +627,7 @@ def render(G, out_dir, width, glyph_dir):
         for s in segs:
             # A run that is going to be spelled out in a zoom strip below is
             # left blank up here - there is no room for a number on it.
-            if s["mode"] == "zoom":
+            if bool(s.get("inzoom")) != zoomed or s["mode"] == "zoom":
                 continue
             size = label_size or s["size"]
             base = y + h / 2 - size * 0.36
@@ -635,7 +647,7 @@ def render(G, out_dir, width, glyph_dir):
         # has gone down to the zoom strip is capped down there, once, and not
         # up here where it would be a smudge three units wide.
         for s in segs:
-            if s["mode"] == "zoom" or not s["nend"]:
+            if bool(s.get("inzoom")) != zoomed or not s["nend"]:
                 continue
             for k in range(s["count"]):
                 p0 = s["mm0"] + (s["sawn"] + kerf) * k
@@ -749,7 +761,7 @@ def render(G, out_dir, width, glyph_dir):
                 for s in zsegs:
                     _label_run(s, zs)
                 _strip(bar_x, zy, ZOOM_H, bar_w, zsegs, zoom["mm0"], zs,
-                       zmarks)
+                       zmarks, zoomed=True)
                 page.text((sale_x, zy + ZOOM_H / 2 - S_SUB * 0.36),
                           f"forstørret {zs / scale:.1f}×".replace(".", ","),
                           S_SUB, anchor="end", colour=RL.GREY)

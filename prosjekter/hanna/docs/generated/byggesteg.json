@@ -335,7 +335,9 @@
         "Rung Block Right_2",
         "Rung Block Right_3",
         "Rung Block Right_4",
-        "Rung Block Right_5"
+        "Rung Block Right_5",
+        "Table Bearer Left",
+        "Table Bearer Right"
       ],
       "highlight": [
         "Ladder Rung_1",
@@ -354,7 +356,9 @@
         "Rung Block Right_2",
         "Rung Block Right_3",
         "Rung Block Right_4",
-        "Rung Block Right_5"
+        "Rung Block Right_5",
+        "Table Bearer Left",
+        "Table Bearer Right"
       ],
       "camera": [
         0,
@@ -365,25 +369,29 @@
       "do": [
         "Skru stigeklossene på innsiden av hver stigevange (J5). Klossen er 36 mm lang — nøyaktig så dyp som stigevangen — og skal ligge i flukt med vangens for- og bakkant, ikke stikke bakover slik trinnet gjør. Klosshøyden er trinnhøyden — mål to ganger.",
         "Legg trinnene på klossene og fest dem (J4).",
+        "Skru de to BORDKLOSSENE på (J5-B) mens stigen ennå ligger flatt. De er 108 mm lange, står i samme X som stigeklossene og har overkanten på 682 — det er bordplatens underside. De skrus fra stigevangens UTSIDE, én 6x80 hver, og de stikker 70 mm BAKOVER forbi vangen: det er hylla bordplaten hviler på i bordstilling. Forkanten flukter med vangens forkant, som trinnene.",
         "Reis stigen mot den fremre sidevangen. Trinnenes forkant skal ligge i flukt med stigevangenes forkant — trinnene stikker BAKOVER, ikke framover. Det som stikker bakover er hylla den løse platen skal hvile på.",
         "Skru stigen fast til vangen etter J3 — **innenfra**, gjennom sidevangen og inn i stigevangen, så stigevangens forside blir uten skruehoder. Klem stigen fast mot vangen først; du står på den andre siden når du skrur. Gjennomgangshullene er boret i steg 0."
       ],
       "check": [
         "Mål lysåpningen mellom stigevangene øverst og nederst — den skal være lik.",
         "Alle 5 trinn i vater.",
+        "Mål høyden på bordklossenes overkant fra stigefoten: 682 mm, begge to, og i vater med hverandre. Bordplaten hviler på dem og på bordbærelekta samtidig — står de skjevt, vipper platen.",
         "Stå på nederste trinn og kjenn etter. Sitter noe løst nå, sitter det løst for alltid."
       ],
       "fasteners": [
         "20× Treskrue 5×60 forsenket Torx",
         "10× Treskrue 6×120 forsenket Torx",
-        "6× Treskrue 6×80 forsenket Torx"
+        "8× Treskrue 6×80 forsenket Torx"
       ],
       "joints": {
         "J3": 2,
         "J4": 10,
-        "J5": 10
+        "J5": 10,
+        "J5-B": 2
       },
       "parts": [
+        "2× Bordkloss 36×48 × 108",
         "5× Rungetrinn 48×68 × 320",
         "10× Stigekloss 36×48 × 36",
         "2× Stigevange 36×48 × 2037"
@@ -617,7 +625,7 @@
         "Samme sak for de to kilelektene, i flukt med platens forkant og med den HØYE enden mot den lange lekta (J13b) — den skråkappede tuppen peker ut mot platekanten. De bærer hjørnet trinnet ikke rekker fram til.",
         "Ingenting går gjennom platens overside. Har du et hull der, har du boret feil vei.",
         "Legg platen i sengestilling: senk den rett ned mellom benkene, bakkanten på den bakre benkevangen, forkanten på trinn 1. De to lange lektene skal gli ned på hver side av trinnenden uten å tvinges.",
-        "Prøv bordstilling: samme plate, samme lekter, rett ned på bordbærelekta og trinn 2. Trinn 1 og trinn 2 ender på samme sted i lengderetningen, så lektene finner trinnenden i begge stillinger."
+        "Prøv bordstilling: samme plate, samme lekter, rett ned på bordbærelekta og de to BORDKLOSSENE. Klossene har endeflaten i nøyaktig samme lengderetning som trinnendene, så de to lektene finner dem på samme måte — bare 70 mm dypere inn."
       ],
       "check": [
         "Skyv platen sidelengs. Den skal bevege seg et par millimeter og så stoppe mot trinnenden — begge veier, i begge stillinger.",

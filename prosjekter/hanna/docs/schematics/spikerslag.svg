@@ -172,7 +172,7 @@
   <rect x="470" y="378" width="98" height="1402" class="zone"/>
   <rect x="2362" y="378" width="98" height="1402" class="zone"/>
   <rect x="568" y="1483" width="1794" height="68" class="zone"/>
-  <rect x="568" y="1238" width="1794" height="68" class="zone"/>
+  <rect x="568" y="1098" width="1794" height="68" class="zone"/>
   <rect x="473" y="280" width="1984" height="98" class="zone"/>
   <circle cx="519" cy="528" r="26" class="picf"/>
   <text x="519" y="539.16" class="pt" text-anchor="middle">1</text>
@@ -180,14 +180,14 @@
   <text x="2411" y="539.16" class="pt" text-anchor="middle">1</text>
   <circle cx="1465" cy="1517" r="26" class="picf"/>
   <text x="1465" y="1528.16" class="pt" text-anchor="middle">2</text>
-  <circle cx="1465" cy="1272" r="26" class="picf"/>
-  <text x="1465" y="1283.16" class="pt" text-anchor="middle">3</text>
+  <circle cx="1465" cy="1132" r="26" class="picf"/>
+  <text x="1465" y="1143.16" class="pt" text-anchor="middle">3</text>
   <circle cx="1465" cy="329" r="26" class="picf"/>
   <text x="1465" y="340.16" class="pt" text-anchor="middle">4</text>
-  <text x="560" y="808" class="smh" text-anchor="start">Hjørnestolpe, bak (veggside) — 0–1402 over gulv  ·  -1000..+402 krysser risset</text>
-  <text x="2370" y="841" class="smh" text-anchor="end">Hjørnestolpe, bak (veggside) — 0–1402 over gulv  ·  -1000..+402 krysser risset</text>
+  <text x="560" y="738" class="smh" text-anchor="start">Hjørnestolpe, bak (veggside) — 0–1402 over gulv  ·  -1000..+402 krysser risset</text>
+  <text x="2370" y="771" class="smh" text-anchor="end">Hjørnestolpe, bak (veggside) — 0–1402 over gulv  ·  -1000..+402 krysser risset</text>
   <text x="588" y="1470.9" class="smh" text-anchor="start">Benkevange, bak (gjennomgående) — 229–297 over gulv  ·  -771..-703 under risset</text>
-  <text x="588" y="1225.9" class="smh" text-anchor="start">Bordbærelekt, bak — 474–542 over gulv  ·  -526..-458 under risset</text>
+  <text x="588" y="1085.9" class="smh" text-anchor="start">Bordbærelekt, bak — 614–682 over gulv  ·  -386..-318 under risset</text>
   <text x="493" y="267.9" class="smh" text-anchor="start">Sidevange, øvre — 1402–1500 over gulv  ·  +402..+500 over risset</text>
   <line x1="350" y1="780" x2="2580" y2="780" class="ctr"/>
   <text x="620" y="769" class="smh" text-anchor="start">HØYDERISS 1000 OVER FERDIG GULV — 0 I RISS-NOTASJONEN (MINUS ER UNDER, PLUSS ER OVER)</text>
@@ -210,14 +210,14 @@
   <line x1="360" y1="1551" x2="360" y2="1483" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="372.65" y="1525.05" class="dmh" text-anchor="middle">68</text>
   <line x1="470" y1="1483" x2="344" y2="1483" class="ext"/>
-  <line x1="360" y1="1483" x2="360" y2="1306" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="372.65" y="1402.55" class="dmh" text-anchor="middle">177</text>
-  <line x1="470" y1="1306" x2="344" y2="1306" class="ext"/>
-  <line x1="360" y1="1306" x2="360" y2="1238" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="372.65" y="1280.05" class="dmh" text-anchor="middle">68</text>
-  <line x1="470" y1="1238" x2="344" y2="1238" class="ext"/>
-  <line x1="360" y1="1238" x2="360" y2="378" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="372.65" y="816.05" class="dmh" text-anchor="middle">860</text>
+  <line x1="360" y1="1483" x2="360" y2="1166" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="372.65" y="1332.55" class="dmh" text-anchor="middle">317</text>
+  <line x1="470" y1="1166" x2="344" y2="1166" class="ext"/>
+  <line x1="360" y1="1166" x2="360" y2="1098" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="372.65" y="1140.05" class="dmh" text-anchor="middle">68</text>
+  <line x1="470" y1="1098" x2="344" y2="1098" class="ext"/>
+  <line x1="360" y1="1098" x2="360" y2="378" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="372.65" y="746.05" class="dmh" text-anchor="middle">720</text>
   <line x1="470" y1="378" x2="344" y2="378" class="ext"/>
   <line x1="360" y1="378" x2="360" y2="280" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="372.65" y="337.05" class="dmh" text-anchor="middle">98</text>
@@ -234,10 +234,10 @@
   <text x="2610" y="417.16" class="sml" text-anchor="start">1402   (+402 fra risset)   uk sidevange, øvre — sone 4 begynner</text>
   <line x1="2484" y1="780" x2="2560" y2="780" class="ext"/>
   <text x="2610" y="787.92" class="sml" text-anchor="start">1000   (0 fra risset)   høyderiss (laser rundt hele nisja)</text>
-  <line x1="2484" y1="1238" x2="2560" y2="1238" class="ext"/>
-  <text x="2610" y="1245.92" class="sml" text-anchor="start">542   (-458 fra risset)   ok bordbærelekt, bak — sone 3 slutter</text>
-  <line x1="2484" y1="1306" x2="2560" y2="1306" class="ext"/>
-  <text x="2610" y="1313.92" class="sml" text-anchor="start">474   (-526 fra risset)   uk bordbærelekt, bak — sone 3 begynner</text>
+  <line x1="2484" y1="1098" x2="2560" y2="1098" class="ext"/>
+  <text x="2610" y="1105.92" class="sml" text-anchor="start">682   (-318 fra risset)   ok bordbærelekt, bak — sone 3 slutter</text>
+  <line x1="2484" y1="1166" x2="2560" y2="1166" class="ext"/>
+  <text x="2610" y="1173.92" class="sml" text-anchor="start">614   (-386 fra risset)   uk bordbærelekt, bak — sone 3 begynner</text>
   <line x1="2484" y1="1483" x2="2560" y2="1483" class="ext"/>
   <text x="2610" y="1490.92" class="sml" text-anchor="start">297   (-703 fra risset)   ok benkevange, bak (gjennomgående) — sone 2 slutter</text>
   <line x1="2484" y1="1551" x2="2560" y2="1551" class="ext"/>
@@ -262,14 +262,14 @@
   <text x="120" y="2368.7" class="sml" text-anchor="start">sengen hvor som helst i sonen. Etterpå kommer du ikke til.</text>
   <text x="120" y="2398.4" class="sml" text-anchor="start">Sone 1: 0–1402 over ferdig gulv = -1000..+402 krysser risset — Hjørnestolpe, bak (veggside) (2 stk., ett felt i hvert hjørne)</text>
   <text x="120" y="2428.1" class="sml" text-anchor="start">Sone 2: 229–297 over ferdig gulv = -771..-703 under risset — Benkevange, bak (gjennomgående)</text>
-  <text x="120" y="2457.8" class="sml" text-anchor="start">Sone 3: 474–542 over ferdig gulv = -526..-458 under risset — Bordbærelekt, bak</text>
+  <text x="120" y="2457.8" class="sml" text-anchor="start">Sone 3: 614–682 over ferdig gulv = -386..-318 under risset — Bordbærelekt, bak</text>
   <text x="120" y="2487.5" class="sml" text-anchor="start">Sone 4: 1402–1500 over ferdig gulv = +402..+500 over risset — Sidevange, øvre</text>
   <text x="120" y="2537" class="leg" text-anchor="start">HØYDERISSET</text>
   <text x="120" y="2576" class="sml" text-anchor="start">Slå et vannrett riss rundt hele nisja med linjelaser, 1000 mm over ferdig gulv. Alle høyder på dette arket er målt fra ferdig gulv,</text>
   <text x="120" y="2605.7" class="sml" text-anchor="start">og på veggen måler du dem ned eller opp fra risset — aldri fra gulvet.</text>
   <text x="120" y="2635.4" class="sml" text-anchor="start">Derfor står hver høyde to ganger: over ferdig gulv, og i parentes det samme tallet minus 1000 — minus er under laserlinja, pluss er</text>
   <text x="120" y="2665.1" class="sml" text-anchor="start">over. Gulvet er skjevt og risset er ikke, så det er parentesen du setter sonene etter.</text>
-  <text x="120" y="2694.8" class="sml" text-anchor="start">Risset ligger på bar vegg mellom sone-toppen 542 og sone-bunnen 1402, så det er synlig helt til sengen står inntil. Det er en assert</text>
+  <text x="120" y="2694.8" class="sml" text-anchor="start">Risset ligger på bar vegg mellom sone-toppen 682 og sone-bunnen 1402, så det er synlig helt til sengen står inntil. Det er en assert</text>
   <text x="120" y="2724.5" class="sml" text-anchor="start">i modellen.</text>
   <text x="120" y="2754.2" class="sml" text-anchor="start">Gulv-kolonnen er fra ferdig gulv. Legges gulvet etterpå, må påforingshøyden legges til — i begge kolonner, for risset slås fra</text>
   <text x="120" y="2783.9" class="sml" text-anchor="start">ferdig gulv det også.</text>

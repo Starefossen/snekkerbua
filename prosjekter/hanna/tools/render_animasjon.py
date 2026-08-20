@@ -546,14 +546,22 @@ def film_turntable(work, width, render_width, want_mp4):
 #
 # SO THE PATH IS RE-SEARCHED, AND IT IS FLAT. No roll, seven handgrips:
 #
-#   1  up         120 mm          into the middle of the slot, flat
-#   2  slide      599 mm left     out over the bench, level, 11 mm off the
-#                                 slat tops and 11 mm under the ledger
+#   1  up        150 mm          into the middle of the slot, flat
+#   2  slide      599 mm left     out over the bench, level, 59 mm off the
+#                                 slat tops and 59 mm under the ledger
 #   3  out         50 mm +Y       the rear edge off the table ledger's line
-#   4  up        225 mm           past the ledger and rung 2, in the open bay
+#   4  up        319 mm           past the ledger and rung 2, in the open bay
 #   5  back        50 mm -Y       over the seat line again
-#   6  slide      599 mm right    back across, now ABOVE the rung 2 band
-#   7  down       122 mm          within the asserted 172, into the table seat
+#   6  slide      599 mm right    back across, now ABOVE the bordkloss band
+#   7  down        84 mm          within the asserted 100, into the table seat
+#
+# X9 re-measured every one of those legs off the model - the numbers above are
+# the v16 ones. What CHANGED is leg 6: the band it crosses in used to have
+# rung 2's top as its floor, because rung 2 carried the plate; the desk's front
+# seat is the two bordklosser at 682, so the floor went up with them and the
+# band is 118 mm for an 86 mm unit. Legs 1-3 are the same move over the same
+# bench; the ceiling over that bench went UP 140 mm with the ledger, so the
+# flat carry has 59 mm of daylight where it had 34.
 #
 # Legs 3 and 5 are the two that look like fussing and are not: the back table
 # ledger runs the whole width of the bed at Y -48..0, so the panel's rear edge
@@ -620,12 +628,16 @@ def mech_keys(G):
     # LEG 3 - far enough forward that the panel's rear edge is off the table
     # ledger's front face on the way up: the ledger is RAIL_T deep, plus fit.
     out = G.RAIL_T + G.PANEL_FIT                            # 50
-    # LEG 4/6 - the free band between the top of rung 2 and the underside of
-    # rung 3, with the unit centred in it: this is the shelf the panel crosses
-    # the ladder on, on the way back. Before K1 the ceiling here was a rung
-    # BLOCK at 624; the blocks are out of the panel's depth band now, so it is
-    # the rung itself at 672 and the band is 190 mm instead of 142.
-    band = (G.RUNG_TOPS[1], _part(G, "Ladder Rung_3").extents[2][0])
+    # LEG 4/6 - the free band the panel crosses the ladder in on the way back,
+    # with the unit centred in it. Before K1 the ceiling here was a rung BLOCK;
+    # the blocks are out of the panel's depth band now, so it is rung 3 itself.
+    # X9 MOVED THE FLOOR OF THIS BAND, and this is the one place in the film
+    # that had to be told: it used to be rung 2's top, because rung 2 was what
+    # carried the plate at table height. The plate is a desk now and its front
+    # seat is the two BORDKLOSSER at PANEL_UNDER_TABLE - higher than rung 2 and
+    # standing in exactly this corridor - so the floor is the bordkloss top.
+    # The band is 118 mm for an 86 mm unit; the model asserts it (X9).
+    band = (G.PANEL_UNDER_TABLE, _part(G, "Ladder Rung_3").extents[2][0])
     cruise = (band[0] + (band[1] - band[0] - unit_h) / 2) - G.BATTEN_Z0_BED
     # LEG 7 - and down.
     drop = cruise - G.PANEL_MODE_LIFT

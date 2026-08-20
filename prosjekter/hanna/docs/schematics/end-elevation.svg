@@ -121,7 +121,7 @@
   <rect x="340" y="777.5" width="1045" height="122.5" class="wood"/>
   <rect x="1295" y="272.5" width="45" height="122.5" class="brd"/>
   <rect x="1295" y="56.25" width="45" height="122.5" class="brd"/>
-  <rect x="340" y="1852.5" width="60" height="85" class="brd"/>
+  <rect x="340" y="1677.5" width="60" height="85" class="brd"/>
   <rect x="340" y="655" width="60" height="122.5" class="wood"/>
   <rect x="1280" y="655" width="60" height="122.5" class="wood"/>
   <rect x="340" y="476.25" width="1000" height="150" class="soft"/>
@@ -129,7 +129,7 @@
   <rect x="400" y="1590" width="1000" height="415" class="soft"/>
   <rect x="340" y="2005" width="1000" height="125" class="soft"/>
   <rect x="340" y="2136.25" width="997.5" height="22.5" class="pnl1"/>
-  <rect x="340" y="1830" width="997.5" height="22.5" class="pnl2"/>
+  <rect x="340" y="1655" width="997.5" height="22.5" class="pnl2"/>
   <line x1="430" y1="2188.75" x2="384" y2="2188.75" class="scrl"/>
   <circle cx="430" cy="2188.75" r="6" class="scrp"/>
   <line x1="362.5" y1="655" x2="362.5" y2="701" class="scrl"/>
@@ -162,16 +162,16 @@
   <circle cx="362.5" cy="655" r="6" class="scrp"/>
   <line x1="430" y1="2188.75" x2="384" y2="2188.75" class="scrl"/>
   <circle cx="430" cy="2188.75" r="6" class="scrp"/>
-  <circle cx="362.5" cy="1962.5" r="9" class="scro"/>
-  <circle cx="362.5" cy="1962.5" r="3.4" class="scrp"/>
-  <circle cx="362.5" cy="1937.5" r="9" class="scro"/>
-  <circle cx="362.5" cy="1937.5" r="3.4" class="scrp"/>
+  <circle cx="362.5" cy="1787.5" r="9" class="scro"/>
+  <circle cx="362.5" cy="1787.5" r="3.4" class="scrp"/>
+  <circle cx="362.5" cy="1762.5" r="9" class="scro"/>
+  <circle cx="362.5" cy="1762.5" r="3.4" class="scrp"/>
   <circle cx="389.435" cy="2216.25" r="9" class="scro"/>
   <circle cx="389.435" cy="2216.25" r="3.4" class="scrp"/>
   <circle cx="389.435" cy="2186.25" r="9" class="scro"/>
   <circle cx="389.435" cy="2186.25" r="3.4" class="scrp"/>
-  <line x1="362.5" y1="1937.5" x2="362.5" y2="1891.5" class="scrl"/>
-  <circle cx="362.5" cy="1937.5" r="6" class="scrp"/>
+  <line x1="362.5" y1="1762.5" x2="362.5" y2="1716.5" class="scrl"/>
+  <circle cx="362.5" cy="1762.5" r="6" class="scrp"/>
   <circle cx="362.5" cy="866.25" r="9" class="scro"/>
   <circle cx="362.5" cy="866.25" r="3.4" class="scrp"/>
   <circle cx="362.5" cy="811.25" r="9" class="scro"/>
@@ -205,7 +205,7 @@
   <line x1="879.96" y1="697.96" x2="1340" y2="697.96" class="ext"/>
   <text x="475" y="1455" class="smh" text-anchor="start">Hjørnestolpe, bak — i veggplanet   36×98 × 1402</text>
   <line x1="459" y1="1447.96" x2="385" y2="1447.96" class="ext"/>
-  <text x="475" y="1970" class="smh" text-anchor="start">Bordbærelekt, bak   48×68 × 1794</text>
+  <text x="475" y="1720" class="smh" text-anchor="start">Bordbærelekt, bak   48×68 × 1794</text>
   <text x="475" y="2248.75" class="smh" text-anchor="start">Benkevange — bak gjennomgående, front i to biter   48×68 × 1794</text>
   <text x="475" y="2130" class="smh" text-anchor="start">Benkespile — 5 per benk   23×98 × 800</text>
   <line x1="461" y1="2122.96" x2="461" y2="2190" class="ext"/>
@@ -232,19 +232,21 @@
   <text x="1520" y="785.42" class="sml" text-anchor="start">1402   ok endebjelke = uk sidevange = ok bakre stolpe</text>
   <line x1="1409" y1="900" x2="1470" y2="900" class="ext"/>
   <text x="1520" y="907.92" class="sml" text-anchor="start">1304   uk endebjelke — står fritt</text>
-  <line x1="1409" y1="1240" x2="1470" y2="1240" class="ext"/>
-  <text x="1520" y="1247.92" class="sml" text-anchor="start">1032   trinn 4</text>
-  <line x1="1409" y1="1546.25" x2="1470" y2="1546.25" class="ext"/>
-  <text x="1520" y="1554.17" class="sml" text-anchor="start">787   trinn 3</text>
+  <line x1="1409" y1="1188.75" x2="1470" y2="1188.75" class="ext"/>
+  <text x="1520" y="1196.67" class="sml" text-anchor="start">1073   trinn 4</text>
+  <line x1="1409" y1="1470" x2="1470" y2="1470" class="ext"/>
+  <text x="1520" y="1477.92" class="sml" text-anchor="start">848   trinn 3</text>
   <line x1="1409" y1="1590" x2="1470" y2="1590" class="ext"/>
   <text x="1520" y="1597.92" class="sml" text-anchor="start">752   ryggputas topp i sofastilling</text>
-  <line x1="1409" y1="1830" x2="1470" y2="1830" class="ext"/>
-  <text x="1520" y="1837.92" class="sml" text-anchor="start">560   bordplate</text>
-  <line x1="1409" y1="1852.5" x2="1470" y2="1852.5" class="ext"/>
-  <polyline points="1470,1852.5 1496,1852.5 1522,1861.68" class="ext"/>
-  <text x="1520" y="1869.16" class="sml" text-anchor="start">542   ok bordbærelekt = trinn 2</text>
-  <line x1="1409" y1="1937.5" x2="1470" y2="1937.5" class="ext"/>
-  <text x="1520" y="1945.42" class="sml" text-anchor="start">474   uk bordbærelekt</text>
+  <line x1="1409" y1="1655" x2="1470" y2="1655" class="ext"/>
+  <text x="1520" y="1662.92" class="sml" text-anchor="start">700   bordplate — pulthøyde</text>
+  <line x1="1409" y1="1677.5" x2="1470" y2="1677.5" class="ext"/>
+  <polyline points="1470,1677.5 1496,1677.5 1522,1686.68" class="ext"/>
+  <text x="1520" y="1694.16" class="sml" text-anchor="start">682   ok bordbærelekt = ok bordkloss = platen i bordstilling</text>
+  <line x1="1409" y1="1762.5" x2="1470" y2="1762.5" class="ext"/>
+  <text x="1520" y="1770.42" class="sml" text-anchor="start">614   uk bordbærelekt</text>
+  <line x1="1409" y1="1815" x2="1470" y2="1815" class="ext"/>
+  <text x="1520" y="1822.92" class="sml" text-anchor="start">572   trinn 2</text>
   <line x1="1409" y1="2005" x2="1470" y2="2005" class="ext"/>
   <text x="1520" y="2012.92" class="sml" text-anchor="start">420   puteoverside = sittehøyde = nedre soveflate</text>
   <line x1="1409" y1="2130" x2="1470" y2="2130" class="ext"/>

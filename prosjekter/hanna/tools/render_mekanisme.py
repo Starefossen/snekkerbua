@@ -18,7 +18,7 @@ wood: the two long battens run down the 48 x 37 mm free shafts beside the rung
 ends with 2 mm of clearance, and because rung 1 and rung 2 end at exactly the
 same X, the SAME two battens find the SAME two end faces at both heights. So
 the two mechanism sheets are still one page per corner and still the same two
-crops 223 mm apart - the left crop is the rear seat (wood on wood, nothing
+crops PANEL_MODE_LIFT apart - the left crop is the rear seat (wood on wood, nothing
 between the panel and the rail), the right crop is the guide in its shaft with
 the measured clearance written on it.
 
@@ -164,7 +164,7 @@ def sheet(RL, G, mode, path):
 # cross batten's outboard END FACE against the front bench rail's END FACE,
 # across the side gap (24 mm up to v12, 63 after K2). The two faces are side
 # by side, in one Z band and
-# one Y band, in BED mode - and 223 mm apart in table mode, where the lock
+# one Y band, in BED mode - and PANEL_MODE_LIFT apart in table mode, where the lock
 # therefore has nothing to take hold of. A lock that cannot be left on in the
 # wrong position is a property of the geometry, not of the instructions.
 # How far the strap has to lap onto each of the two end faces to have

@@ -4122,7 +4122,9 @@ def _bruk_dims(G, mode):
         ("v", G.PANEL_X0 + G.PANEL_W / 2, G.SEAT_FACE, G.PANEL_TOP_TABLE,
          f"{G.TABLE_OVER_SEAT:.0f} plate over sete", "top"),
         # The knee gap is a short dimension in a narrow gap, so it carries the
-        # number alone - what it means is one line down in the caption.
+        # number alone - what it means is one line down in the caption. X9:
+        # the knees are UNDER the plate now, so what this measures is the
+        # nearest approach of body to plate, not a folded leg stopping short.
         ("h", G.FIG_SIT_Z + 20, G.panel_table.extents[0][1],
          right.extents[0][0], f"{G.LEG_TO_TABLE:.0f}", "top"),
     ]
@@ -4133,10 +4135,13 @@ BRUK_NOTE = {
         "Kroppene er tegnet i et eget lag OVER sengen, ikke bak den: en "
         "referansekropp skal verken skjule et bord eller skjules av et.",
     "table_mode":
-        "Skredderstilling, og det er et måleresultat: platen ligger {over:.0f} "
-        "mm over seteflaten og har {under:.0f} mm under seg — ett lår er "
-        "{thigh:.0f} mm, så ingen knær går under denne platen. Målet mellom "
-        "kneet og platekanten er {leg:.0f} mm.",
+        # X9: the pose is an ordinary sit now, so the note says what it
+        # measures. The history - 140/122 and cross-legged until v15 - is in
+        # nøkkelmål and in ASSEMBLY; this line has one page width to live in.
+        "Alminnelig sitting, og det er et måleresultat: platen ligger "
+        "{over:.0f} mm over seteflaten og har {under:.0f} mm under seg, så "
+        "knærne går inn under den. Tallet i sjakten er {leg:.0f} mm — "
+        "nærmeste kropp til platen.",
 }
 
 

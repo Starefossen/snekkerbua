@@ -46,10 +46,100 @@ back corner posts into the back rail plane. Consequences you cannot ignore:
     (1700), which costs the 48 mm of depth v10 just won - and, on a 36 mm
     post, 36 rather than 48 of it. Flagged for the docs round.
 
+DESIGN INTENT (v16 - "the desk is bought, and the ladder pays")
+--------------------------------------------------------------------------
+X9  THE PULT AT 700 IS BUILT, AND WHAT IT COST IS THE EVEN LADDER. X8 (below,
+    and left standing word for word) refused this change. The refusal was
+    arithmetically right and it rested on one assumption nobody had written
+    down: that the LADDER was fixed and the table had to fit under it. The
+    builder has now overruled that assumption himself, in seven words -
+    "700, and adjust the rungs / if need be the number of rungs" - and this
+    entry is what those words come to in wood.
+
+    WHAT WAS BOUGHT. The plate goes 560 -> 700 and its underside 542 -> 682.
+    That is 280 mm over the 420 seat cushion and 262 under it, against 140 and
+    122. The 122 was one thigh: a straight leg went under it and a bent KNEE
+    did not, which is why every drawing in this folder until now showed two
+    children sitting cross-legged at their own table. 262 takes a knee with
+    127 mm to spare, so the figures sit down like people at a desk and the
+    prose that explained the folded legs is DELETED - it was true at 560 and
+    it is a lie at 700, and a comment that was true once is the most expensive
+    kind of wrong. The builder's reference is a thing he can point at in a
+    shop: IKEA SMASTAD's desk at 730.
+
+    WHAT IT COST, IN ONE SENTENCE: THE LADDER IS NO LONGER EVEN. Rung 3 has to
+    stand at 848 so that its underside (800) leaves the plate its 100 mm of
+    straight-up lift, and rung 1 is nailed to the bench rail at 297. Five
+    rungs still - the count did not change - but they fall into TWO FLIGHTS
+    with the lift corridor between them:
+        297  +275  572  +276  848  +225  1073  +225  1298  +225  1523
+    275/276 below and 225 three times above, a spread of 51 mm where X2's
+    ladder was even to within 1. The pitch limit is untouched and still met:
+    276 against 280, inside EN 131's 250..300 band.
+    X1/X2 SAID OUT LOUD that the even ladder was an aesthetic decision and
+    that "the LADDER decides and the TABLE FOLLOWS". X9 is that decision being
+    sold back, by the man who made it, for the thing he wanted more. The
+    evenness rule is therefore re-aimed in the open, and it is re-aimed by
+    being SPLIT rather than loosened: MAX_FLIGHT_SPREAD (2) keeps the old
+    rule, tightened, inside each flight, and MAX_CLIMB_SPREAD (60) is a new
+    and different rule about how far the corridor may push two flights apart.
+    Nothing was exempted and no assert was deleted.
+
+    AND THE RULE IS THE RULE, NOT THE LIST. `even_climb` takes the corridor as
+    a CONSTRAINT now - "no rung top between 614 and 848" - and derives the
+    ladder that satisfies it: fewest rungs, then flattest, then lowest
+    crossing. Move the plate again and the ladder re-derives; nobody hand-sets
+    a rung. That is the X2 rule with one more input, not a special case.
+
+    THE SEAT IS DECOUPLED FROM THE LADDER, AND THAT IS THE OTHER HALF. 682 is
+    a height no rung is allowed to stand at, so the plate cannot land on a
+    rung any more. At the BACK nothing had to be invented: the ledger is the
+    same 48x68 on the same wall plane screwed 140 mm higher, 474..542 ->
+    614..682, and its spikerslag zone with it. At the FRONT there are two new
+    pieces, and they are the only two pieces this whole round adds: BORDKLOSSER,
+    36x48 x 108, one on each ladder upright's inner face at the rung blocks'
+    own X. Their rear 36 mm is the fixing (the upright offers 36 mm of Y and
+    nothing else); the 70 mm behind that is the ledge the plate lands on. The
+    70 is not chosen - it is MIN_BEARING / (2 x 36) rounded up, so the two of
+    them make the same 5 000 mm2 the file asks of any bearing line. One 6x80
+    each, through the upright from the bench side, and one screw is all the
+    36 x 48 face legally holds.
+    THE BATTENS DO NOT KNOW. The bordkloss stands on exactly the plane the
+    rung end stood on (X 835 / 1155) over exactly the same 48 mm of Z, so the
+    panel's guide battens find it the same way, with the same 2 mm fit - and
+    lap 70 mm of it in Y where a rung gave them 30. The panel sub-assembly is
+    unchanged to the millimetre.
+
+    THE CEILING IS NOW THE DESIGN POINT, NOT A LIMIT WITH ROOM UNDER IT. X8's
+    block still computes the tallest plate the mode change allows, off the
+    solids, and it now computes 700 - the plate sits EXACTLY on its own
+    ceiling. Rung 3 went up by exactly the 61 mm that made 700 legal and not
+    one more. The two walls X8 named are both still measured: the lift has its
+    100 mm (INSERT_CLEAR, table mode, dead on the floor) and the crossing has
+    118 mm of band for an 86 mm unit, 32 mm of daylight against a 15 mm gate.
+    The mechanism film flies it.
+
+    WHAT DID NOT MOVE: bed mode, entirely. The bench, the seat, the cushions,
+    the panel in its bed seat, the upper deck, the guards, the mattress, the
+    wall plane, the depth. Rung 1 is still 297 and still carries the bed-mode
+    plate. This round is the LADDER ABOVE RUNG 1 and the TABLE SEAT, and
+    nothing else in the bed is touched.
+
+    WHAT IT LEAVES OPEN, HONESTLY: 280 mm over the cushion is 92 mm above this
+    reference child's seated elbow, so he works at it with his forearms on the
+    plate and his elbows up. The shop's own pair does the same thing (SMASTAD's
+    730 over the 430 chair sold with it is 300), and the builder chose the
+    shop. There is no footrest under the plate - the soles hang 134 mm off the
+    floor - and that is written down as an open point rather than drawn away.
+
 DESIGN INTENT (v15 - "the wall gets a datum, the bench gets a room, and the
                       desk gets an answer")
 --------------------------------------------------------------------------
-X8  THE DESK AT 700 IS NOT BUILDABLE, AND WHAT SAYS SO IS RUNG 3. This entry
+X8  THE DESK AT 700 IS NOT BUILDABLE, AND WHAT SAYS SO IS RUNG 3.
+    *** SUPERSEDED BY X9. Kept whole, because it is the reasoning the change
+    had to answer and because its two walls are still the two walls - what X9
+    changed is not the arithmetic but which member was allowed to move. ***
+    This entry
     is a REFUSAL, written down at the same length the change would have been,
     because the request was right and the reason it cannot be had is not
     obvious from any drawing in this folder.
@@ -122,11 +212,20 @@ X8  THE DESK AT 700 IS NOT BUILDABLE, AND WHAT SAYS SO IS RUNG 3. This entry
     them can have them. X2 already settled the precedence once - "the LADDER
     decides and the TABLE FOLLOWS" - and this entry is that rule being paid
     for a second time, out loud.
+    [X9 CORRECTION, because a wrong number left standing is a trap. It is 61
+     mm and not 51: the lift wants the rung UNDERSIDE at 800, so the top goes
+     to 848. And step 2 -> 3 is not 296, because rung 2 is not nailed down -
+     it moves to 572 and the two steps below the corridor come out 275/276.
+     Nothing needed a 296 mm step; what it needed was for rung 2 to be allowed
+     to move, and X8 did not ask it to. The count stays at five.]
 
     THE FIGURES DO NOT MOVE. The two seated bodies sit cross-legged because
     the plate is at lap height, and the plate is still at lap height, so the
     pose and the prose that explains it are still true. Nothing in this round
     makes them a lie.
+    [X9: and this is the paragraph the change had to come back for. At 700 the
+     plate is NOT at lap height, the pose is not true, and both seated figures
+     are re-posed with their knees under the plate. See X9.]
 
 X8b THE SPIKERSLAG ZONES ARE WRITTEN FROM THE LASER LINE AS WELL. Every
     height in this file is over FERDIG GULV, which is right for a drawing and
@@ -1456,7 +1555,7 @@ BENCH_RAIL_BOTTOM = BENCH_RAIL_TOP - BENCH_RAIL_H   # 229  [was 191]
 #   against the corner reaction it carries in direct bearing off the rail top -
 #   utilisation 0.16 (~0.10) at the 1.5 kN X7 stands over the corner. The
 #   back bench rail and the ledger butt and
-#   screw to its X-inner face at 229..297 and 474..542, so the real unbraced
+#   screw to its X-inner face at 229..297 and 614..682, so the real unbraced
 #   length is shorter than that; 1304 is the conservative reading.
 #   X1 SAYS THIS OUT LOUD RATHER THAN BURYING IT: a 337 mm lift puts all 337
 #   into the ONE gap that governs each post - between the bench rail and the
@@ -1650,9 +1749,11 @@ END_BEAM_X = [POST_W, WALL_SPAN - POST_W - END_BEAM_T]   # 98..134 / 1856..1892
 #     A = 1728 mm2; I (bending in Y, the 36 mm depth) = 48*36^3/12 = 186 624
 #     mm4, i_y = 10.39 mm; I (bending in X, the 48 mm width) = 36*48^3/12 =
 #     331 776 mm4, i_x = 13.86 mm.
-#   In the ladder plane (X) the rungs brace the upright at 297 / 542 / 787 /
-#   1032 / 1277 (X2), so the worst unbraced length there is the 245 mm pitch and
-#   lambda_x = 19 - irrelevant, and better than the 25 it was.
+#   In the ladder plane (X) the rungs brace the upright at 297 / 572 / 848 /
+#   1073 / 1298 (X9), so the worst unbraced length there is the 276 mm pitch and
+#   lambda_x = 20 - irrelevant, and better than the 25 it was. (X2's even ladder
+#   had 245 and lambda_x = 19; the desk cost one point of slenderness on a
+#   member that is not slenderness-governed in this direction at all.)
 #   OUT OF PLANE (Y) is the one that moved, twice. v7: restrained at the bench
 #   rail lap (top 259) and at the rail (1065), worst unbraced length 806 mm,
 #   lambda_y = 58. v8/D13: the bench lap is gone, so the length runs floor to
@@ -1745,24 +1846,125 @@ RUNG_REST_LEDGE = LADDER_Y0 - RUNG_Y0    # 37, the bit behind the upright plane
 # This is a rule being RE-AIMED, in the open, not an assert being bent to fit a
 # result - the derivation below still has to satisfy it, and the evenness rule
 # (MAX_CLIMB_SPREAD) is untouched and is now met to within one millimetre.
+#
+# X9 (v16): THE CLIMB TAKES A CONSTRAINT, AND THE EVENNESS RULE IS RE-AIMED.
+# X2 wrote the ladder as a pure evenness problem - fewest rungs, spaced as
+# evenly as whole millimetres allow - and X8 found what that leaves out: the
+# loose plate has to be LIFTED OUT of the ladder bay in table mode, and a rung
+# in the wrong place is a lid on that lift. X8 measured the lid (rung 3's
+# underside, 739), computed the tallest table it allows (639) and refused the
+# desk. X9 turns the lid round: the corridor is an INPUT to the climb now, and
+# the derivation has to find a ladder that leaves it open. Same rule, one more
+# constraint - not a hand-set list, and not a special case.
+#
+# WHAT THE CORRIDOR IS, IN HEIGHTS. The plate top is TABLE_PLATE_TOP (700 - the
+# builder's number; see X9 at the top of the file). Under it hang the panel
+# unit's own 68 mm of batten, so the SEATED unit occupies TABLE_UNIT_Z0..
+# TABLE_PLATE_TOP, and to get it out the unit has to rise INSERT_CLEAR_MIN
+# before the lift is a lift rather than a wrestle. So no rung top may lie in
+#     (TABLE_UNIT_Z0, RUNG_ABOVE_TABLE_MIN) = (614, 848)
+# - at or below 614 a rung is under the seated unit and out of the way; at or
+# above 848 its underside is at or above 800 and the unit rises its 100 mm
+# clear. Nothing in the band. That is the whole constraint, and every number in
+# it is arithmetic on the plate and on a panel unit built long before the
+# ladder.
+#
+# WHAT IT COSTS, AND THE RULE THAT PAYS. The band splits the climb into TWO
+# FLIGHTS with one crossing step over it, and two flights of different pitch is
+# exactly what MAX_CLIMB_SPREAD = 20 forbade. The COUNT does not change - five
+# rungs either way, so the fifth rung X2 bought is still the fifth rung - but
+# the steps do: 275 / 276 below the crossing and 225 / 225 / 225 above it, a
+# spread of 51 against 20.
+#   THE BUILDER OVERRULED HIS OWN EVENNESS, and that is why the number moves.
+#   X1/X2 made the even ladder an AESTHETIC decision and said so out loud
+#   ("the builder's call, and it is an aesthetic one - an even ladder is what
+#   he wants to look at"). X9 is that decision being sold back for the desk, in
+#   his own words: "700, and adjust the rungs / if need be the number of
+#   rungs". So 20 does not survive - and what replaces it is TWO rules rather
+#   than one bigger number, because the old one was doing two jobs:
+#     MAX_FLIGHT_SPREAD  2   INSIDE a flight, where evenness is still the whole
+#                            point. This is the old rule KEPT and TIGHTENED to
+#                            whole-millimetre rounding and nothing else. Met
+#                            at 1.
+#     MAX_CLIMB_SPREAD  60   BETWEEN the flights. This one is not an evenness
+#                            rule any more and does not pretend to be: it is a
+#                            gate on how far the corridor may push two flights
+#                            apart before the design has to be re-ARGUED rather
+#                            than re-derived. 51 is what the corridor asks for
+#                            here; 60 is where the file stops saying yes.
+#   THE PITCH LIMIT IS UNTOUCHED at 280, and it is still the binding trade
+#   number: the biggest step in the new ladder is 276, inside EN 131's 250..300
+#   band, and that is what keeps this a ladder rather than a scramble.
 MAX_CLIMB_STEP = 280             # pitch limit, rung 1 upwards  [X2: was 250]
-MAX_CLIMB_SPREAD = 20            # how uneven the climb proper may be
+MAX_CLIMB_SPREAD = 60            # BETWEEN flights  [X9: was 20, one flight]
+MAX_FLIGHT_SPREAD = 2            # INSIDE a flight - whole-millimetre rounding
+
+# THE DESK, AND THE CORRIDOR IT KEEPS OPEN. TABLE_PLATE_TOP is the only number
+# in this block that is chosen; the other three are arithmetic on it and on the
+# panel unit. They live up here, ahead of the panel that owns them, because the
+# LADDER is the thing that has to be built round them - PANEL_UNDER_TABLE is
+# read again at its own place in the LOWER CONVERTIBLE SECTION.
+TABLE_PLATE_TOP = 700            # X9: a desk  [X2: 560, a sofa table]
+PANEL_UNDER_TABLE = TABLE_PLATE_TOP - PANEL_T          # 682, the plate's seat
+TABLE_UNIT_Z0 = PANEL_UNDER_TABLE - BENCH_RAIL_H       # 614, batten undersides
+# The straight-up run the mode change is held to, in both modes. It used to be
+# declared down in the insertion-sweep block that measures against it; X9 needs
+# it HERE, because it is one of the two numbers that decide where rung 3 goes.
+INSERT_CLEAR_MIN = 100           # mm of straight-up travel, both modes
+RUNG_ABOVE_TABLE_MIN = (TABLE_PLATE_TOP + INSERT_CLEAR_MIN
+                        + TREAD_T)                     # 848, rung 3's top
 
 
-def even_climb(first_rung_top, surface, max_step):
+def _flight(z0, z1, n):
+    """`n` even steps from z0 to z1, given as the rung tops that START each
+    one - so z1 itself, which is the thing stepped ONTO, is not in the list."""
+    return [z0 + (z1 - z0) * i // n for i in range(n)]
+
+
+def even_climb(first_rung_top, surface, max_step, keep_clear=None):
     """Ladder rung tops from `first_rung_top` up to `surface`.
 
     The first rung is given - it is fixed by what it shares its top with - and
     the rest are the FEWEST that keep every step at or under `max_step`, spaced
     as evenly as whole millimetres allow. The last step is the one onto
-    `surface` itself, so `surface` is not a rung and is not in the result."""
+    `surface` itself, so `surface` is not a rung and is not in the result.
+
+    X9: `keep_clear` is an open band (lo, hi) no rung top may lie in - the
+    corridor the table unit is lifted through. A climb that has to cross such a
+    band is TWO FLIGHTS with one crossing step between them, so the search is
+    over where that crossing lands: fewest rungs first, then the flattest
+    result, then the lowest crossing. That is a total order, so the answer is
+    the same on every run and nobody has to hand-set a list again."""
     span = surface - first_rung_top
-    n = -(-span // max_step)                 # ceil: how many steps it takes
-    return [first_rung_top] + [first_rung_top + span * i // n
-                               for i in range(1, n)]
+    fewest = -(-span // max_step)            # ceil: how many steps it takes
+    if keep_clear is None:
+        return _flight(first_rung_top, surface, fewest)
+    lo, hi = keep_clear
+    for n in range(fewest, fewest + 8):
+        best = None
+        for below in range(1, n):
+            for landing in range(int(hi), int(surface)):
+                tops = (_flight(first_rung_top, landing, below)
+                        + _flight(landing, surface, n - below))
+                seq = tops + [surface]
+                steps = [b - a for a, b in zip(seq, seq[1:])]
+                if max(steps) > max_step:
+                    continue
+                if any(lo < t < hi for t in tops):
+                    continue
+                key = (max(steps) - min(steps), landing)
+                if best is None or key < best[0]:
+                    best = (key, tops)
+        if best is not None:
+            return best[1]
+    raise ValueError(
+        f"no ladder from {first_rung_top} to {surface} keeps {keep_clear} "
+        f"clear at a pitch of {max_step}")
 
 
-RUNG_TOPS = even_climb(BENCH_RAIL_TOP, SLAT_Z1, MAX_CLIMB_STEP)
+RUNG_TOPS = even_climb(BENCH_RAIL_TOP, SLAT_Z1, MAX_CLIMB_STEP,
+                       keep_clear=(TABLE_UNIT_Z0, RUNG_ABOVE_TABLE_MIN))
+#          X9: [297, 572, 848, 1073, 1298]
 #          X1/X2: [297, 542, 787, 1032, 1277]   [was 259, 482, 720, 958]
 
 # Cleat blocks under every rung end, screwed to the inner faces of the
@@ -2270,13 +2472,18 @@ PANEL_LEN = PANEL_Y1 - PANEL_Y0                # 798  [was 800]
 # keeps the wood-to-wood geometry as the retrofit point.
 PANEL_UNDER_BED = BENCH_RAIL_TOP               # 297, rests on the rails/rung 1
 PANEL_TOP_BED = PANEL_UNDER_BED + PANEL_T      # 277
-PANEL_UNDER_TABLE = RUNG_TOPS[1]               # 542, rests on rung 2/the ledger
-                                               # [X2: was 482 - the even ladder
-                                               #  moved rung 2 and this with it]
-PANEL_TOP_TABLE = PANEL_UNDER_TABLE + PANEL_T  # 500
+# X9: PANEL_UNDER_TABLE IS NO LONGER A RUNG TOP. It is declared in the LADDER
+# section (682 = TABLE_PLATE_TOP - PANEL_T) because the ladder is derived round
+# it, and here is where it is USED. Under X2 this line read `RUNG_TOPS[1]` and
+# the table followed the ladder; under X9 the plate is a desk at a height no
+# rung may stand at, so the seat is made of a ledger at the back and two
+# bearer blocks at the front and the LADDER follows the table's corridor
+# instead. The precedence X2 settled is not reversed - the ladder still decides
+# where its own rungs go - it is that the table stopped asking for one.
+PANEL_TOP_TABLE = PANEL_UNDER_TABLE + PANEL_T  # 700
 # The whole move, in one number: the two seats are this far apart and the panel
 # sub-assembly - sheet, battens, screws - is the same object at both of them.
-PANEL_MODE_LIFT = PANEL_UNDER_TABLE - PANEL_UNDER_BED       # 223
+PANEL_MODE_LIFT = PANEL_UNDER_TABLE - PANEL_UNDER_BED       # 385  [X9: 223]
 
 # ---------------------------------------------------------------------------
 # M4: PANEL STIFFENER BATTENS - AND, AFTER V3, THE GUIDES AS WELL
@@ -2324,9 +2531,10 @@ PANEL_MODE_LIFT = PANEL_UNDER_TABLE - PANEL_UNDER_BED       # 223
 #      already keeps. The last 35 mm of that - Y 715..750 - is the batten IN
 #      the shaft, alongside the rung end.
 #   Z  the batten TOP is the panel underside, so the battens hang BELOW it:
-#      229..297 in bed mode, 474..542 in table mode. 229 is the bench rail
-#      underside, which is the floor of the ladder-bay walking zone - the
-#      battens sit at its ceiling and never enter it. Asserted below.
+#      229..297 in bed mode, 614..682 in table mode [X9: was 474..542]. 229 is
+#      the bench rail underside, which is the floor of the ladder-bay walking
+#      zone - the battens sit at its ceiling and never enter it. Asserted
+#      below.
 #
 # WHAT THE FRONT END BEARS ON, SAID OUT LOUD. Nothing, directly: the rung is
 # 320 mm long and the battens are outboard of both its ends, so the batten's
@@ -2393,7 +2601,8 @@ BATTEN_GUIDE_ENGAGE_Y = BATTEN_Y1 - RUNG_Y0    # 35, how deep into the shaft
 # AND IT IS THE LOCK POINT. In BED mode the cross batten's outboard end face
 # stands 24 mm from the front bench rail's end face, in the same Y band and the
 # same Z band - two pieces of wood side by side across the side gap. In TABLE
-# mode the cross batten is 223 mm higher and there is nothing beside it at all.
+# mode the cross batten is PANEL_MODE_LIFT higher and there is nothing beside
+# it at all.
 # A lock fitted there is therefore a bed-mode lock BY GEOMETRY, not by
 # instruction, which is what an EN 747 conversion lock ought to be.
 NOSE_Y1 = PANEL_Y1                             # 750, flush with the front edge
@@ -2576,7 +2785,7 @@ NOSE_CRIT_H = NOSE_TIP_H * 2                                          # 54
 #
 # In bed mode both are in the Z band 229..297 and 24 mm apart across the side
 # gap - two 48x73 end faces looking straight at each other. In table mode the
-# cross batten is 223 mm higher and there is nothing beside it at all, so a
+# cross batten is PANEL_MODE_LIFT higher and there is nothing beside it, so a
 # lock fitted here is a BED-MODE lock by geometry and not by instruction: it
 # cannot be left engaged in the wrong position, because in the wrong position
 # it has nothing to engage. All three options in docs/preview/laasvalg.png act
@@ -2650,11 +2859,89 @@ PANEL_SIDE_STRIP_LEN = PANEL_LEN               # 798, the strip runs the depth
 # It is also stronger where it matters: 48x73 on edge gives W = 42 632 mm3
 # against the 21x95's 31 587, on the same 1794 mm post-to-post span, and the
 # end fixing into the 36 mm post face goes 21x95 = 1995 mm2 to 36x73 = 2628.
+#
+# X9: THE LEDGER IS THE EASY HALF OF THE DESK. It is the same 48x68 on the same
+# wall plane, screwed to the same two posts, 140 mm higher: 474..542 -> 614..682
+# and its spikerslag zone with it. Nothing about the piece changes - not its
+# length, not its profile, not its end fixing - which is the whole reason the
+# rear seat was never the thing that stood in the desk's way.
 LEDGER_BACK_T = BENCH_RAIL_T                   # 48 (Y)  [was BOARD_T = 21]
 LEDGER_BACK_H = BENCH_RAIL_H                   # 68 (Z)  [was BOARD_W = 95]
-LEDGER_BACK_Z1 = PANEL_UNDER_TABLE             # 542  [X2: was 482]
-LEDGER_BACK_Z0 = LEDGER_BACK_Z1 - LEDGER_BACK_H     # 409  [was 387]
+LEDGER_BACK_Z1 = PANEL_UNDER_TABLE             # 682  [X9: was 542, X2: 482]
+LEDGER_BACK_Z0 = LEDGER_BACK_Z1 - LEDGER_BACK_H     # 614  [was 474]
 LEDGER_BACK_Y0 = BACK_RAIL_Y0                  # -48 .. 0, on the wall plane
+
+# ---------------------------------------------------------------------------
+# X9: THE TABLE BEARERS - TWO BLOCKS WHERE THERE USED TO BE A RUNG
+# ---------------------------------------------------------------------------
+# Until X9 the plate's front edge landed on RUNG 2 and PANEL_UNDER_TABLE was a
+# rung top by definition. The desk is at 682 and the ladder cannot follow it
+# there: 682 is inside the corridor the plate itself has to be lifted through,
+# so a rung at that height would be a rung under a lid of its own making. The
+# front seat is therefore made rather than borrowed - two blocks on the ladder
+# uprights' inner faces, in the rung block's own 36x48 stock and at the rung
+# block's own X.
+#
+# THERE IS ONLY ONE FACE TO SCREW TO, AND IT IS 36 mm WIDE. The plate stops
+# PANEL_FIT short of the uprights' back plane (Y 750 against 752), so no part
+# of the plate is ever OVER an upright: whatever carries its front edge has to
+# reach BACK out of the upright and hold the plate on a cantilever. The upright
+# offers 36 mm of Y (752..788) and nothing else, so the block's rear 36 mm is
+# its fixing and everything behind Y 752 is ledge.
+#
+# THE LENGTH IS NOT CHOSEN, IT IS SOLVED. Two blocks 36 mm thick have to make
+# the same MIN_BEARING the file asks of every bearing LINE under this plate, so
+# the ledge is MIN_BEARING / (2 x 36) rounded up to the millimetre - 70 - and
+# the piece is that plus the 36 it is screwed to. 108 mm of 36x48, twice, off
+# the same block board the ten rung blocks come from.
+#
+# AND IT GUIDES, BECAUSE IT STANDS WHERE THE RUNG END STOOD. The panel's two
+# guide battens run down the shafts at X 835 / 1155 and find the rung end there
+# in bed mode (V3). The bearer's outboard face is that same plane, over the
+# same 48 mm of Z under the plate, so TABLE MODE IS GUIDED BY THE SAME
+# GEOMETRY BED MODE IS - and the batten laps 70 mm of it in Y where a rung end
+# gives 30. Nothing about the panel sub-assembly changes; it does not know
+# which of the two it has landed on.
+#
+# WHAT IT IS IN THE WAY OF, SAID OUT LOUD. K1 cut 37 mm off the rung block to
+# get it OUT of the transfer corridor, because that 37 mm carried nothing. X9
+# puts 70 mm of block back INTO the corridor at each side - and this one
+# carries the plate. It is the wall X8 named "the crossing", and the clearance
+# over it is measured on the solids in the X9 block at the bottom of this file.
+#
+# AND WHAT THE SHEET PAYS FOR IT, BECAUSE SOMETHING DOES. Until X9 the plate's
+# front edge landed on a RUNG, 320 mm of continuous bearing across the middle
+# of it. Two blocks give 2 x 36, and the 248 mm of front edge between them
+# (X 871..1119) is bare 18 mm sheet in table mode. That is a real change and it
+# is priced here rather than left for somebody to find:
+#   * where the LOAD PATH runs, nothing moved. The two M4 battens are outboard
+#     of X 835 / 1155 in both modes, so they never sat on the rung either: they
+#     hand their reaction into the sheet and the sheet carries it the same
+#     26 mm across to the same bearing edge, at the same 0,69 utilisation
+#     (V2/M5). The bordkloss is under exactly that edge.
+#   * what IS new is a load put on the middle of the free front edge - leaning
+#     on the table from the ladder side. Take it as a strip spanning the 324 mm
+#     between the two battens: M = 1000 * 324 / 4 = 81 000 Nmm, and on a
+#     conservative 250 mm of effective width W = 250 * 18^2 / 6 = 13 500 mm3,
+#     so sigma = 6,0 MPa against the ~6,95 the bare-panel row in vedlegg A is
+#     calibrated on. Utilisation 0,86 - the worst sheet row in the panel now,
+#     and under 1 with the whole 1 kN standing on one line.
+#   * the honest alternative, said so it is on the record: a full-width bearer
+#     at 682 would be a RUNG at 682, and 682 is the one height in this ladder a
+#     rung may not stand at. That is why it is two blocks and not a rail.
+MIN_BEARING = 5000               # mm2, per bearing LINE under the plate
+TABLE_BEARER_T = BLOCK_T                       # 36 (X), stock thickness
+TABLE_BEARER_H = BLOCK_H                       # 48 (Z), a tread's thickness
+TABLE_BEARER_LEDGE = -(-MIN_BEARING
+                       // (2 * TABLE_BEARER_T))     # 70, derived, not chosen
+TABLE_BEARER_Y1 = LADDER_Y1                    # 788, flush with the front plane
+TABLE_BEARER_Y0 = PANEL_Y1 - TABLE_BEARER_LEDGE     # 680
+TABLE_BEARER_LEN = TABLE_BEARER_Y1 - TABLE_BEARER_Y0    # 108
+TABLE_BEARER_Z1 = PANEL_UNDER_TABLE            # 682, the plate's seat
+TABLE_BEARER_Z0 = TABLE_BEARER_Z1 - TABLE_BEARER_H      # 634
+TABLE_BEARER_X = RUNG_BLOCK_X                  # 835..871 and 1119..1155
+TABLE_BEARER_BEARING = (2 * TABLE_BEARER_T
+                        * TABLE_BEARER_LEDGE)  # 5040 mm2, the front line
 
 # ---------------------------------------------------------------------------
 # V13: THE LOWER LEVEL BECOMES A BED IN FULL LENGTH - SLATS TO THE WALL,
@@ -2779,9 +3066,11 @@ BACK_CUSHION_LEN = (LOWER_SLEEP_LEN - 2 * SEAT_CUSHION_LEN) // 2   # 332
 #     bench up 38): a grown chair, not a child's one.
 #   * seat height goes 320 -> 420 (X3 raised the bench 38 and the cushion is
 #     the same 100): a grown chair, not a child's one.
-#   * the table plate top is 140 mm above the seat cushion and its underside
-#     122 mm - at 120 mm foam those become 120 and 102. (X2 raised the plate
-#     with rung 2 and X3 raised the seat under it; v13 had 118 / 100.)
+#   * the table plate top is 280 mm above the seat cushion and its underside
+#     262 mm - at 120 mm foam those become 260 and 242. (X9 took the plate off
+#     rung 2 and up to desk height; X2 had 140 / 122 and v13 118 / 100. The
+#     cushion is the same cushion at every one of those numbers - it is the
+#     PLATE that moved, three times.)
 #   * head room under the upper bunk's slats is 1080 mm after X1 (was 781) -
 #     the lower storey is a room you stand in now, which is the whole round.
 CUSHION_T = 100
@@ -2791,8 +3080,8 @@ MIN_LOWER_HEADROOM = 700           # own rule: a child sits up in the lower bunk
 LOWER_HEADROOM = SLAT_Z0 - CUSHION_TOP_BENCH           # 1080, to the slats [X1: 781]
 LOWER_HEADROOM_RAIL = RAIL_BOTTOM - CUSHION_TOP_BENCH  # 982, under the rails [683]
 EN_GUARD_TRIGGER_H = 600           # EN 747: over this, a bed base needs guards
-TABLE_OVER_CUSHION = PANEL_TOP_TABLE - CUSHION_TOP_BENCH           # 140  [X2: 118]
-TABLE_UNDER_OVER_CUSHION = PANEL_UNDER_TABLE - CUSHION_TOP_BENCH   # 122  [X2: 100]
+TABLE_OVER_CUSHION = PANEL_TOP_TABLE - CUSHION_TOP_BENCH           # 280  [X9: 140]
+TABLE_UNDER_OVER_CUSHION = PANEL_UNDER_TABLE - CUSHION_TOP_BENCH   # 262  [X9: 122]
 # The foam sheet the four of them come out of, and what is left of it.
 CUSHION_SHEET = (800, 2000)                            # a 80 x 200 foam slab
 CUSHION_SHEET_WASTE = CUSHION_SHEET[1] - LOWER_SLEEP_LEN           # 10
@@ -2834,7 +3123,7 @@ BAY_AT_CUSHION_H = PANEL_OPENING - 2 * SEAT_CUSHION_OVERHANG               # 664
 # bed at all. Stand one up against the back wall and that 800 has to go
 # somewhere, and there are only two directions:
 #   * ALONG X - and a bench offers 645 mm of back wall before the ladder bay
-#     starts, with the TABLE PLATE standing at Z 542..560 from X 708 on. It
+#     starts, with the TABLE PLATE standing at Z 682..700 from X 708 on. It
 #     does not fit, on either bench, by 155 mm.
 #   * STRAIGHT UP - 420 + 800 = 1220, and the upper side rail's underside is
 #     1402. IT FITS NOW, by 182 mm: X1's lift is the first round in which an
@@ -2848,10 +3137,13 @@ BAY_AT_CUSHION_H = PANEL_OPENING - 2 * SEAT_CUSHION_OVERHANG               # 664
 # two abreast if you like.
 #
 # TWO THINGS HOLD IT. Its Y0 is the BACK TABLE LEDGER's front face: the ledger
-# runs the whole length at Y -48..0, Z 474..542, so a cushion standing in the
-# wall plane would drive straight through it - and standing 48 mm forward of the
-# wall instead, it LEANS ON IT, 100 x 68 mm of contact right at the small of the
-# back. The corner post's inner face takes the sideways direction. The price is
+# runs the whole length at Y -48..0, Z 614..682 (X9 took it up 140 with the
+# desk), so a cushion standing in the wall plane would drive straight through it
+# - and standing 48 mm forward of the wall instead, it LEANS ON IT, 100 x 68 mm
+# of contact. X9 moved that contact up the back with the ledger: it used to be
+# at the small of the back (54..122 over the seat) and it is across the middle
+# of it now (194..262), which is where a backrest is meant to push anyway. Same
+# cushion, same 6 800 mm2, and the piece did not change. The corner post's inner face takes the sideways direction. The price is
 # 12 mm: the front face lands at Y 800 against a bed that is 836 deep to Y 788,
 # so a loose cushion stands 12 mm proud of the bed's front plane in sofa mode.
 # That is a soft part in one position and not the bed's depth - and it is
@@ -3082,6 +3374,18 @@ for i, top in enumerate(RUNG_TOPS):
                        RUNG_LEN, RUNG_D, RUNG_T,
                        f"Ladder Rung_{i + 1}", "boards",
                        ("Ladder rung (tread)", sec(RUNG_T, RUNG_D), RUNG_LEN)))
+
+# X9: and the two blocks that carry the plate's front edge at desk height. Same
+# stock and same X as a rung block, screwed to the same 36 mm of upright - and
+# 70 mm longer, so the plate has something to land on where no rung may stand.
+for j, bx0 in enumerate(TABLE_BEARER_X):
+    parts.append(block(bx0, TABLE_BEARER_Y0, TABLE_BEARER_Z0,
+                       TABLE_BEARER_T, TABLE_BEARER_LEN, TABLE_BEARER_H,
+                       f"Table Bearer {'Left' if j == 0 else 'Right'}",
+                       "boards",
+                       ("Table bearer block (X9)",
+                        sec(TABLE_BEARER_T, TABLE_BEARER_H),
+                        TABLE_BEARER_LEN)))
 
 # ---------------------------------------------------------------------------
 # GUARD RAILS  -  FRONT ONLY (W1)
@@ -3424,6 +3728,7 @@ _PART = {
     "upright":     r"Ladder Upright (?:Left|Right)",
     "rung":        r"Ladder Rung_\d+",
     "rung_blk":    r"Rung Block (?:Left|Right)_\d+",
+    "bearer":      r"Table Bearer (?:Left|Right)",
     "guard":       r"Guard Rail Front (?:Left|Right)_\d+",
     "guard_host":  r"(?:Corner Post Front|Ladder Upright) (?:Left|Right)",
     "bed_slat":    r"Bed Slat_\d+",
@@ -3444,6 +3749,7 @@ PART_NO = {
     "bench_front": "fremre benkevange",
     "ledger": "bordbærelekt", "beam": "endebjelke", "stub": "stubbefot",
     "upright": "stigevange", "rung": "rungetrinn", "rung_blk": "stigekloss",
+    "bearer": "bordkloss",
     "guard": "rekkverksbord", "guard_host": "hjørnestolpe / stigevange",
     "bed_slat": "køyespile", "bench_slat": "benkespile",
     "end_slat": "endespile", "end_cleat": "endelist",
@@ -3806,6 +4112,22 @@ JOINTS = [
          side="Fra stigeåpningen, inn i vangens innside",
          contacts=[dict(a="upright", b="rung_blk", axis=0, drives=[
              drive("Treskrue 5×60 forsenket Torx", 1, frm="rung_blk")])]),
+    # X9: the bordkloss is screwed the way the ladder's own pieces are, but
+    # from the OTHER side of the upright than J5 is. J5 drives a 5x60 into the
+    # face from inside the ladder opening, which is right for a block that sits
+    # UNDER its load; the bordkloss carries its load 70 mm behind that face on
+    # a cantilever, so the screw is working in withdrawal as much as in shear
+    # and it wants the bigger one, driven through the whole upright: 6x80
+    # through 48 mm of stigevange leaves 32 mm in a 36 mm block, and it lands
+    # in side grain, not end grain. ONE screw is all the face holds - 36 x 48
+    # is exactly 2 x 3d for a 6 mm screw across the short way, which is the
+    # fits-the-face rule agreeing with itself and not a coincidence.
+    dict(id="J5-B", title="Bordkloss → stigevange", n=2,
+         drill="⌀6 gjennom stigevangen, ⌀4 i klossen",
+         side="Fra stigevangens utside — fra benkerommet — gjennom vangen og "
+              "inn i klossen. Klossens egen underside er urørt",
+         contacts=[dict(a="upright", b="bearer", axis=0, drives=[
+             drive("Treskrue 6×80 forsenket Torx", 1, frm="upright")])]),
     dict(id="J6", title="Køyespile → sidevange (per spileende)", n=28,
          drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
          side="Ovenfra, ned i vangen",
@@ -4912,7 +5234,7 @@ if FASTENERS_ON:
         # solid that has to be clear of the bed is the lifted one, and the
         # members it is allowed to be inside are that mode's panel and
         # battens. Checking the bed-mode solid against table-mode wood would
-        # pass by simply being 223 mm away from everything, which is the
+        # pass by simply being PANEL_MODE_LIFT away from everything, which is the
         # non-check that let the two modes drift apart in the first place.
         _mine = _f["jid"].startswith(PANEL_JOINT)
         for _mode, _pl in _others.items():
@@ -5335,52 +5657,61 @@ FIG_SIT_RISE = FIG_SITTING_H - FIG_TORSO_L - FIG_NECK_L - 2 * FIG_HEAD_R  # 78
 SEAT_FACE = BENCH_TOP + CUSHION_T                      # 420, the sofa seat [X3: 382]
 FIG_SIT_Z = SEAT_FACE + FIG_SIT_RISE                   # 498, hip joint
 
-# CROSS-LEGGED, and it is the table that says so. Through v13 the plate was
-# 118 mm above the seat face with 100 mm under it - ONE THIGH (115 mm did not
-# quite go), so nothing at all could get beneath it and the only way to sit at
-# it was with the legs folded up on the bench. v14 raises the plate with rung 2 (X2)
-# and the seat under it with the bench (X3), and the two nearly cancel: 140
-# above the seat face and 122 under it, which a straight leg (115) now just
-# clears where 100 did not. The pose is UNCHANGED and it is still the pose the drawings
-# dimension - a child sits sideways on the bench facing a plate that starts
-# 420 mm away in X, and folded legs is how that is done - but it has stopped
-# being the only option, and the printed clearance says so rather than the
-# comment claiming it.
-# 30 degrees of splay: enough that the knees clear each other and the drawing
-# reads as folded legs seen from the side, little enough that the knee stays
-# well inside the bench in Y. The folded knee tops out at Z 524 (the hip rode
-# up with the seat), so it clears the back table ledger's underside (474 after
-# X2/X3, 414 before them) - the two moved almost together.
-_CROSS_LEG = ((30, -6), (-110, 0), (-110, 0))
-FIG_SEAT_X = BACKREST_X[0] + CUSHION_T + FIG_TORSO_R   # 288 -> back on the pad
+# X9: THE LEGS COME DOWN, BECAUSE THE PLATE BECAME A DESK.
+#
+# WHAT THE OLD POSE WAS FOR, AND WHY IT IS NOW A LIE. Through v15 the plate was
+# a LAP TABLE: 140 mm above the seat face with 122 under it. A thigh is 116 mm
+# through, so a straight leg went under it and a bent KNEE did not - the knee
+# of a seated child stands about 300 mm above the floor and the plate underside
+# was at 542, but the knee has to get there past a 122 mm slot, and it cannot.
+# So the two seated figures sat CROSS-LEGGED, up on the bench, and the prose in
+# this file argued that this was not a compromise but the way anybody sits on a
+# bench beside a low table. That argument was TRUE at 560. It is not true at
+# 700: the plate's underside is 682 now, 262 mm over the seat face, and a
+# seated knee tops out one thigh radius above the hip - 555, or 135 over the
+# seat. 127 mm of air over the knee. The knees go under, so the figures sit
+# the way people sit at a desk, and the sentence that explained the folded legs
+# is deleted rather than kept and quietly falsified.
+#
+# THE POSE, JOINT BY JOINT. Thighs forward and level, splayed 6 degrees so the
+# two knees read as two; shanks plumb; feet hanging, because at a 420 mm seat a
+# 1200 mm child's soles are 150 mm off the floor and there is no footrest under
+# this plate - said here rather than drawn away.
+_DESK_LEG = ((6, -1), (0, -88), (0, -15))
+# AND THE HIP MOVES FORWARD OFF THE BACK CUSHION, because that is what sitting
+# AT something means. The number is not chosen: put the knee one thigh radius
+# in under the plate's own edge and the hip is one thigh behind it.
+FIG_SEAT_X = PANEL_X0 + FIG_THIGH_R - FIG_THIGH_L      # 472  [X2: 288, on the pad]
 
 figure_seated_left = child(
     "Child Seated Left (table mode)",
     (FIG_SEAT_X + 2, FIG_BENCH_Y, FIG_SIT_Z), 0.0,
-    # leaning 25 degrees over the plate: sat up straight against the back
-    # cushion the arm is 500 mm from the plate and reaches 396 - so the model
-    # leans the torso exactly as far as it takes to put the wrists down.
-    # X2/X3: the plate is 60 mm higher and the seat 38, so the REACH argument
-    # sets the 25 degree lean is unchanged - the hands still cannot get there
-    # sitting upright - but the arm hangs 22 mm less far down. The upper arm
-    # comes up 38 -> 30 degrees below horizontal and the forearm keeps its 26,
-    # which puts the wrist back on the plate with a few millimetres of air. This is
-    # the figure being re-posed to a bed that moved, not to a number that was
-    # wanted: the clearance it measures is printed below, not asserted.
-    torso=(0, 65), head=(0, 65),
-    arms=(((0, -30), (0, -26)), ((0, -30), (0, -26))),
-    legs=((_CROSS_LEG[0], (-110, 2), (-110, 2)),
-          (_CROSS_LEG[0], (-110, -2), (-110, -2))))
+    # THE ONE WHO WORKS AT IT. Sat up straight: the 25 degree lean the sofa
+    # table needed is gone with the sofa table, because the plate is no longer
+    # something you reach DOWN and OUT to. It is the other way now, and the
+    # figure is where that gets said out loud. This child's seated elbow hangs
+    # at 608 (shoulder 812 less a 204 mm upper arm) and the plate is at 700, so
+    # the FOREARMS COME UP ONTO IT and the elbows ride 21 degrees below
+    # horizontal instead of straight down. That is the posture of a desk cut
+    # for a chair being used from a sofa - it is what the height costs, it is
+    # the same thing IKEA's own pair does (SMASTAD's 730 desk over the 430 mm
+    # chair sold with it is 300 mm; this plate is 280 over its cushion), and it
+    # is drawn rather than argued away. The clearance the wrist lands with is
+    # MEASURED and printed below, not asserted.
+    torso=(0, 90), head=(0, 84),
+    arms=(((0, -21), (0, 0)), ((0, -21), (0, 0))),
+    legs=(_DESK_LEG, _DESK_LEG))
 
 figure_seated_right = child(
     "Child Seated Right (table mode)",
     (WALL_SPAN - FIG_SEAT_X - 2, FIG_BENCH_Y, FIG_SIT_Z), 180.0,
-    # the other one sits up straight against the back cushion, and that is the
-    # pose that measures the headroom under the bunk.
+    # the other one sits up straight with the arms down, and that is the pose
+    # that measures the headroom under the bunk. His knees are under the plate
+    # too - that is the X9 claim, and it is the same claim on both sides of the
+    # bed.
     torso=(0, 90), head=(0, 90),
     arms=(((0, -72), (0, -14)), ((0, -72), (0, -14))),
-    legs=((_CROSS_LEG[0], (-110, 2), (-110, 2)),
-          (_CROSS_LEG[0], (-110, -2), (-110, -2))))
+    legs=(_DESK_LEG, _DESK_LEG))
 
 # LYING: on the back, arms in, legs out, feet relaxed. The torso axis is one
 # torso radius above the sleeping face less the same foam sink; the head is a
@@ -6604,11 +6935,17 @@ assert (SLAT_Z0, SLAT_Z1) == (1500, 1523), "D5/U1/V6: slats not flush on top of 
 assert (MATTRESS_Z0, MATTRESS_Z1) == (1523, 1643)
 assert (BENCH_RAIL_BOTTOM, BENCH_RAIL_TOP) == (229, 297)
 assert BENCH_TOP == 320 and PANEL_TOP_BED == 315 and PANEL_UNDER_BED == 297
-assert PANEL_TOP_TABLE == 560 and PANEL_UNDER_TABLE == 542
-assert RUNG_TOPS == [297, 542, 787, 1032, 1277] and POST_HEIGHT == 2037
+assert PANEL_TOP_TABLE == 700 and PANEL_UNDER_TABLE == 682   # X9: was 560/542
+assert RUNG_TOPS == [297, 572, 848, 1073, 1298] and POST_HEIGHT == 2037
+#      X9: was [297, 542, 787, 1032, 1277] - rung 3 went up to clear the desk
+#      and the two flights fell out of it
 assert BACK_POST_HEIGHT == 1402, "W6: the back posts must stop at the rail underside"
-assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (474, 542), \
+assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (614, 682), \
     "V2: the ledger is a bench-rail profile, so its underside is 68 below its top"
+assert (TABLE_BEARER_Z0, TABLE_BEARER_Z1) == (634, 682) \
+    and (TABLE_BEARER_Y0, TABLE_BEARER_Y1) == (680, 788), \
+    "X9: the two bordklosser carry the plate's front edge at the same 682 the " \
+    "ledger carries its rear one"
 assert STUB_LEG_H == 229, "W3: the stub legs reach the bench rail underside"
 print(f"OK  invariant heights held: rail underside {RAIL_BOTTOM}, rail top "
       f"{RAIL_TOP}, no cleats, slats {SLAT_Z0}..{SLAT_Z1} (flush on the rails, "
@@ -7562,11 +7899,14 @@ assert BACKREST_Y0 == LEDGER_BACK_Y0 + LEDGER_BACK_T, \
 # THE CUSHIONS COME OFF FIRST, AND THE MODEL SAYS SO RATHER THAN THE MANUAL
 # REMEMBERING IT. The mode change carries the panel unit SIDEWAYS over the
 # bench, in the shaft between the bench slat tops (320) and the back table
-# ledger's underside (474). A 100 mm cushion lying on that bench fills the
-# bottom 100 of those 154 mm. So this is not a tidiness instruction: the change
-# -over is BLOCKED with the cushions on, and it is derived here.
-CARRY_BAND = (BENCH_TOP, LEDGER_BACK_Z0)                     # 320..474  [X2/X3]
-CARRY_BAND_H = CARRY_BAND[1] - CARRY_BAND[0]                 # 154  [was 132]
+# ledger's underside (614 after X9, 474 before it). A 100 mm cushion lying on
+# that bench fills the bottom 100 of those 294 mm. So this is not a tidiness
+# instruction: the change-over is BLOCKED with the cushions on, and it is
+# derived here. X9 made the shaft 140 mm taller and the cushion did not grow,
+# so the rule is looser than it was - and it still bites, because a cushion
+# standing 100 mm up off the bench is 100 mm of the only floor the unit has.
+CARRY_BAND = (BENCH_TOP, LEDGER_BACK_Z0)              # 320..614  [X9: was 474]
+CARRY_BAND_H = CARRY_BAND[1] - CARRY_BAND[0]          # 294  [was 154, 132]
 assert CUSHION_TOP_BENCH > CARRY_BAND[0] + TOL, \
     "V13: a seat cushion that did not reach into the carry band would make " \
     "this note pointless - check the geometry before deleting it"
@@ -7897,18 +8237,21 @@ print(f"OK  X8c kasserommet under benkene: {len(STORAGE_BAYS)} rom, "
 
 # D13: WALK-AROUND. There must be a real passage on each side of the ladder,
 # between the sofa end and the upright outer face, clear from the floor up to
-# the table-mode panel line (542) across the whole front zone.
+# the table-mode panel line (682 after X9) across the whole front zone. That
+# line used to be written as RUNG_TOPS[1] because the plate sat on rung 2; X9
+# decoupled the two, and the passage follows the PLATE - it is the plate you
+# walk under, not the rung.
 #
 # The clear width is measured against FIXED STRUCTURE (`parts`). The loose panel
 # is handled separately below: it is the seat / table surface, it lies at 297 in
-# bed mode and 542 in table mode, and it does bridge the passage at that height
+# bed mode and 682 in table mode, and it does bridge the passage at that height
 # by design - what matters is that it never touches the floor level you actually
 # stand and put your feet in, which is checked explicitly afterwards.
 # D14 ripple: the front edge of the zone used to be the guard face (834). The
 # guards went inboard, so it is the post plane now - the same 800 mm of front
 # zone the check has always swept, minus the 34 mm that no longer exists.
 PASSAGE_Y = (BACK_RAIL_Y1, FRONT_POST_Y1)            # 0 .. 800, front zone
-PASSAGE_Z = (0, RUNG_TOPS[1])                        # 0 .. 542
+PASSAGE_Z = (0, PANEL_UNDER_TABLE)                   # 0 .. 682  [X9: was 542]
 PASSAGE_BANDS = [("left", OPEN_FLOOR_X[0], up[0].extents[0][0]),
                  ("right", up[1].extents[0][1], OPEN_FLOOR_X[1])]
 passages = []
@@ -8104,14 +8447,40 @@ assert first_rise == BENCH_RAIL_TOP == RUNG_TOPS[0], \
 assert max(climb_steps) <= MAX_CLIMB_STEP, \
     f"D8: biggest climbing step is {max(climb_steps)} > {MAX_CLIMB_STEP}"
 assert max(climb_steps) - min(climb_steps) <= MAX_CLIMB_SPREAD, \
-    f"D8: the climb is uneven - steps {climb_steps}"
+    f"D8/X9: the two flights are {max(climb_steps) - min(climb_steps)} mm " \
+    f"apart in pitch - steps {climb_steps}, gate {MAX_CLIMB_SPREAD}"
+# X9: THE CLIMB IS TWO FLIGHTS, AND EACH ONE IS JUDGED ON ITS OWN. The lift
+# corridor is crossed exactly once - by the step onto the first rung that
+# stands at or above RUNG_ABOVE_TABLE_MIN - and that step is the last one of
+# the lower flight. Inside a flight the old evenness rule survives, tightened:
+# whole-millimetre rounding and nothing else. Nothing about the flights is
+# typed; they are read back off the derived list.
+CLIMB_LANDING = next(i for i, t in enumerate(RUNG_TOPS)
+                     if t >= RUNG_ABOVE_TABLE_MIN)
+CLIMB_FLIGHTS = [climb_steps[:CLIMB_LANDING], climb_steps[CLIMB_LANDING:]]
+assert CLIMB_LANDING >= 1 and all(CLIMB_FLIGHTS), \
+    "X9: the climb has to cross the lift corridor with a step, not start above it"
+assert not any(TABLE_UNIT_Z0 < t < RUNG_ABOVE_TABLE_MIN for t in RUNG_TOPS), (
+    f"X9: a rung top lies in {TABLE_UNIT_Z0}..{RUNG_ABOVE_TABLE_MIN}, which is "
+    f"the band the seated plate occupies and the {INSERT_CLEAR_MIN} mm it has "
+    f"to rise through - rung tops {RUNG_TOPS}")
+for _i, _fl in enumerate(CLIMB_FLIGHTS, 1):
+    assert max(_fl) - min(_fl) <= MAX_FLIGHT_SPREAD, (
+        f"X9: flight {_i} is uneven - steps {_fl}, gate {MAX_FLIGHT_SPREAD}. "
+        f"A flight is a run of equal steps or it is not a flight")
 assert climb[-1] == SLAT_Z1, "the climb must end on the platform surface"
 print(f"OK  D8: rung tops {'/'.join(str(t) for t in RUNG_TOPS)}; rises "
       + " + ".join(str(s) for s in steps)
       + f" mm from the floor to the {SLAT_Z1} platform - first rise "
       f"{first_rise} = bench rail top, then {min(climb_steps)}..{max(climb_steps)} "
-      f"(limit {MAX_CLIMB_STEP}, spread {max(climb_steps) - min(climb_steps)} <= "
-      f"{MAX_CLIMB_SPREAD})")
+      f"(limit {MAX_CLIMB_STEP})")
+print(f"OK  X9 stigen er TO løp om løftesjakten {TABLE_UNIT_Z0}.."
+      f"{RUNG_ABOVE_TABLE_MIN}: "
+      + " og ".join("+".join(str(s) for s in _fl) for _fl in CLIMB_FLIGHTS)
+      + f" - hvert løp jevnt til {max(max(_f) - min(_f) for _f in CLIMB_FLIGHTS)}"
+      f" mm (grense {MAX_FLIGHT_SPREAD}), løpene "
+      f"{max(climb_steps) - min(climb_steps)} mm fra hverandre (grense "
+      f"{MAX_CLIMB_SPREAD}). Ingen trinntopp i sjakten")
 
 # D9: the front table ledger must be GONE and the back one's TOP must BE the
 # table-mode panel underside - no hook step, nothing in between.
@@ -8120,8 +8489,19 @@ assert len(ledgers) == 1 and ledgers[0].label == "Table Ledger Back", \
     "D3: the front table ledger must be deleted"
 assert not any("Front" in p.label and "Ledger" in p.label for p in parts)
 assert ledgers[0].extents[2] == (LEDGER_BACK_Z0, LEDGER_BACK_Z1)
-assert LEDGER_BACK_Z1 == PANEL_UNDER_TABLE == RUNG_TOPS[1], \
-    "D9: the ledger top, rung 2 and the table-mode panel underside must coincide"
+# X9: the ledger top and the table-mode panel underside still have to coincide;
+# what is gone is the third member of that identity. Under X2 it was rung 2's
+# top as well, and the desk is at a height no rung is allowed to stand at, so
+# the front half of the seat is the two bordklosser instead - checked here to
+# be at the SAME 682, because a plate on two seats at two heights rocks.
+_bearers = [p for p in parts if p.label.startswith("Table Bearer")]
+assert len(_bearers) == 2, f"X9: {len(_bearers)} bordklosser, want 2"
+assert LEDGER_BACK_Z1 == PANEL_UNDER_TABLE, \
+    "D9: the ledger top and the table-mode panel underside must coincide"
+assert all(b.extents[2][1] == PANEL_UNDER_TABLE for b in _bearers), \
+    "X9: a bordkloss top is not level with the plate's underside"
+assert PANEL_UNDER_TABLE not in RUNG_TOPS, \
+    "X9: the table seat must NOT be a rung top - that is the whole corridor"
 assert BENCH_RAIL_TOP == PANEL_UNDER_BED == RUNG_TOPS[0], \
     "D10: the bench rail tops, rung 1 and the bed-mode panel underside must coincide"
 assert "HOOK_STEP" not in globals(), "D10: the hook step is supposed to be gone"
@@ -8130,8 +8510,19 @@ print(f"OK  D9/W9: front table ledger deleted; back ledger "
       f"{sec(LEDGER_BACK_T, LEDGER_BACK_H)} x {BETWEEN_POSTS_LEN} "
       f"(was {THROUGH_LEN}, and 21x95 before V2) at X "
       f"{BETWEEN_POSTS_X0}..{BETWEEN_POSTS_X1}, Z {LEDGER_BACK_Z0}.."
-      f"{LEDGER_BACK_Z1}, top level with rung 2, ends screwed to the back posts' "
+      f"{LEDGER_BACK_Z1}, top level with the two bordklosser (X9: with rung 2 "
+      f"until the plate became a desk), ends screwed to the back posts' "
       f"X-inner faces")
+print(f"OK  X9 bordklossene: 2 x {sec(TABLE_BEARER_T, TABLE_BEARER_H)} x "
+      f"{TABLE_BEARER_LEN} på stigevangenes innerflater, X "
+      f"{TABLE_BEARER_X[0]}..{TABLE_BEARER_X[0] + TABLE_BEARER_T} / "
+      f"{TABLE_BEARER_X[1]}..{TABLE_BEARER_X[1] + TABLE_BEARER_T}, Y "
+      f"{TABLE_BEARER_Y0}..{TABLE_BEARER_Y1}, Z {TABLE_BEARER_Z0}.."
+      f"{TABLE_BEARER_Z1}. {UPRIGHT_T} mm av lengden ligger mot vangen "
+      f"({UPRIGHT_T * TABLE_BEARER_H} mm² flate, samme som en stigekloss) og "
+      f"{TABLE_BEARER_LEDGE} mm stikker bak den som bæreflate - "
+      f"{TABLE_BEARER_BEARING} mm² til sammen, og lengden er regnet ut av "
+      f"kravet ({MIN_BEARING} mm² per bærelinje), ikke valgt")
 
 # D10: THE PANEL RESTS ON WOOD. No hooks, no exclusions: in each mode the panel
 # must have real BEARING AREA - a shared horizontal face, not an edge kiss - on
@@ -8158,17 +8549,35 @@ def bearing_area(upper, lower):
 #         back bench rail 652 x 48 = 31 296 mm2
 #   table rung 2          320 x 35 = 11 200 mm2
 #         back ledger     652 x 48 = 31 296 mm2
-# Every named support is still far above the 5 000 mm2 floor.
-MIN_BEARING = 5000               # mm2, per named support
-PANEL_SUPPORTS = {
-    "bed_mode": ("Ladder Rung_1", "Bench Rail Back (continuous)"),
-    "table_mode": ("Ladder Rung_2", "Table Ledger Back"),
+#
+# X9: THE FLOOR IS PER BEARING LINE, NOT PER PIECE - AND THAT IS A RULE BEING
+# GENERALISED, NOT RELAXED. The plate has exactly two bearing LINES, front and
+# rear, and it has always had two: what MIN_BEARING is about is that a line has
+# real face under it rather than an edge kiss. Until X9 each line happened to
+# be ONE piece of wood, so "per named support" and "per line" were the same
+# sentence. The desk splits the front line into two blocks (they are all the
+# uprights will hold - see the X9 bearer note), so the sentence has to be said
+# the way it was always meant: the LINE carries MIN_BEARING. The value is
+# unchanged at 5 000, nothing is exempted, and the bearer's own length is
+# derived FROM this floor rather than checked against it.
+#   bed   forkant  rung 1        320 x 30 = 9 600 mm2
+#         bakkant  bench rail    574 x 48 = 27 552 mm2
+#   table forkant  2 bordklosser 2 x 36 x 70 = 5 040 mm2
+#         bakkant  back ledger   574 x 48 = 27 552 mm2
+PANEL_SUPPORT_LINES = {
+    "bed_mode": {"forkant": ("Ladder Rung_1",),
+                 "bakkant": ("Bench Rail Back (continuous)",)},
+    "table_mode": {"forkant": ("Table Bearer Left", "Table Bearer Right"),
+                   "bakkant": ("Table Ledger Back",)},
 }
-PANEL_RUNG_LEDGE = RUNG_REST_LEDGE - PANEL_FIT      # 35, the fit taken off
+PANEL_SUPPORTS = {m: tuple(lbl for line in lines.values() for lbl in line)
+                  for m, lines in PANEL_SUPPORT_LINES.items()}
+PANEL_RUNG_LEDGE = RUNG_REST_LEDGE - PANEL_FIT      # 30, the fit taken off
 EXPECT_BEARING = {
     "bed_mode": {"Ladder Rung_1": RUNG_LEN * PANEL_RUNG_LEDGE,
                  "Bench Rail Back (continuous)": PANEL_W * BENCH_RAIL_T},
-    "table_mode": {"Ladder Rung_2": RUNG_LEN * PANEL_RUNG_LEDGE,
+    "table_mode": {"Table Bearer Left": TABLE_BEARER_T * TABLE_BEARER_LEDGE,
+                   "Table Bearer Right": TABLE_BEARER_T * TABLE_BEARER_LEDGE,
                    "Table Ledger Back": PANEL_W * LEDGER_BACK_T},
 }
 for mode_name, panel in MODES.items():
@@ -8178,15 +8587,20 @@ for mode_name, panel in MODES.items():
         assert want in found, \
             f"D10: the {mode_name} panel does not rest on '{want}' - it only " \
             f"lands on {sorted(found)}"
-        assert found[want] >= MIN_BEARING, \
-            f"D10: only {found[want]:.0f} mm2 of bearing on '{want}' in {mode_name}"
+    for line, members in PANEL_SUPPORT_LINES[mode_name].items():
+        _area = sum(found[m] for m in members)
+        assert _area >= MIN_BEARING, (
+            f"D10/X9: the {mode_name} plate's {line} line is carried on "
+            f"{_area:.0f} mm2 ({', '.join(members)}), under the "
+            f"{MIN_BEARING} mm2 a bearing line is held to")
     # the front edge and the rear edge must BOTH be carried, or it tips
-    assert any(a > 0 for lbl, a in found.items() if "Rung" in lbl), \
+    assert any(a > 0 for lbl, a in found.items()
+               if "Rung" in lbl or "Bearer" in lbl), \
         f"D10: nothing carries the {mode_name} panel's front edge"
     assert any(a > 0 for lbl, a in found.items()
                if "Back" in lbl or "Ledger" in lbl), \
         f"D10: nothing carries the {mode_name} panel's rear edge"
-    # D13: exactly two supports now, and exactly the areas the note computes.
+    # D13: exactly these supports, and exactly the areas the note computes.
     assert set(found) == set(EXPECT_BEARING[mode_name]), \
         f"D13: the {mode_name} panel rests on {sorted(found)}, expected " \
         f"{sorted(EXPECT_BEARING[mode_name])}"
@@ -8580,7 +8994,9 @@ def vertical_clear(mode):
 # high as it goes: the ledger became a 73 mm member instead of a 95 mm one, so
 # its underside rose 387 -> 409 and the clear run with it. What is asserted is
 # therefore the number, measured, in both modes, on the solids.
-INSERT_CLEAR_MIN = 100           # mm of straight-up travel, both modes
+# INSERT_CLEAR_MIN is declared up in the LADDER section now (X9): the number
+# that decides whether a lift is a lift is also the number that decides where
+# rung 3 goes, and it cannot be read here and used there.
 INSERT_CLEAR = {}
 INSERT_STOPPER = {}
 for _mode in MODES:
@@ -8663,7 +9079,10 @@ print(f"OK  K1 overføringssjakten: {TRANSFER_SLOT:g} mm fri høyde "
       f"{TRANSFER_CEILING:g}) for en {PANEL_UNIT_H:g} mm høy plateenhet = "
       f"{TRANSFER_CLEAR:g} mm klaring, krav {TRANSFER_CLEAR_MIN}. Taket var "
       f"stigeklossenes underkant på 386 så lenge 37 mm av hver kloss hang bak "
-      f"vangen sin; nå er det bordskinnas underkant, som må være der")
+      f"vangen sin (K1), og bordskinnas underkant på 474 etterpå; X9 løftet "
+      f"skinna til {LEDGER_BACK_Z0:g} og lot trinn 2 bli det laveste taket "
+      f"over benken. Selve KRYSSINGEN ved stigen er et annet og trangere "
+      f"tall - se X9-blokka lenger ned")
 
 # K1 - AND WHAT THE SHORTER BLOCK COSTS THE JOINT. Two rows, both re-derived:
 #   J5, the block on the upright - UNCHANGED, because the block never touched
@@ -8713,13 +9132,22 @@ print(f"OK  K1 stigeklossen 36x48 x {RUNG_BLOCK_LEN} (var {RUNG_D}): flate mot "
 
 
 # ---------------------------------------------------------------------------
-# X8 - HOW HIGH THE TABLE CAN GO, AND WHY IT IS NOT A MATTER OF TASTE
+# X8/X9 - HOW HIGH THE TABLE CAN GO, AND WHY IT IS NOT A MATTER OF TASTE
 # ---------------------------------------------------------------------------
-# The builder asked for a DESK: the plate at ~700 over the floor, 280 over the
-# seat cushion, knees under it (IKEA SMASTAD's desk is 730). The answer is no,
-# and the number that says no is not an opinion - it is rung 3. This block
-# works the ceiling out on the solids so the next person who wants a taller
-# table is told HOW MUCH taller it can be instead of being told "collision".
+# X8 wrote this block as a REFUSAL. The builder had asked for a DESK - the
+# plate at ~700 over the floor, 280 over the seat cushion, knees under it, IKEA
+# SMASTAD's 730 as the thing to point at - and the ceiling this block computed
+# was 639, because rung 3 stood at 787 and its underside was a lid at 739. The
+# arithmetic was right and the conclusion was wrong by one assumption: that the
+# LADDER was fixed and the table had to fit under it. X9 moves rung 3 (see the
+# X9 note in the LADDER section) and the same arithmetic now says yes.
+#
+# THE BLOCK IS UNCHANGED. That is the point of it. It still computes the
+# ceiling off the solids and still refuses anything above it - what changed is
+# the solids it measures, and the plate now sits EXACTLY ON the ceiling rather
+# than 79 mm under it. Nothing here was relaxed to let the desk through: rung 3
+# went up by exactly the 61 mm that made 700 legal, and the assert below is the
+# thing that says 61 and not 60.
 #
 # THE TWO WALLS, both of them the same piece of wood:
 #   1  THE STRAIGHT-UP RUN. The panel is 574 x 798 and the ladder rungs run
@@ -8729,19 +9157,26 @@ print(f"OK  K1 stigeklossen 36x48 x {RUNG_BLOCK_LEN} (var {RUNG_D}): flate mot "
 #      BATTEN_GUIDE_ENGAGE_Z (48) before its guides are free of their locator
 #      at all, and INSERT_CLEAR_MIN (100) before that is a lift and not a
 #      wrestle - so the plate TOP can be at most the rung underside less 100.
+#      THIS IS THE BINDING WALL, and after X9 it binds exactly: 800 - 100 = 700.
 #   2  THE CROSSING. The unit does not go from seat to seat straight up: it
 #      goes out over a bench and comes back across the ladder in the free band
 #      between rung 2's top and rung 3's underside (K3, leg 6). Whatever
-#      carries the plate's front edge at table height stands IN that band, so
-#      the unit has to cross ABOVE it: batten bottom over the bearer top, i.e.
-#      over the plate's own underside, while the plate top is still under
-#      rung 3. That is PANEL_UNIT_H - PANEL_T = 68 mm of the band spent
-#      before the unit is even in it.
+#      carries the plate's front edge at table height stands IN that band -
+#      after X9 that is the two bordklosser rather than a rung - so the unit
+#      has to cross ABOVE it: batten bottom over the bearer top, i.e. over the
+#      plate's own underside, while the plate top is still under rung 3. That
+#      is PANEL_UNIT_H - PANEL_T = 68 mm of the band spent before the unit is
+#      even in it, and it leaves TABLE_CROSS_CLEAR of daylight.
 # Both are measured, neither is typed, and the lower of the two is the ceiling.
-TABLE_CEILING_Z = PANEL_TOP_TABLE + INSERT_CLEAR["table_mode"]     # 739
-TABLE_TOP_MAX_LIFT = TABLE_CEILING_Z - INSERT_CLEAR_MIN            # 639
-TABLE_TOP_MAX_CROSS = TABLE_CEILING_Z - (PANEL_UNIT_H - PANEL_T)   # 671
-TABLE_TOP_CEILING = min(TABLE_TOP_MAX_LIFT, TABLE_TOP_MAX_CROSS)   # 639
+TABLE_CEILING_Z = PANEL_TOP_TABLE + INSERT_CLEAR["table_mode"]     # 800
+TABLE_TOP_MAX_LIFT = TABLE_CEILING_Z - INSERT_CLEAR_MIN            # 700
+TABLE_TOP_MAX_CROSS = TABLE_CEILING_Z - (PANEL_UNIT_H - PANEL_T)   # 732
+TABLE_TOP_CEILING = min(TABLE_TOP_MAX_LIFT, TABLE_TOP_MAX_CROSS)   # 700
+# X9: the crossing band, read off the two members that make it, and what is
+# left of it once the unit is in it. This is the number X8 called "29 mm short"
+# and it is the one the mechanism film has to fly the unit through.
+TABLE_CROSS_BAND = TABLE_CEILING_Z - PANEL_UNDER_TABLE             # 118
+TABLE_CROSS_CLEAR = TABLE_CROSS_BAND - PANEL_UNIT_H                # 32
 assert PANEL_TOP_TABLE <= TABLE_TOP_CEILING, (
     f"X8: the table plate is drawn at {PANEL_TOP_TABLE} and the mode change "
     f"tops out at {TABLE_TOP_CEILING} - {TABLE_CEILING_Z} "
@@ -8750,15 +9185,26 @@ assert PANEL_TOP_TABLE <= TABLE_TOP_CEILING, (
     f"{PANEL_UNIT_H - PANEL_T} mm the unit spends getting over its own front "
     f"bearer on the way across. Above that the plate can be drawn but not "
     f"put there")
-print(f"OK  X8 bordhøydens tak: {TABLE_TOP_CEILING:g} mm platetopp. "
+assert TABLE_CROSS_CLEAR >= TRANSFER_CLEAR_MIN, (
+    f"X9: the unit crosses the ladder in a {TABLE_CROSS_BAND:g} mm band "
+    f"(bearer top {PANEL_UNDER_TABLE} to {INSERT_STOPPER['table_mode']} at "
+    f"{TABLE_CEILING_Z:g}) and it is {PANEL_UNIT_H:g} mm tall, so it passes "
+    f"with {TABLE_CROSS_CLEAR:g} mm - under the {TRANSFER_CLEAR_MIN} mm that "
+    f"makes the mode change a flat carry")
+print(f"OK  X8/X9 bordhøydens tak: {TABLE_TOP_CEILING:g} mm platetopp. "
       f"{INSERT_STOPPER['table_mode']} setter taket på {TABLE_CEILING_Z:g}; "
       f"derfra går {INSERT_CLEAR_MIN} mm til rett løft (gir "
       f"{TABLE_TOP_MAX_LIFT:g}) og {PANEL_UNIT_H - PANEL_T:g} mm til å komme "
       f"over sin egen bærekant på tvers (gir {TABLE_TOP_MAX_CROSS:g}) - det "
-      f"laveste gjelder. Platen ligger på {PANEL_TOP_TABLE}, altså "
-      f"{TABLE_TOP_CEILING - PANEL_TOP_TABLE:g} mm under taket. En pult på "
-      f"700 er {700 - TABLE_TOP_CEILING:g} mm over det, og det er trinn 3 som "
-      f"sier nei - se X8 i toppen av fila")
+      f"laveste gjelder. Platen ligger på {PANEL_TOP_TABLE}, altså PRESIS i "
+      f"taket: pulten på 700 er kjøpt ved å løfte trinn 3 til {RUNG_TOPS[2]}, "
+      f"ikke ved å slakke regelen. X8 regnet det samme taket til 639 mot "
+      f"trinn 3 på 787 - se X8 og X9 i toppen av fila")
+print(f"OK  X9 kryssingen ved stigen: {TABLE_CROSS_BAND:g} mm fritt bånd fra "
+      f"bordklossens overkant {PANEL_UNDER_TABLE} til trinn 3s underkant "
+      f"{TABLE_CEILING_Z:g}, for en {PANEL_UNIT_H:g} mm høy enhet = "
+      f"{TABLE_CROSS_CLEAR:g} mm klaring (krav {TRANSFER_CLEAR_MIN}). Det er "
+      f"dette båndet X8 målte til 29 mm for LITE")
 
 # ---------------------------------------------------------------------------
 # X7 - THE REAL EC5 6.3.2, ON THE MEMBER THE LIFT MADE THE WORST
@@ -8864,14 +9310,15 @@ BUCKLING_MEMBERS = [
      "benkevangeomlegget og X1 løftet vangen"),
     ("stigevange, i stigeplanet", UPRIGHT_T, UPRIGHT_W,
      [0] + _rung_mid + [front_rail.extents[2][0]], CLIMBER_KN,
-     "gulv → første trinn; over det avstiver trinnene hverandre hver 245 mm"),
+     "gulv → første trinn; over det avstiver trinnene hverandre, verst "
+     "276 mm etter X9 (245 da stigen var jevn)"),
     ("fremre hjørnestolpe", POST_W, POST_T,
      [0, BENCH_RAIL_TOP, END_BEAM_Z0], 1.5,
      "gulv → fremre benkevangeomlegg (229..297) → endebjelken (1304..1402); "
      "verste gap er benkevange → endebjelke"),
     ("bakre hjørnestolpe", POST_W, POST_T, [0, END_BEAM_Z0], 1.5,
      "gulv → endebjelken alene. Den bakre benkevangen og bordbærelekta "
-     "støter og skrus i stolpens X-innerflate på 229..297 og 474..542, så "
+     "støter og skrus i stolpens X-innerflate på 229..297 og 614..682, så "
      "den virkelige lengden er kortere; dette er den konservative lesningen"),
 ]
 BUCKLING = [(name, ec5_column(w, d, max(b - a for a, b in zip(h, h[1:])), n),
@@ -8912,18 +9359,33 @@ for _name, _r, _why in BUCKLING:
 # thing they are measured against is the rung END GRAIN, in both modes,
 # because rung 1 and rung 2 end at the same X.
 def _guide_battens(mode):
-    """[(side, batten, rung)] - the two guide battens and the rung end each
-    one faces at THIS mode's seat height."""
+    """[(side, batten, locator)] - the two guide battens and the piece of wood
+    each one runs down beside at THIS mode's seat height.
+
+    X9: in bed mode that piece is a RUNG END, and one rung serves both sides;
+    in table mode there is no rung at the seat height any more - there cannot
+    be - and it is the two BORDKLOSSER, one per side. They stand on the same
+    two planes (X 835 / 1155) over the same 48 mm of Z under the plate, which
+    is why the panel sub-assembly is untouched: the battens cannot tell which
+    of the two they have found, and the asserts below do not tell them."""
     panel = MODES[mode]
     top = PANEL_UNDER_BED if mode == "bed_mode" else PANEL_UNDER_TABLE
-    rung = next(p for p in parts
-                if p.label.startswith("Ladder Rung_")
-                and abs(p.extents[2][1] - top) < TOL)
+    seat = [p for p in parts
+            if (p.label.startswith("Ladder Rung_")
+                or p.label.startswith("Table Bearer"))
+            and abs(p.extents[2][1] - top) < TOL]
+    assert seat, f"V3/X9: nothing at all stands at the {mode} seat height {top}"
     out = []
     for b in PANEL_BATTENS[id(panel)]:
         if abs((b.extents[1][1] - b.extents[1][0]) - BATTEN_LEN) > TOL:
             continue                       # a cross batten: never in a shaft
-        out.append((_outboard(0, b), b, rung))
+        side = _outboard(0, b)
+        # the locator on THIS side is the one whose end face the batten looks
+        # at across the fit - nearest in X, measured the way the batten faces.
+        loc = min(seat, key=lambda p: abs(p.extents[0][0] - b.extents[0][1]
+                                          if side < 0 else
+                                          b.extents[0][0] - p.extents[0][1]))
+        out.append((side, b, loc))
     return out
 
 
@@ -8945,16 +9407,26 @@ if FASTENERS_ON:
                 f"{'left' if _side < 0 else 'right'} guide batten stands "
                 f"{_gap:.1f} mm off the rung end, and the fit is {PANEL_FIT}")
             # and it has to be ALONGSIDE the end grain, not above or below it:
-            # a guide that misses the rung in Y or Z guides nothing.
+            # a guide that misses its locator in Y or Z guides nothing.
+            # X9: the Y lap is no longer one number for both modes - a rung end
+            # gives the batten 30 mm of shaft and a bordkloss 70 - so it is
+            # computed from the locator's own back face and held to the
+            # engagement floor rather than typed. The Z lap is still exactly a
+            # tread's thickness in both modes, because that is what the unit
+            # has to rise to come free.
             for _j, _what in ((1, "Y"), (2, "Z")):
                 _lap = (min(_b.extents[_j][1], _rung.extents[_j][1])
                         - max(_b.extents[_j][0], _rung.extents[_j][0]))
-                _want = (BATTEN_GUIDE_ENGAGE_Y if _j == 1
-                         else BATTEN_GUIDE_ENGAGE_Z)
+                _want = (BATTEN_Y1 - max(BATTEN_Y0, _rung.extents[1][0])
+                         if _j == 1 else BATTEN_GUIDE_ENGAGE_Z)
                 assert abs(_lap - _want) < TOL, (
                     f"V3 retning: in {_mode} the guide batten laps "
                     f"'{_rung.label}' by {_lap:.0f} mm in {_what}, want "
                     f"{_want}")
+                assert _j != 1 or _lap >= BATTEN_GUIDE_ENGAGE_Y - TOL, (
+                    f"V3/X9 retning: in {_mode} the guide batten is only "
+                    f"{_lap:.0f} mm into the shaft beside '{_rung.label}', "
+                    f"under the {BATTEN_GUIDE_ENGAGE_Y} mm a rung end gives it")
         # Rz: the two guides are in the SAME Y band and far apart in X, and
         # they oppose opposite senses of X - which is exactly the condition
         # that makes a turn about Z jam one of them, because a turn drives
@@ -9034,7 +9506,10 @@ if FASTENERS_ON:
           f"trinnenden ({PANEL_FIT} mm passing hver vei, {_spread_x:.0f} mm "
           f"fra hverandre, så en dreining om Z kiler den ene), i BEGGE "
           f"stillinger og med {BATTEN_GUIDE_ENGAGE_Z} x "
-          f"{BATTEN_GUIDE_ENGAGE_Y} mm tre mot trinnets endeved. Y- av "
+          f"{BATTEN_GUIDE_ENGAGE_Y} mm tre mot trinnendens endeved i "
+          f"sengestilling og {BATTEN_GUIDE_ENGAGE_Z} x {TABLE_BEARER_LEDGE} "
+          f"mot bordklossen i bordstilling (X9: samme plan, samme passing, "
+          f"dypere sjakt). Y- av "
           f"veggplanet, Y+ av stigevangene ({PANEL_FIT} mm), Z ned av tre "
           f"i hele platens bredde i begge stillinger - og Z OPP av "
           f"ingenting, med vilje: platen skal kunne løftes ut. Ikke ett "
@@ -9381,8 +9856,13 @@ for _f in FIGURES_ALL:
             if overlap_volume(_f.extents, _p.extents) <= 0:
                 continue          # bounding boxes miss: the solids cannot meet
             _hit = _f.intersect(_p)      # None when the solids miss entirely
-            if _hit is not None and _hit.volume > 1.0:
-                _fig_bad.append((_f.label, _p.label, _hit.volume))
+            # ...and a ShapeList when a limb clips a part in more than one
+            # place, which is a real answer and not an error: sum it.
+            _vol = (0.0 if _hit is None
+                    else sum(_s.volume for _s in _hit)
+                    if hasattr(_hit, "__iter__") else _hit.volume)
+            if _vol > 1.0:
+                _fig_bad.append((_f.label, _p.label, _vol))
 assert not _fig_bad, f"reference bodies inside the bed: {_fig_bad}"
 print(f"OK  ingen av de {len(FIGURES_ALL)} referansekroppene er inne i noe "
       f"tre eller stål (skummet er unntatt: kroppen synker "
@@ -9442,12 +9922,21 @@ for _mode, _panel in MODES.items():
 SIT_HEADROOM = FIGURE_CLEAR["Child Seated Right (table mode)"]["room"]
 SIT_HEAD_OVER = FIGURE_CLEAR["Child Seated Right (table mode)"]["over"]
 SIT_CROWN_Z = figure_seated_right.pose["crown"][2]
-TABLE_OVER_SEAT = PANEL_TOP_TABLE - SEAT_FACE          # 140  [X2/X3: was 118]
-TABLE_UNDER_SEAT = PANEL_UNDER_TABLE - SEAT_FACE       # 122  [was 100, one thigh]
-# OCC solid-to-solid, both of them: the right-hand child is folded up clear of
-# the plate, the left-hand one has reached over it.
+TABLE_OVER_SEAT = PANEL_TOP_TABLE - SEAT_FACE          # 280  [X9: was 140]
+TABLE_UNDER_SEAT = PANEL_UNDER_TABLE - SEAT_FACE       # 262  [X9: was 122]
+# OCC solid-to-solid, both of them, and after X9 they measure two different
+# things than they used to: the right-hand child's KNEES are under the plate
+# (so this is the air over the knee, not the gap a folded leg stops short by),
+# and the left-hand one's forearms lie on it.
 LEG_TO_TABLE = figure_seated_right.distance(panel_table)
 WRIST_OVER_TABLE = figure_seated_left.distance(panel_table)
+# The anthropometry the height is honestly measured against: this child's
+# seated elbow, and how far over it the plate is. Printed, not asserted - the
+# builder chose the height and the shop's own pair is no better (SMASTAD's 730
+# desk over the 430 chair sold with it is 300 mm; this is 280).
+FIG_ELBOW_OVER_SEAT = FIG_TORSO_L - FIG_UARM_L         # 110
+TABLE_OVER_ELBOW = TABLE_OVER_SEAT - (FIG_SIT_RISE
+                                      + FIG_ELBOW_OVER_SEAT)       # 92
 LIE_UPPER_ROOM = FIGURE_CLEAR["Child Lying Upper (bed mode)"]["room"]
 LIE_LOWER_ROOM = FIGURE_CLEAR["Child Lying Lower (bed mode)"]["room"]
 LIE_LOWER_FACE = SLAT_Z1 - BED_SLAT_T - (
@@ -9461,13 +9950,23 @@ print(f"OK  bordstilling: den som sitter rett opp har {SIT_HEADROOM:.0f} mm "
       f"barn på {FIGURE_H:.0f} mm kan sitte helt oppreist i sofaen")
 print(f"OK  bordstilling: plata ligger {TABLE_OVER_SEAT:.0f} mm over "
       f"seteflaten og har {TABLE_UNDER_SEAT:.0f} mm under seg - ett lår er "
-      f"{2 * FIG_THIGH_R:.0f} mm, så etter X2 går et strakt bein under plata; "
-      f"til og med v13 gjorde det ikke det ({118 - 18} mm den gang). "
-      f"Figurene sitter likevel i skredderstilling - det er slik man sitter på "
-      f"en benk med bordet {int(PANEL_X0 - (FIG_SEAT_X + 2))} mm unna i X: "
-      f"det foldede kneet stopper "
-      f"{LEG_TO_TABLE:.0f} mm fra platekanten, håndleddet lander "
-      f"{WRIST_OVER_TABLE:.0f} mm over plata")
+      f"{2 * FIG_THIGH_R:.0f} mm og et sittende kne står "
+      f"{FIG_SIT_RISE + FIG_THIGH_R:.0f} mm over setet, så KNEET går under "
+      f"plata med {TABLE_UNDER_SEAT - FIG_SIT_RISE - FIG_THIGH_R:.0f} mm luft "
+      f"(X9). Figurene sitter derfor helt alminnelig, med beina ned og "
+      f"knærne inn under platen. Målt solid mot solid: nærmeste punkt på den "
+      f"som sitter rett opp er {LEG_TO_TABLE:.0f} mm fra platen, og den andre "
+      f"har underarmene {WRIST_OVER_TABLE:.0f} mm over den. Til og med v15 "
+      f"satt begge i skredderstilling, fordi 122 mm ikke slipper et kne inn")
+print(f"OK  bordstilling, ærlig om høyden: {TABLE_OVER_SEAT:.0f} mm over puta "
+      f"er {TABLE_OVER_ELBOW:.0f} mm over albuen til et barn på "
+      f"{FIGURE_H:.0f} mm som sitter her - en pulthøyde regnet for en STOL, "
+      f"brukt fra en sofa. Referansen byggherren pekte på gjør det samme: "
+      f"SMÅSTAD-pulten på 730 over den 430 mm stolen som selges til den er "
+      f"300 mm. Barnet legger underarmene oppå plata og har albuene i været; "
+      f"det er tegnet, ikke bortforklart. Fotskammel finnes ikke: sålene "
+      f"henger {figure_seated_left.extents[2][0]:.0f} mm over gulvet, og det "
+      f"er ført opp som åpent punkt og ikke som en detalj")
 print(f"OK  sengestilling: over den som ligger i køya står ingenting - "
       f"rekkverket står {GUARD_OVER_BODY:.0f} mm over kroppens høyeste punkt "
       f"og {GUARD_OVER_FACE:.0f} mm over ansiktet")

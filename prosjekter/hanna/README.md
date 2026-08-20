@@ -16,7 +16,7 @@ samme modell gir samme bytes.*
 
 En parametrisk loftseng i [build123d](https://github.com/gumyr/build123d) /
 OpenCascade, bygd for én nisje på 199 cm mellom to vegger. Modellen er den
-eneste kilden: **hver tegning, hver tabell og alle 84 sidene i den trykte
+eneste kilden: **hver tegning, hver tabell og alle 88 sidene i den trykte
 monteringsmanualen genereres av solidene og maskinsjekkes før de får finnes.**
 Ikke ett mål er skrevet av. Unntaket er fire skjemaark i `docs/schematics/`,
 som er tegnet for hånd — der et tall på et slikt ark er i strid med en
@@ -40,11 +40,11 @@ hvert merke står på det festemiddelet det navngir.*
 | **Ytre mål** | 1990 × 836 × 2037 mm — fyller nisjen fra vegg til vegg på 1990 mm, i et rom med 2450 mm takhøyde, og gir 1500 mm fri høyde under køya. Gjennomgående deler kappes 1984 mm, for et bord på 1990 mm lar seg ikke svinge inn i en åpning på 1990 mm |
 | **Trevirke** | **67 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 48,5 løpemeter. 24 av de 67 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling |
 | **Stål** | **178 festemidler fordelt på 20 ledd**, **172 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert |
-| **Kontroller** | **443 asserter i modellen** og 103 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått: `grep -cE '^[[:space:]]*assert\b' generate_loftbed.py` og `cat tools/*.py | grep -cE '^[[:space:]]*assert\b'`, så neste runde regner dem ut på nytt i stedet for å arve dem. Skrueretningene er utledet av fysikk (6 av 24 er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — en bijeksjon som asserteres på det ferdige blekket; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
+| **Kontroller** | **453 asserter i modellen** og 103 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått: `grep -cE '^[[:space:]]*assert\b' generate_loftbed.py` og `cat tools/*.py | grep -cE '^[[:space:]]*assert\b'`, så neste runde regner dem ut på nytt i stedet for å arve dem. Skrueretningene er utledet av fysikk (6 av 25 er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — en bijeksjon som asserteres på det ferdige blekket; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
 | **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **144 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
-| **Ut av det** | En **trykkeklar PDF på 84 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
+| **Ut av det** | En **trykkeklar PDF på 88 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
-| **Menneskene** | **Fire referansekropper** — et barn på **1200 mm** bygget av 14 primitiver etter [AnthroKids](https://math.nist.gov/~SRessler/anthrokids/), to som sover og to som sitter, som ekte solider i modellen. De kappes ikke og bærer ingenting, men de **måler**: 127 mm over hodet på den som sitter rett opp, 603 mm over ansiktet til den som ligger nede — og de beviste at ingen knær går under bordplaten |
+| **Menneskene** | **Fire referansekropper** — et barn på **1200 mm** bygget av 14 primitiver etter [AnthroKids](https://math.nist.gov/~SRessler/anthrokids/), to som sover og to som sitter, som ekte solider i modellen. De kappes ikke og bærer ingenting, men de **måler**: 426 mm over hodet på den som sitter rett opp, 902 mm over ansiktet til den som ligger nede — og de er grunnen til at bordplaten ble en pult: på 542 gikk et lår under den, men ikke et kne, og på 682 sitter begge barna med knærne inn under |
 
 Sengens *funksjon* — en loftplate over en benk/bord/ekstraseng som stilles om
 ved å flytte én plate mellom to høyder — er hentet fra en omstillbar loftseng
@@ -154,7 +154,7 @@ denne katalogen, så disse virker uendret uansett hvor i treet du står:
 mise run build      # modellen + alle genererte tabeller + docs/MONTERING.md
 mise run montering  # tegn strektegningene i docs/img/ på nytt
 mise run check      # kjør hele kjeden to ganger, krev byte-identisk resultat
-mise run pdf        # docs/hanna.pdf, 84 sider, trykkeklar
+mise run pdf        # docs/hanna.pdf, 88 sider, trykkeklar
 ```
 
 | Oppgave | Hva den gjør |
@@ -186,7 +186,7 @@ Alt under ligger i `prosjekter/hanna/`, og alle stier er relative til den.
 | `tools/` | Alt som leser modellen: dokumenttabeller, strektegninger, kappeside, plateside, ikoner, PDF, USD-hjelpere |
 | `docs/generated/` | Maskinskrevet, aldri redigert for hånd: kappliste, innkjøpsliste, nøkkelmål, beslagliste, skrueretninger, stegtekst, `byggesteg.json` |
 | `docs/img/`, `docs/schematics/` | De innsjekkede tegningene — så manualen kan leses og skrives ut på en maskin uten noe av denne verktøykjeden |
-| `docs/hanna.pdf` | Manualen på 84 sider. Bevisst utenfor git — verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
+| `docs/hanna.pdf` | Manualen på 88 sider. Bevisst utenfor git — verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
 | `parts.tsv` | Innsjekket regresjonsavtrykk: navn, fargegruppe og omskrevet boks for hver del, i begge stillinger. En diff på den er diffen på modellen |
 | `v1/` | Den første køyesengrammen for nisjen, beholdt som historikk |
 
@@ -246,7 +246,7 @@ som ikke lenger går opp — men den er ingen konfigurator, og sengen er laget f
 **HANNA** is a parametric loft bed — a bed platform over a bench, table and
 spare bed, built for one 199 cm alcove between two walls — modelled in build123d
 / OpenCascade. The model is the only source of truth: every drawing, every table
-and all 84 pages of the printed assembly manual are generated from the solids
+and all 88 pages of the printed assembly manual are generated from the solids
 and machine-checked before they are allowed to exist, and no number is
 hand-transcribed. Four schematic sheets in `docs/schematics/` are the one
 exception: they are drawn by hand, and where one of them disagrees with a

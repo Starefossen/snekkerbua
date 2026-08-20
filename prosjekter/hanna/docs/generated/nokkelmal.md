@@ -32,13 +32,15 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **315** | platens overside i sengestilling |
 | **320** | benkeoverflate (sittehøyde uten pute) |
 | **420** | **puteoverflate — nedre soveflate og sittehøyde med pute** (V13) |
-| **474** | bordbærelektas underkant |
-| **542** | bordbærelektas overkant = trinn 2 = platens underside i bordstilling |
-| **560** | bordplate |
+| **572** | trinn 2 |
+| **614** | bordbærelektas underkant |
+| **634** | bordklossenes underkant |
+| **682** | bordbærelektas og bordklossenes overkant = platens underside i bordstilling (X9: ikke lenger et trinn) |
+| **700** | **bordplate — pulthøyde** (X9) |
 | **752** | ryggputens topp i sofastilling (V13) |
-| **787** | trinn 3 |
-| **1032** | trinn 4 |
-| **1277** | trinn 5 |
+| **848** | trinn 3 |
+| **1073** | trinn 4 |
+| **1298** | trinn 5 |
 | **1304** | endebjelkens underkant |
 | **1402** | endebjelkens overkant = sidevangens underkant (fri høyde under sengen) |
 | **1500** | sidevangens overkant |
@@ -50,7 +52,7 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **1979** | rekkverk, øvre bånd overkant |
 | **2037** | fremre stolpetopp |
 
-Stigningen fra gulv til spilebunn: 297 + 245 + 245 + 245 + 245 + 246 mm. Første stigning er benkevangens høyde — det er en avsats du trår opp på, ikke et klatretrinn. De 5 klatretrinnene er 245–246 mm.
+Stigningen fra gulv til spilebunn: 297 + 275 + 276 + 225 + 225 + 225 mm. Første stigning er benkevangens høyde — det er en avsats du trår opp på, ikke et klatretrinn. De 5 klatretrinnene er 225–276 mm.
 
 ## Dybdeplan (Y)
 
@@ -99,7 +101,7 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | — | **581–649 mm** | **forbudt** — klaringer 25,5–59,5 mm, midt i klembåndet |
 | — | **677–689 mm** | **forbudt** — klaringer 5,5–11,5 mm, midt i klembåndet |
 
-Bredden deltar **ikke** i begrensningene på stillingsbyttet — det er høyden og dybden på plateenheten som møter overføringssjakten (154 mm fri høyde mot en 86 mm høy enhet). Å smalne platen gir mer slingring ved innsettingen og mindre bordflate, ingenting annet. Modellen asserter vinduene: en «bare litt smalere»-endring stopper byggeporten med akkurat denne tabellen.
+Bredden deltar **ikke** i begrensningene på stillingsbyttet — det er høyden og dybden på plateenheten som møter overføringssjakten (204 mm fri høyde mot en 86 mm høy enhet). Å smalne platen gir mer slingring ved innsettingen og mindre bordflate, ingenting annet. Modellen asserter vinduene: en «bare litt smalere»-endring stopper byggeporten med akkurat denne tabellen.
 
 **Køyespiler:** 14 stk., første spile starter på X 20, deling 142,46 mm, siste spile slutter på X 1970. Åpning mellom spilene 44,46 mm.
 
@@ -162,11 +164,12 @@ Modellen har fire *referansekropper*: et barn på **1200 mm** (EN 747 åpner ove
 
 | | Mål |
 |---|---:|
-| **Fri høyde over hodet, sittende** | **426 mm** — kronen står i Z 1074 og «Bed Slat_11» er det første over. Man sitter helt rett opp i sofaen |
+| **Fri høyde over hodet, sittende** | **426 mm** — kronen står i Z 1074 og «Bed Slat_8» er det første over. Man sitter helt rett opp i sofaen |
 | Sittehøyde | 654 mm (0,545 × H) over seteflaten på 420 mm |
-| **Bordplaten over setet** | **140 mm**, med 122 mm under seg — ett lår er 115 mm, så et strakt bein går under platen (til og med v13 lå den 118 mm over setet og hadde 100 under seg; da gjorde det ikke det). Den er en lav flate mellom to sofahalvdeler, og figurene sitter i skredderstilling ved den — slik man sitter på en benk med bordet et halvt meter unna i lengderetningen |
-| Foldet kne til platekant | 138 mm |
-| Håndleddet over platen | 7 mm — armen rekker fram når overkroppen lener seg |
+| **Bordplaten over setet** | **280 mm**, med 262 mm under seg — et sittende kne står 135 mm over setet, så KNÆRNE går inn under platen med 127 mm luft. Det er hele X9-runden: en PULT, ikke et sofabord. Fram til v15 lå platen 140 mm over setet med 122 under seg, og 122 slipper et lår inn men ikke et kne — derfor satt figurene i skredderstilling helt til nå |
+| Nærmeste kropp til platen, sittende | 71 mm |
+| Underarmen over platen | 6 mm — barnet legger armene oppå og har albuene i været: 92 mm av platehøyden ligger over albuen til et barn på 1200 mm. Det er en pulthøyde regnet for en stol, brukt fra en sofa — SMÅSTAD-pulten på 730 over den 430 mm stolen som selges til den gjør det samme (300 mm) |
+| Sålene over gulvet, sittende | 134 mm — ingen fotskammel under platen. Åpent punkt, ikke en detalj |
 | **Fri høyde over ansiktet, nede** | **902 mm** til køyespilene |
 | Over den som ligger i køya | ingenting — køya er åpen oppover. Rekkverket står 93 mm over kroppens høyeste punkt og 158 mm over ansiktet |
 | Madrass igjen bak føttene | 588 mm av 1990 — plassen å vokse i |
@@ -181,6 +184,6 @@ Modellen har fire *referansekropper*: et barn på **1200 mm** (EN 747 åpner ove
 | Rekkverkets høyde over madrassen | 336 | ≥ 160 |
 | Åpning mellom madrass og vegg (verste stilling) | 0 | ≤ 75 |
 | Fri klatreåpning i stigen | 320 | ≥ 300 |
-| Største klatretrinn | 246 | ≤ 280 |
+| Største klatretrinn | 276 | ≤ 280 |
 | Hodehøyde over nedre soveflate | 1080 | ≥ 900 (én sittehøyde) |
 | Hodehøyde over øvre madrass | 807 | ≥ 750 (køya er sovesone) |

@@ -13,7 +13,7 @@ Romdelene kappes for lange og finkappes i rommet — se [kapplista](kappliste.md
 |---|---|---:|
 | **18 mm plate, 574 bred** | 1 plate 18 mm kryssfiner furu, minst 574 × 798 mm | — |
 | **23×98** | **5 stk. 4,8 m** | 14 % |
-| **36×48** | **1 stk. 4,8 m** | 2 % |
+| **36×48** | **2 stk. 4,8 m** | 49 % |
 | **36×98** | **3 stk. 4,8 m** | 17 % |
 | **48×68** | **3 stk. 4,8 m** | 31 % |
 | **48×98** | **1 stk. 4,2 m** | 5 % |
@@ -38,11 +38,12 @@ Kjøpt 24,00 m, brukt 20,73 m, svinn 14 %.
 
 ### 36×48
 
-Kjøpt 4,80 m, brukt 4,68 m, svinn 2 %.
+Kjøpt 9,60 m, brukt 4,90 m, svinn 49 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 2 × 98 + 10 (Endelist) + 10 × 36 (Stigekloss) + 2 × 2037 + 15 (Stigevange) | 68 |
+| 1 | 4800 | 2 × 108 (Bordkloss) + 2 × 98 + 10 (Endelist) + 6 × 36 (Stigekloss) + 2 × 2037 + 15 (Stigevange) | 4 |
+| 2 | 4800 | 4 × 36 (Stigekloss) | 4644 |
 
 ### 36×98
 

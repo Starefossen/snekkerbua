@@ -562,7 +562,8 @@ def build_steps(G):
         dict(
             n=6,
             title="Stigen",
-            parts=["Ladder Upright *", "Rung Block *", "Ladder Rung_*"],
+            parts=["Ladder Upright *", "Rung Block *", "Ladder Rung_*",
+                   "Table Bearer *"],
             camera=(0, 16, 3.6),
             crop_to_subject=True,
             intro="Bygg hele stigen ferdig liggende på gulvet, og skru den så "
@@ -574,6 +575,14 @@ def build_steps(G):
                   f"for- og bakkant, ikke stikke bakover slik trinnet gjør. "
                   f"Klosshøyden er trinnhøyden — mål to ganger.",
                 "Legg trinnene på klossene og fest dem (J4).",
+                f"Skru de to BORDKLOSSENE på (J5-B) mens stigen ennå ligger "
+                  f"flatt. De er {G.TABLE_BEARER_LEN} mm lange, står i samme "
+                  f"X som stigeklossene og har overkanten på "
+                  f"{G.PANEL_UNDER_TABLE} — det er bordplatens underside. "
+                  f"De skrus fra stigevangens UTSIDE, én 6x80 hver, og de "
+                  f"stikker {G.TABLE_BEARER_LEDGE} mm BAKOVER forbi vangen: "
+                  f"det er hylla bordplaten hviler på i bordstilling. "
+                  f"Forkanten flukter med vangens forkant, som trinnene.",
                 "Reis stigen mot den fremre sidevangen. Trinnenes forkant "
                   "skal ligge i flukt med stigevangenes forkant — trinnene "
                   "stikker BAKOVER, ikke framover. Det som stikker bakover er "
@@ -588,11 +597,15 @@ def build_steps(G):
                 "Mål lysåpningen mellom stigevangene øverst og nederst — den "
                   "skal være lik.",
                 f"Alle {len(G.RUNG_TOPS)} trinn i vater.",
+                f"Mål høyden på bordklossenes overkant fra stigefoten: "
+                  f"{G.PANEL_UNDER_TABLE} mm, begge to, og i vater med "
+                  f"hverandre. Bordplaten hviler på dem og på bordbærelekta "
+                  f"samtidig — står de skjevt, vipper platen.",
                 "Stå på nederste trinn og kjenn etter. Sitter noe løst nå, "
                   "sitter det løst for alltid.",
             ],
             joints={'J3': 2, 'J4': 2 * len(G.RUNG_TOPS),
-                    'J5': 2 * len(G.RUNG_TOPS)},
+                    'J5': 2 * len(G.RUNG_TOPS), 'J5-B': 2},
         ),
         dict(
             n=7,
@@ -723,9 +736,10 @@ def build_steps(G):
                   "trinn 1. De to lange lektene skal gli ned på hver side av "
                   "trinnenden uten å tvinges.",
                 "Prøv bordstilling: samme plate, samme lekter, rett ned på "
-                  "bordbærelekta og trinn 2. Trinn 1 og trinn 2 ender på "
-                  "samme sted i lengderetningen, så lektene finner "
-                  "trinnenden i begge stillinger.",
+                  "bordbærelekta og de to BORDKLOSSENE. Klossene har "
+                  "endeflaten i nøyaktig samme lengderetning som trinnendene, "
+                  "så de to lektene finner dem på samme måte — bare 70 mm "
+                  "dypere inn.",
             ],
             check=[
                 "Skyv platen sidelengs. Den skal bevege seg et par "
@@ -900,6 +914,7 @@ NO_NAMES = {
     "Ladder upright (D13)": "Stigevange",
     "Ladder rung (tread)": "Rungetrinn",
     "Ladder rung block": "Stigekloss",
+    "Table bearer block (X9)": "Bordkloss",
     "Bench rail, back (C5)": "Benkevange, bak (gjennomgående)",
     "Bench rail, front segment (D13)": "Benkevange, front (bit)",
     "Bench stub leg (W3)": "Stubbefot",
@@ -938,6 +953,7 @@ LABEL_TO_CUT = [
     ("Bench End Cleat", "Bench end cleat (V13)"),
     ("Guard Rail Front", "Guard rail, front segment (D2/D7/D13)"),
     ("Table Ledger Back", "Table ledger, back"),
+    ("Table Bearer", "Table bearer block (X9)"),
     ("Movable Panel", "Movable panel"),
     ("Panel Stiffener Batten", "Panel stiffener batten (M4)"),
     ("Panel Front Batten", "Panel front cross batten (M5)"),
@@ -1590,10 +1606,13 @@ def emit_nokkelmal(G, out_dir, rows):
         (G.BENCH_TOP, "benkeoverflate (sittehøyde uten pute)"),
         (G.CUSHION_TOP_BENCH, "**puteoverflate — nedre soveflate og "
                               "sittehøyde med pute** (V13)"),
+        (G.RUNG_TOPS[1], "trinn 2"),
         (G.LEDGER_BACK_Z0, "bordbærelektas underkant"),
-        (G.RUNG_TOPS[1], "bordbærelektas overkant = trinn 2 = platens "
-                         "underside i bordstilling"),
-        (G.PANEL_TOP_TABLE, "bordplate"),
+        (G.TABLE_BEARER_Z0, "bordklossenes underkant"),
+        (G.PANEL_UNDER_TABLE, "bordbærelektas og bordklossenes overkant = "
+                              "platens underside i bordstilling (X9: ikke "
+                              "lenger et trinn)"),
+        (G.PANEL_TOP_TABLE, "**bordplate — pulthøyde** (X9)"),
         (G.BACKREST_Z1, "ryggputens topp i sofastilling (V13)"),
         # X2: the rung count is derived now (even_climb), so the landmark
         # rows are too - rungs 1 and 2 have their own lines above because they
@@ -1930,16 +1949,25 @@ def emit_nokkelmal(G, out_dir, rows):
     L.append(f"| Sittehøyde | {G.FIG_SITTING_H:.0f} mm (0,545 × H) over "
              f"seteflaten på {G.SEAT_FACE:.0f} mm |\n")
     L.append(f"| **Bordplaten over setet** | **{G.TABLE_OVER_SEAT:.0f} mm**, "
-             f"med {G.TABLE_UNDER_SEAT:.0f} mm under seg — ett lår er "
-             f"{2 * G.FIG_THIGH_R:.0f} mm, så et strakt bein går under platen "
-             f"(til og med v13 lå den 118 mm over setet og hadde 100 under seg; "
-             f"da gjorde det ikke det). Den er en lav flate mellom to "
-             f"sofahalvdeler, og figurene sitter i skredderstilling ved den — "
-             f"slik man sitter på en benk med bordet et halvt meter unna i "
-             f"lengderetningen |\n")
-    L.append(f"| Foldet kne til platekant | {G.LEG_TO_TABLE:.0f} mm |\n")
-    L.append(f"| Håndleddet over platen | {G.WRIST_OVER_TABLE:.0f} mm — "
-             f"armen rekker fram når overkroppen lener seg |\n")
+             f"med {G.TABLE_UNDER_SEAT:.0f} mm under seg — et sittende kne "
+             f"står {G.FIG_SIT_RISE + G.FIG_THIGH_R:.0f} mm over setet, så "
+             f"KNÆRNE går inn under platen med "
+             f"{G.TABLE_UNDER_SEAT - G.FIG_SIT_RISE - G.FIG_THIGH_R:.0f} mm "
+             f"luft. Det er hele X9-runden: en PULT, ikke et sofabord. Fram "
+             f"til v15 lå platen 140 mm over setet med 122 under seg, og 122 "
+             f"slipper et lår inn men ikke et kne — derfor satt figurene i "
+             f"skredderstilling helt til nå |\n")
+    L.append(f"| Nærmeste kropp til platen, sittende | "
+             f"{G.LEG_TO_TABLE:.0f} mm |\n")
+    L.append(f"| Underarmen over platen | {G.WRIST_OVER_TABLE:.0f} mm — "
+             f"barnet legger armene oppå og har albuene i været: "
+             f"{G.TABLE_OVER_ELBOW:.0f} mm av platehøyden ligger over albuen "
+             f"til et barn på {G.FIGURE_H:.0f} mm. Det er en pulthøyde regnet "
+             f"for en stol, brukt fra en sofa — SMÅSTAD-pulten på 730 over "
+             f"den 430 mm stolen som selges til den gjør det samme (300 mm) |\n")
+    L.append(f"| Sålene over gulvet, sittende | "
+             f"{G.figure_seated_left.extents[2][0]:.0f} mm — ingen fotskammel "
+             f"under platen. Åpent punkt, ikke en detalj |\n")
     L.append(f"| **Fri høyde over ansiktet, nede** | "
              f"**{G.LIE_LOWER_FACE:.0f} mm** til køyespilene |\n")
     L.append(f"| Over den som ligger i køya | ingenting — køya er åpen "
@@ -2998,8 +3026,8 @@ def emit_beslagliste(out_dir, steps):
              "Trevirket for en ettermontert lås står likevel der det sto: "
              "**kilelektas endeved mot enden av den fremre benkevangen**, "
              f"tvers over de {_MODEL.LOCK_GAP} mm i sideklaringen, i samme "
-             "høydebånd i sengestilling og 223 mm fra hverandre i "
-             "bordstilling. Geometrien er målt og asserted i modellen, så "
+             "høydebånd i sengestilling og "
+             f"{_MODEL.PANEL_MODE_LIFT} mm fra hverandre i bordstilling. Geometrien er målt og asserted i modellen, så "
              "alle tre løsningene i "
              "[docs/preview/laasvalg.png](../preview/laasvalg.png) kan "
              "monteres senere uten at noe tre må endres. Det arket er "
