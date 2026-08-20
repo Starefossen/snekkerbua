@@ -9,9 +9,9 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 
 | Post | Behov | Kjøp |
 |---|---:|---|
-| Treskrue 5×60 forsenket Torx | 96 | 1 pk. à 100 stk. |
+| Treskrue 5×60 forsenket Torx | 86 | 1 pk. à 100 stk. |
 | Treskrue 5×40 forsenket Torx | 36 | 1 pk. à 50 stk. |
-| Treskrue 6×80 forsenket Torx | 28 | 1 pk. à 50 stk. |
+| Treskrue 6×80 forsenket Torx | 30 | 1 pk. à 50 stk. |
 | Treskrue 6×120 forsenket Torx | 14 | 1 pk. à 20 stk. |
 | Filtknott / møbeltapp ⌀40 | 8 | 1 pk. |
 | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | 6 | 6 stk. |
@@ -30,9 +30,9 @@ I tillegg trengs **D3 trelim**, én liten flaske. Den er ikke en post i tabellen
 | **J2** | Fremre sidevange → fremre hjørnestolpe | 2 | 2× Treskrue 6×80 forsenket Torx | ⌀6 gjennom vangen, ⌀4 i stolpen | Fra vangens innside — inne fra sengen — gjennom vangen og inn i stolpen. Stolpens forside er urørt |
 | **J2-B** | Bakre sidevange → bakre hjørnestolpe (vangen hviler på stolpetoppen) | 2 | 2× Treskrue 6×120 forsenket Torx | ⌀6 gjennom vangen, ⌀4 i stolpens endeved; forsenk hodet godt under vangens overkant så køyespilene ligger flatt | Rett ned gjennom vangen i stolpetoppen, mens bakrammen ligger flatt på gulvet. Ingenting på veggsiden, og ingen kloss: vangen står 12 mm proud av den tynnere stolpen, så et rett beslag ville uansett ikke ligget an mot begge |
 | **J3** | Stigevange → fremre sidevange | 2 | 3× Treskrue 6×80 forsenket Torx | ⌀6 gjennom sidevangen, ⌀4 i stigevangen | Fra sidevangens innside — inne fra sengen — gjennom vangen og inn i stigevangen. Stigevangens forside er urørt |
-| **J4** | Rungetrinn → stigekloss og stigevange (per trinnende) | 10 | 1× Treskrue 6×120 forsenket Torx + 1× Treskrue 5×60 forsenket Torx | ⌀6 gjennom stigevangen inn i trinnenden; ⌀3,5 ned gjennom trinnet i klossen | 6×120 fra utsiden av stigevangen; 5×60 ovenfra ned i klossen |
+| **J4** | Rungetrinn → stigevange (per trinnende) | 10 | 1× Treskrue 6×120 forsenket Torx | ⌀6 gjennom stigevangen inn i trinnenden, ⌀4 i trinnet | 6×120 fra utsiden av stigevangen, inn i trinnets endeved. Ingenting gjennom trinnets overside — trinnet ligger på stigeklossen og klossen har sin egen skrue (J5) |
 | **J5** | Stigekloss → stigevange | 10 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom klossen, ⌀3 i vangen | Fra stigeåpningen, inn i vangens innside |
-| **J5-B** | Bordkloss → stigevange | 2 | 1× Treskrue 6×80 forsenket Torx | ⌀6 gjennom stigevangen, ⌀4 i klossen | Fra stigevangens utside — fra benkerommet — gjennom vangen og inn i klossen. Klossens egen underside er urørt |
+| **J5-B** | Bordkloss → stigevange | 2 | 2× Treskrue 6×80 forsenket Torx | 2 × ⌀6 gjennom stigevangen, ⌀4 i klossen — stablet i høyden | Fra stigevangens utside — fra benkerommet — gjennom vangen og inn i klossen. Klossens egen underside er urørt |
 | **J6** | Køyespile → sidevange (per spileende) | 28 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom spilen, forsenk hodet under flaten | Ovenfra, ned i vangen |
 | **J7** | Rekkverksbord → hjørnestolpe / stigevange (per omlegg) | 8 | 2× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom bordet, ⌀3 i stolpen | Fra sengesiden, inn i stolpens/stigevangens innside |
 | **J8** | Fremre benkevange → fremre hjørnestolpe | 2 | 2× Treskrue 6×80 forsenket Torx | ⌀6 gjennom vangen, ⌀4 i stolpen | Fra vangens innside — inne fra benkerommet — gjennom vangen og inn i stolpen. Stolpens forside er urørt |
@@ -54,6 +54,6 @@ Forklaringen til hvert ledd står i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene).
 
 **Det står ingen lås i denne lista, og det er ikke en glipp.** Platen løftes rett opp i begge stillinger, og etter denne runden er det ingen ståldel igjen i platemekanismen i det hele tatt — verken beslag eller lås.
 
-Begrunnelsen står i sin helhet i [ASSEMBLY, vedlegg B, avvik 4](../ASSEMBLY.md#vedlegg-b--aksepterte-avvik). Kort: madrassen ligger *oppå* platen og må fjernes før platen kan løftes, dette er underetasjen med ~26 cm fallhøyde, og plateenheten veier 6,3 kg.
+Begrunnelsen står i sin helhet i [ASSEMBLY, vedlegg B, avvik 4](../ASSEMBLY.md#vedlegg-b--aksepterte-avvik). Kort: madrassen ligger *oppå* platen og må fjernes før platen kan løftes, dette er underetasjen med ~42 cm fallhøyde, og plateenheten veier 6,3 kg.
 
 Trevirket for en ettermontert lås står likevel der det sto: **kilelektas endeved mot enden av den fremre benkevangen**, tvers over de 63 mm i sideklaringen, i samme høydebånd i sengestilling og 385 mm fra hverandre i bordstilling. Geometrien er målt og asserted i modellen, så alle tre løsningene i [docs/preview/laasvalg.png](../preview/laasvalg.png) kan monteres senere uten at noe tre må endres. Det arket er historikk nå, ikke en bestilling.

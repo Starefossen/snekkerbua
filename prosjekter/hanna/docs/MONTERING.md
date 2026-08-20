@@ -37,13 +37,14 @@ Alle mål i mm, målt fra ferdig gulv. Resten av tallene står i [nøkkelmål](g
 Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Senga er referansen, ikke rommet — bygg i vater og lodd, og ta skjevheten i delene som møter vegg og gulv.**
 
 1. Vent til vegger og gulv er ferdige. **Mens veggen er åpen: legg spikerslag i sonene under.** Etterpå kommer du ikke til.
-2. Slå et vannrett høyderiss rundt hele nisja med linjelaser, 1000 mm over ferdig gulv. Alt måles fra risset, aldri fra gulvet — spikerslagsonene under står i begge notasjoner, og det er riss-kolonnen du setter dem etter.
-3. Sett laseren som loddlinje midt i nisja. Mål ut til hver endevegg i rutenett: 5 høyder × 3 dybder på hver vegg. Legg sammen paret i hvert punkt. **Minste sum er nisjas minste bredde.**
-4. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
-5. Gulv: mål ned fra risset i sengas fire hjørner og på midten. Merk det høyeste punktet på gulvet. Senga bygges ned fra det.
-6. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 15 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
-7. **De fire hjørnestolpene står helt inntil endeveggen — null klaring.** Derfor strekes veggsiden på hver av dem, hver gang: sett stolpen på plass, hold den i lodd, og strek opp veggsiden med avstandskloss der veggen buler. Høvle av til stolpen står i lodd inntil veggen. Ingen monn i bredden — det er tre som skal bort, ikke legges til. Buler veggen og du lar det stå, skyver bulen hele rammen ut av lodd.
-8. Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
+2. **Riv fotlist og alt annet listverk langs bakveggen i hele nisjas bredde — alle 1990 mm — før rammen reises.** 4 deler står både PÅ gulvet og I veggplanet Y -48: de to bakre hjørnestolpene og de to bakre benkeføttene, og en list under dem skyver hele bakkanten ut fra veggen.
+3. Slå et vannrett høyderiss rundt hele nisja med linjelaser, 1000 mm over ferdig gulv. Alt måles fra risset, aldri fra gulvet — spikerslagsonene under står i begge notasjoner, og det er riss-kolonnen du setter dem etter.
+4. Sett laseren som loddlinje midt i nisja. Mål ut til hver endevegg i rutenett: 5 høyder × 3 dybder på hver vegg. Legg sammen paret i hvert punkt. **Minste sum er nisjas minste bredde.**
+5. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
+6. Gulv: mål ned fra risset i sengas fire hjørner og på midten. Merk det høyeste punktet på gulvet. Senga bygges ned fra det.
+7. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 15 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
+8. **De fire hjørnestolpene står helt inntil endeveggen — null klaring.** Derfor strekes veggsiden på hver av dem, hver gang: sett stolpen på plass, hold den i lodd, og strek opp veggsiden med avstandskloss der veggen buler. Høvle av til stolpen står i lodd inntil veggen. Ingen monn i bredden — det er tre som skal bort, ikke legges til. Buler veggen og du lar det stå, skyver bulen hele rammen ut av lodd.
+9. Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
 
 <img src="img/maal-rommet.png" alt="Nisja som rom, med oppriss og plan ved siden av: høyderisset 1000 mm over ferdig gulv går som en ring rundt alle tre veggene, loddplanet står midt i nisja, og hver endevegg måles i 5 høyder × 3 dybder" height="406">
 
@@ -105,9 +106,9 @@ Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøy
 
 | | |
 |:---:|---|
-| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **96x** | Treskrue 5×60 forsenket Torx |
+| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **86x** | Treskrue 5×60 forsenket Torx |
 | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="44"> **36x** | Treskrue 5×40 forsenket Torx |
-| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **28x** | Treskrue 6×80 forsenket Torx |
+| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **30x** | Treskrue 6×80 forsenket Torx |
 | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="44"> **14x** | Treskrue 6×120 forsenket Torx |
 | <img src="img/beslag/filtknott-d40.svg" alt="Filtknott / møbeltapp ⌀40" height="44"> **8x** | Filtknott / møbeltapp ⌀40 |
 | <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="44"> **6x** | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) |
@@ -127,7 +128,6 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Køyespile | 23×98 | 800 | **14** | nå |
 | Endespile | 23×98 | 764 | **2** | på stedet |
 | Stigevange | 36×48 | 2037 | **2** | på stedet |
-| Bordkloss | 36×48 | 108 | **2** | nå |
 | Endelist | 36×48 | 98 | **2** | på stedet |
 | Stigekloss | 36×48 | 36 | **10** | nå |
 | Hjørnestolpe, front | 36×98 | 2037 | **2** | på stedet |
@@ -140,6 +140,7 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Benkevange, front (bit) | 48×68 | 642 | **2** | på stedet |
 | Rungetrinn | 48×68 | 320 | **5** | nå |
 | Stubbefot | 48×68 | 229 | **4** | på stedet |
+| Bordkloss | 48×68 | 91 | **2** | nå |
 | Kilelekt under platens forkant (skråkappet) | 48×68 | 77 | **2** | nå |
 | Sidevange, øvre | 48×98 | 1984 | **2** | på stedet |
 
@@ -299,16 +300,16 @@ Ledd **J8**, **J10**, **J17** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **2×** | Bordkloss | 36×48 | 108 |
+| **2×** | Bordkloss | 48×68 | 91 |
 | **5×** | Rungetrinn | 48×68 | 320 |
 | **10×** | Stigekloss | 36×48 | 36 |
 | **2×** | Stigevange | 36×48 | 2037 |
 
 | | | |
 |:---:|:---:|---|
-| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **20x** | Treskrue 5×60 |
+| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **10x** | Treskrue 5×60 |
 | <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **10x** | Treskrue 6×120 |
-| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **8x** | Treskrue 6×80 |
+| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **10x** | Treskrue 6×80 |
 
 Bokstavene viser hvor på tegningen hver type går.
 

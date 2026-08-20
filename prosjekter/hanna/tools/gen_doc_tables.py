@@ -1406,7 +1406,10 @@ def emit_innkjopsliste(G, out_dir):
     for e in tab:
         if e["sheet"]:
             L.append(f"| **{e['section']}** | 1 plate 18 mm kryssfiner furu, "
-                     f"minst {G.PANEL_W} × {G.PANEL_LEN} mm | — |\n")
+                     f"minst {G.PANEL_W} × {G.PANEL_LEN} mm. "
+                     f"**Dekkfineren skal ligge langs de {G.PANEL_W} mm** "
+                     f"(sengens lengderetning): platas frie forkant spenner "
+                     f"den veien, og på tvers holder den ikke — se X10 | — |\n")
             continue
         counts = {}
         for b in e["boards"]:
@@ -1515,8 +1518,17 @@ def emit_innkjopsliste(G, out_dir):
     L.append("## Merknader fra butikken\n\n")
     board = G.sec(G.BOARD36_T, G.BOARD36_W).replace("x", "×")
     slat = G.sec(G.BOARD23_T, G.BOARD36_W).replace("x", "×")
+    # Antallet er utledet, ikke telt for hånd: 14 køyespiler + 2 x 5
+    # benkespiler + 2 endespiler = 26 stykker  [var 24, før endespilene].
+    # 24 av dem er den SAMME 800 mm biten; endespilene er kortere fordi den
+    # bakre stolpen står i veien for dem.
+    n_same = G.SLAT_COUNT + 2 * G.BENCH_SLAT_COUNT
+    n_slat = n_same + len(G.END_SLAT_X)
     L.append(f"* **{slat}** er det største bordet i denne sengen i antall og "
-             f"lengde — de 24 spilene er kappet av det, og ingenting annet er. "
+             f"lengde — de {n_slat} spilene er kappet av det: {G.SLAT_COUNT} "
+             f"køyespiler og {2 * G.BENCH_SLAT_COUNT} benkespiler à "
+             f"{_fmt(G.SLAT_LEN)} mm, pluss {len(G.END_SLAT_X)} endespiler à "
+             f"{_fmt(G.END_SLAT_LEN)} mm. "
              f"**{board}** tar resten av det flate virket: stolper, "
              f"rekkverksbord og endebjelker. Ring og bestill før du drar; "
              f"butikken har sjelden nok av én dimensjon på lager. Får du ikke "
@@ -1525,7 +1537,8 @@ def emit_innkjopsliste(G, out_dir):
              f"men da må hele kapplista og alle nøkkelmål regnes på nytt. Ikke "
              f"improviser på sagbenken.\n")
     L.append(f"* **Kjøp ett bord {slat} ekstra.** Planen over bruker fem, og "
-             f"fem er nok. Spilene er den ene delen det er 24 like av, og et "
+             f"fem er nok. Spilene er den ene delen det er {n_same} HELT LIKE "
+             f"av — {_fmt(G.SLAT_LEN)} mm, ett saganslag — og et "
              f"reservebord koster mindre enn en ny tur.\n")
     only = ", ".join(
         f"**{s}** finnes bare i "
@@ -1883,7 +1896,12 @@ def emit_nokkelmal(G, out_dir, rows):
              f"en sonegrense |\n")
     L.append(f"| Hodehøyde over nedre soveflate | {G.LOWER_HEADROOM} mm til "
              f"køyespilene ({G.LOWER_HEADROOM_RAIL} mm under sidevangene) "
-             f"|\n")
+             f"— men det er høyden i det ÅPNE feltet. Målt på kroppene over "
+             f"hele soveflatens fotavtrykk er laveste faste del "
+             f"«{G.LOWER_HEADROOM_WHO}» på {_fmt(G.LOWER_HEADROOM_MIN)} mm, "
+             f"og over putestripa langs veggen er det "
+             f"«{G.LOWER_HEADROOM_WALL_WHO}» på "
+             f"{_fmt(G.LOWER_HEADROOM_WALL)} mm |\n")
     L.append(f"| Ryggpute i sofastilling | står på høykant ytterst på hver "
              f"benk: {G.CUSHION_T} mm tykk, {G.LOWER_SLEEP_DEPTH} mm dyp, "
              f"{G.BACK_CUSHION_LEN} mm høy, topp {G.BACKREST_Z1} mm. Ryggen "
@@ -2000,6 +2018,12 @@ def emit_nokkelmal(G, out_dir, rows):
              f"{G.MAX_CLIMB_STEP} |\n")
     L.append(f"| Hodehøyde over nedre soveflate | {G.LOWER_HEADROOM} | ≥ "
              f"{G.MIN_SIT_HEADROOM} (én sittehøyde) |\n")
+    L.append(f"| — laveste faste del over soveflaten (målt) | "
+             f"{_fmt(G.LOWER_HEADROOM_MIN)} ({G.LOWER_HEADROOM_WHO}) | "
+             f"ingen grense — det er stigen |\n")
+    L.append(f"| — over putestripa ved veggen (målt) | "
+             f"{_fmt(G.LOWER_HEADROOM_WALL)} ({G.LOWER_HEADROOM_WALL_WHO}) | "
+             f"ingen grense — lekta er permanent |\n")
     L.append(f"| Hodehøyde over øvre madrass | {G.UPPER_SIT_HEADROOM} | ≥ "
              f"{G.MIN_LIE_HEADROOM} (køya er sovesone) |\n")
     write(os.path.join(out_dir, "nokkelmal.md"), "".join(L))
@@ -2053,6 +2077,13 @@ def spikerslag_table(G, idx):
 
 def room_first(G):
     """The pre-step, step-shaped: title, intro, do, check."""
+    # W1/W7: delene som står BÅDE på gulvet og I veggplanet. De kan ikke
+    # holdes ut fra veggen — der er det ingen klaring å ta en fotlist i — så
+    # lista utledes her i stedet for å tastes, og kulepunktet under teller den.
+    on_floor_and_wall = sorted(
+        p.label for p in G.CUT_PARTS
+        if abs(p.extents[1][0] - G.WALL_Y) < G.TOL
+        and abs(p.extents[2][0]) < G.TOL)
     return dict(
         title=ROOM_TITLE,
         intro="Nisja er hverken i vinkel eller i vater, og senga skal stå i "
@@ -2062,6 +2093,12 @@ def room_first(G):
         do=[
             "Vent til vegger og gulv er ferdige. **Mens veggen er åpen: legg "
             "spikerslag i sonene under.** Etterpå kommer du ikke til.",
+            f"**Riv fotlist og alt annet listverk langs bakveggen i hele "
+            f"nisjas bredde — alle {G.WALL_SPAN} mm — før rammen reises.** "
+            f"{len(on_floor_and_wall)} deler står både PÅ gulvet og I "
+            f"veggplanet Y {G.WALL_Y}: de to bakre hjørnestolpene og de to "
+            f"bakre benkeføttene, og en list under dem skyver hele bakkanten "
+            f"ut fra veggen.",
             f"Slå et vannrett høyderiss rundt hele nisja med linjelaser, "
             f"{G.MEASURE_DATUM_Z} mm over ferdig gulv. Alt måles fra risset, "
             "aldri fra gulvet — spikerslagsonene under står i begge "
@@ -2099,6 +2136,10 @@ def room_first(G):
             f"{G.ROOM_OVER_WALL} mm, mål om. Kapp uansett etter den minste.",
             "Sjekk at spikerslagene ligger i sonene før veggen lukkes — "
             "målt ned eller opp fra høyderisset, ikke opp fra gulvet.",
+            f"Bakveggen skal være bar helt ned til gulvet i alle "
+            f"{G.WALL_SPAN} mm, ikke bare der de {len(on_floor_and_wall)} "
+            f"delene i veggplanet lander. Hold en rett list mot veggen "
+            f"nederst: den skal ligge an hele veien.",
             "Hver hjørnestolpe skal stå i lodd begge veier. Vipper den "
             "fordi veggen buler, høvles bulen av — lys i fugen der veggen "
             "viker er greit og skal stå.",
@@ -3053,7 +3094,10 @@ def emit_beslagliste(out_dir, steps):
              "Begrunnelsen står i sin helhet i "
              "[ASSEMBLY, vedlegg B, avvik 4](../ASSEMBLY.md#vedlegg-b--aksepterte-avvik). "
              "Kort: madrassen ligger *oppå* platen og må fjernes før platen "
-             "kan løftes, dette er underetasjen med ~26 cm fallhøyde, og "
+             # Fallhøyden er nedre soveflate — puteoversiden over benken —
+             # ned til gulvet, altså CUSHION_TOP_BENCH  [var ~26 cm].
+             f"kan løftes, dette er underetasjen med ~"
+             f"{_fmt(round(_MODEL.CUSHION_TOP_BENCH / 10))} cm fallhøyde, og "
              "plateenheten veier "
              f"{_fmt(round(_MODEL.PANEL_UNIT_MASS, 1))} kg.\n\n"
              "Trevirket for en ettermontert lås står likevel der det sto: "

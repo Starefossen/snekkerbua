@@ -21,6 +21,7 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 **Slik gjør du:**
 
 1. Vent til vegger og gulv er ferdige. **Mens veggen er åpen: legg spikerslag i sonene under.** Etterpå kommer du ikke til.
+1. **Riv fotlist og alt annet listverk langs bakveggen i hele nisjas bredde — alle 1990 mm — før rammen reises.** 4 deler står både PÅ gulvet og I veggplanet Y -48: de to bakre hjørnestolpene og de to bakre benkeføttene, og en list under dem skyver hele bakkanten ut fra veggen.
 1. Slå et vannrett høyderiss rundt hele nisja med linjelaser, 1000 mm over ferdig gulv. Alt måles fra risset, aldri fra gulvet — spikerslagsonene under står i begge notasjoner, og det er riss-kolonnen du setter dem etter.
 1. Sett laseren som loddlinje midt i nisja. Mål ut til hver endevegg i rutenett: 5 høyder × 3 dybder på hver vegg. Legg sammen paret i hvert punkt. **Minste sum er nisjas minste bredde.**
 1. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
@@ -49,6 +50,7 @@ Hva som kappes nå og hva som kappes på stedet: [kapplista](kappliste.md).
 * Høyderisset skal gå hele veien rundt nisja og møte seg selv. Gjør det ikke det, står laseren feil.
 * Er forskjellen mellom minste og største bredde større enn 10 mm, mål om. Kapp uansett etter den minste.
 * Sjekk at spikerslagene ligger i sonene før veggen lukkes — målt ned eller opp fra høyderisset, ikke opp fra gulvet.
+* Bakveggen skal være bar helt ned til gulvet i alle 1990 mm, ikke bare der de 4 delene i veggplanet lander. Hold en rett list mot veggen nederst: den skal ligge an hele veien.
 * Hver hjørnestolpe skal stå i lodd begge veier. Vipper den fordi veggen buler, høvles bulen av — lys i fugen der veggen viker er greit og skal stå.
 
 ## Steg 0 — Kapping, forboring og forsenking
@@ -96,8 +98,8 @@ Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannret
 
 | Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
 |---|---|---|---|---:|
-| **J2-B** 2× Treskrue 6×120 | bakre sidevange 48×98 × 1984, oversiden | 27 / 68 mm fra ytterenden | 18 mm fra bakkanten | 41 |
-| **J8-B** 2× Treskrue 6×80 | bakre benkevange 48×68 × 1794, forsiden (mot rommet) | 34 mm fra ytterenden | 22 mm fra under- og overkanten | 24 |
+| **J2-B** 2× Treskrue 6×120 | bakre sidevange 48×98 × 1984, oversiden | 36 / 77 mm fra ytterenden | 18 mm fra bakkanten | 41 |
+| **J8-B** 2× Treskrue 6×80 | bakre benkevange 48×68 × 1794, forsiden (mot rommet) | 34 mm fra ytterenden | 20 / 44 mm fra overkanten | 24 |
 | **J12** 1× Treskrue 5×40 | bakre hjørnestolpe 36×98 × 1402, innersiden (mot sengas midte) | 808 mm fra toppen | midt på (18 mm fra hver side) | — |
 | **J12** 1× Treskrue 5×40 | bordbærelekt 48×68 × 1794, undersiden | 20 mm fra ytterenden | 18 mm fra bakkanten | — |
 | **J12** 1× Vinkelbeslag 40×40×20 | bakre hjørnestolpe 36×98 × 1402, innersiden (mot sengas midte) | 788 mm fra toppen | midt på (18 mm fra hver side) | — |
@@ -152,7 +154,7 @@ Nå bygges de to endene ut fra bakrammen. Endebjelken går fra den bakre stolpen
 
 | Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
 |---|---|---|---|---:|
-| **J1** 2× Treskrue 6×80 | endebjelke 36×98 × 836, innersiden (mot sengas midte) | 18 mm fra vegg- og romenden | 27 mm fra under- og overkanten | 44 |
+| **J1** 2× Treskrue 6×80 | endebjelke 36×98 × 836, innersiden (mot sengas midte) | 18 mm fra vegg- og romenden | 19 / 63 mm fra underkanten | 44 |
 
 **Slik gjør du:**
 
@@ -214,7 +216,7 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 | **J10** 2× Treskrue 5×40 | benkevange 48×68 × 642, undersiden | 90,5 / 135,5 mm fra innerenden | midt på (24 mm fra hver side) | 45 |
 | **J10** 1× Treskrue 5×60 | stubbefot 48×68 × 229, innersiden (mot sengas midte) | 35 mm fra toppen | midt på (24 mm fra hver side) | — |
 | **J10** 1× Vinkelbeslag 90×90×40×2,5 | stubbefot 48×68 × 229, yttersiden (mot sideveggen) | i flukt med toppen | midt på (24 mm fra hver side) | — |
-| **J17** 2× Treskrue 5×60 | endelist 36×48 × 98, forsiden (mot rommet) | 22,5 mm fra begge ender | midt på (24 mm fra hver side) | 53 |
+| **J17** 2× Treskrue 5×60 | endelist 36×48 × 98, forsiden (mot rommet) | 22,5 mm fra begge ender | 16 mm fra underkanten | 53 |
 
 **Slik gjør du:**
 
@@ -236,9 +238,9 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 
 Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre sidevangen.
 
-**Deler:** 2× Bordkloss 36×48 × 108 · 5× Rungetrinn 48×68 × 320 · 10× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 2037
+**Deler:** 2× Bordkloss 48×68 × 91 · 5× Rungetrinn 48×68 × 320 · 10× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 2037
 
-**Festemidler:** 20× Treskrue 5×60 forsenket Torx · 10× Treskrue 6×120 forsenket Torx · 8× Treskrue 6×80 forsenket Torx
+**Festemidler:** 10× Treskrue 5×60 forsenket Torx · 10× Treskrue 6×120 forsenket Torx · 10× Treskrue 6×80 forsenket Torx
 
 **Ledd:** J3, J4, J5, J5-B — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
@@ -247,16 +249,15 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 | Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
 |---|---|---|---|---:|
 | **J3** 3× Treskrue 6×80 | fremre sidevange 48×98 × 1984, baksiden (mot veggen) | 808 mm fra ytterenden | 25 / 49 / 73 mm fra underkanten | 24 |
-| **J4** 1× Treskrue 5×60 | rungetrinn 48×68 × 320, oversiden | 18 mm fra ytterenden | 18 mm fra forkanten | — |
 | **J4** 1× Treskrue 6×120 | stigevange 36×48 × 2037, yttersiden (mot sideveggen) | 763 / 988 / 1213 / 1489 / 1764 mm fra toppen | midt på (18 mm fra hver side) | — |
 | **J5** 1× Treskrue 5×60 | stigekloss 36×48 × 36, innersiden (mot sengas midte) | midt på (24 mm fra hver ende) | midt på (18 mm fra hver side) | — |
-| **J5-B** 1× Treskrue 6×80 | stigevange 36×48 × 2037, yttersiden (mot sideveggen) | 1379 mm fra toppen | midt på (18 mm fra hver side) | — |
+| **J5-B** 2× Treskrue 6×80 | stigevange 36×48 × 2037, yttersiden (mot sideveggen) | 1377 / 1401 mm fra toppen | midt på (18 mm fra hver side) | 24 |
 
 **Slik gjør du:**
 
 1. Skru stigeklossene på innsiden av hver stigevange (J5). Klossen er 36 mm lang — nøyaktig så dyp som stigevangen — og skal ligge i flukt med vangens for- og bakkant, ikke stikke bakover slik trinnet gjør. Klosshøyden er trinnhøyden — mål to ganger.
 1. Legg trinnene på klossene og fest dem (J4).
-1. Skru de to BORDKLOSSENE på (J5-B) mens stigen ennå ligger flatt. De er 108 mm lange, står i samme X som stigeklossene og har overkanten på 682 — det er bordplatens underside. De skrus fra stigevangens UTSIDE, én 6x80 hver, og de stikker 70 mm BAKOVER forbi vangen: det er hylla bordplaten hviler på i bordstilling. Forkanten flukter med vangens forkant, som trinnene.
+1. Skru de to BORDKLOSSENE på (J5-B) mens stigen ennå ligger flatt. De er 91 mm lange, står i samme X som stigeklossene og har overkanten på 682 — det er bordplatens underside. De skrus fra stigevangens UTSIDE, én 6x80 hver, og de stikker 53 mm BAKOVER forbi vangen: det er hylla bordplaten hviler på i bordstilling. Forkanten flukter med vangens forkant, som trinnene.
 1. Reis stigen mot den fremre sidevangen. Trinnenes forkant skal ligge i flukt med stigevangenes forkant — trinnene stikker BAKOVER, ikke framover. Det som stikker bakover er hylla den løse platen skal hvile på.
 1. Skru stigen fast til vangen etter J3 — **innenfra**, gjennom sidevangen og inn i stigevangen, så stigevangens forside blir uten skruehoder. Klem stigen fast mot vangen først; du står på den andre siden når du skrur. Gjennomgangshullene er boret i steg 0.
 
@@ -282,7 +283,7 @@ Fem spiler per benk, lagt oppå benkevangene — og helt ute ved hver vegg en 76
 | Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
 |---|---|---|---|---:|
 | **J11** 1× Treskrue 5×60 | benkespile 23×98 × 800, oversiden | 24 mm fra vegg- og romenden | midt på (49 mm fra hver side) | — |
-| **J11-E** 1× Treskrue 5×60 | endespile 23×98 × 764, oversiden | 24 mm fra romenden | 47,5 mm fra innerkanten | — |
+| **J11-E** 1× Treskrue 5×60 | endespile 23×98 × 764, oversiden | 24 mm fra romenden | 23 mm fra innerkanten | — |
 | **J16** 1× Treskrue 5×60 | endespile 23×98 × 764, oversiden | 18 mm fra veggenden | midt på (49 mm fra hver side) | — |
 
 **Slik gjør du:**

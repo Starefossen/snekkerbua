@@ -16,7 +16,7 @@ samme modell gir samme bytes.*
 
 En parametrisk loftseng i [build123d](https://github.com/gumyr/build123d) /
 OpenCascade, bygd for én nisje på 199 cm mellom to vegger. Modellen er den
-eneste kilden: **hver tegning, hver tabell og alle 88 sidene i den trykte
+eneste kilden: **hver tegning, hver tabell og alle 89 sidene i den trykte
 monteringsmanualen genereres av solidene og maskinsjekkes før de får finnes.**
 Ikke ett mål er skrevet av. Unntaket er fire skjemaark i `docs/schematics/`,
 som er tegnet for hånd — der et tall på et slikt ark er i strid med en
@@ -38,11 +38,11 @@ hvert merke står på det festemiddelet det navngir.*
 | | |
 |---|---|
 | **Ytre mål** | 1990 × 836 × 2037 mm — fyller nisjen fra vegg til vegg på 1990 mm, i et rom med 2450 mm takhøyde, og gir 1500 mm fri høyde under køya. Gjennomgående deler kappes 1984 mm, for et bord på 1990 mm lar seg ikke svinge inn i en åpning på 1990 mm |
-| **Trevirke** | **67 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 48,5 løpemeter. 24 av de 67 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling |
-| **Stål** | **178 festemidler fordelt på 20 ledd**, **172 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert |
-| **Kontroller** | **453 asserter i modellen** og 113 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått: `grep -cE '^[[:space:]]*assert\b' generate_loftbed.py` og `cat tools/*.py | grep -cE '^[[:space:]]*assert\b'`, så neste runde regner dem ut på nytt i stedet for å arve dem. Skrueretningene er utledet av fysikk (6 av 25 er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — en bijeksjon som asserteres på det ferdige blekket; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
-| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **146 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. Determinismen er en assert, ikke en forventning |
-| **Ut av det** | En **trykkeklar PDF på 89 sider** med én kommando, pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
+| **Trevirke** | **72 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 51,23 løpemeter. Fordelingen: 23×98 26 stk. · 48×68 19 stk. · 36×48 14 stk. · 36×98 10 stk. · 48×98 2 stk. · plata 1 stk. 24 av de 72 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling. Tallene telles av modellen og står nederst i [kapplista](docs/generated/kappliste.md) — `TOTAL 72 pcs 51.23 m in 5 timber profiles + 1 sheet` er det modellen skriver ut mens den bygger |
+| **Stål** | **178 festemidler fordelt på 21 ledd**, **172 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. De 6 som mangler er veggfestet J14: det går rett inn i veggen og har ingen andre del å ende i, så det er plassert, men ikke modellert. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert. Begge tallene skriver modellen ut selv — `178 festemidler plassert i 21 ledd` og `172 festemidler modellert som kropper` |
+| **Kontroller** | **473 asserter i modellen** og 112 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått, og de telles som `ast.Assert`-noder i syntakstreet, ikke med grep: en grep på linjer som begynner med ordet «assert» tar med brødtekst som gjør det samme, og gir 475 her. Metoden er `python -c "import ast,sys;print(sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse(open(sys.argv[1]).read()))))" generate_loftbed.py`, og den samme summen over `tools/*.py` (20 filer) — så neste runde regner dem ut på nytt i stedet for å arve dem. Skrueretningene er utledet av fysikk (6 av de 24 radene i [skrueretningene](docs/generated/skrueretninger.md) er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — 25 linjer over 22 skrueretninger og alle 172 festemidlene, en bijeksjon som asserteres på det ferdige blekket; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
+| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **146 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. 146 er ikke et anslag: det er `git ls-files` over nøyaktig de stiene `snap()` i `mise.toml` hasjer. Determinismen er en assert, ikke en forventning |
+| **Ut av det** | En **trykkeklar PDF på 89 sider** med én kommando — `pdfinfo docs/hanna.pdf` sier hvor mange det ble — pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
 | **Menneskene** | **Fire referansekropper** — et barn på **1200 mm** bygget av 14 primitiver etter [AnthroKids](https://math.nist.gov/~SRessler/anthrokids/), to som sover og to som sitter, som ekte solider i modellen. De kappes ikke og bærer ingenting, men de **måler**: 426 mm over hodet på den som sitter rett opp, 902 mm over ansiktet til den som ligger nede — og de er grunnen til at bordplaten ble en pult: på 542 gikk et lår under den, men ikke et kne, og på 682 sitter begge barna med knærne inn under |
 
@@ -210,7 +210,7 @@ om du heller vil lese den enn å bygge den.*
 * **[docs/MONTERING.md](docs/MONTERING.md)** — billedmanualen. Tolv steg (0–11),
   én tegning per steg, nesten ingen ord. Generert.
 * **[docs/ASSEMBLY.md](docs/ASSEMBLY.md)** — begrunnelsene: verktøy, trevirke,
-  hvert ledd J1…J15, byggerekkefølgen og hvorfor den må være slik, madrass og
+  hvert ledd J1…J17, byggerekkefølgen og hvorfor den må være slik, madrass og
   puter, sikkerhet, og tillegget om lastveiene. Den ene håndskrevne fila.
 * **[docs/generated/](docs/generated/)** — kappliste, innkjøpsliste med
   kappeplan bord for bord, nøkkelmål, beslagliste og skrueretninger.
@@ -234,9 +234,12 @@ To filer, ingen av dem en del av den trykte manualen.
 
 ## Grenser
 
-Dette er ett produkt, ikke et møbelrammeverk. Alt er akseparallelle bokser: alle
-kutt er 90°, det finnes verken gjæring eller kurve i sengen, og tegnemotoren går
-ut fra rektangulære solider i en ortografisk projeksjon. Modellen er parametrisk
+Dette er ett produkt, ikke et møbelrammeverk. Alt er akseparallelle bokser med
+ett unntak: alle kutt er 90° «på to nær», som [kapplista](docs/generated/kappliste.md)
+sier det — de to kilelektene under platens forkant sages i ett rett snitt på
+langs, fra full 68 mm ved roten ned til 27 mm ved tuppen, altså 28,0°. Ellers
+finnes verken gjæring eller kurve i sengen, og tegnemotoren går ut fra
+rektangulære solider i en ortografisk projeksjon. Modellen er parametrisk
 i den forstand at målene er konstanter som holdes sammen av asserter — endrer du
 nisjebredden eller hoveddimensjonen på virket, sier kjeden tydelig fra om hva
 som ikke lenger går opp — men den er ingen konfigurator, og sengen er laget for

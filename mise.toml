@@ -67,7 +67,7 @@ description = "Determinismesjekk: kjør hele kjeden to ganger og krev byte-ident
 # endring i modellen gjorde med tegningene. De fire figurikonene i
 # docs/icons/hanna/ og landemerketabellene i docs/PRAKSIS.md §4 er utledet av
 # den samme slags kilde - landemerketabellen i tools/gen_figurhode.py - og
-# hasjes derfor sammen med resten. De ti andre ikonene i katalogen er tegnet,
+# hasjes derfor sammen med resten. De tolv andre ikonene i katalogen er tegnet,
 # ikke regnet; de er med fordi katalogen er med, og de skal ikke endre seg.
 # De tre genererte skjemaarkene - setedetalj, end-elevation og spikerslag -
 # er med av samme grunn som resten.

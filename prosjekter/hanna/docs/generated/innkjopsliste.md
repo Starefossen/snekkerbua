@@ -11,11 +11,11 @@ Romdelene kappes for lange og finkappes i rommet — se [kapplista](kappliste.md
 
 | Dimensjon | Kjøp | Svinn |
 |---|---|---:|
-| **18 mm plate, 574 bred** | 1 plate 18 mm kryssfiner furu, minst 574 × 798 mm | — |
+| **18 mm plate, 574 bred** | 1 plate 18 mm kryssfiner furu, minst 574 × 798 mm. **Dekkfineren skal ligge langs de 574 mm** (sengens lengderetning): platas frie forkant spenner den veien, og på tvers holder den ikke — se X10 | — |
 | **23×98** | **5 stk. 4,8 m** | 14 % |
-| **36×48** | **2 stk. 4,8 m** | 49 % |
+| **36×48** | **1 stk. 4,8 m** | 2 % |
 | **36×98** | **3 stk. 4,8 m** | 17 % |
-| **48×68** | **3 stk. 4,8 m** | 31 % |
+| **48×68** | **3 stk. 4,8 m** | 30 % |
 | **48×98** | **1 stk. 4,2 m** | 5 % |
 
 ## Kappeplan, bord for bord
@@ -38,12 +38,11 @@ Kjøpt 24,00 m, brukt 20,73 m, svinn 14 %.
 
 ### 36×48
 
-Kjøpt 9,60 m, brukt 4,90 m, svinn 49 %.
+Kjøpt 4,80 m, brukt 4,68 m, svinn 2 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 2 × 108 (Bordkloss) + 2 × 98 + 10 (Endelist) + 6 × 36 (Stigekloss) + 2 × 2037 + 15 (Stigevange) | 4 |
-| 2 | 4800 | 4 × 36 (Stigekloss) | 4644 |
+| 1 | 4800 | 2 × 98 + 10 (Endelist) + 10 × 36 (Stigekloss) + 2 × 2037 + 15 (Stigevange) | 68 |
 
 ### 36×98
 
@@ -57,13 +56,13 @@ Kjøpt 14,40 m, brukt 11,98 m, svinn 17 %.
 
 ### 48×68
 
-Kjøpt 14,40 m, brukt 9,92 m, svinn 31 %.
+Kjøpt 14,40 m, brukt 10,10 m, svinn 30 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
 | 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 + 10 (Benkevange, front (bit)) + 4 × 320 (Rungetrinn) + 4 × 229 + 15 (Stubbefot) + 2 × 200 (Vinkelkloss 25° (J8-B)) | 42 |
-| 2 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 1 × 320 (Rungetrinn) | 49 |
-| 3 | 4800 | 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 2 × 200 (Vinkelkloss 30° (J10)) | 4315 |
+| 2 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 91 (Bordkloss) + 1 × 320 (Rungetrinn) | 35 |
+| 3 | 4800 | 1 × 91 (Bordkloss) + 2 × 77 (Kilelekt under platens forkant (skråkappet)) + 2 × 200 (Vinkelkloss 30° (J10)) | 4139 |
 
 Hjelpedelene på denne dimensjonen — 2 × 200 mm (Vinkelkloss 25° (J8-B)) + 2 × 200 mm (Vinkelkloss 30° (J10)), til sammen 812 mm med sagsnitt — står i kappeplanen over. De er ikke deler i senga, men de er virke du må sage, og da er de kjøpt inn som alt annet. Se [kapplista](kappliste.md).
 
@@ -90,8 +89,8 @@ Ikke trelast, men det står på samme handletur. Skum kjøpes som plate eller so
 
 ## Merknader fra butikken
 
-* **23×98** er det største bordet i denne sengen i antall og lengde — de 24 spilene er kappet av det, og ingenting annet er. **36×98** tar resten av det flate virket: stolper, rekkverksbord og endebjelker. Ring og bestill før du drar; butikken har sjelden nok av én dimensjon på lager. Får du ikke akkurat disse målene, kan modellen kjøres om på en nabodimensjon — det er én konstant i `generate_loftbed.py` — men da må hele kapplista og alle nøkkelmål regnes på nytt. Ikke improviser på sagbenken.
-* **Kjøp ett bord 23×98 ekstra.** Planen over bruker fem, og fem er nok. Spilene er den ene delen det er 24 like av, og et reservebord koster mindre enn en ny tur.
+* **23×98** er det største bordet i denne sengen i antall og lengde — de 26 spilene er kappet av det: 14 køyespiler og 10 benkespiler à 800 mm, pluss 2 endespiler à 764 mm. **36×98** tar resten av det flate virket: stolper, rekkverksbord og endebjelker. Ring og bestill før du drar; butikken har sjelden nok av én dimensjon på lager. Får du ikke akkurat disse målene, kan modellen kjøres om på en nabodimensjon — det er én konstant i `generate_loftbed.py` — men da må hele kapplista og alle nøkkelmål regnes på nytt. Ikke improviser på sagbenken.
+* **Kjøp ett bord 23×98 ekstra.** Planen over bruker fem, og fem er nok. Spilene er den ene delen det er 24 HELT LIKE av — 800 mm, ett saganslag — og et reservebord koster mindre enn en ny tur.
 * Salgslengder: **23×98** finnes bare i 4,8 m, **36×48** finnes bare i 4,8 m, **36×98** finnes bare i 4,8 m, **48×68** finnes bare i 4,8 m. Kappeplanen over er derfor lagt på den lengden alene — de kortere salgslengdene finnes ikke i denne dimensjonen, og et bord du ikke kan kjøpe er ingen plan.
 * **Alt konstruksjonsvirke kjøpes som C24** (styrkesortert), også lektdimensjonene 36×48 og 48×68. Står de i hylla bare som «klasse 1 lekt/rekke — ikke-bærende», så spør i skranken: stigevangene, rungetrinnene og stubbeføttene er alle bærende, og lasttabellen regner C24.
 * Platen er **574 mm bred** og kappes av **18 mm kryssfiner**. Merk at *begrunnelsen* er en annen enn før: fram til K2 var platen 652 mm bred, altså bredere enn de 600 mm limtre furu stopper på i hylla, og kryssfiner var det eneste som fantes i den bredden. 574 går inn i en 600 mm limtreplate. Materialet står likevel — lasttabellen, uttrekket for oppskruene og propp-argumentet i J13 er alle regnet på kryssfiner — men det er et **valg** nå og ikke en tvang. Ført opp som åpent punkt, ikke stilltiende endret.

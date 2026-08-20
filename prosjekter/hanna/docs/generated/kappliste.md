@@ -16,13 +16,13 @@ Mål rommet før du kapper romdelene: se [byggesteg](byggesteg.md#før-steg-0--m
 | Løs plate | 18 mm plate, 574 bred | **798** | 1 | 708..1282 | -48..750 | 297..315 |
 | Benkespile | 23×98 | **800** | 10 | 98..1892 (fordelt) | -48..752 | 297..320 |
 | Køyespile | 23×98 | **800** | 14 | 20..1970 (fordelt) | -48..752 | 1500..1523 |
-| Bordkloss | 36×48 | **108** | 2 | 835..1155 (fordelt) | 680..788 | 634..682 |
 | Stigekloss | 36×48 | **36** | 10 | 835..1155 (fordelt) | 752..788 | 201..1250 (fordelt) |
 | Endebjelke | 36×98 | **836** | 2 | 98..1892 (fordelt) | -48..788 | 1304..1402 |
 | Benkevange, bak (gjennomgående) | 48×68 | **1794** | 1 | 98..1892 | -48..0 | 229..297 |
 | Bordbærelekt, bak | 48×68 | **1794** | 1 | 98..1892 | -48..0 | 614..682 |
 | Avstivningslekt under plate | 48×68 | **750** | 2 | 785..1205 (fordelt) | 0..750 | 229..297 |
 | Rungetrinn | 48×68 | **320** | 5 | 835..1155 | 720..788 | 249..1298 (fordelt) |
+| Bordkloss | 48×68 | **91** | 2 | 835..1155 (fordelt) | 697..788 | 614..682 |
 | Kilelekt under platens forkant (skråkappet) | 48×68 | **77** | 2 | 708..1282 (fordelt) | 702..750 | 229..297 |
 
 **50 deler.** Rommet bestemmer ingen mål på disse. Kapp dem ferdig med én gang.
@@ -65,6 +65,6 @@ Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synl
 
 Disse er ikke med i de 72 delene over — de er ikke deler i senga, de er verktøy du sager i steg 0. Virket til dem er likevel med i [innkjøpslista](innkjopsliste.md): de står i kappeplanen for sin egen dimensjon, som alt annet du må sage.
 
-Fordelt på dimensjon: **23×98** 26 stk. · **48×68** 17 stk. · **36×48** 16 stk. · **36×98** 10 stk. · **48×98** 2 stk. · **18 mm plate, 574 bred** 1 stk.
+Fordelt på dimensjon: **23×98** 26 stk. · **48×68** 19 stk. · **36×48** 14 stk. · **36×98** 10 stk. · **48×98** 2 stk. · **18 mm plate, 574 bred** 1 stk.
 
 Sagstopp for hovedbordet 36×98: **2 stk. à 2037** · **2 stk. à 1402** · **2 stk. à 836** · **4 stk. à 832** — 4 innstillinger på sagen, ikke én per del.

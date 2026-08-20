@@ -82,8 +82,8 @@ Rung Block Right_4	boards	1119	1155	752	788	977	1025
 Rung Block Right_5	boards	1119	1155	752	788	1202	1250
 Seat Cushion Left	mattress	0	663	-48	752	320	420
 Seat Cushion Right	mattress	1327	1990	-48	752	320	420
-Table Bearer Left	boards	835	871	680	788	634	682
-Table Bearer Right	boards	1119	1155	680	788	634	682
+Table Bearer Left	boards	835	883	697	788	614	682
+Table Bearer Right	boards	1107	1155	697	788	614	682
 Table Ledger Back	boards	98	1892	-48	0	614	682
 Upper Side Rail Back	rails	3	1987	-48	0	1402	1500
 Upper Side Rail Front	rails	3	1987	704	752	1402	1500

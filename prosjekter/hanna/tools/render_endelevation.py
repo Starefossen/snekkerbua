@@ -295,6 +295,7 @@ def draw_names(sh, M):
 def levels(M):
     """(z, text) read off named parts. The names are the model's own labels;
     the words are this sheet's."""
+    G = M.G
     L = [
         (0.0, "gulv"),
         (M.z("Bench Rail Back (continuous)", 0), "uk benkevange"),
@@ -309,15 +310,18 @@ def levels(M):
         (M.z("Movable Panel (table mode)", 1), "bordplate — pulthøyde"),
         (M.z("Back Cushion Left (table mode)", 1),
          "ryggputas topp i sofastilling"),
-        (M.z("Ladder Rung_2", 1), "trinn 2"),
-        (M.z("Ladder Rung_3", 1), "trinn 3"),
-        (M.z("Ladder Rung_4", 1), "trinn 4"),
+        # Trinn 1 er ok benkevange og står allerede over (RUNG_TOPS[0] ER
+        # BENCH_RAIL_TOP), så stigen leses fra indeks 1 og ut. Håndlista var
+        # 2-3-4 og mistet det femte trinnet da even_climb ga fem  [was 4].
+        *[(M.z(f"Ladder Rung_{i + 1}", 1), f"trinn {i + 1}")
+          for i in range(1, len(G.RUNG_TOPS))],
         (M.z("End Beam Left", 0), "uk endebjelke — står fritt"),
         (M.z("End Beam Left", 1),
          "ok endebjelke = uk sidevange = ok bakre stolpe"),
         (M.z("Upper Side Rail Front", 1), "ok sidevange"),
         (M.z("Bed Slat_1", 1), "spilebunn = uk madrass"),
-        (M.z("Mattress 200x80 (reference)", 1), "ok madrass (150 mm)"),
+        (M.z("Mattress 200x80 (reference)", 1),
+         f"ok madrass ({nb(G.MATTRESS_H, 0)} mm)"),
         (M.z("Guard Rail Front Left_1", 0), "uk nedre rekkverksbånd"),
         (M.z("Guard Rail Front Left_1", 1), "ok nedre rekkverksbånd"),
         (M.z("Guard Rail Front Left_2", 0), "uk øvre rekkverksbånd"),
@@ -378,13 +382,21 @@ def draw_depth(sh, M):
     xg = why(M.y("Guard Rail Front Left_1", 1)) + 150.0
     sh.dim((xg, zed(mz)), (xg, zed(g1)), nb(g1 - mz, 0), 0.0, 1, "dmh")
     sh.dim((xg, zed(g1t)), (xg, zed(g2)), nb(g2 - g1t, 0), 0.0, 1, "dmh")
+    lo, hi = M.G.EN_LIMB_BAND
     sh.text((xg + 30.0, zed(g1) - 8.0), "EN 747: begge åpninger i båndet "
-            "60–75", "sml")
+            f"{nb(lo, 0)}–{nb(hi, 0)}", "sml")
 
 
 # ---------------------------------------------------------------------------
 # THE WORDS
 # ---------------------------------------------------------------------------
+# The thicknesses a mattress is actually SOLD in. Not a model constant - the
+# model only knows its own window - but it is the shelf the window has to be
+# read against, and the note below names the thinnest shelf height that no
+# longer fits rather than asserting one.
+SHELF_MATTRESS_H = (80, 100, 110, 120, 130, 140, 150, 160)
+
+
 def notes(M):
     G = M.G
     post_b = M.box("Corner Post Back Left")
@@ -400,6 +412,12 @@ def notes(M):
     g1 = M.z("Guard Rail Front Left_1", 0)
     seat = M.z("Seat Cushion Left", 1)
     bench = M.z("Bench Slat Left_1", 1)
+    # Den frie dybden madrassen ligger i: veggplanet til de fremre stolpenes
+    # innside. Er den lik madrassbredden, er vandringen null.
+    depth_clear = (M.y("Corner Post Front Left", 0)
+                   - M.y("Corner Post Back Left", 0))
+    roam = depth_clear - G.MATTRESS_W
+    too_thick = min(t for t in SHELF_MATTRESS_H if t > G.MATTRESS_H_MAX)
 
     def mm(v):
         return nb(v, 0)
@@ -440,12 +458,19 @@ def notes(M):
             "veggen i hele sin lengde, så festet gir midtopplegg også.",
         ]),
         ("MADRASSVINDUET", [
-            f"Madrassen er 800 mm bred og fyller dybden mellom veggen og de "
-            f"fremre stolpene nøyaktig — 0 mm vandring, 0 mm spalte i hver "
-            f"ende. Tykkelsen er et VINDU: 140–155 mm. Tegnet er 150, som "
-            f"gir {mm(g1 - mz)} mm opp til nedre rekkverksbånd. Tynnere enn "
-            f"140 og åpningen blir over 75; tykkere enn 155 og den faller ned "
-            f"i klemvinduet under 60. En vanlig 160 mm madrass er ulovlig her.",
+            f"Madrassen er {mm(G.MATTRESS_W)} mm bred og fyller dybden mellom "
+            f"veggen og de fremre stolpene nøyaktig — {mm(roam)} mm vandring, "
+            f"{mm(roam / 2.0)} mm spalte i hver ende. Tykkelsen er et VINDU: "
+            # [X10: sto som 140–155 / tegnet 150 i ren tekst her - V7-tall
+            #  som U1/X1 hadde flyttet under føttene på arket. Historikken
+            #  hører hjemme i kilden, ikke på et ark en snekker leser.]
+            f"{mm(G.MATTRESS_H_MIN)}–{mm(G.MATTRESS_H_MAX)} mm. Tegnet er "
+            f"{mm(G.MATTRESS_H)}, som gir {mm(g1 - mz)} mm opp til nedre "
+            f"rekkverksbånd. Tynnere enn {mm(G.MATTRESS_H_MIN)} og åpningen "
+            f"blir over {mm(G.MAX_GUARD_OPENING)}; tykkere enn "
+            f"{mm(G.MATTRESS_H_MAX)} og den faller ned i klemvinduet under "
+            f"{mm(G.EN_LIMB_BAND[0])}. Vinduet er trangt: allerede en vanlig "
+            f"{mm(too_thick)} mm madrass er ulovlig her, og alt over den også.",
         ]),
         ("BENKEN, PUTENE OG DEN LØSE PLATEN", [
             f"Benkeflaten ligger på Z {mm(bench)} og puteoversiden på "

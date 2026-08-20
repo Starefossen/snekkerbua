@@ -13,7 +13,7 @@ maskinen har sjekket det.
 
 | | | |
 |---|---|---|
-| <a href="prosjekter/hanna/"><img src="prosjekter/hanna/docs/img/hanna-hero.png" alt="HANNA" width="300"></a> | **[HANNA](prosjekter/hanna/)** — en loftseng med sofa, bord og ekstraseng under, bygd for én nisje på 199 cm. 63 trestykker, 180 festemidler modellert som solider, og en trykkeklar monteringsmanual kompilert av modellen. | <img src="prosjekter/hanna/docs/img/hanna-turntable.gif" alt="Én omdreining" width="150"> |
+| <a href="prosjekter/hanna/"><img src="prosjekter/hanna/docs/img/hanna-hero.png" alt="HANNA" width="300"></a> | **[HANNA](prosjekter/hanna/)** — en loftseng med sofa, bord og ekstraseng under, bygd for én nisje på 199 cm. 72 trestykker, 172 festemidler modellert som solider, og en trykkeklar monteringsmanual kompilert av modellen. | <img src="prosjekter/hanna/docs/img/hanna-turntable.gif" alt="Én omdreining" width="150"> |
 
 ## Felles
 

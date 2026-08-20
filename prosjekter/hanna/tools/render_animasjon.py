@@ -540,6 +540,10 @@ def film_turntable(work, width, render_width, want_mp4):
 #     the blocks' full 48 mm of height. The ceiling is now the back table
 #     ledger's underside at 409, and the slot is TRANSFER_SLOT = 114 mm from
 #     the bench slat tops at 295 - 23 mm of daylight round a 91 mm unit.
+#     Those four are the v13 numbers and they are kept because they are what
+#     the story is about; X1/X9 have since lifted the ledger and re-cut the
+#     unit, so TRANSFER_SLOT, the slat tops and PANEL_UNIT_H all read
+#     differently now. The live ones are the model's - see the X9 note below.
 #   * K2 narrowed the panel 652 -> 574, which does not touch this corridor at
 #     all (it is a height and a depth question) but does make the unit lighter
 #     and the sideways move 39 mm shorter at each end.
@@ -608,10 +612,11 @@ def mech_keys(G):
     except which side of the bed the panel comes out on; the roll that used to
     be the one free parameter is zero, and the two cruise heights are simply
     the middles of the two free bands the model measures."""
-    unit_h = G.PANEL_UNIT_H                                 # 91
+    unit_h = G.PANEL_UNIT_H                                 # 86  [X3: was 91]
     # LEG 1 - up into the middle of the transfer slot. The slot's two walls
     # are measured in the model (K1): bench slat tops to the ledger underside.
-    lift = (G.TRANSFER_FLOOR + G.TRANSFER_CLEAR / 2) - G.BATTEN_Z0_BED   # 120.5
+    lift = (G.TRANSFER_FLOOR + G.TRANSFER_CLEAR / 2) - G.BATTEN_Z0_BED   # 150
+                                                            # [was 120.5]
     assert lift <= G.INSERT_CLEAR["bed_mode"], (
         f"the first lift is {lift:.0f} mm and the asserted free run out of "
         f"the bed seat is only {G.INSERT_CLEAR['bed_mode']}")

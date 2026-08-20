@@ -130,8 +130,8 @@
   <rect x="340" y="2005" width="1000" height="125" class="soft"/>
   <rect x="340" y="2136.25" width="997.5" height="22.5" class="pnl1"/>
   <rect x="340" y="1655" width="997.5" height="22.5" class="pnl2"/>
-  <line x1="430" y1="2188.75" x2="384" y2="2188.75" class="scrl"/>
-  <circle cx="430" cy="2188.75" r="6" class="scrp"/>
+  <line x1="430" y1="2198.75" x2="384" y2="2198.75" class="scrl"/>
+  <circle cx="430" cy="2198.75" r="6" class="scrp"/>
   <line x1="362.5" y1="655" x2="362.5" y2="701" class="scrl"/>
   <circle cx="362.5" cy="655" r="6" class="scrp"/>
   <line x1="407.5" y1="2130" x2="407.5" y2="2176" class="scrl"/>
@@ -152,34 +152,34 @@
   <circle cx="1295" cy="150.625" r="6" class="scrp"/>
   <line x1="1295" y1="84.375" x2="1341" y2="84.375" class="scrl"/>
   <circle cx="1295" cy="84.375" r="6" class="scrp"/>
-  <line x1="1310" y1="2130" x2="1310" y2="2176" class="scrl"/>
-  <circle cx="1310" cy="2130" r="6" class="scrp"/>
   <line x1="370" y1="626.25" x2="370" y2="672.25" class="scrl"/>
   <circle cx="370" cy="626.25" r="6" class="scrp"/>
   <line x1="1310" y1="626.25" x2="1310" y2="672.25" class="scrl"/>
   <circle cx="1310" cy="626.25" r="6" class="scrp"/>
+  <line x1="1310" y1="2130" x2="1310" y2="2176" class="scrl"/>
+  <circle cx="1310" cy="2130" r="6" class="scrp"/>
+  <line x1="430" y1="2198.75" x2="384" y2="2198.75" class="scrl"/>
+  <circle cx="430" cy="2198.75" r="6" class="scrp"/>
   <line x1="362.5" y1="655" x2="362.5" y2="701" class="scrl"/>
   <circle cx="362.5" cy="655" r="6" class="scrp"/>
-  <line x1="430" y1="2188.75" x2="384" y2="2188.75" class="scrl"/>
-  <circle cx="430" cy="2188.75" r="6" class="scrp"/>
   <circle cx="362.5" cy="1787.5" r="9" class="scro"/>
   <circle cx="362.5" cy="1787.5" r="3.4" class="scrp"/>
   <circle cx="362.5" cy="1762.5" r="9" class="scro"/>
   <circle cx="362.5" cy="1762.5" r="3.4" class="scrp"/>
-  <circle cx="389.435" cy="2216.25" r="9" class="scro"/>
-  <circle cx="389.435" cy="2216.25" r="3.4" class="scrp"/>
-  <circle cx="389.435" cy="2186.25" r="9" class="scro"/>
-  <circle cx="389.435" cy="2186.25" r="3.4" class="scrp"/>
+  <circle cx="389.435" cy="2213.75" r="9" class="scro"/>
+  <circle cx="389.435" cy="2213.75" r="3.4" class="scrp"/>
+  <circle cx="389.435" cy="2183.75" r="9" class="scro"/>
+  <circle cx="389.435" cy="2183.75" r="3.4" class="scrp"/>
   <line x1="362.5" y1="1762.5" x2="362.5" y2="1716.5" class="scrl"/>
   <circle cx="362.5" cy="1762.5" r="6" class="scrp"/>
-  <circle cx="362.5" cy="866.25" r="9" class="scro"/>
-  <circle cx="362.5" cy="866.25" r="3.4" class="scrp"/>
-  <circle cx="362.5" cy="811.25" r="9" class="scro"/>
-  <circle cx="362.5" cy="811.25" r="3.4" class="scrp"/>
-  <circle cx="1362.5" cy="866.25" r="9" class="scro"/>
-  <circle cx="1362.5" cy="866.25" r="3.4" class="scrp"/>
-  <circle cx="1362.5" cy="811.25" r="9" class="scro"/>
-  <circle cx="1362.5" cy="811.25" r="3.4" class="scrp"/>
+  <circle cx="362.5" cy="876.25" r="9" class="scro"/>
+  <circle cx="362.5" cy="876.25" r="3.4" class="scrp"/>
+  <circle cx="362.5" cy="821.25" r="9" class="scro"/>
+  <circle cx="362.5" cy="821.25" r="3.4" class="scrp"/>
+  <circle cx="1362.5" cy="876.25" r="9" class="scro"/>
+  <circle cx="1362.5" cy="876.25" r="3.4" class="scrp"/>
+  <circle cx="1362.5" cy="821.25" r="9" class="scro"/>
+  <circle cx="1362.5" cy="821.25" r="3.4" class="scrp"/>
   <line x1="370" y1="2130" x2="370" y2="2176" class="scrl"/>
   <circle cx="370" cy="2130" r="6" class="scrp"/>
   <line x1="1310" y1="2130" x2="1310" y2="2176" class="scrl"/>
@@ -222,7 +222,7 @@
   <line x1="1409" y1="395" x2="1470" y2="395" class="ext"/>
   <text x="1520" y="402.92" class="sml" text-anchor="start">1708   uk nedre rekkverksbånd</text>
   <line x1="1409" y1="476.25" x2="1470" y2="476.25" class="ext"/>
-  <text x="1520" y="484.17" class="sml" text-anchor="start">1643   ok madrass (150 mm)</text>
+  <text x="1520" y="484.17" class="sml" text-anchor="start">1643   ok madrass (120 mm)</text>
   <line x1="1409" y1="626.25" x2="1470" y2="626.25" class="ext"/>
   <text x="1520" y="634.17" class="sml" text-anchor="start">1523   spilebunn = uk madrass</text>
   <line x1="1409" y1="655" x2="1470" y2="655" class="ext"/>
@@ -232,6 +232,9 @@
   <text x="1520" y="785.42" class="sml" text-anchor="start">1402   ok endebjelke = uk sidevange = ok bakre stolpe</text>
   <line x1="1409" y1="900" x2="1470" y2="900" class="ext"/>
   <text x="1520" y="907.92" class="sml" text-anchor="start">1304   uk endebjelke — står fritt</text>
+  <line x1="1409" y1="907.5" x2="1470" y2="907.5" class="ext"/>
+  <polyline points="1470,907.5 1496,907.5 1522,931.68" class="ext"/>
+  <text x="1520" y="939.16" class="sml" text-anchor="start">1298   trinn 5</text>
   <line x1="1409" y1="1188.75" x2="1470" y2="1188.75" class="ext"/>
   <text x="1520" y="1196.67" class="sml" text-anchor="start">1073   trinn 4</text>
   <line x1="1409" y1="1470" x2="1470" y2="1470" class="ext"/>
@@ -279,7 +282,7 @@
   <text x="2400" y="551.3" class="sml" text-anchor="start">Ingen bolt går inn i en stolpe. En 36 mm stolpe gir en M8 bare 18 mm kantavstand</text>
   <text x="2400" y="581" class="sml" text-anchor="start">mot kravet 24 (3d); en forboret 6 mm treskrue trenger 18. Det finnes ikke et</text>
   <text x="2400" y="610.7" class="sml" text-anchor="start">forsenket boltehode i denne sengen.</text>
-  <text x="2400" y="640.4" class="sml" text-anchor="start">J1 endebjelke → stolpe: Z 1331 og 1375, i planene Y -30 og 770</text>
+  <text x="2400" y="640.4" class="sml" text-anchor="start">J1 endebjelke → stolpe: Z 1323 og 1367, i planene Y -30 og 770</text>
   <text x="2400" y="670.1" class="sml" text-anchor="start">J2 fremre sidevange → stolpe: Z 1429 og 1473, X 50,5 fra enden</text>
   <text x="2400" y="699.8" class="sml" text-anchor="start">J8 fremre benkevange → stolpe: Z 251 og 275</text>
   <text x="2400" y="729.5" class="sml" text-anchor="start">J2 og J8 er SNUDD: hodet ligger på vangens innside og skruen går utover i +Y inn</text>
@@ -295,41 +298,42 @@
   <text x="2400" y="1084.7" class="sml" text-anchor="start">midtopplegg også.</text>
   <text x="2400" y="1134.2" class="leg" text-anchor="start">MADRASSVINDUET</text>
   <text x="2400" y="1173.2" class="sml" text-anchor="start">Madrassen er 800 mm bred og fyller dybden mellom veggen og de fremre stolpene</text>
-  <text x="2400" y="1202.9" class="sml" text-anchor="start">nøyaktig — 0 mm vandring, 0 mm spalte i hver ende. Tykkelsen er et VINDU: 140–155</text>
-  <text x="2400" y="1232.6" class="sml" text-anchor="start">mm. Tegnet er 150, som gir 65 mm opp til nedre rekkverksbånd. Tynnere enn 140 og</text>
-  <text x="2400" y="1262.3" class="sml" text-anchor="start">åpningen blir over 75; tykkere enn 155 og den faller ned i klemvinduet under 60.</text>
-  <text x="2400" y="1292" class="sml" text-anchor="start">En vanlig 160 mm madrass er ulovlig her.</text>
-  <text x="2400" y="1341.5" class="leg" text-anchor="start">BENKEN, PUTENE OG DEN LØSE PLATEN</text>
-  <text x="2400" y="1380.5" class="sml" text-anchor="start">Benkeflaten ligger på Z 320 og puteoversiden på 420. Det er FIRE puter, alle 100</text>
-  <text x="2400" y="1410.2" class="sml" text-anchor="start">mm tykke og 800 mm dype: to benkeputer på 663 mm og to ryggputer på 332 mm. 663 +</text>
-  <text x="2400" y="1439.9" class="sml" text-anchor="start">332 + 332 + 663 = 1990 — hele lengden.</text>
-  <text x="2400" y="1469.6" class="sml" text-anchor="start">I sofastilling står ryggputa på høykant ytterst på hver benk, med toppen på Z 752</text>
-  <text x="2400" y="1499.3" class="sml" text-anchor="start">og ryggen mot bordbærelekta. Den er tegnet stiplet her.</text>
-  <text x="2400" y="1529" class="sml" text-anchor="start">Ytterst mot veggenden ligger endespilen, 23×98 × 764, på sin endelist, 36×48 × 98</text>
-  <text x="2400" y="1558.7" class="sml" text-anchor="start">(J17). Den starter på den bakre stolpens forside og lukker feltet helt ut til</text>
-  <text x="2400" y="1588.4" class="sml" text-anchor="start">veggen: spalten inn til første benkespile er 0 mm. Begge ligger bak snittplanet</text>
-  <text x="2400" y="1618.1" class="sml" text-anchor="start">og er tegnet lyse.</text>
-  <text x="2400" y="1647.8" class="sml" text-anchor="start">Den løse platen ligger IKKE i dette snittet — den er 574 mm bred og står midt i</text>
-  <text x="2400" y="1677.5" class="sml" text-anchor="start">sengen, X 708–1282. Begge stillingene er tegnet inn i høyde, fordi det er de to</text>
-  <text x="2400" y="1707.2" class="sml" text-anchor="start">høydene resten av snittet skal leses mot.</text>
-  <text x="2400" y="1796.7" class="leg" text-anchor="start">TEGNFORKLARING</text>
-  <rect x="2400" y="1819.6" width="90" height="24.2" class="wood"/>
-  <text x="2512" y="1838.3" class="sml" text-anchor="start">Vange, endebjelke, bordbærelekt og stolpe I SNITT</text>
-  <rect x="2400" y="1853.7" width="90" height="24.2" class="brd"/>
-  <text x="2512" y="1872.4" class="sml" text-anchor="start">Bord i snitt: køyespile, benkespile, rekkverksbord</text>
-  <rect x="2400" y="1887.8" width="90" height="24.2" class="behind"/>
-  <text x="2512" y="1906.5" class="sml" text-anchor="start">Del BAK snittplanet (mot veggenden)</text>
-  <rect x="2400" y="1921.9" width="90" height="24.2" class="soft"/>
-  <text x="2512" y="1940.6" class="sml" text-anchor="start">Madrass og puter — referanse, ikke en del</text>
-  <rect x="2400" y="1956" width="90" height="24.2" class="pnl1"/>
-  <text x="2512" y="1974.7" class="sml" text-anchor="start">Løs plate, sengestilling (utenfor snittet)</text>
-  <rect x="2400" y="1990.1" width="90" height="24.2" class="pnl2"/>
-  <text x="2512" y="2008.8" class="sml" text-anchor="start">Løs plate og sofastilling, bordstilling (utenfor snittet)</text>
-  <circle cx="2432" cy="2036.3" r="9" class="scro"/>
-  <circle cx="2432" cy="2036.3" r="3.4" class="scrp"/>
-  <text x="2512" y="2042.9" class="sml" text-anchor="start">Treskrue ut av tegningsplanet (langs X)</text>
-  <line x1="2432" y1="2070.4" x2="2478" y2="2070.4" class="scrl"/>
-  <circle cx="2432" cy="2070.4" r="6" class="scrp"/>
-  <text x="2512" y="2077" class="sml" text-anchor="start">Treskrue i tegningsplanet — prikken er hodet</text>
+  <text x="2400" y="1202.9" class="sml" text-anchor="start">nøyaktig — 0 mm vandring, 0 mm spalte i hver ende. Tykkelsen er et VINDU: 110–125</text>
+  <text x="2400" y="1232.6" class="sml" text-anchor="start">mm. Tegnet er 120, som gir 65 mm opp til nedre rekkverksbånd. Tynnere enn 110 og</text>
+  <text x="2400" y="1262.3" class="sml" text-anchor="start">åpningen blir over 75; tykkere enn 125 og den faller ned i klemvinduet under 60.</text>
+  <text x="2400" y="1292" class="sml" text-anchor="start">Vinduet er trangt: allerede en vanlig 130 mm madrass er ulovlig her, og alt over</text>
+  <text x="2400" y="1321.7" class="sml" text-anchor="start">den også.</text>
+  <text x="2400" y="1371.2" class="leg" text-anchor="start">BENKEN, PUTENE OG DEN LØSE PLATEN</text>
+  <text x="2400" y="1410.2" class="sml" text-anchor="start">Benkeflaten ligger på Z 320 og puteoversiden på 420. Det er FIRE puter, alle 100</text>
+  <text x="2400" y="1439.9" class="sml" text-anchor="start">mm tykke og 800 mm dype: to benkeputer på 663 mm og to ryggputer på 332 mm. 663 +</text>
+  <text x="2400" y="1469.6" class="sml" text-anchor="start">332 + 332 + 663 = 1990 — hele lengden.</text>
+  <text x="2400" y="1499.3" class="sml" text-anchor="start">I sofastilling står ryggputa på høykant ytterst på hver benk, med toppen på Z 752</text>
+  <text x="2400" y="1529" class="sml" text-anchor="start">og ryggen mot bordbærelekta. Den er tegnet stiplet her.</text>
+  <text x="2400" y="1558.7" class="sml" text-anchor="start">Ytterst mot veggenden ligger endespilen, 23×98 × 764, på sin endelist, 36×48 × 98</text>
+  <text x="2400" y="1588.4" class="sml" text-anchor="start">(J17). Den starter på den bakre stolpens forside og lukker feltet helt ut til</text>
+  <text x="2400" y="1618.1" class="sml" text-anchor="start">veggen: spalten inn til første benkespile er 0 mm. Begge ligger bak snittplanet</text>
+  <text x="2400" y="1647.8" class="sml" text-anchor="start">og er tegnet lyse.</text>
+  <text x="2400" y="1677.5" class="sml" text-anchor="start">Den løse platen ligger IKKE i dette snittet — den er 574 mm bred og står midt i</text>
+  <text x="2400" y="1707.2" class="sml" text-anchor="start">sengen, X 708–1282. Begge stillingene er tegnet inn i høyde, fordi det er de to</text>
+  <text x="2400" y="1736.9" class="sml" text-anchor="start">høydene resten av snittet skal leses mot.</text>
+  <text x="2400" y="1826.4" class="leg" text-anchor="start">TEGNFORKLARING</text>
+  <rect x="2400" y="1849.3" width="90" height="24.2" class="wood"/>
+  <text x="2512" y="1868" class="sml" text-anchor="start">Vange, endebjelke, bordbærelekt og stolpe I SNITT</text>
+  <rect x="2400" y="1883.4" width="90" height="24.2" class="brd"/>
+  <text x="2512" y="1902.1" class="sml" text-anchor="start">Bord i snitt: køyespile, benkespile, rekkverksbord</text>
+  <rect x="2400" y="1917.5" width="90" height="24.2" class="behind"/>
+  <text x="2512" y="1936.2" class="sml" text-anchor="start">Del BAK snittplanet (mot veggenden)</text>
+  <rect x="2400" y="1951.6" width="90" height="24.2" class="soft"/>
+  <text x="2512" y="1970.3" class="sml" text-anchor="start">Madrass og puter — referanse, ikke en del</text>
+  <rect x="2400" y="1985.7" width="90" height="24.2" class="pnl1"/>
+  <text x="2512" y="2004.4" class="sml" text-anchor="start">Løs plate, sengestilling (utenfor snittet)</text>
+  <rect x="2400" y="2019.8" width="90" height="24.2" class="pnl2"/>
+  <text x="2512" y="2038.5" class="sml" text-anchor="start">Løs plate og sofastilling, bordstilling (utenfor snittet)</text>
+  <circle cx="2432" cy="2066" r="9" class="scro"/>
+  <circle cx="2432" cy="2066" r="3.4" class="scrp"/>
+  <text x="2512" y="2072.6" class="sml" text-anchor="start">Treskrue ut av tegningsplanet (langs X)</text>
+  <line x1="2432" y1="2100.1" x2="2478" y2="2100.1" class="scrl"/>
+  <circle cx="2432" cy="2100.1" r="6" class="scrp"/>
+  <text x="2512" y="2106.7" class="sml" text-anchor="start">Treskrue i tegningsplanet — prikken er hodet</text>
   <text x="120" y="2910" class="tiny" text-anchor="start">Alle mål er lest ut av generate_loftbed.py — ingen av dem er skrevet inn her. Generert av tools/render_endelevation.py; rediger ikke for hånd.</text>
 </svg>

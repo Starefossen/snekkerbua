@@ -347,10 +347,11 @@ def foot_scene(G):
                 if p.label.startswith("Bench Rail Front")
                 and p.extents[0][1] <= x0)
 
-    # (i) THRESHOLD: 48x73 laid flat on the floor across the walk-around. Its
-    #     73 mm goes in Y, in the ladder's own front band (flush with the stile
-    #     front face) so the block lands square on the stile's outer face and
-    #     laps the stub leg it starts from.
+    # (i) THRESHOLD: the bench rail's own stock, BENCH_RAIL_T x BENCH_RAIL_H =
+    #     48x68  [was 48x73], laid flat on the floor across the walk-around.
+    #     Its 68 mm goes in Y, in the ladder's own front band (flush with the
+    #     stile front face) so the block lands square on the stile's outer face
+    #     and laps the stub leg it starts from.
     thr = G.block(x0, stile.extents[1][1] - G.BENCH_RAIL_H, 0,
                   gap, G.BENCH_RAIL_H, G.BENCH_RAIL_T,
                   "ILLUSTRASJON terskelkloss", "rails")

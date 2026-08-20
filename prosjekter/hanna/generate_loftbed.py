@@ -46,6 +46,159 @@ back corner posts into the back rail plane. Consequences you cannot ignore:
     (1700), which costs the 48 mm of depth v10 just won - and, on a 36 mm
     post, 36 rather than 48 of it. Flagged for the docs round.
 
+DESIGN INTENT (v17 - "the screws are checked against each other, and the
+                      free edge stops being free")
+--------------------------------------------------------------------------
+X10  THIS ROUND FOUND NOTHING NEW AND FIXED A GREAT DEAL. Three reviewers went
+    through the model, the tools and the documents and came back with the same
+    kind of finding over and over: not a wrong drawing, but a QUESTION NOBODY
+    HAD ASKED. Everything below was already in the file. It was simply never
+    measured, and the file's own habit - ask the SHAPE, not the table that
+    produced it - had a hole in it exactly where the shapes were not in the
+    list being asked.
+
+    1. TWO SCREWS DO NOT MEET IN THE SAME PIECE OF WOOD, AND SIXTEEN PAIRS DID.
+    Every fastener assert in this file asks a screw about WOOD: is the head
+    flush with it, is the tip inside it, is any of the body in somebody else's.
+    Not one asked a screw about ANOTHER SCREW - and `mode_parts()` is wood-only
+    by design, so the 180 modelled fastener bodies were never in the list they
+    were being checked against. A boolean over the lot found sixteen pairs
+    driven through each other, ten of them at the ladder rung ends where a
+    6x120 from the upright and a 5x60 dropped through the tread crossed at a
+    POINT, 0,00 mm apart, and the model printed OK.
+
+    THE CAUSE IS NOT CARELESSNESS, WHICH IS WHY THE FIX IS A SECOND RULE AND
+    NOT A BIGGER ONE. Every placement rule in this file puts its row in the
+    MIDDLE of its own contact window, and it is right to. What nobody noticed
+    is that two joints sharing a piece of wood share the middle as well: the
+    end slat's screw and the front post's pair both land on X 50,5 because both
+    obeyed the rule. So X10 adds `drive(offset=...)` - a declared step off the
+    window centre, with a written reason, resolved "inboard"/"outboard" so the
+    bed stays symmetric, and required to be perpendicular to the drive - and
+    then adds the measurement that polices it: the least distance between two
+    screw SEGMENTS, grouped by the member they share, ACROSS joints, held to
+    the two half-shanks plus one shank of wood. Five joints took an offset
+    (J1, J2-B, J8-B, J11-E, J17); one screw was struck.
+
+    THE SCREW THAT WAS STRUCK, BECAUSE IT COULD NOT EXIST. J4 used to put a
+    5x60 down through the tread into the rung block. It cannot be moved: the
+    upright's 36 mm of depth pins the through screw's Y to one legal value, the
+    tread's 48 mm pins its Z to 273 +- 6, and a screw dropped from the tread's
+    top has to cross all 48 mm of tread to reach the block. Turned round -
+    up from underneath - it clears the 6x120 by 12 mm and lands on J5 instead,
+    which sits at the block's own mid-height and cannot move either. The block
+    cannot take a vertical screw while the tread has a horizontal one. So it
+    is gone, and what it did is argued off the wood: the block is caught
+    between the upright's face, the tread lying on 1296 mm2 of its top, and
+    that tread being itself pinned to the upright 24 mm above by the 6x120. To
+    turn about J5, the block has to lift a tread that is screwed down.
+
+    2. THE PLATE'S FREE FRONT EDGE, AND THE WORST ARITHMETIC IN THE FILE. X9
+    priced the bare sheet between the two bordklosser at 0,86 - "a strip
+    spanning the 324 mm between the two battens, on a conservative 250 mm of
+    effective width". Both halves wrong, both unsafe. The battens carry nothing
+    at the front edge (X9's own paragraph says so, four lines earlier); the
+    span is the clear bay between the BLOCKS, which the same paragraph names as
+    248 and then does not use. And 250 mm of effective width is not
+    conservative on a FREE edge, where a point load can only spread one way -
+    the file's own other sheet rows use 100 and say "its own length a". On the
+    corrected span and a contact-plus-spread b_ef the row is 1,07 for a flat
+    hand and 1,49 for a knee. The plate did not hold.
+
+    WHAT COULD NOT BE DONE ABOUT IT, MEASURED. The obvious fix is a cross
+    batten under the front edge between the guide battens, and it is not
+    buildable: in bed mode the plate's underside IS the rung's top over the
+    whole ladder bay - the rung is the bed-mode front bearing - so there is
+    exactly 0 mm of air under that edge. Pull the batten back until it clears
+    the rung and it runs into the bordklosser in table mode; pull it back until
+    it clears those and it is 55 mm behind the edge, where the cantilever is no
+    better than the span it replaced. A third bearing has nothing to stand on:
+    the two blocks sit on the ladder uprights and there is no upright in the
+    middle of the bay.
+
+    SO THE BAY WAS SHORTENED AND THE SHEET WAS GIVEN A DIRECTION. The
+    bordkloss became 48x68 x 91 - see (3) - and the free edge went 248 -> 224.
+    That is not enough on its own, and the rest is a CUTTING INSTRUCTION with
+    a load case behind it: plywood carries about two and a half times as much
+    along its face grain as across it, the 6,95 MPa every sheet row in this
+    file is computed on is calibrated on a row that spans the plate's LONG way
+    (in Y, across the face grain), and this row spans in X. The face veneer
+    therefore runs along the bed. It costs nothing - the blank is smaller than
+    the sheet either way - and it is the difference between 1,49 and 0,60. It
+    is written into the innkjopsliste as a requirement, and the row is emitted
+    off the solids so the span can never be typed wrong again.
+
+    3. THE BORDKLOSS GETS ITS SECOND SCREW, AND IT IS THE HOUSE RULE THAT SAYS
+    SO. V5 deleted every bearing block that hung on a single 6 mm screw and
+    wrote the rule down; J5-B is exactly such a corner and was not on the list.
+    X9 had argued its way out of it - "ONE screw is all the face holds, 36 x 48
+    is exactly 2 x 3d" - which was true of the face and never asked whether one
+    screw is all the JOINT needs. It is not: unlike the rung block, this one
+    has a LOOSE plate on it, lifted off twice a day, whose load stands 55 mm in
+    front of the screw line. That is a moment in the plane of the fixing face,
+    and a single screw carries it in friction and shank bending. The only
+    dimension free to grow is the block's height - the 36 is the upright's own
+    depth, forever - so the block becomes the bench-rail board standing on
+    edge, 48x68 x 91, Z 614..682, a 36 x 68 fixing face with 68 = 2 x 3d + 4d
+    and 8 mm to spare. No new profile, two pieces off the 36x48 board, and two
+    accidents in the right direction: the bearing line 5040 -> 5088 mm2 and the
+    free front edge 248 -> 224 mm.
+
+    4. FOUR NUMBERS THAT WERE TYPED WHERE THEY SHOULD HAVE BEEN MEASURED.
+      * BATTEN_GUIDE_ENGAGE_Z was RUNG_T (48) and was doing two jobs. The
+        batten LAPS its locator over 48 mm of Z; it has to RISE 68 to come free
+        of it, because the locator's top is the panel's own underside. The
+        insertion sweep was asking `run > 2 x 48 = 96` against a table-mode run
+        of 100 - the right answer to the wrong question, 4 mm from failing on a
+        number that was never the number. Split in two: ENGAGE_Z the lap,
+        RELEASE_Z the lift, and the sweep asks 100 > 68.
+      * LOWER_HEADROOM was 1500 - 420 and said 1080. Measured on the bodies
+        over the lower sleeping surface's own footprint, the lowest permanent
+        wood is rung 2 at 104 mm and the lowest thing over the cushion strip at
+        the wall is the table ledger at 194. All three numbers are emitted now.
+        1080 is the head room in the room BETWEEN those members, not over them,
+        and the rule that would have caught this is not a clearance but a LIST:
+        the things standing in the lower storey's air have to be the things the
+        reader is told about.
+      * k_cr was in ASSEMBLY and not in the model, so the two documents printed
+        0,42 and 0,62 for the same wedge tip. EC5 6.1.7 reduces the shear width
+        for drying checks; the model does it now, and the number is 1,73 MPa
+        against f_v,d 2,77 = 0,62.
+      * THE SKIRTING BOARD WAS NOT IN THE MODEL AT ALL. The wall plane has
+        always been checked for things standing proud of it; nothing checked
+        what the WALL has standing proud of IT. Four parts meet the wall at the
+        floor - two back posts and two back stub legs - so the fotlist comes
+        off across the whole niche before the frame is raised, and the list of
+        four is derived rather than remembered.
+
+    5. THE ASSERTS THAT COULD NOT FAIL. A reviewer counted twenty-three
+    unfalsifiable ones. The tightest cluster was an EN 747 entrapment check
+    that read `WALL_MATTRESS_GAP == MATTRESS_Y0 - WALL_Y == 0` - every name in
+    it an alias of BACK_RAIL_Y0, so the whole chain is one constant compared to
+    itself, and it would have passed with the mattress built in the next room.
+    It measures the mattress body against the wall face the bodies make now.
+    Six more of that family, seven in the panel sub-assembly that read back
+    their own assignments, a bearing area whose height cancelled on both sides,
+    a guard lap that multiplied both sides by the same board width, and two
+    sentinels that turned "there was nothing to measure" into "the rule is
+    satisfied" - all of them now ask a shape or say out loud that they are a
+    naming identity and not a check.
+
+    6. AND THE COMMENTS ARE CHECKED TOO. Sixteen `NAME = expr  # number`
+    comments in the model had gone stale - MATTRESS_Z0 said 1199 beside 1523,
+    NOSE_LEN said 116 beside 77 - and every one of them had been true once,
+    which is what makes them expensive. The file reads its own source at the
+    end of the run and compares the number a value comment OPENS with to the
+    value the name actually has, at the comment's own precision, skipping
+    anything in a [ ] history bracket. 225 of them, every run, in the port.
+
+    WHAT THIS ROUND DID NOT TOUCH, ON PURPOSE: the build steps, the manual
+    prose and vedlegg A's own tables. The numbers this round moves - the free
+    edge row, the k_cr shear row, the two measured head rooms, the fastener
+    counts - are printed by the model so the documents can be brought to them
+    in the round that owns them. Where a document now contradicts the model,
+    the model is the one that was measured.
+
 DESIGN INTENT (v16 - "the desk is bought, and the ladder pays")
 --------------------------------------------------------------------------
 X9  THE PULT AT 700 IS BUILT, AND WHAT IT COST IS THE EVEN LADDER. X8 (below,
@@ -1351,10 +1504,14 @@ ROOM_H = 2450                    # Z = 0 .. 2450, finished floor to ceiling
 # and the two head-room rules X1 checks against the room.
 SIT_RATIO = 0.545                # seat/floor -> crown, as a fraction of height
 MATTRESS_W = 800                 # 200x80 mattress
-# V7: 150 mm, og vinduet er 140..155. Se MATTRESS_H_MIN/MAX nedenfor: EN 747-1
+# 120 mm, og vinduet er 110..125. Se MATTRESS_H_MIN/MAX nedenfor: EN 747-1
 # gir ikke bare et tak på åpningen mellom madrassen og nederste rekkverksbord,
-# den gir et BÅND - 60..75 mm - og en madrass som er tykkere enn 155 lukker
-# åpningen ned i klemvinduet under 60. 150 legger den på 65, midt i båndet.
+# den gir et BÅND - 60..75 mm - og en madrass som er tykkere enn MATTRESS_H_MAX
+# lukker åpningen ned i klemvinduet under 60. 120 legger den på 65, midt i
+# båndet. [V7 skrev 150 og 140..155; U1/X1 flyttet både spileplanet og
+# rekkverksbåndene, og vinduet fulgte med. Tallene her er utledet i
+# MATTRESS_H_MIN/MAX og assertert der - dette er bare setningen som forklarer
+# dem, og den skal si det samme som de gjør.]
 MATTRESS_H = 120
 
 # D12: the platform depth IS the mattress width. The slats run from the outer
@@ -1464,7 +1621,7 @@ MAX_SLAT_GAP = 60
 # 48 mm back into the slot behind the back rail, and v10/W6 removes the slot by
 # bringing the wall forward to Y -48. The mattress is back to a zero-play fit -
 # it is DRAWN where it can only be. See MATTRESS_WANDER (0) and the W5 block.
-MATTRESS_Z0 = SLAT_Z1                    # 1199
+MATTRESS_Z0 = SLAT_Z1                    # 1523  [X1: 1199]
 MATTRESS_Y0 = SLAT_Y0                    # -48  [was 29]
 MATTRESS_Y1 = MATTRESS_Y0 + MATTRESS_W   # 752  [was 829] == SLAT_Y1
 MATTRESS_Z1 = MATTRESS_Z0 + MATTRESS_H   # 1643  [X1: was 1186..1336 on 150]
@@ -1609,7 +1766,14 @@ VISIBLE_FRONT_Y = FRONT_RAIL_Y1          # 752, the front rails' outer face
 # the back long side, which is why there are no back guard boards, and it is the
 # mattress's back stop (W5). Declared up in the UPPER BED block; this is the
 # identity that ties the two statements of it together.
+# X10: this is a DECLARATION, not a check - WALL_Y and BACK_POST_Y0 are both
+# defined as BACK_RAIL_Y0, which is -RAIL_T, so the line is -48 == -48 and
+# nothing is built yet at this point in the file to ask instead. It is kept
+# because it is where the three names are tied together in one place, and it is
+# labelled so nobody counts it as a check again. The measured statement is
+# WALL_PLANE_BUILT, down in the geometry block.
 assert WALL_Y == BACK_POST_Y0 == BACK_RAIL_Y0 == -48     # the mounting face
+                                                         # (a naming identity)
 
 # W6: THE BACK RAIL BEARS ON THE POST TOPS. Post top == rail underside is the
 # whole point of the round, so it is stated here as an identity and checked
@@ -1807,8 +1971,9 @@ RUNG_LEN = LADDER_CLEAR                  # 320, X 835 .. 1155  [was 420]
 RUNG_T = TREAD_T                         # 48, tread thickness (Z)
 RUNG_D = TREAD_D                         # 68, tread depth (Y)
 RUNG_Y1 = LADDER_Y1                      # 788, flush with the upright front
-RUNG_Y0 = RUNG_Y1 - RUNG_D               # 715  [was 727]
-RUNG_REST_LEDGE = LADDER_Y0 - RUNG_Y0    # 37, the bit behind the upright plane
+RUNG_Y0 = RUNG_Y1 - RUNG_D               # 720  [was 715, 727]
+RUNG_REST_LEDGE = LADDER_Y0 - RUNG_Y0    # 32, the bit behind the upright
+                                         # plane  [was 37]
 # D8: an even climb. Rung 1 shares its top with the bench rails (259), which is
 # not a climbing step but the seat-height ledge you step onto; the rest of the
 # rungs even out the way from there to the platform.
@@ -2263,7 +2428,8 @@ BETWEEN_POSTS_LEN = BETWEEN_POSTS_X1 - BETWEEN_POSTS_X0     # 1794  [was 1894]
 # bed-mode panel does NOT follow it - the panel is an 18 mm sheet on a rail top
 # that has not moved - so the difference is the cushion recess (D10).
 # U1 ripple: on the 36 mm board the bench top is 295 and the recess 18 mm.
-BENCH_TOP = BENCH_RAIL_TOP + BENCH_SLAT_T      # 295, bench slat top / seat height
+BENCH_TOP = BENCH_RAIL_TOP + BENCH_SLAT_T      # 320, bench slat top / seat
+                                               # height  [X3: 295]
 BENCH_LEN = 645                                # slatted zone / stub leg reference
 BENCH_X = [0, WALL_SPAN - BENCH_LEN]           # 0..645 and 1345..1990
 BENCH_SLAT_Y0 = BACK_RAIL_Y0                   # -48, on the wall plane like every
@@ -2306,7 +2472,7 @@ MIN_LEG_BEARING = 40
 # U5: leg-on-rail contact area and its compression-perpendicular utilisation.
 # 48 x 73 = 3504 mm2; at f_c90,d ~ 1.53 MPa with k_c90 = 1.5 that is ~8.0 kN
 # against the ~0.5 kN a leg carries -> ~0.06. (Was 48 x 48 = 2304 mm2, ~0.09.)
-LEG_BEARING_AREA = LEG_W * LEG_T               # 3504 mm2  [was 2304, W3..U4]
+LEG_BEARING_AREA = LEG_W * LEG_T               # 3264 mm2  [was 3504, 2304]
 
 # D13: the front bench rail segments end at the SOFA ends, on their stub legs.
 FRONT_BENCH_RAIL_SEGMENTS = [(THROUGH_X0, BENCH_LEN),              # 3 .. 645
@@ -2471,7 +2637,7 @@ PANEL_LEN = PANEL_Y1 - PANEL_Y0                # 798  [was 800]
 # V4 decides against fitting one (accepted deviation, vedlegg B avvik 4) and
 # keeps the wood-to-wood geometry as the retrofit point.
 PANEL_UNDER_BED = BENCH_RAIL_TOP               # 297, rests on the rails/rung 1
-PANEL_TOP_BED = PANEL_UNDER_BED + PANEL_T      # 277
+PANEL_TOP_BED = PANEL_UNDER_BED + PANEL_T      # 315  [X3: 277]
 # X9: PANEL_UNDER_TABLE IS NO LONGER A RUNG TOP. It is declared in the LADDER
 # section (682 = TABLE_PLATE_TOP - PANEL_T) because the ladder is derived round
 # it, and here is where it is USED. Under X2 this line read `RUNG_TOPS[1]` and
@@ -2554,15 +2720,35 @@ BATTEN_LEN = BATTEN_Y1 - BATTEN_Y0             # 750  [was 713]
 BATTEN_X = [LADDER_INNER_L - PANEL_FIT - BATTEN_W,   # 785 .. 833
             LADDER_INNER_R + PANEL_FIT]              # 1157 .. 1205
 BATTEN_Z0_BED = PANEL_UNDER_BED - BATTEN_H     # 229 == BENCH_RAIL_BOTTOM
-BATTEN_Z0_TABLE = PANEL_UNDER_TABLE - BATTEN_H # 409
+BATTEN_Z0_TABLE = PANEL_UNDER_TABLE - BATTEN_H # 614  [X9: 409]
 # THE SHAFT the batten runs in, and how much of it it uses. 48 mm of rung
-# thickness in Z, 37 mm of rung rest ledge in Y (the bit of the rung that
-# stands proud of the upright plane), and the batten occupies 35 of those
-# 37 mm. Lifting the assembly clear of the rung end therefore takes RUNG_T of
-# vertical travel, and that is the number the insertion sweep is measured
-# against - it replaces the bracket leg it used to be measured against.
-BATTEN_GUIDE_ENGAGE_Z = RUNG_T                 # 48, how far it has to lift
-BATTEN_GUIDE_ENGAGE_Y = BATTEN_Y1 - RUNG_Y0    # 35, how deep into the shaft
+# thickness in Z, 32 mm of rung rest ledge in Y (the bit of the rung that
+# stands proud of the upright plane), and the batten occupies 30 of those
+# 32 mm.
+#
+# X10 - AND THE LAP IS NOT THE LIFT. These were one constant and they are two
+# different distances, which is how the file came to say that the assembly has
+# to rise 48 mm to come free of its locator. It does not. The batten LAPS the
+# locator over RUNG_T of Z - the tread is 48 thick and the batten stands beside
+# it over all 48 - but the batten's underside is BATTEN_H below the panel, not
+# RUNG_T, because the locator's top IS the panel's underside: 229 against 297
+# in bed mode, 614 against 682 in table mode. So it takes 68 mm to lift the
+# batten's bottom edge past the locator's top edge, and 68 is BATTEN_H.
+#   ENGAGE_Z  the lap - what the guide is worth as a guide. Drawings, the
+#             mechanism sheet and the retning check read this one.
+#   RELEASE_Z the lift - what it takes to get free. The insertion sweep reads
+#             this one, and the old sweep was asking `_run > 2 x 48 = 96`
+#             against a table-mode run of 100: right answer, wrong question,
+#             and 4 mm from failing on a number that was never the number.
+#             The requirement is one release lift, not two laps: the assembly
+#             is free the moment the battens clear the locator tops, and
+#             INSERT_CLEAR_MIN (100) is the separate rule that says a lift has
+#             to be a lift and not a wrestle. 100 > 68 with 32 mm to spare.
+BATTEN_GUIDE_ENGAGE_Z = RUNG_T                 # 48, the Z lap into the shaft
+BATTEN_GUIDE_RELEASE_Z = BATTEN_H              # 68, batten underside -> the
+                                               # locator top  [was RUNG_T, 48]
+BATTEN_GUIDE_ENGAGE_Y = BATTEN_Y1 - RUNG_Y0    # 30, how deep into the shaft
+                                               # [was 35]
 
 # ---------------------------------------------------------------------------
 # V2/M5: THE TWO FRONT CROSS BATTENS - THE CANTILEVER THE PANEL STILL HAS
@@ -2609,7 +2795,7 @@ NOSE_Y1 = PANEL_Y1                             # 750, flush with the front edge
 NOSE_Y0 = NOSE_Y1 - BATTEN_W                   # 702
 NOSE_X = [(PANEL_X0, BATTEN_X[0]),             # 669 .. 785
           (BATTEN_X[1] + BATTEN_W, PANEL_X1)]  # 1205 .. 1321
-NOSE_LEN = BATTEN_X[0] - PANEL_X0              # 116
+NOSE_LEN = BATTEN_X[0] - PANEL_X0              # 77  [was 116, 213]
 
 # ---------------------------------------------------------------------------
 # V3: HOW THE BATTENS ARE FIXED TO THE PANEL - AND WHY NOT FROM ABOVE
@@ -2710,7 +2896,10 @@ PANEL_UPSCREW_COVER = PANEL_T - PANEL_UPSCREW_BITE            # 5, ply over it
 #           own): 6*500/18^2 = 9.26 MPa, utilisation 1.33. FAILS.
 #       So the whole detail hangs on ONE glue line, and that glue line sits at
 #       the NEUTRAL AXIS of the laminate, which is where longitudinal shear is
-#       greatest: tau = 1.5V/(b*h) = 1.5*1000/(116*36) = 0.36 MPa. The glue
+#       greatest: tau = 1.5V/(b*h) = 1.5*1000/(77*36) = 0.54 MPa (the wing
+#       is 77 mm since K2, not the 116 this line was written on; and k_cr
+#       does not enter - it is a glue line in plywood, not a sawn face).
+#       The glue
 #       itself is fine (D3 is several MPa) and even plywood's rolling shear
 #       (~0.6-0.8 MPa design) has margin. The glue line is not what kills it.
 #       WHAT KILLS IT IS THAT NOTHING CAN BACK IT UP. Every other glued joint
@@ -2752,14 +2941,37 @@ PANEL_UPSCREW_COVER = PANEL_T - PANEL_UPSCREW_BITE            # 5, ply over it
 # f_m,d = 16.6 for C24: utilisation 0.18, against 0.16 at the root (2.72 MPa)
 # and 0.16 for the old full-depth block. The wedge costs two utilisation points
 # and gives back 46 mm of visible depth at the corner. Shear is the other end
-# of the piece: at the 27 mm tip, tau = 1.5*1000/(48*27) = 1.16 MPa against
-# f_v,d = 2.77, utilisation 0.42 - the highest number on the part, and it is
-# the number that says do not take the tip any thinner.
+# of the piece: at the 27 mm tip, tau = 1.5*1000/(K_CR*48*27) = 1.73 MPa
+# against f_v,d = 2.77, utilisation 0.62 - the highest number on the part, and
+# it is the number that says do not take the tip any thinner.
+# [was 1.16 / 0.42, i.e. the same section computed without k_cr. See K_CR
+#  below: the width the model was dividing by was the sawn width, and EC5 does
+#  not let you have it.]
 NOSE_TIP_H = PANEL_UPSCREW_PASS                # 27, the up-screw's own seat
-NOSE_ROOT_H = BATTEN_H                         # 73, full depth at the root
+# X10 - THE C24 DESIGN VALUES THE PRINTS ABOVE WERE QUOTING AS LITERALS, and
+# the one factor that was missing from all of them. Shear in solid timber is
+# computed on a REDUCED width in Eurocode 5 (6.1.7(2)): a drying check runs
+# along the grain at mid-depth, which is exactly where longitudinal shear is
+# greatest, so the code takes b_ef = k_cr * b and k_cr = 0.67 for softwood in
+# service class 1-2. ASSEMBLY has said so since the round that wrote vedlegg A;
+# the model did not do it, and the two documents printed different numbers for
+# the same detail - 0,42 here and 0,62 there. The model is the one that was
+# wrong. Every shear row in this file divides by K_CR now, and the numbers in
+# the report are the ASSEMBLY ones.
+#
+# The two strengths beside it were literals in f-strings for the same reason
+# nobody noticed the missing factor: a number typed into a print cannot be
+# re-derived and cannot be re-read. They are named here.
+K_CR = 0.67                      # EC5 6.1.7(2), sprekkfaktor on the shear width
+F_V_D = 2.77                     # N/mm2, C24 shear, design (k_mod 0.9 / gM 1.3)
+F_M_D_C24 = 16.6                 # N/mm2, C24 bending, design, no k_h
+
+NOSE_ROOT_H = BATTEN_H                         # 68, full depth at the root
+                                               # [V2: 73]
 NOSE_TAPER_DEG = math.degrees(math.atan2(NOSE_ROOT_H - NOSE_TIP_H, NOSE_LEN))
 # where the bending peaks along the taper, measured from the TIP
-NOSE_CRIT_X = NOSE_TIP_H * NOSE_LEN / (NOSE_ROOT_H - NOSE_TIP_H)      # 68.1
+NOSE_CRIT_X = NOSE_TIP_H * NOSE_LEN / (NOSE_ROOT_H - NOSE_TIP_H)      # 50.7
+                                                                      # [was 68.1]
 NOSE_CRIT_H = NOSE_TIP_H * 2                                          # 54
 
 # ---------------------------------------------------------------------------
@@ -2768,8 +2980,11 @@ NOSE_CRIT_H = NOSE_TIP_H * 2                                          # 54
 # THE DECISION, TAKEN: there is NO lock. It is an accepted deviation from
 # EN 747 4.1.1 and the reasoning is written out in docs/ASSEMBLY.md, vedlegg B,
 # avvik 4 - in one line: the mattress lies ON the panel and has to come off
-# before the panel can lift, this is the LOWER bunk with a ~26 cm fall to the
-# floor, and the panel is a ~9 kg unit whose guides take every lateral degree
+# before the panel can lift, this is the LOWER bunk with a 42 cm fall to the
+# floor (CUSHION_TOP_BENCH; the 26 this line used to say was BENCH_RAIL_TOP
+# before X3 raised the bench, and it never counted the cushion), and the panel
+# is a 6,3 kg unit (PANEL_UNIT_MASS; ~9 was a guess made before the sheet was
+# weighed) whose guides take every lateral degree
 # of freedom.
 #
 # WHAT STAYS HERE IS THE WOOD. The geometry below is kept as a measured,
@@ -2791,7 +3006,8 @@ NOSE_CRIT_H = NOSE_TIP_H * 2                                          # 54
 # it has nothing to engage. All three options in docs/preview/laasvalg.png act
 # across that 24 mm; the geometry of all three stays valid whether or not one
 # is ever fitted, which is exactly why the numbers below are still asserted.
-LOCK_GAP = PANEL_SIDE_GAP                      # 24, the side gap itself
+LOCK_GAP = PANEL_SIDE_GAP                      # 63, the side gap itself
+                                               # [was 24]
 
 # The walking zone under the ladder bay: floor to the bench rail underside. The
 # battens are not allowed into it in either mode.
@@ -2889,30 +3105,58 @@ LEDGER_BACK_Y0 = BACK_RAIL_Y0                  # -48 .. 0, on the wall plane
 # offers 36 mm of Y (752..788) and nothing else, so the block's rear 36 mm is
 # its fixing and everything behind Y 752 is ledge.
 #
-# THE LENGTH IS NOT CHOSEN, IT IS SOLVED. Two blocks 36 mm thick have to make
-# the same MIN_BEARING the file asks of every bearing LINE under this plate, so
-# the ledge is MIN_BEARING / (2 x 36) rounded up to the millimetre - 70 - and
-# the piece is that plus the 36 it is screwed to. 108 mm of 36x48, twice, off
-# the same block board the ten rung blocks come from.
+# THE LENGTH IS NOT CHOSEN, IT IS SOLVED. The two blocks have to make the same
+# MIN_BEARING the file asks of every bearing LINE under this plate, so the
+# ledge is MIN_BEARING / (2 x TABLE_BEARER_T) rounded up to the millimetre and
+# the piece is that plus the UPRIGHT_T it is screwed to.
+#
+# X10 - AND THE SECTION IS SOLVED TOO, WHICH IT WAS NOT BEFORE. X9 wrote this
+# piece as 36x48 x 108, the rung block's own stock, and then had to write down
+# that ONE screw was all it could hold: the fixing face is the upright's 36 mm
+# of depth by the block's own height, and 36 x 48 gives exactly one 6 mm screw
+# either way (2 x 3d = 36 across, and 48 is 12 short of the 2 x 3d + 4d = 60 a
+# second one needs along it). That was true, and it was the wrong thing to
+# accept, because THIS block is not the rung block:
+#   * the rung block has a tread lying on it and the tread is pinned to the
+#     upright. It cannot turn about its one screw;
+#   * the bordkloss has a PLATE lying on it, loose, lifted off twice a day.
+#     Nothing holds it down. And the plate's load stands ~55 mm in FRONT of the
+#     screw line - the plate covers the block's ledge, resultant near Y 723,
+#     the screw is on the upright's centre line at 770 - so the load is a
+#     moment about the X axis, in the PLANE of the fixing face, and one screw
+#     carries it in friction and shank bending. A bearing couple cannot help:
+#     there is nothing under the block.
+# Two screws stacked in Z turn that moment into steel, +-P*55/s per screw. The
+# only dimension free to grow is the block's HEIGHT - the 36 is the upright's
+# own depth and can never change - so the block becomes 48x68 x 91, the
+# bench-rail board, standing 68 in Z: Z 614..682, a fixing face of 36 x 68, and
+# 60 of those 68 mm spent on 2 x 3d + 4d exactly. It is not a new profile
+# (48x68 is the bench rails, the ledger, the stub legs and the four panel
+# battens) and it takes two pieces off the 36x48 board.
+# WHAT ELSE THE WIDER BLOCK BUYS: the free front edge between the two of them
+# goes 248 -> 224 mm and the bearing line goes 2 x 36 x 70 = 5040 to
+# 2 x 48 x 53 = 5088 mm2 - both by-products of the same change, and both in the
+# right direction. See the sheet paragraph below, which needed the first one.
 #
 # AND IT GUIDES, BECAUSE IT STANDS WHERE THE RUNG END STOOD. The panel's two
 # guide battens run down the shafts at X 835 / 1155 and find the rung end there
-# in bed mode (V3). The bearer's outboard face is that same plane, over the
-# same 48 mm of Z under the plate, so TABLE MODE IS GUIDED BY THE SAME
-# GEOMETRY BED MODE IS - and the batten laps 70 mm of it in Y where a rung end
-# gives 30. Nothing about the panel sub-assembly changes; it does not know
-# which of the two it has landed on.
+# in bed mode (V3). The bearer's outboard face is that same plane - the block
+# grew INBOARD, into the bay, not outboard - so TABLE MODE IS GUIDED BY THE
+# SAME GEOMETRY BED MODE IS, and the batten laps the whole 68 mm of it in Z
+# where a rung end gives 48, and 53 mm of it in Y where a rung end gives 30.
+# Nothing about the panel sub-assembly changes; it does not know which of the
+# two it has landed on.
 #
 # WHAT IT IS IN THE WAY OF, SAID OUT LOUD. K1 cut 37 mm off the rung block to
 # get it OUT of the transfer corridor, because that 37 mm carried nothing. X9
-# puts 70 mm of block back INTO the corridor at each side - and this one
-# carries the plate. It is the wall X8 named "the crossing", and the clearance
+# puts TABLE_BEARER_LEDGE (53) of block back INTO the corridor at each side -
+# and this one carries the plate. It is the wall X8 named "the crossing", and the clearance
 # over it is measured on the solids in the X9 block at the bottom of this file.
 #
 # AND WHAT THE SHEET PAYS FOR IT, BECAUSE SOMETHING DOES. Until X9 the plate's
 # front edge landed on a RUNG, 320 mm of continuous bearing across the middle
-# of it. Two blocks give 2 x 36, and the 248 mm of front edge between them
-# (X 871..1119) is bare 18 mm sheet in table mode. That is a real change and it
+# of it. Two blocks give 2 x TABLE_BEARER_T, and TABLE_FREE_EDGE of front edge
+# between them is bare 18 mm sheet in table mode. That is a real change and it
 # is priced here rather than left for somebody to find:
 #   * where the LOAD PATH runs, nothing moved. The two M4 battens are outboard
 #     of X 835 / 1155 in both modes, so they never sat on the rung either: they
@@ -2920,28 +3164,85 @@ LEDGER_BACK_Y0 = BACK_RAIL_Y0                  # -48 .. 0, on the wall plane
 #     26 mm across to the same bearing edge, at the same 0,69 utilisation
 #     (V2/M5). The bordkloss is under exactly that edge.
 #   * what IS new is a load put on the middle of the free front edge - leaning
-#     on the table from the ladder side. Take it as a strip spanning the 324 mm
-#     between the two battens: M = 1000 * 324 / 4 = 81 000 Nmm, and on a
-#     conservative 250 mm of effective width W = 250 * 18^2 / 6 = 13 500 mm3,
-#     so sigma = 6,0 MPa against the ~6,95 the bare-panel row in vedlegg A is
-#     calibrated on. Utilisation 0,86 - the worst sheet row in the panel now,
-#     and under 1 with the whole 1 kN standing on one line.
+#     on the table from the ladder side.
+#
+# [X10 CORRECTION, and it is the biggest single number this file has had wrong.
+#  X9 priced that last bullet as "a strip spanning the 324 mm between the two
+#  battens: M = 1000 * 324 / 4 = 81 000 Nmm, on a conservative 250 mm of
+#  effective width W = 13 500 mm3, sigma 6,0 MPa, utilisation 0,86". Two things
+#  in one sentence, and both of them wrong in the unsafe direction:
+#
+#    THE SPAN IS NOT 324. The battens carry nothing at the front edge - X9's
+#    own first bullet says so, in the paragraph above: they hand their reaction
+#    INTO the sheet. What holds the front edge up is the two BORDKLOSSER, and
+#    the span is the clear bay between them. The same X9 paragraph even names
+#    it in its own second sentence - "the 248 mm of front edge between them is
+#    bare 18 mm sheet" - and then handed 324 to the arithmetic three lines
+#    later. It is now TABLE_FREE_EDGE, measured off the two blocks' solids in
+#    the X10 block below and never typed again.
+#
+#    250 mm OF EFFECTIVE WIDTH IS NOT CONSERVATIVE, IT IS WRONG. b_ef is how
+#    much of the sheet shares a point load, and it is a spreading argument:
+#    away from an edge the load spreads both ways, and at a FREE EDGE it can
+#    only spread one. A hand or a knee on the very edge of the plate mobilises
+#    about the width of the contact patch plus its own spread - contact + 60 mm
+#    is the number used below - not a quarter of a metre. The file's own other
+#    sheet rows already knew this: the V2/M5 row uses 100 mm and calls it
+#    conservative, and the free-corner row (2 lines up from here) says outright
+#    that "the effective width is its own length a". 250 is the outlier, and it
+#    is the one that flattered the answer 2,5x.
+#
+#  Corrected, on the same 1 kN and the wider blocks this round buys, the row is
+#  1,07 for a flat hand and 1,49 for a knee against the 6,95 the bare-sheet
+#  row is calibrated on - see the printed row. It does not pass on that number,
+#  and the fix is not more wood: there is nowhere to put it. See PANEL_GRAIN.]
+#
 #   * the honest alternative, said so it is on the record: a full-width bearer
 #     at 682 would be a RUNG at 682, and 682 is the one height in this ladder a
 #     rung may not stand at. That is why it is two blocks and not a rail.
+#   * and the other honest alternative, X10: a cross batten under the plate's
+#     front edge between the two guide battens - the obvious fix, and it is
+#     NOT BUILDABLE, measured. In bed mode the plate's underside IS the rung's
+#     top over the whole ladder bay (both 297, over X 835..1155, Y 720..788):
+#     the rung is the bed-mode front bearing, so there is exactly 0 mm of air
+#     under the front edge to put a batten in. Pull the batten back until it
+#     clears the rung (Y <= 720) and in TABLE mode it runs into the bordklosser
+#     instead (Y 697..788, Z 614..682); pull it back until it clears those too
+#     (Y <= 695) and it is 55 mm behind the edge, where a 55 mm plate
+#     cantilever is no better than the span it replaced. The plate's front edge
+#     is the one strip of this bed that has wood under it in one mode and has
+#     to be empty in the other.
 MIN_BEARING = 5000               # mm2, per bearing LINE under the plate
-TABLE_BEARER_T = BLOCK_T                       # 36 (X), stock thickness
-TABLE_BEARER_H = BLOCK_H                       # 48 (Z), a tread's thickness
+TABLE_BEARER_T = BATTEN_W                      # 48 (X)  [X9: BLOCK_T, 36]
+TABLE_BEARER_H = BATTEN_H                      # 68 (Z)  [X9: BLOCK_H, 48]
 TABLE_BEARER_LEDGE = -(-MIN_BEARING
-                       // (2 * TABLE_BEARER_T))     # 70, derived, not chosen
+                       // (2 * TABLE_BEARER_T))     # 53, derived  [X9: 70]
 TABLE_BEARER_Y1 = LADDER_Y1                    # 788, flush with the front plane
-TABLE_BEARER_Y0 = PANEL_Y1 - TABLE_BEARER_LEDGE     # 680
-TABLE_BEARER_LEN = TABLE_BEARER_Y1 - TABLE_BEARER_Y0    # 108
+TABLE_BEARER_Y0 = PANEL_Y1 - TABLE_BEARER_LEDGE     # 697  [X9: 680]
+TABLE_BEARER_LEN = TABLE_BEARER_Y1 - TABLE_BEARER_Y0    # 91  [X9: 108]
 TABLE_BEARER_Z1 = PANEL_UNDER_TABLE            # 682, the plate's seat
-TABLE_BEARER_Z0 = TABLE_BEARER_Z1 - TABLE_BEARER_H      # 634
-TABLE_BEARER_X = RUNG_BLOCK_X                  # 835..871 and 1119..1155
+TABLE_BEARER_Z0 = TABLE_BEARER_Z1 - TABLE_BEARER_H      # 614  [X9: 634]
+# The blocks grow INBOARD off the uprights' inner faces, so the guiding plane
+# X 835 / 1155 is untouched and it is the free bay that shrinks instead.
+TABLE_BEARER_X = [LADDER_INNER_L,                       # 835 .. 883
+                  LADDER_INNER_R - TABLE_BEARER_T]      # 1107 .. 1155
 TABLE_BEARER_BEARING = (2 * TABLE_BEARER_T
-                        * TABLE_BEARER_LEDGE)  # 5040 mm2, the front line
+                        * TABLE_BEARER_LEDGE)  # 5088 mm2  [X9: 5040]
+# The bare sheet between the two of them: the plate's free front edge, and the
+# span of the row that is computed on the solids further down.
+TABLE_FREE_EDGE = (TABLE_BEARER_X[1]
+                   - (TABLE_BEARER_X[0] + TABLE_BEARER_T))   # 224  [X9: 248]
+TABLE_BEARER_FACE = UPRIGHT_T * TABLE_BEARER_H          # 2448 mm2 on the upright
+# The screw rule lives further down the file (max_row / MIN_EDGE / min_spacing),
+# so the height is checked against the arithmetic here and against the rule
+# itself where J5-B is placed - see the X10 assert under TABLE_BEARER_SCREWS.
+TABLE_BEARER_SCREWS = 2          # what the 36 x 68 fixing face has to hold
+assert TABLE_BEARER_H >= 2 * (3 * 6) + 4 * 6, (
+    f"X10: the bordkloss stands {TABLE_BEARER_H:g} mm in Z and two 6 mm screws "
+    f"stacked up its fixing face want 2 x 3d + 4d = 60. One screw is not "
+    f"enough here: this block carries a LOOSE plate whose load stands in "
+    f"front of the screw line, with nothing on top of it to stop it turning "
+    f"about a single fastener")
 
 # ---------------------------------------------------------------------------
 # V13: THE LOWER LEVEL BECOMES A BED IN FULL LENGTH - SLATS TO THE WALL,
@@ -3003,7 +3304,7 @@ END_CLEAT_T = BLOCK_T                              # 36 (Y), the bearing depth
 END_CLEAT_H = BLOCK_H                              # 48 (Z)
 END_CLEAT_LEN = BENCH_SLAT_W                       # 98 (X), the end zone
 END_CLEAT_Z1 = BENCH_RAIL_TOP                      # 297, the slat underside
-END_CLEAT_Z0 = END_CLEAT_Z1 - END_CLEAT_H          # 211
+END_CLEAT_Z0 = END_CLEAT_Z1 - END_CLEAT_H          # 249  [X3: 211]
 END_CLEAT_Y0 = BACK_POST_Y1                        # -12, on the post face
 END_CLEAT_Y1 = END_CLEAT_Y0 + END_CLEAT_T          # 24
 END_CLEAT_X = END_SLAT_X                           # under its own slat
@@ -3079,6 +3380,13 @@ CUSHION_TOP_PANEL = PANEL_TOP_BED + CUSHION_T          # 415, over the panel [X3
 MIN_LOWER_HEADROOM = 700           # own rule: a child sits up in the lower bunk
 LOWER_HEADROOM = SLAT_Z0 - CUSHION_TOP_BENCH           # 1080, to the slats [X1: 781]
 LOWER_HEADROOM_RAIL = RAIL_BOTTOM - CUSHION_TOP_BENCH  # 982, under the rails [683]
+# X10: THE CLEAR FIELD IS NOT THE ONLY NUMBER, AND IT WAS THE ONLY ONE PRINTED.
+# Both lines above are typed differences of typed constants: they say how far it
+# is from the cushion top to the SLATS, and they are right about that. What they
+# are not is head room, because three permanent things hang under the slats and
+# over the same footprint, and the lowest of them is 976 mm lower than 1080.
+# They are measured on the solids in the X1 block, the way CEILING_CLEAR is,
+# and both numbers are emitted - see LOWER_HEADROOM_MIN / LOWER_HEADROOM_WALL.
 EN_GUARD_TRIGGER_H = 600           # EN 747: over this, a bed base needs guards
 TABLE_OVER_CUSHION = PANEL_TOP_TABLE - CUSHION_TOP_BENCH           # 280  [X9: 140]
 TABLE_UNDER_OVER_CUSHION = PANEL_UNDER_TABLE - CUSHION_TOP_BENCH   # 262  [X9: 122]
@@ -3152,7 +3460,7 @@ BACKREST_Y0 = LEDGER_BACK_Y0 + LEDGER_BACK_T           # 0, the ledger's face
 BACKREST_Y1 = BACKREST_Y0 + LOWER_SLEEP_DEPTH          # 800
 BACKREST_PROUD = BACKREST_Y1 - FRONT_POST_Y1           # 12, past the front plane
 BACKREST_Z0 = CUSHION_TOP_BENCH                        # 420, on the seat cushion
-BACKREST_Z1 = BACKREST_Z0 + BACK_CUSHION_LEN           # 714
+BACKREST_Z1 = BACKREST_Z0 + BACK_CUSHION_LEN           # 752  [X3: 714]
 BACKREST_X = [POST_W,                                  # 98..198
               WALL_SPAN - POST_W - CUSHION_T]          # 1792..1892
 BACKREST_LEDGER_CONTACT = CUSHION_T * LEDGER_BACK_H    # 6800 mm2 on the ledger
@@ -3850,7 +4158,7 @@ BRACKETS = {
 
 def drive(name, per, frm=None, into=None, axis=None, sign=None, row=None,
           row_sign=None, reach=None, toe=None, bracket=None, bears=None,
-          exempt=None, counterbore=0.0):
+          exempt=None, counterbore=0.0, offset=None):
     """One kind of fastener driven at one contact patch.
 
     `name`    the trade name, in full - the same string the shopping list uses.
@@ -3890,11 +4198,24 @@ def drive(name, per, frm=None, into=None, axis=None, sign=None, row=None,
               stock 5x40 into "27 mm of batten, 13 mm of an 18 mm panel".
               The fit rule below reads the REMAINING thickness, so a
               counterbored screw is checked exactly like any other.
+    `offset`  (axis, mm) or (axis, mm, sign): move every screw of this drive
+              that far OFF the centre the placement rule would otherwise put
+              it at. It exists for one reason and it is X10: the rule puts a
+              row in the middle of its contact window, and two joints that
+              share a piece of wood both obey it and both land on the same
+              middle. `sign` is +1 / -1, or "outboard" / "inboard" so one row
+              of table still serves a joint and its mirror image. It has to be
+              PERPENDICULAR to the drive direction - an offset along the screw
+              would take the head off the face it is driven from - and that is
+              asserted where it is applied. Nothing about it is a free hand:
+              the measured edge-distance rule (X6), the containment asserts and
+              X10 itself all still have to pass on the moved screw, so an offset
+              is a proposal the shapes get to refuse.
     """
     return dict(name=name, per=per, frm=frm, into=into, axis=axis, sign=sign,
                 row=row, row_sign=row_sign, reach=reach, toe=toe,
                 bracket=bracket, bears=bears, exempt=exempt,
-                counterbore=counterbore)
+                counterbore=counterbore, offset=offset)
 
 
 # A toe screw is quoted by the face it enters, how far back from the joint it
@@ -3981,6 +4302,28 @@ TOE_BENCH_POST = dict(face=1, face_sign=1, deg=65.0, back=34.0,
                       seat=TOE_SEAT_DEPTH_BENCH)
 TOE_STUB_RAIL = dict(face=0, face_sign="inboard", deg=60.0, back=35.0)
 
+
+# X10 - AND THE SAME UNIT ONE MORE TIME, BETWEEN TWO SHANKS. See the X10 block at
+# the bottom of the fastener asserts: two screws that meet in the same piece of
+# wood are the one collision this file never looked for, and the floor it is
+# held to is written here, next to the seat's, because it is the same argument.
+# The wood between two screws has to READ AS WOOD and not as a fin, and the
+# least that does is one shank of the thinner of the two - d, the unit MIN_EDGE
+# (3d), min_spacing (4d) and TOE_SEAT_MIN_WEB (1d) are all already written in.
+def screw_web(da, db):
+    """The wood two screws must leave between them: one shank of the thinner."""
+    return min(da, db)
+
+
+def screw_clearance(da, db):
+    """Least distance between two screw AXES: the two half-shanks plus the web.
+
+    Head-to-head falls out of it rather than needing a second rule - the
+    widest pair in the bed is two 6 mm heads at 11.8 mm, and (6+6)/2 + 6 = 12
+    stands them apart on their own.
+    """
+    return (da + db) / 2 + screw_web(da, db)
+
 # THE DRILL-GUIDE BLOCK - "vinkelkloss". A skew hole started freehand walks,
 # and it walks worst exactly where these two are: near an end, in a face the
 # bit meets at 25 or 30 degrees. It is NOT part of the bed, so it is not in
@@ -4066,8 +4409,15 @@ JOINTS = [
          side="Fra bjelkens utside, inn mot stolpen — helt inne i sengen, "
               "tilgjengelig hele veien. Disse to skruene er HELE festet: "
               "det står ingen kloss under bjelkeenden",
+         # X10: the pair steps 8 mm DOWN the beam. The back corner is where the
+         # end beam and the back side rail both take hold of the same post, and
+         # the rail's own J2-B comes straight down through the post top to
+         # Z 1380 - five millimetres past this row's upper screw. Eight takes
+         # the row to 1323 / 1367 and puts 13 mm between the two, and the beam
+         # still has 19 mm of edge under the lower one.
          contacts=[dict(a="post", b="beam", axis=0, drives=[
-             drive("Treskrue 6×80 forsenket Torx", 2, frm="beam", row=2)])]),
+             drive("Treskrue 6×80 forsenket Torx", 2, frm="beam", row=2,
+                   offset=(2, -8.0))])]),
     # V5: DRIVEN FROM INSIDE THE BED. Both directions fit (a 6x80 crosses 36
     # into 48 and 48 into 36 alike), so the rule calls it 'tvetydig' and the
     # table decides - and the table decides on the front face: a head on the
@@ -4086,8 +4436,16 @@ JOINTS = [
               "flatt på gulvet. Ingenting på veggsiden, og ingen kloss: "
               "vangen står 12 mm proud av den tynnere stolpen, så et rett "
               "beslag ville uansett ikke ligget an mot begge",
+         # X10: the pair steps 9 mm INBOARD off the post centre. The post's
+         # 98 mm of X is shared with the first bed slat, whose own J6 screw
+         # comes down at X 69 / 1921 and lands 6,32 mm from this row - two
+         # rules, both putting their screw in the middle of their own window,
+         # both right, and the middle is the same place. 9 mm moves the outer
+         # one to X 80 / 1910, 12,5 mm off the slat screw, and leaves the row
+         # 18 mm (3d) from the post end. Nothing about the joint changes.
          contacts=[dict(a="post_back", b="rail_back", axis=2, drives=[
-             drive("Treskrue 6×120 forsenket Torx", 2, frm="rail_back")])]),
+             drive("Treskrue 6×120 forsenket Torx", 2, frm="rail_back",
+                   offset=(0, 9.0, "inboard"))])]),
     # V5: same flip as J2. The stigevange's forside is in the front plane.
     dict(id="J3", title="Stigevange → fremre sidevange", n=2,
          drill="⌀6 gjennom sidevangen, ⌀4 i stigevangen",
@@ -4097,16 +4455,51 @@ JOINTS = [
              drive("Treskrue 6×80 forsenket Torx", 3, frm="rail_front")])]),
     # X2: two per rung end, and the RUNG COUNT is derived (even_climb), so the
     # joint count has to be derived off the same list rather than typed 8.
-    dict(id="J4", title="Rungetrinn → stigekloss og stigevange "
-                        "(per trinnende)", n=2 * len(RUNG_TOPS),
-         drill="⌀6 gjennom stigevangen inn i trinnenden; ⌀3,5 ned gjennom "
-               "trinnet i klossen",
-         side="6×120 fra utsiden av stigevangen; 5×60 ovenfra ned i klossen",
+    # X10 - THE SCREW THAT COULD NOT EXIST, AND WHY IT IS THE ONE THAT GOES.
+    # A rung end used to carry THREE screws: a 6x120 through the upright into
+    # the tread's end, a 5x60 down through the tread into the block, and J5's
+    # 5x60 through the block into the upright. The middle one was driven
+    # straight through the first: the 6x120 runs along the tread's own centre
+    # line at Z 273 and a screw dropped at X 853 crosses it at a POINT, 0,00 mm
+    # apart, and it did that ten times over. It is not a placement mistake - it
+    # is two correct rules both putting their screw in the middle of the same
+    # piece of wood - and it cannot be moved out of the way:
+    #   * in Y both are pinned to 770. The upright offers 36 mm and a 6 mm
+    #     screw wants 3d each side of it, so the through screw has exactly one
+    #     legal Y; the block offers 36 mm too, so the down screw has 770 +- 3.
+    #   * in Z the through screw is pinned to the tread's own 48 mm, 273 +- 6,
+    #     and a screw dropped from the tread's top has to cross all 48 of them
+    #     to reach the block at all.
+    #   * in X the down screw is pinned to the block's 36 mm, 853 +- 3, and a
+    #     through screw that stops short of it has nothing left: 6x60 is 48 mm
+    #     of upright and 12 mm of end grain. A 6x80 still reaches X 867.
+    #   * turned round - up from the block's underside - it clears the 6x120
+    #     by 12 mm and lands on J5 instead, which sits at the block's own
+    #     mid-height Z 225 and cannot move either.
+    # So the block simply cannot take a vertical screw while the tread has a
+    # horizontal one, and the honest answer is to take the vertical one out
+    # rather than to bore two screws through each other and draw it as fine.
+    # WHAT IT COSTS, MEASURED: nothing in the load path. The rung end's 0,5 kN
+    # goes into the block in BEARING (K1's row, 1296 mm2 at 0,15 of f_c,90,d)
+    # and from the block into the upright through J5, and it goes a second way
+    # through the 6x120 in shear - 2,0 kN against 0,5. The deleted screw
+    # carried neither: it was a LOCK, stopping the block turning about J5's
+    # single screw. That job is now argued off the wood instead of off a screw
+    # that cannot be there: the block is trapped between the upright's face
+    # (its own screw), the tread lying flat on 36 x 36 mm of its top, and that
+    # tread being itself pinned to the upright 48 mm above by the 6x120. To
+    # turn, the block has to lift a tread that is bolted down. See the K1 block
+    # for the rows. ASSEMBLY still says the tread is screwed down into the
+    # block - that sentence is now wrong and is flagged for the docs round.
+    dict(id="J4", title="Rungetrinn → stigevange (per trinnende)",
+         n=2 * len(RUNG_TOPS),
+         drill="⌀6 gjennom stigevangen inn i trinnenden, ⌀4 i trinnet",
+         side="6×120 fra utsiden av stigevangen, inn i trinnets endeved. "
+              "Ingenting gjennom trinnets overside — trinnet ligger på "
+              "stigeklossen og klossen har sin egen skrue (J5)",
          contacts=[
              dict(a="rung", b="upright", axis=0, drives=[
-                 drive("Treskrue 6×120 forsenket Torx", 1, frm="upright")]),
-             dict(a="rung", b="rung_blk", axis=2, drives=[
-                 drive("Treskrue 5×60 forsenket Torx", 1, frm="rung")])]),
+                 drive("Treskrue 6×120 forsenket Torx", 1, frm="upright")])]),
     dict(id="J5", title="Stigekloss → stigevange", n=2 * len(RUNG_TOPS),
          drill="⌀3,5 gjennom klossen, ⌀3 i vangen",
          side="Fra stigeåpningen, inn i vangens innside",
@@ -4119,15 +4512,24 @@ JOINTS = [
     # a cantilever, so the screw is working in withdrawal as much as in shear
     # and it wants the bigger one, driven through the whole upright: 6x80
     # through 48 mm of stigevange leaves 32 mm in a 36 mm block, and it lands
-    # in side grain, not end grain. ONE screw is all the face holds - 36 x 48
-    # is exactly 2 x 3d for a 6 mm screw across the short way, which is the
-    # fits-the-face rule agreeing with itself and not a coincidence.
+    # in side grain, not end grain.
+    # X10: TWO of them, stacked up the face. X9 wrote "ONE screw is all the face
+    # holds - 36 x 48 is exactly 2 x 3d for a 6 mm screw across the short way",
+    # and that was true of a 36 x 48 face; what it did not ask was whether one
+    # screw is all the JOINT NEEDS, and it is not. See the X10 note over
+    # TABLE_BEARER_T: this block carries a LOOSE plate whose load stands 55 mm
+    # in front of the screw line, with nothing on top of it to stop it turning,
+    # and one screw carries that moment in friction and shank bending. The
+    # block stands 68 mm in Z now, so the fixing face is 36 x 68 and 68 is
+    # 2 x 3d + 4d with 8 mm to spare. The pair turns the eccentricity into two
+    # screws in opposite shear.
     dict(id="J5-B", title="Bordkloss → stigevange", n=2,
-         drill="⌀6 gjennom stigevangen, ⌀4 i klossen",
+         drill="2 × ⌀6 gjennom stigevangen, ⌀4 i klossen — stablet i høyden",
          side="Fra stigevangens utside — fra benkerommet — gjennom vangen og "
               "inn i klossen. Klossens egen underside er urørt",
          contacts=[dict(a="upright", b="bearer", axis=0, drives=[
-             drive("Treskrue 6×80 forsenket Torx", 1, frm="upright")])]),
+             drive("Treskrue 6×80 forsenket Torx", 2, frm="upright",
+                   row=2)])]),
     dict(id="J6", title="Køyespile → sidevange (per spileende)", n=28,
          drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
          side="Ovenfra, ned i vangen",
@@ -4165,9 +4567,13 @@ JOINTS = [
               "sete så hodet ligger helt under treet. Vangen ligger fast "
               "mellom de to stolpene, og disse to skruene er HELE festet i "
               "enden — det står ingen kloss under den",
+         # X10: the pair steps 2 mm UP the rail, and J17 steps 8 mm down, so the
+         # end cleat's own screws land midway between these two instead of
+         # 2 mm from the upper one. Three fixings meet in this post and two of
+         # them were on the same height.
          contacts=[dict(a="bench_back", b="post_back", axis=0, drives=[
              drive("Treskrue 6×80 forsenket Torx", 2, frm="bench_back",
-                   toe=TOE_BENCH_POST,
+                   toe=TOE_BENCH_POST, offset=(2, 2.0),
                    exempt="skråskrue gjennom vangens forside nær enden")])]),
     dict(id="J10", title="Benkevange → stubbefot", n=4,
          drill=(f"⌀3 i foten og i vangen. Skråskruen får først sete: "
@@ -4203,8 +4609,15 @@ JOINTS = [
          n=2,
          drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
          side="Ovenfra, ned i benkevangen",
+         # X10: 24,5 mm INBOARD off the patch centre. The front corner post
+         # carries J8's two 6×80 stacked up its own centre line at X 50,5 /
+         # 1939,5, and the end slat's window has the same centre - so this
+         # screw came straight down onto the upper one of them. Moved inboard
+         # it lands over the rail instead of over the post, 24,5 mm clear, with
+         # 23 mm of slat end still outboard of it.
          contacts=[dict(a="end_slat", b="bench_front", axis=2, drives=[
-             drive("Treskrue 5×60 forsenket Torx", 1, frm="end_slat")])]),
+             drive("Treskrue 5×60 forsenket Torx", 1, frm="end_slat",
+                   offset=(0, 24.5, "inboard"))])]),
     dict(id="J16", title="Endespile → endelist (bakre spileende)", n=2,
          drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
          side="Ovenfra, ned i endelisten",
@@ -4220,8 +4633,14 @@ JOINTS = [
          drill="⌀3,5 gjennom listen, ⌀3 i stolpen",
          side="Rett inn i stolpens forside, fra benkerommet — listen ligger "
               "flatt på stolpen og de to skruene er hele festet",
+         # X10: 8 mm DOWN off the patch centre - see J8-B, which steps 2 mm up.
+         # The two toe screws come through this same post at Z 253 and 277 and
+         # this row sat at 273, four millimetres from one of them and crossing
+         # its line. At 265 it stands exactly midway between them, 12 mm from
+         # each, and still has 16 mm of cleat under it.
          contacts=[dict(a="end_cleat", b="post_back", axis=1, drives=[
-             drive("Treskrue 5×60 forsenket Torx", 2, frm="end_cleat")])]),
+             drive("Treskrue 5×60 forsenket Torx", 2, frm="end_cleat",
+                   offset=(2, -8.0))])]),
     dict(id="J12", title="Bordbærelekt → bakre hjørnestolpe (endeskjøt)",
          n=2,
          drill="⌀3 i stolpen og i lekta — forboring er et krav: begge skruene "
@@ -4527,6 +4946,22 @@ def _unit(axis, sign):
     return tuple(v)
 
 
+def _offset_vector(joint, contact, dr, side=None):
+    """X10: the declared step off the window centre, as a model-space vector.
+
+    Resolved at the joint the way `row_sign` is, so "inboard" means the same
+    thing at the left post and at the right one and the bed stays symmetric.
+    """
+    off = [0.0, 0.0, 0.0]
+    if dr["offset"] is None:
+        return off
+    axis, mm = dr["offset"][0], float(dr["offset"][1])
+    word = dr["offset"][2] if len(dr["offset"]) > 2 else None
+    sign = _resolve_sign(word, 1.0, axis, contact[0][axis], side)
+    off[axis] = sign * mm
+    return off
+
+
 # ---------------------------------------------------------------------------
 # THE INSTANCES
 # ---------------------------------------------------------------------------
@@ -4541,9 +4976,10 @@ def _place_drive(joint, crow, contact, pa, pb, dr, shift, side=None):
     win = patch_window(contact)
     d, length = fastener_size(dr["name"])
     what = f"{joint['id']} {dr['name']}"
+    off = _offset_vector(joint, contact, dr, side)
 
     def at(p):
-        return tuple(a + b for a, b in zip(p, shift))
+        return tuple(a + b + c for a, b, c in zip(p, shift, off))
 
     # --- a bracket flange, or the screws that go through one ---------------
     if dr["into"] is not None:
@@ -4726,6 +5162,15 @@ def fastener_specs(all_parts):
         for _k, s in enumerate(offsets):
             for dr in crow["drives"]:
                 for f in _place_drive(j, crow, c, pa, pb, dr, s):
+                    if dr["offset"] is not None:
+                        _oa = dr["offset"][0]
+                        assert abs(f["direction"][_oa]) < 1e-9, (
+                            f"{j['id']}: the X10 offset is on axis "
+                            f"{'XYZ'[_oa]}, which is the axis "
+                            f"{dr['name']} is DRIVEN along - that moves the "
+                            f"head off the face, it does not move the screw "
+                            f"sideways. An offset is perpendicular or it is "
+                            f"a different screw")
                     f.update(jid=j["id"], name=dr["name"], drive=dr,
                              joint=j, crow=crow, contact=c, pa=pa, pb=pb,
                              inst=(_n, _k))
@@ -4826,8 +5271,22 @@ def screw_rows():
     return rows
 
 
-_SECTION_OF = {"J1": (RAIL_T, RAIL_H), "J2": (RAIL_T, RAIL_H),
+# The section each row is quoted in. J1 is the END BEAM, not the side rail:
+# V6b re-sectioned it 48 -> 36 (END_BEAM_T) and this dict was left saying
+# 48x98, so the key-dimensions page has been printing "J1 - endebjelke 48x98"
+# for a 36x98 board ever since. The assert under it is the guard, because the
+# only thing wrong with a typed section is that nobody re-reads it.
+_SECTION_OF = {"J1": (END_BEAM_T, RAIL_H), "J2": (RAIL_T, RAIL_H),
                "J8": (BENCH_RAIL_T, BENCH_RAIL_H)}
+for _jid, _sec in _SECTION_OF.items():
+    _thru = next(f["through"] for f in FASTENER_SPECS
+                 if f["jid"] == _jid and f.get("through") is not None)
+    _built = sorted(round(_thru.extents[j][1] - _thru.extents[j][0], 1)
+                    for j in range(3))[:2]
+    assert _built == sorted(_sec), (
+        f"{_jid}: the row is quoted as {_sec[0]:g}x{_sec[1]:g} and the member "
+        f"it is driven through, '{_thru.label}', measures {_built[0]:g}x"
+        f"{_built[1]:g} on the solid")
 SCREW_ROWS = screw_rows()
 
 print("\n=== FESTEMIDLER ===")
@@ -4859,6 +5318,16 @@ for (_jid, _), _group in sorted(_CBORED.items(), key=lambda kv: kv[0][0]):
             _d = math.dist(_a["anchor"], _b["anchor"])
             if _d < CBORE_PITCH_MIN:
                 CBORE_PITCH_MIN, CBORE_PITCH_WHO = _d, _jid
+# K2 + X10: THE SENTINEL NEEDS A GUARD, the way K4's does. If no member ever
+# carried two counterbores the loop above would never run, CBORE_PITCH_MIN
+# would still be 1e18, and the assert would read `1e18 >= 24` - "nothing to
+# measure" quietly reported as "the rule is satisfied", which is the exact
+# failure K4 was written to avoid. Here the population is KNOWN - the J13a/J13b
+# up-screws - so emptiness is not a legal state at all and it says so.
+assert _CBORED and CBORE_PITCH_WHO is not None, (
+    "K2: no member in the bed carries two counterbored screws, so there is "
+    "nothing to space - but the J13a/J13b up-screws are supposed to be "
+    "exactly that. The population has gone missing, not the problem")
 assert CBORE_PITCH_MIN >= MIN_CBORE_PITCH - FIT_TOL, (
     f"K2: {CBORE_PITCH_WHO} puts two ⌀{PANEL_UPSCREW_CBORE_D} mm "
     f"counterbores {CBORE_PITCH_MIN:g} mm apart, which leaves "
@@ -5105,6 +5574,33 @@ def _ray_exit(point, direction, member):
 def _inside(point, member, grow=0.0):
     return all(lo - grow <= point[j] <= hi + grow
                for j, (lo, hi) in enumerate(member.extents))
+
+
+def _segment_gap(a, b):
+    """Least distance between two segments, each given as (start, end).
+
+    X10 asks it of two screw axes. Segments, not lines: a screw stops at its
+    tip, and two screws that would have crossed 40 mm further on do not touch.
+    Clamped both ways, so a pair that misses end-on is measured end to end.
+    """
+    (p1, q1), (p2, q2) = a, b
+    d1 = [x - y for x, y in zip(q1, p1)]
+    d2 = [x - y for x, y in zip(q2, p2)]
+    r = [x - y for x, y in zip(p1, p2)]
+    A = sum(x * x for x in d1)
+    E = sum(x * x for x in d2)
+    F = sum(x * y for x, y in zip(d2, r))
+    C = sum(x * y for x, y in zip(d1, r))
+    B = sum(x * y for x, y in zip(d1, d2))
+    den = A * E - B * B
+    s = 0.0 if abs(den) < 1e-12 else min(1.0, max(0.0, (B * F - C * E) / den))
+    t = (B * s + F) / E
+    if t < 0.0:
+        t, s = 0.0, min(1.0, max(0.0, -C / A))
+    elif t > 1.0:
+        t, s = 1.0, min(1.0, max(0.0, (B - C) / A))
+    return math.dist([x + s * v for x, v in zip(p1, d1)],
+                     [x + t * v for x, v in zip(p2, d2)])
 
 
 # `display_parts` is defined below, so the names the panel-assembly rule needs
@@ -5392,6 +5888,100 @@ if FASTENERS_ON:
               f"fra hverandre på tvers av aksen = {TOE_SEAT_WEB_MIN:g} mm tre "
               f"imellom, krav {TOE_SEAT_MIN_WEB:g} (én skruediameter). "
               f"Rekkeregelen måler skruen; lomma den ligger i har sin egen")
+
+    # --- X10: TWO SCREWS DO NOT MEET IN THE SAME PIECE OF WOOD --------------
+    # THE HOLE THIS FILLS, SAID PLAINLY. Every assert above asks a screw about
+    # WOOD: is the head flush with it, is the tip inside it, is any of the body
+    # in somebody else's. Not one of them asks a screw about ANOTHER SCREW, and
+    # `mode_parts()` is wood-only by design, so the fasteners were never in the
+    # list they were being checked against. Sixteen pairs were driven through
+    # each other and the model said OK: ten of them at the rung ends, where a
+    # 6x120 from the upright and a 5x60 dropped through the tread crossed at a
+    # POINT, 0,00 mm apart. A drawing cannot be wrong in a way a build catches;
+    # this is the shape asking the question the wood asserts could not.
+    #
+    # WHY IT IS THE RIGHT SHAPE OF RULE. Every placement rule in this file puts
+    # its row in the MIDDLE of its own contact window - and it is right to. What
+    # nobody noticed is that two joints sharing a piece of wood share the middle
+    # as well: the end slat's screw and the front post's screw both land on
+    # X 50,5 because both are correct. So the collisions are not mistakes, they
+    # are the rule meeting itself, and the fix is not a bigger rule but a
+    # SECOND one - a `drive(offset=...)` that steps a row off its own centre,
+    # with a written reason, policed by this measurement and by the edge rule.
+    #
+    # HOW IT IS ASKED. Screws are SEGMENTS, head centre to tip, so two of them
+    # are two line segments and the question is the least distance between them
+    # - not between their anchors, which would miss a crossing entirely, and not
+    # a boolean intersection, which only sees steel actually touching steel and
+    # would pass a pair 0,1 mm apart. The floor is `screw_clearance`: the two
+    # half-shanks plus one shank of wood, the same unit MIN_EDGE (3d),
+    # min_spacing (4d) and TOE_SEAT_MIN_WEB (1d) are written in.
+    #
+    # GROUPED BY THE WOOD, AND ACROSS JOINTS. Two screws can only foul each
+    # other where they are both present, so the pairs that matter are the ones
+    # that SHARE A MEMBER - through or into, either way round. That is also the
+    # only grouping that spans joints, which is exactly where the misses were:
+    # not one of the sixteen was a joint fighting itself except J4, and J4 is
+    # the one this file would have found on its own.
+    #
+    # THE WALL SCREWS ARE IN IT. J14 has no wood on the far side and is skipped
+    # by the containment asserts, but its near half is in the back rail with the
+    # slat screws and the post-top screws, and its X is spread the way a builder
+    # spreads it - so if the spread lands one on top of a slat screw, that is a
+    # real collision in a real rail and the rule should say so.
+    SCREW_PAIR_MIN = 1e18
+    SCREW_PAIR_WHO = None
+    SCREW_PAIR_AT = (0.0, 0.0)
+    SCREW_PAIR_TIGHT = []
+    _seg = {}
+    for _f in FASTENER_SPECS:
+        if _f["kind"] != "screw":
+            continue
+        _a = _f["anchor"]
+        _seg[id(_f)] = (_a, tuple(p + v * _f["length"]
+                                  for p, v in zip(_a, _f["direction"])))
+    _screws = [_f for _f in FASTENER_SPECS if _f["kind"] == "screw"]
+    for _i, _a in enumerate(_screws):
+        _amem = {id(p): p for p in (_a.get("through"), _a.get("into"))
+                 if p is not None}
+        for _b in _screws[_i + 1:]:
+            _bmem = {id(p): p for p in (_b.get("through"), _b.get("into"))
+                     if p is not None}
+            _shared = set(_amem) & set(_bmem)
+            if not _shared:
+                continue
+            _dist = _segment_gap(_seg[id(_a)], _seg[id(_b)])
+            _need = screw_clearance(_a["d"], _b["d"])
+            _who = (f"{_a['jid']} ⌀{_a['d']:g} × {_b['jid']} ⌀{_b['d']:g} i "
+                    f"'{sorted(_amem[k].label for k in _shared)[0]}'")
+            if _dist - _need < SCREW_PAIR_MIN:
+                SCREW_PAIR_MIN, SCREW_PAIR_WHO = _dist - _need, _who
+                SCREW_PAIR_AT = (_dist, _need)
+            assert _dist >= _need - FIT_TOL, (
+                f"X10: {_who} står {_dist:.2f} mm fra hverandre målt akse mot "
+                f"akse, og kravet er {_need:.2f} - de to halve skaftene "
+                f"({(_a['d'] + _b['d']) / 2:g}) pluss "
+                f"{screw_web(_a['d'], _b['d']):g} mm tre. To skruer som møtes "
+                f"i det samme treet borer hverandre i stykker, og treet mellom "
+                f"dem er det som holder begge. Flytt raden med "
+                f"drive(offset=...), snu den ene, kort den, eller stryk den - "
+                f"anker A {tuple(round(v, 1) for v in _a['anchor'])} → "
+                f"{tuple(round(v, 1) for v in _seg[id(_a)][1])}, anker B "
+                f"{tuple(round(v, 1) for v in _b['anchor'])} → "
+                f"{tuple(round(v, 1) for v in _seg[id(_b)][1])}")
+            if _dist - _need < screw_web(_a["d"], _b["d"]):
+                SCREW_PAIR_TIGHT.append((_dist, _need, _who))
+    assert SCREW_PAIR_WHO is not None, \
+        "X10: ingen to skruer deler tre - det kan ikke stemme i denne sengen"
+    SCREW_PAIR_TIGHT.sort(key=lambda r: r[0] - r[1])
+    print(f"OK  X10 skrue mot skrue: av de {len(_screws)} skruene står de "
+          f"nærmeste to som deler tre {SCREW_PAIR_AT[0]:.2f} mm fra hverandre "
+          f"akse mot akse mot et krav på {SCREW_PAIR_AT[1]:.2f} "
+          f"({SCREW_PAIR_MIN:+.2f}) - {SCREW_PAIR_WHO}. Målt som korteste "
+          f"avstand mellom to linjestykker, gruppert på delen de deler, på "
+          f"tvers av ledd")
+    for _d, _n, _w in SCREW_PAIR_TIGHT[:5]:
+        print(f"      {_w:56s} {_d:6.2f} mot {_n:5.2f} ({_d - _n:+.2f})")
 else:
     print("(fasteners off - LOFTBED_FASTENERS=0)")
 
@@ -5653,9 +6243,9 @@ FIG_BENCH_Y = (LOWER_SLEEP_Y0 + LOWER_SLEEP_Y0 + LOWER_SLEEP_DEPTH) / 2  # 352
 # radius above it - a 100 mm foam cushion takes the buttock in. The number is
 # not chosen, it is solved: SIT_RISE is what puts the crown exactly one
 # sitting height (0.545 H) above the seat.
-FIG_SIT_RISE = FIG_SITTING_H - FIG_TORSO_L - FIG_NECK_L - 2 * FIG_HEAD_R  # 78
+FIG_SIT_RISE = FIG_SITTING_H - FIG_TORSO_L - FIG_NECK_L - 2 * FIG_HEAD_R  # 77
 SEAT_FACE = BENCH_TOP + CUSHION_T                      # 420, the sofa seat [X3: 382]
-FIG_SIT_Z = SEAT_FACE + FIG_SIT_RISE                   # 498, hip joint
+FIG_SIT_Z = SEAT_FACE + FIG_SIT_RISE                   # 497, hip joint
 
 # X9: THE LEGS COME DOWN, BECAUSE THE PLATE BECAME A DESK.
 #
@@ -5822,10 +6412,22 @@ for name, _p in (("bed mode", panel_bed), ("table mode", panel_table)):
           f"front face IS the post/upright plane {DEPTH_Y1}; depth was 1070 in "
           f"v7, 964 in v8, 930 before D14, 896 before W6, 848 before U2)")
 assert OVERALL_DEPTH == 836 and DEPTH_SHRINK == 106
-assert OVERALL_DEPTH == 848 - POST_THIN, \
-    f"U2/U3: re-sectioning the verticals 48 -> {POST_T} in Y should take " \
-    f"exactly POST_THIN = {POST_THIN} mm off the 848 the bed was, not " \
-    f"{848 - OVERALL_DEPTH}"
+# X10: `OVERALL_DEPTH == 848 - POST_THIN` was not a check. POST_THIN is
+# RAIL_T - POST_T, so POST_T stands on both sides of the equals and cancels:
+# the assert claimed to police the 48 -> 36 re-section of the verticals and was
+# blind to POST_T by construction. Measured instead - the bed's own Y extent
+# off the bodies, and the front vertical's own thickness off its body.
+BUILT_DEPTH = (max(p.extents[1][1] for p in parts)
+               - min(p.extents[1][0] for p in parts))
+_front_post = next(p for p in parts if p.label == "Corner Post Front Left")
+BUILT_POST_T = _front_post.extents[1][1] - _front_post.extents[1][0]
+assert abs(BUILT_DEPTH - OVERALL_DEPTH) < TOL, \
+    f"U3: the bed measures {BUILT_DEPTH:g} mm deep and the number the file " \
+    f"quotes is {OVERALL_DEPTH:g}"
+assert BUILT_POST_T == POST_T and 848 - BUILT_DEPTH == POST_THIN, \
+    f"U2/U3: the front verticals measure {BUILT_POST_T:g} mm in Y and the " \
+    f"bed came in {848 - BUILT_DEPTH:g} mm off the 848 it was - re-sectioning " \
+    f"them 48 -> {POST_T} is supposed to buy exactly POST_THIN = {POST_THIN}"
 assert OVERALL_DEPTH == END_BEAM_LEN == 836, \
     "W7/U3: the bed must still be exactly as deep as its own end beams"
 # U3: and the 12 mm slice the thinning gives back has to be genuinely outside
@@ -5891,8 +6493,17 @@ assert not any(p.label.startswith("Guard Rail Back") for p in parts), \
 # W6: the parts that used to make the wall face at -96 are the ones that moved,
 # and the plane they used to occupy has to be gone, not merely vacated by the
 # bounding box. Y -96..-48 is now OUTSIDE the bed entirely.
-assert WALL_Y == BACK_RAIL_Y0 == -48 and BACK_POST_Y0 == WALL_Y, \
-    f"W6: the wall plane is {WALL_Y}, want the back rail face {BACK_RAIL_Y0}"
+# X10: what stood here compared WALL_Y to BACK_RAIL_Y0 - the constant to its own
+# alias - and then interpolated both operands into the message, so the only
+# sentence it could ever print was "the wall plane is -48, want the back rail
+# face -48". The real check is the loop directly above, which reads
+# p.extents[1][0] off every body; this line adds the one thing that loop does
+# not say out loud, which is that the plane those bodies share is the plane the
+# file NAMES.
+WALL_PLANE_BUILT = min(p.extents[1][0] for p in parts)
+assert WALL_PLANE_BUILT == WALL_Y == -RAIL_T, \
+    f"W6: the bodies make their back face at Y {WALL_PLANE_BUILT:g} and the " \
+    f"file calls the wall plane {WALL_Y:g}"
 print(f"OK  W1/W6/W7: WALL-SIDE BED - no back guard boards; the back face is the "
       f"flat mounting plane Y={WALL_Y} (was -96), the BACK RAIL FACE, made by "
       f"{len(on_wall)} coplanar parts - back side rail + 2 back posts tucked "
@@ -6942,8 +7553,8 @@ assert RUNG_TOPS == [297, 572, 848, 1073, 1298] and POST_HEIGHT == 2037
 assert BACK_POST_HEIGHT == 1402, "W6: the back posts must stop at the rail underside"
 assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (614, 682), \
     "V2: the ledger is a bench-rail profile, so its underside is 68 below its top"
-assert (TABLE_BEARER_Z0, TABLE_BEARER_Z1) == (634, 682) \
-    and (TABLE_BEARER_Y0, TABLE_BEARER_Y1) == (680, 788), \
+assert (TABLE_BEARER_Z0, TABLE_BEARER_Z1) == (614, 682) \
+    and (TABLE_BEARER_Y0, TABLE_BEARER_Y1) == (697, 788), \
     "X9: the two bordklosser carry the plate's front edge at the same 682 the " \
     "ledger carries its rear one"
 assert STUB_LEG_H == 229, "W3: the stub legs reach the bench rail underside"
@@ -7019,14 +7630,45 @@ assert BACK_RAIL_Y1 - BACK_POST_Y1 == POST_THIN, \
     f"U2: the rail should overhang the post by {POST_THIN} mm on the room side"
 assert BACK_POST_HEIGHT == 1402 and BACK_POST_HEIGHT == RAIL_BOTTOM, \
     f"W6/X1: the back posts run 0..{BACK_POST_HEIGHT}, want 0..1402"
-assert WALL_Y == -48 and WALL_Y == BACK_RAIL_Y0, \
-    f"W7: the wall plane is {WALL_Y}, want the back rail face -48"
+# X10 - THE SKIRTING BOARD IS PART OF THE BED, AND IT WAS NOT IN THE MODEL.
+# The wall plane is a flat face the bed is pushed against and screwed to, and
+# the model has always checked that nothing of the bed stands proud of it. What
+# nobody checked is what stands proud of the WALL: a fotlist is 12-22 mm of it,
+# it runs along the floor, and the parts that meet the wall AT the floor cannot
+# ride over it. There are exactly four of them and this is the list, DERIVED -
+# every part whose back face is the wall plane and whose underside is the
+# floor. The room-preparation step says the same thing in Norwegian; this is
+# the assert that makes it a requirement of the geometry rather than advice.
+WALL_FOOT_PARTS = sorted(p.label for p in parts
+                         if abs(p.extents[1][0] - WALL_Y) < TOL
+                         and abs(p.extents[2][0]) < TOL)
+assert len(WALL_FOOT_PARTS) == 4, (
+    f"X10: {len(WALL_FOOT_PARTS)} parts stand on the floor AND in the wall "
+    f"plane - {WALL_FOOT_PARTS}. Every one of them has to have bare wall "
+    f"behind it all the way down, so the fotlist comes off across the whole "
+    f"niche before the frame is raised. Change the list and the room "
+    f"preparation changes with it")
+print(f"OK  X10 fotlist: {len(WALL_FOOT_PARTS)} deler står BÅDE på gulvet "
+      f"(Z 0) og i veggplanet (Y {WALL_Y:g}) - {', '.join(WALL_FOOT_PARTS)}. "
+      f"Fotlist og annet listverk må vekk i hele nisjens bredde "
+      f"({WALL_SPAN:g} mm) før reisning; en 15 mm list ville skjøvet hele "
+      f"rammen 15 mm ut fra veggen og lagt den ut av lodd")
+assert WALL_PLANE_BUILT == WALL_Y == -48, \
+    f"W7: the bodies' back face is Y {WALL_PLANE_BUILT:g}, the wall plane is " \
+    f"{WALL_Y:g}, and both want -48"
 assert (END_BEAM_Y0, END_BEAM_Y1, END_BEAM_LEN) == (-48, 788, 836), \
     f"W6/U3: the end beams are Y {END_BEAM_Y0}..{END_BEAM_Y1} ({END_BEAM_LEN}), " \
     f"want -48..788 (836)"
-assert END_BEAM_X == [POST_W, WALL_SPAN - POST_W - END_BEAM_T] == [98, 1856], \
-    f"U2: the end beams are at X {END_BEAM_X}, want the new post inner faces " \
-    f"[98, 1844] (98..146 and 1844..1892)"
+# X10: the first == restated END_BEAM_X's own definition and the message quoted
+# [98, 1844] against a condition demanding [98, 1856] - the 1844 and the 146
+# are V6b-old numbers computed with a 48 mm end beam. Read off the bodies.
+_built_beam_x = sorted(p.extents[0] for p in parts
+                       if p.label.startswith("End Beam"))
+assert [x0 for x0, _ in _built_beam_x] == [98, 1856] \
+        and END_BEAM_X == [98, 1856], \
+    f"U2/V6b: the end beams are built at X {_built_beam_x} and the table " \
+    f"says {END_BEAM_X}; both want the post inner faces 98..134 and " \
+    f"1856..1892 for a {END_BEAM_T} mm beam"
 assert OVERALL_DEPTH == 836, f"W7/U3: overall depth {OVERALL_DEPTH}, want 836"
 # and the plane the tuck vacated has to be genuinely outside the bed now.
 VACATED_BACK_LAYER = (-96, -48)
@@ -7106,8 +7748,10 @@ assert PANEL_LEN == SLAT_LEN - PANEL_FIT == 798, \
 # from the split - the name must be gone, not merely unused.
 assert "SLAT_LEN_EXT" not in globals() and "SLAT_Y0_EXT" not in globals(), \
     "W8: the W4 two-length slat split is supposed to be gone"
-assert SLAT_Y0 == WALL_Y, \
-    f"W8: the slats start at Y {SLAT_Y0}, want the wall plane {WALL_Y}"
+assert min(s.extents[1][0] for s in bed_slats) == WALL_Y == SLAT_Y0, \
+    f"W8: the built slats start at Y " \
+    f"{min(s.extents[1][0] for s in bed_slats):g}, want the wall plane " \
+    f"{WALL_Y:g}"
 assert RUNG_REST_LEDGE == 32, \
     f"D12/U2: the rung rest ledge is {RUNG_REST_LEDGE} mm, want 32 (it was 25 " \
     f"while the upright was 48 deep; the tread is still 73 and still flush)"
@@ -7193,6 +7837,15 @@ BLOCKLESS_CORNERS = [
     ("J8", "fremre benkevangeende → fremre stolpe", 0.5),
     ("J8-B", "bakre benkevangeende → bakre stolpe", 0.5),
     ("J17", "endelist → bakre stolpe (V13)", 0.25),
+    # X10: J5-B belongs on this list and was not on it. It is exactly what V5
+    # deleted everywhere else - a block on a post face with nothing under it -
+    # and it was held out only by the sentence that said one screw was all the
+    # face could take. The face is 36 x 68 now and it takes two, so the rule
+    # applies to it like it applies to the rest. The reaction is half the
+    # kilonewton the free-edge row stands on the middle of the plate: it
+    # splits between the two blocks. The moment that comes with it is not a
+    # shear row and gets its own, down where the blocks are built.
+    ("J5-B", "bordkloss → stigevange (X9)", 0.5),
 ]
 # The gate this change had to pass: no row over 0.8 even with the whole design
 # load stood directly over the corner, i.e. at TWICE the reaction above.
@@ -7237,7 +7890,7 @@ assert _j1_end >= MIN_EDGE - TOL and _j1_edge >= MIN_EDGE - TOL, \
 print(f"OK  V5 J1 i bjelkeenden: {_j1_end:g} mm ({_j1_end / SCREW_D:g}d) "
       f"endeavstand langs fiberretningen og {_j1_edge:g} mm "
       f"({_j1_edge / SCREW_D:g}d) kantavstand i lastretningen, i "
-      f"{sec(RAIL_T, RAIL_H)} C24 - krav {MIN_EDGE} (3d)")
+      f"{sec(END_BEAM_T, RAIL_H)} C24 - krav {MIN_EDGE} (3d)")
 
 # W1/W5/W7: THE BACK BARRIER IS THE WALL. There are no back guard boards, so
 # what has to be checked on that side is the mattress/wall entrapment gap.
@@ -7268,25 +7921,43 @@ assert MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0 == MATTRESS_W == 800, \
 assert MAX_MATTRESS_GAP == MATTRESS_WANDER <= MAX_GUARD_OPENING, \
     f"EN 747 entrapment: the mattress can leave a {MAX_MATTRESS_GAP} mm gap, " \
     f"over the {MAX_GUARD_OPENING} mm limit"
-# There is only one position now, so both "extremes" are the drawn one and both
-# gaps are 0. Kept as an explicit pair because it is the statement that the
-# mattress is PINNED, not merely that it happens to be drawn tight.
-gap_at_wall = MATTRESS_Y0 - MATTRESS_STOP_Y0                             # 0
-gap_at_front = MATTRESS_STOP_Y1 - MATTRESS_Y1                            # 0
-assert gap_at_wall == gap_at_front == MATTRESS_WANDER == 0, \
-    f"W5: the mattress leaves {gap_at_wall} at the wall and {gap_at_front} at " \
-    f"the front verticals; both must be 0"
-assert WALL_MATTRESS_GAP == MATTRESS_Y0 - WALL_Y == 0, \
-    f"W5: the mattress rear edge must BE the wall plane, not {WALL_MATTRESS_GAP}" \
-    f" mm off it"
+# X10 - AND THIS TIME OFF THE SOLIDS. What stood here was
+#     assert WALL_MATTRESS_GAP == MATTRESS_Y0 - WALL_Y == 0
+# and WALL_MATTRESS_GAP is DEFINED as MATTRESS_Y0 - WALL_Y, with MATTRESS_Y0
+# an alias of SLAT_Y0, an alias of BACK_RAIL_Y0, which is what WALL_Y is too.
+# The whole chain is one constant compared to itself: it reads as the EN 747
+# entrapment check and it would have passed with the mattress built in the next
+# room. The check has to be asked of the BODIES - the drawn mattress against
+# the wall face the bed actually presents and against the front verticals that
+# actually stop it - and that is what it asks now.
+MATTRESS_BUILT_Y0, MATTRESS_BUILT_Y1 = mattress.extents[1]
+WALL_FACE_BUILT = min(p.extents[1][0] for p in parts)
+FRONT_STOP_BUILT = min(p.extents[1][0] for p in parts
+                       if p.label.startswith(("Corner Post Front",
+                                              "Ladder Upright")))
+gap_at_wall = MATTRESS_BUILT_Y0 - WALL_FACE_BUILT
+gap_at_front = FRONT_STOP_BUILT - MATTRESS_BUILT_Y1
+assert abs(gap_at_wall) < TOL and abs(gap_at_front) < TOL, (
+    f"W5: the mattress body runs Y {MATTRESS_BUILT_Y0:g}..{MATTRESS_BUILT_Y1:g} "
+    f"between a wall face at {WALL_FACE_BUILT:g} and front verticals at "
+    f"{FRONT_STOP_BUILT:g} - {gap_at_wall:g} mm of gap at the wall and "
+    f"{gap_at_front:g} at the front, and EN 747 allows "
+    f"{MAX_GUARD_OPENING:g}. Both have to be 0: the mattress is PINNED, not "
+    f"merely drawn tight")
+assert max(gap_at_wall, gap_at_front) <= MAX_GUARD_OPENING, "W5: unreachable"
+assert WALL_MATTRESS_GAP == gap_at_wall, (
+    f"W5: the typed wall gap is {WALL_MATTRESS_GAP:g} and the built one is "
+    f"{gap_at_wall:g}")
 assert MATTRESS_Y1 == MATTRESS_STOP_Y1 == FRONT_POST_Y0, \
     "W5: the mattress front edge must be on the front stop"
-# And the platform has to be under the mattress over the whole of it - trivially
-# true now that the two are the same 800 mm band, but it is the assert that would
-# catch the platform being pulled off the wall again.
-assert SLAT_Y0 == WALL_Y == MATTRESS_Y0 and SLAT_Y1 == MATTRESS_Y1, \
-    f"W5: the platform is Y {SLAT_Y0}..{SLAT_Y1} under a mattress at " \
-    f"{MATTRESS_Y0}..{MATTRESS_Y1}"
+# And the platform has to be under the mattress over the whole of it. X10: the
+# line that stood here compared four aliases of BACK_RAIL_Y0 and conceded in
+# its own comment that it was "trivially true"; it is the two BODIES now.
+_slat_band = (min(s.extents[1][0] for s in bed_slats),
+              max(s.extents[1][1] for s in bed_slats))
+assert _slat_band == (MATTRESS_BUILT_Y0, MATTRESS_BUILT_Y1), \
+    f"W5: the built platform is Y {_slat_band[0]:g}..{_slat_band[1]:g} under " \
+    f"a built mattress at {MATTRESS_BUILT_Y0:g}..{MATTRESS_BUILT_Y1:g}"
 print(f"OK  W1/W5/W7: no back guard - the WALL is the barrier on the back long "
       f"side and the frame is screwed to it through the back rail (S2). The "
       f"EN 747 case on that side is the mattress gap, and after W6 there is not "
@@ -7342,10 +8013,17 @@ for g in front_guards:
     assert lap_up >= MIN_GUARD_LAP and lap_post >= MIN_GUARD_LAP, \
         f"'{g.label}' laps {lap_up} mm of upright and {lap_post} mm of post; " \
         f"the detail needs {MIN_GUARD_LAP} of each"
-    # full FACE contact over the whole lap and the whole board width, not an
-    # edge kiss: the lap area is (X overlap) x (board width in Z).
-    assert lap_post * GUARD_W >= (POST_W - THROUGH_X0) * GUARD_W
-    assert lap_up * GUARD_W >= UPRIGHT_W * GUARD_W
+    # X10: what stood here was `lap_post * GUARD_W >= (POST_W - THROUGH_X0) *
+    # GUARD_W` and its twin - the same GUARD_W on both sides of the >=, so it
+    # divided out and left the two asserts eight lines up, restated. The area
+    # is real when the height comes off the BOARD, and the floor is a number of
+    # its own rather than the same expression again.
+    lap_h = z[1] - z[0]
+    assert lap_post * lap_h >= MIN_GUARD_LAP * lap_h and \
+        lap_up * lap_h >= MIN_GUARD_LAP * lap_h, \
+        f"'{g.label}' laps {lap_post * lap_h:.0f} mm2 of post and " \
+        f"{lap_up * lap_h:.0f} mm2 of upright, and the floor is " \
+        f"{MIN_GUARD_LAP * lap_h:.0f} - a board on a {lap_h:g} mm face"
 for z0 in GUARD_BAND_Z0:
     band = sorted((g for g in front_guards if g.extents[2][0] == z0),
                   key=lambda p: p.extents[0][0])
@@ -7572,6 +8250,78 @@ assert UPPER_SIT_HEADROOM >= MIN_LIE_HEADROOM, \
 assert LOWER_HEADROOM >= MIN_SIT_HEADROOM, \
     f"X1: {LOWER_HEADROOM} mm over the lower sleeping surface, want " \
     f"{MIN_SIT_HEADROOM} - the sofa is a crawl space, not a seat"
+# X10 - AND NOW MEASURED, over the footprint the surface actually has. The
+# clear field above is the distance to the SLATS; this is the distance to the
+# nearest piece of wood, whatever it is, read off the solids in both modes and
+# over LOWER_SLEEP_RECTS - the same footprint the cushion tiling is checked
+# against. Three permanent members stand in it and none of them was ever
+# printed: the ladder rungs cross the surface's front strip, the back table
+# ledger runs the whole length of the wall strip the seat cushions lie on, and
+# the two bordklosser sit beside the ladder.
+#
+# THE RULE IS NOT A CLEARANCE, IT IS A LIST. There is no honest floor to put
+# under 104 mm - that is a ladder, and a ladder over the front edge of a bunk
+# is the bed working as drawn. What can be asserted, and what would actually
+# have caught this, is that the things standing in the lower storey's air are
+# exactly the things the reader is told about: add a member into that band and
+# the assert names it. Everything else about the storey stays as it was.
+# In table mode the plate itself and its four battens stand over the surface -
+# that is the table, and the whole point of it, so they are named too.
+LOWER_HEADROOM_INTRUDERS = {"Ladder Rung", "Table Ledger Back",
+                            "Table Bearer", "End Beam", "Upper Side Rail",
+                            "Corner Post", "Ladder Upright",
+                            "Movable Panel", "Panel Stiffener Batten",
+                            "Panel Front Batten"}
+
+
+def _over_lower_sleep(part):
+    """mm2 of the lower sleeping surface this part stands over."""
+    (x0, x1), (y0, y1), _ = part.extents
+    a = 0.0
+    for rx0, rx1, ry0, ry1 in LOWER_SLEEP_RECTS:
+        dx = min(x1, rx1) - max(x0, rx0)
+        dy = min(y1, ry1) - max(y0, ry0)
+        if dx > TOL and dy > TOL:
+            a += dx * dy
+    return a
+
+
+LOWER_HEADROOM_MIN, LOWER_HEADROOM_WHO = 1e18, None
+LOWER_HEADROOM_WALL, LOWER_HEADROOM_WALL_WHO = 1e18, None
+_hr_unknown = set()
+for _mode, _panel in MODES.items():
+    for _p in mode_parts(_panel):
+        if is_soft(_p) or _p.extents[2][0] < CUSHION_TOP_BENCH - TOL:
+            continue
+        if _over_lower_sleep(_p) <= TOL:
+            continue
+        _clear = _p.extents[2][0] - CUSHION_TOP_BENCH
+        if _clear < LOWER_HEADROOM_MIN:
+            LOWER_HEADROOM_MIN, LOWER_HEADROOM_WHO = _clear, _p.label
+        # the wall strip is where the seat cushions and the pillows are
+        if _p.extents[1][0] < BACK_RAIL_Y1 - TOL \
+                and _clear < LOWER_HEADROOM_WALL:
+            LOWER_HEADROOM_WALL, LOWER_HEADROOM_WALL_WHO = _clear, _p.label
+        if _clear < MIN_SIT_HEADROOM and not any(
+                _p.label.startswith(k) for k in LOWER_HEADROOM_INTRUDERS):
+            _hr_unknown.add(_p.label)
+assert not _hr_unknown, (
+    f"X10: {sorted(_hr_unknown)} stand less than {MIN_SIT_HEADROOM} mm over "
+    f"the lower sleeping surface and are not on the list of things the "
+    f"drawings name. Either the part is in the wrong place or the reader has "
+    f"not been told about it - both are the same bug")
+assert LOWER_HEADROOM_WHO is not None and LOWER_HEADROOM_WALL_WHO is not None, \
+    "X10: nothing at all stands over the lower sleeping surface - measure again"
+assert LOWER_HEADROOM_MIN < LOWER_HEADROOM, \
+    "X10: the measured head room cannot be more than the clear field to the " \
+    "slats - one of the two is not measuring what it says"
+print(f"OK  X10 nedre etasje, MÅLT på kroppene over soveflatens fotavtrykk "
+      f"({LOWER_SLEEP_AREA / 1e6:.2f} m²): fritt felt til spilene "
+      f"{LOWER_HEADROOM} mm, men laveste faste del er "
+      f"'{LOWER_HEADROOM_WHO}' på {LOWER_HEADROOM_MIN:g} mm, og over "
+      f"putestripa ved veggen er det '{LOWER_HEADROOM_WALL_WHO}' på "
+      f"{LOWER_HEADROOM_WALL:g} mm. Begge tallene er permanente og begge står "
+      f"i nøkkelmålene - 1080 er takhøyden i rommet mellom dem, ikke over dem")
 # THE POT, AND WHICH WAY IT LEANS. The two head rooms and the stack between them
 # add up to the room - that is what makes the split a zero-sum choice rather
 # than a wish - and v14's choice is that the LIVING storey gets the larger half.
@@ -7618,19 +8368,27 @@ assert back_bench_rails[0].extents[0] == (BETWEEN_POSTS_X0, BETWEEN_POSTS_X1), \
     f"{BETWEEN_POSTS_X1} ({BETWEEN_POSTS_LEN} mm)"
 assert back_bench_rails[0].extents[1] == (BACK_RAIL_Y0, BACK_RAIL_Y1)
 # W9: it butts both back posts, so its ends are FIXED as well as borne - a face
-# per end against the post's X-inner plane, 48 (Y) x 73 (Z) = 3504 mm2 of screwed
-# contact. Measured against the real posts.
+# per end against the post's X-inner plane, 36 (Y) x 68 (Z) = 2448 mm2 of screwed
+# contact. [was written 48 x 73 = 3504: the Y is the POST's 36, not the rail's
+# 48, and the Z is the 48x68 rail's 68, not the 21x95 ledger's 73 - two numbers
+# from two different rounds, in one product neither of them belonged to.] Measured against the real posts.
 # U2: the face that end fixing lands on is 36 mm deep in Y now, not 48, so the
 # contact is measured against the real post rather than assumed to be the
 # member's whole end. Both members are 48 deep after V2, so both butt over 36
 # of it - one number for the pair.
+# X10: the height used to be handed in beside the member - BENCH_RAIL_H,
+# LEDGER_BACK_H - and then compared against POST_T * BENCH_RAIL_H, so the
+# height cancelled and what was left was `overlap_y == POST_T`. Build the rail
+# 90 mm tall and the assert still passed. It is read off the body now, like
+# the Y overlap always was.
 POST_TO_POST_ENDS = {
-    "Bench Rail Back (continuous)": (back_bench_rails[0], BENCH_RAIL_H),
-    "Table Ledger Back": (support_rail, LEDGER_BACK_H),
+    "Bench Rail Back (continuous)": back_bench_rails[0],
+    "Table Ledger Back": support_rail,
 }
 end_fixings = {}
-for what, (member, height) in POST_TO_POST_ENDS.items():
-    (rx0, rx1), (ry0, ry1), _ = member.extents
+for what, member in POST_TO_POST_ENDS.items():
+    (rx0, rx1), (ry0, ry1), (rz0, rz1) = member.extents
+    height = rz1 - rz0
     assert (rx0, rx1) == (BETWEEN_POSTS_X0, BETWEEN_POSTS_X1), \
         f"W9: '{what}' must run post to post, it is at X {rx0}..{rx1}"
     areas = []
@@ -7644,12 +8402,21 @@ for what, (member, height) in POST_TO_POST_ENDS.items():
         areas.append(overlap_y * height)
     assert len(areas) == 2 and areas[0] == areas[1]
     end_fixings[what] = areas[0]
-assert end_fixings["Bench Rail Back (continuous)"] == POST_T * BENCH_RAIL_H \
-    == 2448, "U2: the back bench rail should butt 36 x 68 of post face"
-# V2: the ledger is the bench rail's profile now, so it butts the same 36 x 73
-# of post face the bench rail does - 2628 mm2 instead of the 21x95's 1995.
-assert end_fixings["Table Ledger Back"] == POST_T * LEDGER_BACK_H == 2448, \
-    "V2: the back ledger is 48 deep now, so 36 of it butts the post face"
+assert end_fixings["Bench Rail Back (continuous)"] == 2448, \
+    f"U2: the back bench rail butts {end_fixings['Bench Rail Back (continuous)']}" \
+    f" mm2 of post face, want 36 x 68 = 2448"
+# V2: the ledger is the bench rail's profile now, so it butts the same 36 x 68
+# of post face the bench rail does - 2448 mm2 instead of the 21x95's 1995.
+# [the line here used to say 36 x 73 = 2628; 73 was the 21x95 ledger's own
+#  height and it did not survive V2 either.]
+assert end_fixings["Table Ledger Back"] == 2448, \
+    f"V2: the back ledger butts {end_fixings['Table Ledger Back']} mm2 of " \
+    f"post face, want the same 36 x 68 = 2448 the bench rail butts"
+assert (back_bench_rails[0].extents[2][1] - back_bench_rails[0].extents[2][0]
+        == BENCH_RAIL_H
+        and support_rail.extents[2][1] - support_rail.extents[2][0]
+        == LEDGER_BACK_H), \
+    "V2: one of the two post-to-post members is not the section the file says"
 assert BENCH_TOP == BENCH_RAIL_TOP + BENCH_SLAT_T == 320   # [X3: was 282]
 # D10/U1: the cushion recess. The bench slat got 2 mm thicker and the panel did
 # not (it is an 18 mm sheet on a rail top that has not moved), so the dip the
@@ -8522,7 +9289,133 @@ print(f"OK  X9 bordklossene: 2 x {sec(TABLE_BEARER_T, TABLE_BEARER_H)} x "
       f"({UPRIGHT_T * TABLE_BEARER_H} mm² flate, samme som en stigekloss) og "
       f"{TABLE_BEARER_LEDGE} mm stikker bak den som bæreflate - "
       f"{TABLE_BEARER_BEARING} mm² til sammen, og lengden er regnet ut av "
-      f"kravet ({MIN_BEARING} mm² per bærelinje), ikke valgt")
+      f"kravet ({MIN_BEARING} mm² per bærelinje), ikke valgt. "
+      f"Vangeflaten tar {TABLE_BEARER_SCREWS} × 6×80 (X10: var én)")
+
+# ---------------------------------------------------------------------------
+# X10 - THE PLATE'S FREE FRONT EDGE, MEASURED AND PRICED
+# ---------------------------------------------------------------------------
+# MIN_BEARING is an AREA rule and an area rule cannot see a span: two blocks
+# 5088 mm2 apart satisfy it whether they stand 20 mm apart or a metre. That is
+# the hole X9's arithmetic fell into (see the X10 CORRECTION in the X9 block
+# above), and this is the row that closes it. Everything here is read off the
+# solids: the two bearers' inner faces, the plate's own thickness, its own
+# front edge.
+#
+# THE CASE. One kilonewton standing on the middle of the free edge - somebody
+# leaning on the table from the ladder, or sitting on it. Simply supported over
+# the bay, because a free edge has nothing to fix it: M = P*L/4. The effective
+# width is the argument that matters and it is written down rather than
+# assumed: away from an edge a point load spreads both ways into the sheet, at
+# a FREE EDGE it can only spread one, so b_ef is the contact patch plus one
+# spread - PANEL_BEF_SPREAD. Two patches, because they are two different
+# people: a flat hand and a knee.
+#
+# THE GRAIN IS A REQUIREMENT NOW, NOT AN ASSUMPTION. The plate is plywood and
+# plywood is not isotropic: along the face grain it carries roughly two and a
+# half times what it carries across. The file has been computing every sheet
+# row on ONE number, 6,95 MPa, calibrated in vedlegg A on the bare-plate row -
+# and that row spans the plate's LONG way, in Y, so 6,95 is the ACROSS-grain
+# value. This row spans in X. The face grain therefore has to run in X, along
+# the bed, and that is a CUTTING INSTRUCTION with a load case behind it rather
+# than a preference: cut the 574 x 798 blank with the face veneer running the
+# 574 way. It costs nothing (the blank is smaller than the sheet either way)
+# and it is the difference between 1,49 and 0,60.
+PANEL_GRAIN_AXIS = 0             # X - the face veneer runs along the bed
+PANEL_F_M_D_CROSS = 6.95         # MPa, the vedlegg A calibration (across grain)
+PANEL_GRAIN_RATIO = 2.5          # f_m,0 / f_m,90 for softwood plywood
+PANEL_F_M_D_GRAIN = PANEL_F_M_D_CROSS * PANEL_GRAIN_RATIO       # 17.4 MPa
+PANEL_BEF_SPREAD = 60            # mm the load spreads into a FREE edge, one way
+PANEL_EDGE_LOAD_N = 1000         # N, the same kilonewton every other row uses
+PANEL_EDGE_PATCHES = [("flat hånd", 80), ("kne", 40)]
+
+_bx = sorted(b.extents[0] for b in _bearers)
+PANEL_FREE_EDGE_SPAN = _bx[1][0] - _bx[0][1]
+assert abs(PANEL_FREE_EDGE_SPAN - TABLE_FREE_EDGE) < TOL, (
+    f"X10: the bordklosser leave {PANEL_FREE_EDGE_SPAN:g} mm of bare front "
+    f"edge between them and the file says {TABLE_FREE_EDGE:g}")
+assert all(b.extents[1][1] >= panel_table.extents[1][1] - TOL
+           for b in _bearers), \
+    "X10: a bordkloss stops short of the plate's own front edge in Y, so the " \
+    "edge overhangs it and the span above is not the whole case"
+PANEL_EDGE_ROWS = []
+for _what, _patch in PANEL_EDGE_PATCHES:
+    _bef = _patch + PANEL_BEF_SPREAD
+    _w = _bef * PANEL_T ** 2 / 6
+    _sigma = PANEL_EDGE_LOAD_N * PANEL_FREE_EDGE_SPAN / 4 / _w
+    PANEL_EDGE_ROWS.append((_what, _patch, _bef, _sigma,
+                            _sigma / PANEL_F_M_D_CROSS,
+                            _sigma / PANEL_F_M_D_GRAIN))
+PANEL_EDGE_UTIL = max(r[5] for r in PANEL_EDGE_ROWS)
+PANEL_EDGE_UTIL_CROSS = max(r[4] for r in PANEL_EDGE_ROWS)
+assert PANEL_EDGE_UTIL <= 1.0, (
+    f"X10: {PANEL_EDGE_UTIL:.2f} on the plate's free front edge over "
+    f"{PANEL_FREE_EDGE_SPAN:g} mm, even with the face grain running the span. "
+    f"There is nowhere to put a batten under that edge - the rung owns the "
+    f"space in bed mode - so the way out is a shorter bay: widen the "
+    f"bordklosser again, or a thicker sheet")
+assert PANEL_EDGE_UTIL_CROSS > 1.0, (
+    "X10: the across-grain row now passes too, so PANEL_GRAIN_AXIS has stopped "
+    "being load-bearing and should be re-argued rather than left standing as "
+    "a requirement nobody needs")
+print(f"OK  X10 platas frie forkant: {PANEL_FREE_EDGE_SPAN:g} mm bart "
+      f"{PANEL_T} mm ark mellom bordklossene (X "
+      f"{_bx[0][1]:g}..{_bx[1][0]:g}), fritt opplagt, "
+      f"{PANEL_EDGE_LOAD_N / 1000:g} kN midt på kanten - M = "
+      f"{PANEL_EDGE_LOAD_N * PANEL_FREE_EDGE_SPAN / 4:.0f} Nmm:")
+for _what, _patch, _bef, _sigma, _uc, _ug in PANEL_EDGE_ROWS:
+    print(f"      {_what:10s} {_patch} mm avtrykk → b_ef {_bef:g} mm, "
+          f"σ {_sigma:.2f} MPa: {_uc:.2f} mot f_m,d {PANEL_F_M_D_CROSS:g} "
+          f"(på tvers av fiberretningen) og {_ug:.2f} mot "
+          f"{PANEL_F_M_D_GRAIN:.1f} (langs)")
+# X10 - AND THE MOMENT THAT COMES WITH THAT HALF-KILONEWTON. The shear row in
+# BLOCKLESS_CORNERS is the easy half: 0,5 kN into two 6 mm screws is 0,13. What
+# V5's rule does not ask, because no other block in this bed has the problem,
+# is where the load STANDS relative to the screws. On this one it stands on the
+# ledge - out in front of the upright - and the screws are on the upright's own
+# centre line, so the reaction and the fixing are not in the same plane and the
+# difference is a moment about X, lying IN the face. It is carried as a couple:
+# the two screws take equal and opposite shear, arm = their own spacing.
+# With one screw there is no arm at all and no couple - only friction on the
+# 36 x 68 patch and a 6 mm shank in bending, neither of which this file has a
+# number for. That is the whole argument for the second screw, and it is a row
+# now rather than a paragraph.
+_j5b = sorted((f for f in FASTENER_SPECS if f["jid"] == "J5-B"),
+              key=lambda f: f["anchor"][2])
+BEARER_LOAD_KN = 0.5             # half the plate's 1 kN, per block
+# The plate sits on the LEDGE - the part of the block that stands out in front
+# of the upright, Y0..Y0+LEDGE - so its reaction acts through that patch's own
+# middle, and the screws are on the upright's centre line behind it.
+BEARER_LOAD_Y = TABLE_BEARER_Y0 + TABLE_BEARER_LEDGE / 2
+BEARER_ARM = _j5b[0]["anchor"][1] - BEARER_LOAD_Y
+BEARER_COUPLE_ARM = abs(_j5b[-1]["anchor"][2] - _j5b[0]["anchor"][2])
+assert BEARER_COUPLE_ARM > 0, (
+    "X10: the two J5-B screws are at the same height, so there is no couple "
+    "arm and the plate's eccentric load has nothing to work against")
+BEARER_COUPLE_KN = BEARER_LOAD_KN * abs(BEARER_ARM) / BEARER_COUPLE_ARM
+BEARER_SCREW_KN = (BEARER_COUPLE_KN
+                   + BEARER_LOAD_KN / len(_j5b))    # couple + its share of shear
+BEARER_UTIL = BEARER_SCREW_KN / SCREW_SHEAR_KN[6]
+assert BEARER_UTIL <= MAX_BLOCKLESS_UTIL, (
+    f"X10: the worse of the two bordkloss screws is {BEARER_UTIL:.2f} utilised "
+    f"- {BEARER_COUPLE_KN:.2f} kN of couple from a {abs(BEARER_ARM):.0f} mm "
+    f"arm over a {BEARER_COUPLE_ARM:g} mm spacing, plus its share of the "
+    f"direct shear - against the {MAX_BLOCKLESS_UTIL:g} gate every block-less "
+    f"corner in this bed is held to. Stand the block taller so the two screws "
+    f"stand further apart, or take the load off its front")
+print(f"      OG BÆREKANTEN: platen lander {abs(BEARER_ARM):.0f} mm foran "
+      f"skruelinja, så {BEARER_LOAD_KN:g} kN per kloss blir et par på "
+      f"{BEARER_COUPLE_KN:.2f} kN over {BEARER_COUPLE_ARM:g} mm skrueavstand. "
+      f"Med skjæret sitt attpå: {BEARER_SCREW_KN:.2f} kN mot "
+      f"{SCREW_SHEAR_KN[6]:g} → {BEARER_UTIL:.2f} (grense "
+      f"{MAX_BLOCKLESS_UTIL:g}). Med ÉN skrue finnes ikke armen - X9s kloss "
+      f"tok momentet i friksjon og bøyd skaft, som ingen rad i denne fila kan "
+      f"regne på")
+print(f"      KRAV TIL PLATA: dekkfineren skal ligge langs "
+      f"{'XYZ'[PANEL_GRAIN_AXIS]} - sengens lengderetning. Blir den snudd, "
+      f"er raden {PANEL_EDGE_UTIL_CROSS:.2f} og platen holder ikke. "
+      f"[X9 regnet den til 0,86 på 324 mm spenn og 250 mm b_ef - feil spenn "
+      f"(lektene bærer ikke forkanten) og en b_ef ingen fri kant har]")
 
 # D10: THE PANEL RESTS ON WOOD. No hooks, no exclusions: in each mode the panel
 # must have real BEARING AREA - a shared horizontal face, not an edge kiss - on
@@ -8613,14 +9506,38 @@ for mode_name, panel in MODES.items():
           f"{panel.extents[2][1]:.0f} rests on "
           + ", ".join(f"{lbl} ({a:.0f} mm2)" for lbl, a in sorted(found.items()))
           + f" = {sum(found.values()):.0f} mm2 total")
-assert PANEL_LEN == BENCH_SLAT_LEN - PANEL_FIT == PLATFORM_DEPTH - PANEL_FIT, \
-    "D10/V2: the panel has to reach its rear bearing, less the front fit"
-assert PANEL_Y0 == BENCH_SLAT_Y0 and PANEL_Y1 == LADDER_Y0 - PANEL_FIT
-assert RUNG_Y1 == LADDER_Y1, "D10: the tread fronts must be flush with the uprights"
-assert LADDER_Y0 - RUNG_Y0 == RUNG_D - UPRIGHT_T == RUNG_REST_LEDGE == 32, \
-    "D10/U2: the rungs must reach 37 mm behind the upright plane to catch the " \
-    "panel (25 while the upright was 48 deep - the tread did not change, the " \
-    "upright did)"
+# X10 - THE PANEL SUB-ASSEMBLY, OFF ITS OWN BODIES. Everything from here down
+# used to compare a name to the expression it had just been assigned from -
+# `PANEL_Y0 == BENCH_SLAT_Y0` when line 2413 reads `PANEL_Y0 = BENCH_SLAT_Y0`,
+# and six more like it. Only the trailing literals had any power. The panel,
+# its four battens, a rung and an upright are all built by now, so the same
+# claims are asked of the shapes, and the literals stay where they were.
+_Y1_PANEL = next(q for q in mode_parts(panel_bed)
+                 if q.label.startswith("Movable Panel"))
+_Y1_GUIDES = [q for q in mode_parts(panel_bed)
+              if q.label.startswith("Panel Stiffener Batten")]
+_Y1_NOSES = [q for q in mode_parts(panel_bed)
+             if q.label.startswith("Panel Front Batten")]
+_Y1_RUNG = next(q for q in parts if q.label == "Ladder Rung_1")
+_Y1_UP = next(q for q in parts if q.label == "Ladder Upright Left")
+(_pnx0, _pnx1), (_pny0, _pny1), _ = _Y1_PANEL.extents
+assert _pny1 - _pny0 == PANEL_LEN == PLATFORM_DEPTH - PANEL_FIT, \
+    f"D10/V2: the built panel is {_pny1 - _pny0:g} mm deep and has to reach " \
+    f"its rear bearing less the front fit, {PLATFORM_DEPTH - PANEL_FIT:g}"
+_Y1_BENCH_SLATS = [q for q in parts if q.label.startswith("Bench Slat ")]
+assert _pny0 == min(q.extents[1][0] for q in _Y1_BENCH_SLATS) \
+        and _Y1_UP.extents[1][0] - _pny1 == PANEL_FIT, \
+    f"D10: the built panel runs Y {_pny0:g}..{_pny1:g}; it has to start on " \
+    f"the bench slats' own back plane and stop {PANEL_FIT:g} mm short of the " \
+    f"upright face at {_Y1_UP.extents[1][0]:g}"
+assert _Y1_RUNG.extents[1][1] == _Y1_UP.extents[1][1], \
+    "D10: the tread fronts must be flush with the uprights"
+assert _Y1_UP.extents[1][0] - _Y1_RUNG.extents[1][0] == RUNG_REST_LEDGE == 32, \
+    f"D10/U2: the built rung reaches " \
+    f"{_Y1_UP.extents[1][0] - _Y1_RUNG.extents[1][0]:g} mm behind the upright " \
+    f"plane to catch the panel, and the file says {RUNG_REST_LEDGE:g} (it was " \
+    f"37 while the upright was 48 deep - the tread did not change, the " \
+    f"upright did)"
 # D13: the panel still straddles BOTH uprights, which is what makes Y=752 a hard
 # limit for its front edge and therefore what makes the rung ledge necessary.
 assert PANEL_X0 < LADDER_LEFT_X and LADDER_RIGHT_X + UPRIGHT_W < PANEL_X1, \
@@ -8640,42 +9557,61 @@ print(f"OK  D10: no hooks - panel {PANEL_T} x {PANEL_W} x {PANEL_LEN} at Y "
 # (they run down two open shafts with 2 mm on the guiding side, so there is no
 # slack), they stay OUT OF the ladder-bay walking zone, and - V3 - they REACH
 # the rung ends, because they are the guides now.
-assert BATTEN_LEN == BATTEN_Y1 - BATTEN_Y0 == 750
-assert BATTEN_Y0 == BACK_RAIL_Y1, \
-    "M4: the battens must stop at the back rail face, not run past it"
-assert BATTEN_Y1 == PANEL_Y1, \
-    "M4/V3: the battens must reach the panel's own front edge - the last " \
-    "35 mm of them IS the guide, standing in the rung's rest-ledge shaft"
-assert BATTEN_GUIDE_ENGAGE_Y == BATTEN_Y1 - RUNG_Y0 == 30 and \
-    BATTEN_GUIDE_ENGAGE_Y < RUNG_REST_LEDGE, \
-    f"M4/V3: the batten reaches {BATTEN_GUIDE_ENGAGE_Y} mm into a " \
-    f"{RUNG_REST_LEDGE} mm shaft - past the ledge it would foul the uprights"
+assert len(_Y1_GUIDES) == 2 and len(_Y1_NOSES) == 2, \
+    "M4 + M5: two battens along Y, two across X"
+for _b in _Y1_GUIDES:
+    (_bx0, _bx1), (_by0, _by1), _ = _b.extents
+    assert _by1 - _by0 == BATTEN_LEN == 750, \
+        f"M4: '{_b.label}' measures {_by1 - _by0:g} mm along Y, want 750"
+    assert _by0 == BACK_RAIL_Y1, \
+        f"M4: '{_b.label}' starts at Y {_by0:g}; the battens must stop at the " \
+        f"back rail face {BACK_RAIL_Y1:g}, not run past it"
+    assert _by1 == _pny1, \
+        f"M4/V3: '{_b.label}' stops at Y {_by1:g} and the panel's own front " \
+        f"edge is {_pny1:g} - the last 30 mm of the batten IS the guide, and " \
+        f"it has to be there to stand in the rung's rest-ledge shaft"
+    assert _by1 - _Y1_RUNG.extents[1][0] == BATTEN_GUIDE_ENGAGE_Y == 30 \
+            and BATTEN_GUIDE_ENGAGE_Y < RUNG_REST_LEDGE, \
+        f"M4/V3: '{_b.label}' reaches " \
+        f"{_by1 - _Y1_RUNG.extents[1][0]:g} mm into a {RUNG_REST_LEDGE:g} mm " \
+        f"shaft - past the ledge it would foul the uprights"
 assert LEDGER_BACK_Y0 + LEDGER_BACK_T <= BATTEN_Y0, \
     "M4: the battens foul the back table ledger"
 # V2/M5: the two front cross battens - the same stock, the same Z band, flush
 # with the panel's front edge, and inside the panel outline in X.
-assert NOSE_Y1 == PANEL_Y1 and NOSE_Y0 == NOSE_Y1 - BATTEN_W, \
-    f"M5: the front cross battens are at Y {NOSE_Y0}..{NOSE_Y1}"
-assert NOSE_X[0] == (PANEL_X0, BATTEN_X[0]) and \
-    NOSE_X[1] == (BATTEN_X[1] + BATTEN_W, PANEL_X1), \
-    "M5: each front cross batten must run from the panel edge to the M4 batten"
-assert NOSE_LEN == 77 and NOSE_X[0][1] - NOSE_X[0][0] == NOSE_LEN == \
-    NOSE_X[1][1] - NOSE_X[1][0], \
-    f"M5: the two front cross battens are {NOSE_LEN} mm and equal"
+_Y1_GUIDE_X = sorted(q.extents[0] for q in _Y1_GUIDES)
+for _i, _n in enumerate(sorted(_Y1_NOSES, key=lambda q: q.extents[0][0])):
+    (_nx0, _nx1), (_ny0, _ny1), _ = _n.extents
+    assert _ny1 == _pny1 and _ny1 - _ny0 == BATTEN_W, \
+        f"M5: '{_n.label}' is at Y {_ny0:g}..{_ny1:g}; it has to be flush " \
+        f"with the panel's front edge {_pny1:g} and one batten wide"
+    _want = ((_pnx0, _Y1_GUIDE_X[0][0]) if _i == 0
+             else (_Y1_GUIDE_X[1][1], _pnx1))
+    assert (_nx0, _nx1) == _want, \
+        f"M5: '{_n.label}' runs X {_nx0:g}..{_nx1:g}; it has to run from the " \
+        f"panel edge to the M4 batten, {_want[0]:g}..{_want[1]:g}"
+    assert _nx1 - _nx0 == NOSE_LEN == 77, \
+        f"M5: '{_n.label}' is {_nx1 - _nx0:g} mm and the pair has to be " \
+        f"{NOSE_LEN:g} and equal"
 # The corner they exist for, stated as the number it is: the panel's front edge
 # outboard of the M4 batten, in bare 18 mm sheet. V3 shrank it 213 -> 116 and
 # K2's narrower panel takes it to 77 - and the note above is still why that is
 # not enough to delete them: the free-corner stress does not depend on the
 # overhang length at all.
 FRONT_CANTILEVER = NOSE_LEN                         # 77  [was 116, 213]
-assert FRONT_CANTILEVER == BATTEN_X[0] - PANEL_X0 == 77, FRONT_CANTILEVER
-assert NOSE_Y0 <= RUNG_Y0, \
+assert FRONT_CANTILEVER == _Y1_GUIDE_X[0][0] - _pnx0 == 77, \
+    f"M5: the sheet stands {_Y1_GUIDE_X[0][0] - _pnx0:g} mm outboard of the " \
+    f"M4 batten and the file says {FRONT_CANTILEVER:g}"
+assert min(q.extents[1][0] for q in _Y1_NOSES) <= _Y1_RUNG.extents[1][0], \
     "M5: a cross batten that starts behind the rung face would have to " \
     "thread past the rung, and the whole assembly goes straight down"
-# V4: THE WEDGE, asked of the solid and of the screw seat.
-assert NOSE_TIP_H == PANEL_UPSCREW_PASS, \
-    "M5/V4: the wing's tip is the up-screw's own seat or it is a number " \
-    "somebody liked - it has to be PANEL_UPSCREW_PASS"
+# V4: THE WEDGE. `NOSE_TIP_H == PANEL_UPSCREW_PASS` is a NAMING IDENTITY -
+# NOSE_TIP_H is assigned PANEL_UPSCREW_PASS where it is declared, so the line
+# is one name against itself and it is labelled as such rather than counted as
+# a check. What it was standing in for is asked further down, where the wing's
+# own counterbore depths exist: min(_NOSE_CB) == 0, i.e. the bore grounds out
+# exactly at the tip and what is left there is the seat.
+assert NOSE_TIP_H == PANEL_UPSCREW_PASS        # a naming identity, see _NOSE_CB
 _NOSE_TRAPEZOID = BATTEN_W * NOSE_LEN * (NOSE_ROOT_H + NOSE_TIP_H) / 2
 
 # WHAT THE PANEL UNIT WEIGHS, off its own solids. It used to be a number in a
@@ -8773,6 +9709,23 @@ if FASTENERS_ON:
     _NOSE_CB = [round(_wing_height_at(_wings[_f["through"].label],
                                       _f["anchor"][0]) - PANEL_UPSCREW_PASS, 1)
                 for _f in FASTENER_SPECS if _f["jid"] == "J13b"]
+    # X10: THE CHECK `NOSE_TIP_H == PANEL_UPSCREW_PASS` COULD NOT MAKE. The tip
+    # being the seat is a claim about the TAPER, and the taper is what decides
+    # how deep each bore goes: the bore is whatever wood stands over the 27 mm
+    # pass at that screw's own X, so it has to run out to 0 exactly AT the tip
+    # and never below it anywhere. Measured on the wing profile and the placed
+    # screws - a taper cut to a different tip height puts a negative number in
+    # this list, and a negative counterbore is a hole out the bottom.
+    assert min(_NOSE_CB) >= 0.0 \
+            and _wing_height_at(_wings[_Y1_NOSES[0].label],
+                                _Y1_NOSES[0].extents[0][0]) \
+            == NOSE_TIP_H == PANEL_UPSCREW_PASS, (
+        f"M5/V4: the wing's tip measures "
+        f"{_wing_height_at(_wings[_Y1_NOSES[0].label], _Y1_NOSES[0].extents[0][0]):g}"
+        f" mm on the taper this file cuts and the up-screw's pass is "
+        f"{PANEL_UPSCREW_PASS} - the tip IS the seat or it is a number "
+        f"somebody liked. Counterbores under the two screws: "
+        f"{sorted(set(_NOSE_CB))} mm, none of them below 0")
     print(f"OK  M5/V4 kile: begge vingene er skråkappet "
           f"{NOSE_ROOT_H} → {NOSE_TIP_H} mm over {NOSE_LEN} mm "
           f"({NOSE_TAPER_DEG:.1f}°), {_NOSE_TRAPEZOID:.0f} mm3 tre hver mot "
@@ -8785,11 +9738,12 @@ if FASTENERS_ON:
           f"bøyesnitt ligger {NOSE_CRIT_X:.0f} mm fra tuppen (h = "
           f"{NOSE_CRIT_H:.0f} mm), ikke ved roten: "
           f"{6 * 1000 * NOSE_CRIT_X / (BATTEN_W * NOSE_CRIT_H ** 2):.2f} MPa "
-          f"mot 16,6 = utnyttelse "
-          f"{6 * 1000 * NOSE_CRIT_X / (BATTEN_W * NOSE_CRIT_H ** 2) / 16.6:.2f}"
-          f"; skjær i tuppen "
-          f"{1.5 * 1000 / (BATTEN_W * NOSE_TIP_H):.2f} MPa mot 2,77 = "
-          f"{1.5 * 1000 / (BATTEN_W * NOSE_TIP_H) / 2.77:.2f}")
+          f"mot {F_M_D_C24:g} = utnyttelse "
+          f"{6 * 1000 * NOSE_CRIT_X / (BATTEN_W * NOSE_CRIT_H ** 2) / F_M_D_C24:.2f}"
+          f"; skjær i tuppen (med k_cr = {K_CR:g}) "
+          f"{1.5 * 1000 / (K_CR * BATTEN_W * NOSE_TIP_H):.2f} MPa mot "
+          f"{F_V_D:g} = "
+          f"{1.5 * 1000 / (K_CR * BATTEN_W * NOSE_TIP_H) / F_V_D:.2f}")
 # K2: the material argument, checked rather than quoted. See the note above the
 # up-screw constants - this is the assert that stops "too wide for limtre"
 # being repeated once it stopped being true.
@@ -9006,18 +9960,23 @@ for _mode in MODES:
     assert _run >= INSERT_CLEAR_MIN, (
         f"V2 innsetting: the {_mode} assembly can only rise {_run:.0f} mm "
         f"before {_who} - it cannot be lifted clear of its own locators "
-        f"(the guide battens engage {BATTEN_GUIDE_ENGAGE_Z:g} mm)")
-    assert _run > BATTEN_GUIDE_ENGAGE_Z * 2, (
+        f"(the guide battens have to rise "
+        f"{BATTEN_GUIDE_RELEASE_Z:g} mm to come free)")
+    assert _run > BATTEN_GUIDE_RELEASE_Z, (
         f"V2 innsetting: {_run:.0f} mm of clear lift in {_mode} is less than "
-        f"twice the guide batten's engagement - there is no room to aim it")
+        f"the {BATTEN_GUIDE_RELEASE_Z:g} mm it takes to lift the guide "
+        f"battens' undersides past the locator tops - the assembly cannot "
+        f"come out of its own seat at all")
 print(f"OK  V2 innsetting: the panel assembly - sheet, 4 lekter og "
       f"{sum(1 for f in FASTENER_SPECS if f['jid'].startswith('J13'))} skruer "
       f"- går rett ned i begge stillinger. Fri loddrett vei "
       f"{INSERT_CLEAR['bed_mode']:.0f} mm i sengestilling "
       f"({INSERT_STOPPER['bed_mode']}) og {INSERT_CLEAR['table_mode']:.0f} mm "
       f"i bordstilling ({INSERT_STOPPER['table_mode']}), mot "
-      f"{BATTEN_GUIDE_ENGAGE_Z} mm som skal til for å løfte styrelektene fri "
-      f"av trinnenden. Ingenting i veien for noen av delene på veien ned")
+      f"{BATTEN_GUIDE_RELEASE_Z} mm som skal til for å løfte styrelektenes "
+      f"underkant fri av låsedelens overkant (lektene LAPPER "
+      f"{BATTEN_GUIDE_ENGAGE_Z} mm av den - det er to forskjellige mål). "
+      f"Ingenting i veien for noen av delene på veien ned")
 
 
 # ---------------------------------------------------------------------------
@@ -9058,9 +10017,11 @@ TRANSFER_CEILING, TRANSFER_CEILING_WHO = min(
 TRANSFER_FLOOR, TRANSFER_FLOOR_WHO = max(
     (p.extents[2][1], p.label) for p in _corridor
     if p.extents[2][1] <= TRANSFER_CEILING + TOL)
-TRANSFER_SLOT = TRANSFER_CEILING - TRANSFER_FLOOR          # 154  [X1: 114]
+TRANSFER_SLOT = TRANSFER_CEILING - TRANSFER_FLOOR          # 204  [was 154,
+                                                           # X1: 114]
 PANEL_UNIT_H = PANEL_TOP_BED - BATTEN_Z0_BED               # 86   [X3: 91]
-TRANSFER_CLEAR = TRANSFER_SLOT - PANEL_UNIT_H              # 68   [X1: 23]
+TRANSFER_CLEAR = TRANSFER_SLOT - PANEL_UNIT_H              # 118  [was 68,
+                                                           # X1: 23]
 # The gate. Under 15 mm the unit has to be tipped to get through, and a tipped
 # unit is a two-person move over a bench - that is what the comfort round was
 # opened to get rid of.
@@ -9111,6 +10072,20 @@ assert RUNG_BLOCK_BEAR_UTIL <= 0.5, (
     f"K1: the rung bears on {RUNG_BLOCK_BEARING} mm2 of block at "
     f"{RUNG_BLOCK_BEAR_UTIL:.2f} of f_c,90,d - cut the block shorter than the "
     f"upright is deep and this is the row that goes first")
+# X10 - AND WHAT THE BLOCK LOST THIS ROUND. J4 used to put a 5x60 down through
+# the tread into this block; it was driven straight through the 6x120's own
+# hole and it is gone (see the X10 note in the JOINTS table). Neither row above
+# moves - that screw was never in the load path, it was the block's LOCK
+# against turning about its single J5 screw. The lock is still there, it is
+# just wood now: the block is caught between the upright's face, the tread
+# lying flat on RUNG_BLOCK_BEARING of its top, and that tread being itself
+# pinned to the upright by the 6x120 24 mm above the block's own screw. To turn
+# about J5, the block has to lift a tread that is screwed down.
+assert not [f for f in FASTENER_SPECS
+            if f["jid"] == "J4" and f.get("into") is not None
+            and "Rung Block" in f["into"].label], \
+    "X10: a screw is back in the rung block from above - it cannot get there " \
+    "without crossing J4's own 6x120, which is why it was taken out"
 # The one thing the shorter block does change is that the rung's rear
 # RUNG_REST_LEDGE hangs over nothing. It is a 48 mm thick tread and the
 # overhang is 37 mm; the check is that it is an overhang and not a span.
@@ -9128,7 +10103,8 @@ print(f"OK  K1 stigeklossen 36x48 x {RUNG_BLOCK_LEN} (var {RUNG_D}): flate mot "
       f"{RUNG_BLOCK_T * RUNG_D}) = {RUNG_END_KN * 1000 / RUNG_BLOCK_BEARING:.2f} "
       f"MPa mot {FC90_D:g} på tvers av fiberretningen → "
       f"{RUNG_BLOCK_BEAR_UTIL:.2f}; skruen sitter nå på Y {RUNG_BLOCK_Y0 + RUNG_BLOCK_LEN / 2:g}, "
-      f"midt i vangen")
+      f"midt i vangen - og den er hele festet nå: X10 tok ut skruen ned "
+      f"gjennom trinnet, som gikk gjennom 6×120-en sin egen kanal")
 
 
 # ---------------------------------------------------------------------------
@@ -9154,7 +10130,7 @@ print(f"OK  K1 stigeklossen 36x48 x {RUNG_BLOCK_LEN} (var {RUNG_D}): flate mot "
 #      X 835..1155 at Y 720..788, so wherever the plate sits at the ladder its
 #      front strip lies UNDER a rung. In table mode the rung above is rung 3,
 #      measured here as the stopper of INSERT_CLEAR. The unit has to rise
-#      BATTEN_GUIDE_ENGAGE_Z (48) before its guides are free of their locator
+#      BATTEN_GUIDE_RELEASE_Z (68) before its guides are free of their locator
 #      at all, and INSERT_CLEAR_MIN (100) before that is a lift and not a
 #      wrestle - so the plate TOP can be at most the rung underside less 100.
 #      THIS IS THE BINDING WALL, and after X9 it binds exactly: 800 - 100 = 700.
@@ -9409,24 +10385,32 @@ if FASTENERS_ON:
             # and it has to be ALONGSIDE the end grain, not above or below it:
             # a guide that misses its locator in Y or Z guides nothing.
             # X9: the Y lap is no longer one number for both modes - a rung end
-            # gives the batten 30 mm of shaft and a bordkloss 70 - so it is
+            # gives the batten 30 mm of shaft and a bordkloss 53 - so it is
             # computed from the locator's own back face and held to the
-            # engagement floor rather than typed. The Z lap is still exactly a
-            # tread's thickness in both modes, because that is what the unit
-            # has to rise to come free.
-            for _j, _what in ((1, "Y"), (2, "Z")):
+            # engagement floor rather than typed.
+            # X10: and neither is the Z lap, since the bordkloss became 68 mm
+            # tall to hold its second screw. Both are computed from the
+            # locator's own extents and both are held to the floor a RUNG END
+            # sets, which is the case the rule was written on: 30 in Y and
+            # RUNG_T in Z. More lap is more guide - it is the floor that
+            # matters, not an exact number that has to be retyped every time a
+            # locator changes section.
+            for _j, _what, _floor in ((1, "Y", BATTEN_GUIDE_ENGAGE_Y),
+                                      (2, "Z", BATTEN_GUIDE_ENGAGE_Z)):
                 _lap = (min(_b.extents[_j][1], _rung.extents[_j][1])
                         - max(_b.extents[_j][0], _rung.extents[_j][0]))
-                _want = (BATTEN_Y1 - max(BATTEN_Y0, _rung.extents[1][0])
-                         if _j == 1 else BATTEN_GUIDE_ENGAGE_Z)
+                _want = (min(BATTEN_Y1, _rung.extents[1][1])
+                         - max(BATTEN_Y0, _rung.extents[1][0]) if _j == 1
+                         else _rung.extents[2][1] - _rung.extents[2][0])
                 assert abs(_lap - _want) < TOL, (
                     f"V3 retning: in {_mode} the guide batten laps "
-                    f"'{_rung.label}' by {_lap:.0f} mm in {_what}, want "
-                    f"{_want}")
-                assert _j != 1 or _lap >= BATTEN_GUIDE_ENGAGE_Y - TOL, (
-                    f"V3/X9 retning: in {_mode} the guide batten is only "
-                    f"{_lap:.0f} mm into the shaft beside '{_rung.label}', "
-                    f"under the {BATTEN_GUIDE_ENGAGE_Y} mm a rung end gives it")
+                    f"'{_rung.label}' by {_lap:.0f} mm in {_what}, and the "
+                    f"locator's own extent says {_want:.0f} - the batten "
+                    f"misses part of the piece it is supposed to run beside")
+                assert _lap >= _floor - TOL, (
+                    f"V3/X9/X10 retning: in {_mode} the guide batten is only "
+                    f"{_lap:.0f} mm into the shaft beside '{_rung.label}' in "
+                    f"{_what}, under the {_floor:g} mm a rung end gives it")
         # Rz: the two guides are in the SAME Y band and far apart in X, and
         # they oppose opposite senses of X - which is exactly the condition
         # that makes a turn about Z jam one of them, because a turn drives
@@ -9440,7 +10424,9 @@ if FASTENERS_ON:
             f"V3 retning: the two guides are only {_spread_x:.0f} mm apart in "
             f"X - too close together to take a turn about Z")
     # Y, both ways: the wall behind and the uprights in front. No steel.
-    assert PANEL_Y0 == WALL_Y, "V2 retning: the rear edge is not the wall plane"
+    assert panel.extents[1][0] == PANEL_Y0 == WALL_Y, \
+        f"V2 retning: the built rear edge is at Y {panel.extents[1][0]:g}, " \
+        f"the wall plane is {WALL_Y:g}"
     assert LADDER_Y0 - PANEL_Y1 == PANEL_FIT, \
         "V2 retning: the front edge does not meet the uprights across the fit"
     # Z down: WOOD, and after V3 nothing but wood. The rear seat is the whole
@@ -9633,15 +10619,23 @@ assert max(slat_gaps) <= MAX_SLAT_GAP + TOL, \
 # posts again without thinking about the platform.
 assert len({(round(s.extents[1][0]), round(s.extents[1][1])) for s in bed_slats}) == 1, \
     "W8: the upper slats are supposed to be one length in one plane again"
-assert SLAT_Z0 - BACK_POST_HEIGHT == RAIL_H, \
-    f"W8: the slats start {SLAT_Z0 - BACK_POST_HEIGHT} mm above the back post " \
-    f"tops, expected the rail height {RAIL_H}"
+# X10: `SLAT_Z0 - BACK_POST_HEIGHT == RAIL_H` was RAIL_H == RAIL_H - SLAT_Z0 is
+# RAIL_TOP is RAIL_BOTTOM + RAIL_H, and BACK_POST_HEIGHT is RAIL_BOTTOM. The
+# comment above already conceded it ("by construction") and nominated the loop
+# as the real check, but the loop measured the slats against BACK_POST_EXTENTS,
+# which is itself typed. Both halves read the bodies now.
+_post_top = max(p.extents[2][1] for p in back_posts)
+_slat_bottom = min(s.extents[2][0] for s in bed_slats)
+assert _slat_bottom - _post_top == RAIL_H, \
+    f"W8: the built slats start {_slat_bottom - _post_top:g} mm above the " \
+    f"built back post tops ({_slat_bottom:g} over {_post_top:g}), expected " \
+    f"one rail height {RAIL_H}"
 for s in bed_slats:
-    for pe in BACK_POST_EXTENTS:
+    for bp in back_posts:
         inter = [min(a1, b1) - max(a0, b0)
-                 for (a0, a1), (b0, b1) in zip(s.extents, pe)]
+                 for (a0, a1), (b0, b1) in zip(s.extents, bp.extents)]
         assert min(inter) <= 0, \
-            f"W8: '{s.label}' overlaps the back post at X {pe[0]} by {inter}"
+            f"W8: '{s.label}' overlaps '{bp.label}' by {inter}"
 print(f"OK  D5/W8: {SLAT_COUNT} upper slats {sec(BED_SLAT_T, BED_SLAT_W)} x "
       f"{SLAT_LEN} - ONE length again (v9/W4 had 12 x 847 + 2 x 800) - flush on "
       f"top of both rails, Z {SLAT_Z0}..{SLAT_Z1}, Y {SLAT_Y0}..{SLAT_Y1} with "
@@ -9669,10 +10663,15 @@ assert (SLAT_Y0, SLAT_Y1) == (MATTRESS_STOP_Y0, MATTRESS_STOP_Y1), \
 # the D12 statement is literally true again in both directions.
 assert MATTRESS_W == SLAT_LEN == PLATFORM_DEPTH, \
     "D12: the mattress width and the rail-to-rail platform depth must match"
-assert MATTRESS_Y1 == SLAT_Y1, \
-    f"D12: mattress front edge {MATTRESS_Y1} is not flush with the slat ends {SLAT_Y1}"
-assert MATTRESS_Y0 == SLAT_Y0 == BACK_RAIL_Y0 == WALL_Y, \
-    f"D12/W7: mattress rear edge {MATTRESS_Y0} is not on the wall plane {WALL_Y}"
+# X10: both of these compared aliases of one constant. Measured on the bodies,
+# they are the same two claims and they can now fail.
+assert MATTRESS_BUILT_Y1 == max(s.extents[1][1] for s in bed_slats), \
+    f"D12: the built mattress front edge {MATTRESS_BUILT_Y1:g} is not flush " \
+    f"with the built slat ends " \
+    f"{max(s.extents[1][1] for s in bed_slats):g}"
+assert MATTRESS_BUILT_Y0 == WALL_PLANE_BUILT == WALL_Y, \
+    f"D12/W7: the built mattress rear edge {MATTRESS_BUILT_Y0:g} is not on " \
+    f"the wall plane the bodies make, {WALL_PLANE_BUILT:g}"
 print(f"OK  D12/W8: the {MATTRESS_W} mm mattress is exactly the "
       f"{PLATFORM_DEPTH} mm RAIL-TO-RAIL platform (Y {SLAT_Y0}..{SLAT_Y1}) and "
       f"sits on it - 0 mm of bare slat at either edge, and no strip behind the "
@@ -10357,6 +11356,81 @@ print(f"Note (D7/U5/V2): the one-piece-profiles are gone, both of them. 48x48 "
       f"profiles now.")
 print("Note (D5): the slat cleats are gone; the upper slats are screwed "
       "straight down onto the side rails, one 5x60 per end.")
+
+# ---------------------------------------------------------------------------
+# X10 - THE COMMENTS ARE CHECKED TOO
+# ---------------------------------------------------------------------------
+# A number in a comment is the cheapest documentation this file has and the
+# only kind nothing was reading. Sixteen of them had gone stale - MATTRESS_Z0
+# said 1199 next to a value of 1523, NOSE_LEN said 116 next to 77 - and every
+# one of them had been true once, which is exactly what makes them expensive:
+# a wrong number left standing is a trap, and a wrong number that used to be
+# right is a trap with a provenance.
+#
+# So the file reads its own source and asks. The shape it looks for is the one
+# the file already uses everywhere:
+#
+#       NAME = expression            # <value>[, prose] [history]
+#
+# The comment has to OPEN with the number - "# 1080, to the slats" is a value
+# and "# EN 747 entrapment limit" is not, and neither is "# 36x48 stock", where
+# the digits are a section. Anything in square brackets is HISTORY: `[was 116,
+# 213]`, `[X9: 409]`, and it is skipped, because the whole point of writing the
+# old value down is that it is not the current one.
+#
+# Scalars only, and that is deliberate rather than lazy: a comment on a list
+# ("# 0..98 and 1892..1990") is a sentence about a shape, not a value, and
+# guessing which numbers in it are supposed to be the elements is how a
+# checker starts producing noise instead of findings. Integer comments are
+# allowed to be the value ROUNDED - FIG_TORSO_L is 314,4 and says 314 - and
+# half a millimetre is all the rounding they get.
+#
+# WHAT IT CANNOT SEE: a comment on the second line of a two-line assignment,
+# because the name is not on that line. There are a handful of those and they
+# are the price of a checker small enough to be obviously right.
+_VC_LINE = re.compile(r"^([A-Z_][A-Z0-9_]*)\s*=\s*(?!=)(.+?)\s+#\s*(\S.*)$")
+_VC_HEAD = re.compile(r"^(-?\d+(?:[.,]\d+)?)(?![\dxX×])")
+_VC_SKIPPED = 0
+_VC_CHECKED = 0
+_VC_STALE = []
+with open(__file__, encoding="utf-8") as _fh:
+    for _no, _line in enumerate(_fh, 1):
+        _m = _VC_LINE.match(_line.rstrip("\n"))
+        if not _m:
+            continue
+        _name, _, _comment = _m.groups()
+        _head = _VC_HEAD.match(_comment.split("[")[0].strip())
+        if _head is None:
+            continue
+        if _name not in globals():
+            _VC_SKIPPED += 1
+            continue
+        _val = globals()[_name]
+        if isinstance(_val, bool) or not isinstance(_val, (int, float)):
+            _VC_SKIPPED += 1
+            continue
+        _text = _head.group(1).replace(",", ".")
+        _said = float(_text)
+        # A comment is allowed to be the value ROUNDED TO ITS OWN PRECISION and
+        # no further: "# 314" may stand over 314,4 and "# 50.7" over 50,7073,
+        # but neither may stand over a different number.
+        _dp = len(_text.split(".")[1]) if "." in _text else 0
+        _tol = 0.5 * 10 ** -_dp
+        _VC_CHECKED += 1
+        if abs(_said - float(_val)) > _tol:
+            _VC_STALE.append((_no, _name, _said, float(_val)))
+assert not _VC_STALE, (
+    "X10: stale value comments - the number is not what the name is worth:\n"
+    + "\n".join(f"    line {n}: {k} says {a:g}, and it is {b:g}"
+                 for n, k, a, b in _VC_STALE)
+    + "\nEither fix the number or move it into a [was ...] bracket, which is "
+      "what a value that used to be true is for")
+print(f"OK  X10 verditallene i kommentarene: {_VC_CHECKED} av formen "
+      f"`NAVN = uttrykk  # tall` er lest ut av fila og målt mot verdien "
+      f"navnet faktisk har. Ingen står igjen fra en gammel runde. "
+      f"({_VC_SKIPPED} hoppet over: ikke skalarer, eller navn som ikke "
+      f"finnes på modulnivå. Historikk i [ ] leses ikke)")
+
 
 # ---------------------------------------------------------------------------
 # PARTS SNAPSHOT
