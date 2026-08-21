@@ -12,7 +12,7 @@
 |---:|---:|---:|
 | **1990 mm** | **836 mm** | **2037 mm** |
 
-72 deler · 12 steg (0–11) · 1 person — 2 ved reisning (steg 2 og 4) · passer standard madrass 80 × 200 cm
+78 deler · 13 steg (0–12) · 1 person — 2 ved reisning (steg 2 og 4) · passer standard madrass 80 × 200 cm
 
 Sengen står inntil bakveggen og inntil begge sidevegger, og skrus fast i bakveggen. **Bygg bakfra og utover.**
 
@@ -111,8 +111,8 @@ Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøy
 | | |
 |:---:|---|
 | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **86x** | Treskrue 5×60 forsenket Torx |
+| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **38x** | Treskrue 6×80 forsenket Torx |
 | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="44"> **36x** | Treskrue 5×40 forsenket Torx |
-| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **30x** | Treskrue 6×80 forsenket Torx |
 | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="44"> **14x** | Treskrue 6×120 forsenket Torx |
 | <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="44"> **9x** | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) |
 | <img src="img/beslag/filtknott-d40.svg" alt="Filtknott / møbeltapp ⌀40" height="44"> **8x** | Filtknott / møbeltapp ⌀40 |
@@ -138,17 +138,19 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Hjørnestolpe, bak (veggside) | 36×98 | 1402 | **2** | på stedet |
 | Endebjelke | 36×98 | 836 | **2** | nå |
 | Rekkverksbord, front | 36×98 | 832 | **4** | på stedet |
+| Fotbrettgavl | 36×98 | 272 | **2** | nå |
 | Benkevange, bak (gjennomgående) | 48×68 | 1794 | **1** | nå |
 | Bordbærelekt, bak | 48×68 | 1794 | **1** | nå |
 | Avstivningslekt under plate | 48×68 | 750 | **2** | nå |
 | Benkevange, front (bit) | 48×68 | 642 | **2** | på stedet |
+| Fotbrettbord | 48×68 | 416 | **4** | nå |
 | Rungetrinn | 48×68 | 320 | **5** | nå |
 | Stubbefot | 48×68 | 229 | **4** | på stedet |
 | Bordkloss | 48×68 | 91 | **2** | nå |
 | Kilelekt under platens forkant (skråkappet) | 48×68 | 77 | **2** | nå |
 | Sidevange, øvre | 48×98 | 1984 | **2** | på stedet |
 
-**72 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
+**78 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
 
 **Kapp:** «nå» er delene verkstedet gjør ferdig. «på stedet» er de 22 delene som møter en endevegg eller gulvet — de kappes med overmål og finkappes i rommet. Overmålet står i [kapplista](generated/kappliste.md).
 
@@ -431,6 +433,29 @@ Ledd **J13a**, **J13b** → [beslagliste](generated/beslagliste.md)
 ⚠️ Ettertrekk alle festemidler som kan ettertrekkes.
 
 [Steg 11 i ord](generated/byggesteg.md#steg-11--madrass-og-puter)
+
+---
+
+# 12
+
+## Fotbrettet
+
+![Steg 12](img/steg-12.png)
+
+| Ant. | Del | Dim. | Lengde |
+|---:|---|---|---:|
+| **4×** | Fotbrettbord | 48×68 | 416 |
+| **2×** | Fotbrettgavl | 36×98 | 272 |
+
+| | |
+|:---:|---|
+| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **8x** | Treskrue 6×80 |
+
+Ledd **J18** → [beslagliste](generated/beslagliste.md)
+
+⚠️ Mål dekkets overkant: 146 mm over gulvet.
+
+[Steg 12 i ord](generated/byggesteg.md#steg-12--fotbrettet)
 
 ---
 

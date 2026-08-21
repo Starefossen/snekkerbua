@@ -441,3 +441,35 @@ Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikk
 * Mål spalten fra madrassens overside opp til undersiden av det nederste rekkverksbordet. Den skal være 60–75 mm. Er den mindre, er madrassen for tykk.
 * Sett datoen for første ettertrekk i kalenderen: om fire uker, og deretter en gang i året.
 
+## Steg 12 — Fotbrettet
+
+Det siste stykket er ikke en del av sengen. Det er en krakk som står under platen, og den er der fordi pulten på 700 står 280 mm over et sete som er laget for voksne — barnet får knærne inn under platen, men føttene når ikke gulvet. Høyden er ikke valgt: den er den eneste av de ni kurvene sengens egne dimensjoner kan lage som lar puta bære låret uten at putekanten skjærer inn i det. Se X14.
+
+**Deler:** 4× Fotbrettbord 48×68 × 416 · 2× Fotbrettgavl 36×98 × 272
+
+**Festemidler:** 8× Treskrue 6×80 forsenket Torx
+
+**Ledd:** J18 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+
+**Festeplassering — mål på delen:**
+
+| Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
+|---|---|---|---|---:|
+| **J18** 1× Treskrue 6×80 | fotbrettbord 48×68 × 416, oversiden | 18 mm fra ytterenden | midt på (34 mm fra hver side) | — |
+
+**Slik gjør du:**
+
+1. Kapp to gavler 36x98 × 272 mm og 4 dekkbord 48x68 × 416 mm. Alt sammen er rest fra bordene du allerede har kjøpt.
+1. Sett de to gavlene PÅ HØYKANT på et plant underlag, 416 mm fra utside til utside — det er nøyaktig dekkbordenes lengde, så de flukter i begge ender.
+1. Legg dekkbordene tvers over, kant i kant, og la endene flukte med gavlenes yttersider. Ingen overheng: hele dekket skal stå over gavlene, ellers vipper krakken når noen tråkker ytterst.
+1. Forbor ⌀6 gjennom hvert bord og ⌀4 videre ned i gavlens overkant. Én treskrue 6×80 per landing, 8 i alt (J18), midt i bordet og midt i gavlens tykkelse.
+1. Forsenk hodene UNDER flaten og pusse over. Dette er en flate bare føtter står på, ofte uten sokker.
+1. Skyv brettet inn under platen, midt i bukta mellom benkene. Det skal ikke skrus fast til noe: det er en løs krakk, og gulvet foran stigen skal kunne feies.
+
+**Sjekk før du går videre:**
+
+* Mål dekkets overkant: 146 mm over gulvet.
+* Sett deg på benken med knærne under platen og sålene på brettet. Låret skal ligge på puta hele veien ut til putekanten, og leggen skal stå i lodd.
+* Sjekk at brettet ikke stikker ut i noen av de to gangpassasjene ved stigen — det skal stå mellom X 787 og 1203, altså i bredden mellom stigevangenes yttersider.
+* Vipp på brettet. Det skal ikke vippe: dekket er hele fotavtrykket.
+

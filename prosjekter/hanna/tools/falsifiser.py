@@ -64,6 +64,9 @@ class Rig:
         self.pool = check_tall.achievable(self.M, self.log)
         with open(os.path.join(ROOT, "README.md"), encoding="utf-8") as fh:
             self.readme = fh.read()
+        with open(os.path.join(ROOT, "docs", "generated", "kappliste.md"),
+                  encoding="utf-8") as fh:
+            self.kappliste = fh.read()
         self.prose = {}
         for rel in check_tall.PROSE_FILES:
             with open(os.path.join(ROOT, rel), encoding="utf-8") as fh:
@@ -115,6 +118,16 @@ def run_prose(rig, texts=None):
         check_tall.check_prose(rig.pool, texts or rig.prose)
 
 
+def run_kappliste(rig, text=None):
+    """X14: the cut list's own ink. Every row is checked against the POSITION
+    printed in the same row - a piece under «kapp nå» may not show an X that
+    reaches a wall or a Z that starts on the floor - and X14 added the one
+    exception the rule has: a LOOSE piece stands on the floor and is still the
+    workshop's, so its row has to say «(løs del)» out loud."""
+    with contextlib.redirect_stdout(io.StringIO()):
+        T._assert_kappliste_ink(rig.M, rig.kappliste if text is None else text)
+
+
 def run_value_comments(rig, source=None):
     src = rig.M.VALUE_COMMENT_SOURCE if source is None else source
     stale, checked, _skip = rig.M.stale_value_comments(src, vars(rig.M))
@@ -128,6 +141,7 @@ CONTROLS = [
     ("README-tallene", run_readme),
     ("tallsveipet over håndprosaen", run_prose),
     ("X10 verdikommentarene", run_value_comments),
+    ("X14 kapplistas løse deler", run_kappliste),
 ]
 
 
@@ -211,8 +225,8 @@ def inj_readme_retells_a_count(rig):
 
 def inj_readme_quotes_a_line_the_model_lost(rig):
     """Keep quoting a printed line the model no longer prints."""
-    run_readme(rig, _sub(rig.readme, "181 festemidler plassert i 22 ledd",
-                         "181 festemidler plassert i 23 ledd"))
+    run_readme(rig, _sub(rig.readme, "189 festemidler plassert i 23 ledd",
+                         "189 festemidler plassert i 24 ledd"))
 
 
 def inj_prose_keeps_an_old_number(rig):
@@ -256,11 +270,46 @@ def inj_prose_moves_a_computed_stress(rig):
     M/W on a member the model measures - and it was whitelisted for the same
     reason. 12,1 MPa is the ledger with somebody leaning hard on the table,
     vedlegg A's own governing bending row.
+
+    [X14: the nudge was 12,4 and had to move to 12,6. 12,4 stopped being a
+     miss the moment the cut list grew - 36x98 went from 11,88 to 12,42
+     running metres, and the sweep's tolerance at one decimal is 0,05. That
+     is the coarseness this file admits to, and it was the FALSIFIER that
+     caught it drifting, not a reader.]
     """
     texts = dict(rig.prose)
     texts["ASSEMBLY.md"] = _sub(texts["ASSEMBLY.md"], "σ ≈ 12,1 MPa",
-                                "σ ≈ 12,4 MPa")
+                                "σ ≈ 12,6 MPa")
     run_prose(rig, texts)
+
+
+def inj_kappliste_hides_the_loose_mark(rig):
+    """Let a loose piece that stands on the floor pass as an ordinary one.
+
+    THIS IS THE X14 GUARD. The cut list is split by a rule - the room finishes
+    what reaches a wall or stands on the floor - and the footrest is the first
+    piece in this bed that stands on the floor and is NOT the room's, because
+    nobody screws it down. That exception is written into the row itself, so
+    the ink can be read back and held to it. Rub the mark out and the row says
+    «kapp nå» while its own Z column says 0: the check has to bite, or the
+    exception is a thing the code knows and the paper does not.
+    """
+    run_kappliste(rig, _sub(rig.kappliste, f" {T.LOOSE_MARK} |", " |"))
+
+
+def inj_kappliste_moves_a_loose_piece_off_the_floor(rig):
+    """Mark an ordinary workshop piece as loose.
+
+    The other half of the same rule: the mark is not a licence. A row that
+    carries it has to BE a piece standing on the floor and nowhere near a
+    wall, and a piece that hangs in the air with the mark on it is a lie the
+    other way round.
+    """
+    row = next(l for l in rig.kappliste.split("\n")
+               if l.startswith("| Bordkloss "))
+    run_kappliste(rig, _sub(rig.kappliste, row,
+                            row.replace("| Bordkloss ",
+                                        f"| Bordkloss {T.LOOSE_MARK} ", 1)))
 
 
 def inj_stale_value_comment(rig):
@@ -300,6 +349,10 @@ INJECTIONS = [
      "X12 referanse-ende", inj_measured_from_the_foot),
     ("et veggfeste oppgir X-mål som fasit",
      "X12 stenderne", inj_wall_fixing_gets_an_x),
+    ("kapplista skjuler at en løs del står på gulvet",
+     "X14 løse deler", inj_kappliste_hides_the_loose_mark),
+    ("kapplista merker en verksteddel som løs",
+     "X14 løse deler", inj_kappliste_moves_a_loose_piece_off_the_floor),
     ("README gjenforteller et artefakttall som har flyttet seg",
      "README-tall", inj_readme_retells_a_count),
     ("README siterer en linje modellen ikke lenger skriver",

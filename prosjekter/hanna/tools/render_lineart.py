@@ -2025,7 +2025,8 @@ def remap(plines, src_c, src_r, dst_c, dst_r):
 # ---------------------------------------------------------------------------
 def universe(G):
     return {p.label: p for p in
-            list(G.parts) + [G.panel_bed] + list(G.battens_bed) + [G.mattress]
+            list(G.parts) + [G.panel_bed] + list(G.battens_bed)
+            + list(G.FOOTREST_PARTS) + [G.mattress]
             + list(G.CUSHIONS_BED)}
 
 
@@ -2037,7 +2038,7 @@ def full_bed(G):
     """
     from build123d import Compound
     return Compound(children=list(G.parts) + [G.panel_bed]
-                    + list(G.battens_bed))
+                    + list(G.battens_bed) + list(G.FOOTREST_PARTS))
 
 
 def table_bed(G):
@@ -2050,7 +2051,7 @@ def table_bed(G):
     """
     from build123d import Compound
     return Compound(children=list(G.parts) + [G.panel_table]
-                    + list(G.battens_table))
+                    + list(G.battens_table) + list(G.FOOTREST_PARTS))
 
 
 def comp(parts):
@@ -4764,6 +4765,10 @@ def _bruk_dims(G, mode):
         # nearest approach of body to plate, not a folded leg stopping short.
         ("h", G.FIG_SIT_Z + 20, G.panel_table.extents[0][1],
          right.extents[0][0], G.LEG_TO_TABLE, "", "top"),
+        # X14: and the floor the soles actually stand on. It is the one
+        # dimension on this sheet that is a piece of wood rather than a gap.
+        ("v", G.FOOTREST_DECK_X[1] + 40, 0, G.FOOTREST_TOP,
+         G.FOOTREST_TOP, "fotbrett", "side"),
     ]
 
 
@@ -4778,7 +4783,9 @@ BRUK_NOTE = {
         "Alminnelig sitting, og det er et måleresultat: platen ligger "
         "{over:.0f} mm over seteflaten og har {under:.0f} mm under seg, så "
         "knærne går inn under den. Tallet i sjakten er {leg:.0f} mm — "
-        "nærmeste kropp til platen.",
+        "nærmeste kropp til platen. Sålene står på fotbrettet (X14) og "
+        "henger ikke: {foot:.0f} mm over gulvet, leggen i lodd og foten "
+        "flatt.",
 }
 
 
@@ -4857,7 +4864,8 @@ def render_bruk(G, out_dir, width):
         rows += page.wrap(
             BRUK_NOTE[mode].format(
                 over=G.TABLE_OVER_SEAT, under=G.TABLE_UNDER_SEAT,
-                thigh=2 * G.FIG_THIGH_R, leg=G.LEG_TO_TABLE), col, note_sz)
+                thigh=2 * G.FIG_THIGH_R, leg=G.LEG_TO_TABLE,
+                foot=G.FOOTREST_TOP), col, note_sz)
         y = top - T.BADGE_R * 1.7
         for row in rows:
             page.text((page.x0 + T.BADGE_R, y), row, note_sz)

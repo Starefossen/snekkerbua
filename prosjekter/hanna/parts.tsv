@@ -40,14 +40,20 @@ Bench Stub Leg Front Left	posts	577	645	704	752	0	229
 Bench Stub Leg Front Right	posts	1345	1413	704	752	0	229
 Child Lying Lower (bed mode)	figures	587.906	1870.72	111.467	592.533	398.04	663.305
 Child Lying Upper (bed mode)	figures	119.28	1402.09	111.467	592.533	1621.04	1886.3
-Child Seated Left (table mode)	figures	383.6	957.46	187.6	516.4	133.556	1073.45
-Child Seated Right (table mode)	figures	1032.54	1616.36	187.6	516.4	133.556	1074
+Child Seated Left (table mode)	figures	383.6	943.526	187.6	516.4	146	1073.45
+Child Seated Right (table mode)	figures	1046.47	1616.36	187.6	516.4	146	1074
 Corner Post Back Left	posts	0	98	-48	-12	0	1402
 Corner Post Back Right	posts	1892	1990	-48	-12	0	1402
 Corner Post Front Left	posts	0	98	752	788	0	2037
 Corner Post Front Right	posts	1892	1990	752	788	0	2037
 End Beam Left	rails	98	134	-48	788	1304	1402
 End Beam Right	rails	1856	1892	-48	788	1304	1402
+Footrest Cheek Left	boards	787	823	216	488	0	98
+Footrest Cheek Right	boards	1167	1203	216	488	0	98
+Footrest Deck Board_1	boards	787	1203	216	284	98	146
+Footrest Deck Board_2	boards	787	1203	284	352	98	146
+Footrest Deck Board_3	boards	787	1203	352	420	98	146
+Footrest Deck Board_4	boards	787	1203	420	488	98	146
 Guard Rail Front Left_1	boards	3	835	716	752	1708	1806
 Guard Rail Front Left_2	boards	3	835	716	752	1881	1979
 Guard Rail Front Right_1	boards	1155	1987	716	752	1708	1806

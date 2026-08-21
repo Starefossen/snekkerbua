@@ -46,6 +46,89 @@ back corner posts into the back rail plane. Consequences you cannot ignore:
     (1700), which costs the 48 mm of depth v10 just won - and, on a 36 mm
     post, 36 rather than 48 of it. Flagged for the docs round.
 
+DESIGN INTENT (v19 - "the floor comes up to the child")
+--------------------------------------------------------------------------
+X14  THE OPEN POINT X9 LEFT IS CLOSED, AND IT IS CLOSED WITH WOOD. X9 bought
+    the pult at 700 and wrote down what it could not pay for: "there is no
+    footrest under the plate - the soles hang 134 mm off the floor - and that
+    is written down as an open point rather than drawn away". This round puts
+    something under them, and the whole of the round is one question: WHAT
+    DECIDES THE HEIGHT. A footstool is the easiest thing in this bed to pick a
+    number for, which is exactly why it is not allowed to be picked.
+
+    THE HEIGHT IS A BAND, AND THE BAND IS MEASURED ON THE SEAT. Two right
+    angles are not negotiable - the shank stands plumb and the foot lies flat,
+    which is what a seated posture IS - so the leg has exactly one free
+    variable left, how far the thigh tips down off the hip, and the height
+    under the sole is that variable read off. The two ways a footrest is wrong
+    are then both about the SEAT, and both of them are the cushion:
+      TOO HIGH  the thigh comes off the cushion and the child sits on his sit
+                bones with his knees up. Test: the thigh's underside where the
+                cushion ENDS may not be above the cushion's face.
+      TOO LOW   the thigh tips so far that the cushion's front edge digs into
+                it. Test: the thigh may not press deeper into the foam than
+                the buttock already does - and the buttock's own depth is not
+                typed either, it is where the hip sphere sits in the seat.
+    Solved off the built body and the built cushion, that is 134,8 .. 153,9 mm.
+
+    AND THE WOOD PICKS ONE NUMBER OUT OF THE BAND. A stool is two courses:
+    something to stand ON, and something to stand it on. The deck is a board
+    laid FLAT (a board on edge is a rail, not a floor for a sole) and the cheek
+    is a board ON EDGE (a board laid flat is not a cheek, and a stick stood on
+    end is a leg with a footprint too small to stop a heel tipping it). Three
+    on-edge heights by three flat thicknesses over the five sections this bed
+    already buys is NINE stacks, and the band admits exactly one: 98 + 48 =
+    146. Which board of that height and that thickness is two more rules and no
+    taste - the cheek carries the deck screw on its own centre line, so 23 mm
+    cannot (11,5 < 3d) and 36 is the thinner of the two that can; the deck is
+    laid in boards across the depth, so the narrower board is the one that can
+    be built closest to the depth the two feet ask for.
+
+    THE PIECES: two cheeks 36x98 x 272 on edge and four deck boards 48x68 x 416
+    laid flat, edge to edge, eight 6x80 (J18) and NOT ONE SCREW INTO THE BED.
+    Its width is the bay D13 leaves between the two walk-arounds - the footrest
+    takes the middle of the open floor and gives both passages back whole - and
+    its depth is the two soles' own spacing rounded up to whole boards. Not one
+    of those four numbers was chosen.
+
+    LOOSE, AND THAT IS A DECISION WITH A MEASUREMENT BEHIND IT. F1 has already
+    measured that there is no fixed wood in this bay to screw anything to: 689
+    mm outboard, 1057 inboard, 752 behind, nothing at all in front. A FIXED
+    footrest here would also stand in D13's open front floor, which is the
+    thing you put your feet in when the plate is a sofa and the thing you walk
+    through to reach the ladder. So the stool is furniture: it stands under the
+    plate in BOTH positions - 151 mm under the bed-mode panel, 536 under the
+    desk - it is never in the sleeping surface (which starts at 315 and 420,
+    and the stool tops out at 146), and it never has to be parked. If the
+    family ever wants it gone it fits the box room without having been designed
+    to, and that is stated as a fact rather than promised as a plan, because
+    the box room is promised to boxes. `LOOSE_PARTS` is no longer a label
+    either: an assert on the finished fastener list refuses to let any screw
+    cross out of a loose sub-assembly.
+
+    AND THE POSE IS NOT TYPED ANY MORE. X9's seated legs had a typed thigh
+    angle, a shank two degrees off plumb and feet HANGING - toes down 15
+    degrees, which is what a foot does with nothing under it. The shank is
+    plumb now, the foot is flat, and the thigh angle is SOLVED so that the sole
+    lands on the deck. Move the deck and the leg follows.
+
+    WHAT THIS ROUND HAD TO STOP QUOTING. The anthropometry table calls
+    popliteal height 0,28 H and the comment over it claimed all five reference
+    dimensions came back out of the built solid. Three do. Popliteal height and
+    sitting knee height never did and cannot: knee joint to sole on this body
+    is 313,2 mm against the table's 336, and the 22,8 is not a mystery - 16,8
+    because the foot is a box centred on the ankle, so a flat foot gives back
+    half a foot's thickness where the table says one ankle height, and 6,0
+    because shank plus ankle sums to 330. The footrest is therefore NOT derived
+    off 0,28 H; it is derived off the seat and off the body that was built. The
+    arithmetic is printed and asserted rather than left in a comment.
+
+    AND THE TABLE MOVED UP THE FILE. The anthropometry used to sit below the
+    whole bed, because nothing the bed was made of came out of it - the body
+    was drawn against finished wood and measured, never the other way round.
+    The footrest is the first piece of this bed whose SIZE is the body's, so
+    the table has to be readable before the saw.
+
 DESIGN INTENT (v18 - "the review classes become machinery")
 --------------------------------------------------------------------------
 X12  NOTHING IN THE BED MOVED. WHAT MOVED IS WHO DOES THE CHECKING. The three
@@ -339,6 +422,9 @@ X9  THE PULT AT 700 IS BUILT, AND WHAT IT COST IS THE EVEN LADDER. X8 (below,
     730 over the 430 chair sold with it is 300), and the builder chose the
     shop. There is no footrest under the plate - the soles hang 134 mm off the
     floor - and that is written down as an open point rather than drawn away.
+    [X14 CLOSED IT. There is a footrest: a loose board on two cheeks, deck top
+     146, and the soles STAND on it. The 134 was the air under a hanging foot;
+     the 146 is where a flat sole under a plumb shank lands. See X14 above.]
 
 DESIGN INTENT (v15 - "the wall gets a datum, the bench gets a room, and the
                       desk gets an answer")
@@ -4099,7 +4185,7 @@ def mode_parts(panel):
     no-overlap assert on sight.
     """
     return (parts + [mattress] + CUSHIONS[id(panel)] + [panel]
-            + PANEL_BATTENS[id(panel)])
+            + PANEL_BATTENS[id(panel)] + FOOTREST_PARTS)
 
 
 def built(stem):
@@ -4128,6 +4214,7 @@ def is_soft(p):
     the model that is bought as foam rather than cut as timber. Every wood-only
     list in this file filters on THIS and not on identity with `mattress`."""
     return getattr(p, "group", None) == "mattress"
+
 
 
 # ===========================================================================
@@ -4183,6 +4270,8 @@ _PART = {
     "panel":       r"Movable Panel \(bed mode\)",
     "batten":      r"Panel Stiffener Batten (?:Left|Right) \(bed mode\)",
     "nose":        r"Panel Front Batten (?:Left|Right) \(bed mode\)",
+    "foot_deck":   r"Footrest Deck Board_\d+",
+    "foot_cheek":  r"Footrest Cheek (?:Left|Right)",
 }
 
 # The Norwegian name of each family, for the captions the emitters print.
@@ -4200,6 +4289,7 @@ PART_NO = {
     "end_slat": "endespile", "end_cleat": "endelist",
     "panel": "løs plate", "batten": "avstivningslekt",
     "nose": "fremre kilelekt",
+    "foot_deck": "fotbrettbord", "foot_cheek": "fotbrettgavl",
 }
 
 
@@ -4274,6 +4364,256 @@ def fastener_size(name):
     if not m:
         return (5.0, 50.0)
     return (float(m.group(1)), float(m.group(2)))
+
+
+# ---------------------------------------------------------------------------
+# THE REFERENCE BODY'S OWN TABLE
+# ---------------------------------------------------------------------------
+# X14 MOVED THIS BLOCK UP HERE, and the move is the point of the round. Until
+# now the anthropometry sat below the whole bed, because nothing the bed was
+# made of came out of it: the body was drawn against finished wood and
+# measured, never the other way round. The footrest below is the first piece of
+# this bed whose SIZE is the body's, so the table has to be readable before the
+# saw. The poses themselves stay where they were - only the constants move.
+#
+# ANTHROPOMETRY. Public domain: AnthroKids - the digitised 1975/1977 Snyder et
+# al. child anthropometry studies, math.nist.gov/~SRessler/anthrokids/. Every
+# segment below is a fraction of standing height H, and H is set at 1200 mm -
+# the 50th percentile for about 6-8 years, which is the age EN 747 opens the
+# upper bunk at. The five key dimensions the fractions are calibrated on are
+# sitting height 0.545 H, popliteal (knee-hollow) height 0.28 H, sitting knee
+# height 0.30 H, shoulder breadth 0.21 H and head height H/6.
+#
+# X14 - AND THREE OF THE FIVE COME BACK OUT OF THE SOLID, NOT FIVE. The comment
+# that stood here said all five did. Sitting height, shoulder breadth and head
+# height are asserted on the built body further down and always were; POPLITEAL
+# and SITTING KNEE HEIGHT never were, and cannot be, because the built leg does
+# not reproduce them. The arithmetic is written out at FOOTREST_POPLITEAL_LOSS
+# below rather than left as a comment nobody could check.
+FIGURE_H = 1200.0                # standing height, mm  (EN 747 alder 6+)
+
+
+def _fh(k):
+    return k * FIGURE_H
+
+
+# --- the segment table, every entry a fraction of H -------------------------
+FIG_HEAD_R = _fh(0.0833)     # 100  head height H/6 = 200 IS the diameter
+FIG_NECK_R = _fh(0.030)      # 36
+FIG_NECK_L = _fh(0.052)      # 62
+FIG_TORSO_R = _fh(0.075)     # 90   between chest depth and chest breadth
+FIG_TORSO_L = _fh(0.262)     # 314  hip joint -> shoulder joint
+FIG_HIP_R = _fh(0.075)       # 90
+FIG_UARM_R = _fh(0.032)      # 38
+FIG_UARM_L = _fh(0.170)      # 204
+FIG_FARM_R = _fh(0.027)      # 32
+FIG_FARM_L = _fh(0.160)      # 192
+FIG_THIGH_R = _fh(0.048)     # 58
+FIG_THIGH_L = _fh(0.245)     # 294
+FIG_SHANK_R = _fh(0.038)     # 46
+FIG_SHANK_L = _fh(0.236)     # 283
+FIG_ANKLE_Z = _fh(0.039)     # 47   sole -> ankle joint
+FIG_FOOT_L = _fh(0.150)      # 180
+FIG_FOOT_W = _fh(0.055)      # 66
+FIG_FOOT_H = _fh(0.050)      # 60
+FIG_SHOULDER_Y = _fh(0.105)  # 126  half of shoulder breadth 0.21 H
+FIG_HIP_Y = _fh(0.050)       # 60
+FIG_SINK = 12                # mm the body settles into 100 mm of foam
+
+# The five reference dimensions the table is calibrated on.
+FIG_SITTING_H = _fh(SIT_RATIO)   # 654  seat -> crown
+FIG_POPLITEAL = _fh(0.28)    # 336  floor -> knee hollow, seated
+FIG_KNEE_SIT = _fh(0.30)     # 360  floor -> top of knee, seated
+FIG_SHOULDER_W = _fh(0.21)   # 252
+FIG_HEAD_H = FIGURE_H / 6    # 200
+
+# WHERE THE SEATED BODY SITS. These four were down with the poses; the footrest
+# is derived off them, so they come up with the table.
+#
+# BENCH DEPTH is 800 mm and the bench is the lower bed, so a child sitting on
+# it sits in the middle of it: Y = 352 in both directions.
+FIG_BENCH_Y = (LOWER_SLEEP_Y0 + LOWER_SLEEP_Y0 + LOWER_SLEEP_DEPTH) / 2  # 352
+# SEATED: the hip joint rides SIT_RISE above the cushion face, not one hip
+# radius above it - a 100 mm foam cushion takes the buttock in. The number is
+# not chosen, it is solved: SIT_RISE is what puts the crown exactly one
+# sitting height (0.545 H) above the seat.
+FIG_SIT_RISE = FIG_SITTING_H - FIG_TORSO_L - FIG_NECK_L - 2 * FIG_HEAD_R  # 77
+SEAT_FACE = BENCH_TOP + CUSHION_T                      # 420, the sofa seat [X3: 382]
+FIG_SIT_Z = SEAT_FACE + FIG_SIT_RISE                   # 497, hip joint
+# AND THE HIP MOVES FORWARD OFF THE BACK CUSHION, because that is what sitting
+# AT something means. The number is not chosen: put the knee one thigh radius
+# in under the plate's own edge and the hip is one thigh behind it.
+FIG_SEAT_X = PANEL_X0 + FIG_THIGH_R - FIG_THIGH_L      # 472  [X2: 288, on the pad]
+FIG_DESK_SPLAY = 6           # deg the two thighs splay, so two knees read as two
+FIG_HIP_X = FIG_SEAT_X + 2                             # 474, the near child's hip
+
+
+# ---------------------------------------------------------------------------
+# X14 - THE FOOTREST, AND ITS HEIGHT IS A BAND WITH ONE STACK IN IT
+# ---------------------------------------------------------------------------
+# X9 built the pult at 700 and wrote down what it could not pay for: "there is
+# no footrest under the plate - the soles hang 134 mm off the floor - and that
+# is written down as an open point rather than drawn away." This block is that
+# point closed, and the first thing it has to do is refuse to pick a number.
+#
+# THE THREE ANGLES THAT ARE NOT NEGOTIABLE. A seated child's shank stands
+# PLUMB and the foot lies FLAT: right angles at the knee and at the ankle, and
+# they are the definition of the posture, not a preference. Everything else
+# about the leg is then one free variable - how far the thigh tips down off the
+# hip - and the height of the thing under the sole is that variable read off.
+# With the thigh dead level the sole lands here:
+FOOTREST_SOLE_LEVEL = FIG_SIT_Z - FIG_SHANK_L - FIG_FOOT_H / 2     # 184
+# and every millimetre the thigh tips down takes the sole down with it.
+#
+# THE TWO WAYS A FOOTREST IS WRONG, AND BOTH OF THEM ARE MEASURED ON THE SEAT.
+# The seat is a 100 mm foam cushion that ends at the bench end, and the thigh
+# lies across it:
+#   TOO HIGH - the thigh comes off the cushion altogether and the child sits on
+#              his sit bones with his knees up. The test is contact: the
+#              thigh's underside where the cushion ENDS may not be above the
+#              cushion's face.
+#   TOO LOW  - the thigh tips down so far that the cushion's front edge digs
+#              into it. The test is depth: the thigh may not press further into
+#              the foam than the buttock already does, and the buttock's own
+#              depth is not a typed number either - it is where the hip sphere
+#              sits in the seat.
+SEAT_EDGE_X = SEAT_CUSHION_X[0] + SEAT_CUSHION_LEN     # 663, cushion front edge
+FIG_THIGH_RUN = SEAT_EDGE_X - FIG_HIP_X                # 189, hip to that edge
+FIG_BUTTOCK_SINK = SEAT_FACE - (FIG_SIT_Z - FIG_HIP_R)  # 12.7, hip in the foam
+
+
+def footrest_thigh_pitch(top):
+    """Degrees the thigh tips DOWN to land the sole on a support at `top`."""
+    return math.degrees(math.asin((FOOTREST_SOLE_LEVEL - top) / FIG_THIGH_L))
+
+
+def footrest_thigh_at_seat_edge(top):
+    """Z of the thigh's underside where the seat cushion ends."""
+    t = math.radians(footrest_thigh_pitch(top))
+    return (FIG_SIT_Z - FIG_THIGH_RUN * math.tan(t)
+            / math.cos(math.radians(FIG_DESK_SPLAY)) - FIG_THIGH_R)
+
+
+def _footrest_top_for(underside):
+    """The support height that puts the thigh's underside at `underside`."""
+    drop = FIG_SIT_Z - FIG_THIGH_R - underside
+    t = math.atan(drop * math.cos(math.radians(FIG_DESK_SPLAY)) / FIG_THIGH_RUN)
+    return FOOTREST_SOLE_LEVEL - FIG_THIGH_L * math.sin(t)
+
+
+# The band, both ends solved off the body and the cushion, neither one typed.
+FOOTREST_MIN = _footrest_top_for(SEAT_FACE - FIG_BUTTOCK_SINK)   # 135
+FOOTREST_MAX = _footrest_top_for(SEAT_FACE)                      # 154
+assert FOOTREST_MIN < FOOTREST_MAX, \
+    "X14: the two ways of being wrong have crossed - there is no legal height"
+
+# AND NOW THE WOOD, WHICH IS WHERE THE BAND STOPS BEING A RANGE. A stool is two
+# courses: something to stand ON, and something to stand it on. The deck is a
+# board laid FLAT, because a board on edge is a rail and not a floor for a
+# sole; the cheek is a board ON EDGE, because a board laid flat is not a cheek
+# and a stick stood on end is a leg with a footprint too small to keep a heel
+# load from tipping it. That leaves exactly nine stacks - three on-edge heights
+# by three flat thicknesses, over the five sections this bed already buys - and
+# the band above admits one of them.
+TIMBER_SECTIONS = ((BOARD23_T, BOARD36_W), (BOARD36_T, BOARD36_W),
+                   (BLOCK_T, BLOCK_H), (BENCH_RAIL_T, BENCH_RAIL_H),
+                   (RAIL_T, RAIL_H))
+def footrest_stacks():
+    """The nine two-course stacks this bed's own five sections can make.
+
+    A function and not a module constant ON PURPOSE: nine sums of two board
+    dimensions are nine numbers the tallsveip in tools/check_tall.py would
+    otherwise have to treat as things the model can produce, and a pool that
+    grows by arithmetic on its own members is the trap that file already
+    refused once (see the note about pairwise differences there).
+    """
+    return sorted({(h, t) for _t, h in TIMBER_SECTIONS
+                   for t, _h in TIMBER_SECTIONS})
+
+
+FOOTREST_LEGAL = [(h, t) for h, t in footrest_stacks()
+                  if FOOTREST_MIN <= h + t <= FOOTREST_MAX]
+assert len(FOOTREST_LEGAL) == 1, (
+    f"X14: the band {FOOTREST_MIN:.1f}..{FOOTREST_MAX:.1f} admits "
+    f"{len(FOOTREST_LEGAL)} of the {len(footrest_stacks())} stacks this "
+    f"bed's own boards make ({[h + t for h, t in FOOTREST_LEGAL]}) - the "
+    f"height stops being derived the moment there is a choice")
+FOOTREST_CHEEK_H, FOOTREST_DECK_T = FOOTREST_LEGAL[0]              # 98, 48
+FOOTREST_TOP = FOOTREST_CHEEK_H + FOOTREST_DECK_T                  # 146
+
+# WHICH BOARD, of the ones that offer that height and that thickness, is two
+# more rules and no taste. The deck is screwed DOWN into the cheek's top edge,
+# so the cheek's thickness has to carry the screw on its own centre line with
+# 3d of edge: 23 mm cannot (11,5 < 18) and 36 and 48 can, and the thinner of
+# those two is the one that spends less wood. The deck is laid in boards across
+# the depth, so the NARROWER board is the one that can be built closest to the
+# depth the two feet actually ask for.
+FOOTREST_SCREW = "Treskrue 6×80 forsenket Torx"
+FOOTREST_SCREW_D = fastener_size(FOOTREST_SCREW)[0]                # 6
+FOOTREST_CHEEK_T = min(t for t, h in TIMBER_SECTIONS
+                       if h == FOOTREST_CHEEK_H
+                       and t / 2 >= min_edge(FOOTREST_SCREW_D))    # 36
+FOOTREST_DECK_W = min(h for t, h in TIMBER_SECTIONS
+                      if t == FOOTREST_DECK_T)                     # 68
+
+# WHERE IT STANDS. The floor between the two benches is 700 mm wide and D13
+# keeps 142 mm of it clear at each side - the two walk-arounds beside the
+# ladder, which are how you get in to sit down and how you get to the ladder
+# foot. What is left is the bay between the uprights' OUTER faces, and the
+# footrest is exactly as wide as that bay: it takes the middle and gives back
+# both passages whole.
+FOOTREST_X0 = LADDER_LEFT_X                                    # 787
+FOOTREST_X1 = LADDER_RIGHT_X + UPRIGHT_W                       # 1203
+FOOTREST_LEN = FOOTREST_X1 - FOOTREST_X0                       # 416
+# ...and as deep as the two soles stand apart, rounded up to whole boards. The
+# thighs splay FIG_DESK_SPLAY, so the two feet stand FIG_HIP_Y + the splay's
+# own reach either side of the middle of the bench.
+FOOTREST_PITCH = math.radians(footrest_thigh_pitch(FOOTREST_TOP))
+FOOTREST_FOOT_Y = (FIG_HIP_Y + FIG_THIGH_L * math.cos(FOOTREST_PITCH)
+                   * math.sin(math.radians(FIG_DESK_SPLAY))
+                   + FIG_FOOT_W / 2)                           # 123
+FOOTREST_BOARDS = math.ceil(2 * FOOTREST_FOOT_Y / FOOTREST_DECK_W)   # 4
+FOOTREST_DEPTH = FOOTREST_BOARDS * FOOTREST_DECK_W             # 272
+FOOTREST_Y0 = FIG_BENCH_Y - FOOTREST_DEPTH / 2                 # 216
+FOOTREST_CHEEK_X = [FOOTREST_X0, FOOTREST_X1 - FOOTREST_CHEEK_T]  # 787 / 1167
+
+# THE PIECES. Two cheeks and four deck boards, and not one screw into the bed:
+# there is nothing at floor level in this bay to screw it to, and F1 has
+# already measured how far away the nearest fixed wood is in every direction.
+# It is a loose piece of furniture that lives under the plate - under the desk
+# in table mode with the feet on it, under the lower bed in bed mode, 151 mm
+# below the panel either way.
+footrest_cheeks = [
+    block(x, FOOTREST_Y0, 0,
+          FOOTREST_CHEEK_T, FOOTREST_DEPTH, FOOTREST_CHEEK_H,
+          f"Footrest Cheek {'Left' if i == 0 else 'Right'}", "boards",
+          ("Footrest cheek (X14)", sec(FOOTREST_CHEEK_T, FOOTREST_CHEEK_H),
+           FOOTREST_DEPTH))
+    for i, x in enumerate(FOOTREST_CHEEK_X)]
+footrest_deck = [
+    block(FOOTREST_X0, FOOTREST_Y0 + j * FOOTREST_DECK_W, FOOTREST_CHEEK_H,
+          FOOTREST_LEN, FOOTREST_DECK_W, FOOTREST_DECK_T,
+          f"Footrest Deck Board_{j + 1}", "boards",
+          ("Footrest deck board (X14)", sec(FOOTREST_DECK_T, FOOTREST_DECK_W),
+           FOOTREST_LEN))
+    for j in range(FOOTREST_BOARDS)]
+FOOTREST_PARTS = footrest_cheeks + footrest_deck
+# X14: THE LOOSE WOOD. Two sub-assemblies in this bed are screwed to
+# THEMSELVES and to nothing else - the plate unit (sheet + four battens) and
+# the footrest (two cheeks + four deck boards). They are furniture inside the
+# furniture: they are lifted out by hand, they are not part of the frame, and
+# the room does not finish them, because a piece nobody screws down is not
+# scribed to a floor - it is set on it. This is a DECLARATION, and the assert
+# under FASTENER_SPECS turns it into a measurement: no fastener may join
+# anything in here to anything outside it.
+LOOSE_PARTS = [panel_bed, panel_table] + battens_bed + battens_table \
+    + FOOTREST_PARTS
+_LOOSE_IDS = {id(p) for p in LOOSE_PARTS}
+
+
+def is_loose(p):
+    """True for a part of a loose sub-assembly - see LOOSE_PARTS."""
+    return id(p) in _LOOSE_IDS
 
 
 # ---------------------------------------------------------------------------
@@ -4879,6 +5219,20 @@ JOINTS = [
          contacts=[dict(a="panel", b="nose", axis=2, drives=[
              drive("Treskrue 5×40 forsenket Torx", 2, frm="nose",
                    counterbore=PANEL_UPSCREW_CBORE)])]),
+    # X14: THE FOOTREST'S ONLY JOINT, and it is the whole of the footrest's
+    # steel. Each deck board lands on each cheek over a 36 x 68 mm patch and
+    # takes one screw straight down through it. One per landing is the whole
+    # rule: two landings pin a board against turning, and four boards pin the
+    # two cheeks against racking, so nothing in this stool can move without
+    # taking a screw in shear. The 6x80 crosses 48 mm of deck and stands 32 mm
+    # into 98 mm of cheek, and 36 mm of cheek is exactly 2 x 3d across the
+    # screw - which is why the cheek is a 36 and not a 23 (see FOOTREST_CHEEK_T).
+    dict(id="J18", title="Fotbrettbord → gavl", n=8,
+         drill="⌀6 gjennom bordet, ⌀4 i gavlens overkant, forsenk hodet under "
+               "flaten — det er en flate føtter står på",
+         side="Ovenfra, rett ned i gavlen",
+         contacts=[dict(a="foot_deck", b="foot_cheek", axis=2, drives=[
+             drive(FOOTREST_SCREW, 1, frm="foot_deck")])]),
     dict(id="J14", title="Veggfeste — gjennom den bakre sidevangen inn i "
                          "stenderne", n=1,
          fast=[("Veggfeste etter veggtype (treskrue 8×100 i stender, eller "
@@ -5451,6 +5805,24 @@ for _f in FASTENER_SPECS:
 for _name, _qty in _placed.items():
     assert HARDWARE_TOTAL[_name] == _qty, (
         f"{_name}: {_qty} modelled, the joint table sells {HARDWARE_TOTAL[_name]}")
+
+# X14: AND THE WORD "LOOSE" IS NOW A MEASUREMENT. LOOSE_PARTS is a declaration
+# - the plate unit and the footrest - and a declaration that nothing checks is
+# a label. What makes a sub-assembly loose is that no fastener crosses out of
+# it: every screw in it has both members inside it. The moment somebody screws
+# the footrest to a bench rail or hangs the plate on a bracket, this fires, and
+# the room exemption in room_fit() (which lets a loose piece skip the floor
+# trim) loses the thing it rested on.
+_crossing = [(f["jid"], f["pa"].label, f["pb"].label) for f in FASTENER_SPECS
+             if f.get("pa") is not None and f.get("pb") is not None
+             and is_loose(f["pa"]) != is_loose(f["pb"])]
+assert not _crossing, (
+    f"X14: {_crossing} tie a loose sub-assembly to the frame - then it is not "
+    f"loose, and neither the room exemption nor the D13 argument holds")
+print(f"OK  X14 løst er løst: {len(LOOSE_PARTS)} deler i 2 løse enheter "
+      f"(plateenheten og fotbrettet) - ingen av de {len(FASTENER_SPECS)} "
+      f"festemidlene krysser ut av sin egen enhet, så begge kan løftes ut med "
+      f"hendene og ingen av dem er tilpasset gulvet")
 
 # --- the frame screw rows the key-dimensions page prints --------------------
 def screw_rows():
@@ -6333,57 +6705,9 @@ def wood_envelope(panel):
 # on the box: a seated child's bounding box is a 700 mm cube and would say
 # nothing true about the room over the head.
 #
-# ANTHROPOMETRY. Public domain: AnthroKids - the digitised 1975/1977 Snyder et
-# al. child anthropometry studies, math.nist.gov/~SRessler/anthrokids/. Every
-# segment below is a fraction of standing height H, and H is set at 1200 mm -
-# the 50th percentile for about 6-8 years, which is the age EN 747 opens the
-# upper bunk at. The five key dimensions the fractions are calibrated on are
-# sitting height 0.545 H, popliteal (knee-hollow) height 0.28 H, sitting knee
-# height 0.30 H, shoulder breadth 0.21 H and head height H/6, and each of them
-# comes back out of the built solid in FIGURE_ASSERTS below.
-#
-# LEVEL OF ABSTRACTION: the manual's. A round head, no face, no hands, a box
-# for a foot. Fourteen primitives fused into ONE solid, the same way the screw
-# is a Cylinder + Cone + Cylinder + Cone fused into one - a chain of
-# Pos() * Rot() down five joint types (hip, knee, shoulder, elbow, neck) with
-# no inverse kinematics anywhere: every angle in the pose tables is typed, and
-# what the model then MEASURES is where that pose puts the body.
-FIGURE_H = 1200.0                # standing height, mm  (EN 747 alder 6+)
-
-
-def _fh(k):
-    return k * FIGURE_H
-
-
-# --- the segment table, every entry a fraction of H -------------------------
-FIG_HEAD_R = _fh(0.0833)     # 100  head height H/6 = 200 IS the diameter
-FIG_NECK_R = _fh(0.030)      # 36
-FIG_NECK_L = _fh(0.052)      # 62
-FIG_TORSO_R = _fh(0.075)     # 90   between chest depth and chest breadth
-FIG_TORSO_L = _fh(0.262)     # 314  hip joint -> shoulder joint
-FIG_HIP_R = _fh(0.075)       # 90
-FIG_UARM_R = _fh(0.032)      # 38
-FIG_UARM_L = _fh(0.170)      # 204
-FIG_FARM_R = _fh(0.027)      # 32
-FIG_FARM_L = _fh(0.160)      # 192
-FIG_THIGH_R = _fh(0.048)     # 58
-FIG_THIGH_L = _fh(0.245)     # 294
-FIG_SHANK_R = _fh(0.038)     # 46
-FIG_SHANK_L = _fh(0.236)     # 283
-FIG_ANKLE_Z = _fh(0.039)     # 47   sole -> ankle joint
-FIG_FOOT_L = _fh(0.150)      # 180
-FIG_FOOT_W = _fh(0.055)      # 66
-FIG_FOOT_H = _fh(0.050)      # 60
-FIG_SHOULDER_Y = _fh(0.105)  # 126  half of shoulder breadth 0.21 H
-FIG_HIP_Y = _fh(0.050)       # 60
-FIG_SINK = 12                # mm the body settles into 100 mm of foam
-
-# The five reference dimensions the table is calibrated on.
-FIG_SITTING_H = _fh(SIT_RATIO)   # 654  seat -> crown
-FIG_POPLITEAL = _fh(0.28)    # 336  floor -> knee hollow, seated
-FIG_KNEE_SIT = _fh(0.30)     # 360  floor -> top of knee, seated
-FIG_SHOULDER_W = _fh(0.21)   # 252
-FIG_HEAD_H = FIGURE_H / 6    # 200
+# ANTHROPOMETRY. The segment table is up at THE REFERENCE BODY'S OWN TABLE,
+# above the geometry - X14 moved it there because the footrest is cut to it.
+# Everything below is the KINEMATICS: how a pose is built out of that table.
 
 
 def _dirv(yaw, pitch):
@@ -6476,17 +6800,9 @@ def child(label, hip, facing, torso, head, arms, legs):
 # ---------------------------------------------------------------------------
 # THE FOUR POSES
 # ---------------------------------------------------------------------------
-# BENCH DEPTH is 800 mm and the bench is the lower bed, so a child sitting on
-# it sits in the middle of it: Y = 352 in both directions.
-FIG_BENCH_Y = (LOWER_SLEEP_Y0 + LOWER_SLEEP_Y0 + LOWER_SLEEP_DEPTH) / 2  # 352
-
-# SEATED: the hip joint rides SIT_RISE above the cushion face, not one hip
-# radius above it - a 100 mm foam cushion takes the buttock in. The number is
-# not chosen, it is solved: SIT_RISE is what puts the crown exactly one
-# sitting height (0.545 H) above the seat.
-FIG_SIT_RISE = FIG_SITTING_H - FIG_TORSO_L - FIG_NECK_L - 2 * FIG_HEAD_R  # 77
-SEAT_FACE = BENCH_TOP + CUSHION_T                      # 420, the sofa seat [X3: 382]
-FIG_SIT_Z = SEAT_FACE + FIG_SIT_RISE                   # 497, hip joint
+# WHERE THE SEATED BODY SITS - FIG_BENCH_Y, FIG_SIT_RISE, SEAT_FACE and
+# FIG_SIT_Z - is up with the segment table now: the footrest's height is solved
+# off them, and wood cannot be cut to a constant that is declared below it.
 
 # X9: THE LEGS COME DOWN, BECAUSE THE PLATE BECAME A DESK.
 #
@@ -6504,19 +6820,23 @@ FIG_SIT_Z = SEAT_FACE + FIG_SIT_RISE                   # 497, hip joint
 # the way people sit at a desk, and the sentence that explained the folded legs
 # is deleted rather than kept and quietly falsified.
 #
-# THE POSE, JOINT BY JOINT. Thighs forward and level, splayed 6 degrees so the
-# two knees read as two; shanks plumb; feet hanging, because at a 420 mm seat a
-# 1200 mm child's soles are 150 mm off the floor and there is no footrest under
-# this plate - said here rather than drawn away.
-_DESK_LEG = ((6, -1), (0, -88), (0, -15))
-# AND THE HIP MOVES FORWARD OFF THE BACK CUSHION, because that is what sitting
-# AT something means. The number is not chosen: put the knee one thigh radius
-# in under the plate's own edge and the hip is one thigh behind it.
-FIG_SEAT_X = PANEL_X0 + FIG_THIGH_R - FIG_THIGH_L      # 472  [X2: 288, on the pad]
+# THE POSE, JOINT BY JOINT. X14 RE-POSED THE LEGS, AND THE POSE IS NO LONGER
+# TYPED. Until this round the thighs were tipped an arbitrary degree, the shanks
+# stood 2 degrees off plumb and the feet HUNG - toes down 15 degrees, which is
+# what a foot does when there is nothing under it, and X9 said so in as many
+# words: "the soles hang 134 mm off the floor and there is no footrest under
+# this plate". There is one now. So the shank goes PLUMB and the foot goes FLAT
+# - the two right angles a seated posture is defined by - and the one angle
+# left, how far the thigh tips down off the hip, is SOLVED so that the sole
+# lands on the footrest's own deck. Move the deck and the leg follows; nobody
+# hand-sets a thigh. The splay is untouched: X9 put it there so the two knees
+# read as two, and it is still the only thing about this leg anyone chose.
+_DESK_LEG = ((FIG_DESK_SPLAY, -footrest_thigh_pitch(FOOTREST_TOP)),
+             (0, -90), (0, 0))
 
 figure_seated_left = child(
     "Child Seated Left (table mode)",
-    (FIG_SEAT_X + 2, FIG_BENCH_Y, FIG_SIT_Z), 0.0,
+    (FIG_HIP_X, FIG_BENCH_Y, FIG_SIT_Z), 0.0,
     # THE ONE WHO WORKS AT IT. Sat up straight: the 25 degree lean the sofa
     # table needed is gone with the sofa table, because the plate is no longer
     # something you reach DOWN and OUT to. It is the other way now, and the
@@ -6535,7 +6855,7 @@ figure_seated_left = child(
 
 figure_seated_right = child(
     "Child Seated Right (table mode)",
-    (WALL_SPAN - FIG_SEAT_X - 2, FIG_BENCH_Y, FIG_SIT_Z), 180.0,
+    (WALL_SPAN - FIG_HIP_X, FIG_BENCH_Y, FIG_SIT_Z), 180.0,
     # the other one sits up straight with the arms down, and that is the pose
     # that measures the headroom under the bunk. His knees are under the plate
     # too - that is the X9 claim, and it is the same claim on both sides of the
@@ -6834,6 +7154,16 @@ def flush_with_end_wall(p):
 
 def room_fit(p):
     """How the room finishes this part - or None if the workshop does."""
+    # X14: and a LOOSE part is always the workshop's. The three rules below are
+    # all about a frame being built plumb and level inside a niche that is
+    # neither: the foot of a standing member is trimmed because the floor is
+    # out of level, and a wall-facing end is fine-cut because the niche is not
+    # square. A footstool is not built into the niche. It stands where it is
+    # put, and if the floor falls away under one cheek it rocks by exactly as
+    # much as the floor does - which is a thing you shim in ten seconds and not
+    # a thing you saw for.
+    if is_loose(p):
+        return None
     ends = near_end_walls(p)
     floor = on_floor(p)
     if not ends and not floor:
@@ -6855,7 +7185,8 @@ def room_fit(p):
         f"here would be a special case")
 
 
-CUT_PARTS = [p for p in list(parts) + [panel_bed] + battens_bed]
+CUT_PARTS = [p for p in list(parts) + [panel_bed] + battens_bed
+             + FOOTREST_PARTS]
 assert all(p.cut is not None for p in CUT_PARTS), \
     "every wooden part must carry the cut-list line it was counted into"
 
@@ -9474,6 +9805,225 @@ print("OK  D13/U2: walk-around beside the ladder - "
         f"Z {PASSAGE_Z[0]}..{PASSAGE_Z[1]}")
 
 # ---------------------------------------------------------------------------
+# X14 - THE FOOTREST, MEASURED
+# ---------------------------------------------------------------------------
+# The height was solved above, off the body and the cushion, before any of this
+# wood existed. Everything here asks the finished solids whether the solve came
+# true, and asks the two positions whether the thing is in anybody's way.
+FOOTREST_DECK_TOP = max(p.extents[2][1] for p in footrest_deck)
+FOOTREST_DECK_Y = (min(p.extents[1][0] for p in footrest_deck),
+                   max(p.extents[1][1] for p in footrest_deck))
+FOOTREST_DECK_X = (min(p.extents[0][0] for p in footrest_deck),
+                   max(p.extents[0][1] for p in footrest_deck))
+assert abs(FOOTREST_DECK_TOP - FOOTREST_TOP) < TOL, \
+    f"X14: the deck measures {FOOTREST_DECK_TOP} and the solve said " \
+    f"{FOOTREST_TOP}"
+# The deck is the footprint. Every square millimetre a sole can land on stands
+# over the two cheeks' own outline, so no load anywhere on it can tip the stool
+# - it has to be pushed over, never stood over.
+_cheek_x = (min(p.extents[0][0] for p in footrest_cheeks),
+            max(p.extents[0][1] for p in footrest_cheeks))
+_cheek_y = (min(p.extents[1][0] for p in footrest_cheeks),
+            max(p.extents[1][1] for p in footrest_cheeks))
+assert (_cheek_x[0] - TOL <= FOOTREST_DECK_X[0]
+        and FOOTREST_DECK_X[1] <= _cheek_x[1] + TOL
+        and _cheek_y[0] - TOL <= FOOTREST_DECK_Y[0]
+        and FOOTREST_DECK_Y[1] <= _cheek_y[1] + TOL), \
+    f"X14: the deck {FOOTREST_DECK_X} x {FOOTREST_DECK_Y} hangs outside the " \
+    f"cheeks' footprint {_cheek_x} x {_cheek_y} - a foot on the overhang " \
+    f"tips it"
+# ...and what it DOES take to push it over, which is the honest number for a
+# loose thing: the ratio of a horizontal shove at deck height to the load
+# standing on it. The shallow way is the depth.
+FOOTREST_TIP_RATIO = FOOTREST_DEPTH / (2 * FOOTREST_TOP)          # 0.93
+
+# The two walk-arounds D13 keeps clear are the reason the deck stops where it
+# stops. Nothing of the footrest may enter either of them, in either mode - and
+# this is the check that says the loose thing obeys a rule the fixed structure
+# is held to, rather than escaping it by not being in `parts`.
+for _side, _lo, _hi, _clear in passages:
+    _box = ((_lo + TOL, _hi - TOL), PASSAGE_Y, PASSAGE_Z)
+    for p in FOOTREST_PARTS:
+        _inter = [min(a1, b1) - max(a0, b0)
+                  for (a0, a1), (b0, b1) in zip(p.extents, _box)]
+        assert min(_inter) <= TOL, \
+            f"X14: '{p.label}' stands in the {_side} walk-around passage"
+assert abs(FOOTREST_DECK_X[0] - passages[0][2]) < TOL \
+    and abs(FOOTREST_DECK_X[1] - passages[1][1]) < TOL, \
+    f"X14: the deck is {FOOTREST_DECK_X} and the two passages end at " \
+    f"{passages[0][2]} / {passages[1][1]} - the footrest is supposed to be " \
+    f"exactly the bay they leave, no wider and no narrower"
+
+# It lives under the plate in BOTH positions and it never has to be moved: the
+# air over it is the plate's own underside, 297 in bed mode and 682 in table
+# mode. Measured on the panel bodies.
+FOOTREST_AIR = {}
+for _mode, _panel in MODES.items():
+    _gap = _panel.extents[2][0] - FOOTREST_DECK_TOP
+    assert _gap > 0, \
+        f"X14: the footrest is into the plate in {_mode} by {-_gap:.1f} mm"
+    for p in FOOTREST_PARTS:
+        for q in mode_parts(_panel):
+            if q in FOOTREST_PARTS or is_soft(q):
+                continue
+            _inter = [min(a1, b1) - max(a0, b0)
+                      for (a0, a1), (b0, b1) in zip(p.extents, q.extents)]
+            assert min(_inter) <= 0.0, \
+                f"X14: '{p.label}' overlaps '{q.label}' in {_mode}"
+    FOOTREST_AIR[_mode] = _gap
+
+# ...and if the family ever wants it out of the way altogether, it goes in the
+# box room without being designed to: 146 < 229, 416 < 479, 272 < 800. Measured
+# and stated, not asserted as a requirement - the box room is promised to boxes.
+FOOTREST_IN_BOX_ROOM = (FOOTREST_TOP <= STORAGE_BAY_H
+                        and FOOTREST_LEN <= STORAGE_BAY_W
+                        and FOOTREST_DEPTH <= STORAGE_BAY_D)
+
+# --- and the body on it ----------------------------------------------------
+# THE SOLE LANDS ON THE WOOD. Both children, measured body against deck, and
+# the whole point of the round: the number X9 wrote down as an open point was
+# the air under a hanging foot, and there is none of it left.
+FOOTREST_SOLE_GAP = {}
+for _f in FIGURES_TABLE:
+    _gap = _f.extents[2][0] - FOOTREST_DECK_TOP
+    assert abs(_gap) < TOL, \
+        f"X14: '{_f.label}' has its soles {_gap:.2f} mm off the deck"
+    FOOTREST_SOLE_GAP[_f.label] = _gap
+# THE DECK IS WIDE ENOUGH FOR THE FEET IT WAS SIZED FOR - in Y the whole sole,
+# and in X as much of it as the walk-arounds leave. The heel that hangs off the
+# back is measured and said out loud rather than drawn to fit.
+def _bbox_of(hit):
+    """(x0, x1, y0, y1, z0, z1) over a solid OR a ShapeList of them."""
+    shapes = list(hit) if hasattr(hit, "__iter__") else [hit]
+    bbs = [s.bounding_box() for s in shapes]
+    return (min(b.min.X for b in bbs), max(b.max.X for b in bbs),
+            min(b.min.Y for b in bbs), max(b.max.Y for b in bbs),
+            min(b.min.Z for b in bbs), max(b.max.Z for b in bbs))
+
+
+_feet = []
+for _f in FIGURES_TABLE:
+    _slab = Box(WALL_SPAN, 4 * WALL_SPAN, 2 * TOL).moved(
+        Location((WALL_SPAN / 2, 0, FOOTREST_DECK_TOP + TOL)))
+    _fx0, _fx1, _fy0, _fy1, _, _ = _bbox_of(_f.intersect(_slab))
+    _feet.append((_fx0, _fx1))
+    assert (FOOTREST_DECK_Y[0] <= _fy0 + TOL
+            and _fy1 <= FOOTREST_DECK_Y[1] + TOL), \
+        f"X14: '{_f.label}' has a sole off the side of the deck: " \
+        f"Y {_fy0:.0f}..{_fy1:.0f} on a deck {FOOTREST_DECK_Y}"
+_on = [min(x1, FOOTREST_DECK_X[1]) - max(x0, FOOTREST_DECK_X[0])
+       for x0, x1 in _feet]
+FOOTREST_SOLE_ON = min(_on)
+FOOTREST_SOLE_OFF = max((x1 - x0) - o for (x0, x1), o in zip(_feet, _on))
+assert FOOTREST_SOLE_ON > FOOTREST_SOLE_OFF, \
+    f"X14: more of the sole hangs off the deck ({FOOTREST_SOLE_OFF:.0f} mm) " \
+    f"than stands on it ({FOOTREST_SOLE_ON:.0f} mm)"
+
+# THE SEAT STILL CARRIES THE THIGH, and this is the pair of rules the height
+# was solved between, asked of the built bodies instead of the arithmetic.
+# The cushion is foam, so the body is INSIDE it - that is not a collision, it
+# is the seat working - and the two questions are how deep and how far.
+FOOTREST_THIGH = {}
+for _f in FIGURES_TABLE:
+    _near = _f.pose["hip"][0] < WALL_SPAN / 2
+    _cu = next(c for c in CUSHIONS_TABLE
+               if c.label.startswith("Seat Cushion")
+               and (c.extents[0][0] < WALL_SPAN / 2) == _near)
+    _edge = _cu.extents[0][1] if _near else _cu.extents[0][0]
+    _cx0, _cx1, _, _, _cz0, _ = _bbox_of(_f.intersect(_cu))
+    _deep = SEAT_FACE - _cz0
+    _reach = _cx1 if _near else _cx0
+    assert _deep <= FIG_BUTTOCK_SINK + TOL, \
+        f"X14 for lavt: '{_f.label}' presses {_deep:.1f} mm into the seat, " \
+        f"and the buttock's own {FIG_BUTTOCK_SINK:.1f} mm is the limit - the " \
+        f"cushion's front edge is digging into the thigh"
+    assert (_reach >= _edge - TOL) if _near else (_reach <= _edge + TOL), \
+        f"X14 for høyt: '{_f.label}' is only in the cushion out to X " \
+        f"{_reach:.0f} and the cushion ends at {_edge:.0f} - the thigh has " \
+        f"come off the seat and the child is on his sit bones"
+    FOOTREST_THIGH[_f.label] = (_deep, _reach)
+FOOTREST_PITCH_DEG = footrest_thigh_pitch(FOOTREST_TOP)            # 7.4
+FOOTREST_KNEE_ANGLE = 90 + FOOTREST_PITCH_DEG                      # 97
+assert 90 <= FOOTREST_KNEE_ANGLE <= 120, \
+    f"X14: the knee closes to {FOOTREST_KNEE_ANGLE:.0f} deg"
+
+# AND THE ONE NUMBER THIS ROUND HAD TO STOP QUOTING. The table at the top of
+# the file calls popliteal height 0,28 H, and the built leg cannot produce it:
+# knee joint to sole, shank plumb and foot flat, is FIG_SHANK_L + FIG_FOOT_H/2.
+# The difference is not a mystery and it is not a rounding - it is two things,
+# and they add up to it exactly:
+#   * the foot is a BOX centred on the ankle, so a flat foot gives back half a
+#     foot's thickness where the table says one ankle height;
+#   * shank plus ankle sums to 330 where 0,28 H is 336.
+# So the popliteal number is a target this body misses by a knowable amount,
+# and the footrest is NOT derived from it. Said here, with the arithmetic,
+# instead of left in a comment claiming all five dimensions come back out of
+# the solid.
+FOOTREST_KNEE_TO_SOLE = FIG_SHANK_L + FIG_FOOT_H / 2               # 313
+FOOTREST_POPLITEAL_LOSS = FIG_POPLITEAL - FOOTREST_KNEE_TO_SOLE    # 23
+assert abs(FOOTREST_POPLITEAL_LOSS
+           - ((FIG_ANKLE_Z - FIG_FOOT_H / 2)
+              + (FIG_POPLITEAL - FIG_SHANK_L - FIG_ANKLE_Z))) < TOL, \
+    "X14: the popliteal shortfall no longer decomposes into the box foot and " \
+    "the table's own 6 mm - one of the four constants has moved"
+
+print(f"OK  X14 fotbrettet, høyden: setet bærer låret så lenge sålen står "
+      f"mellom {FOOTREST_MIN:.1f} og {FOOTREST_MAX:.1f} mm - under er det "
+      f"putekanten som skjærer inn i låret (dypere enn rumpas egne "
+      f"{FIG_BUTTOCK_SINK:.1f} mm), over slipper låret puta og barnet sitter "
+      f"på sittebeina. To kurver ({FOOTREST_CHEEK_H} på høykant + "
+      f"{FOOTREST_DECK_T} flatt) av de {len(footrest_stacks())} som sengens egne "
+      f"fem dimensjoner lager treffer båndet: {FOOTREST_TOP} mm. "
+      f"Ingen valgte det")
+print(f"OK  X14 fotbrettet, delene: 2 gavler "
+      f"{sec(FOOTREST_CHEEK_T, FOOTREST_CHEEK_H)} x {FOOTREST_DEPTH} på "
+      f"høykant (X {FOOTREST_CHEEK_X[0]}..{FOOTREST_CHEEK_X[0] + FOOTREST_CHEEK_T}"
+      f" / {FOOTREST_CHEEK_X[1]}..{FOOTREST_CHEEK_X[1] + FOOTREST_CHEEK_T}) og "
+      f"{FOOTREST_BOARDS} bord {sec(FOOTREST_DECK_T, FOOTREST_DECK_W)} x "
+      f"{FOOTREST_LEN} flatt oppå, kant i kant - dekk "
+      f"X {FOOTREST_DECK_X[0]:.0f}..{FOOTREST_DECK_X[1]:.0f} x "
+      f"Y {FOOTREST_DECK_Y[0]:.0f}..{FOOTREST_DECK_Y[1]:.0f}, topp "
+      f"{FOOTREST_DECK_TOP:.0f}. Bredden er bukta D13 lar stå mellom de to "
+      f"gangpassasjene, dybden er de to sålenes egen avstand rundet opp til "
+      f"hele bord. Åtte 6×80 (J18) og ikke én skrue inn i sengen")
+print(f"OK  X14 fotbrettet, i veien for ingenting: begge "
+      f"gangpassasjene er urørt ({passages[0][3]:.0f} / {passages[1][3]:.0f} mm "
+      f"fri), og brettet står under platen i begge stillinger - "
+      + " · ".join(f"{m} {g:.0f} mm luft" for m, g in FOOTREST_AIR.items())
+      + f". Det er IKKE i soveflaten: den ligger på "
+      f"{SEAT_FACE:.0f} over benkene og {PANEL_TOP_BED} over platen, og "
+      f"brettet topper ut på {FOOTREST_TOP}. "
+      + (f"Det går også inn i kasserommet ({FOOTREST_TOP} < {STORAGE_BAY_H}, "
+         f"{FOOTREST_LEN} < {STORAGE_BAY_W}, {FOOTREST_DEPTH} < "
+         f"{STORAGE_BAY_D}) hvis noen vil ha det helt bort - men rommet er "
+         f"lovet bort til kasser, så det er en mulighet og ikke en plan"
+         if FOOTREST_IN_BOX_ROOM else "Det får ikke plass i kasserommet"))
+print(f"OK  X14 fotbrettet står stødig: dekket ER fotavtrykket, så ingen last "
+      f"noe sted på det kan velte det - det må skyves. Å skyve det over "
+      f"krever {FOOTREST_TIP_RATIO:.2f} ganger lasten som står på det, "
+      f"vannrett i dekkhøyde; det sklir lenge før det tipper. Løst er et "
+      f"VALG: F1 har målt at det ikke finnes fast tre i denne bukta å skru "
+      f"det til, og en fast fotstøtte her ville stått i D13s åpne gulv")
+print(f"OK  X14 barnet på det: låret faller {FOOTREST_PITCH_DEG:.1f}° og kneet "
+      f"står på {FOOTREST_KNEE_ANGLE:.0f}° (bånd 90..120), leggen i lodd og "
+      f"foten flatt. Målt kropp mot pute: barnet står "
+      + " / ".join(f"{d:.1f} mm" for d, _r in FOOTREST_THIGH.values())
+      + f" ned i skummet (grense {FIG_BUTTOCK_SINK:.1f} = rumpa selv) og "
+      f"puta bærer låret helt ut til sin egen kant ({SEAT_EDGE_X}). Sålen "
+      f"ligger {FOOTREST_SOLE_ON:.0f} av sine {FIG_FOOT_L:.0f} mm på dekket; "
+      f"hælen henger {FOOTREST_SOLE_OFF:.0f} mm bak det, over gulvet "
+      f"gangpassasjen skal ha")
+print(f"OK  X14 og det tallet fila sluttet å sitere: knebøy til såle på den "
+      f"bygde kroppen er {FOOTREST_KNEE_TO_SOLE:.1f} mm, ikke de "
+      f"{FIG_POPLITEAL:.0f} (0,28 H) tabellen oppgir - "
+      f"{FIG_ANKLE_Z - FIG_FOOT_H / 2:.1f} mm fordi foten er en boks sentrert "
+      f"på ankelen og {FIG_POPLITEAL - FIG_SHANK_L - FIG_ANKLE_Z:.1f} mm fordi "
+      f"legg + ankel summerer til {FIG_SHANK_L + FIG_ANKLE_Z:.0f}. "
+      f"FOOTREST_TOP er derfor IKKE utledet av 0,28 H; den er utledet av setet "
+      f"og av den bygde kroppen, og avviket står her i stedet for i en "
+      f"kommentar som påsto at alle fem målene kom ut av soliden")
+
+# ---------------------------------------------------------------------------
 # F1 (V4): CAN THE LADDER FOOT BE TIED TO THE FRAME AT ALL? MEASURED.
 # ---------------------------------------------------------------------------
 # Vedlegg B, avvik 2 has carried an open point since V2: the panel is a one-way
@@ -10044,9 +10594,18 @@ assert 6.0 < PANEL_UNIT_MASS < 8.5, (
 PANEL_UNIT_MASS_DELIVERED = (abs(panel_bed.volume) * PLY_DENSITY
                              + sum(abs(b.volume) for b in battens_bed)
                              * C24_DENSITY_DELIVERED)
+# X14: the footrest's own weight, because a loose thing is carried by one
+# child and not by two adults - and because 3 kg is the difference between a
+# stool that stays where it is put and one that skids away under a heel.
+FOOTREST_MASS = sum(abs(p.volume) for p in FOOTREST_PARTS) * C24_DENSITY
+FOOTREST_MASS_DELIVERED = (sum(abs(p.volume) for p in FOOTREST_PARTS)
+                           * C24_DENSITY_DELIVERED)
 _tv = sum(abs(p.volume) for p in _WOOD)
 BED_MASS = _tv * C24_DENSITY + abs(panel_bed.volume) * PLY_DENSITY
 BED_MASS_DELIVERED = _tv * C24_DENSITY_DELIVERED + abs(panel_bed.volume) * PLY_DENSITY
+print(f"OK  X14 fotbrettet veier {FOOTREST_MASS:.1f} kg "
+      f"({FOOTREST_MASS_DELIVERED:.1f} med levert virke) - ett barn flytter "
+      f"det med én hånd, og det er talt med i sengens egen vekt under her")
 print(f"OK  hele sengen veier {BED_MASS:.0f} kg regnet med C24-klassetallet "
       f"420 kg/m3 og {BED_MASS_DELIVERED:.0f} kg med levert virke, 450 - "
       f"begge uten madrass og puter. Det er tallet to voksne skal flytte")
@@ -11722,9 +12281,11 @@ print(f"OK  bordstilling, ærlig om høyden: {TABLE_OVER_SEAT:.0f} mm over puta 
       f"brukt fra en sofa. Referansen byggherren pekte på gjør det samme: "
       f"SMÅSTAD-pulten på 730 over den 430 mm stolen som selges til den er "
       f"300 mm. Barnet legger underarmene oppå plata og har albuene i været; "
-      f"det er tegnet, ikke bortforklart. Fotskammel finnes ikke: sålene "
-      f"henger {figure_seated_left.extents[2][0]:.0f} mm over gulvet, og det "
-      f"er ført opp som åpent punkt og ikke som en detalj")
+      f"det er tegnet, ikke bortforklart. FOTBRETTET finnes derimot nå "
+      f"(X14): sålene står på {figure_seated_left.extents[2][0]:.0f} mm og "
+      f"ikke {134} over gulvet, og de STÅR - X9 førte de 134 opp som åpent "
+      f"punkt fordi det var luft under en hengende fot, og det punktet er "
+      f"lukket med tre og ikke med en setning")
 print(f"OK  sengestilling: over den som ligger i køya står ingenting - "
       f"rekkverket står {GUARD_OVER_BODY:.0f} mm over kroppens høyeste punkt "
       f"og {GUARD_OVER_FACE:.0f} mm over ansiktet")
@@ -11914,8 +12475,12 @@ assert by_section[sec(BOARD23_T, BOARD36_W)] == SLAT_COUNT + 2 * (
         BENCH_SLAT_COUNT + 1) == 26 and \
     max(by_metres, key=by_metres.get) == sec(BOARD23_T, BOARD36_W), \
     "V6/V13: 23x98 must be both the most numerous and the longest profile"
-assert by_section[sec(BOARD36_T, BOARD36_W)] == 10, \
-    "V6: 36x98 is 4 guard segments + 4 corner posts + 2 end beams (V6b)"
+# X14: 10 -> 12. The two footrest cheeks are the sixth thing on this board, and
+# they are on it for the same reason the guards are: 98 mm of depth standing on
+# edge, 36 mm of thickness carrying a 6 mm screw on its own centre line.
+assert by_section[sec(BOARD36_T, BOARD36_W)] == 12, \
+    "V6/X14: 36x98 is 4 guard segments + 4 corner posts + 2 end beams (V6b) " \
+    "+ 2 footrest cheeks (X14)"
 assert "34x98" not in by_section, \
     "U1: 34x98 is supposed to be gone from the bed entirely"
 print("\nNote: the movable panel and its four battens are listed once; they "
@@ -12093,10 +12658,12 @@ print(f"Note (U4): NO M8 GOES INTO A POST ANY MORE. An M8 needs 3d = 24 mm of "
       f"since deleted those blocks, so J1, J8 and J8-B DO carry their corner "
       f"reactions in screw shear now - 4.0 kN against 1.0 / 0.5 / 0.5, "
       f"asserted above.")
-print(f"Note (D5/D7/U1/U2): {sec(BOARD36_T, BOARD36_W)} is the stock of this "
-      f"bed - {SLAT_COUNT} upper bed slats + {BENCH_SLAT_COUNT * len(BENCH_X)} "
+print(f"Note (D5/D7/U1/U2/X14): {sec(BOARD36_T, BOARD36_W)} is the stock of "
+      f"this bed - {SLAT_COUNT} upper bed slats + "
+      f"{BENCH_SLAT_COUNT * len(BENCH_X)} "
       f"bench slats + {len(FRONT_GUARD_SEGMENTS) * len(GUARD_BAND_Z0)} front "
-      f"guard segments + 4 corner posts = "
+      f"guard segments + 4 corner posts + {len(footrest_cheeks)} footrest "
+      f"cheeks = "
       f"{by_section[sec(BOARD36_T, BOARD36_W)]} of the {total} pieces in the "
       f"bed and {by_metres[sec(BOARD36_T, BOARD36_W)] / 1000:.1f} of its "
       f"{sum(by_metres.values()) / 1000:.1f} running metres. W8's ONE-LENGTH "
@@ -12214,7 +12781,7 @@ print(f"OK  X10 verditallene i kommentarene: {_VC_CHECKED} av formen "
 # by the "(bed mode)" / "(table mode)" suffix on the label. It is the one
 # generated file that IS committed - a diff on it is the diff on the model.
 snapshot = (parts + [mattress] + CUSHIONS_ALL + [panel_bed, panel_table]
-            + battens_bed + battens_table + FIGURES_ALL)
+            + battens_bed + battens_table + FOOTREST_PARTS + FIGURES_ALL)
 snap_path = os.path.join(OUT_DIR, "parts.tsv")
 with open(snap_path, "w", encoding="utf-8") as fh:
     fh.write("label\tgroup\tx0\tx1\ty0\ty1\tz0\tz1\n")

@@ -168,7 +168,10 @@ Modellen har fire *referansekropper*: et barn på **1200 mm** (EN 747 åpner ove
 | **Bordplaten over setet** | **280 mm**, med 262 mm under seg — et sittende kne står 135 mm over setet, så KNÆRNE går inn under platen med 127 mm luft. Det er hele X9-runden: en PULT, ikke et sofabord. Fram til v15 lå platen 140 mm over setet med 122 under seg, og 122 slipper et lår inn men ikke et kne — derfor satt figurene i skredderstilling helt til nå |
 | Nærmeste kropp til platen, sittende | 71 mm |
 | Underarmen over platen | 6 mm — barnet legger armene oppå og har albuene i været: 92 mm av platehøyden ligger over albuen til et barn på 1200 mm. Det er en pulthøyde regnet for en stol, brukt fra en sofa — SMÅSTAD-pulten på 730 over den 430 mm stolen som selges til den gjør det samme (300 mm) |
-| Sålene over gulvet, sittende | 134 mm — ingen fotskammel under platen. Åpent punkt, ikke en detalj |
+| **Sålene på fotbrettet** | **146 mm** over gulvet — de HENGER ikke: leggen står i lodd, foten ligger flatt og kneet på 97°. Til og med X9 hang de 134 mm i lufta |
+| Fotbrettets høyde | 146 mm — utledet, ikke valgt: setet bærer låret bare så lenge sålen står mellom 135 og 154 mm, og av de 9 kurvene sengens egne fem dimensjoner lager treffer én båndet (98 på høykant + 48 flatt) |
+| Fotbrettets plass | X 787..1203 × Y 216..488 × Z 0..146 — bukta mellom de to gangpassasjene, løs, under platen i begge stillinger (151 mm / 536 mm luft) |
+| Låret på puta | barnet står 12.7 mm ned i skummet — samme dybde som rumpa selv (12.7 mm), og puta bærer låret helt ut til sin egen kant på X 663 |
 | **Fri høyde over ansiktet, nede** | **902 mm** til køyespilene |
 | Over den som ligger i køya | ingenting — køya er åpen oppover. Rekkverket står 93 mm over kroppens høyeste punkt og 158 mm over ansiktet |
 | Madrass igjen bak føttene | 588 mm av 1990 — plassen å vokse i |

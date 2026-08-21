@@ -1062,6 +1062,27 @@ Forsenk hodene under lektas forside. Det er den flaten ryggputa lener seg mot.
 Under alle fire hjørnestolper og alle fire stubbeføtter. Slå dem i før du reiser
 noe.
 
+**Ikke under fotbrettet.** Den står på to sammenhengende striper, 36 × 272 mm
+hver, og ikke på fire punkter — en ⌀40 tapp under en 36 mm stripe ville gjort
+en stødig krakk til en vippe. Den veier 3,1 kg (3,3 med levert virke) og løftes med én hånd;
+den dras ikke.
+
+### J18 — Fotbrettbord → gavl (X14)
+
+Åtte 6×80, én per landing: fire bord ganger to gavler. Skruen går rett ned
+gjennom 48 mm dekkbord og står 32 mm inn i en 98 mm gavl, midt i gavlens 36 mm
+— som er nøyaktig 2 × 3d over skruen, og grunnen til at gavlen er et 36-bord og
+ikke et 23. Én skrue per landing er hele regelen: to landinger låser bordet mot
+å dreie, og fire bord låser de to gavlene mot å rase. Ingenting i denne krakken
+kan bevege seg uten å ta en skrue i skjær.
+
+Forsenk hodene **under** flaten. Dette er den ene flaten i hele sengen som bare
+føtter står på.
+
+Krakken skrus ikke til sengen, og det er ikke en forglemmelse: F1 har målt at
+det ikke finnes fast tre i denne bukta å skru den til, og en fast fotstøtte her
+ville stått i det åpne gulvet mellom benkene. Se 8.2b.
+
 ---
 
 ## 5. Madrass og puter
@@ -1377,7 +1398,7 @@ fri bruk. 1200 mm er 50-persentilen for omtrent 6–8 år, altså alderen EN 747
 begge stillingene har hver sin tegning: [sengestillingen i
 bruk](img/bruk-sengestilling.svg) og [bordstillingen i
 bruk](img/bruk-bordstilling.svg). **De to som sitter, sitter alminnelig
-nå** — med beina ned og knærne inn under platen. Til og med v15 satt de i
+nå** — med beina ned, knærne inn under platen og sålene på fotbrettet (X14). Til og med v15 satt de i
 skredderstilling, fordi det var den eneste måten å komme til et bord i
 fanghøyde på; X9 gjorde bordet til en pult, og da forsvant den stillingen.
 
@@ -1442,11 +1463,61 @@ nøyaktig det samme: SMÅSTAD-pulten står 730 over gulvet og stolen som selges
 til den 430, altså de samme 300 millimeterne. Byggherren valgte butikken, og
 det er et gyldig valg, men det er ikke det samme som at høyden er ideell.
 
-**Det er heller ingen fotskammel.** Sålene henger **134 mm** over gulvet når
-barnet sitter. Det er ført opp som et **åpent punkt**, ikke tegnet bort — den
-er ikke tegnet, ikke målt og står ikke i noen liste. Kommer den, kommer den som
-en egen del, og da må den først finne seg et sted: gulvet foran stigen skal stå
-fritt (D13), og under benken står kasserommet.
+**8.2b Fotbrettet, og hvorfor høyden ikke er valgt (X14).** X9 førte opp én
+ting som åpen: det fantes ingen fotskammel, og sålene hang i lufta. Nå står de
+på tre. Fotbrettet er en **løs krakk** — to gavler 36×98 × 272 på høykant og
+fire dekkbord 48×68 × 416 flatt oppå, kant i kant, åtte 6×80 (J18) og **ikke én
+skrue inn i sengen**.
+
+Høyden er det eneste interessante ved den, og den er ikke plukket. To rett
+vinkler er ikke forhandlingsbare — leggen står i lodd og foten ligger flatt —
+og da har beinet én fri variabel igjen: hvor mye låret faller fra hofta. De to
+måtene en fotstøtte er feil på er begge en påstand om **puta**:
+
+* **For høyt** — låret slipper puta og barnet sitter på sittebeina. Prøven er
+  kontakt: lårets underside der puta SLUTTER kan ikke ligge over putas flate.
+* **For lavt** — låret faller så mye at putekanten skjærer inn i det. Prøven er
+  dybde: låret kan ikke presse dypere ned i skummet enn rumpa allerede gjør, og
+  rumpas egen dybde er heller ikke skrevet inn — den er der hoftekula ligger.
+
+Løst på den bygde kroppen og den bygde puta blir det båndet **134,8–153,9 mm**.
+Og så er det treet som plukker ett tall ut av båndet: en krakk er to kurver,
+noe å stå PÅ og noe å sette det på. Dekket ligger flatt (et bord på høykant er
+en list, ikke et gulv for en såle), gavlen står på høykant (et bord som ligger
+flatt er ingen gavl, og en pinne på ende er et bein med for lite fotavtrykk til
+å hindre at en hæl velter den). Tre høykanthøyder ganger tre flattykkelser over
+sengens fem dimensjoner er **ni kurver**, og båndet slipper igjennom nøyaktig
+én: **98 + 48 = 146 mm**. Hvilket bord av den høyden og den tykkelsen er to
+regler til og ingen smak — gavlen bærer dekkskruen på sin egen senterlinje, så
+23 mm kan ikke (11,5 < 3d) og 36 er den tynneste av de to som kan; dekket
+legges i bord tvers over dybden, så det smaleste bordet er det som kommer
+nærmest dybden de to sålene faktisk ber om.
+
+**Den er løs, og det er en avgjørelse med et mål bak seg.** F1 har allerede
+målt at det ikke finnes fast tre i denne bukta å skru noe til: 689 mm utover,
+1057 innover, 752 bakover og ingenting framover. En FAST fotstøtte her ville
+dessuten stått i D11/D13s åpne gulv, som er der du setter føttene når platen er
+sofa og der du går for å komme til stigen. Så den er møbel: den står under
+platen i **begge** stillinger — 151 mm under platen i sengestilling, 536 under
+pulten — den er aldri i soveflaten (som begynner på 315 og 420, mens brettet
+topper ut på 146), og den skal aldri parkeres. Bredden er bukta D13 lar stå
+mellom de to gangpassasjene, så begge passasjene er hele; dybden er de to
+sålenes egen avstand rundet opp til hele bord. Dekket ER fotavtrykket, så
+ingen last noe sted på det kan velte den — den må skyves, og det krever 0,93
+ganger lasten som står på den.
+
+Vil noen ha den helt bort, går den inn i kasserommet (146 < 229, 416 < 479,
+272 < 800). Det er et **måleresultat og ikke en plan**: kasserommet er lovet
+bort til kasser.
+
+**Og ett tall sluttet fila å sitere.** Antropometritabellen oppgir popliteal
+høyde som 0,28 H, og kommentaren over den påsto at alle fem referansemålene kom
+ut av den bygde soliden. Tre gjør det. Popliteal høyde og sittende knehøyde
+gjorde det aldri og kan ikke: kneledd til såle på denne kroppen er 313,2 mm mot
+tabellens 336. De 22,8 er ingen gåte — 16,8 fordi foten er en boks sentrert på
+ankelen, og 6,0 fordi legg pluss ankel summerer til 330. Fotbrettet er derfor
+ikke utledet av 0,28 H; det er utledet av setet og av kroppen som ble bygget,
+og avviket er regnet og assertert i stedet for å stå i en kommentar.
 
 Tallene over er målt på solidene og står i
 [nøkkelmål](generated/nokkelmal.md#referansekroppen--hva-sengen-er-til-for).
@@ -1898,7 +1969,7 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | [setedetalj.svg](schematics/setedetalj.svg) | Skråskruesetene: snitt langs skrueaksen for begge vinkler, munningen ovenfra med veggen mellom lommene, vinkelklossen eksplodert og klossen i bruk |
 | [panel-detail.svg](schematics/panel-detail.svg) | Plateenheten i begge stillinger: plate, to avstivningslekter, to kilelekter, glidesjakten ved trinnenden og skruen nedenfra ut av kontraboret. Ingen ståldel. Etter X9 er bordstillingen tegnet som **pult** — begge opplegg på 682, de to bordklossene med J5-B, og de 100 millimeterne rett løft opp til trinn 3 |
 | [bruk-sengestilling.svg](img/bruk-sengestilling.svg) | Sengestillingen i bruk: én som sover i køya og én på nedre soveflate, med rekkverket over kroppen, fri høyde over ansiktet nede og madrassen som er igjen bak føttene. Rett oppriss av langsiden — stolper, stigevanger og trinn, sidevange, begge rekkverksbånd, benkevanger og stubbeføtter står der som de står i modellen, og hver målpil er differansen mellom to Z |
-| [bruk-bordstilling.svg](img/bruk-bordstilling.svg) | Bordstillingen i bruk: to sittende på hver sin benkepute, vendt mot pulten, med knærne under platen. Fri høyde over hodet, sittehøyde, plate over sete og kne til platekant |
+| [bruk-bordstilling.svg](img/bruk-bordstilling.svg) | Bordstillingen i bruk: to sittende på hver sin benkepute, vendt mot pulten, med knærne under platen og sålene på fotbrettet. Fri høyde over hodet, sittehøyde, plate over sete, kne til platekant og fotbrettets høyde |
 
 **Arkene er tegnet om mot V14-geometrien.** De viser 574×798-platen, 750 mm
 avstivningslekter, de to skråkappede kilelektene, bordbærelekta som 48×68 på

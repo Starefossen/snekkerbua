@@ -18,14 +18,16 @@ Mål rommet før du kapper romdelene: se [byggesteg](byggesteg.md#før-steg-0--m
 | Køyespile | 23×98 | **800** | 14 | 20..1970 (fordelt) | -48..752 | 1500..1523 |
 | Stigekloss | 36×48 | **36** | 10 | 835..1155 (fordelt) | 752..788 | 201..1250 (fordelt) |
 | Endebjelke | 36×98 | **836** | 2 | 98..1892 (fordelt) | -48..788 | 1304..1402 |
+| Fotbrettgavl (løs del) | 36×98 | **272** | 2 | 787..1203 (fordelt) | 216..488 | 0..98 |
 | Benkevange, bak (gjennomgående) | 48×68 | **1794** | 1 | 98..1892 | -48..0 | 229..297 |
 | Bordbærelekt, bak | 48×68 | **1794** | 1 | 98..1892 | -48..0 | 614..682 |
 | Avstivningslekt under plate | 48×68 | **750** | 2 | 785..1205 (fordelt) | 0..750 | 229..297 |
+| Fotbrettbord | 48×68 | **416** | 4 | 787..1203 | 216..488 (fordelt) | 98..146 |
 | Rungetrinn | 48×68 | **320** | 5 | 835..1155 | 720..788 | 249..1298 (fordelt) |
 | Bordkloss | 48×68 | **91** | 2 | 835..1155 (fordelt) | 697..788 | 614..682 |
 | Kilelekt under platens forkant (skråkappet) | 48×68 | **77** | 2 | 708..1282 (fordelt) | 702..750 | 229..297 |
 
-**50 deler.** Rommet bestemmer ingen mål på disse. Kapp dem ferdig med én gang.
+**56 deler.** Rommet bestemmer ingen mål på disse. Kapp dem ferdig med én gang.
 
 ## Kapp når rommet er ferdig — romdeler
 
@@ -50,7 +52,7 @@ Mål rommet før du kapper romdelene: se [byggesteg](byggesteg.md#før-steg-0--m
 
 Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
 
-**72 deler i alt.**
+**78 deler i alt.**
 
 «(fordelt)» betyr at delene i den raden står på flere posisjoner langs den aksen; kolonnen viser da hele området de dekker. Nøyaktige posisjoner står i [nøkkelmål](nokkelmal.md).
 
@@ -63,8 +65,8 @@ Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synl
 | Vinkelkloss 25° (J8-B) — borjigg for skråskruen | 48×68 | **200** | 2 | 2 stk. skrus FLATE MOT FLATE til én kloss. ⌀18 bores VINKELRETT gjennom begge mens klossen ennå er firkantet — det er hele trikset. Først DERETTER kappes sålen av under hullet: kappsag med bladet vippet 25°, som gir en såle som står 65° på den borede flaten og dermed 25° på hullaksen. Kontrollmål: hullets munning i sålen er en ellipse på 42,6 × 18 mm — er den for kort, ble vippen satt på komplementvinkelen | klemmes mot flaten med TO tvinger, hullet over merket. ⌀18 forstnerbor og deretter forboret går NED I hullet, så boret ikke kan vandre. Dybdemerke: hold boret i jiggen til randen flukter med sålen ved hullaksen, merk av på skaftet og flytt merket 20 mm opp — det er setedybden. Brukes i J8-B |
 | Vinkelkloss 30° (J10) — borjigg for skråskruen | 48×68 | **200** | 2 | 2 stk. skrus FLATE MOT FLATE til én kloss. ⌀18 bores VINKELRETT gjennom begge mens klossen ennå er firkantet — det er hele trikset. Først DERETTER kappes sålen av under hullet: kappsag med bladet vippet 30°, som gir en såle som står 60° på den borede flaten og dermed 30° på hullaksen. Kontrollmål: hullets munning i sålen er en ellipse på 36 × 18 mm — er den for kort, ble vippen satt på komplementvinkelen | klemmes mot flaten med TO tvinger, hullet over merket. ⌀18 forstnerbor og deretter forboret går NED I hullet, så boret ikke kan vandre. Dybdemerke: hold boret i jiggen til randen flukter med sålen ved hullaksen, merk av på skaftet og flytt merket 18 mm opp — det er setedybden. Brukes i J10 |
 
-Disse er ikke med i de 72 delene over — de er ikke deler i senga, de er verktøy du sager i steg 0. Virket til dem er likevel med i [innkjøpslista](innkjopsliste.md): de står i kappeplanen for sin egen dimensjon, som alt annet du må sage.
+Disse er ikke med i de 78 delene over — de er ikke deler i senga, de er verktøy du sager i steg 0. Virket til dem er likevel med i [innkjøpslista](innkjopsliste.md): de står i kappeplanen for sin egen dimensjon, som alt annet du må sage.
 
-Fordelt på dimensjon: **23×98** 26 stk. · **48×68** 19 stk. · **36×48** 14 stk. · **36×98** 10 stk. · **48×98** 2 stk. · **18 mm plate, 574 bred** 1 stk.
+Fordelt på dimensjon: **23×98** 26 stk. · **48×68** 23 stk. · **36×48** 14 stk. · **36×98** 12 stk. · **48×98** 2 stk. · **18 mm plate, 574 bred** 1 stk.
 
-Sagstopp for hovedbordet 36×98: **2 stk. à 2037** · **2 stk. à 1402** · **2 stk. à 836** · **4 stk. à 832** — 4 innstillinger på sagen, ikke én per del.
+Sagstopp for hovedbordet 36×98: **2 stk. à 2037** · **2 stk. à 1402** · **2 stk. à 836** · **4 stk. à 832** · **2 stk. à 272** — 5 innstillinger på sagen, ikke én per del.

@@ -14,8 +14,8 @@ Romdelene kappes for lange og finkappes i rommet — se [kapplista](kappliste.md
 | **18 mm plate, 574 bred** | 1 plate 18 mm kryssfiner furu, minst 574 × 798 mm. **Dekkfineren skal ligge langs de 574 mm** (sengens lengderetning): platas frie forkant spenner den veien, og på tvers holder den ikke — se X10 | — |
 | **23×98** | **5 stk. 4,8 m** | 14 % |
 | **36×48** | **1 stk. 4,8 m** | 2 % |
-| **36×98** | **3 stk. 4,8 m** | 17 % |
-| **48×68** | **3 stk. 4,8 m** | 30 % |
+| **36×98** | **3 stk. 4,8 m** | 13 % |
+| **48×68** | **3 stk. 4,8 m** | 18 % |
 | **48×98** | **1 stk. 4,2 m** | 5 % |
 
 ## Kappeplan, bord for bord
@@ -46,23 +46,23 @@ Kjøpt 4,80 m, brukt 4,68 m, svinn 2 %.
 
 ### 36×98
 
-Kjøpt 14,40 m, brukt 11,98 m, svinn 17 %.
+Kjøpt 14,40 m, brukt 12,52 m, svinn 13 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 2 × 1402 + 15 (Hjørnestolpe, bak (veggside)) + 2 × 832 + 10 (Rekkverksbord, front) | 270 |
-| 2 | 4800 | 2 × 836 (Endebjelke) + 2 × 832 + 10 (Rekkverksbord, front) | 1432 |
-| 3 | 4800 | 2 × 2037 + 15 (Hjørnestolpe, front) | 692 |
+| 1 | 4800 | 2 × 272 (Fotbrettgavl) + 2 × 2037 + 15 (Hjørnestolpe, front) | 140 |
+| 2 | 4800 | 2 × 1402 + 15 (Hjørnestolpe, bak (veggside)) + 2 × 832 + 10 (Rekkverksbord, front) | 270 |
+| 3 | 4800 | 2 × 836 (Endebjelke) + 2 × 832 + 10 (Rekkverksbord, front) | 1432 |
 
 ### 48×68
 
-Kjøpt 14,40 m, brukt 10,10 m, svinn 30 %.
+Kjøpt 14,40 m, brukt 11,77 m, svinn 18 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 + 10 (Benkevange, front (bit)) + 4 × 320 (Rungetrinn) + 4 × 229 + 15 (Stubbefot) + 2 × 200 (Vinkelkloss 25° (J8-B)) | 42 |
-| 2 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 91 (Bordkloss) + 1 × 320 (Rungetrinn) | 35 |
-| 3 | 4800 | 1 × 91 (Bordkloss) + 2 × 77 (Kilelekt under platens forkant (skråkappet)) + 2 × 200 (Vinkelkloss 30° (J10)) | 4139 |
+| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 + 10 (Benkevange, front (bit)) + 1 × 91 (Bordkloss) + 3 × 416 (Fotbrettbord) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 4 × 320 (Rungetrinn) | 6 |
+| 2 | 4800 | 1 × 91 (Bordkloss) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 1 × 320 (Rungetrinn) + 4 × 229 + 15 (Stubbefot) + 2 × 200 (Vinkelkloss 25° (J8-B)) + 2 × 200 (Vinkelkloss 30° (J10)) | 2496 |
+| 3 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 416 (Fotbrettbord) | 34 |
 
 Hjelpedelene på denne dimensjonen — 2 × 200 mm (Vinkelkloss 25° (J8-B)) + 2 × 200 mm (Vinkelkloss 30° (J10)), til sammen 812 mm med sagsnitt — står i kappeplanen over. De er ikke deler i senga, men de er virke du må sage, og da er de kjøpt inn som alt annet. Se [kapplista](kappliste.md).
 

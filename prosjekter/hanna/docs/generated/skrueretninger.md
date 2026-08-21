@@ -37,7 +37,8 @@ Hvilken vei hver skrue drives, og hvorfor akkurat den veien. Hvert festemiddel i
 | **J12** | 1× Vinkelbeslag 40×40×20 | **Vinkelbeslag 40×40×20** ligger på bakre hjørnestolpe og bøyer om hjørnet til bordbærelekt; skruene i fliken går mot venstre vegg (speilvendt i den andre enden) | fastsatt |
 | **J13a** | 6× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom avstivningslekt (48×68) → inn i løs plate (18 mm plate, 574 bred), rett opp — hodet står 41 mm inne i avstivningslekt, i bunnen av kontraboret, så skruen tar 13 mm i løs plate og ingenting går gjennom den andre siden | fastsatt — begge veier holder målene |
 | **J13b** | 2× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom fremre kilelekt (48×68) → inn i løs plate (18 mm plate, 574 bred), rett opp — hodet står 27 mm under plata i alle tre hullene, så kontraboret grunner ut mot den skråkappede tuppen (dypest ved roten, null ved tuppen) og skruen tar 13 mm i løs plate uansett | fastsatt — begge veier holder målene |
+| **J18** | 1× Treskrue 6×80 forsenket Torx | **Treskrue 6×80 forsenket Torx** gjennom fotbrettbord (48×68) → inn i fotbrettgavl (36×98), rett ned | utledet av tykkelsene |
 
-**6** av retningene er utledet av målene alene, **18** er fastsatt for hånd. Alle sammen kontrolleres ved hver bygging: skruekroppen må ha hodet i plan med flaten den drives fra, spissen inne i delen den tar tak i, og ingenting av seg selv i noen annen del.
+**7** av retningene er utledet av målene alene, **18** er fastsatt for hånd. Alle sammen kontrolleres ved hver bygging: skruekroppen må ha hodet i plan med flaten den drives fra, spissen inne i delen den tar tak i, og ingenting av seg selv i noen annen del.
 
 Veggfestene (J14 og J12-V) står ikke her — de går rett gjennom den bakre sidevangen og gjennom bordbærelekta og inn i veggen, og har ingen andre del å gå inn i.

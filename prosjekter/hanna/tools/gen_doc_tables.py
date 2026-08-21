@@ -1186,6 +1186,60 @@ def build_steps(G):
             ],
             joints={},
         ),
+        dict(
+            n=12,
+            title="Fotbrettet",
+            parts=["Footrest Cheek *", "Footrest Deck Board_*"],
+            camera=(330, 26, 3.4),
+            intro="Det siste stykket er ikke en del av sengen. Det er en "
+                  "krakk som står under platen, og den er der fordi pulten "
+                  "på "
+                  f"{G.PANEL_TOP_TABLE} står {G.TABLE_OVER_SEAT} mm over et "
+                  "sete som er laget for voksne — barnet får knærne inn "
+                  "under platen, men føttene når ikke gulvet. Høyden er ikke "
+                  "valgt: den er den eneste av de ni kurvene sengens egne "
+                  "dimensjoner kan lage som lar puta bære låret uten at "
+                  "putekanten skjærer inn i det. Se X14.",
+            do=[
+                f"Kapp to gavler "
+                  f"{G.sec(G.FOOTREST_CHEEK_T, G.FOOTREST_CHEEK_H)} × "
+                  f"{G.FOOTREST_DEPTH} mm og {G.FOOTREST_BOARDS} dekkbord "
+                  f"{G.sec(G.FOOTREST_DECK_T, G.FOOTREST_DECK_W)} × "
+                  f"{G.FOOTREST_LEN} mm. Alt sammen er rest fra bordene du "
+                  "allerede har kjøpt.",
+                f"Sett de to gavlene PÅ HØYKANT på et plant underlag, "
+                  f"{G.FOOTREST_LEN} mm fra utside til utside — "
+                  f"det er nøyaktig dekkbordenes lengde, så de flukter i "
+                  "begge ender.",
+                f"Legg dekkbordene tvers over, kant i kant, og la endene "
+                  "flukte med gavlenes yttersider. Ingen overheng: hele "
+                  "dekket skal stå over gavlene, ellers vipper krakken når "
+                  "noen tråkker ytterst.",
+                f"Forbor ⌀6 gjennom hvert bord og ⌀4 videre ned i gavlens "
+                  f"overkant. Én "
+                  f"{G.FOOTREST_SCREW.split(' forsenket')[0].lower()} per "
+                  "landing, {n} i alt (J18), midt i bordet og midt i "
+                  "gavlens tykkelse.".replace("{n}", str(8)),
+                "Forsenk hodene UNDER flaten og pusse over. Dette er en "
+                  "flate bare føtter står på, ofte uten sokker.",
+                "Skyv brettet inn under platen, midt i bukta mellom benkene. "
+                  "Det skal ikke skrus fast til noe: det er en løs krakk, og "
+                  "gulvet foran stigen skal kunne feies.",
+            ],
+            check=[
+                f"Mål dekkets overkant: {G.FOOTREST_TOP} mm over gulvet.",
+                "Sett deg på benken med knærne under platen og sålene på "
+                  "brettet. Låret skal ligge på puta hele veien ut til "
+                  "putekanten, og leggen skal stå i lodd.",
+                f"Sjekk at brettet ikke stikker ut i noen av de to "
+                  f"gangpassasjene ved stigen — det skal stå mellom "
+                  f"X {G.FOOTREST_X0} og {G.FOOTREST_X1}, altså i bredden "
+                  "mellom stigevangenes yttersider.",
+                "Vipp på brettet. Det skal ikke vippe: dekket er hele "
+                  "fotavtrykket.",
+            ],
+            joints={'J18': 8},
+        ),
     ]
 
 
@@ -1201,6 +1255,7 @@ def _match(spec, label):
 def resolve_steps(G, steps):
     """Attach the concrete part labels to every step and check the cover."""
     universe = (list(G.parts) + [G.panel_bed] + list(G.battens_bed)
+                + list(G.FOOTREST_PARTS)
                 + [G.mattress] + list(G.CUSHIONS_BED))
     by_label = {p.label: p for p in universe}
     taken = {}
@@ -1439,6 +1494,8 @@ NO_NAMES = {
     "Movable panel": "Løs plate",
     "Panel stiffener batten (M4)": "Avstivningslekt under plate",
     "Panel front cross batten (M5)": "Kilelekt under platens forkant (skråkappet)",
+    "Footrest cheek (X14)": "Fotbrettgavl",
+    "Footrest deck board (X14)": "Fotbrettbord",
 }
 
 
@@ -1466,6 +1523,8 @@ LABEL_TO_CUT = [
     ("Movable Panel", "Movable panel"),
     ("Panel Stiffener Batten", "Panel stiffener batten (M4)"),
     ("Panel Front Batten", "Panel front cross batten (M5)"),
+    ("Footrest Cheek", "Footrest cheek (X14)"),
+    ("Footrest Deck Board", "Footrest deck board (X14)"),
 ]
 
 
@@ -1482,7 +1541,8 @@ def part_cut_keys(G):
         assert len(keys) == 1, f"cut-list name '{name}' has {len(keys)} lines"
 
     out = {}
-    for p in list(G.parts) + [G.panel_bed] + list(G.battens_bed):
+    for p in (list(G.parts) + [G.panel_bed] + list(G.battens_bed)
+              + list(G.FOOTREST_PARTS)):
         if p.label.startswith("Bed Slat_"):
             # The upper slats are the one family the model has sometimes split
             # into two cut-list lines (different lengths). Pick by length if
@@ -1531,7 +1591,8 @@ def cut_table(G):
     """
     keys = part_cut_keys(G)
     spans = {}
-    for p in list(G.parts) + [G.panel_bed] + list(G.battens_bed):
+    for p in (list(G.parts) + [G.panel_bed] + list(G.battens_bed)
+              + list(G.FOOTREST_PARTS)):
         key = keys[p.label]
         (x0, x1), (y0, y1), (z0, z1) = p.extents
         cur = spans.setdefault(key, [[], [], []])
@@ -1685,14 +1746,34 @@ def _fit_text(G, fit):
     return "nominell — bredden strekes opp"
 
 
-def _cut_rows(L, rows):
+LOOSE_MARK = "(løs del)"
+
+
+def loose_lines(G):
+    """The cut-list lines whose pieces are LOOSE - furniture inside the
+    furniture. The model's own LOOSE_PARTS, and the reason a piece can stand
+    on the floor and still be finished on the bench: nobody screws it down,
+    so nothing has to be scribed to a floor that is out of level."""
+    return {p.cut[0] for p in G.LOOSE_PARTS if p.cut is not None}
+
+
+def _cut_rows(G, L, rows):
     """One position table. Returns the number of pieces it printed."""
     L.append("| Del | Dim. | Lengde | Ant. | X | Y | Z |\n")
     L.append("|---|---|---:|---:|---|---|---|\n")
     n = 0
-    for no_name, section, length, qty, sp, _en, _fit in rows:
+    loose = loose_lines(G)
+    for no_name, section, length, qty, sp, en, _fit in rows:
         n += qty
-        L.append(f"| {no_name} | {section} | **{_fmt(length)}** | {qty} | "
+        # X14: a loose piece that STANDS ON THE FLOOR is the one row in this
+        # table whose position contradicts the rule the table is split by, so
+        # the row says why out loud - and the ink assert below reads the same
+        # words rather than being told about the exception in code.
+        touches = (min(a for a, _b in sp[0]) <= G.ROOM_TOL
+                   or max(b for _a, b in sp[0]) >= G.WALL_SPAN - G.ROOM_TOL
+                   or min(a for a, _b in sp[2]) == 0)
+        mark = f" {LOOSE_MARK}" if en in loose and touches else ""
+        L.append(f"| {no_name}{mark} | {section} | **{_fmt(length)}** | {qty} | "
                  f"{_axis(sp[0])} | {_axis(sp[1])} | {_axis(sp[2])} |\n")
     return n
 
@@ -1749,6 +1830,13 @@ def _assert_kappliste_ink(G, text):
         z0, z1 = span(c[-1])
         at_wall = x0 <= G.ROOM_TOL or x1 >= G.WALL_SPAN - G.ROOM_TOL
         touches = at_wall or z0 == 0
+        # X14: unless the row itself says it is a loose piece - then it stands
+        # on the floor and is still the workshop's, and the row has to say so.
+        if LOOSE_MARK in c[0]:
+            assert not is_room and z0 == 0 and not at_wall, (
+                f"«{c[0]}» er merket {LOOSE_MARK}, men står ikke bare på "
+                f"gulvet: X {c[-3]}, Z {c[-1]}")
+            continue
         assert touches == is_room, (
             f"«{c[0]}» står under «{'kapp på stedet' if is_room else 'kapp nå'}»"
             f", men posisjonen i samme rad sier X {c[-3]}, Z {c[-1]}")
@@ -1799,7 +1887,7 @@ def emit_kappliste(G, out_dir):
          "[byggesteg](byggesteg.md#før-steg-0--mål-rommet).\n\n"]
 
     L.append("## Kapp nå — verksteddeler\n\n")
-    n_shop = _cut_rows(L, shop)
+    n_shop = _cut_rows(G, L, shop)
     L.append(f"\n**{n_shop} deler.** Rommet bestemmer ingen mål på disse. "
              "Kapp dem ferdig med én gang.\n\n")
 
@@ -2506,9 +2594,29 @@ def emit_nokkelmal(G, out_dir, rows):
              f"til et barn på {G.FIGURE_H:.0f} mm. Det er en pulthøyde regnet "
              f"for en stol, brukt fra en sofa — SMÅSTAD-pulten på 730 over "
              f"den 430 mm stolen som selges til den gjør det samme (300 mm) |\n")
-    L.append(f"| Sålene over gulvet, sittende | "
-             f"{G.figure_seated_left.extents[2][0]:.0f} mm — ingen fotskammel "
-             f"under platen. Åpent punkt, ikke en detalj |\n")
+    L.append(f"| **Sålene på fotbrettet** | "
+             f"**{G.figure_seated_left.extents[2][0]:.0f} mm** over gulvet — "
+             f"de HENGER ikke: leggen står i lodd, foten ligger flatt og "
+             f"kneet på {G.FOOTREST_KNEE_ANGLE:.0f}°. Til og med X9 hang de "
+             f"134 mm i lufta |\n")
+    L.append(f"| Fotbrettets høyde | {G.FOOTREST_TOP} mm — utledet, ikke "
+             f"valgt: setet bærer låret bare så lenge sålen står mellom "
+             f"{G.FOOTREST_MIN:.0f} og {G.FOOTREST_MAX:.0f} mm, og av de "
+             f"{len(G.footrest_stacks())} kurvene sengens egne fem "
+             f"dimensjoner lager treffer én båndet "
+             f"({G.FOOTREST_CHEEK_H} på høykant + {G.FOOTREST_DECK_T} "
+             f"flatt) |\n")
+    L.append(f"| Fotbrettets plass | X {G.FOOTREST_X0}..{G.FOOTREST_X1} × "
+             f"Y {G.FOOTREST_Y0:.0f}.."
+             f"{G.FOOTREST_Y0 + G.FOOTREST_DEPTH:.0f} × Z 0..{G.FOOTREST_TOP}"
+             f" — bukta mellom de to gangpassasjene, løs, under platen i "
+             f"begge stillinger ("
+             + " / ".join(f"{g:.0f} mm" for g in G.FOOTREST_AIR.values())
+             + " luft) |\n")
+    L.append(f"| Låret på puta | barnet står {list(G.FOOTREST_THIGH.values())[0][0]:.1f} mm "
+             f"ned i skummet — samme dybde som rumpa selv "
+             f"({G.FIG_BUTTOCK_SINK:.1f} mm), og puta bærer låret helt ut "
+             f"til sin egen kant på X {G.SEAT_EDGE_X} |\n")
     L.append(f"| **Fri høyde over ansiktet, nede** | "
              f"**{G.LIE_LOWER_FACE:.0f} mm** til køyespilene |\n")
     L.append(f"| Over den som ligger i køya | ingenting — køya er åpen "
@@ -4047,6 +4155,7 @@ def emit_step_meshes(G, steps, group_dir):
     os.makedirs(step_dir, exist_ok=True)
     universe = {p.label: p for p in
                 list(G.parts) + [G.panel_bed] + list(G.battens_bed)
+                + list(G.FOOTREST_PARTS)
                 + [G.mattress] + list(G.CUSHIONS_BED)}
     PRIOR = (0.82, 0.82, 0.80, 1.0)
     NEW = (0.94, 0.42, 0.10, 1.0)

@@ -723,6 +723,65 @@
       "no_fasteners": true,
       "info_panel": true,
       "avoid_top_left": true
+    },
+    {
+      "n": 12,
+      "title": "Fotbrettet",
+      "image": true,
+      "page": "step",
+      "labels": [
+        "Footrest Cheek Left",
+        "Footrest Cheek Right",
+        "Footrest Deck Board_1",
+        "Footrest Deck Board_2",
+        "Footrest Deck Board_3",
+        "Footrest Deck Board_4"
+      ],
+      "highlight": [
+        "Footrest Cheek Left",
+        "Footrest Cheek Right",
+        "Footrest Deck Board_1",
+        "Footrest Deck Board_2",
+        "Footrest Deck Board_3",
+        "Footrest Deck Board_4"
+      ],
+      "camera": [
+        330,
+        26,
+        3.4
+      ],
+      "intro": "Det siste stykket er ikke en del av sengen. Det er en krakk som står under platen, og den er der fordi pulten på 700 står 280 mm over et sete som er laget for voksne — barnet får knærne inn under platen, men føttene når ikke gulvet. Høyden er ikke valgt: den er den eneste av de ni kurvene sengens egne dimensjoner kan lage som lar puta bære låret uten at putekanten skjærer inn i det. Se X14.",
+      "do": [
+        "Kapp to gavler 36x98 × 272 mm og 4 dekkbord 48x68 × 416 mm. Alt sammen er rest fra bordene du allerede har kjøpt.",
+        "Sett de to gavlene PÅ HØYKANT på et plant underlag, 416 mm fra utside til utside — det er nøyaktig dekkbordenes lengde, så de flukter i begge ender.",
+        "Legg dekkbordene tvers over, kant i kant, og la endene flukte med gavlenes yttersider. Ingen overheng: hele dekket skal stå over gavlene, ellers vipper krakken når noen tråkker ytterst.",
+        "Forbor ⌀6 gjennom hvert bord og ⌀4 videre ned i gavlens overkant. Én treskrue 6×80 per landing, 8 i alt (J18), midt i bordet og midt i gavlens tykkelse.",
+        "Forsenk hodene UNDER flaten og pusse over. Dette er en flate bare føtter står på, ofte uten sokker.",
+        "Skyv brettet inn under platen, midt i bukta mellom benkene. Det skal ikke skrus fast til noe: det er en løs krakk, og gulvet foran stigen skal kunne feies."
+      ],
+      "check": [
+        "Mål dekkets overkant: 146 mm over gulvet.",
+        "Sett deg på benken med knærne under platen og sålene på brettet. Låret skal ligge på puta hele veien ut til putekanten, og leggen skal stå i lodd.",
+        "Sjekk at brettet ikke stikker ut i noen av de to gangpassasjene ved stigen — det skal stå mellom X 787 og 1203, altså i bredden mellom stigevangenes yttersider.",
+        "Vipp på brettet. Det skal ikke vippe: dekket er hele fotavtrykket."
+      ],
+      "fasteners": [
+        "8× Treskrue 6×80 forsenket Torx"
+      ],
+      "joints": {
+        "J18": 8
+      },
+      "parts": [
+        "4× Fotbrettbord 48×68 × 416",
+        "2× Fotbrettgavl 36×98 × 272"
+      ],
+      "fill_code": false,
+      "half_view": false,
+      "thumbnails": false,
+      "crop_to_subject": false,
+      "no_fasteners": false,
+      "info_panel": false,
+      "avoid_top_left": false
     }
   ],
   "bolt_rows": {

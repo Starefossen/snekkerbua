@@ -91,8 +91,22 @@ Stryk punkter etterhvert som de landes.
 - [x] **Release**: v2.0 kuttes etter denne runden. Geometrien er ny siden
       v1.0, og porten er en annen port. `WALL_SPAN` settes når rommet er målt;
       det blir en egen runde og en egen release.
-- [ ] **Fotstøtte ved pulten**: åpent punkt fra bordrunden (sålene henger
-      134 mm for referansebarnet). Kan ses sammen med krok-oppgaven (v2).
+- [x] **Fotstøtte ved pulten** (X14): bygget som en LØS fotkrakk — 2 gavler
+      36×98 × 272 på høykant + 4 dekkbord 48×68 × 416 flatt, 8 × 6×80 (J18),
+      og ikke én skrue inn i sengen. Dekket topper på **146 mm**, og høyden er
+      utledet og ikke valgt: setet bærer låret bare mellom 134,8 og 153,9 mm
+      (for lavt = putekanten skjærer inn i låret dypere enn rumpa selv ligger;
+      for høyt = låret slipper puta), og av de ni kurvene sengens fem
+      dimensjoner lager treffer nøyaktig én det båndet (98 på høykant + 48
+      flatt). Bredden er bukta D13 lar stå mellom gangpassasjene, dybden er de
+      to sålenes egen avstand rundet opp til hele bord. Begge figurene er
+      re-posert: legg i lodd, fot flatt, lårvinkelen SOLVED slik at sålen
+      lander på dekket — sålegapet er assertert til 0. Ingen nye bord kjøpt
+      (svinn 36×98 17 → 13 %, 48×68 30 → 18 %), nytt byggesteg 12, og to nye
+      feilinjiseringer i `tools/falsifiser.py` vokter kapplistas «(løs del)».
+      ÅPENT, SAGT HØYT: fila slutter å sitere popliteal 0,28 H som noe den
+      bygde kroppen gir — kneledd til såle måler 313,2 mot 336, og de 22,8
+      dekomponeres (16,8 boksfoten + 6,0 tabellen) og assertes.
 
 ## Fysisk huskeliste (byggeplass)
 

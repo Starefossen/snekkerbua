@@ -10,8 +10,8 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 | Post | Behov | Kjøp |
 |---|---:|---|
 | Treskrue 5×60 forsenket Torx | 86 | 1 pk. à 100 stk. |
+| Treskrue 6×80 forsenket Torx | 38 | 1 pk. à 50 stk. |
 | Treskrue 5×40 forsenket Torx | 36 | 1 pk. à 50 stk. |
-| Treskrue 6×80 forsenket Torx | 30 | 1 pk. à 50 stk. |
 | Treskrue 6×120 forsenket Torx | 14 | 1 pk. à 20 stk. |
 | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | 9 | 9 stk. |
 | Filtknott / møbeltapp ⌀40 | 8 | 1 pk. |
@@ -46,6 +46,7 @@ I tillegg trengs **D3 trelim**, én liten flaske. Den er ikke en post i tabellen
 | **J12-V** | Veggfeste — gjennom bordbærelekta inn i stenderne | 1 | 3× Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | ⌀8 gjennom lekta, forsenk for hodet; veggen etter festetype. Bores på stedet — stenderne finnes bare i rommet | Rett gjennom lekta inn i veggen, fra benkerommet. Lekta ligger flatt mot veggen i hele sin lengde, så festet trenger verken kloss eller brakett; hodet forsenkes i lektas forside, som ryggputa lener seg mot |
 | **J13a** | Avstivningslekt → løs plate (limt, skrudd nedenfra) | 2 | 6× Treskrue 5×40 forsenket Torx | ⌀12 kontrabor 41 mm opp i lektas underside, ⌀3,5 videre gjennom resten av lekta. Ingenting gjennom platens overside | Nedenfra, opp gjennom lekta og 13 mm inn i den 18 mm platen. Limes med D3 trelim på hele lektas overkant først — skruene er tvinger som blir sittende |
 | **J13b** | Fremre kilelekt (vinge) → løs plate (limt, skrudd nedenfra) | 2 | 2× Treskrue 5×40 forsenket Torx | ⌀12 kontrabor opp i vingens underside TIL DET STÅR 27 mm IGJEN opp til plata — vingen er skråkappet, så det blir dypest ved roten og null ved tuppen. ⌀3,5 videre gjennom de siste 27 mm. Ingenting gjennom platens overside | Nedenfra, som J13a. Vingen ligger med forkanten i flukt med platens forkant, full høyde mot avstivningslekta og skråkappet ut mot platekanten |
+| **J18** | Fotbrettbord → gavl | 8 | 1× Treskrue 6×80 forsenket Torx | ⌀6 gjennom bordet, ⌀4 i gavlens overkant, forsenk hodet under flaten — det er en flate føtter står på | Ovenfra, rett ned i gavlen |
 | **J14** | Veggfeste — gjennom den bakre sidevangen inn i stenderne | 1 | 6× Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | ⌀8 gjennom vangen, forsenk for hodet; veggen etter festetype | Rett gjennom vangen inn i veggen. Vangen ligger flatt mot veggen i hele sin lengde, så festet trenger ingen kloss og ingen brakett |
 | **J15** | Filtknott under stolpe og stubbefot | 8 | 1× Filtknott / møbeltapp ⌀40 | — | Slås i endeveden før reisning |
 

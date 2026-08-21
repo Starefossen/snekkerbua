@@ -320,9 +320,9 @@ PAGE_CLAIMS = [
 # Compared with runs of whitespace collapsed, because the model's own line is
 # laid out in columns and the README quotes it as a sentence.
 README_QUOTES = [
-    "TOTAL 72 pcs 51.23 m in 5 timber profiles + 1 sheet",
-    "181 festemidler plassert i 22 ledd",
-    "172 festemidler modellert som kropper",
+    "TOTAL 78 pcs 53.43 m in 5 timber profiles + 1 sheet",
+    "189 festemidler plassert i 23 ledd",
+    "180 festemidler modellert som kropper",
 ]
 
 
@@ -403,13 +403,31 @@ HIST_ROW = re.compile(r"\(før\)")
 # to do with them. If the sweep ever grows units, they come back.
 PROSE_ALLOW = {
     "ASSEMBLY.md": {
-        "108 mm": "motregning: hva EC5 VILLE krevd av en rad som ikke er bygget",
         "52,1 mm": "mellomregning i et krav som rundes opp til 53 i samme setning",
         "2,9 mm": "mellomregning på vinkelklossens såle, ikke et mål på senga",
         "1,8 mm": "differansen mellom to hullkanter, regnet i teksten selv",
-        "12,7 mm": "samme regnestykke, munningens egen kant",
-        "116 mm": "den GAMLE kilelekta, navngitt som gammel i samme setning",
         "35,5 mm": "raden på den gamle 116 mm-vingen - samme historiske setning",
+        # X14 STRØK TRE OPPFØRINGER, og det er verdt å skrive hvorfor, for to
+        # av dem gikk ut ved et sammentreff og ikke fordi noen regnet dem:
+        #   «12,7 mm» dekkes nå ekte - FIG_BUTTOCK_SINK er det tallet;
+        #   «108 mm» og «116 mm» dekkes av potten uten at senga har noe
+        #   108 eller 116 mm i seg: 116 kommer av at kantavstandsrapporten
+        #   fikk 116 RADER da J18 la til åtte skruer, og 108 av en skalar
+        #   dypt i J5s festeliste. Det er nøyaktig den grovheten sveipet
+        #   selv oppgir (potten dekker ~17 % av heltallene opp til 2500), og
+        #   regelen om at en hviteliste ikke får overleve det den unnskyldte
+        #   er sterkere enn ønsket om å beholde dekningen. Notert her i
+        #   stedet for å bli oppdaget på nytt neste runde.
+        # X14: begge disse lå i potten ved et sammentreff og mistet dekningen
+        # da fotbrettet re-poserte de to sittende figurene. Tallene er de
+        # samme; det er potten som flyttet seg, og det er nøyaktig den
+        # grovheten sveipet selv sier at den har.
+        "175 mm": "øvre rad i madrasstabellens forbudte vindu - håndsatt så "
+                  "radene flisleger 126..175 og 180+; modellen regner "
+                  "vinduet 110..125 og ikke tabellens rader",
+        "584 mm": "spennet vedlegg A regner den fremre benkevangebiten på, "
+                  "håndregnet der; sto i potten til X14 fordi en "
+                  "referansekropp tilfeldigvis målte 583,8 mm bred",
     },
     # HANNAs egen PRAKSIS måler for det meste PAPIRET og ikke sengen -
     # streker, ikoner, dekningsgrad, kilder. De tallene finnes med rette ikke
