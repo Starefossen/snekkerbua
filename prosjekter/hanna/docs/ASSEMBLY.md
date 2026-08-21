@@ -1469,6 +1469,21 @@ millimeterne madrassen er lang. **588 mm igjen bak føttene.**
 
 Regnedelen. Du trenger ikke lese dette for å bygge sengen.
 
+**Radene under regnes av modellen (X13).** Fram til denne runden var vedlegg A
+det ene stedet i prosjektet der tall var *regnet for hånd og skrevet inn*, og
+tallsveipet i `tools/check_tall.py` måtte hvitliste dem ett for ett. Nå står
+C24-arket og hver rad i `generate_loftbed.py` — søk `X13` — og byggeloggen
+skriver dem ut på hver kjøring. Fire tall flyttet seg da regnestykket ble
+maskinelt, og de er rettet her: lagerkapasiteten under trinnet delte på den
+**karakteristiske** 2,5 der alle andre lagerrader delte på designverdien 2,31
+(3,2 → 3,0 kN); endespilen var skalert med spennforholdet **i annen**, som er
+måten en nedbøying skalerer og ikke en spenning (0,46 → 0,48);
+spile-mot-vange-raden sto på 0,05 der 0,7 kN på 4704 mm² er 0,06; og
+stolpen mot gulvet var avrundet til 45 der 3528 mm² endeved er 45,6 kN. A.6 sa
+dessuten 0,15 om trinnet, som er 1 kN-tallet, mens A.2 for lengst hadde flyttet
+raden til EN 747-2s 1,2 kN. Ingenting i sengen er rørt av dette — det er
+regnestykkene som har byttet hånd.
+
 Spennene i tabellene er delenes frie spenn, som følger av kapplista og
 nøkkelmålene.
 
@@ -1572,7 +1587,7 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | Køyespile 23×98, **bar bunn** | Bøyning, én fot over minst to spiler | 752 mm c/c | 0,5 kN på én spile | **0,50** | ✓ σ ≈ 10,9 MPa mot f<sub>m,d</sub> 21,6; nedbøying 4,1 mm |
 | Køyespile 23×98, **med madrass** | Bøyning, kroppen spredt over feltet | 752 mm c/c | 0,3 kN på én spile | **0,30** | ✓ σ ≈ 6,5 MPa |
 | Køyespile, **hele vekten på én bar spile** | Bøyning | 752 mm c/c | 1 kN på én spile | **1,01** | ✗ Nøyaktig på grensen. Se 7.4 — ikke en byggemåte, en bruksregel |
-| Spile → sidevange | Trelagring, full vangebredde under hver spile | 48 mm opplegg | 0,7 kN | 0,05 | ✓ |
+| Spile → sidevange | Trelagring, full vangebredde under hver spile | 48 mm opplegg | 0,7 kN | 0,06 | ✓ |
 | Bakre sidevange, regnet som fritt spenn mellom hjørnestolpene | Bøyning | 1794 mm | 2 kN | **0,65** | ✓ Konservativt — se raden under |
 | Bakre sidevange **som bygget** | Bøyning, men vangen er skrudd til veggen i hver stender den treffer, så den er understøttet flere ganger på veien | ≈ 331 mm mellom veggfestene (6 fester over 1984 mm, 165 mm inn fra hver vegg) | 2 kN | ≈ **0,08** | ✓ Dette er grunnen til at veggfestet ikke er valgfritt |
 | Fremre sidevange 48×98 | Bøyning, avstivet av de to stigevangene | 1794 mm | 2 kN | < 0,65 | ✓ σ ≈ 11,7 MPa mot 18,1 |
@@ -1583,14 +1598,14 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | Samme ledd, **kantavstander** | 18 mm (3d) til bjelkens ende langs fiberretningen, 19 mm (3,2d) til kanten i lastretningen, i 36 × 98 C24 | krav 3d = 18 mm | — | — | ✓ Et vanlig omlegg, ikke en sprø endeskjøt. Målt på modellen |
 | Fremre hjørnestolpe 36×98 | Knekking om svak akse, verste frie lengde 1007 mm — X1 la hele løftet inn i det ene spennet benkevange → endebjelke | λ = 97, k<sub>c</sub> = 0,32 → N<sub>c,Rd</sub> ≈ **14,7 kN** | ≈ 1,5 kN | **0,10** | ✓ Svak akse er dimensjonerende, og margin er likevel god |
 | Bakre hjørnestolpe 36×98 | Knekking, kortere stolpe, avstivet av benkevange og bordbærelekt. Fri lengde 1304 mm regnet konservativt, som om bare endebjelken holder | λ = 126, k<sub>c</sub> = 0,20 → N<sub>c,Rd</sub> ≈ **9,1 kN** | ≈ 1,5 kN | **0,16** | ✓ |
-| Stolpe → gulv | Endeved mot gulv | 45 kN i treet | 1 kN | 0,02 | ✓ |
+| Stolpe → gulv | Endeved mot gulv | 45,6 kN i treet | 1 kN | 0,02 | ✓ |
 
 ### A.2 Stigen
 
 | Ledd | Bæremåte | Spenn / flate | Last | Utn. | Dom |
 |---|---|---|---|---:|---|
 | Rungetrinn 48×68 | Bøyning | 320 mm | **1,2 kN** | **0,18** | ✓ σ ≈ 3,7 MPa mot 20,9. Lasten er EN 747-2s prøvenivå for et trinn, ikke vårt eget anslag. Trinnet kjennes helt stivt |
-| Trinn → stigekloss | **Trelagring** 36 × 36 | 1296 mm² → 3,2 kN | 0,5 kN | 0,15 | ✓ K1 kappet klossen 73 → 36 mm; flaten halveres, tallet fordobles og ligger fortsatt lavt |
+| Trinn → stigekloss | **Trelagring** 36 × 36 | 1296 mm² → 3,0 kN | 0,5 kN | 0,17 | ✓ K1 kappet klossen 73 → 36 mm; flaten halveres, tallet fordobles og ligger fortsatt lavt |
 | Stigekloss → stigevange | Skruskjær, 1 × 5 mm — klossflaten 36 × 48 mm tar ikke to | 1,5 kN | 0,5 kN | **0,33** | ✓ |
 | Samme hjørne, **kombinert skjærvei** | Klossens skrue + trinnendens 6×120 gjennom stigevangen | 3,5 kN | 0,5 kN | 0,14 | ✓ Trinnet låser også klossen mot å rotere om sin ene skrue |
 | Skrue i trinnenden | Bærer ingen vertikal last | — | ≈ 0 | — | ✓ Riktig utformet |
@@ -1615,7 +1630,7 @@ er ikke et tall noen valgte.
 | Ledd | Bæremåte | Spenn / flate | Last | Utn. | Dom |
 |---|---|---|---|---:|---|
 | Benkespile 23×98 | Bøyning — samme stykke som køyespilen | 752 mm c/c | 0,5 kN på én spile | **0,50** | ✓ Delingen er tettere her, 112,25 mm, så en fot tar minst tre spiler |
-| Endespile 23×98 (V13) | Bøyning — samme stykke, kortere spenn | 722 mm c/c | 0,5 kN på én spile | **0,46** | ✓ Spennet er 30 mm kortere enn feltets, så raden over er den strenge |
+| Endespile 23×98 (V13) | Bøyning — samme stykke, kortere spenn | 722 mm c/c | 0,5 kN på én spile | **0,48** | ✓ Spennet er 30 mm kortere enn feltets, så raden over er den strenge |
 | Endespile → endelist | Trelagring 98 × 36 | 3528 mm² → 8,2 kN | 0,25 kN | 0,03 | ✓ |
 | Endelist → bakre stolpe (J17) | Skruskjær, 2 × 5 mm — hele festet, ingen kloss under | 3,0 kN | 0,25 kN | **0,08** | ✓ Med hele spilelasten stående rett over listen: 0,17 |
 | Spile → benkevange | Trelagring 48 × 98 | 4704 mm² → 10,9 kN | 0,5 kN | 0,05 | ✓ |
@@ -1667,6 +1682,7 @@ er ikke et tall noen valgte.
 | Bordkloss → stigevange, platas eksentriske last i skrueparet (J5-B) | **0,55** |
 | Avstivningslekt under platen, hele lasten over én av dem | **0,52** |
 | Køyespile og benkespile, 0,5 kN på én bar spile | **0,50** |
+| Endespile (V13), 0,5 kN på én bar spile | 0,48 |
 | Platas frie forkant, 1 kN flat hånd (fiberretningen **langs**) | 0,43 |
 | Endebjelke (36×98) | 0,40 |
 | Bordbærelekt på høykant, ren bordlast | 0,34 |
@@ -1675,10 +1691,10 @@ er ikke et tall noen valgte.
 | Stigevange, knekking ut av planet | **0,26** |
 | Endebjelke → hjørnestolpe (J1), to skruer i skjær | **0,25** |
 | Vange → endebjelke (trelagring) | 0,25 |
+| Rungetrinn, bøyning (EN 747-2s 1,2 kN) | **0,18** |
 | Stigevange → fremre sidevange (J3) | 0,17 |
+| Trinn → stigekloss (trelagring) | 0,17 |
 | Bakre hjørnestolpe, knekking | 0,16 |
-| Trinn → stigekloss (trelagring) | 0,15 |
-| Rungetrinn, bøyning | 0,15 |
 | Kilelekt under platehjørnet, bøyning i det kritiske snittet | 0,13 |
 | Benkevangeendene → stolpe (J8, J8-B), to skruer i skjær | 0,13 |
 | Bakre benkevange over åpningen mellom stubbeføttene | 0,12 |

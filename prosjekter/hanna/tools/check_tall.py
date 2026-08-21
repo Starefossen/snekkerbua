@@ -387,33 +387,27 @@ HIST_ROW = re.compile(r"\(før\)")
 # The numbers that are RIGHTLY not in the model, one line each with the reason.
 # Exact: an entry that stops occurring in the file fails, so the list cannot
 # quietly outlive what it was excusing.
+#
+# X13 TOOK TWENTY LINES OUT OF THIS LIST. Every one of them read «håndregnet i
+# lastveis-tillegget» or «lagerkapasitet regnet av flate x f_c,90» - vedlegg A
+# worked its own arithmetic and the model had no opinion. The model computes
+# those rows now (search X13 in generate_loftbed.py), so the sweep is sharp on
+# them instead of blind to them: change a stress in the prose and it fails.
+#
+# AND THREE PRAKSIS LINES WENT WITH THEM, WHICH IS A SMALL LOSS AND IS SAID
+# OUT LOUD. «1,56 %», «5,8 %» and «21,6 %» were drawing-room measurements off
+# IKEA's sheet, rightly absent from the model - but the pool is unit-blind, and
+# X13 put 1,56 (the bare Johansen capacity), 5,8 (a slat deflection) and 21,6
+# (f_m,d at k_h 1,3) into it. The whitelist has to be exact, so the lines had
+# to go; those three percentages are now covered by numbers that have nothing
+# to do with them. If the sweep ever grows units, they come back.
 PROSE_ALLOW = {
     "ASSEMBLY.md": {
         "108 mm": "motregning: hva EC5 VILLE krevd av en rad som ikke er bygget",
         "52,1 mm": "mellomregning i et krav som rundes opp til 53 i samme setning",
         "2,9 mm": "mellomregning på vinkelklossens såle, ikke et mål på senga",
         "1,8 mm": "differansen mellom to hullkanter, regnet i teksten selv",
-        "12,1 mm": "samme regnestykke, andre ledd",
         "12,7 mm": "samme regnestykke, munningens egen kant",
-        "760 mm": "anslått fritt spenn i lastveis-tillegget, avrundet med «≈»",
-        "11 000\nMPa": "E-modul for C24, sitert fra standarden",
-        "1,54 MPa": "designverdi regnet i lastveis-tillegget (2,5 × 0,8 / 1,3)",
-        "2,31 MPa": "samme, med k_c,90 = 1,5",
-        "2,08 MPa": "håndregnet spenning i lastveis-tillegget",
-        "11,7 MPa": "håndregnet spenning i lastveis-tillegget",
-        "7,3 MPa": "håndregnet spenning i lastveis-tillegget",
-        "3,7 MPa": "håndregnet spenning i lastveis-tillegget",
-        "5,1 MPa": "håndregnet spenning i lastveis-tillegget",
-        "6,7 MPa": "håndregnet spenning i lastveis-tillegget",
-        "12,1 MPa": "håndregnet spenning i lastveis-tillegget",
-        "1,15 kN": "Johansen-kapasitet uten taueffekt, håndregnet",
-        "1,56 kN": "Johansen-kapasitet uten taueffekt, håndregnet",
-        "3,2 kN": "lagerkapasitet regnet av flate × f_c,90 i tillegget",
-        "7,5 kN": "lagerkapasitet regnet av flate × f_c,90 i tillegget",
-        "0,27 kN": "uttrekkskapasitet per skrue, håndregnet i tillegget",
-        "10,9 MPa": "håndregnet spenning i lastveis-tillegget",
-        "10,9 kN": "lagerkapasitet regnet av flate × f_c,90 i tillegget",
-        "8,2 kN": "lagerkapasitet regnet av flate × f_c,90 i tillegget",
         "116 mm": "den GAMLE kilelekta, navngitt som gammel i samme setning",
         "35,5 mm": "raden på den gamle 116 mm-vingen - samme historiske setning",
     },
@@ -429,13 +423,10 @@ PROSE_ALLOW = {
         "0,71 mm": "strekbredde målt på IKEAs eget ark, kildemåling",
         "0,22 mm": "strekbredde som ble prøvd og forkastet - gråner i trykk",
         "0,001 mm": "OpenCascades toleranse for en krum kropp, ikke et mål",
-        "1,56 %": "strek mot figurhøyde på IKEAs ark, kildemåling",
-        "5,8 %": "strek mot hodediameter på IKEAs ark, kildemåling",
         "15,6 %": "dekningsgrad målt på ikonet i 19 mm @ 300 dpi",
         "17,8 %": "dekningsgrad målt på ikonet i 19 mm @ 300 dpi",
         "20,1 %": "dekningsgrad målt på ikonet i 19 mm @ 300 dpi",
         "21,5 %": "dekningsgrad målt på ikonet i 19 mm @ 300 dpi",
-        "21,6 %": "dekningsgrad på ikonet før figurhoderunden - historikk uten parentes",
         "22,4 %": "figurhøyde i ikonets egne enheter, tegnerom",
         "26,9 %": "hodeandel målt på IKEAs ark, kildemåling",
         "437 mm": "avstand mellom to merkeklynger på den ferdige stegsiden, tegnerom",

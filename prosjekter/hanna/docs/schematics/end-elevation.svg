@@ -267,9 +267,11 @@
   <text x="840" y="2757" class="dmh" text-anchor="middle">800  spilebunn = madrassbredden</text>
   <line x1="340" y1="2842" x2="1385" y2="2842" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="862.5" y="2865" class="dmh" text-anchor="middle">836  dybde over alt</text>
-  <line x1="1490" y1="476.25" x2="1490" y2="395" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <line x1="1490" y1="476.25" x2="1490" y2="451.505" class="dim" marker-start="url(#aS)"/>
+  <line x1="1490" y1="424.115" x2="1490" y2="395" class="dim" marker-end="url(#aE)"/>
   <text x="1502.65" y="443.675" class="dmh" text-anchor="middle">65</text>
-  <line x1="1490" y1="272.5" x2="1490" y2="178.75" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <line x1="1490" y1="272.5" x2="1490" y2="241.505" class="dim" marker-start="url(#aS)"/>
+  <line x1="1490" y1="214.115" x2="1490" y2="178.75" class="dim" marker-end="url(#aE)"/>
   <text x="1502.65" y="233.675" class="dmh" text-anchor="middle">75</text>
   <text x="1520" y="387" class="sml" text-anchor="start">EN 747: begge åpninger i båndet 60–75</text>
   <text x="2400" y="305" class="leg" text-anchor="start">ASYMMETRISK — SENGEN ER IKKE VENDBAR</text>

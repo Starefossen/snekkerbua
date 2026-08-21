@@ -223,22 +223,26 @@
   <text x="588" y="1714.86" class="smh" text-anchor="start">Benkevange, bak (gjennomgående) — 229–297 over gulv  ·  -771..-703 under risset</text>
   <text x="588" y="1329.86" class="smh" text-anchor="start">Bordbærelekt, bak — 614–682 over gulv  ·  -386..-318 under risset</text>
   <text x="493" y="511.86" class="smh" text-anchor="start">Sidevange, øvre — 1402–1500 over gulv  ·  +402..+500 over risset</text>
-  <line x1="360" y1="2055.2" x2="360" y2="1826.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <line x1="360" y1="2055.2" x2="360" y2="1956.58" class="dim" marker-start="url(#aS)"/>
+  <line x1="360" y1="1929.19" x2="360" y2="1826.2" class="dim" marker-end="url(#aE)"/>
   <text x="372.65" y="1948.75" class="dmh" text-anchor="middle">229</text>
   <line x1="470" y1="1826.2" x2="344" y2="1826.2" class="ext"/>
   <line x1="360" y1="1826.2" x2="360" y2="1758.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="372.65" y="1800.25" class="dmh" text-anchor="middle">68</text>
   <line x1="470" y1="1758.2" x2="344" y2="1758.2" class="ext"/>
-  <line x1="360" y1="1758.2" x2="360" y2="1441.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <line x1="360" y1="1758.2" x2="360" y2="1615.58" class="dim" marker-start="url(#aS)"/>
+  <line x1="360" y1="1588.19" x2="360" y2="1441.2" class="dim" marker-end="url(#aE)"/>
   <text x="372.65" y="1607.75" class="dmh" text-anchor="middle">317</text>
   <line x1="470" y1="1441.2" x2="344" y2="1441.2" class="ext"/>
   <line x1="360" y1="1441.2" x2="360" y2="1373.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="372.65" y="1415.25" class="dmh" text-anchor="middle">68</text>
   <line x1="470" y1="1373.2" x2="344" y2="1373.2" class="ext"/>
-  <line x1="360" y1="1373.2" x2="360" y2="653.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <line x1="360" y1="1373.2" x2="360" y2="1029.08" class="dim" marker-start="url(#aS)"/>
+  <line x1="360" y1="1001.69" x2="360" y2="653.2" class="dim" marker-end="url(#aE)"/>
   <text x="372.65" y="1021.25" class="dmh" text-anchor="middle">720</text>
   <line x1="470" y1="653.2" x2="344" y2="653.2" class="ext"/>
-  <line x1="360" y1="653.2" x2="360" y2="555.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <line x1="360" y1="653.2" x2="360" y2="620.08" class="dim" marker-start="url(#aS)"/>
+  <line x1="360" y1="592.69" x2="360" y2="555.2" class="dim" marker-end="url(#aE)"/>
   <text x="372.65" y="612.25" class="dmh" text-anchor="middle">98</text>
   <line x1="470" y1="555.2" x2="344" y2="555.2" class="ext"/>
   <line x1="470" y1="2055.2" x2="344" y2="2055.2" class="ext"/>

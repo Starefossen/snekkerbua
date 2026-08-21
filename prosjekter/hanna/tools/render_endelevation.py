@@ -33,6 +33,11 @@ screw drawn is a placed fastener with its own anchor and direction. The only
 things typed here are the ones the model has no opinion about: how big the
 paper is, where on it a note goes, and what the note says.
 
+Counts included (X13): the slats and the cushions are COUNTED in the model,
+never typed, and assert_counts_ink() reads every count back out of the finished
+SVG and holds it up against that same tally - so a bed that gains a slat or a
+cushion stops the build rather than quietly disagreeing with its own drawing.
+
 Usage:
     python tools/render_endelevation.py [--out docs/schematics/end-elevation.svg]
 
@@ -41,6 +46,7 @@ give byte-identical files, and `mise run check` says so.
 """
 
 import os
+import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -161,6 +167,40 @@ class Model:
                        for fs in self.G.FASTENER_SPECS
                        if fs["jid"] == jid and fs.get("anchor") is not None})
 
+    def count(self, stem):
+        """Hvor mange deler modellen faktisk bygde med denne navnestammen -
+        «Bed Slat_1», «Bed Slat_2», … Telt, aldri skrevet inn."""
+        return sum(1 for lab in self.by_label if lab.startswith(stem))
+
+    def cushions(self):
+        """De fysiske putene, i rekkefølge langs X slik de ligger i
+        sengestilling.
+
+        CUSHIONS_ALL bygger de to ryggputene TO ganger - én gang per stilling -
+        så lengden av den lista er ikke antall skumklosser. Klossene er de
+        DISTINKTE navnene med stillingen strøket, og hver av dem tas i sin
+        sengestilling, for det er der alle fire ligger på rad i samme flate.
+        Asserten under gjør at en pute som bare finnes i bordstilling feller
+        arket i stedet for å forsvinne stille ut av tellingen."""
+        run = []
+        seen = []
+        for c in self.G.CUSHIONS_ALL:
+            stem = c.label.split(" (")[0]
+            if "(table mode)" in c.label or stem in seen:
+                continue
+            seen.append(stem)
+            run.append(c)
+        stems = {c.label.split(" (")[0] for c in self.G.CUSHIONS_ALL}
+        assert len(run) == len(stems), (
+            f"modellen har {len(stems)} puter, men bare {len(run)} av dem har "
+            f"en sengestilling å ligge i")
+        return sorted(run, key=lambda c: c.extents[0][0])
+
+    def dim(self, part, axis):
+        """Én kant av en del, målt langs én akse."""
+        lo, hi = part.extents[axis]
+        return round(hi - lo, 1)
+
 
 # ---------------------------------------------------------------------------
 # THE VIEW
@@ -244,21 +284,41 @@ NAMED = [
     ("Back Cushion Left (table mode)", 200.0, 560.0, None),
 ]
 
-NAMES = {
-    "Upper Side Rail Front": "Sidevange, øvre — bak og front",
-    "End Beam Left": "Endebjelke — henger i sine egne skruer",
-    "Bed Slat_1": "Køyespile — 14 like, én lengde",
-    "Mattress 200x80 (reference)": "Madrass (referanse, ikke en del)",
-    "Guard Rail Front Left_2": "Rekkverksbord, front — to bånd",
-    "Corner Post Front Left": "Hjørnestolpe, front",
-    "Corner Post Back Left": "Hjørnestolpe, bak — i veggplanet",
-    "Table Ledger Back": "Bordbærelekt, bak",
-    "Bench Rail Back (continuous)":
-        "Benkevange — bak gjennomgående, front i to biter",
-    "Bench Slat Left_1": "Benkespile — 5 per benk",
-    "Seat Cushion Left": "Benkepute",
-    "Back Cushion Left (table mode)": "Ryggpute, på høykant i sofastilling",
-}
+# Norsk prosa skriver små antall med bokstaver, og modellen kjenner bare
+# heltallet. Denne tabellen er den ærlige broen over det gapet: TALLET telles
+# fortsatt i modellen, det er bare STAVEMÅTEN som står her. Et antall utenfor
+# tabellen skrives med siffer - da er det uansett for stort til å skrives med
+# bokstaver på et arbeidsark.
+TALLORD = {1: "én", 2: "to", 3: "tre", 4: "fire", 5: "fem", 6: "seks",
+           7: "sju", 8: "åtte", 9: "ni", 10: "ti", 11: "elleve", 12: "tolv"}
+
+
+def tallord(n):
+    return TALLORD.get(n, str(n))
+
+
+def names(M):
+    """Navnet hver del får på arket. Ordene er dette arkets egne; hvert ANTALL
+    i dem telles i modellen, på samme måte som trinnstigen leser RUNG_TOPS -
+    får sengen en spile til, følger teksten etter av seg selv."""
+    return {
+        "Upper Side Rail Front": "Sidevange, øvre — bak og front",
+        "End Beam Left": "Endebjelke — henger i sine egne skruer",
+        "Bed Slat_1":
+            f"Køyespile — {M.count('Bed Slat_')} like, én lengde",
+        "Mattress 200x80 (reference)": "Madrass (referanse, ikke en del)",
+        "Guard Rail Front Left_2": "Rekkverksbord, front — to bånd",
+        "Corner Post Front Left": "Hjørnestolpe, front",
+        "Corner Post Back Left": "Hjørnestolpe, bak — i veggplanet",
+        "Table Ledger Back": "Bordbærelekt, bak",
+        "Bench Rail Back (continuous)":
+            "Benkevange — bak gjennomgående, front i to biter",
+        "Bench Slat Left_1":
+            f"Benkespile — {M.count('Bench Slat Left_')} per benk",
+        "Seat Cushion Left": "Benkepute",
+        "Back Cushion Left (table mode)":
+            "Ryggpute, på høykant i sofastilling",
+    }
 
 
 def spec(M, label):
@@ -270,6 +330,7 @@ def spec(M, label):
 
 
 def draw_names(sh, M):
+    NAMES = names(M)
     for label, y, z, target in NAMED:
         txt = f"{NAMES[label]}   {spec(M, label)}"
         sh.text((why(y), zed(z)), txt, "smh")
@@ -418,6 +479,20 @@ def notes(M):
                    - M.y("Corner Post Back Left", 0))
     roam = depth_clear - G.MATTRESS_W
     too_thick = min(t for t in SHELF_MATTRESS_H if t > G.MATTRESS_H_MAX)
+    # PUTENE, TELT OG MÅLT. Antallet er antall skumklosser i modellen, tykkelse
+    # og dybde er de samme to kantene på hver av dem, og oppdelingen er de fire
+    # lengdene lest i rekkefølge langs sengen. Ingen av tallene skrives her.
+    cush = M.cushions()
+    c_t = sorted({M.dim(c, 2) for c in cush})
+    c_d = sorted({M.dim(c, 1) for c in cush})
+    seats = [c for c in cush if c.label.startswith("Seat")]
+    backs = [c for c in cush if c.label.startswith("Back")]
+    seat_len = sorted({M.dim(c, 0) for c in seats})
+    back_len = sorted({M.dim(c, 0) for c in backs})
+    assert len(c_t) == len(c_d) == len(seat_len) == len(back_len) == 1, (
+        f"putene er ikke lenger én tykkelse ({c_t}), én dybde ({c_d}) og to "
+        f"lengder ({seat_len}, {back_len}) - da holder ikke setningen under")
+    run = [M.dim(c, 0) for c in cush]
 
     def mm(v):
         return nb(v, 0)
@@ -474,9 +549,12 @@ def notes(M):
         ]),
         ("BENKEN, PUTENE OG DEN LØSE PLATEN", [
             f"Benkeflaten ligger på Z {mm(bench)} og puteoversiden på "
-            f"{mm(seat)}. Det er FIRE puter, alle 100 mm tykke og 800 mm dype: "
-            f"to benkeputer på 663 mm og to ryggputer på 332 mm. "
-            f"663 + 332 + 332 + 663 = 1990 — hele lengden.",
+            f"{mm(seat)}. Det er {tallord(len(cush)).upper()} puter, alle "
+            f"{mm(c_t[0])} mm tykke og {mm(c_d[0])} mm dype: "
+            f"{tallord(len(seats))} benkeputer på {mm(seat_len[0])} mm og "
+            f"{tallord(len(backs))} ryggputer på {mm(back_len[0])} mm. "
+            f"{' + '.join(mm(v) for v in run)} = {mm(sum(run))} — hele "
+            f"lengden.",
             f"I sofastilling står ryggputa på høykant ytterst på hver benk, "
             f"med toppen på Z "
             f"{mm(M.z('Back Cushion Left (table mode)', 1))} og ryggen mot "
@@ -541,9 +619,75 @@ def draw_legend(sh, y):
 
 
 # ---------------------------------------------------------------------------
+# ASSERTEN SOM LESER BLEKKET
+# ---------------------------------------------------------------------------
+# X13: de to antallene på dette arket - spilene og putene - sto som tall i
+# teksten, riktige den dagen de ble skrevet. Nå telles de i modellen, og denne
+# asserten leser dem TILBAKE UT AV DEN FERDIGE SVG-EN og holder dem opp mot
+# modellens egen telling. Får sengen én spile eller én pute til uten at arket
+# følger med, stopper bygget her - som på spikerslagsarket, der de skraverte
+# feltene leses tilbake ut av blekket på samme måte.
+_TXT_RE = re.compile(r"<text\b[^>]*>(.*?)</text>")
 
-def build(G):
-    M = Model(G)
+
+def _ink(path):
+    """All teksten arket faktisk skrev, som én streng. Notatene brytes over
+    flere linjer, så setningene settes sammen igjen med mellomrom før de
+    leses - ellers avhenger asserten av hvor linjeskiftet tilfeldigvis falt."""
+    with open(path, encoding="utf-8") as fh:
+        text = fh.read()
+    words = [b.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&")
+             for b in _TXT_RE.findall(text)]
+    return " ".join(words)
+
+
+def assert_counts_ink(path, M):
+    """Hvert antall som STÅR på arket, mot det modellen har bygd."""
+    ink = _ink(path)
+    checked = 0
+    for pattern, want, hva in (
+            (r"Køyespile — (\d+) like", M.count("Bed Slat_"), "køyespiler"),
+            (r"Benkespile — (\d+) per benk", M.count("Bench Slat Left_"),
+             "benkespiler per benk")):
+        found = re.findall(pattern, ink)
+        assert len(found) == 1, \
+            f"fant {len(found)} steder som teller {hva} på arket, venter ett"
+        assert int(found[0]) == want, (
+            f"arket sier {found[0]} {hva}, men modellen har bygd {want}")
+        checked += 1
+
+    cush = M.cushions()
+    found = re.findall(r"Det er ([A-ZÆØÅ]+) puter", ink)
+    assert len(found) == 1, \
+        f"fant {len(found)} steder som teller putene på arket, venter ett"
+    assert found[0] == tallord(len(cush)).upper(), (
+        f"arket sier {found[0]} puter, men modellen har bygd "
+        f"{len(cush)} ({tallord(len(cush)).upper()})")
+    checked += 1
+
+    # ... og oppdelingen, som er de samme putene en gang til: lengdene i
+    # rekkefølge langs sengen, og summen som SKAL være hele soveflaten.
+    found = re.findall(r"((?:\d+ \+ )+\d+) = (\d+) — hele lengden", ink)
+    assert len(found) == 1, \
+        f"fant {len(found)} pute-regnestykker på arket, venter ett"
+    run = [int(v) for v in found[0][0].split(" + ")]
+    want = [int(M.dim(c, 0)) for c in cush]
+    assert run == want, (
+        f"regnestykket på arket deler soveflaten i {run}, men putene i "
+        f"modellen måler {want}")
+    assert int(found[0][1]) == sum(want) == int(M.G.LOWER_SLEEP_LEN), (
+        f"putene summerer til {sum(want)} mm, arket skriver {found[0][1]} og "
+        f"soveflaten er {M.G.LOWER_SLEEP_LEN} mm")
+    checked += 1
+    return checked
+
+
+# ---------------------------------------------------------------------------
+
+def build(G, M=None):
+    # Samme modell tegner arket og leser blekket etterpå - ellers kunne de to
+    # i prinsippet svare på hvert sitt sengeutkast.
+    M = Model(G) if M is None else M
     sh = Sheet(SHEET_W, SHEET_H, STYLE_K,
                "Loftseng - kortside, snitt A-A",
                width=2400, origin=ORIGIN, extra_css=EXTRA_CSS)
@@ -572,8 +716,11 @@ def main(argv):
     if "--out" in argv:
         out = argv[argv.index("--out") + 1]
     import generate_loftbed as G
-    build(G).write(out)
-    print(f"wrote {out}")
+    M = Model(G)
+    build(G, M).write(out)
+    n = assert_counts_ink(out, M)
+    print(f"wrote {out}  ({n} antall på arket lest tilbake ut av blekket og "
+          f"målt mot modellen)")
     return 0
 
 

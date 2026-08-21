@@ -47,6 +47,30 @@ def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+def _clip_box(a, b, box):
+    """The stretch of the segment a->b that lies inside `box`, as the pair of
+    parameters (t0, t1) along it, or None if the segment never enters it.
+
+    Plain slab clipping, and it is here rather than inlined because both the
+    vertical and the horizontal case of a dimension ask it the same question:
+    where does this line run under that figure?"""
+    x0, y0, x1, y1 = box
+    t0, t1 = 0.0, 1.0
+    for p, q, lo, hi in ((a[0], b[0], x0, x1), (a[1], b[1], y0, y1)):
+        d = q - p
+        if abs(d) < 1e-12:
+            if p < lo or p > hi:
+                return None
+            continue
+        s0, s1 = (lo - p) / d, (hi - p) / d
+        if s0 > s1:
+            s0, s1 = s1, s0
+        t0, t1 = max(t0, s0), min(t1, s1)
+        if t0 >= t1:
+            return None
+    return (t0, t1)
+
+
 # ---------------------------------------------------------------------------
 # THE FAMILY'S NUMBERS - type, stroke, halo
 # ---------------------------------------------------------------------------
@@ -63,6 +87,11 @@ SW_BASE = {
 }
 
 HALO_BASE = 6.0             # the white halo under a figure on line work
+
+# A haloed class is the same type as its plain one - `.dmh` is `.dm` with white
+# under it - and anything that has to MEASURE a string needs the size, not the
+# halo. Written down here so the two never drift apart.
+SZ_ALIAS = {"tinyh": "tiny", "smh": "sml", "dmh": "dm"}
 
 
 def sizes(k):
@@ -226,11 +255,19 @@ class Sheet:
             self.text((p[0], p[1] + i * lead), row, cls, anchor)
         return p[1] + (len(rows) - 1) * lead
 
+    # -- TYPE THAT HAS TO FIT ----------------------------------------------
+    # 0.52 em per character is this family's average, and the same one
+    # tools/render_lineart.py measures its own columns with. It is an average
+    # and it is meant to be: a note that runs off the sheet is the one drawing
+    # fault a proof render always shows and a code review never does, and the
+    # only way to not have it is to ask how wide the text is before it is set.
+    CHAR_W = 0.52
+
     def wrap(self, text, width, cls="sml"):
         """Greedy wrap to a column measured in SHEET UNITS, not in characters:
         a note that runs off the sheet is the one drawing fault a proof render
         always shows and a code review never does."""
-        cw = self.sz[cls] * 0.52
+        cw = self.sz[cls] * self.CHAR_W
         out, row = [], ""
         for word in text.split():
             cand = (row + " " + word).strip()
@@ -242,6 +279,51 @@ class Sheet:
         if row:
             out.append(row)
         return out
+
+    def type_size(self, cls):
+        """The em of a class, halo or no halo."""
+        return self.sz[SZ_ALIAS.get(cls, cls)]
+
+    def text_box(self, p, s, cls="sml", anchor="start", pad=0.0, pad_y=None):
+        """The box one line of type occupies on the page, from the same 0.52 em
+        average wrap() measures a column with. 0.72 em over the baseline is the
+        cap height, 0.21 under it the descender - a figure is drawn from these
+        two, never guessed at.
+
+        The two pads are separate because they are two different courtesies:
+        `pad` runs along the READING direction, where a line stopped flush with
+        the last glyph still reads as touching it, and `pad_y` only has to
+        cover the halo the glyph carries."""
+        sz = self.type_size(cls)
+        pad_y = pad if pad_y is None else pad_y
+        w = len(s) * sz * self.CHAR_W
+        back = {"start": 0.0, "middle": w / 2.0, "end": w}.get(anchor, 0.0)
+        x0 = p[0] - back
+        return (x0 - pad, p[1] - sz * 0.72 - pad_y,
+                x0 + w + pad, p[1] + sz * 0.21 + pad_y)
+
+    def line_cut(self, a, b, box, cls="dim", start="", end="", keep=0.0):
+        """One line with a HOLE in it where `box` - a figure's own box - lies
+        over it, and the whole line when it does not.
+
+        A white halo hides the stroke under a glyph and cannot hide it in the
+        SPACE between two words - which is exactly where "1990 mm" has one - so
+        the line gives way instead. Each end keeps the marker it came with. If
+        a stub would come out shorter than `keep` the arrow has nowhere to sit,
+        so the line is left whole and the halo does what it can: the same
+        answer, and for the same reason, as the one in
+        tools/render_lineart.py's dimension()."""
+        n = math.hypot(b[0] - a[0], b[1] - a[1])
+        cut = _clip_box(a, b, box) if n > 1e-9 else None
+        if cut is not None:
+            t0, t1 = cut
+            if t0 * n > keep and (1.0 - t1) * n > keep:
+                p0 = (a[0] + (b[0] - a[0]) * t0, a[1] + (b[1] - a[1]) * t0)
+                p1 = (a[0] + (b[0] - a[0]) * t1, a[1] + (b[1] - a[1]) * t1)
+                self.line(a, p0, cls, start)
+                self.line(p1, b, cls, end)
+                return
+        self.line(a, b, cls, start + end)
 
     def arc(self, c, r, th0, th1, cls="dim", extra=""):
         """A circular arc, angles in sheet space (y down, so a growing angle
@@ -264,6 +346,11 @@ class Sheet:
         OUTSIDE pointing in - the same thing a drawing office does, and the
         reason it is a rule here rather than a judgement is that the span is
         known: it is the distance between the two points.
+
+        Where the figure lies ACROSS its own line the line is CUT under it, not
+        haloed over - see line_cut(). Nothing about the call changes: the
+        figure sits where it always sat, and a figure that already stood clear
+        of its line still gets that line whole.
         """
         SZ = self.sz
         dx, dy = b[0] - a[0], b[1] - a[1]
@@ -281,16 +368,6 @@ class Sheet:
                       (b2[0] + nx * gap * 2, b2[1] + ny * gap * 2), "ext")
         if outside is None:
             outside = n < SZ["dm"] * 2.2
-        if outside:
-            self.line(a2, b2, "dim")
-            tail = SZ["dm"] * 1.6
-            self.line((a2[0] - ux * tail, a2[1] - uy * tail), a2, "dim",
-                      ' marker-end="url(#aE)"')
-            self.line((b2[0] + ux * tail, b2[1] + uy * tail), b2, "dim",
-                      ' marker-end="url(#aE)"')
-        else:
-            self.line(a2, b2, "dim",
-                      ' marker-start="url(#aS)" marker-end="url(#aE)"')
         if txt_off is None:
             txt_off = (nx * SZ["dm"] * 0.55 - ux * 0,
                        ny * SZ["dm"] * 0.55 - uy * 0)
@@ -302,6 +379,32 @@ class Sheet:
                            else SZ["dm"] * 1.0)
         m = ((a2[0] + b2[0]) / 2 + txt_off[0],
              (a2[1] + b2[1]) / 2 + txt_off[1])
+        # THE FIGURE SITS IN THE LINE, NOT ON IT - where it sits on it at all.
+        # A halo hides the stroke under a glyph and cannot hide it in the SPACE
+        # between two words, which is exactly where "1990 mm" has one, so the
+        # line gives way to the figure's own box instead. The figure on this
+        # family's sheets is set ACROSS its line, never along it, so the box is
+        # padded 0.36 em along the reading direction - render_lineart.py's
+        # number - and only by its halo the other way. A horizontal dimension's
+        # figure sits clear of its line and that box misses it: the line comes
+        # out whole, exactly as it was drawn before there was a hole to cut.
+        box = self.text_box(m, label, cls, anchor,
+                            pad=self.type_size(cls) * 0.36,
+                            pad_y=HALO_BASE * self.k * 0.5)
+        # The head is a marker, so it is measured in stroke widths: 13 of them
+        # wide, and a stub shorter than that has nowhere to put it.
+        keep = self.sw["dim"] * 13.0
+        if outside:
+            self.line_cut(a2, b2, box, "dim", keep=keep)
+            tail = SZ["dm"] * 1.6
+            self.line((a2[0] - ux * tail, a2[1] - uy * tail), a2, "dim",
+                      ' marker-end="url(#aE)"')
+            self.line((b2[0] + ux * tail, b2[1] + uy * tail), b2, "dim",
+                      ' marker-end="url(#aE)"')
+        else:
+            self.line_cut(a2, b2, box, "dim", keep=keep,
+                          start=' marker-start="url(#aS)"',
+                          end=' marker-end="url(#aE)"')
         self.text(m, label, cls, anchor)
 
     def leader(self, tip, elbow, txt_p, rows, cls="sml", anchor="start"):

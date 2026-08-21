@@ -231,6 +231,38 @@ def inj_prose_invents_a_millimetre(rig):
     run_prose(rig, texts)
 
 
+def inj_prose_restores_a_hand_worked_capacity(rig):
+    """Put the bearing capacity back the way vedlegg A worked it by hand.
+
+    THIS IS THE ONE THE X13 ROUND EXISTS FOR. Until this round every bearing
+    capacity in the load-path appendix was arithmetic done once by a person and
+    then whitelisted, and «3,2 kN» sat in `PROSE_ALLOW` with «lagerkapasitet
+    regnet av flate x f_c,90 i tillegget» beside it - which is to say the sweep
+    was told not to look. The model divides 1296 mm2 by the same design value
+    every other bearing row uses now (2,31, not the characteristic 2,5) and
+    gets 3,0. Type the old number back in and the sweep has to bite; if it does
+    not, the whitelist line was deleted without anything taking its place.
+    """
+    texts = dict(rig.prose)
+    texts["ASSEMBLY.md"] = _sub(texts["ASSEMBLY.md"], "1296 mm² → 3,0 kN",
+                                "1296 mm² → 3,2 kN")
+    run_prose(rig, texts)
+
+
+def inj_prose_moves_a_computed_stress(rig):
+    """Nudge a bending stress the model now works off the C24 sheet.
+
+    The bearing case above is a capacity; this is the other family - sigma =
+    M/W on a member the model measures - and it was whitelisted for the same
+    reason. 12,1 MPa is the ledger with somebody leaning hard on the table,
+    vedlegg A's own governing bending row.
+    """
+    texts = dict(rig.prose)
+    texts["ASSEMBLY.md"] = _sub(texts["ASSEMBLY.md"], "σ ≈ 12,1 MPa",
+                                "σ ≈ 12,4 MPa")
+    run_prose(rig, texts)
+
+
 def inj_stale_value_comment(rig):
     """Move one digit in a value comment and ask the verifier to find it.
 
@@ -276,6 +308,10 @@ INJECTIONS = [
      "tallsveip", inj_prose_keeps_an_old_number),
     ("håndprosaen finner opp en millimeter",
      "tallsveip", inj_prose_invents_a_millimetre),
+    ("lastveis-tillegget får tilbake sin håndregnede lagerkapasitet",
+     "tallsveip", inj_prose_restores_a_hand_worked_capacity),
+    ("en av vedlegg As bøyespenninger flyttes en tidel",
+     "tallsveip", inj_prose_moves_a_computed_stress),
     ("en verdikommentar står igjen fra en gammel runde",
      "X10 verdikommentarer", inj_stale_value_comment),
 ]

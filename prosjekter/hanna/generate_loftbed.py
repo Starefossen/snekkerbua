@@ -3017,9 +3017,70 @@ NOSE_TIP_H = PANEL_UPSCREW_PASS                # 27, the up-screw's own seat
 # The two strengths beside it were literals in f-strings for the same reason
 # nobody noticed the missing factor: a number typed into a print cannot be
 # re-derived and cannot be re-read. They are named here.
+# X13 FINISHES THE SENTENCE X10 STARTED. X10 named three literals; vedlegg A
+# quotes about twenty more - every design strength, every worked stress, every
+# bearing capacity - and the tallsveip in tools/check_tall.py had to whitelist
+# them one by one with «håndregnet i lastveis-tillegget» beside each. A number
+# excused by a whitelist is a number nobody re-derives, which is how «116 mm»
+# survived becoming 77. So the WHOLE C24 sheet is named here, in one place, and
+# the load rows are worked off it further down (search X13). What used to be
+# transcription is now arithmetic, and the whitelist is that much shorter.
+#
+# THE CHARACTERISTIC VALUES ARE CITED, NOT DERIVED - they come out of NS-EN 338
+# and this file has no way to compute them. Everything BELOW the line is.
+C24_FM_K = 24.0                  # N/mm2, EN 338, bending
+C24_FV_K = 4.0                   # N/mm2, EN 338, shear
+C24_FC90K = 2.5                  # N/mm2, EN 338, compression across the grain
+C24_FC0K = 21.0                  # N/mm2, EN 338, compression along the grain
+C24_E_MEAN = 11000.0             # N/mm2, EN 338, mean modulus (deflection)
+C24_E005 = 7400.0                # N/mm2, EN 338, 5-percentile modulus (buckling)
+C24_RHO_K = 350.0                # kg/m3, EN 338, characteristic density
+GAMMA_M_TIMBER = 1.3             # EC5 NA table 2.3, solid timber
+K_MOD_SHORT = 0.9                # short-term load, service class 1 - a child
+                                 # sitting down, and what vedlegg A bends on
+K_MOD_MEDIUM = 0.8               # medium-term load, service class 1 - self
+                                 # weight and standing bearing, and what every
+                                 # buckling figure in this file's history used
+BETA_C_SOLID = 0.2               # EC5 6.3.2(4), solid timber
+K_C90 = 1.5                      # EC5 6.1.5, bearing on a continuous support
 K_CR = 0.67                      # EC5 6.1.7(2), sprekkfaktor on the shear width
-F_V_D = 2.77                     # N/mm2, C24 shear, design (k_mod 0.9 / gM 1.3)
-F_M_D_C24 = 16.6                 # N/mm2, C24 bending, design, no k_h
+# ...and the design values, which ARE derived. The three X10 named are kept to
+# the two decimals they were typed with - rounding here rather than at the
+# print keeps every line this file has ever emitted byte-identical, and the
+# asserts under them are what says the rounding is a rounding and not a drift.
+F_V_D = round(C24_FV_K * K_MOD_SHORT / GAMMA_M_TIMBER, 2)          # 2.77
+F_M_D_C24 = round(C24_FM_K * K_MOD_SHORT / GAMMA_M_TIMBER, 1)      # 16.6
+FC0_D = C24_FC0K * K_MOD_MEDIUM / GAMMA_M_TIMBER                   # 12.92
+FC90_D = round(C24_FC90K * K_MOD_MEDIUM / GAMMA_M_TIMBER, 2)       # 1.54
+FC90_D_BEARING = round(FC90_D * K_C90, 2)                          # 2.31
+for _nm, _got, _exact in (("f_v,d", F_V_D, C24_FV_K * K_MOD_SHORT / GAMMA_M_TIMBER),
+                          ("f_m,d", F_M_D_C24,
+                           C24_FM_K * K_MOD_SHORT / GAMMA_M_TIMBER),
+                          ("f_c,90,d", FC90_D,
+                           C24_FC90K * K_MOD_MEDIUM / GAMMA_M_TIMBER)):
+    assert abs(_got - _exact) / _exact < 0.005, (
+        f"X13: {_nm} is quoted as {_got:g} and works out to {_exact:.4f} - "
+        f"that is not a rounding any more, it is a different number")
+
+
+def k_h(h):
+    """EC5 3.2(3): the size factor for solid timber under 150 mm bending depth.
+
+    Every load-bearing member in this bed is under 150 mm, so it applies
+    everywhere, and f_m,d therefore depends on the DEPTH the member bends in.
+    Vedlegg A prints this as a five-column table; the table is this function.
+    """
+    return min(1.3, (150.0 / h) ** 0.2)
+
+
+def f_m_d(h):
+    """C24 design bending strength at bending depth `h`, k_h included.
+
+    Off the UNROUNDED 16,615, not off F_M_D_C24's two significant figures:
+    16,6 x 1,171 is 19,4 and 16,615 x 1,171 is 19,5, and vedlegg A's table
+    says 19,5. Rounding twice is how a table stops agreeing with itself.
+    """
+    return C24_FM_K * K_MOD_SHORT / GAMMA_M_TIMBER * k_h(h)
 
 NOSE_ROOT_H = BATTEN_H                         # 68, full depth at the root
                                                # [V2: 73]
@@ -4039,6 +4100,27 @@ def mode_parts(panel):
     """
     return (parts + [mattress] + CUSHIONS[id(panel)] + [panel]
             + PANEL_BATTENS[id(panel)])
+
+
+def built(stem):
+    """The built solids whose label starts with `stem`, and never none of them.
+
+    The empty case matters more than it looks: `[p for p in parts if ...]`
+    over a stem that no longer exists yields [], min() over which raises - but
+    an `all()` or a `==` against an empty set would pass, and a landmark with
+    nothing under it is the exact silence these asserts exist to break.
+    """
+    got = [p for p in parts if p.label.startswith(stem)]
+    assert got, (f"X13: nothing built is labelled «{stem}» - the landmark "
+                 f"rows measure wood, and there is none of this kind left")
+    return got
+
+
+def built_z(stem):
+    """(underside, top) of those solids, read off their extents."""
+    got = built(stem)
+    return (min(p.extents[2][0] for p in got),
+            max(p.extents[2][1] for p in got))
 
 
 def is_soft(p):
@@ -6587,8 +6669,13 @@ assert BUILT_POST_T == POST_T and 848 - BUILT_DEPTH == POST_THIN, \
     f"U2/U3: the front verticals measure {BUILT_POST_T:g} mm in Y and the " \
     f"bed came in {848 - BUILT_DEPTH:g} mm off the 848 it was - re-sectioning " \
     f"them 48 -> {POST_T} is supposed to buy exactly POST_THIN = {POST_THIN}"
-assert OVERALL_DEPTH == END_BEAM_LEN == 836, \
-    "W7/U3: the bed must still be exactly as deep as its own end beams"
+# X13: this read `OVERALL_DEPTH == END_BEAM_LEN == 836`, and the first leg
+# could not fail - OVERALL_DEPTH is built out of the same three numbers
+# END_BEAM_LEN is. The claim is about two BODIES, so it is measured on two.
+_beam_depth = max(p.extents[1][1] - p.extents[1][0] for p in built("End Beam"))
+assert _beam_depth == BUILT_DEPTH == 836, \
+    f"W7/U3: the end beams measure {_beam_depth:g} mm deep and the bed " \
+    f"{BUILT_DEPTH:g} - the bed must still be exactly as deep as its own beams"
 # U3: and the 12 mm slice the thinning gives back has to be genuinely outside
 # the bed, not merely outside its bounding box - the same test D14 and W6 ran on
 # the layers they vacated. Y 788..800 held the front corner posts, the ladder
@@ -7553,8 +7640,14 @@ assert (POST_T, POST_W) == (BOARD36_T, BOARD36_W), \
 assert (UPRIGHT_T, UPRIGHT_W) == (BLOCK_T, BLOCK_H), \
     f"U2: the ladder uprights are {sec(UPRIGHT_T, UPRIGHT_W)}, want the " \
     f"{sec(BLOCK_T, BLOCK_H)} block/upright profile"
-assert UPRIGHT_T == POST_T == FRONT_POST_Y1 - FRONT_POST_Y0, \
-    f"U3: every vertical in the front plane must be {POST_T} mm deep in Y"
+# X13: the third leg was FRONT_POST_Y1 - FRONT_POST_Y0, which IS POST_T by
+# definition - the row said "every vertical in the front plane" and measured a
+# subtraction. It measures the verticals now.
+_front_plane = built("Corner Post Front") + built("Ladder Upright")
+_front_depths = {p.extents[1][1] - p.extents[1][0] for p in _front_plane}
+assert UPRIGHT_T == POST_T and _front_depths == {POST_T}, \
+    f"U3: every vertical in the front plane must be {POST_T} mm deep in Y - " \
+    f"the {len(_front_plane)} built ones measure {sorted(_front_depths)}"
 print(f"OK  D1/W2/W6/U2: exactly 6 frame verticals - 2 front corner posts "
       f"{sec(POST_T, POST_W)} x {POST_HEIGHT}, 2 back corner posts "
       f"{sec(POST_T, POST_W)} x {BACK_POST_HEIGHT} (W6: inside the back rail "
@@ -7574,9 +7667,13 @@ print(f"OK  D1/W2/W6/U2: exactly 6 frame verticals - 2 front corner posts "
 # there would be a joint hanging in mid air. (d) Nothing at all on the wall side
 # stands above the PLATFORM: that is the W2 conclusion, and it is now true with a
 # whole rail height to spare instead of exactly 0 mm.
-assert BACK_POST_HEIGHT == RAIL_BOTTOM == BACK_RAIL_ON_POST_Z, \
-    f"W6: the back posts stop at {BACK_POST_HEIGHT}, want the rail underside " \
-    f"{RAIL_BOTTOM} so the rail bears on them"
+# X13: all three names were the same 1402 through the definition chain
+# (BACK_RAIL_ON_POST_Z = RAIL_BOTTOM, BACK_POST_HEIGHT = RAIL_BOTTOM), so the
+# row could not tell the post from the rail. Two bodies, two measurements.
+assert built_z("Corner Post Back")[1] == built_z("Upper Side Rail Back")[0], \
+    f"W6: the back posts stop at {built_z('Corner Post Back')[1]:g} and the " \
+    f"back rail's underside is at {built_z('Upper Side Rail Back')[0]:g} - " \
+    f"they have to be one face or the rail does not bear on them"
 assert BACK_POST_HEIGHT < SLAT_Z1 < MATTRESS_Z1, \
     "W2/W6: the back posts must stay clear of the platform and the mattress band"
 assert SLAT_Z1 - BACK_POST_HEIGHT == RAIL_H + BED_SLAT_T == 121, \
@@ -7642,8 +7739,10 @@ assert highest is back_rail and highest.extents[2][1] == RAIL_TOP, \
     f"{highest.extents[2][1]}, expected the back side rail top {RAIL_TOP}"
 # The M8 ties into the end beam (1304..1402) are the highest fastener and they
 # stop exactly at the cut, where the beam top is flush with the rail underside.
-assert END_BEAM_Z1 == BACK_POST_HEIGHT, \
-    "W6: the end beam top and the post top are both the rail underside"
+assert built_z("End Beam")[1] == built_z("Corner Post Back")[1], \
+    f"W6: the end beam tops are at {built_z('End Beam')[1]:g} and the back " \
+    f"post tops at {built_z('Corner Post Back')[1]:g} - both are supposed to " \
+    f"be the rail underside (X13: was two names for one constant)"
 # (d) NOTHING above the platform on the wall side. There is no post above the
 # slats at all now - the tallest thing in the back rail plane is the rail, 34 mm
 # BELOW the platform surface - so a 120 or a 130 mm mattress exposes nothing.
@@ -7663,7 +7762,9 @@ print(f"OK  W2/W6/U2: back posts {POST_HEIGHT} -> {BACK_POST_HEIGHT} = the RAIL 
       f"the rail's own plane at Y {BACK_POST_Y0}..{BACK_POST_Y1} of "
       f"{BACK_RAIL_Y0}..{BACK_RAIL_Y1}. The back side "
       f"rail BEARS on both post tops - {POST_W - THROUGH_X0} x {POST_T} = "
-      f"{BACK_RAIL_POST_BEARING} mm2 of end grain (was 2160), ~7.9 kN, so the corner "
+      f"{BACK_RAIL_POST_BEARING} mm2 of end grain (was 2160), "
+      f"{BACK_RAIL_POST_BEARING * FC90_D_BEARING / 1000:.1f} kN off the C24 "
+      f"sheet (X13: computed, not typed), so the corner "
       f"reaction never enters a fastener; the bolts and brackets are pure ties. "
       f"The {len(back_post_neighbours)} parts a back post touches all top out at "
       f"or below the cut except that rail; end-beam top {END_BEAM_Z1} = the cut, "
@@ -7724,28 +7825,63 @@ print(f"OK  D4: posts flush with the walls at X 0..{POST_W} / "
 # stayed still. The point of the block is unchanged: these are the heights a
 # tape measure finds on the finished bed, typed out once so a derivation that
 # drifts is caught here rather than in a drawing.
-assert RAIL_BOTTOM == 1402 and RAIL_TOP == SLAT_Z0 == 1500
+# X13 - AND THIS BLOCK MEASURES WOOD NOW, WHICH IS WHAT IT ALWAYS SAID IT DID.
+# Half of it used to compare a constant with the literal it had been assigned
+# from: `RAIL_BOTTOM == 1402` where RAIL_BOTTOM = 1402, `POST_HEIGHT == 2037`
+# where POST_HEIGHT = 2037, `PANEL_UNDER_BED == 297` where PANEL_UNDER_BED =
+# BENCH_RAIL_TOP = 297. Those legs cannot fail, and the change each of them
+# claims to watch for - a body ending up somewhere else - walks straight
+# through: the constant moves, and the assert moves with it. A tape measure
+# does not read the file. So the left side of every row below comes off the
+# SOLIDS, and the right side is the typed landmark; move the geometry without
+# moving the landmark, or the other way about, and the row goes red.
+assert built_z("Upper Side Rail") == (1402, 1500), \
+    f"X1: the upper side rails stand at {built_z('Upper Side Rail')}, and " \
+    f"1500 is the round number the whole lift was aimed at"
 # V13 narrowed the match: there IS a cleat in this bed now (the bench end
 # cleat), and the thing D5 deleted was the SLAT cleat under the upper
 # platform. The guard names it.
 assert not any("Slat Cleat" in p.label for p in parts), \
     "D5: the slat cleats must be gone"
-assert (SLAT_Z0, SLAT_Z1) == (1500, 1523), "D5/U1/V6: slats not flush on top of the rails"
-assert (MATTRESS_Z0, MATTRESS_Z1) == (1523, 1643)
-assert (BENCH_RAIL_BOTTOM, BENCH_RAIL_TOP) == (229, 297)
-assert BENCH_TOP == 320 and PANEL_TOP_BED == 315 and PANEL_UNDER_BED == 297
-assert PANEL_TOP_TABLE == 700 and PANEL_UNDER_TABLE == 682   # X9: was 560/542
-assert RUNG_TOPS == [297, 572, 848, 1073, 1298] and POST_HEIGHT == 2037
+assert built_z("Bed Slat") == (1500, 1523), \
+    f"D5/U1/V6: the built slats sit at {built_z('Bed Slat')}, not flush on " \
+    f"top of the rails at 1500"
+assert mattress.extents[2] == (1523, 1643), \
+    f"the mattress body is at {mattress.extents[2]}, want 1523..1643"
+assert built_z("Bench Rail") == (229, 297), \
+    f"the bench rails are at {built_z('Bench Rail')}, want 229..297"
+assert built_z("Bench Slat") == (297, 320) \
+    and panel_bed.extents[2] == (297, 315), \
+    f"X3: the bench seat is {built_z('Bench Slat')} and the bed-mode plate " \
+    f"{panel_bed.extents[2]} - both start on the rail tops at 297"
+assert panel_table.extents[2] == (682, 700), \
+    f"X9: the table-mode plate is at {panel_table.extents[2]}, want 682..700 " \
+    f"(was 542/560 before the desk went up)"
+assert [p.extents[2][1] for p in sorted(built("Ladder Rung"),
+                                        key=lambda p: p.extents[2][0])] \
+    == [297, 572, 848, 1073, 1298], \
+    f"X9: the built rung tops are " \
+    f"{sorted(p.extents[2][1] for p in built('Ladder Rung'))}, and the even " \
+    f"ladder X2 rules is what the list on the right is"
 #      X9: was [297, 542, 787, 1032, 1277] - rung 3 went up to clear the desk
 #      and the two flights fell out of it
-assert BACK_POST_HEIGHT == 1402, "W6: the back posts must stop at the rail underside"
-assert (LEDGER_BACK_Z0, LEDGER_BACK_Z1) == (614, 682), \
+assert built_z("Corner Post Front") == built_z("Ladder Upright") == (0, 2037), \
+    f"X1: the front plane runs {built_z('Corner Post Front')} and the ladder " \
+    f"{built_z('Ladder Upright')} - all four verticals are one height"
+assert built_z("Corner Post Back") == (0, 1402), \
+    f"W6: the back posts run {built_z('Corner Post Back')} - they must stop " \
+    f"at the rail underside"
+assert built_z("Table Ledger Back") == (614, 682), \
     "V2: the ledger is a bench-rail profile, so its underside is 68 below its top"
-assert (TABLE_BEARER_Z0, TABLE_BEARER_Z1) == (614, 682) \
-    and (TABLE_BEARER_Y0, TABLE_BEARER_Y1) == (697, 788), \
+_bearers = built("Table Bearer")
+assert built_z("Table Bearer") == (614, 682) \
+    and (min(p.extents[1][0] for p in _bearers),
+         max(p.extents[1][1] for p in _bearers)) == (697, 788), \
     "X9: the two bordklosser carry the plate's front edge at the same 682 the " \
     "ledger carries its rear one"
-assert STUB_LEG_H == 229, "W3: the stub legs reach the bench rail underside"
+assert built_z("Bench Stub Leg") == (0, 229), \
+    f"W3: the stub legs run {built_z('Bench Stub Leg')} - they reach the " \
+    f"bench rail underside and stand on the floor"
 print(f"OK  invariant heights held: rail underside {RAIL_BOTTOM}, rail top "
       f"{RAIL_TOP}, no cleats, slats {SLAT_Z0}..{SLAT_Z1} (flush on the rails, "
       f"U1 took the platform 1197 -> 1186 on the {BED_SLAT_T} mm board and X1 "
@@ -7812,12 +7948,22 @@ for what, (old, new) in BACK_PLANES_FIXED.items():
 assert (BACK_POST_Y0, BACK_POST_Y1) == (-48, -12), \
     f"W6/U2: the back posts are at Y {BACK_POST_Y0}..{BACK_POST_Y1}, want " \
     f"-48..-12 (the wall side of the back rail's own plane)"
-assert BACK_POST_Y0 == BACK_RAIL_Y0 and BACK_POST_Y1 <= BACK_RAIL_Y1, \
-    "W6: the back posts must sit inside the back rail's plane, back face first"
+_bp, _br = built("Corner Post Back"), built("Upper Side Rail Back")
+assert (min(p.extents[1][0] for p in _bp) == min(p.extents[1][0] for p in _br)
+        and max(p.extents[1][1] for p in _bp)
+        <= max(p.extents[1][1] for p in _br)), \
+    "W6: the back posts must sit inside the back rail's plane, back face " \
+    "first (X13: was BACK_POST_Y0 == BACK_RAIL_Y0, which is how the first is " \
+    "defined off the second)"
 assert BACK_RAIL_Y1 - BACK_POST_Y1 == POST_THIN, \
     f"U2: the rail should overhang the post by {POST_THIN} mm on the room side"
-assert BACK_POST_HEIGHT == 1402 and BACK_POST_HEIGHT == RAIL_BOTTOM, \
-    f"W6/X1: the back posts run 0..{BACK_POST_HEIGHT}, want 0..1402"
+# X13 STRUCK THIS ROW rather than rewrote it. It read
+#     assert BACK_POST_HEIGHT == 1402 and BACK_POST_HEIGHT == RAIL_BOTTOM
+# and BACK_POST_HEIGHT IS RAIL_BOTTOM IS the literal 1402, so both legs were
+# one number looking at itself. What it meant to say is now measured twice
+# over - `built_z("Corner Post Back") == (0, 1402)` in the landmark block and
+# the bearing row further up - and a third copy that cannot fail is worse than
+# no copy at all.
 # X10 - THE SKIRTING BOARD IS PART OF THE BED, AND IT WAS NOT IN THE MODEL.
 # The wall plane is a flat face the bed is pushed against and screwed to, and
 # the model has always checked that nothing of the bed stands proud of it. What
@@ -7902,8 +8048,13 @@ assert (FRONT_POST_Y0, FRONT_POST_Y1) == (752, 788) == (LADDER_Y0, LADDER_Y1), \
 # The rungs are the one family whose BACK face moves too: they keep their 73 mm
 # depth and their fronts stay flush with the uprights, so the whole tread comes
 # back 12 and the ledge behind the upright plane grows 25 -> 37.
-assert (RUNG_Y0, RUNG_Y1) == (720, 788) and RUNG_D == 68, \
-    f"U2: the rungs are Y {RUNG_Y0}..{RUNG_Y1}, want 720..788"
+# X13: `RUNG_D == 68` was TREAD_D looking at its own literal. The rungs are
+# built, so the depth comes off them.
+_rung_y = {p.extents[1] for p in built("Ladder Rung")}
+assert _rung_y == {(720.0, 788.0)} \
+    and {y1 - y0 for y0, y1 in _rung_y} == {RUNG_D}, \
+    f"U2: the built rungs are Y {sorted(_rung_y)}, want 720..788 - one " \
+    f"{RUNG_D} mm tread depth, flush with the upright front"
 assert RUNG_REST_LEDGE == RUNG_D - UPRIGHT_T == 32, \
     f"U2: the rung rest ledge is {RUNG_REST_LEDGE}, want {RUNG_D} - " \
     f"{UPRIGHT_T} = 32"
@@ -7914,19 +8065,39 @@ assert RUNG_REST_LEDGE == RUNG_D - UPRIGHT_T == 32, \
 assert (FRONT_GUARD_Y0, FRONT_GUARD_Y1) == (716, 752), \
     f"D14/U1: the front guards are at Y {FRONT_GUARD_Y0}..{FRONT_GUARD_Y1}, " \
     f"want 716..752 (inner faces of the front posts / ladder uprights)"
-assert FRONT_GUARD_SHIFT == POST_T + GUARD_T == 72 and \
-    (FRONT_POST_Y1 - FRONT_GUARD_Y0,
-     FRONT_POST_Y1 + GUARD_T - FRONT_GUARD_Y1) == \
-    (FRONT_GUARD_SHIFT, FRONT_GUARD_SHIFT), \
-    f"D14: the guards sit {FRONT_POST_Y1 - FRONT_GUARD_Y0} in from where they " \
-    f"would hang on the outer faces, not {FRONT_GUARD_SHIFT}"
+# X13: every leg of this row was FRONT_GUARD_SHIFT unwrapped one turn more -
+# FRONT_GUARD_Y0 comes off FRONT_POST_Y0, which comes off FRONT_POST_Y1 and
+# POST_T - so it said POST_T + GUARD_T == POST_T + GUARD_T three ways. D14's
+# claim is about where two BODIES sit: the guard's FRONT face is the post's
+# BACK face, which is what "inboard" means.
+_gy = {p.extents[1] for p in built("Guard Rail Front")}
+_py = {p.extents[1] for p in built("Corner Post Front")}
+assert len(_gy) == len(_py) == 1, \
+    f"D14: the front guards and the front posts are not each in one plane: " \
+    f"{sorted(_gy)} / {sorted(_py)}"
+(_g0, _g1), (_p0, _p1) = _gy.pop(), _py.pop()
+assert _g1 == _p0 and (_p1 - _g0) == FRONT_GUARD_SHIFT == 72, \
+    f"D14: the guards run Y {_g0:g}..{_g1:g} and the posts {_p0:g}..{_p1:g} - " \
+    f"the boards hang INBOARD, so the guard front face has to BE the post " \
+    f"back face, and the pair {FRONT_GUARD_SHIFT} mm deep together"
 # The whole journey of the guard plane, in one line: v7 had the boards outboard
 # at Y 906, D12 took the front stack in 106, D14 jumped them over the posts by
 # POST_T + GUARD_T, and U1/U2 thinned both the post and the board.
 assert 906 - FRONT_GUARD_Y0 == DEPTH_SHRINK + FRONT_GUARD_SHIFT + POST_THIN \
     == 190
-assert (SLAT_Y0, SLAT_Y1) == (-48, 752) and SLAT_LEN == PLATFORM_DEPTH == 800
-assert BENCH_SLAT_LEN == SLAT_LEN
+# X13: `SLAT_LEN == PLATFORM_DEPTH == 800` was three names for one number
+# (PLATFORM_DEPTH = MATTRESS_W = 800) and `BENCH_SLAT_LEN == SLAT_LEN` was two.
+# Both claims are about BODIES - the slat field IS the mattress footprint, and
+# a bench slat IS the same stick as an upper one - so both are measured.
+assert (SLAT_Y0, SLAT_Y1) == (-48, 752)
+assert {p.extents[1] for p in built("Bed Slat")} == {mattress.extents[1]}, \
+    f"D12/W5: the built slats span Y " \
+    f"{sorted({p.extents[1] for p in built('Bed Slat')})} and the mattress " \
+    f"{mattress.extents[1]} - the platform is the footprint, wall to rail"
+assert {p.extents[1] for p in built("Bench Slat")} \
+    == {p.extents[1] for p in built("Bed Slat")}, \
+    "D5: a bench slat is supposed to be the same piece as an upper slat - " \
+    "same length, same plane, one saw stop for all 24"
 # V2: the panel is the ONE flat part that is no longer a slat length. It is
 # PANEL_FIT shorter, and that fit is what makes it a drop-in instead of a part
 # you have to spring into place between the wall and the ladder.
@@ -8100,12 +8271,22 @@ assert not back_guards, \
     "is the barrier on that side"
 assert (MATTRESS_STOP_Y0, MATTRESS_STOP_Y1) == (WALL_Y, FRONT_POST_Y0) == (-48, 752), \
     "W5: the mattress stops are the wall and the front vertical plane"
-assert MATTRESS_WANDER == \
-    (MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0) - MATTRESS_W == 0, \
-    f"W5/W7: the mattress can wander {MATTRESS_WANDER} mm, expected 0 - the " \
-    f"clear between the stops is supposed to BE the mattress"
-assert MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0 == MATTRESS_W == 800, \
-    "W7: the wall-to-front-vertical clear must be exactly the mattress width"
+# X13: the first row's left leg IS its right leg - MATTRESS_WANDER is assigned
+# exactly that subtraction - so it compared a number with itself and then with
+# 0. The clear is measured between the two bodies that MAKE it: the wall plane
+# every back part shares, and the four front verticals.
+_stop_back = min(p.extents[1][0] for p in parts)
+_stop_front = min(p.extents[1][0] for p in built("Corner Post Front")
+                  + built("Ladder Upright"))
+_built_clear = _stop_front - _stop_back
+_built_mattress = mattress.extents[1][1] - mattress.extents[1][0]
+assert _built_clear - _built_mattress == MATTRESS_WANDER == 0, \
+    f"W5/W7: the built clear between the stops is {_built_clear:g} mm and the " \
+    f"built mattress {_built_mattress:g} - the clear is supposed to BE the " \
+    f"mattress, with 0 mm of wander"
+assert _built_clear == MATTRESS_W == 800, \
+    f"W7: the wall-to-front-vertical clear measures {_built_clear:g} mm, and " \
+    f"it must be exactly the mattress width"
 assert MAX_MATTRESS_GAP == MATTRESS_WANDER <= MAX_GUARD_OPENING, \
     f"EN 747 entrapment: the mattress can leave a {MAX_MATTRESS_GAP} mm gap, " \
     f"over the {MAX_GUARD_OPENING} mm limit"
@@ -8136,8 +8317,13 @@ assert max(gap_at_wall, gap_at_front) <= MAX_GUARD_OPENING, "W5: unreachable"
 assert WALL_MATTRESS_GAP == gap_at_wall, (
     f"W5: the typed wall gap is {WALL_MATTRESS_GAP:g} and the built one is "
     f"{gap_at_wall:g}")
-assert MATTRESS_Y1 == MATTRESS_STOP_Y1 == FRONT_POST_Y0, \
-    "W5: the mattress front edge must be on the front stop"
+_front_face = min(p.extents[1][0] for p in built("Corner Post Front")
+                  + built("Ladder Upright"))
+assert mattress.extents[1][1] == MATTRESS_STOP_Y1 == _front_face, \
+    f"W5: the built mattress front edge is at Y {mattress.extents[1][1]:g} " \
+    f"and the front stops begin at {_front_face:g} - the mattress edge must " \
+    f"be ON the stop (X13: was MATTRESS_STOP_Y1 == FRONT_POST_Y0, which is " \
+    f"the line that assigns it)"
 # And the platform has to be under the mattress over the whole of it. X10: the
 # line that stood here compared four aliases of BACK_RAIL_Y0 and conceded in
 # its own comment that it was "trivially true"; it is the two BODIES now.
@@ -8605,7 +8791,10 @@ assert (back_bench_rails[0].extents[2][1] - back_bench_rails[0].extents[2][0]
         and support_rail.extents[2][1] - support_rail.extents[2][0]
         == LEDGER_BACK_H), \
     "V2: one of the two post-to-post members is not the section the file says"
-assert BENCH_TOP == BENCH_RAIL_TOP + BENCH_SLAT_T == 320   # [X3: was 282]
+# X13 STRUCK: `BENCH_TOP == BENCH_RAIL_TOP + BENCH_SLAT_T` is the line that
+# ASSIGNS BENCH_TOP, read backwards, and the 320 it ended on is measured on
+# the built bench slats in the landmark block above
+# (`built_z("Bench Slat") == (297, 320)`). [X3: was 282]
 # D10/U1: the cushion recess. The bench slat got 2 mm thicker and the panel did
 # not (it is an 18 mm sheet on a rail top that has not moved), so the dip the
 # fold-out cushions fold into grows 16 -> 18 mm. That is the right direction:
@@ -8696,8 +8885,14 @@ for _i, (_slat, _cleat) in enumerate(zip(end_slats, end_cleats)):
     assert _cx == _sx, "V13: the cleat sits under its own slat, full width"
 # the field is CLOSED: no gap at the wall, and none between the end slat and
 # the first ordinary bench slat.
-assert END_SLAT_X[0] == 0 and END_SLAT_X[1] + BENCH_SLAT_W == WALL_SPAN, \
-    "V13: the end slats must reach both walls"
+_end_slats = built("Bench End Slat")
+assert (min(p.extents[0][0] for p in _end_slats) == 0
+        and max(p.extents[0][1] for p in _end_slats) == WALL_SPAN), \
+    f"V13: the built end slats run X " \
+    f"{min(p.extents[0][0] for p in _end_slats):g}.." \
+    f"{max(p.extents[0][1] for p in _end_slats):g} - they must reach both " \
+    f"walls (X13: was END_SLAT_X, which is DEFINED as 0 and WALL_SPAN less " \
+    f"the slat width)"
 assert END_SLAT_GAP == 0, \
     f"V13: the end slat leaves a {END_SLAT_GAP} mm gap to the field it closes"
 assert END_SLAT_GAP <= EN_FINGER_FREE, \
@@ -8849,8 +9044,18 @@ assert TABLE_UNDER_OVER_CUSHION > 0 and TABLE_OVER_CUSHION > 0, \
 assert SEAT_CUSHION_SHAFT_GAP > 0, \
     f"V13: the seat cushion reaches into the panel's transfer shaft by " \
     f"{-SEAT_CUSHION_SHAFT_GAP} mm - the plate cannot be lowered past it"
-assert BACKREST_Y0 == LEDGER_BACK_Y0 + LEDGER_BACK_T, \
-    "V13: the backrest stands on the back table ledger's front face"
+_ledger_face = max(p.extents[1][1] for p in built("Table Ledger Back"))
+# Only the UPRIGHT ones: in bed mode the same two cushions lie flat on the
+# bench and start at the wall, which is the whole point of them folding.
+_backrests = [c for c in CUSHIONS_ALL
+              if c.label.startswith("Back Cushion")
+              and c.label.endswith("(table mode)")]
+assert {c.extents[1][0] for c in _backrests} == {_ledger_face}, \
+    f"V13: the backrest cushions start at Y " \
+    f"{sorted({c.extents[1][0] for c in _backrests})} and the built ledger's " \
+    f"front face is {_ledger_face:g} - the backrest stands ON that face " \
+    f"(X13: was BACKREST_Y0 == LEDGER_BACK_Y0 + LEDGER_BACK_T, its own " \
+    f"assignment)"
 # THE CUSHIONS COME OFF FIRST, AND THE MODEL SAYS SO RATHER THAN THE MANUAL
 # REMEMBERING IT. The mode change carries the panel unit SIDEWAYS over the
 # bench, in the shaft between the bench slat tops (320) and the back table
@@ -9451,14 +9656,21 @@ assert ledgers[0].extents[2] == (LEDGER_BACK_Z0, LEDGER_BACK_Z1)
 # be at the SAME 682, because a plate on two seats at two heights rocks.
 _bearers = [p for p in parts if p.label.startswith("Table Bearer")]
 assert len(_bearers) == 2, f"X9: {len(_bearers)} bordklosser, want 2"
-assert LEDGER_BACK_Z1 == PANEL_UNDER_TABLE, \
-    "D9: the ledger top and the table-mode panel underside must coincide"
+assert built_z("Table Ledger Back")[1] == panel_table.extents[2][0], \
+    f"D9: the built ledger top is {built_z('Table Ledger Back')[1]:g} and the " \
+    f"table-mode plate's underside {panel_table.extents[2][0]:g} - they have " \
+    f"to coincide (X13: was LEDGER_BACK_Z1 == PANEL_UNDER_TABLE, one assigned " \
+    f"from the other)"
 assert all(b.extents[2][1] == PANEL_UNDER_TABLE for b in _bearers), \
     "X9: a bordkloss top is not level with the plate's underside"
 assert PANEL_UNDER_TABLE not in RUNG_TOPS, \
     "X9: the table seat must NOT be a rung top - that is the whole corridor"
-assert BENCH_RAIL_TOP == PANEL_UNDER_BED == RUNG_TOPS[0], \
-    "D10: the bench rail tops, rung 1 and the bed-mode panel underside must coincide"
+assert built_z("Bench Rail")[1] == panel_bed.extents[2][0] \
+    == min(p.extents[2][1] for p in built("Ladder Rung")), \
+    f"D10: bench rail tops {built_z('Bench Rail')[1]:g}, bed-mode plate " \
+    f"underside {panel_bed.extents[2][0]:g}, lowest rung top " \
+    f"{min(p.extents[2][1] for p in built('Ladder Rung')):g} - all three are " \
+    f"one plane or the plate rocks"
 assert "HOOK_STEP" not in globals(), "D10: the hook step is supposed to be gone"
 assert PANEL_X0 >= LADDER_INNER_L - 200 and PANEL_X1 <= LADDER_INNER_R + 200
 print(f"OK  D9/W9: front table ledger deleted; back ledger "
@@ -9928,6 +10140,10 @@ if FASTENERS_ON:
           f"{6 * 1000 * NOSE_CRIT_X / (BATTEN_W * NOSE_CRIT_H ** 2):.2f} MPa "
           f"mot {F_M_D_C24:g} = utnyttelse "
           f"{6 * 1000 * NOSE_CRIT_X / (BATTEN_W * NOSE_CRIT_H ** 2) / F_M_D_C24:.2f}"
+          f" (roten selv: "
+          f"{6 * 1000 * NOSE_LEN / (BATTEN_W * NOSE_ROOT_H ** 2):.2f} MPa = "
+          f"{6 * 1000 * NOSE_LEN / (BATTEN_W * NOSE_ROOT_H ** 2) / F_M_D_C24:.2f}"
+          f", X13: regnet her nå og ikke bare i vedlegg A)"
           f"; skjær i tuppen (med k_cr = {K_CR:g}) "
           f"{1.5 * 1000 / (K_CR * BATTEN_W * NOSE_TIP_H):.2f} MPa mot "
           f"{F_V_D:g} = "
@@ -9946,9 +10162,21 @@ print(f"OK  K2 platematerialet: platen er {PANEL_W} mm bred og "
          f"er bredere enn de {LIMTRE_SHELF_W} mm limtre furu stopper på - "
          f"kryssfiner er det eneste som finnes i den bredden"))
 # X: OUTBOARD of both rung ends by the fit, and symmetric about the centreline.
-assert BATTEN_X[0] + BATTEN_W == LADDER_INNER_L - PANEL_FIT and \
-    BATTEN_X[1] == LADDER_INNER_R + PANEL_FIT, \
-    "M4/V3: a batten does not stand the fit off its rung end"
+# X13: BATTEN_X is ASSIGNED those two expressions, so the row was the
+# assignment read backwards. What V3 actually claims is a relation between two
+# built things - the guide batten and the rung end it runs down beside - and
+# that is measurable in both directions.
+_stiff = sorted((p for p in battens_bed
+                 if p.label.startswith("Panel Stiffener Batten")),
+                key=lambda p: p.extents[0][0])
+_rung0 = built("Ladder Rung")[0]
+assert len(_stiff) == 2 \
+    and _rung0.extents[0][0] - _stiff[0].extents[0][1] == PANEL_FIT \
+    and _stiff[1].extents[0][0] - _rung0.extents[0][1] == PANEL_FIT, \
+    f"M4/V3: the guide battens end at X {_stiff[0].extents[0][1]:g} / " \
+    f"{_stiff[1].extents[0][0]:g} and the rung runs " \
+    f"{_rung0.extents[0][0]:g}..{_rung0.extents[0][1]:g} - each batten stands " \
+    f"exactly PANEL_FIT ({PANEL_FIT}) outboard of its own rung end"
 assert BATTEN_X[0] + BATTEN_W <= RUNG_BLOCK_X[0] and \
     BATTEN_X[1] >= RUNG_BLOCK_X[1] + RUNG_BLOCK_T, \
     "M4: a batten crosses the rung-block line"
@@ -10244,14 +10472,25 @@ RUNG_BLOCK_FACE = UPRIGHT_T * RUNG_BLOCK_H           # 1728 mm2 on the upright
 RUNG_BLOCK_BEARING = RUNG_BLOCK_T * RUNG_BLOCK_LEN   # 1296 mm2 under the rung
 CLIMBER_KN = 1.0
 RUNG_END_KN = CLIMBER_KN / 2
-FC90_D = 2.5                     # N/mm2, C24 across the grain, k_c,90 = 1
+# X13: this row used to divide by a bare 2.5 - the CHARACTERISTIC f_c,90 with a
+# comment saying k_c,90 = 1 - while every other bearing row in vedlegg A divided
+# by the DESIGN value with k_c,90 = 1,5, i.e. 2,31. Two conventions in one
+# document is one convention too many, and the design one is the one the
+# material paragraph declares. The row goes 0,15 -> 0,17 and its capacity
+# 3,2 -> 3,0 kN; see the X13 block.
 _j5 = [f for f in FASTENER_SPECS if f["jid"] == "J5"]
 assert len(_j5) == 2 * len(RUNG_TOPS) and {int(round(f["d"])) for f in _j5} == {5}
-RUNG_BLOCK_BEAR_UTIL = RUNG_END_KN * 1000 / RUNG_BLOCK_BEARING / FC90_D
+RUNG_BLOCK_BEAR_UTIL = (RUNG_END_KN * 1000 / RUNG_BLOCK_BEARING
+                        / FC90_D_BEARING)
 RUNG_BLOCK_SCREW_UTIL = RUNG_END_KN / SCREW_SHEAR_KN[5]
-assert RUNG_BLOCK_FACE == UPRIGHT_T * BLOCK_H, \
-    "K1: the block's face on the upright is supposed to be unchanged - the " \
-    "upright's own depth by the block's own height, which is what it always was"
+_blk, _upr = built("Rung Block")[0], built("Ladder Upright")[0]
+_upr_depth = _upr.extents[1][1] - _upr.extents[1][0]
+_blk_height = _blk.extents[2][1] - _blk.extents[2][0]
+assert RUNG_BLOCK_FACE == _upr_depth * _blk_height, \
+    f"K1: the block's face on the upright is the UPRIGHT's own depth by the " \
+    f"BLOCK's own height, and the built pair gives {_upr_depth:g} x " \
+    f"{_blk_height:g} against {RUNG_BLOCK_FACE} (X13: was UPRIGHT_T * " \
+    f"BLOCK_H, i.e. the same two constants RUNG_BLOCK_FACE is assigned from)"
 assert 2 * RUNG_BLOCK_SCREW_UTIL <= MAX_BLOCKLESS_UTIL, (
     f"K1: J5's single 5 mm screw is {2 * RUNG_BLOCK_SCREW_UTIL:.2f} utilised "
     f"with the whole climber over one rung end - over the "
@@ -10289,7 +10528,7 @@ print(f"OK  K1 stigeklossen 36x48 x {RUNG_BLOCK_LEN} (var {RUNG_D}): flate mot "
       f"{2 * RUNG_BLOCK_SCREW_UTIL:.2f}, grense {MAX_BLOCKLESS_UTIL:g}); "
       f"trinnet ligger på {RUNG_BLOCK_BEARING} mm² (var "
       f"{RUNG_BLOCK_T * RUNG_D}) = {RUNG_END_KN * 1000 / RUNG_BLOCK_BEARING:.2f} "
-      f"MPa mot {FC90_D:g} på tvers av fiberretningen → "
+      f"MPa mot {FC90_D_BEARING:g} på tvers av fiberretningen → "
       f"{RUNG_BLOCK_BEAR_UTIL:.2f}; skruen sitter nå på Y {RUNG_BLOCK_Y0 + RUNG_BLOCK_LEN / 2:g}, "
       f"midt i vangen - og den er hele festet nå: X10 tok ut skruen ned "
       f"gjennom trinnet, som gikk gjennom 6×120-en sin egen kanal")
@@ -10421,12 +10660,10 @@ print(f"OK  X9 kryssingen ved stigen: {TABLE_CROSS_BAND:g} mm fritt bånd fra "
 # not. If the ladder stile ever crosses it, the answer is the floor-level tie
 # back to the front corner posts the D13 note has been flagging - not a
 # thicker stile.
-C24_FC0K = 21.0                  # N/mm2, EN 338, compression along the grain
-C24_E005 = 7400.0                # N/mm2, EN 338, 5-percentile modulus
-K_MOD_MEDIUM = 0.8               # medium-term load, service class 1
-GAMMA_M_TIMBER = 1.3
-BETA_C_SOLID = 0.2               # EC5 6.3.2(4), solid timber
-FC0_D = C24_FC0K * K_MOD_MEDIUM / GAMMA_M_TIMBER          # 12.92 N/mm2
+# The five constants this block used to declare for itself - f_c,0,k, E_0,05,
+# k_mod, gamma_M, beta_c - live in the C24 sheet up beside K_CR now (X13). One
+# material, one place; a block that keeps its own copy is a block that can
+# disagree with vedlegg A without anybody noticing.
 MAX_BUCKLING_UTIL = 0.5
 
 
@@ -10501,7 +10738,6 @@ assert BUCKLING_WORST[0].startswith("stigevange, ut av planet"), (
     f"X7: the worst buckling row is '{BUCKLING_WORST[0]}', not the ladder "
     f"stile out of plane - the LADDER note says otherwise and one of the two "
     f"is now wrong")
-K_MOD_SHORT = 0.9                # what vedlegg A.6 argues for a 2 kN drop
 print(f"OK  X7 EC5 6.3.2 (k_c-metoden, C24: f_c,0,k {C24_FC0K:g}, E_0,05 "
       f"{C24_E005:g}, k_mod {K_MOD_MEDIUM:g}/gamma_M {GAMMA_M_TIMBER:g} → "
       f"f_c,0,d {FC0_D:.2f} N/mm², beta_c {BETA_C_SOLID:g}), grense "
@@ -10513,6 +10749,315 @@ for _name, _r, _why in BUCKLING:
           f"N_c,Rd {_r['cap']:5.1f} kN mot {_r['n']:.1f} → "
           f"{_r['util']:.2f} ({_r['util'] * K_MOD_MEDIUM / K_MOD_SHORT:.2f} "
           f"med k_mod {K_MOD_SHORT:g})   [{_why}]")
+
+
+# ---------------------------------------------------------------------------
+# X13 - VEDLEGG A IS COMPUTED HERE, NOT WORKED ON PAPER
+# ---------------------------------------------------------------------------
+# WHAT WAS WRONG WITH IT. docs/ASSEMBLY.md's vedlegg A is the one part of the
+# documentation that carried ARITHMETIC rather than measurements: about twenty
+# stresses and capacities, each worked once by a person and typed in. The
+# number sweep in tools/check_tall.py could not check a single one of them -
+# the model did not hold them - so each got a whitelist line reading
+# «håndregnet i lastveis-tillegget», and a whitelisted number is a number that
+# nobody will ever re-derive. That is exactly the shape of fault the sweep was
+# built for: «116 mm» stayed in the prose for two rounds after the wing became
+# 77 because no machine had an opinion about it.
+#
+# WHAT THIS BLOCK IS. The same rows, worked off the same solids and the same
+# C24 sheet the rest of the file uses (search K_CR for the sheet). Two
+# formulas cover almost all of it - a simply supported point load at midspan
+# and a bearing area against f_c,90,d - and where a row needs a third, it says
+# so in its own line. It reports the way X7 reports: every row printed, every
+# row gated, and the two rows that are SUPPOSED to fail asserted to fail,
+# because vedlegg A's use rules (7.4) rest on them failing.
+#
+# WHAT IT IS NOT ALLOWED TO DO. It does not move wood and it does not pick
+# loads. Every load below is one vedlegg A already declared - 2 kN on the
+# upper deck, 1 kN on a rung, 0,5 kN on a slat under one foot - and they are
+# named here so a reader can see the whole load side in one place instead of
+# spread over a table's «Last» column.
+#
+# THE THREE ROWS WHERE THE MODEL DISAGREED WITH THE PAPER, all of them small
+# and all of them corrected IN ASSEMBLY, because the model is the source:
+#   * the rung block bearing was divided by the CHARACTERISTIC 2,5 where every
+#     other bearing row used the design 2,31. 3,2 -> 3,0 kN, 0,15 -> 0,17.
+#   * the end slat was scaled off the bench slat by the span RATIO SQUARED,
+#     which is how a deflection scales and not how a stress does. 0,46 -> 0,48.
+#   * the slat-on-rail bearing row said 0,05 where 0,7 kN on 4704 mm2 is 0,06.
+# And one that is not a disagreement but a staleness: vedlegg A.6 listed the
+# rung at 0,15, which is the 1 kN figure, while A.2 had already moved the row
+# to EN 747-2's 1,2 kN test load. 0,18 is the number.
+#
+# DESIGN LOADS - vedlegg A's own, gathered.
+DECK_DESIGN_KN = 2.0        # a 100 kg body on the deck, dynamic factor two
+SLAT_FOOT_KN = 0.5          # one foot on a bare slat field, worst slat
+SLAT_MATTRESS_KN = 0.3      # the same body through a mattress, over 7 slats
+SLAT_BEAR_KN = 0.7          # what one slat end delivers to the rail under it
+RUNG_TEST_KN = 1.2          # EN 747-2's test level for a rung - not our guess
+BENCH_KN = 0.5              # one person seated on the bench
+PLATE_KN = 2.0              # somebody kneels on the plate, dynamic
+PLATE_BATTEN_KN = 1.0       # ...shared between the two stiffening battens
+TABLE_KN = 0.55             # plain table load on the rear ledger
+TABLE_LEAN_KN = 1.0         # somebody leans hard on the table's back edge
+GUARD_KN = 0.5              # EN 747 horizontal load on a guard rail
+END_SLAT_BEAR_KN = 0.25     # half the end slat's foot load, per end
+
+# THE SPANS THAT ARE NOT ALREADY NAMED. A span is centre of bearing to centre
+# of bearing, so each one is derived from the two things that hold the member.
+SLAT_SPAN = ((FRONT_RAIL_Y0 + RAIL_T / 2)
+             - (BACK_RAIL_Y0 + RAIL_T / 2))                 # 752
+GUARD_LAP_POST = POST_W - THROUGH_X0                        # 95, onto the post
+GUARD_SPAN = ((LADDER_INNER_L - UPRIGHT_W / 2)
+              - (THROUGH_X0 + GUARD_LAP_POST / 2))          # 760.5
+assert SLAT_SPAN == END_SLAT_SPAN + 30, (
+    f"X13: vedlegg A says the end slat's span is 30 mm shorter than the "
+    f"field's; the solids say {SLAT_SPAN:g} against {END_SLAT_SPAN:g}")
+
+
+def bending_point(p_kn, span, b, h, fixed=False):
+    """One member, one point load at midspan. `h` is the depth it BENDS in.
+
+    `fixed` is the built-in-both-ends case - M = PL/8 instead of PL/4 - and
+    the only member in this bed that gets it is the guard board, which is
+    screwed flat to a post at one end and an upright at the other.
+    """
+    w = b * h * h / 6.0
+    inertia = b * h ** 3 / 12.0
+    m = p_kn * 1000.0 * span / (8.0 if fixed else 4.0)
+    sigma = m / w
+    cap = f_m_d(h)
+    defl = (p_kn * 1000.0 * span ** 3
+            / ((192.0 if fixed else 48.0) * C24_E_MEAN * inertia))
+    return dict(what=f"σ {sigma:5.2f} MPa mot f_m,d {cap:4.1f} (k_h "
+                       f"{k_h(h):.2f}, h {h:g})",
+                sigma=sigma, cap=cap, util=sigma / cap, defl=defl,
+                w=w, span=span, p=p_kn)
+
+
+def bearing_row(area, p_kn, along=False):
+    """One bearing face. Across the grain unless the face is END GRAIN."""
+    f = FC0_D if along else FC90_D_BEARING
+    cap = area * f / 1000.0
+    return dict(what=f"{area:g} mm² × {f:.2f} = {cap:5.2f} kN mot {p_kn:g}",
+                cap=cap, util=p_kn / cap, area=area, p=p_kn)
+
+
+# (name, row, gate, note)
+LOAD_ROWS = [
+    # --- A.1 overkøyen
+    ("køyespile, bar bunn", bending_point(SLAT_FOOT_KN, SLAT_SPAN,
+                                          BED_SLAT_W, BED_SLAT_T), 0.8,
+     "en fot over minst to spiler - spilens dimensjonerende rad"),
+    ("køyespile, med madrass", bending_point(SLAT_MATTRESS_KN, SLAT_SPAN,
+                                             BED_SLAT_W, BED_SLAT_T), 0.8,
+     "kroppen spredt over sju spiler - illustrasjon, ikke krav"),
+    ("spile → sidevange", bearing_row(BED_SLAT_W * RAIL_T,
+                                       SLAT_BEAR_KN), 0.8,
+     "full vangebredde under hver spile"),
+    ("bakre sidevange, fritt spenn", bending_point(DECK_DESIGN_KN,
+                                                   BETWEEN_POSTS_LEN,
+                                                   RAIL_T, RAIL_H), 0.8,
+     "regnet som om veggfestet ikke fantes - se A.1s rad under"),
+    ("fremre sidevange", bending_point(DECK_DESIGN_KN, BETWEEN_POSTS_LEN,
+                                       RAIL_T, RAIL_H), 0.8,
+     "samme stykke, avstivet av de to stigevangene"),
+    ("vange → endebjelke", bearing_row(RAIL_T * END_BEAM_T,
+                                        CLIMBER_KN), 0.8,
+     "vangen hviler på bjelken, den henger ikke"),
+    ("bakre vange → stolpetopp", bearing_row(BACK_RAIL_POST_BEARING,
+                                              CLIMBER_KN), 0.8,
+     "hele stolpetoppens endeved er opplegg - ingen festemidler i veien"),
+    ("endebjelke", bending_point(DECK_DESIGN_KN, END_BEAM_LEN,
+                                 END_BEAM_T, RAIL_H), 0.8,
+     "rammebinderen: begge sidevanger lander på den"),
+    ("stolpe → gulv", bearing_row(POST_W * POST_T, CLIMBER_KN,
+                                   along=True), 0.8,
+     "endeved mot gulv, altså LANGS fiberretningen"),
+    # --- A.2 stigen
+    ("rungetrinn", bending_point(RUNG_TEST_KN, RUNG_LEN, RUNG_D, RUNG_T), 0.8,
+     "EN 747-2s prøvelast, ikke vårt eget anslag"),
+    ("trinn → stigekloss", bearing_row(RUNG_BLOCK_BEARING,
+                                        RUNG_END_KN), 0.5,
+     "K1 kappet klossen 73 → 36; flaten halveres og tallet fordobles"),
+    # --- A.3 underetasjen
+    ("benkespile, bar bunn", bending_point(SLAT_FOOT_KN, SLAT_SPAN,
+                                           BENCH_SLAT_W, BENCH_SLAT_T), 0.8,
+     "samme stykke som køyespilen, tettere deling"),
+    ("endespile (V13)", bending_point(SLAT_FOOT_KN, END_SLAT_SPAN,
+                                      BENCH_SLAT_W, BENCH_SLAT_T), 0.8,
+     "samme stykke, 30 mm kortere spenn"),
+    ("endespile → endelist", bearing_row(END_CLEAT_BEARING,
+                                          END_SLAT_BEAR_KN), 0.8,
+     "listen bærer spileenden mot den bakre stolpen"),
+    ("spile → benkevange", bearing_row(BENCH_SLAT_W * BENCH_RAIL_T,
+                                        SLAT_FOOT_KN), 0.8,
+     "full vangebredde igjen"),
+    ("bakre benkevange", bending_point(BENCH_KN, PANEL_OPENING,
+                                       BENCH_RAIL_T, BENCH_RAIL_H), 0.8,
+     "over åpningen mellom stubbeføttene"),
+    ("benkevange → stubbefot", bearing_row(BENCH_RAIL_T * BENCH_RAIL_H,
+                                            BENCH_KN), 0.8,
+     "hele vangesnittet står på foten"),
+    # --- A.4 plate og rekkverk
+    ("avstivningslekt, 1 kN hver", bending_point(PLATE_BATTEN_KN, BATTEN_LEN,
+                                                 BATTEN_W, BATTEN_H), 0.8,
+     "lekta regnet alene - platen er ikke kreditert som flens"),
+    ("avstivningslekt, alt over én", bending_point(PLATE_KN, BATTEN_LEN,
+                                                   BATTEN_W, BATTEN_H), 0.8,
+     "et kne lander like gjerne rett over en lekt som mellom to"),
+    ("bordbærelekt, bordlast", bending_point(TABLE_KN, BETWEEN_POSTS_LEN,
+                                             LEDGER_BACK_T,
+                                             LEDGER_BACK_H), 0.8,
+     "lekta spenner post til post uten støtte under (X9)"),
+    ("bordbærelekt, tung lening", bending_point(TABLE_LEAN_KN,
+                                                BETWEEN_POSTS_LEN,
+                                                LEDGER_BACK_T,
+                                                LEDGER_BACK_H), 0.8,
+     "lektas dimensjonerende rad - derfor kan den ikke bli tynnere"),
+    ("rekkverksbord", bending_point(GUARD_KN, GUARD_SPAN, GUARD_W, GUARD_T,
+                                    fixed=True), 0.8,
+     "vannrett last om svak akse, innspent i post og vange i hver ende"),
+]
+# THE TWO ROWS THAT MUST FAIL. Vedlegg A's use rules exist because these two
+# do not hold, and a silent improvement in either would take the reason for
+# the rule away without taking the rule away. So they are asserted UNSAFE.
+SLAT_SOLO_ROW = bending_point(CLIMBER_KN, SLAT_SPAN, BED_SLAT_W, BED_SLAT_T)
+assert SLAT_SOLO_ROW["util"] > 1.0, (
+    f"X13: a whole 1 kN on ONE bare slat now works out at "
+    f"{SLAT_SOLO_ROW['util']:.2f} - vedlegg A 7.4 is a use rule BECAUSE this "
+    f"row fails, and a row that has quietly started passing means the rule "
+    f"has to be re-argued rather than re-typed")
+for _name, _row, _gate, _why in LOAD_ROWS:
+    assert _row["util"] <= _gate, (
+        f"X13: «{_name}» is {_row['util']:.2f} utilised ({_row['what']}) - "
+        f"over the {_gate:g} gate vedlegg A holds this class of row to")
+LOAD_WORST = max(LOAD_ROWS, key=lambda r: r[1]["util"])
+assert LOAD_WORST[0] == "bakre sidevange, fritt spenn", (
+    f"X13: the worst row in these tables is now «{LOAD_WORST[0]}» at "
+    f"{LOAD_WORST[1]['util']:.2f} - A.6 puts the back rail WITHOUT its wall "
+    f"fixing at the top of this list, and one of the two documents is wrong")
+# ...but that row is a COUNTER-CASE: it is the bed with its wall fixing taken
+# away, printed to show what the fixing buys. The front rail is the same stick
+# on the same conservative span, held by two ladder uprights the row ignores.
+# Set those two aside and the worst row left is the one that governs a bed as
+# actually built - and A.6 names it.
+LOAD_CONSERVATIVE = {"bakre sidevange, fritt spenn", "fremre sidevange"}
+LOAD_GOVERNING = max((r for r in LOAD_ROWS if r[0] not in LOAD_CONSERVATIVE),
+                     key=lambda r: r[1]["util"])
+assert LOAD_GOVERNING[0] == "bordbærelekt, tung lening", (
+    f"X13: with the two conservative rail rows set aside, the worst row left "
+    f"is «{LOAD_GOVERNING[0]}» at {LOAD_GOVERNING[1]['util']:.2f} - A.6 "
+    f"names the ledger under a hard lean as the bed's own worst bending row")
+assert (LOAD_ROWS[[r[0] for r in LOAD_ROWS].index("fremre sidevange")][1]
+        ["util"] == LOAD_ROWS[[r[0] for r in LOAD_ROWS]
+                              .index("bakre sidevange, fritt spenn")][1]
+        ["util"]), \
+    "X13: the two side rails are the same section on the same span under " \
+    "the same load - if their rows differ, one of them has been edited"
+# The size factor, as the five-column table vedlegg A prints it. The claim the
+# table makes is that k_h is CAPPED for the thin sections and biting for the
+# rest, and that is what is asserted - not the digits, which are printed.
+KH_DEPTHS = [BED_SLAT_T, END_BEAM_T, RUNG_T, BATTEN_H, RAIL_H]   # 23 36 48 68 98
+assert [round(k_h(h), 2) for h in KH_DEPTHS] == sorted(
+        [round(k_h(h), 2) for h in KH_DEPTHS], reverse=True), \
+    "X13: k_h must fall as the section gets deeper - it is (150/h)^0,2"
+assert k_h(BED_SLAT_T) == k_h(END_BEAM_T) == 1.3, \
+    "X13: the two thinnest sections are supposed to be ON the 1,3 cap"
+assert k_h(RAIL_H) < 1.3, \
+    "X13: at 98 mm k_h is under the cap and is doing work"
+# WITHDRAWAL, the one row in vedlegg A that is neither bending nor bearing:
+# the six 5x40 that come up through the counterbores into the plate. EC5
+# 8.7.2, halved because the thread is in plywood and not in solid timber.
+UPSCREW_D = 5.0
+UPSCREW_FAX_K = (0.52 * UPSCREW_D ** -0.5 * PANEL_UPSCREW_BITE ** -0.1
+                 * C24_RHO_K ** 0.8)                          # 19.52 N/mm2
+UPSCREW_KD = min(UPSCREW_D / 8.0, 1.0)                        # 0.625
+UPSCREW_AX_RK = UPSCREW_KD * UPSCREW_FAX_K * UPSCREW_D * PANEL_UPSCREW_BITE
+UPSCREW_AX_RD = (UPSCREW_AX_RK / 2.0) * K_MOD_SHORT / GAMMA_M_TIMBER / 1000.0
+assert PANEL_UPSCREW_BITE < PANEL_T, (
+    f"X13: the up-screw is credited with {PANEL_UPSCREW_BITE} mm of thread in "
+    f"a {PANEL_T} mm sheet - it cannot have more thread than there is sheet")
+# THE ROPE EFFECT, SAID OUT LOUD. The 1,5 / 2,0 kN this file shears screws
+# against are rule-of-thumb values that ASSUME the thread pulls the parts
+# together. Plain Johansen without it is lower, and vedlegg A prints both sets
+# so the row is honest. These two are CITED, like f_c,0,k above: deriving them
+# needs a screw's f_u, which is a product property this file does not have and
+# must not invent. What the file DOES compute is the consequence - what the
+# highest screw row in the bed becomes if you take the bare numbers.
+SCREW_SHEAR_NO_ROPE_KN = {5: 1.15, 6: 1.56}
+assert set(SCREW_SHEAR_NO_ROPE_KN) == set(SCREW_SHEAR_KN) and all(
+    SCREW_SHEAR_NO_ROPE_KN[d] < SCREW_SHEAR_KN[d] for d in SCREW_SHEAR_KN), \
+    "X13: the no-rope-effect capacities have to exist for every screw " \
+    "diameter this bed uses and be LOWER than the ones with it"
+# PLAIN SHEAR ROWS ONLY, and the exclusion is the point rather than a
+# convenience. J5-B also carries the plate's ECCENTRIC load as a couple in a
+# screw PAIR (BEARER_UTIL, 0,55 - see the J5-B block above), which is a
+# different kind of row: it is not «this many screws against this much shear»,
+# it is an arm. Vedlegg A.6 lists it on its own line above these, and A.7's
+# sentence «den høyeste skrueraden i sengen» is about the shear rows. So the
+# two are compared separately, and the ordering A.6 asserts is asserted here.
+def screw_row_caps(jid):
+    """(with rope effect, without) for ONE instance of this joint.
+
+    Summed over the screws the model actually PLACED in it, not over a count
+    typed here - the same reading V5's block-less corner table takes.
+    """
+    scr = [f for f in FASTENER_SPECS if f["jid"] == jid and f["kind"] == "screw"]
+    per = len(scr) // JOINT[jid]["n"]
+    assert per * JOINT[jid]["n"] == len(scr) and per >= 1, (
+        f"X13: {jid} has {len(scr)} screws over {JOINT[jid]['n']} instances - "
+        f"a shear row needs a whole number of them")
+    ds = [int(round(f["d"])) for f in scr[:per]]
+    return (sum(SCREW_SHEAR_KN[d] for d in ds),
+            sum(SCREW_SHEAR_NO_ROPE_KN[d] for d in ds))
+
+
+SCREW_SHEAR_ROWS = [(f"{_jid} {_what}", _r) + screw_row_caps(_jid)
+                    for _jid, _what, _r in BLOCKLESS_CORNERS]
+SCREW_SHEAR_ROWS.append(("J5 stigekloss → stigevange", RUNG_END_KN)
+                        + screw_row_caps("J5"))
+WORST_SCREW_ROW = max(SCREW_SHEAR_ROWS, key=lambda r: r[1] / r[2])
+WORST_SCREW_UTIL = WORST_SCREW_ROW[1] / WORST_SCREW_ROW[2]
+WORST_SCREW_BARE = WORST_SCREW_ROW[1] / WORST_SCREW_ROW[3]
+assert WORST_SCREW_BARE < 1.0 \
+    and BEARER_SCREW_KN / SCREW_SHEAR_NO_ROPE_KN[6] < 1.0, (
+    f"X13: «{WORST_SCREW_ROW[0]}» is {WORST_SCREW_BARE:.2f} utilised on the "
+    f"bare Johansen capacity and the J5-B couple "
+    f"{BEARER_SCREW_KN / SCREW_SHEAR_NO_ROPE_KN[6]:.2f} - vedlegg A's claim "
+    f"is that NO row passes 1,0 with either set of numbers, and that claim "
+    f"has just stopped being true")
+assert BEARER_UTIL > WORST_SCREW_UTIL, (
+    f"X13: the J5-B couple is {BEARER_UTIL:.2f} and the worst plain shear row "
+    f"{WORST_SCREW_UTIL:.2f} - A.6 lists the couple ABOVE every shear row, "
+    f"and A.7 calls the shear rows the ones with a highest. Swap the order "
+    f"and both sentences want rewriting, not just re-typing")
+print(f"OK  X13 vedlegg A regnet av modellen (C24: f_m,k {C24_FM_K:g}, "
+      f"f_v,k {C24_FV_K:g}, f_c,90,k {C24_FC90K:g}, E_mean {C24_E_MEAN:g}, "
+      f"γ_M {GAMMA_M_TIMBER:g} → f_m,d {F_M_D_C24:g} før k_h, "
+      f"f_v,d {F_V_D:g}, f_c,90,d {FC90_D:g} og med k_c,90 "
+      f"{K_C90:g}: {FC90_D_BEARING:g} MPa):")
+print(f"      k_h-tabellen: "
+      + " · ".join(f"h {h:g} → {k_h(h):.2f} → f_m,d {f_m_d(h):.1f} MPa"
+                   for h in KH_DEPTHS))
+for _name, _row, _gate, _why in LOAD_ROWS:
+    _extra = (f"  nedbøying {_row['defl']:.1f} mm" if "defl" in _row else "")
+    print(f"      {_name:28s} {_row['what']} → {_row['util']:.2f}"
+          f"{_extra}   [{_why}]")
+print(f"      {'køyespile, hele vekten alene':28s} {SLAT_SOLO_ROW['what']} → "
+      f"{SLAT_SOLO_ROW['util']:.2f}   [STRYKER med vilje - se 7.4, det er en "
+      f"bruksregel og ikke en byggemåte]")
+print(f"      {'lekt → plate, uttrekk':28s} f_ax,k {UPSCREW_FAX_K:.2f} MPa, "
+      f"k_d {UPSCREW_KD:g}, {PANEL_UPSCREW_BITE} mm gjenge → "
+      f"F_ax,Rk {UPSCREW_AX_RK:.0f} N, halvert for kryssfiner og med "
+      f"k_mod/γ_M: {UPSCREW_AX_RD:.2f} kN per skrue   [EC5 8.7.2]")
+print(f"      høyeste RENE skruerad: {WORST_SCREW_ROW[0]} — "
+      f"{WORST_SCREW_ROW[1]:g} kN mot {WORST_SCREW_ROW[2]:g} = "
+      f"{WORST_SCREW_UTIL:.2f} med taueffekt, mot {WORST_SCREW_ROW[3]:g} = "
+      f"{WORST_SCREW_BARE:.2f} uten (ren Johansen). J5-Bs eksentriske "
+      f"skruepar er høyere - {BEARER_UTIL:.2f} / "
+      f"{BEARER_SCREW_KN / SCREW_SHEAR_NO_ROPE_KN[6]:.2f} - men det er et "
+      f"moment i en arm, ikke en skjærrad, og A.6 fører det på egen linje")
 
 
 # 2 - EVERY DIRECTION HAS A BLOCKER, AND THE BLOCKER IS WOOD NOW.
@@ -10717,9 +11262,21 @@ for _what, _g in PANEL_GAPS.items():
     assert _en_gap_legal(_g), (
         f"EN 747: the gap '{_what}' is {_g:g} mm - a finger enters it and "
         f"wedges. It has to land in one of the bands {_BANDS_TEXT} mm")
-assert PANEL_X0 - BENCH_LEN == PANEL_SIDE_GAP == 63 and \
-    (WALL_SPAN - BENCH_LEN) - PANEL_X1 == PANEL_SIDE_GAP, \
-    "EN 747: the two side gaps must be equal and must be the declared one"
+# X13: PANEL_X0 IS BENCH_LEN + PANEL_SIDE_GAP and PANEL_X1 is its mirror, so
+# both legs were the assignment read backwards and the row could not see a
+# finger gap change. The gap is measured between the built plate and the built
+# bench ends - the stub legs, whose inner faces ARE the bench ends.
+_legs = built("Bench Stub Leg")
+_bench_end_l = max(p.extents[0][1] for p in _legs
+                   if p.extents[0][1] <= LADDER_CENTER_X)
+_bench_end_r = min(p.extents[0][0] for p in _legs
+                   if p.extents[0][0] >= LADDER_CENTER_X)
+assert (panel_bed.extents[0][0] - _bench_end_l
+        == _bench_end_r - panel_bed.extents[0][1] == PANEL_SIDE_GAP == 63), \
+    f"EN 747: the built side gaps are " \
+    f"{panel_bed.extents[0][0] - _bench_end_l:g} and " \
+    f"{_bench_end_r - panel_bed.extents[0][1]:g} mm - they must be equal and " \
+    f"must be the declared {PANEL_SIDE_GAP}"
 assert not _en_gap_legal(10), \
     "EN 747: 10 mm - the gap this design used to have - must NOT be legal"
 assert not _en_gap_legal(40), \
@@ -10764,11 +11321,18 @@ print(f"OK  K2 platebredden er kvantisert: {PANEL_W:g} mm i en åpning på "
 
 # D5: FLUSH TOP. No cleats anywhere; every slat lies on top of the rails and
 # must bear on the FULL 48 mm width of BOTH of them, exactly like a bench slat.
-assert SLAT_Z0 == RAIL_TOP, "slats do not sit on top of the rails"
-assert MATTRESS_Z0 == SLAT_Z1, "mattress does not sit on the slats"
+# X13: the first two rows were SLAT_Z0 and MATTRESS_Z0 looking at the very
+# names they are assigned from, and the last was two names for 800 (it is
+# measured on the two slat families up in the W8 block now). All three claims
+# are about wood touching wood, so two of them are measured on the wood and
+# the third has moved to where the wood is.
+assert built_z("Bed Slat")[0] == built_z("Upper Side Rail")[1], \
+    f"D5: the built slats start at {built_z('Bed Slat')[0]:g} and the rails " \
+    f"top out at {built_z('Upper Side Rail')[1]:g} - the slats sit ON them"
+assert mattress.extents[2][0] == built_z("Bed Slat")[1], \
+    f"the mattress underside is {mattress.extents[2][0]:g} and the slat tops " \
+    f"are {built_z('Bed Slat')[1]:g} - the mattress sits on the slats"
 assert (SLAT_Y0, SLAT_Y1) == (BACK_RAIL_Y0, FRONT_RAIL_Y1)
-assert SLAT_LEN == BENCH_SLAT_LEN == 800, \
-    "D5: an upper slat is supposed to be the same piece as a bench slat"
 # V6: the two SLAT families are still one and the same piece - that is what
 # makes the 24-in-one-setup cut - but they are no longer the guard board's
 # profile. A slat is loaded flat and a guard board is loaded on edge, so they
@@ -10903,9 +11467,16 @@ in_band_at_back = [p for p in parts
 assert not in_band_at_back, \
     f"W5: {[p.label for p in in_band_at_back]} still stands in the mattress " \
     f"band in the back rail plane - the wall is supposed to be the only stop there"
-mattress_play = (MATTRESS_STOP_Y1 - MATTRESS_STOP_Y0) - MATTRESS_W
+# X13: `mattress_play` was a second copy of MATTRESS_WANDER's own assignment,
+# so the row compared one subtraction with itself. The play is measured
+# between the built stops and the built mattress instead - the same bodies the
+# W5 block has just finished naming.
+mattress_play = ((min(p.extents[1][0] for p in stops_front)
+                  - min(p.extents[1][0] for p in parts))
+                 - (mattress.extents[1][1] - mattress.extents[1][0]))
 assert mattress_play == MATTRESS_WANDER == 0, \
-    f"W5: the mattress can move {mattress_play} mm, expected {MATTRESS_WANDER}"
+    f"W5: the built mattress can move {mattress_play:g} mm, and the file says " \
+    f"{MATTRESS_WANDER}"
 assert mattress_play <= MAX_GUARD_OPENING, \
     f"EN 747: {mattress_play} mm of mattress travel means a {mattress_play} mm " \
     f"gap at one end, over the {MAX_GUARD_OPENING} mm limit"
@@ -11464,7 +12035,8 @@ print(f"Note (U5): the four bench stub legs are {sec(LEG_T, LEG_W)} x "
       f"bench ends X {BENCH_LEN} / {WALL_SPAN - BENCH_LEN} and they run outward "
       f"from there, so the front rail segments are still zero-cantilever "
       f"end-bearing members; the leg-on-rail contact is {LEG_BEARING_AREA} mm2 "
-      f"(was 2304), utilisation ~0.06 in compression perpendicular to the "
+      f"(was 2304), utilisation "
+      f"{BENCH_KN / (LEG_BEARING_AREA * FC90_D_BEARING / 1000):.2f} in compression perpendicular to the "
       f"grain.")
 print(f"Note (D13): the ladder is {LADDER_CLEAR} mm clear (was 420) on "
       f"{sec(UPRIGHT_T, UPRIGHT_W)} uprights (was 48x48), so the rungs are "

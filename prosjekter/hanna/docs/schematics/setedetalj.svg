@@ -91,7 +91,8 @@
   <line x1="178" y1="114.374" x2="178" y2="82.374" class="ext"/>
   <line x1="177.493" y1="113.286" x2="170.224" y2="97.698" class="ext"/>
   <line x1="141.241" y1="130.191" x2="133.972" y2="114.602" class="ext"/>
-  <line x1="171.238" y1="99.873" x2="134.986" y2="116.778" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <line x1="171.238" y1="99.873" x2="156.654" y2="106.674" class="dim" marker-start="url(#aS)"/>
+  <line x1="154.489" y1="107.683" x2="134.986" y2="116.778" class="dim" marker-end="url(#aE)"/>
   <text x="153.112" y="106.313" class="dmh" text-anchor="middle">20</text>
   <line x1="136.761" y1="120.584" x2="234" y2="120.584" class="ext"/>
   <line x1="226" y1="114.374" x2="226" y2="120.584" class="dim"/>
@@ -133,7 +134,8 @@
   <line x1="466" y1="114.374" x2="466" y2="82.374" class="ext"/>
   <line x1="465.4" y1="113.335" x2="456.8" y2="98.439" class="ext"/>
   <line x1="434.223" y1="131.335" x2="425.623" y2="116.439" class="ext"/>
-  <line x1="458" y1="100.517" x2="426.823" y2="118.517" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <line x1="458" y1="100.517" x2="445.954" y2="107.472" class="dim" marker-start="url(#aS)"/>
+  <line x1="443.524" y1="108.875" x2="426.823" y2="118.517" class="dim" marker-end="url(#aE)"/>
   <text x="442.412" y="107.505" class="dmh" text-anchor="middle">18</text>
   <line x1="430.073" y1="124.147" x2="520" y2="124.147" class="ext"/>
   <line x1="512" y1="114.374" x2="512" y2="124.147" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>

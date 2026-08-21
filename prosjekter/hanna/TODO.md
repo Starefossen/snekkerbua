@@ -39,15 +39,45 @@ Stryk punkter etterhvert som de landes.
 
 ## Mindre restanse fra revisjonen
 
-- [ ] ~28 halvtautologiske asserter utenfor de to klyngene (de 23 hele er tatt).
-- [ ] `render_endelevation`: «14 like»/puteantall er verifisert riktige, men
+- [x] ~28 halvtautologiske asserter utenfor de to klyngene (de 23 hele er tatt).
+      Gjort: klassen er jaget med en AST-detektor (venstre og høyre side
+      utfoldes gjennom definisjonskjeden og sammenlignes) — 42 `==`-ledd
+      funnet, 29 av dem døde. 31 asserter skrevet om til å måle solider
+      (`.extents` på de bygde kroppene, via to nye hjelpere `built`/`built_z`),
+      2 strøket åpent med begrunnelse i stedet. De 13 som står igjen er enten
+      merket som navneidentiteter fra før, eller ledd i en kjede der det andre
+      leddet ER en måling.
+- [x] `render_endelevation`: «14 like»/puteantall er verifisert riktige, men
       hardkodet — krever refaktor av modulnivå-dict for å utledes.
-- [ ] `schematic.Sheet.dim`: samme ordmellomrom-under-halo-problem som
+      Gjort: `NAMES` er blitt `names(M)`, antallene telles i modellen, og
+      `assert_counts_ink` leser dem tilbake ut av den ferdige SVG-en.
+- [x] `schematic.Sheet.dim`: samme ordmellomrom-under-halo-problem som
       `render_lineart` fikk brudd-i-streken for.
-- [ ] Lastveis-tillegget i ASSEMBLY håndregner spenninger og kapasiteter
+      Gjort: `render_lineart.Page.dimension`-idiomet er flyttet over —
+      `text_box`, `_clip_box` og `line_cut` bryter streken der figuren står i
+      stedet for å male halo bak den, med samme stubbe-regel (kortere stubbe
+      enn et pilhode → hel strek). Alle tre genererte ark regenerert og lest
+      som PNG: streken krysser ikke lenger ordmellomrommet i «1990 mm».
+- [x] Lastveis-tillegget i ASSEMBLY håndregner spenninger og kapasiteter
       (σ i MPa, lagerkapasitet i kN). 22 av dem står i tallsveipets hviteliste
-      fordi modellen ikke regner dem. Skal den? Da blir hvitelista kortere og
-      sveipet skarpere — men det er en modellutvidelse, ikke en portsak.
+      fordi modellen ikke regner dem. Skal den?
+      Gjort — ja. Hele C24-arket er navngitt ett sted (ved `K_CR`), og
+      `X13`-blokka regner 22 lastrader + k_h-tabellen + uttrekket etter EC5
+      8.7.2 og printer dem som X7 printer sine. Hvitelista gikk fra 44 til 21
+      oppføringer (20 ASSEMBLY-linjer og 3 PRAKSIS-linjer ut, sistnevnte
+      dekket av urelaterte modelltall og notert i fila). Tre tall i ASSEMBLY
+      var feil og er rettet mot modellen: lagerkapasiteten under trinnet
+      (3,2 → 3,0 kN, delte på karakteristisk 2,5 i stedet for design 2,31),
+      endespilen (0,46 → 0,48, skalert med spennforholdet i annen),
+      spile-mot-vange (0,05 → 0,06) og stolpe-mot-gulv (45 → 45,6 kN);
+      A.6 sa dessuten 0,15 om trinnet der A.2 for lengst hadde
+      1,2 kN-lasten (0,18). To nye feilinjiseringer i
+      `tools/falsifiser.py` beviser at klassen nå felles.
+      ÅPENT, IKKE TATT: de to Johansen-tallene (1,15 / 1,56 kN uten
+      taueffekt) står som SITERTE konstanter, ikke utledet — en ærlig
+      utledning trenger skruens f_u, som fila ikke har. Regnet med EC5s
+      vanlige f_u = 600 N/mm² blir de 1,43 og 1,97, altså +24 % og +26 %:
+      godt over 10 %-grensen, så det er rapportert og ikke overkjørt.
 
 ## Åpne beslutninger (Hans)
 
