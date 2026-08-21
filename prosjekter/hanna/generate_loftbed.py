@@ -46,6 +46,61 @@ back corner posts into the back rail plane. Consequences you cannot ignore:
     (1700), which costs the 48 mm of depth v10 just won - and, on a 36 mm
     post, 36 rather than 48 of it. Flagged for the docs round.
 
+DESIGN INTENT (v18 - "the review classes become machinery")
+--------------------------------------------------------------------------
+X12  NOTHING IN THE BED MOVED. WHAT MOVED IS WHO DOES THE CHECKING. The three
+    reviewers of X10/X11 found about fifty faults, and the faults were fixed -
+    but the fixes were the small half of the finding. The large half was that
+    five whole KINDS of question were being asked by a person reading, once,
+    and by nothing at all in between. A class of fault that only a reader can
+    catch is a class of fault that comes back. So this round wrote the
+    machinery and let the classes die:
+
+    1. C9 ON THE ASSEMBLIES. C9 asked every STICK whether it could be got into
+    a 1990 mm opening, and nobody carries a stick into this niche - the
+    builder screws five pieces together on the floor and then has to get THAT
+    in. The bodies are now DERIVED (the connected components of «parts this
+    step adds, joined by joints this step drives»), measured as boxes, and
+    held to the same three rules: it must fit between the walls, its tilt
+    diagonal must pass under the ceiling, and if it is wider than a member may
+    be long it must be built where it stands and a later step must raise it.
+    The back frame is not a case in that list - it is what rule three catches,
+    and the check asserts that the body it finds is the five pieces the prose
+    calls the back frame. See `check_step_units` in tools/gen_doc_tables.py.
+
+    2. A DATUM THAT IS STILL WASTE. X6 rule 2 refuses to name an end that does
+    not exist yet, and the proof of it needed three facts that live in three
+    places: the cut list knows which ends leave the bench oversize, the
+    placement table names the datum, and the steps know when the drill comes
+    out. `assert_datum_ink` reads all three OFF THE FINISHED INK and demands
+    they close - a hole measured from a still-oversize end has to be in step
+    0's deferred list, and every joint in that list has to have such a hole.
+    The foot has no deferred list at all, and that is asserted separately.
+
+    3. THE README'S OWN NUMBERS. The one document in this project whose counts
+    were retold rather than measured was the one that claims nothing here is
+    retold. `tools/check_tall.py` counts them - asserts, artefacts, pages,
+    pieces, running metres, fasteners, joints - and checks the lines it quotes
+    in backticks against what the model actually printed this run.
+
+    4. THE NUMBER SWEEP. Every «NNN mm/MPa/kg/kN/%» in the hand-written prose,
+    against the values the model can produce. Same file; the pool is
+    deliberately narrow and says how narrow it is.
+
+    5. FALSIFICATION AS A GATE. Every round has ended by breaking an assert on
+    purpose to watch it go red, and it worked every time somebody remembered.
+    `tools/falsifiser.py` is that habit written down: named injections against
+    the asserts that GUARD - the ones that measure ink or solids across files,
+    where passing and having nothing to say look identical - each of which
+    must fell its own check, with the unperturbed run as the control.
+
+    AND ONE THING ABOUT THE WALL. STUD_LAYOUT_UNKNOWN. The nine wall fixings
+    are the only fasteners in this bed whose X is not a fact, and the tables
+    printed a c/c for them like any other row. The flag now says so where the
+    model can see it, the spacing is documented as the worst layout the rule
+    allows rather than a measurement, and an assert on the finished ink
+    refuses any wall-fixing row that offers an X as a datum.
+
 DESIGN INTENT (v17 - "the screws are checked against each other, and the
                       free edge stops being free")
 --------------------------------------------------------------------------
@@ -5245,6 +5300,29 @@ def fastener_specs(all_parts):
 # none.
 WALL_FIXINGS = [("J14", back_rail), ("J12-V", support_rail)]
 
+# X12 - AND THE X OF A WALL FIXING IS NOT A MEASUREMENT. Everything else in
+# this bed stands where the wood puts it. These nine do not: they stand where
+# the STUDS are, and the studs are in the room. This model has no wall, has
+# never measured one, and is not entitled to an opinion about the centres -
+# 600 is a convention, not a fact, and a 1950s wall obeys nothing.
+#
+# So the even spread below is a MODELLING CONVENIENCE and nothing more. It
+# exists to give each fixing a body to be counted, drawn and priced, and to
+# give the ledger and the rail a defensible span to be reckoned on: N fixings
+# spread evenly is the WORST layout a builder can hit while still obeying the
+# rule he is actually given, which is «one in every stud you find, and at
+# least at both ends and in the middle». Find them closer together and the
+# spans get shorter, never longer, so the strength case is conservative in
+# the right direction.
+#
+# What that costs, and it is deliberate: the c/c number the tables print is
+# advisory. It is flagged here rather than in the emitter so that anything
+# reading the model can see it - `wall_fix_placement_rows` prints the RULE in
+# the «fra enden» column and never an X, the row's pitch is printed with a
+# «≈», and an assert on the finished ink refuses any wall-fixing row that
+# offers an X as a datum. This flag is what those three are keeping.
+STUD_LAYOUT_UNKNOWN = True
+
 
 def wall_fastener_specs():
     d, length = 8.0, 100.0
@@ -5256,6 +5334,7 @@ def wall_fastener_specs():
         y = member.extents[1][1]
         z = sum(member.extents[2]) / 2
         for i in range(count):
+            # Advisory, not measured - see STUD_LAYOUT_UNKNOWN above.
             t = (i + 0.5) / count
             out.append(dict(kind="screw", anchor=(x0 + (x1 - x0) * t, y, z),
                             direction=(0.0, -1.0, 0.0), length=length, d=d,
@@ -5355,6 +5434,23 @@ SCREW_ROWS = screw_rows()
 print("\n=== FESTEMIDLER ===")
 print(f"OK  {len(FASTENER_SPECS)} festemidler plassert i "
       f"{len(JOINTS)} ledd, alle lagt ut etter (n-1)x4d + 2x3d")
+# X12: STUD_LAYOUT_UNKNOWN, kept. The X6 placement machinery turns a fastener
+# into «so many mm from a named end», and that is precisely the sentence a
+# wall fixing is not allowed to be given. What keeps it out is that a wall
+# fixing has no `drive` - `fastener_placements()` skips those - so the flag is
+# only true as long as that stays true, and this is where it is measured.
+_WALL_SPEC = [_f for _f in FASTENER_SPECS if _f.get("wall")]
+assert STUD_LAYOUT_UNKNOWN and _WALL_SPEC, \
+    "X12: no fixing is marked `wall` - STUD_LAYOUT_UNKNOWN guards nothing"
+assert all(_f["drive"] is None for _f in _WALL_SPEC), (
+    "X12: a wall fixing has picked up a `drive`, which is what turns a "
+    "fastener into an X measured off a named end. The studs are in the room "
+    "and this model has not seen them - see STUD_LAYOUT_UNKNOWN")
+print(f"OK  X12 stenderne: {len(_WALL_SPEC)} veggfester i "
+      f"{len(WALL_FIXINGS)} ledd er lagt ut jevnt langs sin egen del. Den "
+      f"delingen er VEILEDENDE - modellen har ingen vegg - og ingen av dem "
+      f"har en drivretning, så ingen av dem kan få en plasseringslinje med "
+      f"X-mål. Regelen er «et feste i hver stender du treffer»")
 for _j in JOINTS:
     _mine = [f for f in FASTENER_SPECS if f["jid"] == _j["id"]]
     _what = " + ".join(f"{q}x {n}" for n, q in _j["fast"])
@@ -11480,37 +11576,51 @@ print("Note (D5): the slat cleats are gone; the upper slats are screwed "
 # WHAT IT CANNOT SEE: a comment on the second line of a two-line assignment,
 # because the name is not on that line. There are a handful of those and they
 # are the price of a checker small enough to be obviously right.
+#
+# X12 MADE IT A FUNCTION, which is a smaller change than it looks and the
+# reason is the whole point of tools/falsifiser.py: a checker that can only be
+# run on this file, as it stands on disk, cannot be shown to BITE. Given the
+# source as a string and the values as a dict, it can be handed a comment with
+# one digit changed and asked to find it - and that proof is now part of the
+# gate. Nothing else moved: the loop below is the loop that was here.
 _VC_LINE = re.compile(r"^([A-Z_][A-Z0-9_]*)\s*=\s*(?!=)(.+?)\s+#\s*(\S.*)$")
 _VC_HEAD = re.compile(r"^(-?\d+(?:[.,]\d+)?)(?![\dxX×])")
-_VC_SKIPPED = 0
-_VC_CHECKED = 0
-_VC_STALE = []
-with open(__file__, encoding="utf-8") as _fh:
-    for _no, _line in enumerate(_fh, 1):
-        _m = _VC_LINE.match(_line.rstrip("\n"))
-        if not _m:
+
+
+def stale_value_comments(source, values):
+    """(stale, checked, skipped) for `NAME = expr  # <value>` in `source`."""
+    stale, checked, skipped = [], 0, 0
+    for no, line in enumerate(source.split("\n"), 1):
+        m = _VC_LINE.match(line.rstrip("\n"))
+        if not m:
             continue
-        _name, _, _comment = _m.groups()
-        _head = _VC_HEAD.match(_comment.split("[")[0].strip())
-        if _head is None:
+        name, _, comment = m.groups()
+        head = _VC_HEAD.match(comment.split("[")[0].strip())
+        if head is None:
             continue
-        if _name not in globals():
-            _VC_SKIPPED += 1
+        if name not in values:
+            skipped += 1
             continue
-        _val = globals()[_name]
-        if isinstance(_val, bool) or not isinstance(_val, (int, float)):
-            _VC_SKIPPED += 1
+        val = values[name]
+        if isinstance(val, bool) or not isinstance(val, (int, float)):
+            skipped += 1
             continue
-        _text = _head.group(1).replace(",", ".")
-        _said = float(_text)
+        text = head.group(1).replace(",", ".")
+        said = float(text)
         # A comment is allowed to be the value ROUNDED TO ITS OWN PRECISION and
         # no further: "# 314" may stand over 314,4 and "# 50.7" over 50,7073,
         # but neither may stand over a different number.
-        _dp = len(_text.split(".")[1]) if "." in _text else 0
-        _tol = 0.5 * 10 ** -_dp
-        _VC_CHECKED += 1
-        if abs(_said - float(_val)) > _tol:
-            _VC_STALE.append((_no, _name, _said, float(_val)))
+        dp = len(text.split(".")[1]) if "." in text else 0
+        checked += 1
+        if abs(said - float(val)) > 0.5 * 10 ** -dp:
+            stale.append((no, name, said, float(val)))
+    return stale, checked, skipped
+
+
+with open(__file__, encoding="utf-8") as _fh:
+    VALUE_COMMENT_SOURCE = _fh.read()
+_VC_STALE, _VC_CHECKED, _VC_SKIPPED = stale_value_comments(
+    VALUE_COMMENT_SOURCE, globals())
 assert not _VC_STALE, (
     "X10: stale value comments - the number is not what the name is worth:\n"
     + "\n".join(f"    line {n}: {k} says {a:g}, and it is {b:g}"

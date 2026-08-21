@@ -40,7 +40,7 @@ hvert merke står på det festemiddelet det navngir.*
 | **Ytre mål** | 1990 × 836 × 2037 mm — fyller nisjen fra vegg til vegg på 1990 mm, i et rom med 2450 mm takhøyde, og gir 1500 mm fri høyde under køya. Gjennomgående deler kappes 1984 mm, for et bord på 1990 mm lar seg ikke svinge inn i en åpning på 1990 mm |
 | **Trevirke** | **72 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 51,23 løpemeter. Fordelingen: 23×98 26 stk. · 48×68 19 stk. · 36×48 14 stk. · 36×98 10 stk. · 48×98 2 stk. · plata 1 stk. 24 av de 72 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling. Tallene telles av modellen og står nederst i [kapplista](docs/generated/kappliste.md) — `TOTAL 72 pcs 51.23 m in 5 timber profiles + 1 sheet` er det modellen skriver ut mens den bygger |
 | **Stål** | **181 festemidler fordelt på 22 ledd**, **172 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. De 9 som mangler er de to veggfestene, J14 og J12-V: de går rett inn i veggen og har ingen andre del å ende i, så de er plassert, men ikke modellert. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert. Begge tallene skriver modellen ut selv — `181 festemidler plassert i 22 ledd` og `172 festemidler modellert som kropper` |
-| **Kontroller** | **475 asserter i modellen** og 139 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått, og de telles som `ast.Assert`-noder i syntakstreet, ikke med grep: en grep på linjer som begynner med ordet «assert» tar med brødtekst som gjør det samme, og gir 477 her. Metoden er `python -c "import ast,sys;print(sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse(open(sys.argv[1]).read()))))" generate_loftbed.py`, og den samme summen over `tools/*.py` (20 filer) — så neste runde regner dem ut på nytt i stedet for å arve dem. Skrueretningene er utledet av fysikk (6 av de 24 radene i [skrueretningene](docs/generated/skrueretninger.md) er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — 25 linjer over 22 skrueretninger og alle 172 festemidlene, en bijeksjon som asserteres på det ferdige blekket. De to siste radene er veggfestene: de får hver sin egen plasseringslinje over 9 fester, satt etter stender og ikke etter mål, og telles derfor for seg; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
+| **Kontroller** | **477 asserter i modellen** og 160 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått, og de telles som `ast.Assert`-noder i syntakstreet, ikke med grep: en grep på linjer som begynner med ordet «assert» tar med brødtekst som gjør det samme, og gir 482 her. Metoden er `python -c "import ast,sys;print(sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse(open(sys.argv[1]).read()))))" generate_loftbed.py`, og den samme summen over `tools/*.py` (22 filer) — men ingen runde arver dem lenger: `tools/check_tall.py` teller dem på nytt i porten og feller bygget hvis denne tabellen sier noe annet enn det den finner. Skrueretningene er utledet av fysikk (6 av de 24 radene i [skrueretningene](docs/generated/skrueretninger.md) er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — 25 linjer over 22 skrueretninger og alle 172 festemidlene, en bijeksjon som asserteres på det ferdige blekket. De to siste radene er veggfestene: de får hver sin egen plasseringslinje over 9 fester, satt etter stender og ikke etter mål, og telles derfor for seg; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
 | **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **136 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. 136 er ikke et anslag: det er `git ls-files` over nøyaktig de stiene `snap()` i `mise.toml` hasjer. Determinismen er en assert, ikke en forventning |
 | **Ut av det** | En **trykkeklar PDF på 94 sider** med én kommando — `pdfinfo docs/hanna.pdf` sier hvor mange det ble — pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
@@ -69,6 +69,10 @@ generate_loftbed.py           modellen: mål, deler, festemidler, asserter
   ├─ tools/gen_figurhode.py   → figurikonenes hoder + landemerkene i PRAKSIS §4
   ├─ tools/gen_glyphs.py      → skrueikoner og piktogrammer
   ├─ tools/render_animasjon.py → docs/img/hanna-*.gif  (de tre filmene)
+  ├─ tools/check_tall.py      → skriver ingenting: måler README-ens talte tall
+  │                             og sveiper håndprosaens tall mot modellen
+  ├─ tools/falsifiser.py      → skriver ingenting: feilinjiserer vokterne og
+  │                             krever at hver enkelt feller
   └─ tools/build_pdf.py       → docs/hanna.pdf
        └─ tools/render_pdf_matrix.py → docs/img/hanna-manual-sider.png
 ```
@@ -126,6 +130,16 @@ retter det når de ryker. Fire familier:
   riktig vei. Et beslag som *bærer* noe må ha den vannrette fliken skrudd rett
   opp, i undersiden av det den bærer.
 
+**Og assertene prøves selv.** En assert som aldri har feilet er ikke en bevist
+assert, den er en uprøvd en. `tools/falsifiser.py` tar de asserene som VOKTER —
+de som måler ferdig blekk eller plasserte kropper på tvers av filer, der
+«bestått» og «hadde ingenting å si» ser like ut — kjører dem først rene på
+dagens innhold, og perturberer så én ting om gangen i minnet: bærer bakrammen
+inn gjennom en åpning like bred som seg selv, tar et ledd ut av steg 0s
+utsettelsesliste, gir et veggfeste et X-mål som fasit, lar README gjenfortelle
+et tall som har flyttet seg. Hver eneste feilinjisering må felle sin assert.
+Ingen av dem rører en fil på disk, og porten kjører dem.
+
 Og siden alt utledet er sjekket inn — nettopp for at `git diff --stat` etter et
 bygg *skal være* konsekvensanalysen — må kjeden selv være reproduserbar.
 `mise run check` kjører den to ganger og sammenligner sjekksummer. Ryker den, er
@@ -167,7 +181,7 @@ mise run pdf        # docs/hanna.pdf, 94 sider, trykkeklar
 | `endelevation` | Tegner kortsnittet (sengen sett fra enden) til `docs/schematics/end-elevation.svg` |
 | `spikerslag` | Tegner bakveggen som oppriss med sonene som skal ha spikerslag til `docs/schematics/spikerslag.svg` |
 | `figurhode` | Regner hodet på konturfiguren inn i de fire figurikonene og skriver landemerketabellene i PRAKSIS §4 |
-| `check` | Determinismeasserten: to fulle kjøringer, 136 artefakter, byte-identisk eller feil |
+| `check` | Determinismeasserten: to fulle kjøringer, 136 artefakter, byte-identisk eller feil — og etterpå `check_tall` (README-ens talte tall + tallsveipet over håndprosaen) og `falsifiser` (feilinjisering av vokterne) |
 | `pdf` | Setter sammen `docs/hanna.pdf` av de innsjekkede dokumentene (trenger ikke build123d) |
 | `schematics` | Rendrer `docs/schematics/*.svg` til PNG for korrektur |
 | `usdz` | Konverterer nettene til `.usdz` for Quick Look / Xcode / AR, ett materiale per fargegruppe |

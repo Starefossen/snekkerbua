@@ -90,7 +90,7 @@ Rangert etter hva som låser opp mest per krone, gitt eksisterende park:
 | # | Verktøy | Hvorfor / hva det låser opp | Merknad (ONE+/HP-status) |
 |---|---|---|---|
 | 1 | **Eksentersliper — ONE+ HP-variant** | Finish-kvalitet på alt; HANNA: 72 deler skal slipes før maling | Kjøp før malejobben. HP børsteløs-utgave finnes i sortimentet — verifiser modellnr. (ikke ta brushed R18ROS hvis HP står ved siden av) |
-| 2 | **Linjelaser, selvnivellerende kryss** | Høyderiss rundt nisja og loddlinje midt i den. Uten den kan ikke romdelene i HANNA kappes: nisjas minste bredde og gulvets høyeste punkt måles fra risset, ikke fra gulvet | Batteriuavhengig, 500–1500 kr. **Trengs FØR kapp av romdelene** |
+| 2 | **Linjelaser, selvnivellerende — 360° horisontal + vertikal** | Høyderiss rundt nisja og loddlinje midt i den. Uten den kan ikke romdelene i HANNA kappes: nisjas minste bredde og gulvets høyeste punkt måles fra risset, ikke fra gulvet | **Lånt eksemplar dekker behovet inntil videre — ikke kjøpt.** Anbefaling når den skal kjøpes: **Bosch UniversalLevel 360 Premium Set**, ~1 730 kr, ±0,4 mm/m, 360° horisontal linje **og** vertikal linje, stativ inkludert. Budsjett: **Jula Meec 360°**, 999 kr. ⚠️ **Unngå Bosch PLL 360-1** — den mangler vertikal linje, og loddlinja midt i nisja er halve jobben. Batteriuavhengig. **Trengs FØR kapp av romdelene** |
 | 3 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Batteriuavhengig; billigst per nytte på lista |
 | 4 | **Forstnerbor-sett** | Flatbunnede hull: HANNA trenger ⌀18 (skråskrue-setene) og ⌀40 (filtknottene) | Drives av drillen (13 mm chuck ✓). **Trengs til HANNA-byggingen** |
 | 5 | **Japansk sag (ryoba) + stemjern-sett** | Rene hakk og presisjon for hånd; billigste vei til skjult treskjøt | Batteriuavhengig, ~200–400 kr |
@@ -100,6 +100,12 @@ Rangert etter hva som låser opp mest per krone, gitt eksisterende park:
 **Avmeldt etter strategivalget:** R18CS-0 (brushed sirkelsag, skinneinkompatibel),
 RCK183G-0-pakken (inneholder brushed sirkelsag + stikksag vi ikke trenger ennå),
 stikksag generelt (venter på et prosjekt med kurver — velg da HP-variant om den finnes).
+
+**Avmeldt bevisst — laseravstandsmåler.** Den måler punkt til punkt og lyver
+gjerne en centimeter på en skjev endevegg. Jobben i HANNA er ikke å lese ett
+tall, men å legge et **plan**: høyderisset rundt hele nisja og loddlinja midt
+i den. Laserplan + tommestokk måler denne jobben bedre enn en avstandsmåler
+gjør, og nisjebredden leses uansett som en sum av to mål ut fra loddlinja.
 
 ## Forbruk/småting å ha liggende
 

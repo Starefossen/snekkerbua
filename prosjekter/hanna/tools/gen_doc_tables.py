@@ -279,37 +279,58 @@ def floor_trim(G, *specs):
 # The back frame: the members step 1 lays out flat and step 2 tips upright.
 # Named ONCE - step 1's `parts` list is this list - so the frame the steps
 # build and the frame the clearances are measured on cannot drift apart.
+#
+# X12: AND IT IS NO LONGER A CASE OF ITS OWN. `unit_envelope` below measures
+# ANY body a step hands the builder, `step_units` derives what those bodies
+# are from the joints the step drives, and `check_step_units` runs the
+# manoeuvring rule over all of them. The back frame is what that rule finds
+# when it looks at step 1 - the list here is the prose's handle on it, and
+# the check asserts the two are the same five pieces.
 BACK_FRAME_PARTS = ["Corner Post Back *", "Upper Side Rail Back",
                     "Bench Rail Back (continuous)", "Table Ledger Back"]
+
+
+def unit_envelope(G, ps):
+    """One BODY's box, and what getting it into place costs the room.
+
+    A body is whatever the builder screws together and then lifts, tips or
+    carries as one thing. Three spans off the solids and two consequences:
+
+      w  along the wall (X). This is the C9 measurement, taken on an
+         assembly instead of on a stick: a body wider than THROUGH_LEN
+         cannot be swung in through the opening at all, however light it is.
+      t  the thickness of the layer it was built in (Y).
+      h  how tall it stands (Z).
+
+    `sweep` is what its far corner traces when it is tipped upright about its
+    bottom edge - the same idiom as TILT_SWEEP in the model
+    (`math.hypot(BUILT_TOP_Z, OVERALL_DEPTH)` against ROOM_H) - and `need` is
+    the niche depth it wants if it has to be built LYING DOWN in the niche:
+    its own height, or the finished bed's depth, whichever is the deeper.
+    Which of the two binds is a fact about this bed, not a given.
+    """
+    ext = [(min(p.extents[j][0] for p in ps),
+            max(p.extents[j][1] for p in ps)) for j in range(3)]
+    h = ext[2][1] - ext[2][0]
+    t = ext[1][1] - ext[1][0]
+    return dict(labels=sorted(p.label for p in ps), n=len(ps),
+                w=ext[0][1] - ext[0][0], t=t, h=h,
+                sweep=math.hypot(h, t), need=max(h, G.OVERALL_DEPTH))
 
 
 def back_frame(G):
     """The back frame's own envelope, and what raising it needs.
 
-    Same idiom as TILT_SWEEP in the model (`math.hypot(BUILT_TOP_Z,
-    OVERALL_DEPTH)` against ROOM_H), and a DIFFERENT number, because this is
-    the back frame and not the bed: the frame is as tall as its own topmost
-    member and only as thick as the one layer it is built in.
-
-    Lying on the floor it takes its own HEIGHT out of the niche depth; tipped
-    up about its bottom edge the far corner sweeps hypot(height, thickness),
-    and that has to pass under the ceiling.
+    A DIFFERENT number from the bed's, because this is the back frame and not
+    the bed: the frame is as tall as its own topmost member and only as thick
+    as the one layer it is built in.
     """
     ps = [p for p in G.CUT_PARTS
           if any(_match(s, p.label) for s in BACK_FRAME_PARTS)]
     for spec in BACK_FRAME_PARTS:
         assert any(_match(spec, p.label) for p in ps), \
             f"the back frame names '{spec}' and the model has no such part"
-    h = max(p.extents[2][1] for p in ps) - min(p.extents[2][0] for p in ps)
-    t = max(p.extents[1][1] for p in ps) - min(p.extents[1][0] for p in ps)
-    sweep = math.hypot(h, t)
-    assert sweep <= G.ROOM_H, (
-        f"bakrammen er {_fmt(h)} × {_fmt(t)} mm og sveiper {sweep:.0f} mm når "
-        f"den tippes opp om underkanten - taket er på {G.ROOM_H}")
-    # The niche has to hold the frame lying down AND the finished bed. Which
-    # of the two is the binding one is a fact about this bed, not a given.
-    need = max(h, G.OVERALL_DEPTH)
-    return dict(h=h, t=t, sweep=sweep, need=need)
+    return unit_envelope(G, ps)
 
 
 def rung_pitch(G):
@@ -1202,6 +1223,149 @@ def resolve_steps(G, steps):
     missing = sorted(set(by_label) - set(taken))
     assert not missing, f"no build step places: {missing}"
     return steps
+
+
+# ---------------------------------------------------------------------------
+# X12 - C9 ON THE ASSEMBLIES, NOT JUST ON THE STICKS
+# ---------------------------------------------------------------------------
+# C9 in the model asks one question of every PIECE of wood: can a member this
+# long be got into a WALL_SPAN opening? It is the right question and it was
+# being asked of the wrong things. Nobody carries a stick into this niche and
+# screws it to the wall on its own - the builder screws five pieces together
+# on the floor and then has to get THAT into place, and until the review
+# nothing measured it. The 1990 mm back frame passed every assert in the file
+# while the prose told the reader to slide it in sideways through a 1990 mm
+# gap.
+#
+# WHAT A BODY IS, DERIVED. A step lists the parts it adds and the joints it
+# drives. Two of its parts are one body exactly when a joint OF THAT STEP
+# fastens them to each other: screw them together and what you lift is the
+# sum. So the bodies of a step are the connected components of that graph,
+# and a part nothing in the step joins to is a body of one - which is C9 as it
+# always was. Nothing here is a list of steps that happen to build frames:
+# move a joint into another step and the bodies move with it.
+#
+# THE RULE, ON EVERY BODY:
+#
+#   1. It has to fit between the walls at all             w <= WALL_SPAN
+#   2. Tipped upright about its bottom edge, its far
+#      corner has to pass under the ceiling               sweep <= ROOM_H
+#   3. If it is wider than a member may be long, it
+#      cannot be swung in through the opening: it must
+#      be BUILT WHERE IT STANDS and raised on the spot.   w > THROUGH_LEN
+#      Then the steps have to say so - there has to be a
+#      step that raises it and adds nothing - and the
+#      niche has to be deep enough to hold it lying down.
+#
+# The back frame is not a case in that list. It is what rule 3 CATCHES, and
+# the check below asserts that the body rule 3 finds is the same five pieces
+# the prose calls the back frame. The day a second body goes over 1984, this
+# stops the build and asks for the second raising step in words.
+UNIT_TOL = 0.5
+
+
+def step_units(G, steps):
+    """{step number: [unit, ...]} - the bodies each step hands the builder."""
+    by_label = {p.label: p for p in G.CUT_PARTS}
+    out = {}
+    for st in steps:
+        labels = [l for l in st["labels"] if l in by_label]
+        parent = {l: l for l in labels}
+
+        def find(a):
+            while parent[a] != a:
+                parent[a] = parent[parent[a]]
+                a = parent[a]
+            return a
+
+        for f in G.FASTENER_SPECS:
+            if f["jid"] not in st["joints"]:
+                continue
+            pa, pb = f.get("pa"), f.get("pb")
+            if pa is None or pb is None:
+                continue
+            if pa.label in parent and pb.label in parent:
+                ra, rb = find(pa.label), find(pb.label)
+                if ra != rb:
+                    parent[ra] = rb
+        groups = {}
+        for l in labels:
+            groups.setdefault(find(l), []).append(l)
+        out[st["n"]] = sorted(
+            (unit_envelope(G, [by_label[l] for l in g]) for g in groups.values()),
+            key=lambda u: u["labels"])
+    return out
+
+
+def raising_steps(G, steps, unit):
+    """The steps that MOVE this body without adding anything to it.
+
+    A step with no parts of its own re-highlights what it works on (the
+    `highlight` field exists for exactly that), so the ink says which body it
+    takes hold of. That is the declaration the rule needs: a body too wide to
+    be carried in has to have one of these after the step that builds it.
+    """
+    return [st["n"] for st in steps
+            if not st["labels"] and st["highlight_labels"]
+            and set(st["highlight_labels"]) <= set(unit["labels"])]
+
+
+def check_step_units(G, steps):
+    """The manoeuvring rule, run on every body every step makes."""
+    units = step_units(G, steps)
+    in_place = []
+    for st in steps:
+        for u in units[st["n"]]:
+            assert u["w"] <= G.WALL_SPAN + UNIT_TOL, (
+                f"steg {st['n']}: enheten {u['labels']} er {_fmt(u['w'])} mm "
+                f"bred og nisja er {G.WALL_SPAN} - den får ikke plass mellom "
+                f"veggene i det hele tatt")
+            assert u["sweep"] <= G.ROOM_H, (
+                f"steg {st['n']}: enheten {u['labels']} er {_fmt(u['h'])} × "
+                f"{_fmt(u['t'])} mm og sveiper {u['sweep']:.0f} mm når den "
+                f"tippes opp om underkanten - taket er på {G.ROOM_H}")
+            if u["w"] <= G.THROUGH_LEN + UNIT_TOL:
+                continue
+            # Rule 3: too wide to be swung in. It is built where it stands.
+            raisers = raising_steps(G, steps, u)
+            assert raisers, (
+                f"steg {st['n']}: enheten {u['labels']} er {_fmt(u['w'])} mm "
+                f"bred - mer enn {G.THROUGH_LEN}, så den lar seg ikke svinge "
+                f"inn i en {G.WALL_SPAN} mm åpning. Den må bygges der den "
+                f"skal stå og reises på stedet, og da må et senere steg gjøre "
+                f"nettopp det: et steg uten egne deler som merker av denne "
+                f"enheten. Det finnes ikke")
+            in_place.append((st["n"], raisers, u))
+    # THE BACK FRAME IS RULE 3'S OUTCOME, and this is where that is said out
+    # loud rather than assumed. One body in this bed cannot be carried in; the
+    # prose calls it the back frame and prints its numbers, so the two have to
+    # be the same body measured once.
+    assert len(in_place) == 1, (
+        "X12: " + str(len(in_place)) + " enheter må bygges på plass - "
+        + "; ".join(f"steg {n}: {u['labels']}" for n, _r, u in in_place)
+        + ". Prosaen i «Før steg 0» og i steg 1/2 beskriver ÉN slik enhet. "
+          "Blir det flere, må teksten si det - tallene kan ikke bare "
+          "regnes om")
+    _n, _raisers, u = in_place[0]
+    bf = back_frame(G)
+    assert u["labels"] == bf["labels"], (
+        f"X12: enheten som må bygges på plass er {u['labels']}, og prosaen "
+        f"kaller bakrammen {bf['labels']} - BACK_FRAME_PARTS og steg "
+        f"{_n} har gått fra hverandre")
+    assert u["need"] <= bf["need"] + UNIT_TOL, "X12: back frame need drifted"
+    _all = [v for vs in units.values() for v in vs]
+    _carried = max(v["w"] for v in _all if v["w"] <= G.THROUGH_LEN + UNIT_TOL)
+    _sweep = max(v["sweep"] for v in _all)
+    _built = len([s for s in steps if s["labels"]])
+    _rz = ", ".join(str(r) for r in _raisers)
+    print(f"  X12 manøvrerbarhet: {len(_all)} enheter i {_built} steg målt "
+          f"som kropper, ikke som pinner. Bredeste som kan bæres inn: "
+          f"{_fmt(_carried)} mm (grense {G.THROUGH_LEN}); høyeste sveip "
+          f"{_sweep:.0f} mm (tak {G.ROOM_H}). Steg {_n} bygger den ene som "
+          f"IKKE kan bæres inn - {_fmt(u['w'])} mm bred, {u['n']} deler - og "
+          f"steg {_rz} reiser den: sveip {u['sweep']:.0f} mm, og den krever "
+          f"{_fmt(u['need'])} mm nisjedybde liggende")
+    return units
 
 
 def SOFT_BUY(G, label):
@@ -2771,7 +2935,10 @@ def wall_fix_note(G, st):
         f"Stenderne finnes bare i rommet, og de står der de står — du finner "
         f"dem først når rammen er oppe. Regelen er derfor **et feste i hver "
         f"stender du treffer, og minst i begge ender og på midten** av delen. "
-        f"Tallet i c/c-kolonnen er den delingen modellen regner styrken på: "
+        f"**Tallet i c/c-kolonnen er veiledende.** Modellen har ingen vegg og "
+        f"vet ikke hvor stenderne står; den regner styrken på en jevn deling, "
+        f"og det er den verste fordelingen du kan treffe mens du følger "
+        f"regelen over: "
         + " · ".join(f"{w['jid']} {w['n']} stk. på {_fmt(w['piece_len'])} mm, "
                      f"{_fmt(round(w['inset']))} mm inn fra hver ytterende"
                      for w in ws)
@@ -2898,6 +3065,146 @@ def assert_placement_ink(G, bygg, retn):
           f"skrueretninger, {n_fast} festemidler - én linje per rad, ingen "
           f"rad uten linje; + {len(wall_ink)} veggfestelinjer med {n_wall} "
           f"fester, plassert etter stender og ikke etter mål")
+
+
+# ---------------------------------------------------------------------------
+# X12 - A DATUM THAT IS STILL WASTE WHEN THE DRILL COMES OUT
+# ---------------------------------------------------------------------------
+# X6 rule 2 says an end that does not exist yet is not a datum, and the model
+# keeps it by REFUSING to name such an end (`_end_is_datum`). That is the
+# right place for the rule and the wrong place for the proof: the rule is
+# about the meeting of three separate facts, and the model only holds one of
+# them.
+#
+#   * the CUT LIST knows which ends leave the bench oversize - ROOM_OVER_WALL
+#     on every end that meets a wall, ROOM_OVER_FLOOR under every foot;
+#   * the PLACEMENT TABLE names the end each hole is measured from;
+#   * the STEPS know when the drill comes out - step 0 for everything that is
+#     cut to size in the shop, and a point of its own, after the fine cut, for
+#     the pieces the room finishes.
+#
+# Any two of those three can agree while the third one drifts, and none of
+# them can see the other two. So this reads all three OFF THE FINISHED INK -
+# the placement rows in byggesteg.md and the sentence in step 0 that names
+# the deferred joints - and demands they close:
+#
+#   a hole measured from an end that is still 10 mm of waste when it is
+#   bored has to be in the deferred list, and every joint in that list has
+#   to have such a hole.
+#
+# The foot is the other half of the same rule and it has no deferred list at
+# all: a foot is trimmed in vater long after the frame is standing, so a hole
+# measured up from one can never be bored. That is not "defer it", it is "you
+# cannot say it" - and it is why the ladder's rung holes count DOWN from the
+# top.
+END_NO_AXIS = {"ytterenden": (0, "ytre"), "innerenden": (0, "indre"),
+               "veggenden": (1, "bak"), "romenden": (1, "fram"),
+               "nedre ende": (2, "ned"), "toppen": (2, "opp")}
+# The two-in-one datum names, which have to be expanded before they are asked
+# about: «fra begge ender» is a claim about both of them.
+END_NO_PAIRS = {"vegg- og romenden": [(1, "bak"), (1, "fram")]}
+END_NO_BOTH = "begge ender"          # the axis comes from the piece
+DRILL_DEFER_MARK = "IKKE PÅ BUKKEN"
+
+
+def oversize_ends(fit):
+    """The ends of a piece that are still waste when it leaves the bench."""
+    if fit is None:
+        return set()
+    if fit["kind"] == "vegg":
+        return {(0, "ytre")}         # ROOM_OVER_WALL, fine-cut in the room
+    if fit["kind"].startswith("gulv"):
+        return {(2, "ned")}          # ROOM_OVER_FLOOR, trimmed in vater
+    return set()                     # meddrag: the WIDTH is scribed, not the end
+
+
+def assert_datum_ink(G, bygg):
+    """No placement line measures from an end that is still oversize."""
+    rows, defer_ink = [], None
+    for line in bygg.split("\n"):
+        if DRILL_DEFER_MARK in line:
+            m = re.search(r"Det gjelder ((?:J[\w-]+, )*J[\w-]+)\.", line)
+            assert m, (f"steg 0 har «{DRILL_DEFER_MARK}»-punktet, men det "
+                       f"navngir ingen ledd - regelen har ingen eier på trykk")
+            defer_ink = set(m.group(1).split(", "))
+            m2 = re.search(r"har (\d+) mm overmål i hver ende", line)
+            assert m2 and int(m2.group(1)) == G.ROOM_OVER_WALL, (
+                f"steg 0 trykker et annet overmål enn modellens "
+                f"{G.ROOM_OVER_WALL} mm")
+        if line.startswith("| **J"):
+            rows.append([x.strip() for x in line.strip().strip("|").split("|")])
+    assert defer_ink is not None, \
+        f"ingen «{DRILL_DEFER_MARK}»-setning på trykk i steg 0"
+
+    # The piece is found by the string the emitter PRINTS for it, built here
+    # out of the same two calls the placement row is built out of. A cell that
+    # matches no cut-list line is a cell nobody can look up, and that is a
+    # finding in itself - so it is an assert and not a `continue`.
+    by_ink = {}
+    for p in G.CUT_PARTS:
+        ink = f"{_no_section(G, p.cut[1])} × {_fmt(p.cut[2])}"
+        by_ink.setdefault(ink, []).append(p)
+
+    earned, bench_hits, foot_hits = set(), [], []
+    for c in rows:
+        jid = re.fullmatch(r"\*\*(J[\w-]+)\*\*.*", c[0]).group(1)
+        hits = [ink for ink in by_ink if ink in c[1]]
+        assert len(hits) == 1, (
+            f"{jid}: «{c[1]}» treffer {len(hits)} kapplinjer - "
+            f"plasseringsraden navngir en del kapplista ikke har")
+        ps = by_ink[hits[0]]
+        if "Veggfeste" in c[0]:
+            # No piece datum at all: the studs decide, and the row says so.
+            assert "etter stender" in c[2], \
+                f"{jid}: et veggfeste har fått et X-mål som fasit: «{c[2]}»"
+            continue
+        over = oversize_ends(G.ROOM_FIT.get(ps[0].label))
+        if not over:
+            continue
+        # Which ends does the row name? The «fra enden» column is always the
+        # piece's LENGTH axis, so «begge ender» resolves against that.
+        axis = G._length_axis(ps[0])
+        named = set()
+        for word, ref in END_NO_AXIS.items():
+            if f"fra {word}" in c[2]:
+                named.add(ref)
+        for word, refs in END_NO_PAIRS.items():
+            if f"fra {word}" in c[2]:
+                named |= set(refs)
+        if f"fra {END_NO_BOTH}" in c[2]:
+            named |= {(axis, w) for w in
+                      (("ytre", "indre"), ("bak", "fram"), ("ned", "opp"))[axis]}
+        hit = named & over
+        if not hit:
+            continue
+        if any(a == 2 for a, _w in hit):
+            foot_hits.append((jid, ps[0].label, c[2]))
+        else:
+            earned.add(jid)
+            if jid not in defer_ink:
+                bench_hits.append((jid, ps[0].label, c[2]))
+
+    assert not foot_hits, (
+        "X6/X12: disse plasseringslinjene måler fra en FOT som først kappes "
+        "i vater når rammen står - det finnes ikke noe senere boretidspunkt "
+        "å utsette dem til, så linjen må måles fra toppen i stedet: "
+        + "; ".join(f"{j} på '{l}' ({t})" for j, l, t in foot_hits))
+    assert not bench_hits, (
+        f"X6/X12: disse måles fra en ende som ennå har {G.ROOM_OVER_WALL} mm "
+        f"overmål når steg 0 borer, og steg 0 utsetter dem ikke: "
+        + "; ".join(f"{j} på '{l}' ({t})" for j, l, t in bench_hits)
+        + f". Enten skal leddet stå i «{DRILL_DEFER_MARK}»-punktet, eller så "
+          f"skal hullet måles fra den andre enden")
+    assert earned == defer_ink, (
+        f"X6/X12: steg 0 utsetter {sorted(defer_ink)}, og det er "
+        f"{sorted(earned)} som faktisk måler fra en ende med overmål. "
+        f"For mye: {sorted(defer_ink - earned)}; for lite: "
+        f"{sorted(earned - defer_ink)}")
+    print(f"  X12 referanse-ende: {len(rows)} plasseringsrader lest av "
+          f"blekket mot kapplistas overmål. {len(earned)} ledd "
+          f"({', '.join(sorted(earned))}) måler fra en ende som ennå har "
+          f"{G.ROOM_OVER_WALL} mm på seg, og steg 0 utsetter nøyaktig de "
+          f"samme. Ingen linje måler fra en fot")
 
 
 def emit_byggesteg(G, out_dir, steps, idx):
@@ -3785,6 +4092,7 @@ def emit(ns):
     print("\n=== DOC FRAGMENTS ===")
     rows = G.SCREW_ROWS
     steps = resolve_steps(G, build_steps(G))
+    check_step_units(G, steps)
     idx = cut_index(G)
 
     emit_kappliste(G, out_dir)
@@ -3794,6 +4102,7 @@ def emit(ns):
     emit_beslagliste(out_dir, steps)
     retn = emit_skrueretninger(G, out_dir, idx)
     assert_placement_ink(G, bygg, retn)
+    assert_datum_ink(G, bygg)
     emit_montering(G, G.OUT_DIR, steps, idx)
     emit_json(G, out_dir, steps, idx, rows)
     emit_step_meshes(G, steps, G.GROUP_DIR)
