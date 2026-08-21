@@ -9,6 +9,9 @@ Stryk punkter etterhvert som de landes.
 - [x] **Retterunde 2** (`f7e2781`) — sone 3 fikk 3 veggfester (J12-V),
       nisjedybdekrav 1500, steg 0 delt, trimpunkter inne, alle ark/prosafunn
       rettet.
+- [x] **Release hanna-v2.0** («leken får rommet») og **hanna-v2.1** («føttene
+      når ned») er kuttet med alle ni vedlegg verifisert. Neste release:
+      når rommet er målt og `WALL_SPAN` satt.
 
 ## Portrunde (X12) — landet
 
