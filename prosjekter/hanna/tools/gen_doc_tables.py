@@ -3315,6 +3315,29 @@ def assert_datum_ink(G, bygg):
           f"samme. Ingen linje måler fra en fot")
 
 
+# ---------------------------------------------------------------------------
+# X15 - AND THE SAME REFERENCE RULE, ASKED OF THE DRAWINGS
+# ---------------------------------------------------------------------------
+# assert_datum_ink() above holds the PLACEMENT TABLE to X6 rule 2: no hole is
+# measured from an end that is still waste. X15 put measurements on the step
+# sheets as well, and they are measured off the same bed at the same moment -
+# so they answer to the same rule. It is asked here, of the derived records,
+# rather than in the drawing file: a measure that may not exist must not be
+# drawn OR emitted, and the place to refuse it is where it is made.
+def assert_step_dims(G, steps):
+    import step_dims
+    recs = step_dims.owed(G, steps)
+    n_z = step_dims.assert_datums(G, recs)
+    n_dim = sum(1 for r in sum(recs.values(), []) if r["kind"] == "mål")
+    n_flush = sum(len(v) for v in recs.values()) - n_dim
+    print(f"  X15 plasseringsmål: {n_dim} mål og {n_flush} flukt over "
+          f"{len([n for n in recs if recs[n]])} steg, alle utledet av "
+          f"kroppene og leddene. {n_z} av dem er høyder, og hver eneste en "
+          f"måles NEDOVER fra noe som står - ingen fra en fot og ingen fra "
+          f"gulvet")
+    return recs
+
+
 def emit_byggesteg(G, out_dir, steps, idx):
     L = [HEAD, "# Steg for steg\n\n",
          "Rekkefølgen er ikke fri. Sengen står inntil bakveggen og inntil "
@@ -4212,6 +4235,7 @@ def emit(ns):
     retn = emit_skrueretninger(G, out_dir, idx)
     assert_placement_ink(G, bygg, retn)
     assert_datum_ink(G, bygg)
+    assert_step_dims(G, steps)
     emit_montering(G, G.OUT_DIR, steps, idx)
     emit_json(G, out_dir, steps, idx, rows)
     emit_step_meshes(G, steps, G.GROUP_DIR)

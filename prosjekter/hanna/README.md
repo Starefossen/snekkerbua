@@ -40,7 +40,7 @@ hvert merke står på det festemiddelet det navngir.*
 | **Ytre mål** | 1990 × 836 × 2037 mm — fyller nisjen fra vegg til vegg på 1990 mm, i et rom med 2450 mm takhøyde, og gir 1500 mm fri høyde under køya. Gjennomgående deler kappes 1984 mm, for et bord på 1990 mm lar seg ikke svinge inn i en åpning på 1990 mm |
 | **Trevirke** | **78 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 53,43 løpemeter. Fordelingen: 23×98 26 stk. · 48×68 23 stk. · 36×48 14 stk. · 36×98 12 stk. · 48×98 2 stk. · plata 1 stk. 24 av de 78 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling. Tallene telles av modellen og står nederst i [kapplista](docs/generated/kappliste.md) — `TOTAL 78 pcs 53.43 m in 5 timber profiles + 1 sheet` er det modellen skriver ut mens den bygger |
 | **Stål** | **189 festemidler fordelt på 23 ledd**, **180 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. De 9 som mangler er de to veggfestene, J14 og J12-V: de går rett inn i veggen og har ingen andre del å ende i, så de er plassert, men ikke modellert. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert. Begge tallene skriver modellen ut selv — `189 festemidler plassert i 23 ledd` og `180 festemidler modellert som kropper` |
-| **Kontroller** | **509 asserter i modellen** og 170 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått, og de telles som `ast.Assert`-noder i syntakstreet, ikke med grep: en grep på linjer som begynner med ordet «assert» tar med brødtekst som gjør det samme, og gir 514 her. Metoden er `python -c "import ast,sys;print(sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse(open(sys.argv[1]).read()))))" generate_loftbed.py`, og den samme summen over `tools/*.py` (22 filer) — men ingen runde arver dem lenger: `tools/check_tall.py` teller dem på nytt i porten og feller bygget hvis denne tabellen sier noe annet enn det den finner. Skrueretningene er utledet av fysikk (7 av de 25 radene i [skrueretningene](docs/generated/skrueretninger.md) er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — 26 linjer over 23 skrueretninger og alle 180 festemidlene, en bijeksjon som asserteres på det ferdige blekket. De to siste radene er veggfestene: de får hver sin egen plasseringslinje over 9 fester, satt etter stender og ikke etter mål, og telles derfor for seg; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
+| **Kontroller** | **509 asserter i modellen** og 185 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått, og de telles som `ast.Assert`-noder i syntakstreet, ikke med grep: en grep på linjer som begynner med ordet «assert» tar med brødtekst som gjør det samme, og gir 514 her. Metoden er `python -c "import ast,sys;print(sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse(open(sys.argv[1]).read()))))" generate_loftbed.py`, og den samme summen over `tools/*.py` (23 filer) — men ingen runde arver dem lenger: `tools/check_tall.py` teller dem på nytt i porten og feller bygget hvis denne tabellen sier noe annet enn det den finner. Skrueretningene er utledet av fysikk (7 av de 25 radene i [skrueretningene](docs/generated/skrueretninger.md) er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — 26 linjer over 23 skrueretninger og alle 180 festemidlene, en bijeksjon som asserteres på det ferdige blekket. De to siste radene er veggfestene: de får hver sin egen plasseringslinje over 9 fester, satt etter stender og ikke etter mål, og telles derfor for seg; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
 | **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **138 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. 138 er ikke et anslag: det er `git ls-files` over nøyaktig de stiene `snap()` i `mise.toml` hasjer. Determinismen er en assert, ikke en forventning |
 | **Ut av det** | En **trykkeklar PDF på 96 sider** med én kommando — `pdfinfo docs/hanna.pdf` sier hvor mange det ble — pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
@@ -112,7 +112,7 @@ papir.
 
 **Manualen kan ikke lyve.** Assertene sier nesten aldri at et tall er det
 tallet — de er forhold, utledet av noe utenfor tegningen, og de sier hvor man
-retter det når de ryker. Fire familier:
+retter det når de ryker. Fem familier:
 
 * **Skruelengde.** En gjennomgående skrue må gå klar av delen den drives fra og
   ende inne i den andre: `t(fra) < lengde < t(fra) + t(inn i)`. Der bare én
@@ -126,6 +126,13 @@ retter det når de ryker. Fire familier:
   plassert; og hver stegside må *tegne* minst ett feste av hver type den lister
   opp, med tegnet antall lik trykt antall. Den siste fanger tause tegninger — en
   del som står i tabellen og aldri blir vist festet.
+* **Plasseringsmålene på stegarkene.** Hvert steg skylder de få målene som
+  plasserer treet det legger til — avstanden fra noe som allerede står til
+  kanten av delen, utledet av kroppene og leddene og aldri satt for hånd. Hver
+  pil måles tilbake ut av det ferdige `<path>`-et, gjennom kameraet, mot
+  modellens eget tall; og en bijeksjon holder «tegnet på arket» mot «skyldt av
+  steget», så et mål ikke kan forsvinne stille. Høyder måles nedover, aldri fra
+  en fot og aldri fra gulvet — X6 regel 2, denne gangen på tegningen.
 * **Orientering.** Et beslag som er skrudd fast i tre er ikke nødvendigvis
   riktig vei. Et beslag som *bærer* noe må ha den vannrette fliken skrudd rett
   opp, i undersiden av det den bærer.
@@ -136,8 +143,9 @@ de som måler ferdig blekk eller plasserte kropper på tvers av filer, der
 «bestått» og «hadde ingenting å si» ser like ut — kjører dem først rene på
 dagens innhold, og perturberer så én ting om gangen i minnet: bærer bakrammen
 inn gjennom en åpning like bred som seg selv, tar et ledd ut av steg 0s
-utsettelsesliste, gir et veggfeste et X-mål som fasit, lar README gjenfortelle
-et tall som har flyttet seg. Hver eneste feilinjisering må felle sin assert.
+utsettelsesliste, gir et veggfeste et X-mål som fasit, lar et stegark slutte
+stille å tegne et plasseringsmål det skylder, lar README gjenfortelle et tall
+som har flyttet seg. Hver eneste feilinjisering må felle sin assert.
 Ingen av dem rører en fil på disk, og porten kjører dem.
 
 Og siden alt utledet er sjekket inn — nettopp for at `git diff --stat` etter et

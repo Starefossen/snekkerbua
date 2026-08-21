@@ -61,6 +61,7 @@ class Rig:
         self.M = _MODEL
         self.log = _LOG
         self.bygg = self._byggesteg()
+        self.bygg_steps = T.resolve_steps(self.M, T.build_steps(self.M))
         self.pool = check_tall.achievable(self.M, self.log)
         with open(os.path.join(ROOT, "README.md"), encoding="utf-8") as fh:
             self.readme = fh.read()
@@ -90,6 +91,28 @@ class Rig:
 
     def steps(self, G):
         return T.resolve_steps(G, T.build_steps(G))
+
+    def step_dims(self):
+        """A fresh copy of every placement measure the steps owe."""
+        import copy
+        import step_dims
+        return copy.deepcopy(step_dims.owed(self.M, self.bygg_steps))
+
+    def sheets(self):
+        """The finished step drawings, read back off disk - they are the ink.
+
+        X15's bijection is a question about FILES: what came out on the paper
+        against what the model says the step owes. So the rig hands the guard
+        the same thing `mise run montering` hands it, and an injection edits a
+        copy of one sheet.
+        """
+        out = {}
+        for st in self.bygg_steps:
+            path = os.path.join(ROOT, "docs", "img", f"steg-{st['n']:02d}.svg")
+            if os.path.exists(path):
+                with open(path, encoding="utf-8") as fh:
+                    out[st["n"]] = fh.read()
+        return out
 
 
 # ---------------------------------------------------------------------------
@@ -128,6 +151,23 @@ def run_kappliste(rig, text=None):
         T._assert_kappliste_ink(rig.M, rig.kappliste if text is None else text)
 
 
+def run_step_dim_datum(rig, recs=None):
+    """X15: no placement measure on a step sheet is taken off a foot or off
+    the floor, and every height is measured downwards."""
+    import step_dims
+    with contextlib.redirect_stdout(io.StringIO()):
+        step_dims.assert_datums(
+            rig.M, rig.step_dims() if recs is None else recs)
+
+
+def run_step_dim_ink(rig, sheets=None):
+    """X15's bijection: what the sheets drew against what the steps owe."""
+    import step_dims
+    with contextlib.redirect_stdout(io.StringIO()):
+        step_dims.assert_ink(rig.M, rig.bygg_steps,
+                             rig.sheets() if sheets is None else sheets)
+
+
 def run_value_comments(rig, source=None):
     src = rig.M.VALUE_COMMENT_SOURCE if source is None else source
     stale, checked, _skip = rig.M.stale_value_comments(src, vars(rig.M))
@@ -138,6 +178,8 @@ def run_value_comments(rig, source=None):
 CONTROLS = [
     ("X12 manøvrerbarhet per byggesteg", run_units),
     ("X12 referanse-ende mot overmål", run_datum),
+    ("X15 plasseringsmålenes utgangspunkt", run_step_dim_datum),
+    ("X15 stegarkenes plasseringsmål mot modellen", run_step_dim_ink),
     ("README-tallene", run_readme),
     ("tallsveipet over håndprosaen", run_prose),
     ("X10 verdikommentarene", run_value_comments),
@@ -212,6 +254,62 @@ def inj_wall_fixing_gets_an_x(rig):
         "(mot rommet) | etter stender — minst i begge ender og på midten |",
         "| **J14** 6× Veggfeste | bakre sidevange 48×98 × 1984, forsiden "
         "(mot rommet) | 165 mm fra ytterenden |"))
+
+
+def _a_measure(recs, kind="mål", axis=None):
+    """The first placement record of a kind, in step order - so an injection
+    aims at a RULE and not at a number that may move next round."""
+    for n in sorted(recs):
+        for i, r in enumerate(recs[n]):
+            if r["kind"] == kind and (axis is None or r["axis"] == axis):
+                return n, i, r
+    raise RuntimeError("modellen skylder ingen slike plasseringsmål lenger - "
+                       "injeksjonen har mistet målet sitt")
+
+
+def inj_step_sheet_prints_a_wrong_figure(rig):
+    """Type a different number on an arrow the model measured itself."""
+    sheets = dict(rig.sheets())
+    n, _i, rec = _a_measure(rig.step_dims())
+    old = f">{rec['figure']}</text>"
+    new = f">{int(rec['mm']) + 45} mm</text>"
+    sheets[n] = _sub(sheets[n], old, new)
+    run_step_dim_ink(rig, sheets)
+
+
+def inj_step_sheet_drops_a_measure(rig):
+    """Rub one measure off a sheet and leave everything else standing.
+
+    This is the SILENCE case, and it is the reason the bijection exists: a
+    sheet that has stopped drawing a dimension looks exactly like a step that
+    never owed one.
+    """
+    sheets = dict(rig.sheets())
+    n, _i, rec = _a_measure(rig.step_dims())
+    sheets[n] = _sub(sheets[n], f">{rec['figure']}</text>", ">.</text>")
+    run_step_dim_ink(rig, sheets)
+
+
+def inj_step_dim_measured_upward(rig):
+    """Turn one height round so it is measured UP from the piece below.
+
+    X6 rule 2 on the drawings: the lower end of a standing part is still
+    ROOM_OVER_FLOOR of waste when the frame goes up, so a height taken from
+    underneath is a height taken off wood that is not there yet.
+    """
+    recs = rig.step_dims()
+    n, i, _r = _a_measure(recs, axis=2)
+    recs[n][i]["alts"] = [(b, a) for a, b in recs[n][i]["alts"]]
+    run_step_dim_datum(rig, recs)
+
+
+def inj_step_dim_measured_from_the_floor(rig):
+    """Put the datum end of a height on the floor - which is not in vater."""
+    recs = rig.step_dims()
+    n, i, _r = _a_measure(recs, axis=2)
+    recs[n][i]["alts"] = [((a[0], a[1], 0.0), b)
+                          for a, b in recs[n][i]["alts"]]
+    run_step_dim_datum(rig, recs)
 
 
 def inj_readme_retells_a_count(rig):
@@ -349,6 +447,14 @@ INJECTIONS = [
      "X12 referanse-ende", inj_measured_from_the_foot),
     ("et veggfeste oppgir X-mål som fasit",
      "X12 stenderne", inj_wall_fixing_gets_an_x),
+    ("et stegark trykker et annet tall enn det modellen målte",
+     "X15 plasseringsmål", inj_step_sheet_prints_a_wrong_figure),
+    ("et stegark slutter stille å tegne et mål steget skylder",
+     "X15 plasseringsmål", inj_step_sheet_drops_a_measure),
+    ("en høyde på et stegark måles oppover fra delen under",
+     "X15 utgangspunkt", inj_step_dim_measured_upward),
+    ("en høyde på et stegark tas fra gulvet",
+     "X15 utgangspunkt", inj_step_dim_measured_from_the_floor),
     ("kapplista skjuler at en løs del står på gulvet",
      "X14 løse deler", inj_kappliste_hides_the_loose_mark),
     ("kapplista merker en verksteddel som løs",

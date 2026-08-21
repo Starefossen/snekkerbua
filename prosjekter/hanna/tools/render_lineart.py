@@ -1765,6 +1765,60 @@ class Page:
                    (back[0] + uy * wing, back[1] - ux * wing)],
                   fill=colour, stroke=colour, width=length * 0.06)
 
+    # -- AND THE OTHER KIND OF DIMENSION, WHICH IS A WORD -------------------
+    # Zero is a measurement too, and an arrow with «0 mm» on it is a drawing
+    # lying about what it knows: nobody sets a rail flush by measuring nothing.
+    # Two edges that land in line are drawn as what they are - a SIGHT LINE
+    # lying IN the plane the two share, a short bar across it where each edge
+    # is, and the word between them. Same pen, same type size and the same
+    # record as dimension(), so the assert that takes an arrow back off the
+    # paper takes this one back too.
+    def flush(self, p0, p1, label, size=None, colour=INK):
+        size = T.S_DIM if size is None else size
+        dx, dy = p1[0] - p0[0], p1[1] - p0[1]
+        span = math.hypot(dx, dy)
+        if span < 1e-9:
+            return None
+        ux, uy = dx / span, dy / span
+        nx, ny = -uy, ux
+        w_dim = size * 0.085
+        half = len(label) * size * self.CHAR_W * 0.5
+        mid = ((p0[0] + p1[0]) / 2.0, (p0[1] + p1[1]) / 2.0)
+        cut = half + size * 0.36
+        i_line = len(self.body)
+        room = span * 0.5 > cut + size * 0.4
+        dash = f"{_f(size * 0.34)} {_f(size * 0.30)}"
+        if room:
+            self.polylines([[p0, (mid[0] - ux * cut, mid[1] - uy * cut)],
+                            [(mid[0] + ux * cut, mid[1] + uy * cut), p1]],
+                           colour, w_dim * 0.60, dash=dash)
+        else:
+            self.line(p0, p1, colour, w_dim * 0.60, dash=dash)
+        bar = size * 0.55
+        for tip in (p0, p1):
+            self.line((tip[0] - nx * bar, tip[1] - ny * bar),
+                      (tip[0] + nx * bar, tip[1] + ny * bar), colour, w_dim)
+        rx, ry = (ux, uy) if ux >= 0.0 else (-ux, -uy)
+        i_text = len(self.body)
+        drop = size * (0.34 if room else 1.05)
+        base = (mid[0] + ry * drop, mid[1] - rx * drop)
+        self.text(base, label, size, anchor="middle", weight="bold",
+                  colour=colour, rotate=-math.degrees(math.atan2(ry, rx)),
+                  halo=size * 0.22)
+        c = (mid[0] + ry * (drop - size * 0.34),
+             mid[1] - rx * (drop - size * 0.34))
+        return {"line": i_line, "text": i_text, "a": p0, "b": p1,
+                "label": label, "u": (ux, uy),
+                "ink": [[p0, p1],
+                        [(c[0] - rx * half - ry * size,
+                          c[1] - ry * half + rx * size),
+                         (c[0] + rx * half - ry * size,
+                          c[1] + ry * half + rx * size),
+                         (c[0] + rx * half + ry * size,
+                          c[1] + ry * half - rx * size),
+                         (c[0] - rx * half + ry * size,
+                          c[1] - ry * half - rx * size)]]}
+
     def embed_svg(self, path, x, y, w, h):
         """Drop one of the fastener glyphs in, at its own aspect ratio."""
         with open(path, encoding="utf-8") as fh:
@@ -1957,6 +2011,315 @@ def dim_ink(page, rec):
     i = el.index('d="') + 3
     d = el[i:el.index('"', i)]
     return [(float(a), -float(b)) for a, b in _DIM_PT.findall(d)]
+
+
+# ---------------------------------------------------------------------------
+# X15 - THE PLACEMENT MEASURES ON A STEP SHEET
+# ---------------------------------------------------------------------------
+# WHICH numbers a step owes is not this file's business: tools/step_dims.py
+# derives them off the model's own solids and joints, and a page that drew one
+# more or one less than the list says would be a page disagreeing with the bed.
+# What IS this file's business is where on the paper they go, and that is the
+# same rule the measurement sheet composes itself by - every arrow stands off
+# the line work as far as it has to to clear it IN THE STRETCH IT SPANS, plus
+# one margin, and every arrow already placed goes back into the line work
+# before the next one asks.
+#
+# A step page is a crowded page, though, and the sheet has two extra decisions
+# to make that the measurement sheet does not.
+#
+#   WHICH WAY OUT. A height on an axonometric can leave the drawing along
+#   either of the two axes that are not its own, in either direction, and the
+#   four answers are not equally good on a page that already carries a
+#   fastener list, a magnifier and a mirror note. So all four are measured and
+#   the shortest way out wins - the same rule again, asked once per candidate
+#   - and then every later measure on the same axis FOLLOWS it, so they come
+#   out as one column and not as a fan.
+#
+#   HOW FAR OUT WHEN THEY SHARE A DATUM. Two heights off one post top are
+#   COLLINEAR, and dim_offset() clears the line work rather than the
+#   neighbour: translate both spans and they land on each other at the post.
+#   So the sheet keeps a high-water mark per axis and each further measure
+#   stands one margin outside every one already placed.
+STEP_DIM_MARGIN = 1.15          # x the figure size: air round a placement mark
+
+
+# An axis a camera looks straight down has no direction on the paper: its
+# projection is a couple of thousandths of a millimetre pointing wherever the
+# rounding went. Normalise that and a witness line sets off in a random
+# direction, which is how four ladder heights ended up stacked on top of one
+# another down the middle of a stile. A quarter of the model unit is the
+# floor: below it the axis is not a way out of the drawing.
+AXIS_ON_PAPER = 0.25
+# How far off parallel a witness axis has to be from the arrow it carries
+# before it counts as a way OUT of the drawing: the sine of the angle between
+# them, so 0.35 is about 20 degrees.
+ACROSS_THE_SPAN = 0.35
+# How long a flush sight line is allowed to be, in figure heights.
+FLUSH_REACH = 7.0
+
+
+def _dim_axis_candidates(view, axis):
+    """The ways a measurement on this model axis can leave the drawing.
+
+    Two per axis - out along it and back along it - over the two axes that are
+    not its own, minus any the camera has flattened.
+    """
+    out = []
+    for j in range(3):
+        if j == axis:
+            continue
+        for sgn in (1.0, -1.0):
+            v = [0.0, 0.0, 0.0]
+            v[j] = sgn
+            d = view.dir_xy(tuple(v))
+            if math.hypot(d[0], d[1]) > AXIS_ON_PAPER:
+                out.append((j, sgn, d))
+    return out
+
+
+def _pick_alt_model(view, rec, box):
+    """Which of a mirrored measure's places this page can actually see.
+
+    Left and right measure the same, so the record carries every place it
+    could be drawn; the sheet takes the one inside its own crop, and where
+    several are inside, the nearest end of the page - which on a half view is
+    the end drawn at full size.
+    """
+    best = None
+    x0, y0, x1, y1 = box
+    for p0, p1 in rec["alts"]:
+        a, b = view.xy(p0), view.xy(p1)
+        mid = ((a[0] + b[0]) / 2.0, (a[1] + b[1]) / 2.0)
+        inside = (x0 <= a[0] <= x1 and x0 <= b[0] <= x1
+                  and y0 <= a[1] <= y1 and y0 <= b[1] <= y1)
+        key = (0 if inside else 1, round(mid[0], 3), round(mid[1], 3))
+        if best is None or key < best[0]:
+            best = (key, p0, p1)
+    return best[1], best[2]
+
+
+def _pick_alt(view, rec, box):
+    p0, p1 = _pick_alt_model(view, rec, box)
+    return view.xy(p0), view.xy(p1)
+
+
+def plan_step_dims(view, recs, art, size, box):
+    """Where every placement measure this step owes goes on the paper.
+
+    Returns the plans in drawing order, with the page rectangle they need.
+    Nothing is drawn: the page has to be told how big it is before it exists,
+    and a measurement standing off the bed is part of how big it is.
+    """
+    margin = size * STEP_DIM_MARGIN
+    field = list(art)
+    plans, ways, high = [], {}, {}
+    # Short spans first: the ones that hug the drawing take the paper nearest
+    # it, and the long ones stand outside them - the way a drawing office
+    # stacks a dimension.
+    order = sorted(recs, key=lambda r: (
+        math.hypot(*[a - b for a, b in zip(*_pick_alt(view, r, box))]),
+        r["axis"], r["figure"]))
+    for rec in order:
+        p0, p1 = _pick_alt(view, rec, box)
+        # A measure the camera has flattened cannot be drawn, and the step
+        # still owes it - so this is an assert and not a `continue`: a page
+        # that quietly dropped one would look exactly like a step that never
+        # owed one, which is the whole failure mode X15 exists to close.
+        m0, m1 = _pick_alt_model(view, rec, box)
+        span = math.hypot(p1[0] - p0[0], p1[1] - p0[1])
+        assert span > math.dist(m0, m1) * AXIS_ON_PAPER, \
+            (f"steg {rec['n']}: {rec['family']} skylder «{rec['figure']}», men "
+             f"målet står rett inn i kameraet fra denne vinkelen - det har "
+             f"ingen lengde på papiret og kan ikke tegnes")
+        if rec["kind"] == "flukt":
+            # A SIGHT LINE IS A DIRECTION, NOT A DISTANCE. It says «this edge
+            # is in line with that one», and once it has left the new piece
+            # pointing at the other, every further millimetre of it is line
+            # work laid over the drawing for nothing. So it is cut back to a
+            # few figure heights: the end that MATTERS - the one on the wood
+            # this step adds - stays where it is, and the assert reads it.
+            keep = min(1.0, size * FLUSH_REACH / span)
+            p0 = (p1[0] + (p0[0] - p1[0]) * keep,
+                  p1[1] + (p0[1] - p1[1]) * keep)
+            plan = dict(rec=rec, p0=p0, p1=p1, axis=None, off=0.0, at=0.5,
+                        label=rec["figure"], ink=None, m0=m0, m1=m1)
+        else:
+            # THE WAY OUT MUST BE ACROSS THE MEASUREMENT, NOT ALONG IT. An
+            # axis that projects parallel to the span carries the dimension
+            # line further up its own arrow and no distance at all off the
+            # drawing - which is how four ladder heights came out stacked on
+            # top of one another down the middle of a stile.
+            ux = (p1[0] - p0[0]) / span
+            uy = (p1[1] - p0[1]) / span
+            # THE FIGURE IS WIDER THAN THE GAP IT MEASURES, and that is the
+            # normal case here: «14 mm» is five characters over a 14 mm span.
+            # So the stretch the offset has to clear is not the arrow, it is
+            # the arrow plus the figure standing beside it - otherwise the
+            # measure clears a gap nothing is in and lands on the wood either
+            # side of it.
+            slack = (margin
+                     + len(rec["figure"]) * size * Page.CHAR_W * 0.5)
+            # TWO MEASURES OF THE SAME KIND LEAVE THE DRAWING THE SAME WAY.
+            # The first one on an axis picks the shortest way out; every one
+            # after it follows, and they stack in one column the way a drawing
+            # office stacks them. Letting each choose for itself is worse than
+            # untidy: two axes can project to page directions 40 degrees apart,
+            # and then the second arrow only half clears the first and the two
+            # come out lying on top of one another.
+            best = None
+            for _j, _sgn, d in ([(None, None, ways[rec["axis"]])]
+                                if rec["axis"] in ways
+                                else _dim_axis_candidates(view, rec["axis"])):
+                dn = math.hypot(d[0], d[1])
+                if abs(ux * d[1] - uy * d[0]) / dn < ACROSS_THE_SPAN:
+                    continue
+                off = dim_offset(field, p0, p1, d, margin, slack=slack)
+                if best is None or off < best[0] - 1e-9:
+                    best = (off, d)
+            assert best is not None, \
+                (f"steg {rec['n']}: {rec['family']} skylder «{rec['figure']}», "
+                 f"men ingen av modellens akser går på tvers av målet på "
+                 f"papiret - pila har ingen vei ut av tegningen")
+            off, d = best
+            ways[rec["axis"]] = d
+            # AND A MEASURE OFF A SHARED DATUM STANDS OUTSIDE THE ONE BEFORE
+            # IT. dim_offset() clears the LINE WORK in the stretch it spans,
+            # which is the right question for a sheet whose dimensions point
+            # in all directions and the wrong one for a column of them off one
+            # post top: those are COLLINEAR, so a translated copy of the span
+            # lands on top of its neighbour at the datum end however far out
+            # its far end goes. The drawing office answer is a high-water mark
+            # - each further dimension one margin outside every one already
+            # placed, measured on the witness axis - and that is this.
+            dn = math.hypot(d[0], d[1])
+            nx, ny = d[0] / dn, d[1] / dn
+            reach = min(nx * p0[0] + ny * p0[1], nx * p1[0] + ny * p1[1]) + off
+            mark = high.get(rec["axis"])
+            if mark is not None and reach < mark + margin:
+                off += mark + margin - reach
+            high[rec["axis"]] = max(
+                max(nx * p[0] + ny * p[1] for p in (p0, p1)) + off,
+                mark if mark is not None else -1e18)
+            an = math.hypot(d[0], d[1])
+            a = (p0[0] + d[0] / an * off, p0[1] + d[1] / an * off)
+            b = (p1[0] + d[0] / an * off, p1[1] + d[1] / an * off)
+            at = dim_seat(field, a, b,
+                          len(rec["figure"]) * size * Page.CHAR_W, size * 1.1)
+            plan = dict(rec=rec, p0=p0, p1=p1, axis=d, off=off, at=at,
+                        label=rec["figure"], ink=None, m0=m0, m1=m1)
+        # The ink this one is about to make, so the next one keeps off it:
+        # the arrow WHERE IT WILL BE, and the witness lines that carry it out
+        # there. The figure's own box comes back off the page when it is
+        # actually drawn; here a margin's worth of air round the arrow stands
+        # in for it, which is what STEP_DIM_MARGIN is.
+        sx = sy = 0.0
+        if plan["axis"]:
+            an = math.hypot(*plan["axis"])
+            sx = plan["axis"][0] / an * plan["off"]
+            sy = plan["axis"][1] / an * plan["off"]
+        a = (p0[0] + sx, p0[1] + sy)
+        b = (p1[0] + sx, p1[1] + sy)
+        plan["ink"] = [[a, b], [p0, a], [p1, b]]
+        field += plan["ink"]
+        plans.append(plan)
+    return plans
+
+
+def step_dim_bounds(plans, size):
+    """The rectangle every planned measure needs, figures included.
+
+    The pad is the longest figure on the sheet standing on end, because that
+    is what it is: the type sits ON the arrow and turns with it, so a
+    dimension at the edge of the page needs half a figure's length of paper
+    whichever way round it ended up.
+    """
+    pts = [p for plan in plans for pl in plan["ink"] for p in pl]
+    if not pts:
+        return None
+    pad = size * 1.0 + max(len(plan["label"]) for plan in plans) \
+        * size * Page.CHAR_W * 0.5
+    return (min(p[0] for p in pts) - pad, min(p[1] for p in pts) - pad,
+            max(p[0] for p in pts) + pad, max(p[1] for p in pts) + pad)
+
+
+def draw_step_dims(page, view, plans, size):
+    """Draw them, and take every one of them back off the paper.
+
+    The assert is the measurement sheet's: the arrow is measured ON THE PAPER,
+    divided by the length one model millimetre has along that axis IN THIS
+    CAMERA, and has to come out the number printed on it - which in turn has to
+    be the model's own. A figure typed by hand, an arrow drawn to the wrong
+    corner or a camera that stopped agreeing with itself all die here.
+    """
+    ink = []
+    for plan in plans:
+        rec = plan["rec"]
+        if rec["kind"] == "flukt":
+            out = page.flush(plan["p0"], plan["p1"], plan["label"], size=size)
+        else:
+            out = page.dimension(plan["p0"], plan["p1"], plan["label"],
+                                 axis=plan["axis"], off=plan["off"],
+                                 size=size, at=plan["at"])
+        assert out is not None, \
+            f"steg {rec['n']}: «{plan['label']}» kom ut med null lengde"
+        _assert_step_dim(page, view, plan, out, size)
+        ink += out["ink"]
+    return ink
+
+
+def _assert_step_dim(page, view, plan, out, size):
+    rec = plan["rec"]
+    pts = dim_ink(page, out)
+    assert len(pts) in (2, 4), \
+        (f"steg {rec['n']}: målpila for {rec['family']} kom ut som "
+         f"{len(pts)} punkter, ikke 2 eller 4")
+    dx, dy = pts[-1][0] - pts[0][0], pts[-1][1] - pts[0][1]
+    drawn = math.hypot(dx, dy)
+    figure = dim_figure(page, out)
+    assert figure == rec["figure"], \
+        (f"steg {rec['n']}: det står «{figure}» på arket, men modellen "
+         f"sier «{rec['figure']}»")
+    if rec["kind"] == "flukt":
+        # A sight line has no length to check - what it claims is a DIRECTION,
+        # and that is what is asked of the ink.
+        # The end that matters is the one ON THE NEW WOOD - the other has
+        # been cut back to keep the line short - so that end has to sit on the
+        # model's own edge, and the line has to POINT at the piece the edge is
+        # in line with. Both are read off the emitted path.
+        a, b = view.xy(plan["m0"]), view.xy(plan["m1"])
+        end = min((pts[0], pts[-1]),
+                  key=lambda p: math.hypot(p[0] - b[0], p[1] - b[1]))
+        other = pts[-1] if end is pts[0] else pts[0]
+        assert math.hypot(end[0] - b[0], end[1] - b[1]) < size * 0.05, \
+            (f"steg {rec['n']}: flukt-linja for {rec['family']} starter et "
+             f"sted modellen ikke har noen kant")
+        wx, wy = a[0] - b[0], a[1] - b[1]
+        gx, gy = other[0] - end[0], other[1] - end[1]
+        wn, gn = math.hypot(wx, wy), math.hypot(gx, gy)
+        assert gn > size * 0.5 and wn > 1e-9, \
+            f"steg {rec['n']}: flukt-linja for {rec['family']} har ingen retning"
+        assert (wx * gx + wy * gy) / (wn * gn) > 0.999, \
+            (f"steg {rec['n']}: flukt-linja for {rec['family']} peker ikke mot "
+             f"{rec['datum']}")
+        return
+    v = [0.0, 0.0, 0.0]
+    v[rec["axis"]] = 1.0
+    ax, ay = view.dir_xy(tuple(v))
+    k = math.hypot(ax, ay)
+    assert k > 1e-6, \
+        (f"steg {rec['n']}: aksen til {rec['family']} står rett inn i "
+         f"kameraet - målet har ingen lengde på papiret")
+    assert abs(dx * ay - dy * ax) / k < size * 0.05, \
+        f"steg {rec['n']}: målpila for {rec['family']} ligger ikke langs sin akse"
+    mm = drawn / k
+    printed = float(re.fullmatch(r"(\d+) mm", figure).group(1))
+    assert abs(printed - rec["mm"]) <= 0.51, \
+        (f"steg {rec['n']}: det står {printed:.0f} mm på arket, men modellen "
+         f"sier {rec['mm']:.1f}")
+    assert abs(mm - rec["mm"]) < size * 0.02 / k, \
+        (f"steg {rec['n']}: pila for {rec['family']} er {mm:.1f} mm lang "
+         f"gjennom kameraet, men det står {printed:.0f} mm på den")
 
 
 def dim_figure(page, rec):
@@ -3692,7 +4055,7 @@ def check_coverage(st, kept, fasteners, families, share=1):
 
 
 def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
-                fasteners, families, centre, half=None):
+                fasteners, families, centre, half=None, dims=()):
     n = st["n"]
     prior = [uni[l] for l in placed if l not in st["highlight"]]
     new = [uni[l] for l in st["highlight"]]
@@ -3738,7 +4101,23 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         # - they are dropped from the PICTURE, which is the whole point of a
         # half view and is what the mirror pictogram says out loud.
         marks = [m for m in marks if m["p2"][0] <= half["cut"]]
+
+    # X15: THE PLACEMENT MEASURES ARE PLANNED BEFORE THE PAGE EXISTS, because
+    # an arrow standing off the bed is part of how big the page has to be.
+    # Every one of them is derived in tools/step_dims.py off the model's own
+    # solids; all this does is find them paper.
+    # A measure stands off THE SUBJECT, not off the ghost. The frame already
+    # standing is grey for exactly this reason - an annotation is welcome to
+    # lie across it, the way an exploded fastener is - and a dimension that
+    # had to clear a two-metre bed to measure a rung would take the page with
+    # it. So the field is the wood this step adds and nothing else.
+    dim_size = T.S_DIM
+    dim_plans = plan_step_dims(view, dims, new_only, dim_size, page_box)
+    want = step_dim_bounds(dim_plans, dim_size)
     x0, y0, x1, y1 = page_box
+    if want is not None:
+        x0, y0 = min(x0, want[0]), min(y0, want[1])
+        x1, y1 = max(x1, want[2]), max(y1, want[3])
     page = Page(x0, y0, x1, y1)
     # THE RASTER, KNOWN BEFORE ANYTHING IS DRAWN. write() works this out at
     # the end for the fill code's sake, but the thread on a screw has to be
@@ -3757,6 +4136,10 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # says the opposite.
     page.polylines(new_only, INK, T.W_NEW * 0.45, dash="26 20")
     page.polylines(combined.get("new", []), INK, T.W_NEW)
+    # ...and the measures go down with the line work, so that everything that
+    # comes after - the panel, the fasteners, the badges - can be told to keep
+    # off them by the same field it keeps off the bed by.
+    dim_ink_lines = draw_step_dims(page, view, dim_plans, dim_size)
 
     # No step number in the drawing: the page header already carries it, and
     # two of them is one too many.
@@ -3774,10 +4157,14 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # "emptiest" would pick the top left corner, which is exactly the corner
     # the panel is about: the mattress meeting the back wall. The step says so
     # itself with avoid_top_left.
+    # The measures count as SUBJECT to the panel placer, not as line work: a
+    # fastener list parked over a dimension hides a number, and an opaque
+    # white box over a number is the one drawing fault that cannot be read
+    # round.
     bx, by = emptiest_corner(combined.get("prior", []),
                              page, inset_w, inset_h, marks,
                              avoid_top_left=st.get("avoid_top_left"),
-                             subject=new_only)
+                             subject=new_only + dim_ink_lines)
     box = (bx, by, inset_w, inset_h)
     # Both of these are measured on the SHORT side of the page, so a step
     # that gets a tall page of its own - the ladder - does not get arrows and
@@ -3803,7 +4190,8 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         note_h = note_w * 0.42
         nx, ny = emptiest_corner(combined.get("prior", []),
                                  page, note_w, note_h, keep,
-                                 avoid=(box,), subject=new_only)
+                                 avoid=(box,),
+                                 subject=new_only + dim_ink_lines)
         note_box = (nx, ny, note_w, note_h)
 
     # THE FASTENERS THEMSELVES. Two styles, and which one a page gets is
@@ -3823,6 +4211,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     occ = layout.Occupancy()
     occ.add_lines(combined.get("prior", []), weight=0.15, tag="grey")
     occ.add_lines(new_only + combined.get("new", []), weight=1.0, tag="dark")
+    occ.add_lines(dim_ink_lines, weight=1.0, tag="dark")
     occ.add_box(box, weight=40.0)
     stacks = {}
     captions = []
@@ -4108,6 +4497,7 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
             PAGE_FILL_SCALES[n] = width / page.w
     print(f"  steg {n:2d}  {len(combined.get('prior', [])):4d} gra / "
           f"{len(new_only):4d} svarte / {len(keep):2d} festepunkt"
+          + (f" / {len(dim_plans)} mål" if dim_plans else "")
           + (f" / vegg m/{studs} stendere" if studs else "")
           + f" -> {png}")
     return png
@@ -4605,6 +4995,12 @@ def render_all(G, data, out_dir, width, only):
     centre = (look_at.X, look_at.Y, look_at.Z)
     families = part_families(G)
     glyph_dir = os.path.join(ROOT, "docs", "img", "beslag")
+    # X15: what every step owes in placement measures, derived once off the
+    # model. The pages draw from this list and nothing else, and the ink
+    # assert at the bottom of this function reads the finished files back
+    # against the same list.
+    import step_dims
+    owed = step_dims.owed(G, data["steps"])
 
     # One page rectangle per camera, taken from the FINISHED bed, so nothing
     # jumps between drawings. These are all worked out before a single step
@@ -4661,7 +5057,8 @@ def render_all(G, data, out_dir, width, only):
                 png = render_step(G, views[key], st, uni, placed, out_dir,
                                   width, box, glyph_dir,
                                   step_fastener_glyphs(st, glyph_dir),
-                                  families, centre, half)
+                                  families, centre, half,
+                                  dims=owed.get(n, ()))
             if png:
                 made.append(png)
         placed += st["labels"]
@@ -4669,6 +5066,22 @@ def render_all(G, data, out_dir, width, only):
         # Every page has been drawn, so the question can be asked of all of
         # them at once. On a single-step run there is nothing to ask it of.
         assert_fill_code_rule(data)
+        # X15's bijection, and it is asked of the FILES. Every figure that
+        # came out on a step sheet against every figure the model says that
+        # step owes - so a measure that quietly stopped being drawn cannot
+        # look like a step that never owed one.
+        sheets = {}
+        for st in data["steps"]:
+            path = os.path.join(out_dir, f"steg-{st['n']:02d}.svg")
+            if os.path.exists(path):
+                with open(path, encoding="utf-8") as fh:
+                    sheets[st["n"]] = fh.read()
+        drawn = step_dims.assert_ink(G, data["steps"], sheets)
+        n_dim = sum(1 for r in sum(owed.values(), []) if r["kind"] == "mål")
+        print(f"  X15 plasseringsmål: {drawn} tegnet over "
+              f"{len([n for n in owed if owed[n]])} stegark - {n_dim} pil"
+              f"er og {drawn - n_dim} «{step_dims.FLUSH_WORD}», hver enkelt "
+              f"målt tilbake gjennom projeksjonen og mot modellen")
     return made
 
 
