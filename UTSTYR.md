@@ -24,7 +24,7 @@ Ryobi selger ofte begge varianter side om side.
 | Blad | 216 mm, 48 tenner karbid | Fine snitt i høvlet virke |
 | Snittdybde 90°/45° | 70 / 48 mm | Dekker alle HANNA-profilene (36×98, 48×98 osv.) på høykant/flask |
 | Glideskinne | Teleskopisk | Brede emner — **maks snittbredde er udokumentert: mål og før inn her** |
-| Gjæring/vinkel | H/V 50°/47°, laser, LED | Vinkelkutt — HANNA bruker kun 90°, men lister/rammer venter |
+| Gjæring/vinkel | H/V 50°/47°, laser, LED | HANNA er 90° på alt unntatt to navngitte kutt: bladet vippes **25°** (vinkelkloss J8-B) og **30°** (vinkelkloss J10) når sålen kappes av under det ferdigborede ⌀18-hullet. Det tredje ikke-90°-kuttet i senga — kilelektenes **28,0°** skråkapp, 68 → 27 mm over 77 mm — er *ikke* en kappsagjobb: håndsag eller båndsag, med limflaten urørt |
 | Ekstra | Sponpose, tvinge, sideforlengere, bærbar | |
 
 **Dekker:** all kapping av konstruksjonsvirke og lister. **Dekker ikke:**
@@ -36,8 +36,9 @@ platekutt, kløyving/langsgående kutt (→ se kjøpsplan).
 |---|---|---|
 | Dreiemoment | 60 Nm, 24-trinns kobling | Driver 6 mm skruer i heltre uten å mukke (HANNAs rammeskruer) |
 | Chuck | 13 mm metall | Tar forstnerbor og store trebor (maks 38 mm i tre) |
-| Slagfunksjon | 0–27 200 slag/min, 13 mm i mur | **Veggfeste i mur/betong dekket** — plugg + skrue (HANNA J14) |
+| Slagfunksjon | 0–27 200 slag/min, 13 mm i mur | **Veggfeste i mur/betong dekket** — plugg + skrue (HANNA J14 og J12-V) |
 | Motor | Børsteløs, 2 gir (450/1700 o/min) | Lavt gir til store bor og skruing med følelse |
+| Bor HANNA krever | ⌀12 kontrabor · ⌀8 · brad-point ⌀6 og ⌀3,5 · forboring ⌀3 / ⌀3,5 / ⌀4 / ⌀6 · forstner ⌀18 / ⌀40 | **⌀12** tar de 16 kontraborene under platen: 12 rette à 41 mm i de to avstivningslektene (J13a), 4 i de skråkappede kilene (J13b) som grunner ut mot tuppen. **⌀8** er gjennomgangshullet for veggfestene, forsenket for hodet — to ledd i to høyder: J14 gjennom den bakre sidevangen og J12-V gjennom bordbærelekta. **Brad-point ⌀6** (J8-B) og **⌀3,5** (J10) settes i den flate bunnen av vinkelklossens ⌀18-lomme og retter seg selv inn i skruens vinkel — en vanlig spiralbor med senterspiss vandrer der |
 
 **Dekker:** boring tre/stål/mur, all skruing, forboring/forsenking.
 
@@ -88,7 +89,7 @@ Rangert etter hva som låser opp mest per krone, gitt eksisterende park:
 
 | # | Verktøy | Hvorfor / hva det låser opp | Merknad (ONE+/HP-status) |
 |---|---|---|---|
-| 1 | **Eksentersliper — ONE+ HP-variant** | Finish-kvalitet på alt; HANNA: 71 deler skal slipes før maling | Kjøp før malejobben. HP børsteløs-utgave finnes i sortimentet — verifiser modellnr. (ikke ta brushed R18ROS hvis HP står ved siden av) |
+| 1 | **Eksentersliper — ONE+ HP-variant** | Finish-kvalitet på alt; HANNA: 72 deler skal slipes før maling | Kjøp før malejobben. HP børsteløs-utgave finnes i sortimentet — verifiser modellnr. (ikke ta brushed R18ROS hvis HP står ved siden av) |
 | 2 | **Linjelaser, selvnivellerende kryss** | Høyderiss rundt nisja og loddlinje midt i den. Uten den kan ikke romdelene i HANNA kappes: nisjas minste bredde og gulvets høyeste punkt måles fra risset, ikke fra gulvet | Batteriuavhengig, 500–1500 kr. **Trengs FØR kapp av romdelene** |
 | 3 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Batteriuavhengig; billigst per nytte på lista |
 | 4 | **Forstnerbor-sett** | Flatbunnede hull: HANNA trenger ⌀18 (skråskrue-setene) og ⌀40 (filtknottene) | Drives av drillen (13 mm chuck ✓). **Trengs til HANNA-byggingen** |
@@ -102,6 +103,6 @@ stikksag generelt (venter på et prosjekt med kurver — velg da HP-variant om d
 
 ## Forbruk/småting å ha liggende
 
-Treskruer forsenket Torx i spennet 4×40–6×120 (HANNA-lista gir startlager),
+Treskruer forsenket Torx i spennet 5×40–6×120 (HANNA-lista gir startlager),
 forborings-/forsenkerbits, slipepapir K80–K180, trelim, neodymmagneter ⌀10–15
 (anti-skrangle), filtknotter.

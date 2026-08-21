@@ -12,7 +12,7 @@
 |---:|---:|---:|
 | **1990 mm** | **836 mm** | **2037 mm** |
 
-72 deler · 12 steg (0–11) · 2 personer · passer standard madrass 80 × 200 cm
+72 deler · 12 steg (0–11) · 1 person — 2 ved reisning (steg 2 og 4) · passer standard madrass 80 × 200 cm
 
 Sengen står inntil bakveggen og inntil begge sidevegger, og skrus fast i bakveggen. **Bygg bakfra og utover.**
 
@@ -26,7 +26,7 @@ Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). Full steg-for-steg-tekst: [bygg
 
 **1990 × 836 × 2037 mm.** Bredden er rommets tall og ikke sengas: senga fyller nisja vegg til vegg, og hver gjennomgående del kappes til 1984 mm for å komme inn i den.
 
-Under senga står **1500 mm** fritt. Platen er tegnet i bordstilling, på **700 mm** — den samme platen ligger nede på 315 mm som sengebunn. Soveflaten oppe er 1984 × **800 mm**: en standard madrass på 80 × 200 cm.
+Under senga står **1500 mm** fritt. Platen er tegnet i bordstilling, på **700 mm** — den samme platen ligger nede på 315 mm som sengebunn. Soveflaten oppe er 1990 × **800 mm** — vegg til vegg, ikke kappelengden: spilene er 1984 mm og holdes 3 mm fra hver vegg for å komme inn, men madrassen presses de siste millimeterne inn mellom veggene og fyller hele nisjas bredde. En standard madrass på 80 × 200 cm.
 
 Alle mål i mm, målt fra ferdig gulv. Resten av tallene står i [nøkkelmål](generated/nokkelmal.md).
 
@@ -40,11 +40,13 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 2. **Riv fotlist og alt annet listverk langs bakveggen i hele nisjas bredde — alle 1990 mm — før rammen reises.** 4 deler står både PÅ gulvet og I veggplanet Y -48: de to bakre hjørnestolpene og de to bakre benkeføttene, og en list under dem skyver hele bakkanten ut fra veggen.
 3. Slå et vannrett høyderiss rundt hele nisja med linjelaser, 1000 mm over ferdig gulv. Alt måles fra risset, aldri fra gulvet — spikerslagsonene under står i begge notasjoner, og det er riss-kolonnen du setter dem etter.
 4. Sett laseren som loddlinje midt i nisja. Mål ut til hver endevegg i rutenett: 5 høyder × 3 dybder på hver vegg. Legg sammen paret i hvert punkt. **Minste sum er nisjas minste bredde.**
-5. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
-6. Gulv: mål ned fra risset i sengas fire hjørner og på midten. Merk det høyeste punktet på gulvet. Senga bygges ned fra det.
-7. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 15 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
-8. **De fire hjørnestolpene står helt inntil endeveggen — null klaring.** Derfor strekes veggsiden på hver av dem, hver gang: sett stolpen på plass, hold den i lodd, og strek opp veggsiden med avstandskloss der veggen buler. Høvle av til stolpen står i lodd inntil veggen. Ingen monn i bredden — det er tre som skal bort, ikke legges til. Buler veggen og du lar det stå, skyver bulen hele rammen ut av lodd.
-9. Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
+5. **Mål nisjedybden på BEGGE endevegger** — fra bakveggen og ut til nisjas åpning, i de samme 5 høydene. Minste dybde må være minst **1500 mm**, og det er bakrammen som setter kravet, ikke senga: senga er 836 mm dyp, men bakrammen bygges liggende på gulvet inne i nisja og tippes opp derfra (steg 1 og 2). Liggende tar den sin egen høyde, 1500 mm, ut fra bakveggen. Er nisja grunnere enn det, får rammen ikke ligge — og da lar den seg ikke reise heller, for 1990 mm bredde går ikke å svinge inn i en 1990 mm åpning.
+6. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
+7. Gulv: mål ned fra risset i sengas fire hjørner og på midten. Merk det høyeste punktet på gulvet. Senga bygges ned fra det.
+8. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 15 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
+9. **Romdelenes hull bores først når romdelen er finkappet.** Hvert hull i dem er målt fra den enden som ennå har 10 mm overmål på seg, så rekkefølgen er kapp først, drill etterpå. Kapplistas rombolk sier hvilke deler, og siste punkt i steg 0 sier hvilke ledd.
+10. **De fire hjørnestolpene står helt inntil endeveggen — null klaring.** Derfor strekes veggsiden på hver av dem, hver gang: sett stolpen på plass, hold den i lodd, og strek opp veggsiden med avstandskloss der veggen buler. Høvle av til stolpen står i lodd inntil veggen. Ingen monn i bredden — det er tre som skal bort, ikke legges til. Buler veggen og du lar det stå, skyver bulen hele rammen ut av lodd.
+11. Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
 
 <img src="img/maal-rommet.png" alt="Nisja som rom, med oppriss og plan ved siden av: høyderisset 1000 mm over ferdig gulv går som en ring rundt alle tre veggene, loddplanet står midt i nisja, og hver endevegg måles i 5 høyder × 3 dybder" height="406">
 
@@ -57,14 +59,16 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 
 **Spikerslag i veggen** — legg dem mens veggen er åpen:
 
-| Sone | Fra ferdig gulv | Fra høyderisset (1000) | Vegg | Del som skal ha feste |
-|---:|---|---|---|---|
-| 1 | **0–1402** | **-1000..+402 krysser risset** | Hjørnene, mot endeveggene | Hjørnestolpe, bak (veggside) (2 stk.) |
-| 2 | **229–297** | **-771..-703 under risset** | Bakveggen | Benkevange, bak (gjennomgående) |
-| 3 | **614–682** | **-386..-318 under risset** | Bakveggen | Bordbærelekt, bak |
-| 4 | **1402–1500** | **+402..+500 over risset** | Bakveggen | Sidevange, øvre |
+| Sone | Fra ferdig gulv | Fra høyderisset (1000) | Vegg | Del som ligger an her | Feste i veggen |
+|---:|---|---|---|---|---|
+| 1 | **0–1402** | **-1000..+402 krysser risset** | Hjørnene, mot endeveggene | Hjørnestolpe, bak (veggside) (2 stk.) | — (bare anlegg) |
+| 2 | **229–297** | **-771..-703 under risset** | Bakveggen | Benkevange, bak (gjennomgående) | — (bare anlegg) |
+| 3 | **614–682** | **-386..-318 under risset** | Bakveggen | Bordbærelekt, bak | J12-V, 3 stk. |
+| 4 | **1402–1500** | **+402..+500 over risset** | Bakveggen | Sidevange, øvre | J14, 6 stk. |
 
 To notasjoner, samme sone. **Målt fra ferdig gulv** er modellens egen Z. **Målt fra høyderisset** er den samme høyden minus 1000 — minus er *under* laserlinja, pluss er *over* den. Gulvet er skjevt og risset er ikke: står du ved den åpne veggen med målebåndet på laserlinja, er det den andre kolonnen du setter sonene etter.
+
+**Spikerslaget skal ligge i alle 4 sonene, også der det ikke kommer en skrue.** Kolonnen *Del som ligger an her* sier hva sengen presser mot veggen i den høyden — det er derfor sonen finnes. Kolonnen *Feste i veggen* sier hva som faktisk skrus fast der, og «— (bare anlegg)» betyr at sengen bare hviler mot veggen i den sonen. En gipsplate uten tre bak gir etter under anlegg også.
 
 Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøyden legges til — i begge kolonner, for risset slås fra ferdig gulv det også.
 
@@ -86,10 +90,10 @@ Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøy
 
 | Slik | Ikke slik | |
 |:---:|:---:|---|
-| <img src="img/ikon/to-personer.svg" alt="to-personer" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/en-person-nei.svg" alt="en-person-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **To personer.** Bakrammen veier mye og skal reises loddrett. |
+| <img src="img/ikon/to-personer.svg" alt="to-personer" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/en-person-nei.svg" alt="en-person-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Én person — men to ved reisningen, steg 2 og 4.** Bakrammen tippes opp om underkanten, og den fremre sidevangen løftes opp på endebjelkene. Begge deler krever fire hender. Resten av sengen er skrevet for én mann med tvinger og lister. |
 | <img src="img/ikon/underlag.svg" alt="underlag" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/dra-nei.svg" alt="dra-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Mykt underlag.** Bygg rammene flatt på papp eller teppe. Ikke dra delene over gulvet. |
 | <img src="img/ikon/sorter.svg" alt="sorter" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Sorter delene** etter kapplista, og merk hver del på en flate som blir skjult. |
-| <img src="img/ikon/blyant-foerst.svg" alt="blyant-foerst" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/skrutrekker-foerst-nei.svg" alt="skrutrekker-foerst-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Blyanten først.** Merk av hvert kapp og hvert hull før du skrur — all saging og all boring skjer i steg 0, før noe reises. |
+| <img src="img/ikon/blyant-foerst.svg" alt="blyant-foerst" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/skrutrekker-foerst-nei.svg" alt="skrutrekker-foerst-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Blyanten først.** Merk av hvert kapp og hvert hull før du skrur — all saging og all boring skjer før delen reises: verksteddelene i steg 0, romdelene så snart de er finkappet i rommet. |
 | <img src="img/ikon/verktoy.svg" alt="verktoy" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Verktøy:** drill med bor, torxbits, tommestokk, vater og vinkelhake. |
 | <img src="img/ikon/forbor.svg" alt="forbor" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Forbor.** I bordene og i all endeved er forboring et krav. |
 | <img src="img/ikon/veggfeste-ja.svg" alt="veggfeste-ja" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/fritt-staaende-nei.svg" alt="fritt-staaende-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Sengen skal skrus fast i veggen.** Den er ikke beregnet på å stå fritt — veggen er sperren på baksiden. |
@@ -110,8 +114,8 @@ Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøy
 | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="44"> **36x** | Treskrue 5×40 forsenket Torx |
 | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **30x** | Treskrue 6×80 forsenket Torx |
 | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="44"> **14x** | Treskrue 6×120 forsenket Torx |
+| <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="44"> **9x** | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) |
 | <img src="img/beslag/filtknott-d40.svg" alt="Filtknott / møbeltapp ⌀40" height="44"> **8x** | Filtknott / møbeltapp ⌀40 |
-| <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="44"> **6x** | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) |
 | <img src="img/beslag/vinkelbeslag-90x90x40.svg" alt="Vinkelbeslag 90×90×40×2,5 varmforsinket" height="179"> **4x** | Vinkelbeslag 90×90×40×2,5 varmforsinket |
 | <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="84"> **2x** | Vinkelbeslag 40×40×20 |
 
@@ -164,7 +168,7 @@ Posisjoner: [kappliste](generated/kappliste.md). Hva du skal kjøpe: [innkjøpsl
 
 Ledd **J15** → [beslagliste](generated/beslagliste.md)
 
-⚠️ Romdelene skal IKKE kappes ferdig nå. Kapplista sier hvilke — de kappes med overmål og finkappes i rommet.
+⚠️ Romdelene skal IKKE kappes ferdig nå, og hullene i dem skal ikke bores nå. Kapplista sier hvilke — de kappes med overmål, finkappes i rommet, og bores der.
 
 [Steg 0 i ord](generated/byggesteg.md#steg-0--kapping-forboring-og-forsenking)
 
@@ -172,7 +176,7 @@ Ledd **J15** → [beslagliste](generated/beslagliste.md)
 
 # 1
 
-## Bakrammen — bygg den flatt på gulvet
+## Bakrammen — bygg den flatt på gulvet i nisja
 
 ![Steg 1](img/steg-01.png)
 
@@ -196,25 +200,25 @@ Ledd **J2-B**, **J8-B**, **J12** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Mål diagonalene i rammen — de skal være like.
 
-[Steg 1 i ord](generated/byggesteg.md#steg-1--bakrammen--bygg-den-flatt-på-gulvet)
+[Steg 1 i ord](generated/byggesteg.md#steg-1--bakrammen--bygg-den-flatt-på-gulvet-i-nisja)
 
 ---
 
 # 2
 
-## Reis bakrammen og skru den fast i veggen
+## Tipp bakrammen opp og skru den fast i veggen
 
 ![Steg 2](img/steg-02.png)
 
 | | |
 |:---:|---|
-| <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="30"> **6x** | Veggfeste |
+| <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="30"> **9x** | Veggfeste |
 
-Ledd **J14** → [beslagliste](generated/beslagliste.md)
+Ledd **J12-V**, **J14** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Vater langs sidevangen, og lodd på begge stolper.
 
-[Steg 2 i ord](generated/byggesteg.md#steg-2--reis-bakrammen-og-skru-den-fast-i-veggen)
+[Steg 2 i ord](generated/byggesteg.md#steg-2--tipp-bakrammen-opp-og-skru-den-fast-i-veggen)
 
 ---
 

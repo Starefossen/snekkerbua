@@ -112,10 +112,10 @@ Modellen har hatt én invariant siden første linje: **hver tredel er en
 akseparallell boks.** Det er den som gjør `.extents` til hele sannheten om en
 del, og det er den «alt treverk er bokser» i §3 hviler på. V4 bryter den
 nøyaktig én gang: de to fremre kilelektene under platen — vingene, M5 — er
-skråkappet, 73 mm dype ved roten og 27 ved spissen.
+skråkappet, 68 mm dype ved roten og 27 ved spissen.
 
 Det er trygt, og grunnen er at **paringsflatene fortsatt er rektangler**. Vingen
-møter platen over hele sin 116 × 48 mm toppflate, og den møter ingenting annet.
+møter platen over hele sin 77 × 48 mm toppflate, og den møter ingenting annet.
 Flaten som ble kappet, er undersiden, og den berører ingen del i noen av de to
 stillingene. `contacts()`, `patch_window()` og `bearing_area()` ser derfor
 nøyaktig det de så før.
@@ -298,7 +298,7 @@ igjen på.
 
 Med den ekte konturen bærer formen gjenkjenningen, og faktoren trenger bare
 bære størrelsen: **`SCREW_FATTEN` er 2,0** (var 3,0). Hodet er
-`HEAD_DIA_RATIO` = 1,95 nominelle diametre og kjernen 0,72, så en 6×90 er
+`HEAD_DIA_RATIO` = 1,95 nominelle diametre og kjernen 0,72, så en 6×120 er
 23,4 mm over hodet og 8,6 mm over kjernen der den før var 34 og 18. Siden har
 fått en tredjedel av blekket sitt tilbake. `W_SCREW` fulgte med ned, fra 0,60
 til 0,40 penn: konturen er streken rundt et ti millimeter bredt objekt, ikke
@@ -410,9 +410,11 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   | Ⓒ | krysskravert | grovere rute enn Ⓑ, ellers er de to bare to gråtoner |
   | Ⓓ | heldekt | sjeldnest, og oftest et vinkelbeslag, som er heldekt fra før |
 
-  Koden er redundant med vilje: formen skiller 5×40 fra 6×120, men ikke 6×80
-  fra 6×90; bokstaven krever at leseren finner og leser et lite tegn; sammen
-  holder de hverandre oppe, og ingen av dem trenger farge.
+  Koden er redundant med vilje: formen skiller 5×40 fra 6×120 med god margin,
+  men den skiller dårligere jo nærmere hverandre to skruer ligger — 5×60 mot
+  6×80 er ett diametertrinn og 20 mm; bokstaven krever at leseren finner og
+  leser et lite tegn; sammen holder de hverandre oppe, og ingen av dem trenger
+  farge.
 
   **Men bare der formen faktisk svikter.** Fyllet er ikke gratis: det legger et
   mønster i hver eneste skrue på siden, og på en side der silhuettene skiller
@@ -431,10 +433,19 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
 
   Tallene står ett sted, i `gen_glyphs.ambiguous_pairs()`, og svaret følger
   steget ut i `byggesteg.json` som `fill_code` — utledet av leddataene, ikke
-  skrudd på for hånd (se §5). Med dagens ledd slår regelen til på **ett** steg:
-  steg 5, der Ⓑ 5×70 og Ⓒ 6×80 er 12,5 % og ett diametertrinn fra hverandre.
-  Steg 1 (6×90 mot 6×120) og steg 6 (5×60 mot 6×80) ligger begge på nøyaktig
-  25 % og faller utenfor.
+  skrudd på for hånd (se §5). Med dagens ledd slår regelen til på **ingen**
+  steg: `fill_code` står `false` på alle tolv, og ikke ett ark i manualen
+  tegnes kodet. Nærmest kommer 5×60 mot 6×80 — de møtes på steg 5 og steg 6,
+  de er ett diametertrinn fra hverandre, og 60 av 80 er nøyaktig **25 %**.
+  Vilkåret sier «under 25 %», så paret faller utenfor på likhetstegnet. Resten
+  er ikke i nærheten: 6×80 mot 6×120 er 33 %, og det paret som ligger tettest i
+  lengde av alle — 6×120 mot veggfestets 8×100, 17 % — er to diametertrinn fra
+  hverandre og deler dessuten ingen side.
+
+  At regelen står uten å fyre er ikke et argument for å ta den bort. Den er
+  skrevet for den dagen et ledd bytter lengde, og da skal svaret komme av seg
+  selv i stedet for av at noen husker det. En regel som først skrives når den
+  trengs, er en regel som ble skrevet én gang for lite.
 
   **Ett mønster per silhuett (R8).** Gjengen og fyllkoden er to teksturer av
   samme størrelsesorden inne i en kropp som er ti–tolv millimeter bred, og
@@ -445,9 +456,9 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
 
   Derfor tar koden kroppen fra gjengen — **men bare der koden faktisk ER et
   mønster**. `open` er fraværet av ett, og den deles ut til den bokstaven siden
-  har flest av, så den vanligste skruen på en kodet side (seksten av tjue på
-  steg 5) beholder gjengen sin og ser ut som det samme objektet den er på alle
-  andre sider. Ingenting konkurrerer med den der, så ingenting er kjøpt ved å
+  har flest av, så den vanligste skruen på en kodet side beholder gjengen sin
+  og ser ut som det samme objektet den er på alle andre sider. Ingenting
+  konkurrerer med den der, så ingenting er kjøpt ved å
   ta den bort. Regelen er `render_lineart.thread_cues()`, og
   `fyllkontrast.png` tegnes med den, ellers beviser prøven en tegning manualen
   ikke lager.
@@ -462,7 +473,7 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   --fill-contrast` skriver `docs/preview/fyllkontrast.png`: hver kode i den
   størrelsen den minste bokstavsiden faktisk gir en skrue, i innsettets
   størrelse, og i halv størrelse som stresstest. Prøven blir stående selv om
-  bare én side i dag bruker koden: den er dokumentasjonen på hvorfor settet ser
+  ingen side i dag bruker koden: den er dokumentasjonen på hvorfor settet ser
   ut som det gjør, og den skal leses igjen den dagen et ledd bytter skrue.
   Prøven avgjorde to ting som
   ikke lot seg resonnere fram — **hodet alene kan ikke bære koden** (et
@@ -850,11 +861,14 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   i sitt ikon — de er rekvisitter i et figurikon, ikke ting på egen hånd.
 * **Merkebokstavene** er ett tegn i en sirkel, samme radius overalt.
 * **De kodede glyfene.** Der et steg koder festemidlene sine, skrives
-  skrueglyfen også i sin egen fyllkode (`treskrue-5x70-hatch.svg`), og det er
+  skrueglyfen også i sin egen fyllkode — glyfens navn med koden hengt på
+  (`coded_slug()`: `treskrue-6x80` blir `treskrue-6x80-hatch.svg`) — og det er
   den fila både innsettpanelets rad og stegets tabell bruker. Hvilke par som
   finnes bestemmes av STEGENE — av hvem som deler ut bokstaver **og** hvem
   regelen over slår til på; et par ingen side viser er en fil ingen leser, og
-  den skal ut av katalogen. En side uten fyll bruker den bare glyfen, så
+  den skal ut av katalogen. Med dagens ledd slår regelen ikke til på noe steg,
+  så katalogen har ingen kodede glyfer i det hele tatt — og det er riktig
+  tilstand, ikke en mangel. En side uten fyll bruker den bare glyfen, så
   tabellen viser det tegningen viser. Beslagsiden får i tillegg
   `fyllkode.svg` — de fire kodene i
   full størrelse, én per bokstav — og det er der koden læres. På en stegside er
@@ -959,9 +973,22 @@ JSON har ingen kommentarer). Skal et tall endres, endres det i modellen.
 ### Determinismen
 
 Alt utledet er sjekket inn — også `.png`-ene, `.svg`-ene og `parts.tsv` —
-og `mise run check` kjører `build` + `montering` to fulle ganger og krever at
-`docs/generated/`, `docs/MONTERING.md`, `docs/img/` og `parts.tsv` kommer ut
-byte-identisk begge ganger. Hvorfor det er en assert og ikke en forventning,
+og `mise run check` kjører hele kjeden (`build` + `montering` + `setedetalj` +
+`endelevation` + `spikerslag`) to fulle ganger og krever at alle sju stiene
+`snap()` hasher kommer ut byte-identisk begge ganger:
+
+1. `docs/generated/`
+2. `docs/MONTERING.md`
+3. `docs/img/`
+4. `parts.tsv`
+5. de tre genererte skjemaarkene `docs/schematics/setedetalj.svg`,
+   `end-elevation.svg` og `spikerslag.svg`
+6. `docs/icons/hanna/` — figurikonene, som er regnet ut av landemerketabellen
+   i `tools/gen_figurhode.py`
+7. `docs/PRAKSIS.md` — landemerketabellene i §4 kommer fra den samme kilden, og
+   da hører fila med i hashen som alt annet utledet
+
+Hvorfor det er en assert og ikke en forventning,
 og hva et brudd betyr, står i
 [PRAKSIS §6](../../../PRAKSIS.md#6-determinismen-er-en-assert).
 
@@ -972,9 +999,9 @@ og hva et brudd betyr, står i
 * **Gjenger på skruene.** Se over.
 * **Filtknottene (J15) er ikke modellert.** De slås i endeveden før reisning og
   ville flyttet gulvplanet i modellen uten å si noe nytt.
-* **Veggfestet (J14) er plassert, men ikke eksportert.** Halve skruen står i en
-  vegg som ikke er modellert, og 52 mm stål bak Y = −48 ville gjort den
-  eksporterte sengen 888 mm dyp. Det flate monteringsplanet på 836 mm er hele
+* **Veggfestene (J14 og J12-V) er plassert, men ikke eksportert.** Halve
+  skruen står i en vegg som ikke er modellert, og 52 mm stål bak Y = −48 ville
+  gjort den eksporterte sengen 888 mm dyp. Det flate monteringsplanet på 836 mm er hele
   poenget med den baksiden, så skruene tegnes og eksporteres ikke.
 * **Ingen ansikter, ingen hender, ingen fingre på referansekroppene.**
   Fjorten primitiver: rundt hode, sylindre for hals, overkropp, armer og bein,

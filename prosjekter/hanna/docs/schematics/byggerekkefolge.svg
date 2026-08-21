@@ -101,7 +101,7 @@
   <!-- forklaringstekst inne i rammen -->
   <text x="262" y="506" class="lbl" text-anchor="start">Sidevange, øvre 48×98 × 1984 – hviler RETT PÅ stolpetoppene (Z 1402).</text>
   <text x="262" y="542" class="sml" text-anchor="start">J2-B: 2× treskrue 6×120 rett ned gjennom vangen i stolpens endeved. Aldri noe på veggsiden.</text>
-  <text x="262" y="576" class="sml" text-anchor="start">J14 (steg 2): 6 veggfester rett gjennom vangen inn i stenderne – prikkene på vangen.</text>
+  <text x="262" y="576" class="sml" text-anchor="start">J14 (steg 2): 6 veggfester gjennom vangen inn i stenderne – prikkene. J12-V: 3 til, i lekta.</text>
   <text x="262" y="636" class="lbl" text-anchor="start">Hjørnestolpe, bak (veggside) 36×98 × 1402 – bakflaten ER veggflaten.</text>
   <text x="262" y="790" class="lbl" text-anchor="start">Bordbærelekt, bak 48×68 × 1794 – på høykant (Z 614–682), J12 vinkelbeslag i hver ende.</text>
   <text x="262" y="826" class="lbl" text-anchor="start">Benkevange, bak 48×68 × 1794 (Z 229–297) – J8-B: 2 skrå 6×80 i hver ende, og det er hele festet.</text>
@@ -193,7 +193,7 @@
   <text x="1524" y="474" class="lbl" text-anchor="start">plan, Y = −48 … 0. Det laget ER monteringsflaten mot veggen.</text>
   <text x="1524" y="520" class="lbl" text-anchor="start">Den bakre benkevangen og bordbærelekta er kappet til å fylle NØYAKTIG mellom de to bakre</text>
   <text x="1524" y="554" class="lbl" text-anchor="start">stolpene – 1794 mm – så de lar seg ikke tre inn etterpå. De må inn mens rammen ligger flatt.</text>
-  <text x="1524" y="600" class="lbl" text-anchor="start">Derfor: bygg bakrammen flatt på gulvet (steg 1), reis den og skru den fast i veggen (steg 2) FØR</text>
+  <text x="1524" y="600" class="lbl" text-anchor="start">Derfor: bygg bakrammen flatt på gulvet I NISJA (steg 1), tipp den opp og skru den fast (steg 2) FØR</text>
   <text x="1524" y="634" class="lbl" text-anchor="start">noe annet monteres. Etter det bygges sengen utover, plan for plan, og hver eneste skrue er</text>
   <text x="1524" y="668" class="lbl" text-anchor="start">tilgjengelig fra romsiden. Ingen bolt går inn i en stolpe, og det finnes ikke ett eneste forsenket</text>
   <text x="1524" y="702" class="lbl" text-anchor="start">boltehode i sengen – alt inn i en 36 mm stolpe er forboret 6 mm treskrue.</text>
@@ -203,20 +203,22 @@
 
   <circle cx="1520" cy="850" r="19" class="bal"/><text x="1520" y="859" class="baln" text-anchor="middle">0</text>
   <text x="1560" y="858" class="st" text-anchor="start">Kapping, forboring og forsenking</text>
-  <text x="1560" y="892" class="sml" text-anchor="start">Alt sagarbeid og all boring på bukk, før noe reises. J15: filtknott under alle fire stolper og alle fire stubbeføtter.</text>
+  <text x="1560" y="892" class="sml" text-anchor="start">Verksteddelene kappes og bores ferdig på bukk. J15: filtknott under alle fire stolper og alle fire stubbeføtter.</text>
+  <text x="1560" y="922" class="sml" text-anchor="start">De 10 romdelene har veggovermål og finkappes i rommet – hullene deres bores DA, ikke her: en ende som ikke er kappet er ikke et mål.</text>
 
   <circle cx="1520" cy="968" r="19" class="bal"/><text x="1520" y="977" class="baln" text-anchor="middle">1</text>
-  <text x="1560" y="976" class="st" text-anchor="start">Bakrammen – bygg den flatt på gulvet</text>
+  <text x="1560" y="976" class="st" text-anchor="start">Bakrammen – bygg den flatt på gulvet i nisja</text>
   <text x="1560" y="1010" class="sml" text-anchor="start">2 stolper 36×98×1402 · sidevange 48×98×1984 · benkevange 48×68×1794 · bordbærelekt 48×68×1794.</text>
   <text x="1560" y="1040" class="sml" text-anchor="start">Ledd: J2-B, J8-B, J12.  Mål diagonalene, og kjenn over hele baksiden: ingenting får stikke ut.</text>
 
   <circle cx="1520" cy="1086" r="19" class="bal"/><text x="1520" y="1095" class="baln" text-anchor="middle">2</text>
-  <text x="1560" y="1094" class="st" text-anchor="start">Reis bakrammen og skru den fast i veggen</text>
-  <text x="1560" y="1128" class="sml" text-anchor="start">J14: 6 veggfester rett gjennom den bakre sidevangen inn i stenderne. Ingen brakett, ingen kloss, ingen kile.</text>
+  <text x="1560" y="1094" class="st" text-anchor="start">Tipp bakrammen opp og skru den fast i veggen</text>
+  <text x="1560" y="1128" class="sml" text-anchor="start">Rammen er 1990 bred i en 1990 bred nisje: den tippes opp der den ligger, den bæres ikke inn. Sidelengs finnes ingen vei.</text>
+  <text x="1560" y="1158" class="sml" text-anchor="start">J14: 6 veggfester gjennom den bakre sidevangen · J12-V: 3 gjennom bordbærelekta – ni i alt, rett inn i stenderne.</text>
 
   <circle cx="1520" cy="1204" r="19" class="bal"/><text x="1520" y="1213" class="baln" text-anchor="middle">3</text>
   <text x="1560" y="1212" class="st" text-anchor="start">Endebjelkene og de fremre stolpene</text>
-  <text x="1560" y="1246" class="sml" text-anchor="start">2 endebjelker 36×98×836 · 2 stolper 36×98×2037. Ledd: J1 (Z 1331 og 1375) – to 6×80 per hjørne, ingen kloss under.</text>
+  <text x="1560" y="1246" class="sml" text-anchor="start">2 endebjelker 36×98×836 · 2 stolper 36×98×2037. Ledd: J1 (Z 1323 og 1367) – to 6×80 per hjørne, ingen kloss under.</text>
 
   <circle cx="1520" cy="1322" r="19" class="bal"/><text x="1520" y="1331" class="baln" text-anchor="middle">4</text>
   <text x="1560" y="1330" class="st" text-anchor="start">Fremre sidevange</text>
@@ -228,7 +230,7 @@
 
   <circle cx="1520" cy="1558" r="19" class="bal"/><text x="1520" y="1567" class="baln" text-anchor="middle">6</text>
   <text x="1560" y="1566" class="st" text-anchor="start">Stigen</text>
-  <text x="1560" y="1600" class="sml" text-anchor="start">Bygges ferdig liggende: 2 stigevanger 36×48×2037 · 10 stigeklosser · 5 rungetrinn 48×68×320 · 2 bordklosser 36×48×108 (Z 634–682).  Ledd: J3, J4, J5, J5-B.</text>
+  <text x="1560" y="1600" class="sml" text-anchor="start">Bygges ferdig liggende: 2 stigevanger 36×48×2037 · 10 stigeklosser · 5 rungetrinn 48×68×320 · 2 bordklosser 48×68×91 (Z 614–682).  Ledd: J3, J4, J5, J5-B.</text>
 
   <circle cx="1520" cy="1676" r="19" class="bal"/><text x="1520" y="1685" class="baln" text-anchor="middle">7</text>
   <text x="1560" y="1684" class="st" text-anchor="start">Benkespiler og endespiler</text>
@@ -267,5 +269,5 @@
   <text x="622" y="2348" class="sml" text-anchor="start">Ingen bæreklosser noe sted</text>
   <text x="1010" y="2276" class="sml" text-anchor="start">Skjematisk. Målene som står her er</text>
   <text x="1010" y="2312" class="sml" text-anchor="start">virkelige; alle andre mål slås opp i de</text>
-  <text x="1010" y="2348" class="sml" text-anchor="start">fem andre arkene og i nøkkelmål.</text>
+  <text x="1010" y="2348" class="sml" text-anchor="start">seks andre arkene og i nøkkelmål.</text>
 </svg>

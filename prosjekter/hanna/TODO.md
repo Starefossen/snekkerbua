@@ -5,12 +5,8 @@ Retterunde 1 er landet (`77a3657`). Stryk punkter etterhvert som de landes.
 
 ## Pågår
 
-- [ ] **Retterunde 2** (agent i arbeid): byggesteg-logikk (bakramme-reisning som
-      tipp, steg 0 delt i verksted-/romdelhull, trimpunkter, steg 2-festetabell),
-      sone 3-beslutning (veggfester i bordbærelekta eller omdøpt kolonne),
-      steg-06/steg-02-figurfiks + tegnet-festemiddel-assert, spikerslag-arkets
-      tekstkollisjoner, ASSEMBLY/PRAKSIS/UTSTYR-etterslep, håndark mot ny
-      bordkloss 48×68×91. Reviewes, portes, committes.
+- [x] **Retterunde 2** — landet. Sone 3 fikk 3 veggfester (J12-V), nisjedybdekrav
+      1500, steg 0 delt, trimpunkter inne, alle ark/prosafunn rettet.
 
 ## Neste: portrunde — automatiser klassene revisorene fant manuelt
 
@@ -36,6 +32,9 @@ Retterunde 1 er landet (`77a3657`). Stryk punkter etterhvert som de landes.
       hardkodet — krever refaktor av modulnivå-dict for å utledes.
 - [ ] `schematic.Sheet.dim`: samme ordmellomrom-under-halo-problem som
       `render_lineart` fikk brudd-i-streken for.
+- [ ] Veggfestenes modellposisjoner (J14 c/c 331, J12-V c/c 598) later som
+      modellen vet hvor stenderne står — stegteksten sier riktig «etter
+      stender», men modellens fordeling bør merkes veiledende/utledes ærligere.
 
 ## Åpne beslutninger (Hans)
 

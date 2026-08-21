@@ -4406,9 +4406,15 @@ SHOP_AIDS = [
 JOINTS = [
     dict(id="J1", title="Endebjelke → hjørnestolpe", n=4,
          drill="⌀6 gjennom bjelken, ⌀4 i stolpen",
-         side="Fra bjelkens utside, inn mot stolpen — helt inne i sengen, "
-              "tilgjengelig hele veien. Disse to skruene er HELE festet: "
-              "det står ingen kloss under bjelkeenden",
+         # X11: this string said "fra bjelkens utside", which is a face that
+         # cannot be reached: the beam's outer face is the one BUTTED AGAINST
+         # the post, so a screw started there would have to begin inside the
+         # post. The model's own placement says otherwise - the row projects
+         # onto the beam's INNER face - and that is the face a man standing in
+         # the bed can actually put a drill on.
+         side="Fra bjelkens innside (mot sengas midte), inn mot stolpen — "
+              "helt inne i sengen, tilgjengelig hele veien. Disse to skruene "
+              "er HELE festet: det står ingen kloss under bjelkeenden",
          # X10: the pair steps 8 mm DOWN the beam. The back corner is where the
          # end beam and the back side rail both take hold of the same post, and
          # the rail's own J2-B comes straight down through the post top to
@@ -4655,6 +4661,51 @@ JOINTS = [
                    axis=0, row=2, row_sign=-1, reach=40.0),
              drive("Treskrue 5×40 forsenket Torx", 1, into="ledger", axis=2,
                    sign=1, row=0, reach=40.0)])]),
+    # X11: THE SECOND WALL JOINT. Until this round the wall carried exactly one
+    # fixing - J14, through the back side rail - and the nogging table promised
+    # a fixing in all four zones. Three of the four had none, and zone 3 is the
+    # one where that was worth fixing rather than only worth saying: the ledger
+    # is the panel's REAR BEARING in table mode, it lies flat on the wall plane
+    # over its whole 1894 mm exactly as the back rail does, and the nogging is
+    # going into that wall anyway - the zone exists for this piece.
+    #
+    # THE FOUR ARGUMENTS AGAINST, TAKEN IN ORDER, BECAUSE NONE OF THEM HOLDS:
+    #   1  «the ledger must be loadable straight down without hanging on
+    #      screws in withdrawal» (ASSEMBLY §J12). True, and untouched: this
+    #      screw is HORIZONTAL, so a downward load on the ledger is SHEAR in
+    #      it, the strong direction. The two 40x40x20 brackets still carry the
+    #      ends and the ledger still stands on steel, not on threads.
+    #   2  «the wall plane must be dead flat». That rule is about anything
+    #      sticking out BEHIND Y -48 - which is why the bracket is 20 mm wide
+    #      and not 40. A fixing driven FROM the room, head counterbored into
+    #      the ledger's front face at Y 0, adds nothing to the back face. It is
+    #      the same geometry J14 already has.
+    #   3  «the ledger must go in while the back frame is flat on the floor».
+    #      It still does - J12 is a step 1 joint and stays there. These holes
+    #      cannot be drilled in the workshop at all: the studs only exist in
+    #      the room, so the drilling belongs to the same step as J14, after
+    #      the frame is up against the wall.
+    #   4  «the bed is the reference, not the room - a rigid wall fixing at
+    #      midspan of a member already trapped between two posts overdetermines
+    #      it». It would, if the ledger were somewhere else. It is not: it is
+    #      part of the ONE rigid back frame whose whole back face J14 already
+    #      pulls flat against the wall. The frame is at the wall before these
+    #      screws exist; they do not decide where it sits, they only take load
+    #      out of the middle of a 1894 mm span that had none.
+    # What is bought for it: the rear bearing of the desk stops being a
+    # simply-supported 1894 mm beam and becomes three spans of about 630, at
+    # the one height on this wall where the load is a person leaning on a desk.
+    dict(id="J12-V", title="Veggfeste — gjennom bordbærelekta inn i "
+                           "stenderne", n=1,
+         fast=[("Veggfeste etter veggtype (treskrue 8×100 i stender, eller "
+                "plugg + skrue i mur)", 3)],
+         drill="⌀8 gjennom lekta, forsenk for hodet; veggen etter festetype. "
+               "Bores på stedet — stenderne finnes bare i rommet",
+         side="Rett gjennom lekta inn i veggen, fra benkerommet. Lekta ligger "
+              "flatt mot veggen i hele sin lengde, så festet trenger verken "
+              "kloss eller brakett; hodet forsenkes i lektas forside, som "
+              "ryggputa lener seg mot",
+         contacts=[]),
     # V3: NOTHING GOES THROUGH THE TOP OF THE PANEL. The panel is the table
     # top, and a table top with twelve screw heads - or twelve plugs - in it is
     # a table top with twelve marks in it. So the battens are glued to the
@@ -5178,27 +5229,39 @@ def fastener_specs(all_parts):
     return specs
 
 
-# The wall fixing is the one joint with nothing on the other side: it goes
-# through the back rail and into the studs of a wall this model does not have.
-# It is placed off the rail itself, spread along the length the way a builder
-# spreads it across the studs he finds, and marked `wall` - the containment
-# asserts and the mesh export both skip it, because everything past Y = -48 is
-# in the wall.
+# The wall fixings are the joints with nothing on the other side: they go
+# through a member that lies flat on the wall plane and into the studs of a
+# wall this model does not have. Each is placed off its own member, spread
+# along the length the way a builder spreads it across the studs he finds, and
+# marked `wall` - the containment asserts and the mesh export both skip them,
+# because everything past Y = -48 is in the wall.
+#
+# X11: there are TWO of them now. The rule that picks the members is the one
+# the nogging block already states for the wall as a whole - a member whose
+# LENGTH runs along the wall face lies flat on it over that whole length - so
+# it is written here as a pair of (joint, member) and checked against that
+# rule down in the nogging block, where the rule lives. A fixing into a member
+# that does not lie flat on the wall would need a packer, and this file has
+# none.
+WALL_FIXINGS = [("J14", back_rail), ("J12-V", support_rail)]
+
+
 def wall_fastener_specs():
-    j = JOINT["J14"]
-    name, count = j["fast"][0]
     d, length = 8.0, 100.0
-    x0, x1 = back_rail.extents[0]
-    y = back_rail.extents[1][1]
-    z = sum(back_rail.extents[2]) / 2
     out = []
-    for i in range(count):
-        t = (i + 0.5) / count
-        out.append(dict(kind="screw", anchor=(x0 + (x1 - x0) * t, y, z),
-                        direction=(0.0, -1.0, 0.0), length=length, d=d,
-                        through=back_rail, into=None, wall=True,
-                        jid="J14", name=name, drive=None, joint=j,
-                        crow=None, contact=None))
+    for jid, member in WALL_FIXINGS:
+        j = JOINT[jid]
+        name, count = j["fast"][0]
+        x0, x1 = member.extents[0]
+        y = member.extents[1][1]
+        z = sum(member.extents[2]) / 2
+        for i in range(count):
+            t = (i + 0.5) / count
+            out.append(dict(kind="screw", anchor=(x0 + (x1 - x0) * t, y, z),
+                            direction=(0.0, -1.0, 0.0), length=length, d=d,
+                            through=member, into=None, wall=True,
+                            jid=jid, name=name, drive=None, joint=j,
+                            crow=None, contact=None))
     return out
 
 
@@ -7129,6 +7192,28 @@ for p in WALL_FIX_PARTS:
         hit["labels"].append(p.label)
         hit["corner"] = hit["corner"] and flush_with_end_wall(p)
 WALL_ZONES.sort(key=lambda zo: (zo["z"][0], zo["z"][1], zo["cut"]))
+
+# X11: AND WHICH OF THEM ACTUALLY GETS A SCREW. A nogging zone is a band the
+# bed PRESSES on - it is derived from bearing, not from fixings - and for four
+# rounds the printed table called every zone's part «the part that gets a
+# fixing», which was true of one zone out of four. The two facts are different
+# and they are both worth printing, so the fixings are read back off the
+# placed fasteners and hung on the zone they land in. A zone with no wall
+# fastener in its height band gets an empty list and the table says so.
+for _jid, _m in WALL_FIXINGS:
+    assert _m in WALL_FIX_PARTS, \
+        f"{_jid}: '{_m.label}' does not run along the wall face - it cannot " \
+        f"be screwed to it without a packer, and this bed has none"
+for zo in WALL_ZONES:
+    zo["fix"] = []
+    for jid, member in WALL_FIXINGS:
+        if member.label in zo["labels"]:
+            n = sum(1 for f in FASTENER_SPECS if f["jid"] == jid)
+            zo["fix"].append((jid, n))
+assert sum(n for zo in WALL_ZONES for _jid, n in zo["fix"]) \
+    == sum(1 for f in FASTENER_SPECS if f.get("wall")), \
+    "a wall fastener landed outside every nogging zone"
+
 for zo in WALL_ZONES:
     zo["labels"].sort()
 assert len({zo["cut"] for zo in WALL_ZONES}) == len(WALL_ZONES), \
@@ -7223,6 +7308,13 @@ print(f"OK  X8b fra høyderisset ({MEASURE_DATUM_Z} over ferdig gulv): "
                    for _n, zo in enumerate(WALL_ZONES, 1))
       + " - utledet ved subtraksjon, aldri skrevet inn, og differansen er "
         "asserted på hver eneste sonekant")
+print("OK  X11 hvilke soner som faktisk får skruer i veggen: "
+      + " · ".join(
+          f"sone {_n} "
+          + (", ".join(f"{_jid} {_q} stk." for _jid, _q in zo["fix"])
+             if zo["fix"] else "bare anlegg")
+          for _n, zo in enumerate(WALL_ZONES, 1))
+      + " - lest av de plasserte veggfestene, ikke av tabellteksten")
 
 # C9: nothing horizontal may be longer than 1984, and every long member must sit
 # in one of the two legal X bands. A 1990 mm piece cannot be swung into a 1990 mm

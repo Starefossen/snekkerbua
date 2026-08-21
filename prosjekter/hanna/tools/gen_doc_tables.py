@@ -205,6 +205,266 @@ def hardware_total(steps):
 
 
 # ---------------------------------------------------------------------------
+# WHAT THE ROOM FINISHES, AND WHAT IT COSTS THE STEPS
+# ---------------------------------------------------------------------------
+# Four facts the build steps have to say out loud, and every one of them is a
+# property of the MODEL and not of the prose:
+#
+#   * which pieces the room saws to LENGTH. Their holes cannot be bored on a
+#     bench, because the end every one of those holes is measured from does
+#     not exist yet - see X6 rule 2 in generate_loftbed.py, which allows a
+#     wall end as a datum on exactly one condition: that it is fine-cut off
+#     the measured niche BEFORE the drill comes out.
+#   * which pieces stand on the floor with a trim allowance under them.
+#     Somebody has to be told to cut it off, and in which step.
+#   * how big the BACK FRAME is lying down. Step 1 builds it flat and step 2
+#     tips it up, and both of those cost room.
+#   * where the WALL FIXINGS go. Which joints they are, how many screws each
+#     drives and at what height is read out of the model, never typed, because
+#     a fixing may be added or moved in the same breath as this is written.
+#
+# `_match` is the part matcher in the PART MATCHING section further down; it
+# is only ever called from inside a function here, so the order is fine.
+def room_cut(G, kind):
+    """The pieces the room finishes the named way, and their cut-list lines."""
+    ps = [p for p in G.CUT_PARTS
+          if G.ROOM_FIT.get(p.label, {}).get("kind", "").startswith(kind)]
+    assert ps, f"no piece in the model is finished '{kind}' by the room"
+    return ps, sorted({p.cut for p in ps})
+
+
+def wall_cut_joints(G):
+    """Joints whose holes are measured off an end the ROOM has not cut yet.
+
+    The one list that keeps X6 rule 2's promise honest. Note what it is NOT:
+    it is not «every joint on a piece the room shortens». A hole in the front
+    bench rail segment measured from the INNER end can be bored on a bench
+    all day - that end is sawn in the shop. It is the datum that decides, so
+    the datum is what is read: an `ytre` end on a piece the room cuts to
+    length is an end that does not exist yet.
+    """
+    _ps, lines = room_cut(G, "vegg")
+    keys = {(sec, ln) for _n, sec, ln in lines}
+    order = {j["id"]: i for i, j in enumerate(JOINTS)}
+    hit = set()
+    for pl in G.FASTENER_PLACEMENTS:
+        if (pl["section"].replace("×", "x"), pl["piece_len"]) not in keys:
+            continue
+        for a in pl["axes"]:
+            if a["role"] == "ende" and any(r["ref"] == "ytre"
+                                           for r in a["refs"]):
+                hit.add(pl["jid"])
+    assert hit, "no joint is measured off a wall end - X6 rule 2 has no owner"
+    return sorted(hit, key=lambda j: order[j])
+
+
+def floor_trim(G, *specs):
+    """(count, allowance) for the standing pieces one step trims at the foot.
+
+    Read off the model's own room-fit table, so a piece that stops standing on
+    the floor stops being told to trim - and a step that names a piece the
+    room does NOT trim stops the build instead of printing an instruction
+    nobody can carry out.
+    """
+    ps = [p for p in G.CUT_PARTS if any(_match(s, p.label) for s in specs)]
+    assert ps, f"{specs} matches no part"
+    kinds = {G.ROOM_FIT.get(p.label, {}).get("kind", "") for p in ps}
+    assert all(k.startswith("gulv") for k in kinds), \
+        f"{specs} is not trimmed at the foot by the room: {sorted(kinds)}"
+    overs = {G.ROOM_FIT[p.label]["over"] for p in ps}
+    assert len(overs) == 1, f"{specs} carries {sorted(overs)} mm of allowance"
+    return len(ps), next(iter(overs))
+
+
+# The back frame: the members step 1 lays out flat and step 2 tips upright.
+# Named ONCE - step 1's `parts` list is this list - so the frame the steps
+# build and the frame the clearances are measured on cannot drift apart.
+BACK_FRAME_PARTS = ["Corner Post Back *", "Upper Side Rail Back",
+                    "Bench Rail Back (continuous)", "Table Ledger Back"]
+
+
+def back_frame(G):
+    """The back frame's own envelope, and what raising it needs.
+
+    Same idiom as TILT_SWEEP in the model (`math.hypot(BUILT_TOP_Z,
+    OVERALL_DEPTH)` against ROOM_H), and a DIFFERENT number, because this is
+    the back frame and not the bed: the frame is as tall as its own topmost
+    member and only as thick as the one layer it is built in.
+
+    Lying on the floor it takes its own HEIGHT out of the niche depth; tipped
+    up about its bottom edge the far corner sweeps hypot(height, thickness),
+    and that has to pass under the ceiling.
+    """
+    ps = [p for p in G.CUT_PARTS
+          if any(_match(s, p.label) for s in BACK_FRAME_PARTS)]
+    for spec in BACK_FRAME_PARTS:
+        assert any(_match(spec, p.label) for p in ps), \
+            f"the back frame names '{spec}' and the model has no such part"
+    h = max(p.extents[2][1] for p in ps) - min(p.extents[2][0] for p in ps)
+    t = max(p.extents[1][1] for p in ps) - min(p.extents[1][0] for p in ps)
+    sweep = math.hypot(h, t)
+    assert sweep <= G.ROOM_H, (
+        f"bakrammen er {_fmt(h)} × {_fmt(t)} mm og sveiper {sweep:.0f} mm når "
+        f"den tippes opp om underkanten - taket er på {G.ROOM_H}")
+    # The niche has to hold the frame lying down AND the finished bed. Which
+    # of the two is the binding one is a fact about this bed, not a given.
+    need = max(h, G.OVERALL_DEPTH)
+    return dict(h=h, t=t, sweep=sweep, need=need)
+
+
+def rung_pitch(G):
+    """(lower pitches, upper pitches, the rung the change happens above).
+
+    X9 made the ladder two runs, so it has two pitches and the change is a
+    DESIGN DECISION the reader is entitled to see named. Derived from the rung
+    tops: the first place two neighbouring gaps stop matching is the joint.
+    """
+    tops = list(G.RUNG_TOPS)
+    gaps = [b - a for a, b in zip(tops, tops[1:])]
+    k = next((i for i in range(1, len(gaps)) if abs(gaps[i] - gaps[i - 1]) > 1.5),
+             None)
+    assert k is not None, "the ladder climbs on one pitch - there is no change"
+    return gaps[:k], gaps[k:], k + 1
+
+
+def wall_end_inset(G, jid):
+    """How far from a piece's WALL end this joint's nearest hole stands."""
+    for pl in G.FASTENER_PLACEMENTS:
+        if pl["jid"] != jid:
+            continue
+        for a in pl["axes"]:
+            for r in a["refs"]:
+                if r["ref"] == "bak":
+                    return min(r["at"])
+    raise AssertionError(f"{jid} has no hole measured from a wall end")
+
+
+def _member_no(G, part):
+    """The Norwegian trade name of a part, off the joint table that names it.
+
+    A part is named by every joint it is in, and the names are not all equally
+    sharp: the slats know the back side rail only as «sidevange», the joint at
+    its own end calls it «bakre sidevange». The sharpest one wins - and the
+    assert says what «sharpest» means, so a genuinely ambiguous part stops the
+    build instead of being printed under whichever name came first.
+    """
+    names = set()
+    for f in G.FASTENER_SPECS:
+        crow = f.get("crow")
+        if crow is None:
+            continue
+        for who, key in (("pa", "a"), ("pb", "b")):
+            if f.get(who) is part:
+                names.add(PART_NO[crow[key]])
+    assert names, f"no joint names '{part.label}'"
+    best = max(sorted(names), key=len)
+    assert all(best.endswith(n) for n in names), \
+        f"'{part.label}' is called {sorted(names)} - no one of those is the " \
+        f"same name with a qualifier on it"
+    return best
+
+
+def wall_fix_lines(G, jids=None):
+    """One placement line per wall-fixing joint, measured off the model.
+
+    WHICH joints hold the bed to the wall, how many fixings each drives,
+    through which member, at what height and on what nominal spacing all come
+    out of WALL_FIXINGS and the fastener solids themselves. Add a fixing, move
+    it, take one away - the table follows without a word being edited here.
+    """
+    out = []
+    for jid, part in G.WALL_FIXINGS:
+        if jids is not None and jid not in jids:
+            continue
+        fs = [f for f in G.FASTENER_SPECS if f["jid"] == jid]
+        assert fs, f"{jid} fixes the bed to the wall and places no fastener"
+        assert all(f["through"] is part for f in fs), \
+            f"{jid} does not pass through '{part.label}' all the way"
+        zs = {f["anchor"][2] for f in fs}
+        assert len(zs) == 1, \
+            f"{jid}: the wall fixings stand at {sorted(zs)} - not one row"
+        z = next(iter(zs))
+        xs = sorted(f["anchor"][0] for f in fs)
+        gaps = [b - a for a, b in zip(xs, xs[1:])]
+        assert gaps and max(gaps) - min(gaps) < 0.51, \
+            f"{jid}: the fixings are not on one pitch ({gaps})"
+        ds = {f["d"] for f in fs}
+        assert len(ds) == 1, f"{jid}: {sorted(ds)} mm holes in one row"
+        fast = JOINT[jid]["fast"]
+        assert len(fast) == 1, f"{jid} drives {len(fast)} kinds of fixing"
+        (x0, _x1), _y, (z0, z1) = part.extents
+        out.append(dict(
+            jid=jid, name=fast[0][0], per=fast[0][1], n=len(fs),
+            member=_member_no(G, part), section=_no_section(G, part.cut[1]),
+            piece_len=part.cut[2], d=next(iter(ds)),
+            # The face the head is countersunk in is the face the screw is
+            # driven FROM - the opposite one to where it points, read off the
+            # solid exactly as the model's own _mark_face does.
+            face=(1, "fram" if fs[0]["direction"][1] < 0 else "bak"),
+            z=z, below=z - z0, above=z1 - z,
+            inset=xs[0] - x0, cc=gaps[0], drill=JOINT[jid]["drill"]))
+    return out
+
+
+# The cut list's room half, named once so the steps can link to it and the
+# heading and the anchor can never drift apart.
+KAPP_ROOM_HEAD = "Kapp når rommet er ferdig — romdeler"
+
+
+def kapp_room_link(text="kapplistas rombolk"):
+    return f"[{text}](kappliste.md#{_anchor(KAPP_ROOM_HEAD)})"
+
+
+def _per_joint(jid):
+    """«2× Treskrue 6×80» for one joint - the count the model places, never
+    a number typed into a sentence."""
+    return " + ".join(f"{q}× {_fast_short(n)}" for n, q in JOINT[jid]["fast"])
+
+
+def _upright_top(G):
+    ps = [p for p in G.CUT_PARTS if _match("Ladder Upright *", p.label)]
+    tops = {p.extents[2][1] for p in ps}
+    assert len(tops) == 1, f"the ladder stiles top out at {sorted(tops)}"
+    return next(iter(tops))
+
+
+def _rung_pitch_do(G):
+    """The one line that says the ladder changes pitch, and that it is meant."""
+    low, high, at = rung_pitch(G)
+    def band(gs):
+        return " / ".join(_fmt(v) for v in sorted(set(gs)))
+    return (f"**Stigningen skifter over trinn {at}, og det er tilsiktet.** "
+            f"{band(low)} mm mellom de nederste trinnene, {band(high)} mm "
+            f"mellom de øverste. Stigen er to løp (X9): det nederste er "
+            f"trappa opp på benken, det øverste er klatringen opp i senga. "
+            f"Måler du {band(low)} der det skal være {band(high)}, har du "
+            f"satt en kloss feil — ikke rett opp stigningen, rett opp "
+            f"klossen.")
+
+
+def _room_drill_do(G):
+    """Step 0's LAST instruction: the holes the bench is not allowed to bore.
+
+    Every number in it is read out of the room-fit table and the placement
+    lines, so the day a piece stops being cut by the room, this paragraph
+    stops naming it.
+    """
+    ps, lines = room_cut(G, "vegg")
+    jids = wall_cut_joints(G)
+    return (f"**IKKE PÅ BUKKEN — {len(ps)} romdeler skal bores senere.** "
+            f"Delene i {len(lines)} kapplinjer under "
+            f"«{kapp_room_link(KAPP_ROOM_HEAD)}» har "
+            f"{G.ROOM_OVER_WALL} mm overmål i hver ende som møter vegg, og "
+            f"hullene deres er målt **fra ytterenden** — nettopp den enden. "
+            f"**En ende som ikke er kappet, er ikke et utgangspunkt.** "
+            f"Rekkefølgen er: mål nisja, finkapp veggendene etter målt "
+            f"bredde, og bor først da. Det gjelder "
+            f"{', '.join(jids)}. Legg delene på bukk i rommet når de er "
+            f"finkappet; alt annet i dette steget gjøres ferdig i "
+            f"verkstedet.")
+
+
+# ---------------------------------------------------------------------------
 # BUILD STEPS - defined ONCE, here
 # ---------------------------------------------------------------------------
 # `parts`     labels added to the assembly in this step ("*" = prefix match).
@@ -314,10 +574,10 @@ def build_steps(G):
                   "fire egne kanter, og så stolper, rekkverksbord, trinn og "
                   "stigevangenes kanter. Modellen tegner alle deler skarpe; "
                   "kantbrytningen er en instruks og flytter ingen mål.",
-                "Bor alle gjennomgående hull i stolper, vanger, endebjelker "
-                  "og benkevanger — diameter etter forboringskolonnen i "
-                  "beslaglista. Bor gjennom begge deler samtidig, med delene "
-                  "tvunget sammen.",
+                "Bor alle gjennomgående hull i **verksteddelene** — stolper, "
+                  "endebjelker og de delene kapplista sier er ferdig kappet. "
+                  "Diameter etter forboringskolonnen i beslaglista. Bor "
+                  "gjennom begge deler samtidig, med delene tvunget sammen.",
                 "Forsenk hodene på alle festemidler som ender i en veggvendt "
                   "flate. Beslaglista sier hvilke ledd det gjelder.",
                 "Forbor alle treskruer etter beslaglista. I bordene og i "
@@ -353,10 +613,12 @@ def build_steps(G):
                   "den på frihånd.",
                 "Slå filtknotter under alle fire hjørnestolper og alle fire "
                   "stubbeføtter.",
+                _room_drill_do(G),
             ],
             check=[
-                "Romdelene skal IKKE kappes ferdig nå. Kapplista sier hvilke "
-                  "— de kappes med overmål og finkappes i rommet.",
+                "Romdelene skal IKKE kappes ferdig nå, og hullene i dem skal "
+                  "ikke bores nå. Kapplista sier hvilke — de kappes med "
+                  "overmål, finkappes i rommet, og bores der.",
                 "Legg de to lengste delene — sidevangene — inn i rommet nå og "
                   "sjekk at de går fritt forbi begge vegger. De er kappet "
                   "kortere enn veggavstanden nettopp for dette.",
@@ -367,18 +629,25 @@ def build_steps(G):
         ),
         dict(
             n=1,
-            title="Bakrammen — bygg den flatt på gulvet",
-            parts=["Corner Post Back *", "Upper Side Rail Back",
-                   "Bench Rail Back (continuous)", "Table Ledger Back"],
+            title="Bakrammen — bygg den flatt på gulvet i nisja",
+            parts=list(BACK_FRAME_PARTS),
             camera=(330, 24, 3.4),
             half_view=True,
-            intro="Hele baksiden av sengen er ett eneste flatt lag: to korte "
-                  "stolper og tre vannrette deler i samme plan. Det laget er "
-                  "monteringsflaten mot veggen. Og det MÅ bygges som én "
-                  "ramme: den bakre benkevangen og bordbærelekta er kappet "
-                  "til å fylle nøyaktig mellom de to stolpene, så de lar seg "
-                  "ikke tre inn etterpå.",
+            intro=f"Hele baksiden av sengen er ett eneste flatt lag: to korte "
+                  f"stolper og tre vannrette deler i samme plan. Det laget er "
+                  f"monteringsflaten mot veggen. Og det MÅ bygges som én "
+                  f"ramme: den bakre benkevangen og bordbærelekta er kappet "
+                  f"til å fylle nøyaktig mellom de to stolpene, så de lar seg "
+                  f"ikke tre inn etterpå. **Rammen bygges liggende INNE i "
+                  f"nisja**, med underkanten mot bakveggen — den er "
+                  f"{G.WALL_SPAN} mm bred og lar seg ikke bære inn ferdig "
+                  f"reist. Det er den samme rammen steg 2 tipper opp.",
             do=[
+                f"Rydd gulvet i nisja og legg ut papp eller teppe. Rammen "
+                  f"legges ned der den skal stå: underkanten inntil "
+                  f"bakveggen, toppen ut mot rommet. Den tar "
+                  f"{_fmt(back_frame(G)['h'])} mm av nisjedybden liggende — "
+                  f"målet du kontrollerte i forsteget.",
                 "Legg de to bakre stolpene ut i riktig avstand. De er de "
                   "korte — de stopper under sidevangen.",
                 "Legg den bakre sidevangen oppå stolpetoppene. Den skal "
@@ -416,38 +685,72 @@ def build_steps(G):
         ),
         dict(
             n=2,
-            title="Reis bakrammen og skru den fast i veggen",
+            title="Tipp bakrammen opp og skru den fast i veggen",
+            two_person=True,
             parts=[],
-            highlight=["Upper Side Rail Back"],
+            highlight=["Upper Side Rail Back", "Table Ledger Back"],
             camera=(330, 24, 3.4),
             thumbnails=True,
-            intro="Sengen festes til veggen gjennom den bakre sidevangen. "
-                  "Vangen ligger flatt mot veggen i hele sin lengde, så "
-                  "skruene går rett gjennom den og inn i stenderne. De "
-                  "skruene holder ikke bare sengen på plass — de støtter også "
-                  "vangen på midten.",
+            intro="Sengen festes til veggen i to høyder: gjennom den bakre "
+                  "sidevangen øverst og gjennom bordbærelekta nede ved "
+                  "bordhøyde. Begge ligger flatt mot veggen i hele sin "
+                  "lengde, så skruene går rett gjennom dem og inn i "
+                  "stenderne. De skruene holder ikke bare sengen på plass — "
+                  "de støtter også de to lange delene på midten.",
             do=[
-                "Reis bakrammen og skyv den inntil bakveggen og inntil begge "
-                  "sidevegger.",
+                f"**Tipp rammen opp om sin egen underkant, der den ligger.** "
+                  f"Den skal ikke bæres inn og ikke skyves sidelengs mot "
+                  f"sideveggene: rammen er {G.WALL_SPAN} mm bred og nisja er "
+                  f"{G.WALL_SPAN} mm — null klaring i begge ender, og en "
+                  f"{G.WALL_SPAN} mm del lar seg ikke svinge inn i en "
+                  f"{G.WALL_SPAN} mm åpning. Derfor ble den bygget liggende "
+                  f"på plassen sin i steg 1. Underkanten er hengselet og blir "
+                  f"liggende mot gulvet hele veien opp.",
+                f"To personer, én på hver stolpe. Rammens øverste hjørne "
+                  f"sveiper {back_frame(G)['sweep']:.0f} mm på vei opp — "
+                  f"taket er på {G.ROOM_H} mm, så den går klar, men få "
+                  f"lamper og lister ut av veien først.",
+                "Skyv rammen inntil bakveggen. Bare bakover — sidelengs er "
+                  "det ingen vei å gå.",
+                f"**Trim de {floor_trim(G, 'Corner Post Back *')[0]} "
+                  f"bakstolpene i bunn nå.** De er kappet "
+                  f"{floor_trim(G, 'Corner Post Back *')[1]} mm for lange. "
+                  f"Mål ned fra høyderisset i begge ender, strek opp foten "
+                  f"med avstandskloss, legg rammen ned igjen og kapp. Tipp "
+                  f"opp på nytt og vater langs sidevangen. Gjenta til vangen "
+                  f"ligger vannrett — det er den høyden hele sengen arves "
+                  f"fra.",
                 "Finn stenderne i veggen. Merk av senterlinjene på "
-                  "sidevangen.",
+                  "sidevangen og på bordbærelekta.",
                 "Loddsjekk begge stolper, og vater langs sidevangen.",
                 "Skru rammen fast i veggen gjennom sidevangen (J14). Ta et "
                   "feste i hver stender du treffer — minst i endene og på "
                   "midten.",
+                "Skru bordbærelekta fast i veggen på samme måte (J12-V), midt "
+                  "i lektas høyde. **Hullene bores nå, ikke i verkstedet** — "
+                  "stenderne finnes bare i rommet, og lekta satt i rammen "
+                  "allerede i steg 1. Forsenk hodene under lektas forside; "
+                  "det er den ryggputa lener seg mot. Lekta bærer bordplatens "
+                  "bakkant, og disse skruene tar den lange spennvidden ned "
+                  "til tre korte.",
                 "Skru en midlertidig skråstiver fra rammen ned til gulvet "
                   "hvis rammen står alene en stund. Den er flat og velter "
                   "lett framover.",
             ],
             check=[
                 "Vater langs sidevangen, og lodd på begge stolper.",
+                "Begge bakstolper skal stå med hele endeflaten mot gulvet "
+                  "etter trimmingen. Er det luft under en av dem, er den ikke "
+                  "trimmet nok — kil den ikke opp.",
                 "Ta tak i vangen og dra. Rammen skal ikke bevege seg fra "
                   "veggen i det hele tatt.",
+                "Kjenn etter langs bordbærelektas overkant: den skal ligge "
+                  "vannrett og skruehodene skal stå under forsiden.",
                 "Er veggen mur eller betong, bruk plugg eller betongskrue. "
                   "Er den bindingsverk, må du treffe stender. En plateplugg i "
                   "gips er ikke et veggfeste.",
             ],
-            joints={'J14': 1},
+            joints={'J14': 1, 'J12-V': 1},
         ),
         dict(
             n=3,
@@ -459,6 +762,14 @@ def build_steps(G):
                   "fra den bakre stolpen til den fremre og bærer begge "
                   "sidevanger.",
             do=[
+                f"**Trim de {floor_trim(G, 'Corner Post Front *')[0]} fremre "
+                  f"stolpene i bunn før de reises.** De har samme "
+                  f"{floor_trim(G, 'Corner Post Front *')[1]} mm overmål som "
+                  f"bakstolpene: still stolpen opp mot sideveggen, mål ned "
+                  f"fra høyderisset, strek opp foten med avstandskloss og "
+                  f"kapp. Toppen er referansen — hvert hull i stolpen er "
+                  f"målt derfra, og det er derfor foten er den enden som "
+                  f"kappes.",
                 "Reis den fremre stolpen på plass mot sideveggen.",
                 "Legg endebjelken opp mellom de to stolpene og fest den til "
                   "begge etter J1. **Det er ingen bærekloss under "
@@ -467,6 +778,12 @@ def build_steps(G):
                   "stolpen møtes, så du kan ikke sette den skjevt. Klem en "
                   "list på stolpens innside i høyde med bjelkens underkant "
                   "hvis du bygger alene — den listen tas av igjen.",
+                f"**De to bakerste J1-skruene står "
+                  f"{_fmt(wall_end_inset(G, 'J1'))} "
+                  f"mm fra bakveggen.** Der får du ikke inn en drill med "
+                  f"vanlig bits. Ta lang bits eller vinkelbits, og prøv "
+                  f"rekkevidden før bjelken ligger på plass — etterpå er det "
+                  f"ingen vei rundt.",
                 "Gjenta i den andre enden.",
             ],
             check=[
@@ -483,12 +800,17 @@ def build_steps(G):
         dict(
             n=4,
             title="Fremre sidevange",
+            two_person=True,
             parts=["Upper Side Rail Front"],
             camera=(330, 24, 3.4),
             intro="Den fremre vangen lukker rammen i overetasjen. Den hviler "
                   "på begge endebjelker og festes til de fremre stolpene.",
             do=[
-                "Løft vangen opp på endebjelkene, på utsiden av dem.",
+                f"Løft vangen opp på endebjelkene, på utsiden av dem. **To "
+                  f"personer**, én i hver ende: vangen er {G.THROUGH_LEN} mm "
+                  f"lang og skal treffe to opplegg i "
+                  f"{G.RAIL_BOTTOM} mm høyde samtidig. Alene ender den ene "
+                  f"enden på gulvet.",
                 "Fest den til begge fremre stolper etter J2. **Skruene "
                   "drives innenfra:** du står inne i sengerammen — den er "
                   "tom, spilene kommer først i steg 8 — og skrur gjennom "
@@ -519,12 +841,20 @@ def build_steps(G):
                   "spilene: den er bæreverk som vangene, den står i samme "
                   "høyde som dem, og den skal stå ferdig før noe legges oppå.",
             do=[
-                "Fest hver vangebit til sin fremre hjørnestolpe etter J8. "
-                  "**Skruene drives innenfra**, fra vangens innside og inn i "
-                  "stolpen, så stolpens forside blir stående uten "
-                  "skruehoder. Du kommer til ovenfra: benken er åpen til "
-                  "spilene går på i steg 7. Ingen kloss under enden — "
-                  "hullene fra steg 0 holder vangen i riktig høyde.",
+                f"Fest hver vangebit til sin fremre hjørnestolpe etter J8. "
+                  f"**Skruene drives innenfra**, fra vangens innside og inn i "
+                  f"stolpen, så stolpens forside blir stående uten "
+                  f"skruehoder. Du kommer til ovenfra: benken er åpen til "
+                  f"spilene går på i steg 7. Ingen kloss under enden — "
+                  f"hullene holder vangen i riktig høyde. Vangebiten er en "
+                  f"romdel: hullene i den ble boret etter finkapp, se det "
+                  f"siste punktet i steg 0 og {kapp_room_link()}.",
+                f"**Trim de {floor_trim(G, 'Bench Stub Leg *')[0]} "
+                  f"stubbeføttene i bunn.** De er kappet "
+                  f"{floor_trim(G, 'Bench Stub Leg *')[1]} mm for lange. Hold "
+                  f"foten opp under vangen der den skal stå, strek av mot "
+                  f"gulvet med avstandskloss, og kapp. Én fot om gangen — "
+                  f"gulvet er ikke i vater, og de fire blir ikke like lange.",
                 "Sett en stubbefot under den innerste enden av hver "
                   "vangebit. Vangebiten skal slutte akkurat der foten står — "
                   "ingen utstikk forbi foten.",
@@ -575,11 +905,13 @@ def build_steps(G):
                   f"for- og bakkant, ikke stikke bakover slik trinnet gjør. "
                   f"Klosshøyden er trinnhøyden — mål to ganger.",
                 "Legg trinnene på klossene og fest dem (J4).",
+                _rung_pitch_do(G),
                 f"Skru de to BORDKLOSSENE på (J5-B) mens stigen ennå ligger "
                   f"flatt. De er {G.TABLE_BEARER_LEN} mm lange, står i samme "
                   f"X som stigeklossene og har overkanten på "
                   f"{G.PANEL_UNDER_TABLE} — det er bordplatens underside. "
-                  f"De skrus fra stigevangens UTSIDE, én 6x80 hver, og de "
+                  f"De skrus fra stigevangens UTSIDE, "
+                  f"{_per_joint('J5-B')} hver, stablet i høyden, og de "
                   f"stikker {G.TABLE_BEARER_LEDGE} mm BAKOVER forbi vangen: "
                   f"det er hylla bordplaten hviler på i bordstilling. "
                   f"Forkanten flukter med vangens forkant, som trinnene.",
@@ -587,20 +919,33 @@ def build_steps(G):
                   "skal ligge i flukt med stigevangenes forkant — trinnene "
                   "stikker BAKOVER, ikke framover. Det som stikker bakover er "
                   "hylla den løse platen skal hvile på.",
-                "Skru stigen fast til vangen etter J3 — **innenfra**, "
-                  "gjennom sidevangen og inn i stigevangen, så stigevangens "
-                  "forside blir uten skruehoder. Klem stigen fast mot vangen "
-                  "først; du står på den andre siden når du skrur. "
-                  "Gjennomgangshullene er boret i steg 0.",
+                f"**Trim de {floor_trim(G, 'Ladder Upright *')[0]} "
+                  f"stigevangene i bunn — og gjør det nå, mens stigen står "
+                  f"prøvd opp.** De er kappet "
+                  f"{floor_trim(G, 'Ladder Upright *')[1]} mm for lange. "
+                  f"Stigen ble bygget liggende, så trimmingen går i tre "
+                  f"trekk: hold stigen i lodd med toppen der den skal sitte, "
+                  f"strek av mot gulvet med avstandskloss, ta den ned og legg "
+                  f"den flatt, og kapp begge vanger. Prøv opp igjen før du "
+                  f"skrur.",
+                f"Skru stigen fast til vangen etter J3 — **innenfra**, "
+                  f"gjennom sidevangen og inn i stigevangen, så stigevangens "
+                  f"forside blir uten skruehoder. Klem stigen fast mot vangen "
+                  f"først; du står på den andre siden når du skrur. "
+                  f"Gjennomgangshullene sitter i sidevangen, som er en "
+                  f"romdel: de ble boret etter finkapp, se det siste punktet "
+                  f"i steg 0.",
             ],
             check=[
                 "Mål lysåpningen mellom stigevangene øverst og nederst — den "
                   "skal være lik.",
                 f"Alle {len(G.RUNG_TOPS)} trinn i vater.",
-                f"Mål høyden på bordklossenes overkant fra stigefoten: "
-                  f"{G.PANEL_UNDER_TABLE} mm, begge to, og i vater med "
-                  f"hverandre. Bordplaten hviler på dem og på bordbærelekta "
-                  f"samtidig — står de skjevt, vipper platen.",
+                f"Mål ned fra STIGEVANGENS TOPP til bordklossenes overkant: "
+                  f"{_fmt(_upright_top(G) - G.PANEL_UNDER_TABLE)} mm, begge "
+                  f"to, og i vater med hverandre. Målt ovenfra, som alt annet "
+                  f"på en stående del — foten er nettopp trimmet og er ikke "
+                  f"et utgangspunkt. Bordplaten hviler på klossene og på "
+                  f"bordbærelekta samtidig; står de skjevt, vipper platen.",
                 "Stå på nederste trinn og kjenn etter. Sitter noe løst nå, "
                   "sitter det løst for alltid.",
             ],
@@ -892,7 +1237,7 @@ def step_part_rows(G, st, cut_index):
 
 
 def step_part_summary(G, st, cut_index):
-    """['2x Endebjelke 48x98 x 896', ...] for the labels this step adds."""
+    """['2× Endebjelke 36×98 × 836', ...] for the labels this step adds."""
     out = []
     for qty, name, section, length in step_part_rows(G, st, cut_index):
         out.append(f"{qty}× {name} {section} × {length}" if section
@@ -1294,7 +1639,7 @@ def emit_kappliste(G, out_dir):
     L.append(f"\n**{n_shop} deler.** Rommet bestemmer ingen mål på disse. "
              "Kapp dem ferdig med én gang.\n\n")
 
-    L.append("## Kapp når rommet er ferdig — romdeler\n\n")
+    L.append(f"## {KAPP_ROOM_HEAD}\n\n")
     n_room = _room_rows(G, L, room)
     L.append(f"\n**{n_room} deler.** Kapp dem med overmålet i kolonnen "
              "«Kapp på stedet», og finkapp på stedet:\n\n")
@@ -1632,10 +1977,16 @@ def emit_nokkelmal(G, out_dir, rows):
         # share a top with something else, and the rest are just steps.
         *((z, f"trinn {i + 1}") for i, z in enumerate(G.RUNG_TOPS) if i >= 2),
         (G.END_BEAM_Z0, "endebjelkens underkant"),
+        # X6: the BACK post stops under the back side rail, 635 mm below the
+        # front one, and that top is a landmark in its own right - it is the
+        # height the back frame is built to and the datum every hole in a back
+        # post is measured down from. It used to be printed on the slat-bottom
+        # row, which is a different height altogether.
+        (G.BACK_POST_HEIGHT, "**bakre stolpetopp**"),
         (G.RAIL_BOTTOM, "endebjelkens overkant = sidevangens underkant "
                         "(fri høyde under sengen)"),
         (G.RAIL_TOP, "sidevangens overkant"),
-        (G.SLAT_Z1, "spilebunn / madrassens underside / bakre stolpetopp"),
+        (G.SLAT_Z1, "spilebunn / madrassens underside"),
         (G.MATTRESS_Z1, "madrassens overside (ved "
                         f"{G.MATTRESS_H} mm madrass; lovlig band "
                         f"{G.MATTRESS_H_MIN}–{G.MATTRESS_H_MAX})"),
@@ -1645,8 +1996,16 @@ def emit_nokkelmal(G, out_dir, rows):
         (G.GUARD_BAND_Z0[1] + G.GUARD_W, "rekkverk, øvre bånd overkant"),
         (G.POST_HEIGHT, "fremre stolpetopp"),
     ]
-    for z, what in sorted(heights):
-        L.append(f"| **{_fmt(z)}** | {what} |\n")
+    # TWO LANDMARKS AT ONE HEIGHT ARE ONE ROW. The back post top and the side
+    # rail's underside are the same Z, and printing them as two rows with the
+    # same number in the left column would ask the reader to decide which one
+    # the height belongs to. They are merged in the order they are named
+    # above, so the row reads as one fact seen from several parts.
+    merged = {}
+    for z, what in heights:
+        merged.setdefault(round(z, 3), []).append(what)
+    for z in sorted(merged):
+        L.append(f"| **{_fmt(z)}** | {' = '.join(merged[z])} |\n")
 
     climb = [0] + list(G.RUNG_TOPS) + [G.SLAT_Z1]
     steps = [b - a for a, b in zip(climb, climb[1:])]
@@ -2042,12 +2401,34 @@ def emit_nokkelmal(G, out_dir, rows):
 ROOM_TITLE = "Før steg 0 — mål rommet"
 
 
+NO_WALL_FIX = "— (bare anlegg)"
+
+
+def _spikerslag_fix(zo):
+    """What a nogging zone actually gets, read off the model's own fixings.
+
+    X11: A ZONE IS A BEARING BAND, NOT A SCREW BAND. `WALL_ZONES` is derived
+    from the parts that lie flat on the wall or stand in a corner - what the
+    bed PRESSES on - and until X11 the table headed that column «del som skal
+    ha feste», which promised a fixing in every one of the four. One of the
+    four had one. Both facts are worth printing and they are two columns now;
+    this one comes from `zo["fix"]`, which generate_loftbed.py fills by
+    reading back the placed wall fasteners, so a joint added or removed in the
+    model moves this cell and nothing has to be retyped.
+    """
+    if not zo["fix"]:
+        return NO_WALL_FIX
+    return " · ".join(f"{jid}, {n} stk." for jid, n in sorted(zo["fix"]))
+
+
 def spikerslag_rows(G, idx):
-    """[(nr, "fra–til", "fra risset", vegg, del), ...] - the noggings the wall
-    needs, in both notations: over the finished floor and from the height line.
-    The second column is G.riss_span(), i.e. the first one minus
+    """[(nr, "fra–til", "fra risset", vegg, del, feste), ...] - the noggings
+    the wall needs, in both notations: over the finished floor and from the
+    height line. The second column is G.riss_span(), i.e. the first one minus
     MEASURE_DATUM_Z - see the X8b block in generate_loftbed.py for why a wall
-    cannot be set off a floor nobody trusts."""
+    cannot be set off a floor nobody trusts. The last one is what the zone
+    gets in the way of screws, which is not the same question - see
+    `_spikerslag_fix`."""
     out = []
     for i, zo in enumerate(G.WALL_ZONES, 1):
         z0, z1 = zo["z"]
@@ -2056,22 +2437,30 @@ def spikerslag_rows(G, idx):
         out.append((i, f"{_fmt(z0)}–{_fmt(z1)}", zo["riss_txt"],
                     "Hjørnene, mot endeveggene" if zo["corner"]
                     else "Bakveggen",
-                    f"{name}" + (f" ({n} stk.)" if n > 1 else "")))
+                    f"{name}" + (f" ({n} stk.)" if n > 1 else ""),
+                    _spikerslag_fix(zo)))
     return out
 
 
 def spikerslag_table(G, idx):
     L = [f"| Sone | Fra ferdig gulv | Fra høyderisset ({G.MEASURE_DATUM_Z}) | "
-         "Vegg | Del som skal ha feste |\n",
-         "|---:|---|---|---|---|\n"]
-    for nr, z, r, wall, part in spikerslag_rows(G, idx):
-        L.append(f"| {nr} | **{z}** | **{r}** | {wall} | {part} |\n")
+         "Vegg | Del som ligger an her | Feste i veggen |\n",
+         "|---:|---|---|---|---|---|\n"]
+    for nr, z, r, wall, part, fix in spikerslag_rows(G, idx):
+        L.append(f"| {nr} | **{z}** | **{r}** | {wall} | {part} | {fix} |\n")
     L.append(f"\nTo notasjoner, samme sone. **Målt fra ferdig gulv** er "
              f"modellens egen Z. **Målt fra høyderisset** er den samme "
              f"høyden minus {G.MEASURE_DATUM_Z} — minus er *under* "
              f"laserlinja, pluss er *over* den. Gulvet er skjevt og risset er "
              f"ikke: står du ved den åpne veggen med målebåndet på laserlinja, "
              f"er det den andre kolonnen du setter sonene etter.\n")
+    L.append(f"\n**Spikerslaget skal ligge i alle {len(G.WALL_ZONES)} sonene, "
+             f"også der det ikke kommer en skrue.** Kolonnen *Del som ligger "
+             f"an her* sier hva sengen presser mot veggen i den høyden — det "
+             f"er derfor sonen finnes. Kolonnen *Feste i veggen* sier hva som "
+             f"faktisk skrus fast der, og «{NO_WALL_FIX}» betyr at sengen "
+             f"bare hviler mot veggen i den sonen. En gipsplate uten tre bak "
+             f"gir etter under anlegg også.\n")
     return "".join(L)
 
 
@@ -2107,6 +2496,17 @@ def room_first(G):
             f"endevegg i rutenett: {G.MEASURE_GRID[0]} høyder × "
             f"{G.MEASURE_GRID[1]} dybder på hver vegg. Legg sammen paret i "
             f"hvert punkt. **Minste sum er nisjas minste bredde.**",
+            f"**Mål nisjedybden på BEGGE endevegger** — fra bakveggen og ut "
+            f"til nisjas åpning, i de samme "
+            f"{G.MEASURE_GRID[0]} høydene. Minste dybde må være minst "
+            f"**{_fmt(back_frame(G)['need'])} mm**, og det er bakrammen som "
+            f"setter kravet, ikke senga: senga er {G.OVERALL_DEPTH} mm dyp, "
+            f"men bakrammen bygges liggende på gulvet inne i nisja og tippes "
+            f"opp derfra (steg 1 og 2). Liggende tar den sin egen høyde, "
+            f"{_fmt(back_frame(G)['h'])} mm, ut fra bakveggen. Er nisja "
+            f"grunnere enn det, får rammen ikke ligge — og da lar den seg "
+            f"ikke reise heller, for {G.WALL_SPAN} mm bredde går ikke å svinge "
+            f"inn i en {G.WALL_SPAN} mm åpning.",
             f"Er minste bredde et annet tall enn {G.WALL_SPAN}: sett den inn "
             "som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run "
             "build`. Kapplista regner seg om.",
@@ -2119,6 +2519,14 @@ def room_first(G):
             "hver veggende og finkappes etter målt bredde. Ytterste "
             "endespile strekes opp etter veggen med fast avstand, så fugen "
             "blir jevn.",
+            # Denne lista trykkes to steder med hver sin relative sti
+            # (byggesteg.md i docs/generated, MONTERING.md i docs), så her
+            # står det ingen lenke - bare hvor svaret er.
+            f"**Romdelenes hull bores først når romdelen er finkappet.** "
+            f"Hvert hull i dem er målt fra den enden som ennå har "
+            f"{G.ROOM_OVER_WALL} mm overmål på seg, så rekkefølgen er kapp "
+            f"først, drill etterpå. Kapplistas rombolk sier hvilke deler, og "
+            f"siste punkt i steg 0 sier hvilke ledd.",
             "**De fire hjørnestolpene står helt inntil endeveggen — null "
             "klaring.** Derfor strekes veggsiden på hver av dem, hver gang: "
             "sett stolpen på plass, hold den i lodd, og strek opp veggsiden "
@@ -2134,6 +2542,12 @@ def room_first(G):
             "Gjør det ikke det, står laseren feil.",
             f"Er forskjellen mellom minste og største bredde større enn "
             f"{G.ROOM_OVER_WALL} mm, mål om. Kapp uansett etter den minste.",
+            f"Nisjedybden skal være minst {_fmt(back_frame(G)['need'])} mm i "
+            f"hvert eneste målepunkt på begge endevegger — ikke i snitt. Det "
+            f"grunneste punktet er det rammen tar borti når den ligger. "
+            f"Kommer du under, må rammen bygges på et annet gulv, og da må "
+            f"den bæres inn ferdig reist gjennom en åpning som er nøyaktig "
+            f"like bred som den selv. Det går ikke.",
             "Sjekk at spikerslagene ligger i sonene før veggen lukkes — "
             "målt ned eller opp fra høyderisset, ikke opp fra gulvet.",
             f"Bakveggen skal være bar helt ned til gulvet i alle "
@@ -2155,13 +2569,24 @@ ROOM_ZONE_NOTE = ("Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet "
 # THE ASSERT THAT READS THE INK. Every height band printed in the nogging
 # table has to be the real Z extent of the part named in the same row - not a
 # number that once was.
+#
+# X11: AND THE FIXING COLUMN IS READ THE SAME WAY. The column that used to say
+# «del som skal ha feste» was the one thing on this sheet nobody could check,
+# because it was a heading and not a measurement - it claimed a fixing for
+# four zones and the model placed one in one of them. The claim is a cell now,
+# and the cell is read back and counted against the wall fasteners the model
+# actually placed in that height band. A joint added to or taken out of
+# WALL_FIXINGS moves both, or stops the build.
+SPIKERSLAG_COLS = 6
+
+
 def assert_spikerslag_ink(G, idx, text):
     seen = 0
     for line in text.split("\n"):
         if not line.startswith("| ") or "**" not in line:
             continue
         c = [x.strip() for x in line.strip().strip("|").split("|")]
-        if len(c) != 5:
+        if len(c) != SPIKERSLAG_COLS:
             continue
         m = re.fullmatch(r"\*\*([\d,]+)–([\d,]+)\*\*", c[1])
         if not m:
@@ -2188,9 +2613,34 @@ def assert_spikerslag_ink(G, idx, text):
                 and abs(p.extents[2][1] - z1) < 0.05]
         assert hits, (f"spikerslagsone {c[0]} sier {c[1]} for «{part}», men "
                       "ingen del med det navnet står i den høyden")
+        # THE FIXING CELL, MEASURED. Every wall fastener the model placed
+        # THROUGH one of the pieces this row names is counted, joint by joint,
+        # and the cell has to name exactly those joints with exactly those
+        # numbers - or say, in so many words, that the zone gets none. It is
+        # the PIECE and not the height band that decides: zone 1 is the corner
+        # post and runs 0..1402, so it contains every other zone's height, and
+        # a band test would credit it with screws that go through somebody
+        # else's wood.
+        labels = {p.label for p in hits}
+        placed = {}
+        for f in G.FASTENER_SPECS:
+            if not f.get("wall") or f["through"].label not in labels:
+                continue
+            placed[f["jid"]] = placed.get(f["jid"], 0) + 1
+        want = (NO_WALL_FIX if not placed else
+                " · ".join(f"{jid}, {n} stk."
+                           for jid, n in sorted(placed.items())))
+        assert c[5] == want, (
+            f"spikerslagsone {c[0]} står på trykk med festet «{c[5]}», men "
+            f"modellen har lagt «{want}» i Z {c[1]}")
         seen += 1
     assert seen == len(G.WALL_ZONES), \
         f"{seen} soner på trykk mot {len(G.WALL_ZONES)} i modellen"
+    n_ink = sum(1 for line in text.split("\n")
+                if line.startswith("| ") and NO_WALL_FIX in line)
+    assert n_ink == sum(1 for zo in G.WALL_ZONES if not zo["fix"]), \
+        f"{n_ink} soner på trykk uten veggfeste mot " \
+        f"{sum(1 for zo in G.WALL_ZONES if not zo['fix'])} i modellen"
 
 
 # ---------------------------------------------------------------------------
@@ -2282,6 +2732,54 @@ def _place_cell(a):
     return txt
 
 
+def wall_fix_placement_rows(G, st):
+    """The wall fixings, in the same five columns as everything else.
+
+    THEY ARE THE ONE ROW THAT CANNOT CARRY AN X MEASUREMENT. Every other
+    fastener in the bed sits where the wood says; these sit where the STUDS
+    say, and the studs are not in the model - they are in the room. So the
+    line gives the height, the diameter and the RULE, and the pitch column
+    carries the spacing the model reckons the strength on.
+    """
+    out = []
+    for w in wall_fix_lines(G, jids=set(st["joints"])):
+        piece = (f"{w['member']} {w['section']} × {_fmt(w['piece_len'])}, "
+                 f"{PLACE_FACE_NO[w['face']]}")
+        if abs(w["below"] - w["above"]) < 0.51:
+            kant = (f"midt på ({_fmt(w['below'])} mm fra hver side) = "
+                    f"{_fmt(w['z'])} mm over gulvet")
+        else:
+            near = "ned" if w["below"] <= w["above"] else "opp"
+            kant = (f"{_fmt(min(w['below'], w['above']))} mm fra "
+                    f"{PLACE_EDGE_NO[(2, near)]} = {_fmt(w['z'])} mm over "
+                    f"gulvet")
+        out.append((f"**{w['jid']}** {w['per']}× {_fast_short(w['name'])}",
+                    piece,
+                    "etter stender — minst i begge ender og på midten",
+                    kant, f"≈ {_fmt(round(w['cc']))}"))
+    return out
+
+
+def wall_fix_note(G, st):
+    """The paragraph under a step that fastens the bed to the wall."""
+    ws = wall_fix_lines(G, jids=set(st["joints"]))
+    if not ws:
+        return ""
+    n = sum(w["n"] for w in ws)
+    return (
+        f"**Veggfestene har ingen X-mål, og hullene kan ikke bores i steg 0.** "
+        f"Stenderne finnes bare i rommet, og de står der de står — du finner "
+        f"dem først når rammen er oppe. Regelen er derfor **et feste i hver "
+        f"stender du treffer, og minst i begge ender og på midten** av delen. "
+        f"Tallet i c/c-kolonnen er den delingen modellen regner styrken på: "
+        + " · ".join(f"{w['jid']} {w['n']} stk. på {_fmt(w['piece_len'])} mm, "
+                     f"{_fmt(round(w['inset']))} mm inn fra hver ytterende"
+                     for w in ws)
+        + f". Tettere stendere gir sterkere feste, ikke svakere; færre enn "
+        f"{n} fester i alt er for få. Boring: "
+        + " · ".join(f"{w['jid']} {w['drill']}" for w in ws) + ".\n")
+
+
 def placement_rows(G, st, idx):
     """[(ledd, merkes-opp-på, fra enden, fra kanten, c/c)] for one step."""
     out = []
@@ -2300,6 +2798,9 @@ def placement_rows(G, st, idx):
                     " · ".join(cells["ende"]) or "—",
                     " · ".join(cells["kant"]) or "—",
                     " / ".join(cc) or "—"))
+    # ...and the wall fixings, which the model places but cannot measure into
+    # a piece: their X belongs to the studs. Same table, same columns.
+    out += wall_fix_placement_rows(G, st)
     return out
 
 
@@ -2313,7 +2814,15 @@ PLACE_RULES = (
     "Hullet er oppgitt i DELENS egne mål — så mange mm inn fra en navngitt "
     "ende, så mange mm inn fra en navngitt kant, og senteravstand mellom "
     "hullene i samme rad. Ta tabellene med til steg 0: det er der du merker "
-    "opp og borer, mens delene ennå ligger løse på bukken.\n\n"
+    "opp og borer, mens delene ennå ligger løse på bukken — med to unntak, "
+    "og begge står i punktene under.\n\n"
+    "* **Romdelene bores ikke på bukken.** De er kappet med overmål i den "
+    "enden som møter vegg, og alle målene i raden er tatt fra nettopp den "
+    "enden. De finkappes etter målt nisjebredde først, og bores så. Siste "
+    "punkt i steg 0 sier hvilke.\n"
+    "* **Veggfestene har ingen X-mål i det hele tatt.** Stenderne bestemmer, "
+    "og de finnes bare i rommet. Raden gir høyden, diameteren og regelen — "
+    "og hullene bores på stedet.\n"
     "* **Ytterenden** er den enden av delen som peker mot nærmeste "
     "endevegg, **innerenden** den som peker inn mot sengas midte. Derfor "
     "gjelder ett mål begge sider av senga — og modellen måler at de to "
@@ -2354,6 +2863,20 @@ def assert_placement_ink(G, bygg, retn):
             continue
         key = (m.group(1), m.group(2))
         placed[key] = placed.get(key, 0) + 1
+    # THE WALL FIXINGS ARE READ OUT FIRST, and against the model rather than
+    # against the direction sheet: they go into a wall and not into a second
+    # piece of wood, so they have no drive and no direction row - see the last
+    # line of skrueretninger.md. What they DO have is a placement line each,
+    # and this is where that is counted.
+    wall_want = {(w["jid"], _fast_short(w["name"])): w
+                 for w in wall_fix_lines(G)}
+    wall_ink = {k: v for k, v in placed.items() if k in wall_want}
+    placed = {k: v for k, v in placed.items() if k not in wall_want}
+    assert set(wall_ink) == set(wall_want), (
+        f"veggfeste: {sorted(set(wall_want) - set(wall_ink))} står i modellen "
+        f"uten en plasseringslinje")
+    assert all(v == 1 for v in wall_ink.values()), \
+        "et veggfeste har fått mer enn én plasseringslinje"
     missing = driven - set(placed)
     extra = set(placed) - driven
     assert not missing and not extra, (
@@ -2370,9 +2893,11 @@ def assert_placement_ink(G, bygg, retn):
     driven_total = len([f for f in G.FASTENER_SPECS if f["drive"] is not None])
     assert n_fast == driven_total, \
         f"{n_fast} festemidler dekket av plasseringslinjene mot {driven_total}"
+    n_wall = sum(w["n"] for w in wall_fix_lines(G))
     print(f"  festeplassering: {n_lines} linjer, {len(driven)} "
           f"skrueretninger, {n_fast} festemidler - én linje per rad, ingen "
-          f"rad uten linje")
+          f"rad uten linje; + {len(wall_ink)} veggfestelinjer med {n_wall} "
+          f"fester, plassert etter stender og ikke etter mål")
 
 
 def emit_byggesteg(G, out_dir, steps, idx):
@@ -2431,6 +2956,9 @@ def emit_byggesteg(G, out_dir, steps, idx):
             for row in place:
                 L.append("| " + " | ".join(row) + " |\n")
             L.append("\n")
+            note = wall_fix_note(G, st)
+            if note:
+                L.append(note + "\n")
         L.append("**Slik gjør du:**\n\n")
         for d in st["do"]:
             L.append(f"1. {d}\n")
@@ -2449,33 +2977,63 @@ MONTERING_HEAD = (
     "     IKKE REDIGER FOR HÅND. Strektegningene lages av\n"
     "     `mise run montering` (tools/render_lineart.py). -->\n\n")
 
+# HOW MANY PAIRS OF HANDS, AND WHERE. The cover used to say «2 personer» and
+# every step said «hvis du er alene» - one of the two was wrong, and it was
+# the cover. The steps are written for ONE man with clamps and battens, and
+# they name the places where that stops being true; those places carry
+# `two_person=True` in build_steps(), and the badge, the cover line and the
+# pictogram caption are all read off THAT. Move the flag and all three move.
+def two_person_steps(steps):
+    return sorted(st["n"] for st in steps if st.get("two_person"))
+
+
+def _og(items):
+    items = [str(i) for i in items]
+    return items[0] if len(items) == 1 else \
+        ", ".join(items[:-1]) + " og " + items[-1]
+
+
+def crew_line(steps):
+    ns = two_person_steps(steps)
+    assert ns, "ingen steg er merket som tomannsjobb - da er badgen en løgn"
+    return f"1 person — 2 ved reisning (steg {_og(ns)})"
+
+
 # The pictogram page. (do-key, dont-key or None, the one line beside them).
 # The drawings themselves come out of tools/gen_glyphs.py; the pairs use the
 # manual convention of showing the wrong way beside the right one.
-PREP = [
-    ("to-personer", "en-person-nei",
-     "**To personer.** Bakrammen veier mye og skal reises loddrett."),
-    ("underlag", "dra-nei",
-     "**Mykt underlag.** Bygg rammene flatt på papp eller teppe. Ikke dra "
-     "delene over gulvet."),
-    ("sorter", None,
-     "**Sorter delene** etter kapplista, og merk hver del på en flate som "
-     "blir skjult."),
-    # Denne raden avløste "Les steg 0 først" med bokikonet. Budskapet var det
-    # samme - alt kappes og bores før noe reises - men det stod bare i teksten;
-    # nå står det i bildet, og paret har fått den IKKE SLIK-en boka aldri hadde.
-    ("blyant-foerst", "skrutrekker-foerst-nei",
-     "**Blyanten først.** Merk av hvert kapp og hvert hull før du skrur — "
-     "all saging og all boring skjer i steg 0, før noe reises."),
-    ("verktoy", None,
-     "**Verktøy:** drill med bor, torxbits, tommestokk, vater og "
-     "vinkelhake."),
-    ("forbor", None,
-     "**Forbor.** I bordene og i all endeved er forboring et krav."),
-    ("veggfeste-ja", "fritt-staaende-nei",
-     "**Sengen skal skrus fast i veggen.** Den er ikke beregnet på å stå "
-     "fritt — veggen er sperren på baksiden."),
-]
+def prep_rows(steps):
+    ns = two_person_steps(steps)
+    return [
+        ("to-personer", "en-person-nei",
+         f"**Én person — men to ved reisningen, steg {_og(ns)}.** Bakrammen "
+         f"tippes opp om underkanten, og den fremre sidevangen løftes opp på "
+         f"endebjelkene. Begge deler krever fire hender. Resten av sengen er "
+         f"skrevet for én mann med tvinger og lister."),
+        ("underlag", "dra-nei",
+         "**Mykt underlag.** Bygg rammene flatt på papp eller teppe. Ikke "
+         "dra delene over gulvet."),
+        ("sorter", None,
+         "**Sorter delene** etter kapplista, og merk hver del på en flate "
+         "som blir skjult."),
+        # Denne raden avløste "Les steg 0 først" med bokikonet. Budskapet var
+        # det samme - alt kappes og bores før noe reises - men det stod bare i
+        # teksten; nå står det i bildet, og paret har fått den IKKE SLIK-en
+        # boka aldri hadde.
+        ("blyant-foerst", "skrutrekker-foerst-nei",
+         "**Blyanten først.** Merk av hvert kapp og hvert hull før du skrur "
+         "— all saging og all boring skjer før delen reises: "
+         "verksteddelene i steg 0, romdelene så snart de er finkappet i "
+         "rommet."),
+        ("verktoy", None,
+         "**Verktøy:** drill med bor, torxbits, tommestokk, vater og "
+         "vinkelhake."),
+        ("forbor", None,
+         "**Forbor.** I bordene og i all endeved er forboring et krav."),
+        ("veggfeste-ja", "fritt-staaende-nei",
+         "**Sengen skal skrus fast i veggen.** Den er ikke beregnet på å stå "
+         "fritt — veggen er sperren på baksiden."),
+    ]
 
 
 # Forsteg-sidens eget SLIK / IKKE SLIK-par, i samme oppsett som «Før du
@@ -2631,8 +3189,8 @@ def emit_montering(G, root, steps, idx):
          "| Bredde | Dybde | Høyde |\n|---:|---:|---:|\n",
          f"| **{G.WALL_SPAN} mm** | **{G.OVERALL_DEPTH} mm** | "
          f"**{G.POST_HEIGHT} mm** |\n\n",
-         f"{n_parts} deler · {n_steps} steg ({step_lo}–{step_hi}) · 2 personer · "
-         f"passer standard madrass 80 × 200 cm\n\n",
+         f"{n_parts} deler · {n_steps} steg ({step_lo}–{step_hi}) · "
+         f"{crew_line(steps)} · passer standard madrass 80 × 200 cm\n\n",
          "Sengen står inntil bakveggen og inntil begge sidevegger, og skrus "
          "fast i bakveggen. **Bygg bakfra og utover.**\n\n",
          "Ord og begrunnelser: [ASSEMBLY.md](ASSEMBLY.md). "
@@ -2658,8 +3216,11 @@ def emit_montering(G, root, steps, idx):
     L.append(f"Under senga står **{G.SLAT_Z0} mm** fritt. Platen er tegnet i "
              f"bordstilling, på **{G.PANEL_TOP_TABLE} mm** — den samme platen "
              f"ligger nede på {G.PANEL_TOP_BED} mm som sengebunn. Soveflaten "
-             f"oppe er {G.THROUGH_LEN} × **{G.SLAT_LEN} mm**: en standard "
-             f"madrass på 80 × 200 cm.\n\n")
+             f"oppe er {G.WALL_SPAN} × **{G.SLAT_LEN} mm** — vegg til vegg, "
+             f"ikke kappelengden: spilene er {G.THROUGH_LEN} mm og holdes "
+             f"{G.THROUGH_X0} mm fra hver vegg for å komme inn, men madrassen "
+             f"presses de siste millimeterne inn mellom veggene og fyller "
+             f"hele nisjas bredde. En standard madrass på 80 × 200 cm.\n\n")
     L.append("Alle mål i mm, målt fra ferdig gulv. Resten av tallene står i "
              "[nøkkelmål](generated/nokkelmal.md).\n\n")
 
@@ -2737,7 +3298,7 @@ def emit_montering(G, root, steps, idx):
              "festemidlene i full lengde — hodet på skrusiden, spissen inne i "
              "mottakerdelen.\n\n")
     L.append("| Slik | Ikke slik | |\n|:---:|:---:|---|\n")
-    for do, dont, line in PREP:
+    for do, dont, line in prep_rows(steps):
         yes = (_img("img/ikon/" + pikto[do], 72, do) + " "
                + _img("img/ikon/" + pikto["hake"], 26, "ja"))
         no = ("" if dont is None else
@@ -3042,9 +3603,9 @@ def emit_skrueretninger(G, out_dir, idx):
              f"hver bygging: skruekroppen må ha hodet i plan med flaten den "
              f"drives fra, spissen inne i delen den tar tak i, og ingenting "
              f"av seg selv i noen annen del.\n\n")
-    L.append("Veggfestet (J14) står ikke her — det går rett gjennom den bakre "
-             "sidevangen og inn i veggen, og har ingen andre del å gå inn "
-             "i.\n")
+    L.append("Veggfestene (J14 og J12-V) står ikke her — de går rett gjennom "
+             "den bakre sidevangen og gjennom bordbærelekta og inn i veggen, "
+             "og har ingen andre del å gå inn i.\n")
     text = "".join(L)
     write(os.path.join(out_dir, "skrueretninger.md"), text)
     return text
@@ -3104,11 +3665,9 @@ def emit_beslagliste(out_dir, steps):
              "**kilelektas endeved mot enden av den fremre benkevangen**, "
              f"tvers over de {_MODEL.LOCK_GAP} mm i sideklaringen, i samme "
              "høydebånd i sengestilling og "
-             f"{_MODEL.PANEL_MODE_LIFT} mm fra hverandre i bordstilling. Geometrien er målt og asserted i modellen, så "
-             "alle tre løsningene i "
-             "[docs/preview/laasvalg.png](../preview/laasvalg.png) kan "
-             "monteres senere uten at noe tre må endres. Det arket er "
-             "historikk nå, ikke en bestilling.\n")
+             f"{_MODEL.PANEL_MODE_LIFT} mm fra hverandre i bordstilling. "
+             "Geometrien er målt og asserted i modellen, så en lås kan "
+             "ettermonteres senere uten at noe tre må endres.\n")
     write(os.path.join(out_dir, "beslagliste.md"), "".join(L))
 
 

@@ -378,38 +378,38 @@
   <rect x="2746" y="1434" width="276" height="69" class="brd"/>
   <polyline points="2998,1707 3022,1673 2998,1639 3022,1605 2998,1571 3022,1537 2998,1503" class="brk"/>
   <polyline points="2998,1503 3022,1480 2998,1457 3022,1434" class="brk"/>
-  <ellipse cx="2848" cy="1641" rx="63.8874" ry="27" class="seat"/>
-  <ellipse cx="2793.622" cy="1641" rx="11.4108" ry="27" class="seatb"/>
-  <line x1="2793.622" y1="1641" x2="2630.485" y2="1641" class="scrl"/>
-  <circle cx="2793.622" cy="1641" r="7" class="scr"/>
-  <ellipse cx="2848" cy="1569" rx="63.8874" ry="27" class="seat"/>
-  <ellipse cx="2793.622" cy="1569" rx="11.4108" ry="27" class="seatb"/>
-  <line x1="2793.622" y1="1569" x2="2630.485" y2="1569" class="scrl"/>
-  <circle cx="2793.622" cy="1569" r="7" class="scr"/>
-  <text x="2932" y="1616" class="jl" text-anchor="start">J8-B</text>
+  <ellipse cx="2848" cy="1635" rx="63.8874" ry="27" class="seat"/>
+  <ellipse cx="2793.622" cy="1635" rx="11.4108" ry="27" class="seatb"/>
+  <line x1="2793.622" y1="1635" x2="2630.485" y2="1635" class="scrl"/>
+  <circle cx="2793.622" cy="1635" r="7" class="scr"/>
+  <ellipse cx="2848" cy="1563" rx="63.8874" ry="27" class="seat"/>
+  <ellipse cx="2793.622" cy="1563" rx="11.4108" ry="27" class="seatb"/>
+  <line x1="2793.622" y1="1563" x2="2630.485" y2="1563" class="scrl"/>
+  <circle cx="2793.622" cy="1563" r="7" class="scr"/>
+  <text x="2932" y="1610" class="jl" text-anchor="start">J8-B</text>
   <text x="2470" y="1440" class="sml" text-anchor="start">Bakre hjørnestolpe</text>
   <text x="2470" y="1470" class="sml" text-anchor="start">36×98, Y −48 … −12 –</text>
   <text x="2470" y="1500" class="sml" text-anchor="start">forsiden ligger 12 mm</text>
   <text x="2470" y="1530" class="sml" text-anchor="start">bak vangens forside.</text>
   <line x1="3022" y1="1707" x2="3105" y2="1707" class="ext"/>
-  <line x1="3022" y1="1668" x2="3105" y2="1668" class="ext"/>
-  <line x1="3022" y1="1614" x2="3105" y2="1614" class="ext"/>
-  <line x1="3022" y1="1596" x2="3105" y2="1596" class="ext"/>
-  <line x1="3022" y1="1542" x2="3105" y2="1542" class="ext"/>
+  <line x1="3022" y1="1662" x2="3105" y2="1662" class="ext"/>
+  <line x1="3022" y1="1608" x2="3105" y2="1608" class="ext"/>
+  <line x1="3022" y1="1590" x2="3105" y2="1590" class="ext"/>
+  <line x1="3022" y1="1536" x2="3105" y2="1536" class="ext"/>
   <line x1="3022" y1="1503" x2="3105" y2="1503" class="ext"/>
-  <line x1="3095" y1="1707" x2="3095" y2="1668" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="3107" y="1695.5" class="dm" text-anchor="start">13</text>
-  <line x1="3095" y1="1668" x2="3095" y2="1614" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="3107" y="1649" class="dm" text-anchor="start">18</text>
-  <line x1="3095" y1="1614" x2="3095" y2="1596" class="dim"/>
-  <text x="3107" y="1613" class="dm" text-anchor="start">6</text>
-  <line x1="3095" y1="1596" x2="3095" y2="1542" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="3107" y="1577" class="dm" text-anchor="start">18</text>
-  <line x1="3095" y1="1542" x2="3095" y2="1503" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="3107" y="1530.5" class="dm" text-anchor="start">13</text>
-  <text x="3055" y="1790" class="sml" text-anchor="start">13–18–6–18–13 = 68</text>
+  <line x1="3095" y1="1707" x2="3095" y2="1662" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="3107" y="1692.5" class="dm" text-anchor="start">15</text>
+  <line x1="3095" y1="1662" x2="3095" y2="1608" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="3107" y="1643" class="dm" text-anchor="start">18</text>
+  <line x1="3095" y1="1608" x2="3095" y2="1590" class="dim"/>
+  <text x="3107" y="1607" class="dm" text-anchor="start">6</text>
+  <line x1="3095" y1="1590" x2="3095" y2="1536" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="3107" y="1571" class="dm" text-anchor="start">18</text>
+  <line x1="3095" y1="1536" x2="3095" y2="1503" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="3107" y="1527.5" class="dm" text-anchor="start">11</text>
+  <text x="3055" y="1790" class="sml" text-anchor="start">15–18–6–18–11 = 68</text>
   <text x="3055" y="1822" class="sml" text-anchor="start">6 mm tre mellom de to lommene,</text>
-  <text x="3055" y="1854" class="sml" text-anchor="start">13 mm til vangens over- og underkant.</text>
+  <text x="3055" y="1854" class="sml" text-anchor="start">15 mm ned til underkanten, 11 opp.</text>
   <line x1="2746" y1="1707" x2="2746" y2="1995" class="ext"/>
   <line x1="2784.112" y1="1707" x2="2784.112" y2="1995" class="ext"/>
   <line x1="2848" y1="1707" x2="2848" y2="1995" class="ext"/>
@@ -420,9 +420,9 @@
   <text x="2797" y="1931" class="dm" text-anchor="middle">34</text>
   <line x1="2784.112" y1="1960" x2="2911.888" y2="1960" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
   <text x="2848" y="1986" class="dm" text-anchor="middle">42,6  munningens lengde</text>
-  <polyline points="2790,1660 2600,2040" class="ldr" marker-start="url(#aE)"/>
+  <polyline points="2790,1654 2600,2040" class="ldr" marker-start="url(#aE)"/>
   <text x="2380" y="2062" class="sml" text-anchor="start">Hodet ligger i bunnen av lommen, 3,11 mm under treet.</text>
-  <text x="2380" y="2170" class="big" text-anchor="start">PLAN VED Z = 251 – SETET OG SKRUEVINKELEN (X–Y), 3:1</text>
+  <text x="2380" y="2170" class="big" text-anchor="start">PLAN VED Z = 253 – SETET OG SKRUEVINKELEN (X–Y), 3:1</text>
   <rect x="2386" y="2272" width="636" height="48" class="wall"/>
   <rect x="2386" y="2320" width="66" height="190" class="wall"/>
   <line x1="2452" y1="2320" x2="3022" y2="2320" class="wallface"/>
@@ -453,7 +453,7 @@
   <text x="2380" y="2690" class="sml" text-anchor="start">bakflaten ER veggflaten. Bakre benkevange og bordbærelekt går stolpe til stolpe,</text>
   <text x="2380" y="2720" class="sml" text-anchor="start">X 98–1892 = 1794 mm, og BUTTER mot stolpenes innerflate – de kan ikke tres inn</text>
   <text x="2380" y="2750" class="sml" text-anchor="start">etterpå, så bakrammen må bygges flat på gulvet.</text>
-  <text x="2380" y="2810" class="sml" text-anchor="start">J8-B: 2 × treskrue 6×80 SKRÅTT, 25° på vangens forside, ved Z 251 og 275 (24 mm s/s).</text>
+  <text x="2380" y="2810" class="sml" text-anchor="start">J8-B: 2 × treskrue 6×80 SKRÅTT, 25° på vangens forside, ved Z 253 og 277 (24 mm s/s).</text>
   <text x="2380" y="2840" class="sml" text-anchor="start">Bor setet FØRST med vinkelklossen: ⌀18 forstner 20 mm ned LANGS skruens akse, så</text>
   <text x="2380" y="2870" class="sml" text-anchor="start">⌀6 skrått videre gjennom vangen og ⌀4 i stolpen – forbor hele veien. 60 mm av</text>
   <text x="2380" y="2900" class="sml" text-anchor="start">skruen står igjen etter setet. Munningens nærmeste kant står 12,7 mm fra ende-</text>

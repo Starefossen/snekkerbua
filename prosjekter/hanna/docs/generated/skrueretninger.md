@@ -40,4 +40,4 @@ Hvilken vei hver skrue drives, og hvorfor akkurat den veien. Hvert festemiddel i
 
 **6** av retningene er utledet av målene alene, **18** er fastsatt for hånd. Alle sammen kontrolleres ved hver bygging: skruekroppen må ha hodet i plan med flaten den drives fra, spissen inne i delen den tar tak i, og ingenting av seg selv i noen annen del.
 
-Veggfestet (J14) står ikke her — det går rett gjennom den bakre sidevangen og inn i veggen, og har ingen andre del å gå inn i.
+Veggfestene (J14 og J12-V) står ikke her — de går rett gjennom den bakre sidevangen og gjennom bordbærelekta og inn i veggen, og har ingen andre del å gå inn i.

@@ -33,8 +33,7 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **320** | benkeoverflate (sittehøyde uten pute) |
 | **420** | **puteoverflate — nedre soveflate og sittehøyde med pute** (V13) |
 | **572** | trinn 2 |
-| **614** | bordbærelektas underkant |
-| **614** | bordklossenes underkant |
+| **614** | bordbærelektas underkant = bordklossenes underkant |
 | **682** | bordbærelektas og bordklossenes overkant = platens underside i bordstilling (X9: ikke lenger et trinn) |
 | **700** | **bordplate — pulthøyde** (X9) |
 | **752** | ryggputens topp i sofastilling (V13) |
@@ -42,9 +41,9 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **1073** | trinn 4 |
 | **1298** | trinn 5 |
 | **1304** | endebjelkens underkant |
-| **1402** | endebjelkens overkant = sidevangens underkant (fri høyde under sengen) |
+| **1402** | **bakre stolpetopp** = endebjelkens overkant = sidevangens underkant (fri høyde under sengen) |
 | **1500** | sidevangens overkant |
-| **1523** | spilebunn / madrassens underside / bakre stolpetopp |
+| **1523** | spilebunn / madrassens underside |
 | **1643** | madrassens overside (ved 120 mm madrass; lovlig band 110–125) |
 | **1708** | rekkverk, nedre bånd underkant |
 | **1806** | rekkverk, nedre bånd overkant |

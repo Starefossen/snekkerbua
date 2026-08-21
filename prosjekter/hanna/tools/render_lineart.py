@@ -323,10 +323,13 @@ def step_marks(G, st, letters, codes, view):
     page was handed - so the body, the section and the panel row all draw the
     same fastener the same way, and a bare page is bare everywhere.
     """
+    specs = [f for f in G.FASTENER_SPECS if f["jid"] in st["joints"]]
+    # The ring a head-on fastener is drawn with is a property of the PAGE, not
+    # of the screw: it shrinks where its neighbours crowd it (A ROW OF HEADS).
+    # It has to be known here, because mark["body"] is what R2 merges on.
+    rings = ring_radii(view, specs)
     out = []
-    for f in G.FASTENER_SPECS:
-        if f["jid"] not in st["joints"]:
-            continue
+    for f, ring in zip(specs, rings):
         if f["kind"] == "plate":
             p3 = tuple(a + r * f["reach"] * 0.5
                        for a, r in zip(f["anchor"], f["run"]))
@@ -343,10 +346,10 @@ def step_marks(G, st, letters, codes, view):
                         dir3=d3, per=1, jid=f["jid"],
                         name=f["name"], letter=letters.get(f["name"]),
                         code=codes.get(f["name"]),
-                        area=area, spec=f,
+                        area=area, spec=f, ring=ring,
                         # The body as the page would draw it sitting in its
                         # hole - what R2 asks its question of.
-                        body=body_capsule(view, f)))
+                        body=body_capsule(view, f, ring=ring)))
     return out
 
 
@@ -611,6 +614,87 @@ def drawn_head_r(d):
     return d * SCREW_FATTEN * gen_glyphs.HEAD_DIA_RATIO / 2.0
 
 
+# ---------------------------------------------------------------------------
+# A ROW OF HEADS - HOW BIG THE RINGED DOT IS
+# ---------------------------------------------------------------------------
+# A screw driven straight at the camera has no silhouette left, and the page
+# draws the ringed dot instead. That ring is the one mark on the page whose
+# size comes from NOTHING in the model: T.RING_R is a page constant, the same
+# circle for a 5x40 and a 6x120, chosen so a single head-on screw reads at
+# arm's length. It is a symbol, not a projection.
+#
+# And a symbol that is bigger than the spacing of the things it stands for
+# stops being able to count them. J3 drives three 6x80 up the ladder upright
+# 24 mm apart, dead-on to the step-6 camera; three rings of T.RING_R = 15 mm
+# at 23 mm centres are a chain of overlapping circles, so R2 - which asks
+# whether the DRAWN bodies share paper, and is right to - merged the middle
+# one away and the page showed four screws where the table said six.
+#
+# The screws are not the problem. The symbol is, so the symbol gives way: in a
+# row of head-on rings each one shrinks to half the gap to its nearest
+# neighbour, which is the largest circle that still leaves every screw its own
+# ring, and the row reads as the row of holes it is. Nothing else changes -
+# same centre dot, same ink, same place - and the ring is never drawn LARGER
+# than T.RING_R, so a lone head-on screw is untouched on every page.
+#
+# The floor is legibility: below RING_MIN_RATIO times its own centre dot there
+# is no annulus left to see, only a blob, and at that point the two really are
+# one place on the paper. Then the ring keeps its full size, the two bodies
+# overlap, and R2 merges them into one mark carrying the count - which is the
+# honest answer for two screws the camera has genuinely put on top of each
+# other. assert_joint_marks_drawn() is where such a pair has to be written
+# down by name before the build will pass.
+RING_MIN_RATIO = 1.9
+# The rings may touch, but a hairline of white between two circles is what
+# makes them two circles, and capsules_overlap() is a strict "<" - so a row
+# sized to exactly half the gap would sit on the boundary of every rule that
+# measures it. This is that hairline, as a fraction of the half-gap.
+RING_ROW_SLACK = 0.98
+
+
+def head_on_point(view, f):
+    """Where a fastener with no axis left on the page puts its ring, or None.
+
+    The same test body_capsule() and draw_fastener() make - a projected axis
+    shorter than AXIS_ON_PAGE of the screw's true length - asked once, in one
+    place, so the ring rule and the ink cannot disagree about which fasteners
+    are head-on.
+    """
+    if f["kind"] == "plate":
+        return None
+    p0 = view.xy(f["anchor"])
+    p1 = view.xy(tuple(a + d * f["length"]
+                       for a, d in zip(f["anchor"], f["direction"])))
+    if math.hypot(p1[0] - p0[0], p1[1] - p0[1]) >= f["length"] * AXIS_ON_PAGE:
+        return None
+    return p0
+
+
+def ring_radii(view, specs):
+    """The ring each head-on fastener on ONE page is drawn with.
+
+    A list parallel to `specs`, None where the fastener has an axis to draw
+    and therefore no ring. Every radius is at most T.RING_R and at least
+    RING_MIN_RATIO centre dots, and the pairwise guarantee follows from taking
+    half the NEAREST neighbour's gap: if r_a is half a's nearest gap and r_b
+    half b's, then r_a + r_b <= d(a, b) for every pair that is not already
+    inside the floor. So no two rings that could be separated are drawn on top
+    of each other, and no ring is drawn too small to be a ring.
+    """
+    floor = T.RING_DOT_R * RING_MIN_RATIO
+    pts = [head_on_point(view, f) for f in specs]
+    out = []
+    for i, p in enumerate(pts):
+        if p is None:
+            out.append(None)
+            continue
+        gaps = [math.hypot(q[0] - p[0], q[1] - p[1]) * 0.5 * RING_ROW_SLACK
+                for j, q in enumerate(pts) if q is not None and j != i]
+        gaps = [g for g in gaps if g >= floor]
+        out.append(min([T.RING_R] + gaps))
+    return out
+
+
 def _seg_seg_dist(a0, a1, b0, b1):
     """Distance between two segments on the page, 0 where they cross."""
     def cross(o, p, q):
@@ -625,7 +709,8 @@ def _seg_seg_dist(a0, a1, b0, b1):
                layout._seg_dist(b0, a0, a1), layout._seg_dist(b1, a0, a1))
 
 
-def body_capsule(view, f, shift=(0.0, 0.0, 0.0), page_off=(0.0, 0.0)):
+def body_capsule(view, f, shift=(0.0, 0.0, 0.0), page_off=(0.0, 0.0),
+                 ring=None):
     """The drawn body as (end, end, half-width) on the page.
 
     For a screw that is what the silhouette IS. For a bracket - which has no
@@ -633,6 +718,11 @@ def body_capsule(view, f, shift=(0.0, 0.0, 0.0), page_off=(0.0, 0.0)):
     for a question no bracket has ever had to answer: a merge only ever
     considers two fasteners with the SAME NAME, and no bracket shares a name
     with a screw.
+
+    `ring` is the head-on ring this fastener is DRAWN with on this page - see
+    A ROW OF HEADS. It is passed in rather than read off T because a row of
+    them shrinks together, and a capsule that assumed the full symbol would
+    keep merging away screws the page has just made room for.
     """
     anchor = tuple(a + s for a, s in zip(f["anchor"], shift))
     ox, oy = page_off
@@ -649,7 +739,7 @@ def body_capsule(view, f, shift=(0.0, 0.0, 0.0), page_off=(0.0, 0.0)):
     n = math.hypot(p1[0] - p0[0], p1[1] - p0[1])
     if n < f["length"] * AXIS_ON_PAGE:
         # Head on: the page draws a ringed dot, so that is the body.
-        return (p0, p0, T.RING_R)
+        return (p0, p0, T.RING_R if ring is None else ring)
     # The capsule is the body the page DRAWS, floor and all - not the raw
     # projection. A foreshortened screw is stretched back to the floor when it
     # is drawn, and a capsule that stopped short of it would let a badge park
@@ -1169,7 +1259,8 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
         # Straight at the reader: the drawing convention for an axis with no
         # length on the page is a ringed dot, and it is the same mark whether
         # the screw is in or out.
-        page.circle(p0, T.RING_R, fill=paint, width=T.W_SCREW)
+        ring = m.get("ring") or T.RING_R
+        page.circle(p0, ring, fill=paint, width=T.W_SCREW)
         page.dot(p0, T.RING_DOT_R)
         # The ring IS the drawn body on this page - there is no axis to draw -
         # so it goes into the record as one. A badge has to be able to touch
@@ -1179,7 +1270,7 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
                                 letter=m.get("letter"),
                                 points=[p0], axis=None,
                                 head_r=drawn_head_r(f["d"]),
-                                cap=(p0, p0, T.RING_R)))
+                                cap=(p0, p0, ring)))
         return p0, p0, None
     if solid:
         page.poly(outline, fill=paint, stroke=INK, width=T.W_SCREW)
@@ -1214,7 +1305,8 @@ def draw_fastener(page, view, m, style, shift=(0.0, 0.0, 0.0), stack=0,
                             # length it was drawn at: the two together are what
                             # says whether this is still a screw (STUB_ASPECT).
                             head_r=drawn_head_r(f["d"]),
-                            cap=body_capsule(view, f, shift, page_off)))
+                            cap=body_capsule(view, f, shift, page_off,
+                                             ring=m.get("ring"))))
     return p0, p1, body
 
 
@@ -2770,6 +2862,83 @@ def assert_marks_own_element(page, occ):
 
 
 # ---------------------------------------------------------------------------
+# EVERY FASTENER, ONE FOR ONE - AND THE THREE PLACES IT IS NOT
+# ---------------------------------------------------------------------------
+# The front of the manual promises that the fasteners are DRAWN, one for one,
+# and check_coverage() has never been able to check that promise: it adds up
+# the `per` counts, and a mark that swallowed its neighbour hands its count on
+# and keeps the sum right while the page draws one screw where the table says
+# two. That is precisely how J3's middle screw went missing on step 6 - six
+# screws in the beslag list, four silhouettes on the paper, every total
+# correct.
+#
+# assert_joint_marks_drawn() asks the other question, of the ink: how many
+# SYMBOLS did this page put down for this joint, against how many fasteners
+# the joint has in this step. It is a joint-by-joint count and not a page
+# total, because a page total can be right for the wrong reason.
+#
+# COINCIDENT_MARKS is the only way out, and it is a list of NAMES rather than
+# a tolerance: a step, a joint, what the model has, what the page could draw,
+# and why. Every entry here is the same picture, and it is a real one - two
+# screws of one joint 24 mm apart, drawn with heads fattened to SCREW_FATTEN
+# so a 6 mm screw is legible at all, i.e. 23.4 mm across. The two silhouettes
+# overlap by 0.3 mm and the page can only draw one of them. The screws are
+# right, the spacing is right, and the head is a legibility licence the whole
+# manual is drawn with (docs/preview/formkontrast.png is where that number is
+# proven), so this is the one case that is honestly a coincidence.
+#
+# It is NOT the escape hatch for a symbol that is merely too big for its row.
+# The head-on ring is a page constant with nothing of the screw in it, so when
+# a row of them crowds, the ring gives way instead - see A ROW OF HEADS. Only
+# a fattening that the manual has already paid for elsewhere may cash in here.
+#
+#   (step, joint): (fasteners in the model, symbols the page draws, why)
+COINCIDENT_MARKS = {
+    (1, "J8-B"): (2, 1, "bakre benkevangeende → bakre stolpe: paret står "
+                        "24 mm fra hverandre i Z og hodene er 23,4 mm"),
+    (5, "J8"): (2, 1, "fremre benkevangeende → fremre stolpe: samme par, "
+                      "samme 24 mm, sett omtrent rett forfra"),
+    (6, "J5-B"): (4, 2, "bordkloss → stigevange: to par à 24 mm, ett i "
+                        "hver vange, begge sett langs sin egen akse"),
+}
+
+
+def assert_joint_marks_drawn(page, st, marks):
+    """One drawn symbol per fastener, joint by joint, measured off the ink.
+
+    `marks` is what the step drives on THIS page - already cut down to the
+    half a half view draws, because a half view's other end is not a missing
+    screw, it is a screw on the other sheet. The count on the paper comes out
+    of the page's own record, so it is the silhouettes that answer and not the
+    intention that produced them.
+    """
+    want, got = {}, {}
+    for m in marks:
+        want[m["jid"]] = want.get(m["jid"], 0) + 1
+    for r in page.record:
+        if r["kind"] in ("screw", "plate") and r.get("mark") is not None:
+            got[r["jid"]] = got.get(r["jid"], 0) + 1
+    for jid in sorted(want):
+        n_want, n_got = want[jid], got.get(jid, 0)
+        known = COINCIDENT_MARKS.get((st["n"], jid))
+        if known is None:
+            assert n_got == n_want, (
+                f"steg {st['n']}, ledd {jid}: leddet har {n_want} "
+                f"festemidler i dette steget, men arket tegner {n_got} "
+                f"symboler. Festemidlene skal stå ett for ett. Enten skal "
+                f"symbolet vike (se A ROW OF HEADS og choose_marks (R2)), "
+                f"eller så er sammenfallet ekte og skal skrives opp med navn "
+                f"og grunn i COINCIDENT_MARKS.")
+            continue
+        listed, drawn, why = known
+        assert (n_want, n_got) == (listed, drawn), (
+            f"steg {st['n']}, ledd {jid}: COINCIDENT_MARKS sier {listed} "
+            f"festemidler tegnet som {drawn} symboler ({why}), men arket "
+            f"har {n_want} festemidler og tegner {n_got}. Sammenfallet er "
+            f"ikke det samme lenger - rett opp raden eller stryk den.")
+
+
+# ---------------------------------------------------------------------------
 # R7 - ONE BADGE PER TYPE PER CLUSTER
 # ---------------------------------------------------------------------------
 # A ladder stile takes eight identical 5x60 in a column, and the page used to
@@ -3025,36 +3194,179 @@ def draw_inset(page, box, sections, step_fasteners, glyph_dir, codes):
 # covers loses its own mark and has to hand its count to a joint somewhere
 # else on the page, and a panel on a panel is simply one page short.
 PANEL_INK = 1.0
+# ...and what it costs on the step's OWN parts. layout.Occupancy has always
+# known that the two layers are not the same thing - "a caption may lie over
+# the grey ghost of a frame that is already standing, never over the black
+# part the step is about" - and every annotation on the page but this one
+# asked it that way. The panel did not, and it is the annotation with the
+# least right to be careless: a badge crowds what is under it, an opaque
+# white box HIDES it. On the ladder page that put the fastener list over the
+# top of the right upright, which is one of the two parts the step is about.
+# So the step's own line work is a wall to the panel and the ghost behind it
+# is not: the panel is welcome in front of the standing frame, which is what
+# ghosting is for, and nowhere near the piece being fitted.
+PANEL_SUBJECT = 400.0
 PANEL_MARK = 60.0
 PANEL_PANEL = 4000.0
+# occ.cost() counts the VERTICES that land inside the box, which is the right
+# question for a scatter of short edges and the wrong one for a 2 m upright
+# whose two ends are off the page: a panel could sit squarely across the
+# middle of it and be charged nothing. So the subject's edges are walked at
+# this pitch first, in model mm, and the box is charged for the paper it
+# covers rather than for the corners it happens to catch.
+SUBJECT_SAMPLE = 25.0
+# The panel's own air: how far its edge stands off the page edge, and how much
+# margin round it also counts as occupied. They were two loose numbers in the
+# placer call; they are named because crop_to_subject() has to solve for them
+# - a page cut so tight that no corner can hold the panel is a page where the
+# placer's only choice is which part of the subject to hide.
+PANEL_EDGE = 20.0
+PANEL_GROW = 30.0
+# The margin crop_to_subject() solves for is EXACT, and exact means tangent:
+# the grown footprint's edge lands on the subject's outermost line, and a
+# point on the boundary counts as inside. This is the hairline that makes
+# "beside the subject" mean beside it.
+PANEL_CLEAR = 8.0
+
+
+def _sampled(plines, pitch):
+    """The same line work with a point at least every `pitch` along it."""
+    out = []
+    for pl in plines:
+        pts = [pl[0]]
+        for a, b in zip(pl, pl[1:]):
+            n = int(math.hypot(b[0] - a[0], b[1] - a[1]) / pitch)
+            for i in range(1, n + 1):
+                t = i / (n + 1)
+                pts.append((a[0] + (b[0] - a[0]) * t,
+                            a[1] + (b[1] - a[1]) * t))
+            pts.append(b)
+        out.append(pts)
+    return out
 
 
 def emptiest_corner(plines, page, box_w, box_h, marks=(),
-                    avoid_top_left=False, avoid=()):
+                    avoid_top_left=False, avoid=(), subject=()):
     """Put the inset where the drawing is not - and, above all, where the
     fastening points are not.
 
     Four candidates, in the order they are preferred, through the same placer
     every other annotation goes through. `avoid` is any panel already on the
     page. Two panels in one corner is not crowding, it is one panel hiding the
-    other."""
+    other. `subject` is the step's own parts - see PANEL_SUBJECT: the panel
+    may stand in front of the ghost and not in front of them."""
     occ = layout.Occupancy()
     occ.add_lines(plines, weight=PANEL_INK, tag="art")
+    occ.add_lines(_sampled(subject, SUBJECT_SAMPLE), weight=PANEL_SUBJECT,
+                  tag="art")
     # The mark's own radius on top of the box's margin: a panel edge 40 mm
     # from a fastening point is already on it.
     occ.add_points([m["p2"] for m in marks], radius=10.0, weight=PANEL_MARK,
                    tag="mark")
     for a in avoid:
         occ.add_box(a, weight=PANEL_PANEL)
-    corners = [(page.x1 - box_w - 20, page.y1 - box_h - 20),
-               (page.x1 - box_w - 20, page.y0 + 20),
-               (page.x0 + 20, page.y0 + 20)]
+    e = PANEL_EDGE
+    corners = [(page.x1 - box_w - e, page.y1 - box_h - e),
+               (page.x1 - box_w - e, page.y0 + e),
+               (page.x0 + e, page.y0 + e)]
     if not avoid_top_left:
-        corners.append((page.x0 + 20, page.y1 - box_h - 20))
+        corners.append((page.x0 + e, page.y1 - box_h - e))
     at = layout.place([(bx + box_w / 2, by + box_h / 2)
                        for bx, by in corners],
-                      (box_w, box_h), occ, grow=30.0)
+                      (box_w, box_h), occ, grow=PANEL_GROW)
     return (at[0] - box_w / 2, at[1] - box_h / 2)
+
+
+# ---------------------------------------------------------------------------
+# THE WALL THE BED IS SCREWED TO
+# ---------------------------------------------------------------------------
+# One step in this manual is not about a piece of the bed at all: it stands the
+# back frame up and fastens it to the ROOM. Drawn without the room, that page
+# was a frame floating in white with its wall screws coming out of the back of
+# it and nothing on the other side - the one page in the book whose whole
+# subject was the thing it did not draw.
+#
+# So it gets the wall, and it gets it in the pen the page already has for
+# something that is there and is not what you are fitting now: the ghost.
+# Grey, W_PRIOR, drawn before anything else and therefore behind it. No new
+# stroke is invented and nothing is added that the eye has to climb over -
+# the step is still about the frame.
+#
+#   THE FLOOR LINE   where the wall meets the floor, and the ONLY edge of the
+#                    wall that is drawn: it is the only one that is real. A
+#                    wall does not stop at the edge of the page, so it runs
+#                    out of the viewBox at both ends and at the top, and a
+#                    rectangle round it would have said it stops there.
+#   THE STUDS        phantom - dashed, in DASH_PHANTOM, which is this page's
+#                    own way of saying "this is really there and you cannot
+#                    see it" (see DRAWING A FASTENER). That is exactly their
+#                    state: behind the boarding, and the reader's job to find.
+#
+# WHAT THE DRAWING DOES NOT CLAIM. Where the studs in the reader's room stand
+# is not in the model and cannot be - generate_loftbed.py says so itself in
+# the joint note, "stenderne finnes bare i rommet", and the fastener row says
+# "etter veggtype" for the same reason. So this draws A stud wall and not THIS
+# wall: ordinary bindingsverk at c/c 600, phased on the bed's own centre line.
+# Nothing on the page counts them and no assert measures them; they are the
+# picture of a wall, in the lightest pen the page owns.
+WALL_STUD_CC = 600.0
+WALL_STUD_W = 36.0
+# How far past the bed the wall runs before the viewBox cuts it off. A wall
+# that ended where the frame ends would be a headboard.
+WALL_MARGIN = 700.0
+
+
+def wall_datum(G, marks):
+    """(wall plane Y, the bed's box) for a step that fastens to the room.
+
+    None for every other step, and the test is deliberately not a joint id or
+    a count: which joints go into the wall is the model's business and has
+    already changed once. What cannot change is the geometry - a wall fixing
+    is a fastener whose POINT ends up behind the bed's own back face - and the
+    plane it ends up behind is that same back face, read off the model rather
+    than typed in here.
+    """
+    box = full_bed(G).bounding_box()
+    for m in marks:
+        f = m["spec"]
+        if f["kind"] == "plate":
+            continue
+        tip_y = f["anchor"][1] + f["direction"][1] * f["length"]
+        if tip_y < box.min.Y - 1e-6:
+            return (box.min.Y, box)
+    return None
+
+
+def draw_wall(page, view, G, marks):
+    """The room behind the frame. Returns how many studs went down."""
+    datum = wall_datum(G, marks)
+    if datum is None:
+        return 0
+    wall_y, box = datum
+    x0, x1 = box.min.X - WALL_MARGIN, box.max.X + WALL_MARGIN
+    z0, z1 = box.min.Z, box.max.Z + WALL_MARGIN
+    page.polylines([[view.xy((x0, wall_y, z0)), view.xy((x1, wall_y, z0))]],
+                   GREY, T.W_PRIOR)
+    # The FLOOR line runs past the bed at both ends; the STUDS do not. Only
+    # the ones the frame is actually fastened to are any of the drawing's
+    # business, and a phantom line out in the empty half of the page is
+    # wallpaper - it crosses the before/after thumbnails and says nothing the
+    # three behind the frame have not said already.
+    mid = (box.min.X + box.max.X) / 2.0
+    lo = int(math.floor((box.min.X - mid) / WALL_STUD_CC))
+    hi = int(math.ceil((box.max.X - mid) / WALL_STUD_CC))
+    studs = []
+    for k in range(lo, hi + 1):
+        c = mid + k * WALL_STUD_CC
+        edges = [x for x in (c - WALL_STUD_W / 2, c + WALL_STUD_W / 2)
+                 if box.min.X <= x <= box.max.X]
+        if len(edges) < 2:
+            continue
+        for x in edges:
+            studs.append([view.xy((x, wall_y, z0)),
+                          view.xy((x, wall_y, z1))])
+    page.polylines(studs, GREY, T.W_PRIOR, dash=DASH_PHANTOM)
+    return len(studs) // 2
 
 
 # ---------------------------------------------------------------------------
@@ -3433,6 +3745,9 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # how many pixels is one millimetre of this page going to be. So the page
     # is told once, here, and both rules read the one number.
     page.px_per_unit = width / page.w
+    # THE ROOM, on the one page whose subject is the room: before the ghost,
+    # so it is behind everything, including everything already standing.
+    studs = draw_wall(page, view, G, marks)
     page.polylines(combined.get("prior", []), GREY, T.W_PRIOR)
     # The new part is drawn whole - but the stretch of it that something
     # already standing hides is drawn DASHED, because that is the only thing
@@ -3458,9 +3773,10 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # "emptiest" would pick the top left corner, which is exactly the corner
     # the panel is about: the mattress meeting the back wall. The step says so
     # itself with avoid_top_left.
-    bx, by = emptiest_corner(combined.get("prior", []) + new_only,
+    bx, by = emptiest_corner(combined.get("prior", []),
                              page, inset_w, inset_h, marks,
-                             avoid_top_left=st.get("avoid_top_left"))
+                             avoid_top_left=st.get("avoid_top_left"),
+                             subject=new_only)
     box = (bx, by, inset_w, inset_h)
     # Both of these are measured on the SHORT side of the page, so a step
     # that gets a tall page of its own - the ladder - does not get arrows and
@@ -3484,9 +3800,9 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     if half:
         note_w = page.w * 0.38
         note_h = note_w * 0.42
-        nx, ny = emptiest_corner(combined.get("prior", []) + new_only,
+        nx, ny = emptiest_corner(combined.get("prior", []),
                                  page, note_w, note_h, keep,
-                                 avoid=(box,))
+                                 avoid=(box,), subject=new_only)
         note_box = (nx, ny, note_w, note_h)
 
     # THE FASTENERS THEMSELVES. Two styles, and which one a page gets is
@@ -3622,7 +3938,8 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                         for q in range(QUEUE_MAX):
                             back = (out + (blen + hover) * q) / nrm
                             shift = tuple(-c * back for c in f["direction"])
-                            cap = body_capsule(view, f, shift, poff)
+                            cap = body_capsule(view, f, shift, poff,
+                                               ring=m.get("ring"))
                             if not any(capsules_overlap(cap, c)
                                        for c in drawn_caps):
                                 break
@@ -3635,7 +3952,8 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                     back = 0.0
                     shift = (0.0, 0.0, 0.0)
                     label_dir = (0.0, -1.0)
-            drawn_caps.append(body_capsule(view, f, shift, poff))
+            drawn_caps.append(body_capsule(view, f, shift, poff,
+                                           ring=m.get("ring")))
             head, tip, body = draw_fastener(page, view, m, style, shift, 0,
                                             poff)
             # Dotted, not dashed and not an arrow: this line is a fastener's
@@ -3735,6 +4053,8 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     assert_badges_cover(page)
     assert_badges_homogeneous(page)
     assert_marks_own_element(page, occ)
+    if not st.get("no_fasteners"):
+        assert_joint_marks_drawn(page, st, marks)
 
     # R3 - NO LEADERS FROM THE INSET.
     # The panel used to trail up to four long grey dashed lines across the
@@ -3786,7 +4106,9 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
         if page.fill_spans:
             PAGE_FILL_SCALES[n] = width / page.w
     print(f"  steg {n:2d}  {len(combined.get('prior', [])):4d} gra / "
-          f"{len(new_only):4d} svarte / {len(keep):2d} festepunkt -> {png}")
+          f"{len(new_only):4d} svarte / {len(keep):2d} festepunkt"
+          + (f" / vegg m/{studs} stendere" if studs else "")
+          + f" -> {png}")
     return png
 
 
@@ -4241,7 +4563,24 @@ def crop_to_subject(view, page_box, new_parts):
     if not new_parts:
         return page_box
     bx0, by0, bx1, by1 = bounds(project(view, [("s", comp(new_parts))])["s"])
-    mx = (bx1 - bx0) * 1.05                # room for arrows and badges
+    sw = bx1 - bx0
+    mx = sw * 1.05                         # room for arrows and badges
+    # ...AND ROOM FOR THE PAGE'S OWN PANEL, which is not an annotation the
+    # crop may leave out: it is INSET_W_FRAC of the finished page width, it is
+    # opaque, and every one of emptiest_corner()'s four candidates puts it in a
+    # side margin. Cut the page to 1.05 subject widths and that margin comes
+    # out 437 mm against a 445 mm panel, so all four corners cover the ladder
+    # and the placer's only decision is which upright to hide - which is how
+    # the fastener list ended up lying over the right stile's top.
+    #
+    # The margin that can hold the panel is the fixed point of
+    #     mx = INSET_W_FRAC * (sw + 2 mx)
+    #            + PANEL_EDGE + PANEL_GROW + PANEL_CLEAR
+    # and it is solved rather than guessed, so the day the panel or the crop
+    # changes width the page follows it instead of going quietly opaque.
+    room = ((INSET_W_FRAC * sw + PANEL_EDGE + PANEL_GROW + PANEL_CLEAR)
+            / (1.0 - 2 * INSET_W_FRAC))
+    mx = max(mx, room)
     my = (by1 - by0) * 0.06
     return (bx0 - mx, by0 - my, bx1 + mx, by1 + my)
 

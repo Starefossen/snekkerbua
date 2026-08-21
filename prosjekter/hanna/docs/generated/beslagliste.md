@@ -13,8 +13,8 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 | Treskrue 5×40 forsenket Torx | 36 | 1 pk. à 50 stk. |
 | Treskrue 6×80 forsenket Torx | 30 | 1 pk. à 50 stk. |
 | Treskrue 6×120 forsenket Torx | 14 | 1 pk. à 20 stk. |
+| Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | 9 | 9 stk. |
 | Filtknott / møbeltapp ⌀40 | 8 | 1 pk. |
-| Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | 6 | 6 stk. |
 | Vinkelbeslag 90×90×40×2,5 varmforsinket | 4 | 6 stk. |
 | Vinkelbeslag 40×40×20 | 2 | 4 stk. |
 
@@ -26,7 +26,7 @@ I tillegg trengs **D3 trelim**, én liten flaske. Den er ikke en post i tabellen
 
 | Ledd | Hva | Antall ledd | Per ledd | Forboring | Drives fra |
 |---|---|---:|---|---|---|
-| **J1** | Endebjelke → hjørnestolpe | 4 | 2× Treskrue 6×80 forsenket Torx | ⌀6 gjennom bjelken, ⌀4 i stolpen | Fra bjelkens utside, inn mot stolpen — helt inne i sengen, tilgjengelig hele veien. Disse to skruene er HELE festet: det står ingen kloss under bjelkeenden |
+| **J1** | Endebjelke → hjørnestolpe | 4 | 2× Treskrue 6×80 forsenket Torx | ⌀6 gjennom bjelken, ⌀4 i stolpen | Fra bjelkens innside (mot sengas midte), inn mot stolpen — helt inne i sengen, tilgjengelig hele veien. Disse to skruene er HELE festet: det står ingen kloss under bjelkeenden |
 | **J2** | Fremre sidevange → fremre hjørnestolpe | 2 | 2× Treskrue 6×80 forsenket Torx | ⌀6 gjennom vangen, ⌀4 i stolpen | Fra vangens innside — inne fra sengen — gjennom vangen og inn i stolpen. Stolpens forside er urørt |
 | **J2-B** | Bakre sidevange → bakre hjørnestolpe (vangen hviler på stolpetoppen) | 2 | 2× Treskrue 6×120 forsenket Torx | ⌀6 gjennom vangen, ⌀4 i stolpens endeved; forsenk hodet godt under vangens overkant så køyespilene ligger flatt | Rett ned gjennom vangen i stolpetoppen, mens bakrammen ligger flatt på gulvet. Ingenting på veggsiden, og ingen kloss: vangen står 12 mm proud av den tynnere stolpen, så et rett beslag ville uansett ikke ligget an mot begge |
 | **J3** | Stigevange → fremre sidevange | 2 | 3× Treskrue 6×80 forsenket Torx | ⌀6 gjennom sidevangen, ⌀4 i stigevangen | Fra sidevangens innside — inne fra sengen — gjennom vangen og inn i stigevangen. Stigevangens forside er urørt |
@@ -43,6 +43,7 @@ I tillegg trengs **D3 trelim**, én liten flaske. Den er ikke en post i tabellen
 | **J16** | Endespile → endelist (bakre spileende) | 2 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom spilen, forsenk hodet under flaten | Ovenfra, ned i endelisten |
 | **J17** | Endelist → bakre hjørnestolpe (mot stolpens forside) | 2 | 2× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom listen, ⌀3 i stolpen | Rett inn i stolpens forside, fra benkerommet — listen ligger flatt på stolpen og de to skruene er hele festet |
 | **J12** | Bordbærelekt → bakre hjørnestolpe (endeskjøt) | 2 | 1× Vinkelbeslag 40×40×20 + 2× Treskrue 5×40 forsenket Torx | ⌀3 i stolpen og i lekta — forboring er et krav: begge skruene står nær en ende, og lekta (48×68) tas i endeveden | Beslaget på stolpens innerflate, med den vannrette fliken UNDER lektas ende, så lekta har noe å hvile på og ikke bare henger i skruer |
+| **J12-V** | Veggfeste — gjennom bordbærelekta inn i stenderne | 1 | 3× Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | ⌀8 gjennom lekta, forsenk for hodet; veggen etter festetype. Bores på stedet — stenderne finnes bare i rommet | Rett gjennom lekta inn i veggen, fra benkerommet. Lekta ligger flatt mot veggen i hele sin lengde, så festet trenger verken kloss eller brakett; hodet forsenkes i lektas forside, som ryggputa lener seg mot |
 | **J13a** | Avstivningslekt → løs plate (limt, skrudd nedenfra) | 2 | 6× Treskrue 5×40 forsenket Torx | ⌀12 kontrabor 41 mm opp i lektas underside, ⌀3,5 videre gjennom resten av lekta. Ingenting gjennom platens overside | Nedenfra, opp gjennom lekta og 13 mm inn i den 18 mm platen. Limes med D3 trelim på hele lektas overkant først — skruene er tvinger som blir sittende |
 | **J13b** | Fremre kilelekt (vinge) → løs plate (limt, skrudd nedenfra) | 2 | 2× Treskrue 5×40 forsenket Torx | ⌀12 kontrabor opp i vingens underside TIL DET STÅR 27 mm IGJEN opp til plata — vingen er skråkappet, så det blir dypest ved roten og null ved tuppen. ⌀3,5 videre gjennom de siste 27 mm. Ingenting gjennom platens overside | Nedenfra, som J13a. Vingen ligger med forkanten i flukt med platens forkant, full høyde mot avstivningslekta og skråkappet ut mot platekanten |
 | **J14** | Veggfeste — gjennom den bakre sidevangen inn i stenderne | 1 | 6× Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | ⌀8 gjennom vangen, forsenk for hodet; veggen etter festetype | Rett gjennom vangen inn i veggen. Vangen ligger flatt mot veggen i hele sin lengde, så festet trenger ingen kloss og ingen brakett |
@@ -56,4 +57,4 @@ Forklaringen til hvert ledd står i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene).
 
 Begrunnelsen står i sin helhet i [ASSEMBLY, vedlegg B, avvik 4](../ASSEMBLY.md#vedlegg-b--aksepterte-avvik). Kort: madrassen ligger *oppå* platen og må fjernes før platen kan løftes, dette er underetasjen med ~42 cm fallhøyde, og plateenheten veier 6,3 kg.
 
-Trevirket for en ettermontert lås står likevel der det sto: **kilelektas endeved mot enden av den fremre benkevangen**, tvers over de 63 mm i sideklaringen, i samme høydebånd i sengestilling og 385 mm fra hverandre i bordstilling. Geometrien er målt og asserted i modellen, så alle tre løsningene i [docs/preview/laasvalg.png](../preview/laasvalg.png) kan monteres senere uten at noe tre må endres. Det arket er historikk nå, ikke en bestilling.
+Trevirket for en ettermontert lås står likevel der det sto: **kilelektas endeved mot enden av den fremre benkevangen**, tvers over de 63 mm i sideklaringen, i samme høydebånd i sengestilling og 385 mm fra hverandre i bordstilling. Geometrien er målt og asserted i modellen, så en lås kan ettermonteres senere uten at noe tre må endres.
