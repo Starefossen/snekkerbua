@@ -12,7 +12,7 @@
 |---:|---:|---:|
 | **1990 mm** | **836 mm** | **2037 mm** |
 
-78 deler · 13 steg (0–12) · 1 person — 2 ved reisning (steg 2 og 4) · passer standard madrass 80 × 200 cm
+76 deler · 13 steg (0–12) · 1 person — 2 ved reisning (steg 2 og 4) · passer standard madrass 80 × 200 cm
 
 Sengen står inntil bakveggen og inntil begge sidevegger, og skrus fast i bakveggen. **Bygg bakfra og utover.**
 
@@ -111,8 +111,8 @@ Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøy
 | | |
 |:---:|---|
 | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **86x** | Treskrue 5×60 forsenket Torx |
-| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **38x** | Treskrue 6×80 forsenket Torx |
 | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="44"> **36x** | Treskrue 5×40 forsenket Torx |
+| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **34x** | Treskrue 6×80 forsenket Torx |
 | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="44"> **14x** | Treskrue 6×120 forsenket Torx |
 | <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="44"> **9x** | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) |
 | <img src="img/beslag/filtknott-d40.svg" alt="Filtknott / møbeltapp ⌀40" height="44"> **8x** | Filtknott / møbeltapp ⌀40 |
@@ -146,11 +146,10 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Fotbrettbord | 48×68 | 416 | **4** | nå |
 | Rungetrinn | 48×68 | 320 | **5** | nå |
 | Stubbefot | 48×68 | 229 | **4** | på stedet |
-| Bordkloss | 48×68 | 91 | **2** | nå |
 | Kilelekt under platens forkant (skråkappet) | 48×68 | 77 | **2** | nå |
 | Sidevange, øvre | 48×98 | 1984 | **2** | på stedet |
 
-**78 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
+**76 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
 
 **Kapp:** «nå» er delene verkstedet gjør ferdig. «på stedet» er de 22 delene som møter en endevegg eller gulvet — de kappes med overmål og finkappes i rommet. Overmålet står i [kapplista](generated/kappliste.md).
 
@@ -306,7 +305,6 @@ Ledd **J8**, **J10**, **J17** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **2×** | Bordkloss | 48×68 | 91 |
 | **5×** | Rungetrinn | 48×68 | 320 |
 | **10×** | Stigekloss | 36×48 | 36 |
 | **2×** | Stigevange | 36×48 | 2037 |
@@ -315,11 +313,11 @@ Ledd **J8**, **J10**, **J17** → [beslagliste](generated/beslagliste.md)
 |:---:|:---:|---|
 | <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **10x** | Treskrue 5×60 |
 | <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **10x** | Treskrue 6×120 |
-| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **10x** | Treskrue 6×80 |
+| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **6x** | Treskrue 6×80 |
 
 Bokstavene viser hvor på tegningen hver type går.
 
-Ledd **J3**, **J4**, **J5**, **J5-B** → [beslagliste](generated/beslagliste.md)
+Ledd **J3**, **J4**, **J5** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Mål lysåpningen mellom stigevangene øverst og nederst — den skal være lik.
 

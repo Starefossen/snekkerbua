@@ -320,9 +320,9 @@ PAGE_CLAIMS = [
 # Compared with runs of whitespace collapsed, because the model's own line is
 # laid out in columns and the README quotes it as a sentence.
 README_QUOTES = [
-    "TOTAL 78 pcs 53.43 m in 5 timber profiles + 1 sheet",
-    "189 festemidler plassert i 23 ledd",
-    "180 festemidler modellert som kropper",
+    "TOTAL 76 pcs 53.25 m in 5 timber profiles + 1 sheet",
+    "185 festemidler plassert i 22 ledd",
+    "176 festemidler modellert som kropper",
 ]
 
 
@@ -403,7 +403,11 @@ HIST_ROW = re.compile(r"\(før\)")
 # to do with them. If the sweep ever grows units, they come back.
 PROSE_ALLOW = {
     "ASSEMBLY.md": {
-        "52,1 mm": "mellomregning i et krav som rundes opp til 53 i samme setning",
+        # X16 STRØK «52,1 mm». Det var mellomregningen i bordklossens hylledybde
+        # (5000 / (2 x 48), rundet opp til 53 i samme setning), og bordklossen
+        # finnes ikke lenger - platens forkant står på et trinn. Setningen gikk
+        # ut med J5-B-avsnittet, og da må linja her gå ut med den: en hviteliste
+        # som overlever det den unnskyldte, skjuler neste feil.
         "2,9 mm": "mellomregning på vinkelklossens såle, ikke et mål på senga",
         "1,8 mm": "differansen mellom to hullkanter, regnet i teksten selv",
         "35,5 mm": "raden på den gamle 116 mm-vingen - samme historiske setning",

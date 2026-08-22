@@ -913,8 +913,7 @@ def build_steps(G):
         dict(
             n=6,
             title="Stigen",
-            parts=["Ladder Upright *", "Rung Block *", "Ladder Rung_*",
-                   "Table Bearer *"],
+            parts=["Ladder Upright *", "Rung Block *", "Ladder Rung_*"],
             camera=(0, 16, 3.6),
             crop_to_subject=True,
             intro="Bygg hele stigen ferdig liggende på gulvet, og skru den så "
@@ -927,15 +926,13 @@ def build_steps(G):
                   f"Klosshøyden er trinnhøyden — mål to ganger.",
                 "Legg trinnene på klossene og fest dem (J4).",
                 _rung_pitch_do(G),
-                f"Skru de to BORDKLOSSENE på (J5-B) mens stigen ennå ligger "
-                  f"flatt. De er {G.TABLE_BEARER_LEN} mm lange, står i samme "
-                  f"X som stigeklossene og har overkanten på "
-                  f"{G.PANEL_UNDER_TABLE} — det er bordplatens underside. "
-                  f"De skrus fra stigevangens UTSIDE, "
-                  f"{_per_joint('J5-B')} hver, stablet i høyden, og de "
-                  f"stikker {G.TABLE_BEARER_LEDGE} mm BAKOVER forbi vangen: "
-                  f"det er hylla bordplaten hviler på i bordstilling. "
-                  f"Forkanten flukter med vangens forkant, som trinnene.",
+                f"**Trinn {G.CLIMB_LANDING + 1} er STØTTETRINNET — det er "
+                  f"bordplatens forkant i bordstilling.** Ingen egen del og "
+                  f"ingen ekstra skrue: det er det samme trinnet som de "
+                  f"andre, satt med overkanten på {G.PANEL_UNDER_TABLE} mm "
+                  f"over gulvet. Har du en eldre tegning med to "
+                  f"BORDKLOSSER på vangenes innside her, er den utgått — "
+                  f"klossene er strøket, og trinnet gjør jobben deres.",
                 "Reis stigen mot den fremre sidevangen. Trinnenes forkant "
                   "skal ligge i flukt med stigevangenes forkant — trinnene "
                   "stikker BAKOVER, ikke framover. Det som stikker bakover er "
@@ -961,17 +958,18 @@ def build_steps(G):
                 "Mål lysåpningen mellom stigevangene øverst og nederst — den "
                   "skal være lik.",
                 f"Alle {len(G.RUNG_TOPS)} trinn i vater.",
-                f"Mål ned fra STIGEVANGENS TOPP til bordklossenes overkant: "
-                  f"{_fmt(_upright_top(G) - G.PANEL_UNDER_TABLE)} mm, begge "
-                  f"to, og i vater med hverandre. Målt ovenfra, som alt annet "
+                f"Mål ned fra STIGEVANGENS TOPP til STØTTETRINNETS overkant: "
+                  f"{_fmt(_upright_top(G) - G.PANEL_UNDER_TABLE)} mm i begge "
+                  f"ender, og trinnet i vater. Målt ovenfra, som alt annet "
                   f"på en stående del — foten er nettopp trimmet og er ikke "
-                  f"et utgangspunkt. Bordplaten hviler på klossene og på "
-                  f"bordbærelekta samtidig; står de skjevt, vipper platen.",
+                  f"et utgangspunkt. Bordplaten hviler på dette trinnet og "
+                  f"på bordbærelekta samtidig; står de i ulik høyde, vipper "
+                  f"platen.",
                 "Stå på nederste trinn og kjenn etter. Sitter noe løst nå, "
                   "sitter det løst for alltid.",
             ],
             joints={'J3': 2, 'J4': 2 * len(G.RUNG_TOPS),
-                    'J5': 2 * len(G.RUNG_TOPS), 'J5-B': 2},
+                    'J5': 2 * len(G.RUNG_TOPS)},
         ),
         dict(
             n=7,
@@ -1102,10 +1100,11 @@ def build_steps(G):
                   "trinn 1. De to lange lektene skal gli ned på hver side av "
                   "trinnenden uten å tvinges.",
                 "Prøv bordstilling: samme plate, samme lekter, rett ned på "
-                  "bordbærelekta og de to BORDKLOSSENE. Klossene har "
-                  "endeflaten i nøyaktig samme lengderetning som trinnendene, "
-                  "så de to lektene finner dem på samme måte — bare 70 mm "
-                  "dypere inn.",
+                  "bordbærelekta og STØTTETRINNET. Det er nøyaktig samme "
+                  "grep som i sengestilling — samme trinnprofil, samme "
+                  "trinnende, samme passing — bare fire trinn høyere oppe. "
+                  "Lektene skal gli ned på hver side av trinnenden uten å "
+                  "tvinges her også.",
             ],
             check=[
                 "Skyv platen sidelengs. Den skal bevege seg et par "
@@ -1478,7 +1477,6 @@ NO_NAMES = {
     "Ladder upright (D13)": "Stigevange",
     "Ladder rung (tread)": "Rungetrinn",
     "Ladder rung block": "Stigekloss",
-    "Table bearer block (X9)": "Bordkloss",
     "Bench rail, back (C5)": "Benkevange, bak (gjennomgående)",
     "Bench rail, front segment (D13)": "Benkevange, front (bit)",
     "Bench stub leg (W3)": "Stubbefot",
@@ -1519,7 +1517,6 @@ LABEL_TO_CUT = [
     ("Bench End Cleat", "Bench end cleat (V13)"),
     ("Guard Rail Front", "Guard rail, front segment (D2/D7/D13)"),
     ("Table Ledger Back", "Table ledger, back"),
-    ("Table Bearer", "Table bearer block (X9)"),
     ("Movable Panel", "Movable panel"),
     ("Panel Stiffener Batten", "Panel stiffener batten (M4)"),
     ("Panel Front Batten", "Panel front cross batten (M5)"),
@@ -2004,9 +2001,14 @@ def emit_innkjopsliste(G, out_dir):
         if e["sheet"]:
             L.append(f"| **{e['section']}** | 1 plate 18 mm kryssfiner furu, "
                      f"minst {G.PANEL_W} × {G.PANEL_LEN} mm. "
-                     f"**Dekkfineren skal ligge langs de {G.PANEL_W} mm** "
-                     f"(sengens lengderetning): platas frie forkant spenner "
-                     f"den veien, og på tvers holder den ikke — se X10 | — |\n")
+                     f"**Legg dekkfineren langs de {G.PANEL_W} mm** "
+                     f"(sengens lengderetning): platas styrende arkrad "
+                     f"spenner den veien. Det er en MARGIN og ikke lenger et "
+                     f"krav — raden holder "
+                     + f"{G.PANEL_EDGE_UTIL_CROSS:.2f}".replace(".", ",")
+                     + f" også snudd — men det "
+                     f"koster ingenting, så legg den riktig vei. Se X16 "
+                     f"| — |\n")
             continue
         counts = {}
         for b in e["boards"]:
@@ -2218,10 +2220,10 @@ def emit_nokkelmal(G, out_dir, rows):
                               "sittehøyde med pute** (V13)"),
         (G.RUNG_TOPS[1], "trinn 2"),
         (G.LEDGER_BACK_Z0, "bordbærelektas underkant"),
-        (G.TABLE_BEARER_Z0, "bordklossenes underkant"),
-        (G.PANEL_UNDER_TABLE, "bordbærelektas og bordklossenes overkant = "
-                              "platens underside i bordstilling (X9: ikke "
-                              "lenger et trinn)"),
+        (G.PANEL_UNDER_TABLE - G.RUNG_T, "støttetrinnets underkant"),
+        (G.PANEL_UNDER_TABLE, "bordbærelektas og STØTTETRINNETS overkant = "
+                              "platens underside i bordstilling (X16: et "
+                              "trinn igjen; X9 hadde to bordklosser her)"),
         (G.PANEL_TOP_TABLE, "**bordplate — pulthøyde** (X9)"),
         (G.BACKREST_Z1, "ryggputens topp i sofastilling (V13)"),
         # X2: the rung count is derived now (even_climb), so the landmark
@@ -3316,6 +3318,43 @@ def assert_datum_ink(G, bygg):
 
 
 # ---------------------------------------------------------------------------
+# X16 - THE ONE RUNG THAT IS NOT LIKE THE OTHERS HAS TO SAY SO ON PAPER
+# ---------------------------------------------------------------------------
+# X16 took two bordklosser off the ladder and gave their job to a rung. That
+# is the right piece of wood in the right place, and it has one cost that no
+# drawing can carry on its own: the seat rung LOOKS EXACTLY LIKE THE OTHER
+# FOUR. Same section, same length, same two screws, same block underneath.
+# Nothing about it on the bench says «this one is the table top's front edge,
+# and if it is 3 mm out the plate rocks».
+#
+# So the sentence that says it is a load-bearing artefact, and it is checked
+# like one. The step that builds the ladder has to NAME the seat rung by its
+# number and PRINT the height it is set to, measured down from the upright top
+# the way every other height on a standing part is - and both have to be the
+# model's own numbers. A step guide that quietly stops saying which rung the
+# plate lands on is exactly the failure this round invented, and it is not a
+# thing a reader would notice: the ladder would still be right in every
+# drawing and the builder would still have no reason to measure that one rung
+# twice.
+def assert_seat_rung_ink(G, bygg):
+    """The step guide has to name the seat rung and print its own height."""
+    seat_no = G.RUNG_TOPS.index(G.PANEL_UNDER_TABLE) + 1
+    down = _upright_top(G) - G.PANEL_UNDER_TABLE
+    body = bygg.split("## Steg 6")[-1].split("\n## ")[0]
+    assert f"Trinn {seat_no}" in body, (
+        f"X16: steg 6 navngir ikke støttetrinnet. Platen lander på trinn "
+        f"{seat_no} i bordstilling, og det trinnet er ikke til å skille fra "
+        f"de andre fire på benken - står det ikke på arket, finnes det ikke")
+    assert f"{_fmt(down)} mm" in body, (
+        f"X16: steg 6 skriver ikke ned støttetrinnets egen høyde "
+        f"({_fmt(down)} mm ned fra stigevangens topp). Det er det ene målet "
+        f"på stigen som bordplaten hviler på")
+    print(f"  X16 støttetrinnet: steg 6 navngir trinn {seat_no} og setter det "
+          f"{_fmt(down)} mm ned fra stigevangens topp - lest av blekket, mot "
+          f"modellens egen {G.PANEL_UNDER_TABLE} mm")
+
+
+# ---------------------------------------------------------------------------
 # X15 - AND THE SAME REFERENCE RULE, ASKED OF THE DRAWINGS
 # ---------------------------------------------------------------------------
 # assert_datum_ink() above holds the PLACEMENT TABLE to X6 rule 2: no hole is
@@ -4235,6 +4274,7 @@ def emit(ns):
     retn = emit_skrueretninger(G, out_dir, idx)
     assert_placement_ink(G, bygg, retn)
     assert_datum_ink(G, bygg)
+    assert_seat_rung_ink(G, bygg)
     assert_step_dims(G, steps)
     emit_montering(G, G.OUT_DIR, steps, idx)
     emit_json(G, out_dir, steps, idx, rows)

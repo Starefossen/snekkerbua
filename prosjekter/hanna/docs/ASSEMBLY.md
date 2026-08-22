@@ -406,17 +406,21 @@ trinnet har en vannrett.
 **Så jobben er lagt på treet i stedet, og det er en bedre begrunnelse enn den
 strøkne skruen var.** Klossen er fanget mellom tre ting: vangeflaten den er
 skrudd til, trinnet som ligger på 1296 mm² av oversiden hennes, og at det
-trinnet selv er naglet til vangen 24 mm lenger opp av 6×120-en. Skal klossen
+trinnet selv er naglet til vangen 48 mm lenger opp av 6×120-en. Skal klossen
 rotere om sin ene skrue (J5), må den løfte et trinn som er skrudd fast. Det er
-lås av tre, ikke av stål — og det er den samme forskjellen som skiller
-stigeklossen fra bordklossen i J5-B, der det ikke ligger noe trinn oppå og
-klossen derfor må ha to skruer.
+lås av tre, ikke av stål — og det er grunnen til at **hver eneste kloss i denne
+stigen har et trinn oppå seg**. X9 hang to klosser på vangene som ikke hadde
+det, og måtte kjøpe en skrue nummer to til hver av dem for å erstatte trinnet;
+X16 strøk klossene, og med dem den ene delen i sengen som trengte stål fordi
+den manglet tre.
 
 Trinnene stikker **bakover**, ikke framover: forkanten ligger i flukt med
 stigevangens forkant, og det som blir liggende bak vangeplanet er hylla den løse
-platen hviler på. Etter X9 gjelder den setningen bare **trinn 1**: i
-bordstilling hviler platen ikke lenger på et trinn i det hele tatt, men på de
-to bordklossene — se J5-B.
+platen hviler på. **Den setningen gjelder begge stillinger igjen.** Fra X9 til
+X15 gjaldt den bare trinn 1, fordi bordstillingen da hvilte på to påskrudde
+bordklosser og ikke på et trinn i det hele tatt; etter X16 lander platens
+forkant på **trinn 1** i sengestilling og på **trinn 3** i bordstilling — samme
+profil, samme hylle, samme ledd, samme 320 mm trinn.
 
 **Klossen følger ikke trinnet bakover.** Den er 36 mm dyp — nøyaktig så dyp som
 stigevangen — og står i vangens eget dybdebånd, ikke i trinnets. Klossen har
@@ -427,36 +431,94 @@ bakre 32 mm står **fritt** ved endene: trinnet er 68 mm dypt og vangeplanet tar
 de fremste 36, så det er en 48 mm tykk kloss tre som stikker 32 mm ut, ikke et
 spenn.
 
-**Stigen er to løp, og det er X9 som gjorde den til det.** Trinnoverkantene
-står på 297, 572, 848, 1073 og 1298, og stigningskjeden fra gulv til spilebunn
-er 297 + 275 + 276 + 225 + 225 + 225. Fem trinn som før; det er ikke antallet
-som er endret, det er fordelingen. Grunnen står i J13 og i 8.2: platen skulle
-opp i pulthøyde, og da måtte trinn 3 opp av veien for løftet — nøyaktig 61 mm,
-til 848. Til og med v15 sto trinnene på 297, 542, 787, 1032 og 1277, med
-245 mm mellom hvert.
+**Stigen er to løp, og X16 flyttet skillet mellom dem opp i et trinn.**
+Trinnoverkantene står på 297, 489, 682, 962 og 1242, og stigningskjeden fra
+gulv til spilebunn er 297 + 192 + 193 + 280 + 280 + 281. Fem trinn som før; det
+er ikke antallet som er endret, det er fordelingen. Grunnen står i J13 og i
+8.2, og den er snudd på hodet siden X9: **682 er ikke lenger en høyde et trinn
+har forbud mot å stå på — det er høyden et trinn skal stå på.** Bordplatens
+underside er 682, trinn 3 er lagt nøyaktig der, og de to løpene **møtes** på
+det trinnet. X9 leste den samme høyden som et bånd som måtte holdes tomt og
+skjøv trinnene til 297 / 572 / 848 / 1073 / 1298 for å få det til; til og med
+v15 sto de på 297 / 542 / 787 / 1032 / 1277, jevnt fordelt.
+
+**Antallet trinn er fortsatt FEM, og det skal stå her og ikke i en fotnote.**
+Bestillingen var «ta bort et trinn og juster avstanden», og et trinn ble ikke
+borte. Trinn 1 er naglet til benkevangen på 297, spilebunnen ligger på 1523, og
+297 → 682 lar seg ikke gå i ett steg. Det som forsvant, er de **to
+bordklossene**. Ved platens forkant sto det tre trebiter i to omfar — et trinn
+oppe og et klossepar under — og der står det nå én. Det var de klossene
+byggherren så fra gulvet, og det er dem runden tok; trinnet overtok jobben
+deres.
 
 Det er verdt å si nøyaktig hva som ble gitt opp og hva som ikke ble det.
-**Stigningsgrensen står urørt:** største klatretrinn er 276 mm mot 280 — og det
-er **det** tallet EN 131s bånd 250–300 gjelder for i denne fila. De fem
-klatretrinnene ligger på 275, 276, 225, 225 og 225: de to nederste er inne i
-båndet, de tre øverste ligger under det. Å ta et kortere steg enn normen legger
-opp til er ikke en fare, det er bare tettere trinn; det er den *lange*
-stigningen grensen på 280 vokter, og den er ikke rørt. Det som ble gitt opp er
-*jevnheten*,
-som X1/X2 selv skrev ned som en utseendebeslutning — og den er ikke slakket,
-den er **delt**: inne i hvert av de to løpene er stigen jevn til 1 mm (grensen
-er 2), og forskjellen mellom de to løpene er 51 mm mot en ny og egen grense på
-60. Den grensen er hevet fra 20, i åpent lende og med begrunnelse, og ingen
-regel er fjernet. Det som skiller de to løpene er løftesjakten platen skal opp
-gjennom, og den er en **inngangsverdi** til stigen nå: ingen trinnoverkant får
-ligge i båndet 614..848, og stigen regnes ut av det kravet — færrest trinn,
-så flatest, så lavest kryssing. Flytter platen seg igjen, regnes stigen om;
-ingen setter et trinn for hånd.
+**Stigningsgrensen ble hevet med én millimeter, og den ble hevet i åpent
+lende.** Det øvre løpet er 841 mm i tre steg, og 841 = 3 × 280 + 1, så største
+klatretrinn er 281 mm der fila før sa 280. De fem klatretrinnene ligger på 192,
+193, 280, 280 og 281 — det er **det** tallet EN 131s bånd 250–300 gjelder for i
+denne fila, og 281 ligger godt inne i båndet; 280 var husets egen avrunding av
+det, ikke normens tall. Det fantes nøyaktig ett alternativ: legge støttetrinnet
+på 683 i stedet for 682. Da går det øvre løpet opp i tre like steg og grensen
+står — men bordplaten går til 701, bordbærelekta til 615–683 og
+**spikerslagsone 3 én millimeter oppover en vegg byggherren spikrer denne
+uka**. Veggen er ikke forhandlingsbar, og en fot finner ikke én millimeter på
+et 280 mm steg. Det ble sagt nei til dette i åpent lende, med tallet skrevet
+ned ved siden av.
+
+Å ta et kortere steg enn normen legger opp til er ikke en fare, det er bare
+tettere trinn; det er den *lange* stigningen grensen vokter. Det som ble gitt
+opp er *jevnheten*, som X1/X2 selv skrev ned som en utseendebeslutning — og den
+er ikke slakket, den er **delt**: inne i hvert av de to løpene er stigen jevn
+til 1 mm, og den grensen (2) er urørt. Forskjellen **mellom** løpene er derimot
+89 mm mot en egen grense på 90, der X9 sto på 51 mot 60. Spriket er ingen
+overraskelse, det er regnestykket: det nedre løpet har 385 mm å klatre i stedet
+for 551, i de samme to stegene. Nede er det to grunne steg opp til pulten, oppe
+er det en ordentlig stige — og det er nettopp det denne sengen er.
+
+Det som skiller de to løpene er ikke lenger et forbudt bånd, det er et påbudt
+punkt. Løftesjakten står igjen som betingelse **over** støttetrinnet — ingen
+*annen* trinnoverkant får ligge i båndet 614..848 — men trinnet platen hviler
+på er selve gulvet i det løftet og er unntatt fra sitt eget forbud. Ut over det
+er stigen den samme utledningen X2 skrev, bare gjort to ganger: færrest trinn,
+så jevnest, i hvert løp for seg. Flytter platen seg igjen, følger støttetrinnet
+den og hele stigen regnes om; ingen setter et trinn for hånd.
+
+**Og prisen ble betalt et annet sted, av trinn 2.** Det nedre løpet falt med
+støttetrinnet, så trinn 2 gikk fra 572 til 489, og underkanten står nå 21 mm
+over den nedre soveflaten der den før sto 104. Det er ikke takhøyde lenger, det
+er en **spalte** — og 21 mm ligger inne i EN 747-båndet 12–25 mm, der et lem
+passerer fritt og ingenting kiler seg. Modellen asserterer det som en spalte nå
+i stedet for å rapportere det som hodehøyde, nettopp fordi en liste over «deler
+leseren er fortalt om» ikke ser at én av dem sniker seg ned mot en madrass. Se
+5 og 7.
 
 Første steget, de 297 fra gulvet opp på benkevangen, er fortsatt en avsats du
 trår opp på og ikke et klatretrinn — og trinn 1 står fortsatt på 297 og bærer
-fortsatt sengemodus-platen. X9 rørte stigen **over** trinn 1 og ingenting
-annet.
+fortsatt sengemodus-platen. Både X9 og X16 rørte stigen **over** trinn 1 og
+ingenting annet.
+
+**Hullene i vangen, målt fra vangetoppen — les dette før du borer.** Stigevangen
+kappes med overmål og finkappes i **bunnen**, så toppen er den enden som ligger
+fast, og det er den alle hull måles fra. Hullsenteret ligger midt i trinnets
+høyde, altså 24 mm under trinnets overkant.
+
+| Trinn | Overkant over gulv | J4 ⌀6 fra vangetoppen |
+|---:|---:|---:|
+| 1 | 297 mm | **1764 mm** |
+| 2 | 489 mm | **1572 mm** |
+| 3 (støttetrinnet) | 682 mm | **1379 mm** |
+| 4 | 962 mm | **1099 mm** |
+| 5 | 1242 mm | **819 mm** |
+
+Stigeklossens hull (J5, ⌀3 i vangen) trenger ikke sin egen kolonne: klossen står
+rett under trinnet sitt og er like høy, så J5-hullet ligger **48 mm lenger ned
+fra vangetoppen** enn J4-hullet i samme rad — klosshøyden, hver gang.
+
+**Bare trinn 1 står der det sto.** Etter X9-arket lå de fire andre J4-hullene på
+[var 1489, 1213, 988 og 763 mm fra vangetoppen], og de to bordklossene hadde
+hvert sitt hullpar [var 1377 og 1401]. Har du boret etter det arket, står fire
+hull tomme og ett av bordklosshullene 2 mm fra det nye støttetrinnets — se det
+strøkne J5-B-avsnittet under for hvordan det plugges.
 
 ### J5 — Stigekloss → stigevange
 
@@ -473,70 +535,36 @@ midt i vangen.
 
 Klossen er ikke overlatt til den ene skruen — men det som holder den er
 **tre**, ikke en skrue til. Trinnet ligger på 1296 mm² av klossens overside, og
-trinnenden er skrudd til stigevangen med en 6×120 gjennom vangen, 24 mm over
-klossens egen skrue. De to festene deler samme hjørne, og skal klossen rotere om
+trinnenden er skrudd til stigevangen med en 6×120 gjennom vangen, 48 mm over
+klossens egen skrue — begge sitter midt i sin egen deltykkelse, og delene er
+48 mm høye hver. De to festene deler samme hjørne, og skal klossen rotere om
 skruen sin, må den løfte et trinn som er naglet fast. X10 strøk den loddrette
 5×60-en ned gjennom trinnet som sto her før — se J4 for hvorfor den ikke kunne
 stå noe sted.
 
-### J5-B — Bordkloss → stigevange
+### J5-B — Bordkloss → stigevange *(STRØKET i X16)*
 
-**De to eneste nye delene i X9.** En **48×68**-lekt kappet **91 mm** og satt på
-**høykant** — Z 614–682 — én på hver stigevanges innerflate, i stigeklossenes
-egen X. Dette er hylla bordplatens forkant lander på i bordstilling — jobben
-trinn 2 hadde til X9 tok platen opp i pulthøyde og la den i et høydebånd der det
-ikke får stå et trinn. *X9 skrev denne klossen som en 36×48 × 108 av stigens
-eget bord; X10 gjorde den om, og det er hele avsnittet under.*
+**Dette leddet finnes ikke lenger. Bygger du etter et ark fra før X16, er det
+her arket er feil.** X9 la bordplaten på 700 ved å erklære 682 for en høyde
+ingen trinn fikk stå i — platen skal løftes gjennom det båndet — og måtte så gi
+forkanten et opplegg likevel. Det ble to bordklosser: 48×68 på høykant, én på
+hver stigevanges innerflate, med to 6×80 hver. To trebiter som gjorde et trinns
+jobb, i en stige som allerede kan lage en avsats i akkurat den høyden. **X16 snudde betingelsen:** 682 er høyden et trinn *skal* stå på,
+trinn 3 ligger der, og klossene er strøket sammen med sine fire skruer.
 
-**Klossen gjør to ting, og de deler de 91 millimeterne mellom seg.** De
-**fremste 36 mm** (Y 752–788) ligger mot stigevangen og er innfestingen — 36 mm
-er alt vangen har å tilby i dybden, og det tallet kan aldri endres. De
-**bakerste 53 mm** (Y 697–750) stikker **bak** vangen, ut i det samme
-dybdebåndet trinnenden ligger i, og *er* hylla platen lander på. De 2
-millimeterne imellom er den samme innsettingsklaringen platens forkant har mot
-vangen — de bærer ingenting og skal ikke bære noe.
+*Hva som forsvant med dem, kort: to deler av 48×68 [var 91 mm lange], fire
+Treskruer 6×80, ett ledd i beslaglista (23 → 22), én rad i skrueretningene og
+to rader i lastbanen — deriblant den ene skrueraden i hele sengen som hadde
+lasten stående foran sin egen skruelinje [var 0,55 utnyttet]. Bæreflaten under
+platens forkant gikk fra klossenes 5088 mm² til trinnets 9600 mm², og hylla er
+igjen den samme hylla som i sengestilling.*
 
-**De 53 millimeterne er regnet ut, ikke valgt.** Kravet i modellen er 5000 mm²
-bæreflate per bærelinje. Klossen er 48 mm bred, og det er to av dem, så hylla
-må være 5000 / (2 × 48) = 52,1 mm dyp — rundet opp til 53. To ganger 48 × 53 er
-**5088 mm²**. Blir kravet strengere, blir klossen lengre; ingen skrev 91.
-
-**To skruer, og høyden er kjøpt for å få plass til dem:** to Treskruer 6×80
-forsenket, **stablet i høyden**, fra stigevangens **utside** — altså fra
-benkerommet — gjennom de 48 mm vangen og 32 mm inn i den 48 mm brede klossen.
-Flaten klossen dekker av vangen er 36 × 68 mm. De 36 tar én skrue på tvers
-(2 × 3d), akkurat som før; det nye er de **68 i høyden**, som er 2 × 3d + 4d =
-60 med 8 mm til overs. Forbor gjennomgående i vangen og forbor i klossen.
-
-**Og her er forskjellen fra stigeklossen, sagt rett ut — det er den som betaler
-for den andre skruen.** Stigeklossen har et trinn liggende oppå seg, og det
-trinnet er selv naglet til vangen: klossen kan ikke rotere om sin ene skrue uten
-å løfte et trinn som er skrudd fast. Bordklossen har ingenting oppå seg — bare
-platen, som *ligger* der og løftes vekk to ganger om dagen. Og platas last står
-ikke over skruelinja: den står **46 mm foran** den, ute på hylla. Det er et
-moment som ligger i selve innfestingsflaten, og med bare én skrue finnes det
-ingen arm å ta det i — da bæres det i friksjon og bøyd skaft, som ingen rad i
-lasttabellen kan regne på. To skruer stablet i høyden gjør momentet om til et
-skruepar i motsatt skjær over 24 mm arm. Det er derfor klossen ble 68 mm høy:
-**høyden er den eneste dimensjonen som var ledig.** De 36 er vangens egen dybde
-og kan aldri vokse.
-
-**Og profilen er ikke en ny profil.** 48×68 er dimensjonen sengen har fra før —
-benkevangene, bordbærelekta, stubbeføttene og de fire platelektene — så
-omleggingen koster ingenting nytt i hylla. Den tar til og med to biter *bort
-fra* 36×48-bordet, som er den knappeste dimensjonen i sengen, og legger dem på
-et 48×68-bord som hadde over fire meter rest.
-
-**Overkanten er målet.** Begge klossene skal ha overkanten i nøyaktig samme
-høyde som bordbærelektas overkant bak — platen hviler på de tre samtidig, og
-står én av dem skjevt, vipper platen. Mål høyden fra stigefoten, ikke fra
-gulvet. Klossene skrus på mens stigen ennå ligger flatt, før den reises.
-
-**Og plateenheten kjenner ikke forskjell.** Klossen vokste **innover** i
-stigeåpningen, ikke utover, så ytterflaten står i nøyaktig det planet trinnenden
-sto i — X 835 og 1155 — og styrelektene finner den på samme måte og med samme 2 mm passing.
-Det eneste som er annerledes er at sjakten er dypere: lekta lapper **53 mm** av
-klossen i dybden der en trinnende ga den 30. Se J13a.
+**Har du alt boret etter det gamle arket?** Klossenes to ⌀6 sto i stigevangens
+utside [var 1377 og 1401 mm fra vangetoppen]. Det nye J4-hullet for
+støttetrinnet står **1379 mm** fra vangetoppen — altså 2 mm fra det øverste av
+dem. Bor du det nye hullet uten videre, vandrer boret ned i det gamle og du får
+et ovalt hull rundt en gjennomgående 6×120. Plugg det gamle hullet med limt
+rundstokk og la limet herde før du borer det nye. Hele hulltabellen står i J4.
 
 ### J6 — Køyespile → sidevange
 
@@ -724,14 +752,16 @@ Lekta må inn mens bakrammen ligger flat, av samme grunn som benkevangen: den er
 kappet til å fylle nøyaktig mellom stolpene.
 
 Lekta er det bakre opplegget for platen i bordstilling, og overkanten skal ligge
-i nøyaktig samme høyde som de to bordklossene på stigevangene (J5-B). Da ligger
-platen rett på alle tre, uten beslag og uten kile.
+i nøyaktig samme høyde som **støttetrinnet** på stigen — trinn 3, overkant 682.
+Da ligger platen rett på begge to, uten beslag og uten kile. *(X9 hadde to
+bordklosser her i stedet for et trinn; X16 strøk dem — se J4.)*
 
 **X9 flyttet den 140 mm opp, og ingenting annet ved den.** Samme del, samme
 lengde, samme to vinkelbeslag, samme ledd — den skrus bare høyere: underkanten
 gikk fra 474 til **614** og overkanten fra 542 til **682**, som er bordplatens
 nye underside. Det er den lette halvdelen av pulten; den vanskelige sto ved
-stigen og heter J5-B. **Spikerslagsonen følger med:** sone 3 i veggen ligger nå
+stigen, og X16 løste den ved å legge et trinn i den høyden i stedet for å henge
+klosser under den. **Spikerslagsonen følger med:** sone 3 i veggen ligger nå
 på 614–682 over ferdig gulv, altså −386..−318 fra høyderisset. Legger du
 spikerslaget etter et gammelt ark, treffer skruene 140 mm for lavt. Sonene står
 i [byggesteg](generated/byggesteg.md#før-steg-0--mål-rommet).
@@ -756,17 +786,20 @@ byttet mellom de to setene er en annen sak, og den står nederst i avsnittet.
 
 Vekten hviler på **tre**, ikke på stål: bakkanten på den bakre benkevangen
 (sengestilling) eller på bordbærelekta (bordstilling), forkanten på **trinn 1**
-i sengestilling og på **de to bordklossene** i bordstilling. Fram til X9 var
-også den fremre bæringen i bordstilling et trinn — trinn 2 — men pulthøyden la
-platen i et bånd der det ikke får stå et trinn, og da måtte forkanten få sitt
-eget opplegg. Se J5-B.
+i sengestilling og på **trinn 3** i bordstilling. Det er samme profil, samme
+hylle og samme ledd i begge stillinger, og etter X16 er de to opplegglinjene
+like store til millimeteren: 37 152 mm² totalt begge veier. *(Fra X9 til X15 sto
+det to påskrudde bordklosser under forkanten i bordstilling, fordi pulthøyden da
+var erklært forbudt for et trinn. Se det strøkne J5-B.)*
 
-**Og regelen om bæreflate ble generalisert i samme slengen.** Modellens
-minstekrav på 5000 mm² gjaldt «per navngitt opplegg» så lenge hver bærelinje
-var én del. Nå er forkanten i bordstilling **to** klosser i stedet for ett
-trinn, så kravet er skrevet om til å gjelde **per bærelinje** — forkant og
-bakkant, hver for seg, uansett hvor mange biter linja består av. Verdien er den
-samme 5000, ingenting er unntatt, og de to bordklossene gir 5088.
+**Og regelen om bæreflate står, selv om grunnen til å skrive den om er borte.**
+Modellens minstekrav på 5000 mm² gjaldt «per navngitt opplegg» så lenge hver
+bærelinje var én del; X9 gjorde forkanten til to klosser, og da ble kravet
+skrevet om til å gjelde **per bærelinje** — forkant og bakkant, hver for seg,
+uansett hvor mange biter linja består av. X16 gjorde linja til én bit igjen, men
+regelen blir stående i den generelle formen: den er riktigere, og den koster
+ingenting. Verdien er den samme 5000, ingenting er unntatt, og trinnet gir
+320 × 30 = **9600 mm²** der de to klossene ga 5088.
 
 **Og styringen er også tre.** Det står ikke ett vinkelbeslag i denne
 mekanismen — den jobben gjør de to lange lektene — og det står ingen lås i den
@@ -784,15 +817,14 @@ forkant (750 mm). To ting på én gang:
   trinnet som stikker bak stigevangen — så det er 48 × 30 mm tre mot endeved
   som stopper platen sidelengs, ikke en 2 mm stålflik.
 
-**Og i bordstilling er det bordklossen som styrer, i nøyaktig det samme
-planet.** X9 tok trinnet vekk under platens forkant og satte to klosser der i
-stedet (J5-B), men klossenes ytterflater står på X 835 og 1155 — der trinnendene
-sto — med den samme 2 mm passingen. Det eneste som er annerledes er at sjakten er
-romsligere: klossen står 68 mm høy der en trinnende gir 48, og lekta lapper
-53 mm av den i dybden der et trinn ga den 30. **Plateenheten er uendret til
-millimeteren**, og den kjenner ikke forskjell på de to.
+**Og i bordstilling er det en trinnende som styrer, i nøyaktig det samme
+planet.** Det er hele poenget med X16: samme profil, samme plan, samme passing.
+Styrelekta møter 48 × 30 mm endeved mot trinn 1 nede og mot trinn 3 oppe, med de
+samme 2 millimeterne begge steder. *(Fra X9 til X15 sto det to bordklosser her i
+stedet — samme ytterflater på X 835 og 1155, men 68 mm høye og med 53 mm omlegg
+i dybden. Da var sjakten romsligere oppe enn nede; nå er de like.)*
 
-Trinn 1 og bordklossene ender på nøyaktig samme sted i lengderetningen, så det
+Trinn 1 og trinn 3 ender på nøyaktig samme sted i lengderetningen, så det
 samme lektparet finner opplegget sitt i **begge** stillinger. De stopper platen
 begge veier (den ene mot venstre, den andre mot høyre), og de stopper den i
 å vri seg, fordi en vridning drar begge to samme vei — den ene kiler seg
@@ -821,8 +853,8 @@ det er verdt å skjønne hvorfor, for det er ikke skruen som er problemet — de
 hullet den sitter i. Passer-på-flaten-regelen (`(n−1)·4d + 2·3d`) måler
 **skaftet**: tre 5 mm skruer trenger 20 mm mellom seg og får plass på 77 mm. Men
 hver av dem sitter i bunnen av et **⌀12 kontrabor**, og tre 12 mm hull med 20 mm
-senteravstand står igjen med 8 mm tre imellom. På den gamle 116 mm-vingen kom
-det aldri opp, fordi raden hadde 35,5 mm å spre seg på; på 77 mm faller den ned
+senteravstand står igjen med 8 mm tre imellom. På vingen slik den var før K2
+(var 116 mm lang) kom det aldri opp, fordi raden hadde 35,5 mm å spre seg på; på 77 mm faller den ned
 på 4d-minimum og hullene møtes nesten. To skruer åpner den til 32 mm — 20 mm
 tre — og lastsiden merker det ikke: oppskruene er tvinger for en limfuge, og
 hele gruppa lå under 0,05. Modellen asserter det nå: **et kontrabor har sin egen
@@ -922,31 +954,40 @@ i byggeporten.
 
 **Innsettingsveien er målt, ikke antatt.** Modellen sveiper hele enheten — plate,
 to styrelekter, to kiler og seksten skruer — rett opp fra begge seter og krever at
-ingenting treffer noe: **209 mm** fri vei i sengestilling og **100 mm** i
+ingenting treffer noe: **126 mm** fri vei i sengestilling og **214 mm** i
 bordstilling. Det skal **68 mm** til for å løfte styrelektenes underkant fri av
-låsedelens overkant, så det er **3,1 ganger** så mye vei nede og **1,47 ganger**
-oppe. Taket er **trinn 2** i sengestilling og **trinn 3** i bordstilling —
+låsedelens overkant, så det er **1,85 ganger** så mye vei nede og **3,15 ganger**
+oppe. Taket er **trinn 2** i sengestilling og **trinn 4** i bordstilling —
 begge deler er tre som *må* være der.
 
+**X16 snudde hvilken av de to som er den trange.** Under X9 lå bordstillingen
+nøyaktig på grensen (100) og sengestillingen romslig; nå er det motsatt.
+Grunnen er den samme i begge ender: taket over bordsetet er ikke lenger trinnet
+som *bar* platen, men trinnet **over** det — trinn 4 på 962, underkant 914 — så
+løftet i bordstilling ble mer enn dobbelt så høyt. Og i sengestilling kom trinn 2
+ned fra 572 til 489 med resten av det nedre løpet, så taket der falt tilsvarende.
+Begge ligger godt over kravet.
+
 *De 68 er ikke de 48 lekta lapper.* Fram til X10 sto det 48 her, og det er
-lengden på **omfaret** — hvor mye av trinnenden eller bordklossen styrelekta
+lengden på **omfaret** — hvor mye av trinnenden styrelekta
 ligger utenpå i høyden. Løftet som skal til for å komme fri av den er noe annet:
 låsedelens overkant *er* platens egen underside, så lekta må opp hele sin egen
 høyde, 68 mm. To forskjellige mål på samme sted, og modellen holder dem fra
 hverandre nå. Med det gamle tallet spurte innsettingsprøven etter 2 × 48 = 96 mm
-mot bordstillingens 100 — riktig svar på feil spørsmål, og 4 mm fra å stryke på
-et tall som aldri var tallet.
+mot en bordstilling som da lå på 100 — riktig svar på feil spørsmål, og
+[X10: 4 mm] fra å stryke på et tall som aldri var tallet.
 
-**De 100 er ikke en margin, de er kravet.** Modellen har hele tiden krevd
-100 mm rett løft i begge stillinger, og etter X9 ligger bordstillingen
-**nøyaktig** på den grensen: platetoppen står på 700 og trinn 3s underkant på
-800. Pulten er kjøpt ved å løfte trinn 3 de 61 millimeterne som gjorde 700
-lovlig — ikke én mer, og ikke ved å slakke kravet. Regnestykket er det samme
-X8 brukte til å si nei; det som er endret er hvilken del som fikk lov til å
-flytte seg. (Fram til X9 var tallene 159 og 179, med bordbærelekta som tak i
+**De 100 er kravet, og etter X16 er begge stillinger godt over det.** Modellen
+har hele tiden krevd 100 mm rett løft i begge seter. Under X9 lå bordstillingen
+**nøyaktig** på grensen — platetoppen på 700 og trinn 3s underkant på 800 — fordi
+det trinnet var lokket over platen og bare var løftet akkurat så mye at 700 gikk
+opp. X16 la et trinn under platen i stedet, og da ble lokket trinn 4: taket over
+en plate i bordstilling gikk fra 700 til **814**, og løftet fra 100 til 214.
+Kravet er ikke slakket i noen ende; det er delen under platen som er byttet ut.
+(Fram til X9 var tallene 159 og 179, med bordbærelekta som tak i
 sengestilling; fram til K1 var det en stigekloss i begge tilfeller, med 109 og
 124 mm — de klossene var 37 mm for lange og hang inn i veien uten å gjøre noen
-nytte. Se K1 og X9 i modellen.)
+nytte. Se K1, X9 og X16 i modellen.)
 
 **Men stillingsbyttet er ikke ett langt loddrett løft — og det er verdt å lese
 før du prøver.** De to fri veiene over gjelder *setet*: hvordan platen kommer
@@ -957,23 +998,25 @@ tegning av den:
 
 0. **Ta av alle fire putene først.** Dette er ikke ryddighet: enheten bæres
    sidelengs i sjakten mellom benkespilenes overkant (320) og trinn 2s
-   underside (524), og den bæres midt i den — undersiden av enheten løper på
-   379. En 100 mm pute som ligger på benken har overflaten sin på 420 og står
-   altså 41 mm opp i det enheten skal gjennom. Med putene på er ombyggingen
-   fysisk sperret.
+   underside (441), og den sjakten er 121 mm høy for en enhet på 86. En 100 mm
+   pute som ligger på benken har overflaten sin på **420** — 21 mm under
+   sjaktens eget tak — så med putene på er det ikke plass til enheten i det hele
+   tatt. Ombyggingen er fysisk sperret. *(X16 tok trinn 2 ned fra 572 til 489, så
+   dette er blitt trangere: sjakten var 204 mm.)*
 1. **Løft rett opp**, ca. 15 cm, til enheten står midt i overføringssjakten.
 2. **Skyv platen sidelengs** inn over benken, til den er klar av stigen —
    **vannrett hele veien**. Sjakten mellom benkespilenes overkant (320) og
-   trinn 2s underside (524) er 204 mm høy og enheten er 86: det står 59 mm luft
-   over og under den under hele bæringen. (Før X9 var sjakten 154 mm, med taket
+   trinn 2s underside (441) er 121 mm høy og enheten er 86: det står **35 mm**
+   klaring i alt, delt likt over og under den under hele bæringen, mot et krav
+   på 15. Dette er den trangeste av de to bæringene nå. (Før X9 var sjakten 154 mm, med taket
    i bordbærelekta på 474; lekta gikk opp med bordplaten, og det som er igjen
    som tak er trinn 2.)
 3. **Trekk den litt fram**, så bakkanten står av bordbærelekta.
 4. **Løft den opp** forbi bordbærelekta og opp i kryssebåndet — ute over benken
    er banen fri.
 5. **Skyv den inn igjen** til bakkanten står over setelinjen.
-6. **Skyv den sidelengs tilbake** over stigen, nå i båndet mellom bordklossenes
-   overkant (682) og trinn 3s underside (800).
+6. **Skyv den sidelengs tilbake** over stigen, nå i båndet mellom
+   støttetrinnets overkant (682) og trinn 4s underside (914).
 7. **Senk den ned** i bordsetet.
 
 Veien tilbake er den samme baklengs.
@@ -984,13 +1027,13 @@ bakkanten *må* av linja dens før den kan gå opp — uansett hvor i lengden du
 står. Alt det andre er ett løft, én bæring bort, én bæring tilbake og én
 nedsenking.
 
-**Etappe 6 er den X9 måtte betale for, og den er målt.** Bordklossene står i
-det båndet enheten krysser stigen i — det er nettopp derfor de er klosser og
-ikke et trinn — så enheten må gå **over** sitt eget fremre opplegg på veien
-tilbake. Båndet er 682 (bordklossens overkant) til 800 (trinn 3s underkant) =
-**118 mm**, enheten er 86, og det står **32 mm** klaring igjen mot et krav på
-15. Det er dette båndet X8 regnet til å være 29 mm for lite, med trinn 3 der
-det da sto.
+**Etappe 6 er den X9 måtte betale for, og X16 fikk pengene igjen.** Enheten må
+gå **over** sitt eget fremre opplegg på veien tilbake — det gjelder uansett hva
+opplegget er laget av. Båndet er 682 (støttetrinnets overkant) til **914**
+(trinn 4s underkant) = **232 mm**, enheten er 86, og det står **146 mm**
+klaring igjen mot et krav på 15. *X9 hadde 32 mm her, over bordklossene, fordi
+lokket den gang var det samme trinnet som sto rett over dem.* Det er dette
+båndet X8 regnet til å være 29 mm for lite, med trinn 3 der det da sto.
 
 *Slik var det ikke før.* Fram til K1 var sjakten 91 mm høy for en 91 mm høy
 enhet — null klaring — og den eneste veien gjennom var å **vippe** den ene
@@ -1245,17 +1288,18 @@ sengens dybde — sengen er 836 mm dyp som før.
 ### Putene av FØR du bygger om
 
 Plateenheten bæres **sidelengs inn over benken** i sjakten mellom benkespilenes
-overkant (320) og trinn 2s underside (524) — 204 mm — og den bæres midt i den,
-med undersiden på 379. En 100 mm pute som ligger på benken har overflaten på
-420 og står 41 mm opp i den banen. Ombyggingen er altså fysisk sperret med
-putene på, og modellen regner det ut selv. Første steg i begge retninger:
-**ta av alle fire putene.**
+overkant (320) og trinn 2s underside (441) — **121 mm** — og enheten er 86 mm
+høy, så det er 35 mm klaring å fordele over og under den. En 100 mm pute som
+ligger på benken har overflaten på **420**, altså bare 21 mm under sjaktens eget
+tak: da er det ikke plass til enheten i det hele tatt. Ombyggingen er fysisk
+sperret med putene på, og modellen regner det ut selv. Første steg i begge
+retninger: **ta av alle fire putene.**
 
 *Sjakten var 154 mm til og med v15, med taket i bordbærelektas underside på
-474. X9 tok lekta med opp i pulthøyde, og da er det trinn 2 som er igjen som
-tak. Sjakten er blitt romsligere — 118 mm klaring rundt en 86 mm høy enhet mot
-68 før — men putene skal av likevel, for puta står i den nederste halvdelen av
-den.*
+474. X9 tok lekta med opp i pulthøyde, og da ble trinn 2 taket — 204 mm. X16
+tok hele det nedre løpet ned, trinn 2 med det, og sjakten er blitt den
+trangeste passeringen i hele ombyggingen. 35 mm mot et krav på 15 er fortsatt
+god margin, men den tåler ikke en pute.*
 
 ### Å skaffe skummet
 
@@ -1295,14 +1339,15 @@ sklir de fra hverandre den første natta noen sover der.
 * **Kjøp alt konstruksjonsvirke som C24.** Det gjelder også lektdimensjonene
   36×48 og 48×68, som mange steder står i hylla bare som «klasse 1 lekt/rekke
   — ikke-bærende». Spør i skranken: stigevangene og stigeklossene (36×48),
-  rungetrinnene, stubbeføttene og bordklossene (48×68) er alle bærende, og
+  rungetrinnene og stubbeføttene (48×68) er alle bærende, og
   lasttabellen i vedlegg A regner C24.
-* **36×48 er ett bord igjen, og det er X10 som ga det tilbake.** X9 la de to
-  bordklossene på denne dimensjonen og skjøv dermed fire stigeklosser over på et
-  bord nummer to som ellers sto tomt; svinnet gikk fra 2 % til 49 %. X10 gjorde
-  klossene om til 48×68 × 91, og da falt de to bitene av 36×48 igjen: **4,80 m
-  kjøpt, 4,68 m brukt, 2 % svinn** — ett eneste bord, med 68 mm rest. De to
-  bitene havnet på 48×68-bordet, som har over fire meter rest å ta imot dem med.
+* **36×48 er ett bord, og det holder akkurat.** **4,80 m kjøpt, 4,68 m brukt,
+  2 % svinn** — de to stigevangene, de ti stigeklossene og de to endelistene av
+  samme bord, med 68 mm til overs når sagsnittene er tatt med. Kapp de to
+  vangene først; klossene tar hva som helst av resten.
+  *(X9 la de to bordklossene på denne dimensjonen og skjøv fire stigeklosser
+  over på et bord nummer to; X10 flyttet klossene til 48×68, og X16 strøk dem
+  helt. Svinnet har vært innom 49 % på veien.)*
   Se [innkjøpslista](generated/innkjopsliste.md).
 * **Platen kappes av 18 mm kryssfiner.** Etter K2 er den 574 mm bred og ville
   gått inn i en 600 mm limtreplate — men lasttabellen, uttrekket for
@@ -1443,17 +1488,22 @@ bordstilling var det trinn 3, og med trinn 3 der det da sto (underkant 739) ga
 Det neiet hvilte på én forutsetning ingen hadde skrevet ned: at **stigen var
 fast og bordet måtte passe under den**. X9 er byggherren som overprøver sitt
 eget vedtak, med syv ord — «700, og juster trinnene / evt. antall trinn» — og
-da snur regnestykket. Trinn 3 er løftet **61 mm**, til 848, og da står
-underkanten på 800: nøyaktig 100 over en platetopp på 700. Pulten ligger ikke
-under taket sitt, den ligger **på** det. Ingen regel ble slakket for å få den
-dit.
+da snur regnestykket. X9 løftet trinn 3 [var 61 mm, til 848], og da sto
+underkanten på 800: nøyaktig 100 over en platetopp på 700. Pulten lå ikke
+under taket sitt, den lå **på** det. Ingen regel ble slakket for å få den dit.
+
+**Og X16 snudde den siste biten.** X9 kjøpte høyden ved å holde et bånd TOMT og
+henge to bordklosser under platens forkant; X16 legger et trinn i den høyden i
+stedet. Trinn 3 står på **682** — bordplatens underside — og lokket over løftet
+er trinn 4, med underkanten på **914**. Platetoppen er den samme 700, men taket
+gikk fra 700 til **814** og løftet fra 100 til **214**. Se J4 og J13.
 
 **Prisen står i stigen, og den er reell.** X1/X2 skrev ned den jevne stigen som
 en utseendebeslutning og slo fast at «stigen bestemmer og bordet følger». X9 er
 den beslutningen solgt tilbake, av den som tok den, for det han ville ha mer.
-Stigen er nå to løp om løftesjakten, med 51 mm forskjell mellom dem. Se J4 for
-hva som ble beholdt: stigningsgrensen, jevnheten inne i hvert løp, og
-trinnantallet.
+Stigen er to løp som møtes på støttetrinnet, med **89 mm** forskjell mellom dem
+(X9 hadde 51). Se J4 for hva som ble beholdt: stigningsgrensen, jevnheten inne i
+hvert løp, og trinnantallet.
 
 **Og det som er ærlig å si om høyden, står her.** 280 mm over puta er **92 mm
 over albuen** til et sittende barn på 1200 mm. Det er en pulthøyde regnet for
@@ -1683,18 +1733,18 @@ spennet. Det er en bruksregel, ikke en beregning: se 7.4.
 | Stigevange → gulv | Ren søyle helt ned til gulvet | — | 1 kN | — | ✓ Ingen festemiddel i klatrelastens vei nedover |
 | Stigevange, knekking **ut av planet** | Fri lengde gulv → fremre sidevange, 1402 mm etter X1 | λ ≈ 135, k<sub>c</sub> ≈ 0,17 → 3,9 kN | 1 kN | **0,26** | ✓ men se vedlegg B, avvik 2. Vangen står med den tynne siden ut av planet |
 | Stigevange → fremre sidevange (J3) | Skruskjær, 3 × 6 mm — 98 mm omlegg tar ikke fire i rad | 6,0 kN | < 1 kN | 0,17 | ✓ Samme detalj som hele rammen bruker |
-| **Bordkloss → stigevange (J5-B)** | Skruskjær, 2 × 6 mm — hele festet, det står ingen kloss under | 4,0 kN | 0,5 kN | **0,12** | ✓ Med hele platelasten stående over den ene klossen: 0,25. Klosskravet V5 stiller til hvert klossløst hjørne i sengen, og X10 satte J5-B inn på den lista |
-| Samme ledd, **eksentrisiteten** | Platen står ute på hylla, **46 mm foran skruelinja**, så lasten og festet ikke ligger i samme plan. Momentet ligger *i* innfestingsflaten og bæres som et skruepar i motsatt skjær, med skrueavstanden som arm | Par 0,97 kN over 24 mm arm, pluss sin del av skjæret = 1,09 kN mot 2,0 | 0,5 kN per kloss | **0,55** | ✓ Grense 0,8. **Dette er raden som kjøpte den andre skruen:** med én skrue finnes ikke armen, og momentet bæres i friksjon og bøyd skaft — som ingen rad i denne fila kan regne på |
+| **Støttetrinnet under platens forkant** | Samme rad som «Rungetrinn» over — trinn 3 er ikke en egen deltype. Platen legger 0,55 kN på den fremre bærelinja, mot trinnets egen prøvelast på 1,2 | 320 mm | 0,55 kN | < 0,18 | ✓ Bæreflaten er 320 × 30 = 9600 mm², nesten dobbelt av kravet på 5000 |
 | Stigens stivhet i eget plan | Rammevirkning: to vanger + fem trinn | — | — | — | ✓ |
 
-**Bordklossene (J5-B) fikk sine egne rader her i X10, og de sto ikke der før.**
-X9 skrev dem opp som en ren bæreflate og ingen ny lastbane — 5000 mm² per
-bærelinje, ferdig med det — og det var galt to ganger: klossen er et klossløst
-hjørne av nøyaktig den typen V5 skrev regelen for, og lasten på den står ikke
-over festet sitt. Bæreflaten er der fortsatt og holder: 2 × 48 × 53 =
-**5088 mm²** mot filas krav på 5000. De 91 millimeterne er 53 mm hylle + 36 mm
-innfesting + de 2 platen har i klaring mot vangen; lengden følger av kravet og
-er ikke et tall noen valgte.
+**To rader gikk UT av denne tabellen i X16, og det er verdt å si hvilke.**
+X10 måtte gi bordklossene sine egne rader her: en skjærrad, og — verre — en
+**eksentrisitetsrad**, fordi platas last sto ute på klossens hylle og ikke over
+skruelinja. Det var et moment som lå i selve innfestingsflaten, båret som et
+skruepar i motsatt skjær, og den raden lå på 0,55 — den høyeste skrueraden i
+hele sengen. Begge deler forsvant med klossene: **ingen skrue i denne sengen har
+lenger last stående foran sin egen skruelinje**, og den høyeste rene skrueraden
+er nå J5 med 0,33. Et trinn bærer platen *over* vangen i stedet for på en
+utkraging foran den, og da finnes momentet ikke.
 
 ### A.3 Underetasjen
 
@@ -1719,14 +1769,12 @@ er ikke et tall noen valgte.
 | Plate 18 mm, **bar** | Bøyning over to opplegg | 750 mm | 2 kN dynamisk | **1,40** | ✗ Holder ikke alene. Denne raden er kalibrert på f<sub>m,d</sub> ≈ **6,95 MPa** for plata, og alle plateradene under bruker samme tall |
 | Plate 18 mm **med to avstivningslekter 48×68 på høykant** | Lekta regnet alene — platen er ikke kreditert som flens, se J13a | 750 mm | 1 kN på hver | **0,26** | ✓ σ ≈ 5,1 MPa mot 19,5. Dette er hele grunnen til at lektene finnes |
 | Samme lekt, **hele lasten over ÉN av dem** | Et kne lander like gjerne rett over en lekt som midt imellom | 750 mm | 2 kN dynamisk | **0,52** | ✓ Dette er jobben reserven i lekta gjør, og grunnen til at den ikke kan krympes |
-| **Styrelektas forende → trinnet, gjennom plata** (V3) | Lekta står 2 mm utenfor trinnenden, så forenden har ikke opplegg under seg: reaksjonen går 26 mm sideveis gjennom plata (lektas senterlinje X 809 → trinnets opplegskant X 835; i bordstilling er det bordklossens kant, samme X 835, så raden gjelder begge stillinger) | 26 mm arm, 100 mm effektiv bredde (konservativt) | 1 kN | **0,69** | ✓ σ ≈ 4,8 MPa. Dette er platas dimensjonerende rad nå — prisen for å legge styringen der styringen må skje |
-| **Platas frie forkant, flat hånd** (X10) | I bordstilling bærer to klosser forkanten, ikke et helt trinn, så det står 224 mm bart 18 mm ark mellom dem. Fritt opplagt stripe, M = P·L/4 = 56 000 Nmm. b<sub>ef</sub> er avtrykket pluss det lasten sprer seg til — ved en **fri kant** sprer den seg bare én vei | 224 mm spenn, 80 mm avtrykk → b<sub>ef</sub> 140 mm | 1 kN | **0,43** | ✓ σ = 7,41 MPa mot 17,4 **langs** fiberretningen. På tvers er den 1,07 mot 6,95 og stryker — se raden under |
-| **Platas frie forkant, kne** (X10) | Samme spenn, mindre avtrykk: et kne mobiliserer mindre av arket enn en flat hånd, og det er derfor kneet og ikke hånden er dimensjonerende | 224 mm spenn, 40 mm avtrykk → b<sub>ef</sub> 100 mm | 1 kN | **0,60** | ✓ σ = 10,37 MPa mot 17,4 langs. På tvers: **1,49**, en klar stryk. **Dette er hele begrunnelsen for fiberkravet:** dekkfineren SKAL ligge langs sengens lengderetning, og modellen asserter begge veier — at raden går langs og at den ikke går på tvers |
-| **Fritt platehjørne, bar 18 mm plate** (V3, kontrollregning) | Punktlast på et fritt hjørne: utkraget stripe med effektiv bredde = egen lengde, så σ = P·a/(a·t²/6) = **6P/t²** og lengden faller ut | uavhengig av avstand | 1 kN kne | **2,66** | ✗ σ = 18,5 MPa. Gjelder like fullt om lekta står 213, 116 eller 77 mm unna — **derfor ble kilelektene ikke fjernet** |
+| **Styrelektas forende → trinnet, gjennom plata** (V3) | Lekta står 2 mm utenfor trinnenden, så forenden har ikke opplegg under seg: reaksjonen går 26 mm sideveis gjennom plata (lektas senterlinje X 809 → trinnets opplegskant X 835 — samme trinnprofil og samme X i begge stillinger etter X16, så raden gjelder begge) | 26 mm arm, 100 mm effektiv bredde (konservativt) | 1 kN | **0,69** | ✓ σ = 4,81 MPa mot f<sub>m,d</sub> 6,95 **på tvers** av fiberretningen, og 0,28 mot 17,4 langs. Dette er platas dimensjonerende rad — prisen for å legge styringen der styringen må skje. Den holder **begge veier**, og det er grunnen til at fiberretningen er blitt en margin i stedet for et krav |
+| **Fritt platehjørne, bar 18 mm plate** (V3, kontrollregning) | Punktlast på et fritt hjørne: utkraget stripe med effektiv bredde = egen lengde, så σ = P·a/(a·t²/6) = **6P/t²** og lengden faller ut | uavhengig av avstand | 1 kN kne | **2,66** | ✗ σ = 18,5 MPa. Gjelder like fullt hvor nær lekta står [var 213, 116 eller 77 mm] — **derfor ble kilelektene ikke fjernet**. Hjørnet ligger utenfor trinnenden og får ikke hjelp av støttetrinnet |
 | **Kilelekt (vinge) under hjørnet, bøyning** (M5/V4/K2, 77 mm, 68 → 27 mm) | Utkraging fra styrelekta, med lasten på kilen selv. Med h(x) avtakende topper σ seg der h = 2 × spissen, altså 51 mm fra spissen — inne i delen, ikke ved roten | 77 mm, kritisk snitt h = 54 mm | 1 kN kne | **0,13** | ✓ σ = 2,17 MPa mot f<sub>m,d</sub> 16,6 i C24. Roten selv: 2,08 MPa, 0,13. K2 gjorde vingen kortere og tallet falt med den (var 0,18 på 116 mm) |
 | **Kilelekt (vinge), skjær i spissen** (M5/V4) | Tverrskjær i delens tynneste snitt, 48 × 27 mm, med sprekkfaktoren: τ = 1,5·1000/(0,67·48·27) | 27 mm spisshøyde | 1 kN kne | **0,62** | ✓ 1,73 MPa mot f<sub>v,d</sub> = 2,77. Delens dimensjonerende tall, og det som sier at spissen ikke skal bli tynnere |
 | Lekt → plate (J13a/J13b) | Limt fuge 48 × 750 mm + 6 skruer 5×40 opp fra kontrabor i hver styrelekt, 2 i hver kile, 13 mm gjenge i plata | uttrekk ≈ 0,27 kN per skrue (halvert for kryssfiner) | 0,12 kN, enheten (6,3 kg) løftet etter ett hjørne med faktor 2 | **< 0,05** | ✓ I bruk står fugen i trykk — platen hviler på lekta, lasten går ikke gjennom et festemiddel |
-| Bordbærelekt 48×68 **på høykant** | Bøyning om sterk akse. **Dette er lekta som spenner fritt, ikke benkevangen:** i bordstilling hviler platen bak på bordbærelekta og foran på de to bordklossene (X9 — det var trinn 2 før), og lekta går post til post uten støtte under | 1794 mm | 0,55 kN bordlast | **0,34** | ✓ σ ≈ 6,7 MPa mot 19,5 |
+| Bordbærelekt 48×68 **på høykant** | Bøyning om sterk akse. **Dette er lekta som spenner fritt, ikke benkevangen:** i bordstilling hviler platen bak på bordbærelekta og foran på støttetrinnet (X16 — det var to bordklosser fra X9, og trinn 2 før det), og lekta går post til post uten støtte under | 1794 mm | 0,55 kN bordlast | **0,34** | ✓ σ ≈ 6,7 MPa mot 19,5 |
 | Samme lekt, **noen lener seg tungt på bordet** | Halve den dynamiske designlasten havner på det bakre opplegget | 1794 mm | 1 kN | **0,62** | ✓ σ ≈ 12,1 MPa. Lektas dimensjonerende rad, og grunnen til at den ikke kan bli tynnere |
 | Bordbærelekt → stolpe | Skruskjær, 1 × 5 mm per beslagflik — 40 mm flik tar ikke to | 1,5 kN | 0,13 kN | 0,09 | ✓ Lekta ligger dessuten PÅ den vannrette fliken; skruen holder den bare nede |
 | Rekkverksbord 36×98 | Bøyning om svak akse, vannrett last, innspent i begge ender | ≈ 760 mm | 0,5 kN | **0,10** | ✓ σ ≈ 2,2 MPa mot 21,6 |
@@ -1749,12 +1797,9 @@ er ikke et tall noen valgte.
 | Bakre sidevange regnet uten veggfestet | 0,65 |
 | Bordbærelekt, noen lener seg tungt på bordet | **0,62** |
 | Kilelekt under platehjørnet, skjær i 27 mm-spissen (med k<sub>cr</sub>) | **0,62** |
-| Platas frie forkant, 1 kN kne midt på de 224 mm (fiberretningen **langs**) | **0,60** |
-| Bordkloss → stigevange, platas eksentriske last i skrueparet (J5-B) | **0,55** |
 | Avstivningslekt under platen, hele lasten over én av dem | **0,52** |
 | Køyespile og benkespile, 0,5 kN på én bar spile | **0,50** |
 | Endespile (V13), 0,5 kN på én bar spile | 0,48 |
-| Platas frie forkant, 1 kN flat hånd (fiberretningen **langs**) | 0,43 |
 | Endebjelke (36×98) | 0,40 |
 | Bordbærelekt på høykant, ren bordlast | 0,34 |
 | Stigekloss → stigevange, klossens ene skrue regnet alene | **0,33** |
@@ -1772,10 +1817,15 @@ er ikke et tall noen valgte.
 | Rekkverksbord, vannrett last | 0,10 |
 | Alle andre ledd | ≤ 0,10 |
 
-De øverste er forskjellige slags ledd — en plate i to helt ulike lastbaner, en
-vange uten sitt veggfeste, to lekter og et skruepar i en kloss — og det er slik
-det skal se ut. Ingen enkelt delfamilie er verken flaskehalsen eller den
-overdimensjonerte.
+De øverste er forskjellige slags ledd — en plate, en vange uten sitt veggfeste
+og to lekter — og det er slik det skal se ut. Ingen enkelt delfamilie er verken
+flaskehalsen eller den overdimensjonerte.
+
+**Og etter X16 er den høyeste rene skrueraden i hele sengen 0,33** — J5,
+stigeklossens ene skrue. Toppen av denne lista er tre og ikke stål. Fram til
+denne runden lå bordklossens skruepar øverst blant skruene på 0,55, og det var
+den eneste raden i sengen der lasten sto foran sin egen skruelinje. Den finnes
+ikke lenger, og det er en assert i modellen og ikke en observasjon her.
 
 ### A.7 Kilder
 
@@ -1883,9 +1933,11 @@ og hva som ligger imellom:
 * **utover: 689 mm** til den fremre hjørnestolpen. Mellomrommet er D13s
   gangpassasje, som skal stå fri for fast tre i 142 mm bredde fra gulvet og
   helt opp til **Z 682**. Til og med v15 sto det tallet skrevet som «trinn 2»,
-  fordi platen lå på trinn 2 i bordstilling. X9 skilte de to, og da følger
-  passasjen **platen** og ikke et trinn: det er pultflaten du går under. Kravet
-  ble 140 mm høyere av den grunn alene.
+  fordi platen lå på trinn 2 i bordstilling. X9 skilte de to og lot passasjen
+  følge **platen** og ikke et trinn — det er pultflaten du går under — og kravet
+  ble 140 mm høyere av den grunn alene. Etter X16 faller de to sammen igjen:
+  støttetrinnet står på nøyaktig den samme 682, så høyden er den samme enten du
+  leser den av platen eller av trinnet.
 * **innover: 1057 mm** til den andre fremre hjørnestolpen. Mellomrommet er
   stigeåpningen, 320 mm fri mot EN 747s minimum på 300. (Å binde de to
   stigevangene til hverandre gir dessuten ingenting i dybden — de er én ramme
@@ -1964,10 +2016,10 @@ Ettermontering av lås er mulig uten å endre en eneste trebit — se J13.
 | [byggerekkefolge.svg](schematics/byggerekkefolge.svg) | Oversikt over byggerekkefølgen, med samme nummer som byggesteg og MONTERING |
 | [spikerslag.svg](schematics/spikerslag.svg) | Bakveggen som oppriss, X langs veggen og Z opp fra ferdig gulv: sonene som skal ha spikerslag, skravert i sin fulle bredde og høyde, høyderisset som tynn strek, og de ni veggfestene i to rader der de lander. Hver høyde står to ganger — over ferdig gulv, og i parentes som fortegnstall fra høyderisset, som er den du faktisk måler fra på en skjev gulvflate. Det eneste arket som ikke tegner sengen, men veggen — og det eneste som må leses før veggen lukkes. Sonene er modellens `WALL_ZONES` |
 | [end-elevation.svg](schematics/end-elevation.svg) | Kortsiden: snitt A–A gjennom endebjelken, med veggen inntegnet. Hele dybden i ett bilde, hver etasje fra gulv til rekkverkstopp, og det arket som viser at sengen er usymmetrisk — bakre stolpe stopper i sengeflaten, fremre går helt opp til rekkverket |
-| [ladder-detail.svg](schematics/ladder-detail.svg) | Stigen: vanger, stigeklosser, trinn, J3-skruene, hylla bak trinnet som platen hviler på i sengestilling, og sjaktene ved siden av trinnendene der avstivningslektene løper. Etter X9 også de to **bordklossene** med J5-B-skruene, og løftesjakten som er det trinnhøydene er regnet ut av — arket sier «stigningen er to løp» og viser hvorfor |
+| [ladder-detail.svg](schematics/ladder-detail.svg) | Stigen: vanger, stigeklosser, trinn, J3-skruene, hylla bak trinnet som platen hviler på i **begge** stillinger, og sjaktene ved siden av trinnendene der avstivningslektene løper. Etter X16 er **støttetrinnet** — trinn 3 på 682 — tegnet som det opplegget bordplaten lander på, og løftesjakten over det er det de øvre trinnhøydene er regnet ut av. Arket sier «stigningen er to løp som møtes på et trinn» og viser hvorfor |
 | [bench-detail.svg](schematics/bench-detail.svg) | Benken: vangeenden mot hjørnestolpen uten kloss, vangebiten som ender på stubbefoten, benkespilene og platekanten. Egen plan gjennom J8-Bs sete og skruevinkel |
 | [setedetalj.svg](schematics/setedetalj.svg) | Skråskruesetene: snitt langs skrueaksen for begge vinkler, munningen ovenfra med veggen mellom lommene, vinkelklossen eksplodert og klossen i bruk |
-| [panel-detail.svg](schematics/panel-detail.svg) | Plateenheten i begge stillinger: plate, to avstivningslekter, to kilelekter, glidesjakten ved trinnenden og skruen nedenfra ut av kontraboret. Ingen ståldel. Etter X9 er bordstillingen tegnet som **pult** — begge opplegg på 682, de to bordklossene med J5-B, og de 100 millimeterne rett løft opp til trinn 3 |
+| [panel-detail.svg](schematics/panel-detail.svg) | Plateenheten i begge stillinger: plate, to avstivningslekter, to kilelekter, glidesjakten ved trinnenden og skruen nedenfra ut av kontraboret. Ingen ståldel. Bordstillingen er tegnet som **pult** — begge opplegg på 682, forkanten på **støttetrinnet** (X16), og de 214 millimeterne rett løft opp til trinn 4 |
 | [bruk-sengestilling.svg](img/bruk-sengestilling.svg) | Sengestillingen i bruk: én som sover i køya og én på nedre soveflate, med rekkverket over kroppen, fri høyde over ansiktet nede og madrassen som er igjen bak føttene. Rett oppriss av langsiden — stolper, stigevanger og trinn, sidevange, begge rekkverksbånd, benkevanger og stubbeføtter står der som de står i modellen, og hver målpil er differansen mellom to Z |
 | [bruk-bordstilling.svg](img/bruk-bordstilling.svg) | Bordstillingen i bruk: to sittende på hver sin benkepute, vendt mot pulten, med knærne under platen og sålene på fotbrettet. Fri høyde over hodet, sittehøyde, plate over sete, kne til platekant og fotbrettets høyde |
 
@@ -1978,13 +2030,15 @@ bjelke- og vangeender, ingen U-brakett, ingen krokplate og ikke én M6, fordi
 ingen av delene finnes. J2, J3
 og J8 er tegnet med hodet på vangens innside, slik de skrus.
 
-**Og de er ført videre til X9.** Det er fem ting å se etter, og de står på
-arkene nå: bordbærelekta på Z 614–682 og ikke 474–542, bordplaten på 700 og
-ikke 560, trinnoverkantene på 297 / 572 / 848 / 1073 / 1298 og ikke
-297 / 542 / 787 / 1032 / 1277, de **to bordklossene** ved stigen — som ikke
-fantes før — og de to figurene i `bruk-bordstilling.svg`, som sitter
-alminnelig med knærne under platen der de før satt i skredderstilling. Har du
-skrevet ut et ark før denne runden, er alle fem feil på det.
+**Og de er ført videre til X16.** Det er fire ting å se etter, og de står på
+arkene nå: trinnoverkantene på **297 / 489 / 682 / 962 / 1242** — stigningen
+297 + 192 + 193 + 280 + 280 + 281 — der X9-arket hadde 297 / 572 / 848 /
+1073 / 1298 og v15-arket 297 / 542 / 787 / 1032 / 1277; **støttetrinnet** på
+682, som er bordplatens underside, der X9-arket hadde to påskrudde bordklosser;
+bordbærelekta på Z 614–682 og bordplaten på 700, uendret siden X9; og de to
+figurene i `bruk-bordstilling.svg`, som sitter alminnelig med knærne under
+platen. Har du skrevet ut et ark før denne runden, er trinnhøydene og klossene
+feil på det — se hulltabellen i J4.
 
 **Tre av arkene regenereres av modellen: `setedetalj.svg`, `end-elevation.svg`
 og `spikerslag.svg`.** De fire andre er håndtegnet. De er gått gjennom mot

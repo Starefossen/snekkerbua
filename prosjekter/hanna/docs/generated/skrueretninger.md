@@ -19,7 +19,6 @@ Hvilken vei hver skrue drives, og hvorfor akkurat den veien. Hvert festemiddel i
 | **J3** | 3× Treskrue 6×80 forsenket Torx | **Treskrue 6×80 forsenket Torx** gjennom fremre sidevange (48×98) → inn i stigevange (36×48), utover mot rommet | fastsatt — begge veier holder målene — skrudd innenfra og ut, så hodet ikke havner på den romvendte forflaten |
 | **J4** | 1× Treskrue 6×120 forsenket Torx | **Treskrue 6×120 forsenket Torx** gjennom stigevange (36×48) → inn i rungetrinn (48×68), mot høyre vegg (speilvendt i den andre enden) | utledet av tykkelsene |
 | **J5** | 1× Treskrue 5×60 forsenket Torx | **Treskrue 5×60 forsenket Torx** gjennom stigekloss (36×48) → inn i stigevange (36×48), mot venstre vegg (speilvendt i den andre enden) | fastsatt — begge veier holder målene |
-| **J5-B** | 2× Treskrue 6×80 forsenket Torx | **Treskrue 6×80 forsenket Torx** gjennom stigevange (36×48) → inn i bordkloss (48×68), mot høyre vegg (speilvendt i den andre enden) | fastsatt — begge veier holder målene |
 | **J6** | 1× Treskrue 5×60 forsenket Torx | **Treskrue 5×60 forsenket Torx** gjennom køyespile (23×98) → inn i sidevange (48×98), rett ned | utledet av tykkelsene |
 | **J7** | 2× Treskrue 5×60 forsenket Torx | **Treskrue 5×60 forsenket Torx** gjennom rekkverksbord (36×98) → inn i hjørnestolpe / stigevange (36×98), utover mot rommet | fastsatt — begge veier holder målene — skrudd innenfra og ut, så hodet ikke havner på den romvendte forflaten |
 | **J8** | 2× Treskrue 6×80 forsenket Torx | **Treskrue 6×80 forsenket Torx** gjennom fremre benkevange (48×68) → inn i fremre hjørnestolpe (36×98), utover mot rommet | fastsatt — begge veier holder målene — skrudd innenfra og ut, så hodet ikke havner på den romvendte forflaten |
@@ -39,6 +38,6 @@ Hvilken vei hver skrue drives, og hvorfor akkurat den veien. Hvert festemiddel i
 | **J13b** | 2× Treskrue 5×40 forsenket Torx | **Treskrue 5×40 forsenket Torx** gjennom fremre kilelekt (48×68) → inn i løs plate (18 mm plate, 574 bred), rett opp — hodet står 27 mm under plata i alle tre hullene, så kontraboret grunner ut mot den skråkappede tuppen (dypest ved roten, null ved tuppen) og skruen tar 13 mm i løs plate uansett | fastsatt — begge veier holder målene |
 | **J18** | 1× Treskrue 6×80 forsenket Torx | **Treskrue 6×80 forsenket Torx** gjennom fotbrettbord (48×68) → inn i fotbrettgavl (36×98), rett ned | utledet av tykkelsene |
 
-**7** av retningene er utledet av målene alene, **18** er fastsatt for hånd. Alle sammen kontrolleres ved hver bygging: skruekroppen må ha hodet i plan med flaten den drives fra, spissen inne i delen den tar tak i, og ingenting av seg selv i noen annen del.
+**7** av retningene er utledet av målene alene, **17** er fastsatt for hånd. Alle sammen kontrolleres ved hver bygging: skruekroppen må ha hodet i plan med flaten den drives fra, spissen inne i delen den tar tak i, og ingenting av seg selv i noen annen del.
 
 Veggfestene (J14 og J12-V) står ikke her — de går rett gjennom den bakre sidevangen og gjennom bordbærelekta og inn i veggen, og har ingen andre del å gå inn i.

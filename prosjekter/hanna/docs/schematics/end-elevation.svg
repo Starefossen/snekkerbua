@@ -232,24 +232,21 @@
   <text x="1520" y="785.42" class="sml" text-anchor="start">1402   ok endebjelke = uk sidevange = ok bakre stolpe</text>
   <line x1="1409" y1="900" x2="1470" y2="900" class="ext"/>
   <text x="1520" y="907.92" class="sml" text-anchor="start">1304   uk endebjelke — står fritt</text>
-  <line x1="1409" y1="907.5" x2="1470" y2="907.5" class="ext"/>
-  <polyline points="1470,907.5 1496,907.5 1522,931.68" class="ext"/>
-  <text x="1520" y="939.16" class="sml" text-anchor="start">1298   trinn 5</text>
-  <line x1="1409" y1="1188.75" x2="1470" y2="1188.75" class="ext"/>
-  <text x="1520" y="1196.67" class="sml" text-anchor="start">1073   trinn 4</text>
-  <line x1="1409" y1="1470" x2="1470" y2="1470" class="ext"/>
-  <text x="1520" y="1477.92" class="sml" text-anchor="start">848   trinn 3</text>
+  <line x1="1409" y1="977.5" x2="1470" y2="977.5" class="ext"/>
+  <text x="1520" y="985.42" class="sml" text-anchor="start">1242   trinn 5</text>
+  <line x1="1409" y1="1327.5" x2="1470" y2="1327.5" class="ext"/>
+  <text x="1520" y="1335.42" class="sml" text-anchor="start">962   trinn 4</text>
   <line x1="1409" y1="1590" x2="1470" y2="1590" class="ext"/>
   <text x="1520" y="1597.92" class="sml" text-anchor="start">752   ryggputas topp i sofastilling</text>
   <line x1="1409" y1="1655" x2="1470" y2="1655" class="ext"/>
   <text x="1520" y="1662.92" class="sml" text-anchor="start">700   bordplate — pulthøyde</text>
   <line x1="1409" y1="1677.5" x2="1470" y2="1677.5" class="ext"/>
   <polyline points="1470,1677.5 1496,1677.5 1522,1686.68" class="ext"/>
-  <text x="1520" y="1694.16" class="sml" text-anchor="start">682   ok bordbærelekt = ok bordkloss = platen i bordstilling</text>
+  <text x="1520" y="1694.16" class="sml" text-anchor="start">682   ok bordbærelekt = trinn 3 = platen i bordstilling</text>
   <line x1="1409" y1="1762.5" x2="1470" y2="1762.5" class="ext"/>
   <text x="1520" y="1770.42" class="sml" text-anchor="start">614   uk bordbærelekt</text>
-  <line x1="1409" y1="1815" x2="1470" y2="1815" class="ext"/>
-  <text x="1520" y="1822.92" class="sml" text-anchor="start">572   trinn 2</text>
+  <line x1="1409" y1="1918.75" x2="1470" y2="1918.75" class="ext"/>
+  <text x="1520" y="1926.67" class="sml" text-anchor="start">489   trinn 2</text>
   <line x1="1409" y1="2005" x2="1470" y2="2005" class="ext"/>
   <text x="1520" y="2012.92" class="sml" text-anchor="start">420   puteoverside = sittehøyde = nedre soveflate</text>
   <line x1="1409" y1="2130" x2="1470" y2="2130" class="ext"/>

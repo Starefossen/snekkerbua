@@ -3262,8 +3262,6 @@ COINCIDENT_MARKS = {
                         "24 mm fra hverandre i Z og hodene er 23,4 mm"),
     (5, "J8"): (2, 1, "fremre benkevangeende → fremre stolpe: samme par, "
                       "samme 24 mm, sett omtrent rett forfra"),
-    (6, "J5-B"): (4, 2, "bordkloss → stigevange: to par à 24 mm, ett i "
-                        "hver vange, begge sett langs sin egen akse"),
 }
 
 

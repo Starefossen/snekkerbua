@@ -556,16 +556,19 @@ def film_turntable(work, width, render_width, want_mp4):
 #   3  out         50 mm +Y       the rear edge off the table ledger's line
 #   4  up        319 mm           past the ledger and rung 2, in the open bay
 #   5  back        50 mm -Y       over the seat line again
-#   6  slide      599 mm right    back across, now ABOVE the bordkloss band
+#   6  slide      599 mm right    back across, now ABOVE the seat rung
 #   7  down        84 mm          within the asserted 100, into the table seat
 #
-# X9 re-measured every one of those legs off the model - the numbers above are
-# the v16 ones. What CHANGED is leg 6: the band it crosses in used to have
-# rung 2's top as its floor, because rung 2 carried the plate; the desk's front
-# seat is the two bordklosser at 682, so the floor went up with them and the
-# band is 118 mm for an 86 mm unit. Legs 1-3 are the same move over the same
-# bench; the ceiling over that bench went UP 140 mm with the ledger, so the
-# flat carry has 59 mm of daylight where it had 34.
+# X9 re-measured every one of those legs off the model and X16 re-measured them
+# again; the millimetres above are the v16 ones and the live numbers are
+# whatever mech_keys() reads today. What X16 changed is the two ends of the
+# band leg 6 crosses in. The FLOOR is the plate's own front seat, which is a
+# RUNG again instead of two bordklosser - the same 682. The CEILING is no
+# longer the same tread as the floor: it is the rung ABOVE the seat, so the
+# band goes 118 -> 232 mm round an 86 mm unit. The bench end of the trip got
+# tighter by the same move - rung 2 came down 572 -> 489 with the rest of the
+# lower flight - so the flat carry over the bench has 17 mm of daylight above
+# and below where it had 59.
 #
 # Legs 3 and 5 are the two that look like fussing and are not: the back table
 # ledger runs the whole width of the bed at Y -48..0, so the panel's rear edge
@@ -635,14 +638,15 @@ def mech_keys(G):
     out = G.RAIL_T + G.PANEL_FIT                            # 50
     # LEG 4/6 - the free band the panel crosses the ladder in on the way back,
     # with the unit centred in it. Before K1 the ceiling here was a rung BLOCK;
-    # the blocks are out of the panel's depth band now, so it is rung 3 itself.
-    # X9 MOVED THE FLOOR OF THIS BAND, and this is the one place in the film
-    # that had to be told: it used to be rung 2's top, because rung 2 was what
-    # carried the plate at table height. The plate is a desk now and its front
-    # seat is the two BORDKLOSSER at PANEL_UNDER_TABLE - higher than rung 2 and
-    # standing in exactly this corridor - so the floor is the bordkloss top.
-    # The band is 118 mm for an 86 mm unit; the model asserts it (X9).
-    band = (G.PANEL_UNDER_TABLE, _part(G, "Ladder Rung_3").extents[2][0])
+    # the blocks are out of the panel's depth band now, so it is a tread again.
+    # X9 MOVED THE FLOOR OF THIS BAND and X16 moved its CEILING, and both are
+    # the same fact seen from two sides: whatever carries the plate's front
+    # edge at table height stands in this corridor and IS the floor of it.
+    # Under X9 that was two bordklosser at PANEL_UNDER_TABLE with rung 3
+    # overhead; under X16 the seat is a RUNG and the lid is the rung above it,
+    # which the model has already measured as TABLE_CEILING_Z. The band goes
+    # 118 -> 232 mm round an 86 mm unit, and the model asserts it.
+    band = (G.PANEL_UNDER_TABLE, G.TABLE_CEILING_Z)
     cruise = (band[0] + (band[1] - band[0] - unit_h) / 2) - G.BATTEN_Z0_BED
     # LEG 7 - and down.
     drop = cruise - G.PANEL_MODE_LIFT
@@ -656,7 +660,7 @@ def mech_keys(G):
         (MECH_ROLL, (side, out, lift)),            # 3 rear edge off the ledger
         (MECH_ROLL, (side, out, cruise)),          # 4 up past ledger and rung 2
         (MECH_ROLL, (side, 0.0, cruise)),          # 5 back over the seat line
-        (MECH_ROLL, (0.0, 0.0, cruise)),           # 6 across, above rung 2
+        (MECH_ROLL, (0.0, 0.0, cruise)),           # 6 across, over the seat rung
         (MECH_ROLL, (0.0, 0.0, G.PANEL_MODE_LIFT)),   # 7 down into the table seat
     ]
 

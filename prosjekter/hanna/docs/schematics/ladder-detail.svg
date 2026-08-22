@@ -24,6 +24,7 @@
     .lbl { font-size:24px; }
     .sml { font-size:22px; }
     .dm  { font-size:23px; }
+    .zl  { font-size:22px; paint-order:stroke; stroke:#fff; stroke-width:6px; }
     .leg { font-size:26px; font-weight:bold; }
     .jl  { font-size:27px; font-weight:bold; paint-order:stroke; stroke:#fff; stroke-width:6px; }
     .pst { fill:#c4c4c4; stroke:#000; stroke-width:3; }
@@ -53,7 +54,7 @@
 
 
   <text x="90" y="220" class="ttl">STIGEDETALJ</text>
-  <text x="90" y="262" class="sub">Stigevanger, rungetrinn, stigeklosser, bordklosser og løftesjakten som bestemmer trinnhøydene · alle mål i mm · A er 0,8:1 i tegneenheter</text>
+  <text x="90" y="262" class="sub">Stigevanger, rungetrinn, stigeklosser, støttetrinnet under bordplaten og løftesjakten over det · alle mål i mm · A er 0,8:1 i tegneenheter</text>
 
   <!-- ==================================================== A -->
   <text x="400" y="330" class="pt" text-anchor="start">A · STIGEN SETT FORFRA (X–Z), 0,8:1</text>
@@ -62,29 +63,26 @@
   <rect x="545.4" y="1408" width="459.2" height="14.4" class="pnl"/>
   <!-- den samme løse platen i BORDSTILLING: Z 682-700, X 708-1282 -->
   <rect x="545.4" y="1100" width="459.2" height="14.4" class="pnlt"/>
-  <!-- bordklosser 48x68 x 91: X 835-883 / 1107-1155, Z 614-682 -->
-  <rect x="647" y="1114.4" width="38.4" height="54.4" class="blk"/>
-  <rect x="864.6" y="1114.4" width="38.4" height="54.4" class="blk"/>
   <!-- trinn 1, ok 297 -->
   <rect x="647" y="1460.8" width="28.8" height="38.4" class="blk"/>
   <rect x="874.2" y="1460.8" width="28.8" height="38.4" class="blk"/>
   <rect x="647" y="1422.4" width="256" height="38.4" class="brd"/>
-  <!-- trinn 2, ok 572 -->
-  <rect x="647" y="1240.8" width="28.8" height="38.4" class="blk"/>
-  <rect x="874.2" y="1240.8" width="28.8" height="38.4" class="blk"/>
-  <rect x="647" y="1202.4" width="256" height="38.4" class="brd"/>
-  <!-- trinn 3, ok 848 - uk 800 er 100 mm over bordplatens topp 700 -->
-  <rect x="647" y="1020" width="28.8" height="38.4" class="blk"/>
-  <rect x="874.2" y="1020" width="28.8" height="38.4" class="blk"/>
-  <rect x="647" y="981.6" width="256" height="38.4" class="brd"/>
-  <!-- trinn 4, ok 1073 -->
-  <rect x="647" y="840" width="28.8" height="38.4" class="blk"/>
-  <rect x="874.2" y="840" width="28.8" height="38.4" class="blk"/>
-  <rect x="647" y="801.6" width="256" height="38.4" class="brd"/>
-  <!-- trinn 5, ok 1298 -->
-  <rect x="647" y="660" width="28.8" height="38.4" class="blk"/>
-  <rect x="874.2" y="660" width="28.8" height="38.4" class="blk"/>
-  <rect x="647" y="621.6" width="256" height="38.4" class="brd"/>
+  <!-- trinn 2, ok 489 -->
+  <rect x="647" y="1307.2" width="28.8" height="38.4" class="blk"/>
+  <rect x="874.2" y="1307.2" width="28.8" height="38.4" class="blk"/>
+  <rect x="647" y="1268.8" width="256" height="38.4" class="brd"/>
+  <!-- trinn 3, ok 682 - STOETTETRINNET, bordplatens underside -->
+  <rect x="647" y="1152.8" width="28.8" height="38.4" class="blk"/>
+  <rect x="874.2" y="1152.8" width="28.8" height="38.4" class="blk"/>
+  <rect x="647" y="1114.4" width="256" height="38.4" class="brd"/>
+  <!-- trinn 4, ok 962 - uk 914 er 214 mm over bordplatens topp 700 -->
+  <rect x="647" y="928.8" width="28.8" height="38.4" class="blk"/>
+  <rect x="874.2" y="928.8" width="28.8" height="38.4" class="blk"/>
+  <rect x="647" y="890.4" width="256" height="38.4" class="brd"/>
+  <!-- trinn 5, ok 1242 -->
+  <rect x="647" y="704.8" width="28.8" height="38.4" class="blk"/>
+  <rect x="874.2" y="704.8" width="28.8" height="38.4" class="blk"/>
+  <rect x="647" y="666.4" width="256" height="38.4" class="brd"/>
   <rect x="608.6" y="396" width="38.4" height="1264" class="pst"/>
   <rect x="903" y="396" width="38.4" height="1264" class="pst"/>
   <!-- plateenhetens egne avstivningslekter i BORDSTILLING: Z 614-682 -->
@@ -128,37 +126,31 @@
   <circle cx="922.2" cy="499.2" r="11" class="scrg"/>
   <circle cx="922.2" cy="480" r="11" class="scrg"/>
   
-  <!-- J4 / J5, trinn 1 (ok 297) -->
+  <!-- J4 / J5, trinn 1 -->
   <line x1="608.6" y1="1441.6" x2="698.2" y2="1441.6" class="scrl"/><circle cx="608.6" cy="1441.6" r="7" class="scr"/>
   <line x1="675.8" y1="1480" x2="624.6" y2="1480" class="scrl"/><circle cx="675.8" cy="1480" r="7" class="scr"/>
   <line x1="941.4" y1="1441.6" x2="851.8" y2="1441.6" class="scrl"/><circle cx="941.4" cy="1441.6" r="7" class="scr"/>
   <line x1="874.2" y1="1480" x2="925.4" y2="1480" class="scrl"/><circle cx="874.2" cy="1480" r="7" class="scr"/>
-  <!-- J4 / J5, trinn 2 (ok 572) -->
-  <line x1="608.6" y1="1221.6" x2="698.2" y2="1221.6" class="scrl"/><circle cx="608.6" cy="1221.6" r="7" class="scr"/>
-  <line x1="675.8" y1="1260" x2="624.6" y2="1260" class="scrl"/><circle cx="675.8" cy="1260" r="7" class="scr"/>
-  <line x1="941.4" y1="1221.6" x2="851.8" y2="1221.6" class="scrl"/><circle cx="941.4" cy="1221.6" r="7" class="scr"/>
-  <line x1="874.2" y1="1260" x2="925.4" y2="1260" class="scrl"/><circle cx="874.2" cy="1260" r="7" class="scr"/>
-  <!-- J5-B, bordklossene: 2 x 6x80 fra vangens UTSIDE, stablet i hoeyden
-       (Z 636 og 660), 48 mm vange + 32 mm kloss -->
-  <line x1="608.6" y1="1132" x2="672.6" y2="1132" class="scrl"/><circle cx="608.6" cy="1132" r="7" class="scr"/>
-  <line x1="608.6" y1="1151.2" x2="672.6" y2="1151.2" class="scrl"/><circle cx="608.6" cy="1151.2" r="7" class="scr"/>
-  <line x1="941.4" y1="1132" x2="877.4" y2="1132" class="scrl"/><circle cx="941.4" cy="1132" r="7" class="scr"/>
-  <line x1="941.4" y1="1151.2" x2="877.4" y2="1151.2" class="scrl"/><circle cx="941.4" cy="1151.2" r="7" class="scr"/>
-  <!-- J4 / J5, trinn 3 (ok 848) -->
-  <line x1="608.6" y1="1000.8" x2="698.2" y2="1000.8" class="scrl"/><circle cx="608.6" cy="1000.8" r="7" class="scr"/>
-  <line x1="675.8" y1="1039.2" x2="624.6" y2="1039.2" class="scrl"/><circle cx="675.8" cy="1039.2" r="7" class="scr"/>
-  <line x1="941.4" y1="1000.8" x2="851.8" y2="1000.8" class="scrl"/><circle cx="941.4" cy="1000.8" r="7" class="scr"/>
-  <line x1="874.2" y1="1039.2" x2="925.4" y2="1039.2" class="scrl"/><circle cx="874.2" cy="1039.2" r="7" class="scr"/>
-  <!-- J4 / J5, trinn 4 (ok 1073) -->
-  <line x1="608.6" y1="820.8" x2="698.2" y2="820.8" class="scrl"/><circle cx="608.6" cy="820.8" r="7" class="scr"/>
-  <line x1="675.8" y1="859.2" x2="624.6" y2="859.2" class="scrl"/><circle cx="675.8" cy="859.2" r="7" class="scr"/>
-  <line x1="941.4" y1="820.8" x2="851.8" y2="820.8" class="scrl"/><circle cx="941.4" cy="820.8" r="7" class="scr"/>
-  <line x1="874.2" y1="859.2" x2="925.4" y2="859.2" class="scrl"/><circle cx="874.2" cy="859.2" r="7" class="scr"/>
-  <!-- J4 / J5, trinn 5 (ok 1298) -->
-  <line x1="608.6" y1="640.8" x2="698.2" y2="640.8" class="scrl"/><circle cx="608.6" cy="640.8" r="7" class="scr"/>
-  <line x1="675.8" y1="679.2" x2="624.6" y2="679.2" class="scrl"/><circle cx="675.8" cy="679.2" r="7" class="scr"/>
-  <line x1="941.4" y1="640.8" x2="851.8" y2="640.8" class="scrl"/><circle cx="941.4" cy="640.8" r="7" class="scr"/>
-  <line x1="874.2" y1="679.2" x2="925.4" y2="679.2" class="scrl"/><circle cx="874.2" cy="679.2" r="7" class="scr"/>
+  <!-- J4 / J5, trinn 2 -->
+  <line x1="608.6" y1="1288" x2="698.2" y2="1288" class="scrl"/><circle cx="608.6" cy="1288" r="7" class="scr"/>
+  <line x1="675.8" y1="1326.4" x2="624.6" y2="1326.4" class="scrl"/><circle cx="675.8" cy="1326.4" r="7" class="scr"/>
+  <line x1="941.4" y1="1288" x2="851.8" y2="1288" class="scrl"/><circle cx="941.4" cy="1288" r="7" class="scr"/>
+  <line x1="874.2" y1="1326.4" x2="925.4" y2="1326.4" class="scrl"/><circle cx="874.2" cy="1326.4" r="7" class="scr"/>
+  <!-- J4 / J5, trinn 3 -->
+  <line x1="608.6" y1="1133.6" x2="698.2" y2="1133.6" class="scrl"/><circle cx="608.6" cy="1133.6" r="7" class="scr"/>
+  <line x1="675.8" y1="1172" x2="624.6" y2="1172" class="scrl"/><circle cx="675.8" cy="1172" r="7" class="scr"/>
+  <line x1="941.4" y1="1133.6" x2="851.8" y2="1133.6" class="scrl"/><circle cx="941.4" cy="1133.6" r="7" class="scr"/>
+  <line x1="874.2" y1="1172" x2="925.4" y2="1172" class="scrl"/><circle cx="874.2" cy="1172" r="7" class="scr"/>
+  <!-- J4 / J5, trinn 4 -->
+  <line x1="608.6" y1="909.6" x2="698.2" y2="909.6" class="scrl"/><circle cx="608.6" cy="909.6" r="7" class="scr"/>
+  <line x1="675.8" y1="948" x2="624.6" y2="948" class="scrl"/><circle cx="675.8" cy="948" r="7" class="scr"/>
+  <line x1="941.4" y1="909.6" x2="851.8" y2="909.6" class="scrl"/><circle cx="941.4" cy="909.6" r="7" class="scr"/>
+  <line x1="874.2" y1="948" x2="925.4" y2="948" class="scrl"/><circle cx="874.2" cy="948" r="7" class="scr"/>
+  <!-- J4 / J5, trinn 5 -->
+  <line x1="608.6" y1="685.6" x2="698.2" y2="685.6" class="scrl"/><circle cx="608.6" cy="685.6" r="7" class="scr"/>
+  <line x1="675.8" y1="724" x2="624.6" y2="724" class="scrl"/><circle cx="675.8" cy="724" r="7" class="scr"/>
+  <line x1="941.4" y1="685.6" x2="851.8" y2="685.6" class="scrl"/><circle cx="941.4" cy="685.6" r="7" class="scr"/>
+  <line x1="874.2" y1="724" x2="925.4" y2="724" class="scrl"/><circle cx="874.2" cy="724" r="7" class="scr"/>
 
   <!-- X-mål under -->
   <line x1="608.6" y1="1660" x2="608.6" y2="1785" class="ext"/>
@@ -183,101 +175,101 @@
   <line x1="505" y1="1460.8" x2="470" y2="1460.8" class="ext"/>
   <line x1="545.4" y1="1422.4" x2="470" y2="1422.4" class="ext"/>
   <line x1="545.4" y1="1408" x2="470" y2="1408" class="ext"/>
-  <line x1="608.6" y1="1279.2" x2="470" y2="1279.2" class="ext"/>
-  <line x1="608.6" y1="1240.8" x2="470" y2="1240.8" class="ext"/>
-  <line x1="608.6" y1="1202.4" x2="470" y2="1202.4" class="ext"/>
-  <line x1="608.6" y1="1058.4" x2="470" y2="1058.4" class="ext"/>
-  <line x1="608.6" y1="1020" x2="470" y2="1020" class="ext"/>
-  <line x1="608.6" y1="981.6" x2="470" y2="981.6" class="ext"/>
-  <line x1="608.6" y1="878.4" x2="470" y2="878.4" class="ext"/>
-  <line x1="608.6" y1="840" x2="470" y2="840" class="ext"/>
-  <line x1="608.6" y1="801.6" x2="470" y2="801.6" class="ext"/>
-  <line x1="608.6" y1="698.4" x2="470" y2="698.4" class="ext"/>
-  <line x1="608.6" y1="660" x2="470" y2="660" class="ext"/>
-  <line x1="608.6" y1="621.6" x2="470" y2="621.6" class="ext"/>
+  <line x1="608.6" y1="1345.6" x2="470" y2="1345.6" class="ext"/>
+  <line x1="608.6" y1="1307.2" x2="470" y2="1307.2" class="ext"/>
+  <line x1="608.6" y1="1268.8" x2="470" y2="1268.8" class="ext"/>
+  <line x1="608.6" y1="1191.2" x2="470" y2="1191.2" class="ext"/>
+  <line x1="608.6" y1="1152.8" x2="470" y2="1152.8" class="ext"/>
+  <line x1="608.6" y1="1114.4" x2="470" y2="1114.4" class="ext"/>
+  <line x1="608.6" y1="967.2" x2="470" y2="967.2" class="ext"/>
+  <line x1="608.6" y1="928.8" x2="470" y2="928.8" class="ext"/>
+  <line x1="608.6" y1="890.4" x2="470" y2="890.4" class="ext"/>
+  <line x1="608.6" y1="743.2" x2="470" y2="743.2" class="ext"/>
+  <line x1="608.6" y1="704.8" x2="470" y2="704.8" class="ext"/>
+  <line x1="608.6" y1="666.4" x2="470" y2="666.4" class="ext"/>
   <line x1="608.6" y1="538.4" x2="470" y2="538.4" class="ext"/>
   <line x1="608.6" y1="460" x2="470" y2="460" class="ext"/>
   <line x1="608.6" y1="441.6" x2="470" y2="441.6" class="ext"/>
   <line x1="480" y1="1660" x2="480" y2="1499.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="1587.1" class="dm" text-anchor="end">201</text>
+  <text x="468" y="1582.9" class="dm" text-anchor="end">201</text>
   <line x1="480" y1="1499.2" x2="480" y2="1460.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="1487.5" class="dm" text-anchor="end">48</text>
+  <text x="468" y="1483.3" class="dm" text-anchor="end">48</text>
   <line x1="480" y1="1460.8" x2="480" y2="1422.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="1449.1" class="dm" text-anchor="end">48</text>
+  <text x="468" y="1444.9" class="dm" text-anchor="end">48</text>
   <line x1="480" y1="1422.4" x2="480" y2="1408" class="dim"/>
-  <text x="468" y="1422.7" class="dm" text-anchor="end">18</text>
-  <line x1="480" y1="1408" x2="480" y2="1279.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="1351.1" class="dm" text-anchor="end">161</text>
-  <line x1="480" y1="1279.2" x2="480" y2="1240.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="1267.5" class="dm" text-anchor="end">48</text>
-  <line x1="480" y1="1240.8" x2="480" y2="1202.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="1229.1" class="dm" text-anchor="end">48</text>
-  <line x1="480" y1="1202.4" x2="480" y2="1058.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="1138.1" class="dm" text-anchor="end">180</text>
-  <line x1="480" y1="1058.4" x2="480" y2="1020" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="1046.7" class="dm" text-anchor="end">48</text>
-  <line x1="480" y1="1020" x2="480" y2="981.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="1008.3" class="dm" text-anchor="end">48</text>
-  <line x1="480" y1="981.6" x2="480" y2="878.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="937.5" class="dm" text-anchor="end">129</text>
-  <line x1="480" y1="878.4" x2="480" y2="840" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="866.7" class="dm" text-anchor="end">48</text>
-  <line x1="480" y1="840" x2="480" y2="801.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="828.3" class="dm" text-anchor="end">48</text>
-  <line x1="480" y1="801.6" x2="480" y2="698.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="757.5" class="dm" text-anchor="end">129</text>
-  <line x1="480" y1="698.4" x2="480" y2="660" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="686.7" class="dm" text-anchor="end">48</text>
-  <line x1="480" y1="660" x2="480" y2="621.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="648.3" class="dm" text-anchor="end">48</text>
-  <line x1="480" y1="621.6" x2="480" y2="538.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="587.5" class="dm" text-anchor="end">104</text>
+  <text x="468" y="1418.5" class="dm" text-anchor="end">18</text>
+  <line x1="480" y1="1408" x2="480" y2="1345.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="1380.1" class="dm" text-anchor="end">78</text>
+  <line x1="480" y1="1345.6" x2="480" y2="1307.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="1329.7" class="dm" text-anchor="end">48</text>
+  <line x1="480" y1="1307.2" x2="480" y2="1268.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="1291.3" class="dm" text-anchor="end">48</text>
+  <line x1="480" y1="1268.8" x2="480" y2="1191.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="1233.3" class="dm" text-anchor="end">97</text>
+  <line x1="480" y1="1191.2" x2="480" y2="1152.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="1175.3" class="dm" text-anchor="end">48</text>
+  <line x1="480" y1="1152.8" x2="480" y2="1114.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="1136.9" class="dm" text-anchor="end">48</text>
+  <line x1="480" y1="1114.4" x2="480" y2="967.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="1044.1" class="dm" text-anchor="end">184</text>
+  <line x1="480" y1="967.2" x2="480" y2="928.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="951.3" class="dm" text-anchor="end">48</text>
+  <line x1="480" y1="928.8" x2="480" y2="890.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="912.9" class="dm" text-anchor="end">48</text>
+  <line x1="480" y1="890.4" x2="480" y2="743.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="820.1" class="dm" text-anchor="end">184</text>
+  <line x1="480" y1="743.2" x2="480" y2="704.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="727.3" class="dm" text-anchor="end">48</text>
+  <line x1="480" y1="704.8" x2="480" y2="666.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="688.9" class="dm" text-anchor="end">48</text>
+  <line x1="480" y1="666.4" x2="480" y2="538.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="468" y="605.7" class="dm" text-anchor="end">160</text>
   <line x1="480" y1="538.4" x2="480" y2="460" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="506.7" class="dm" text-anchor="end">98</text>
-  <line x1="480" y1="460" x2="480" y2="441.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="468" y="458.3" class="dm" text-anchor="end">23</text>
+  <text x="468" y="502.5" class="dm" text-anchor="end">98</text>
+  <line x1="480" y1="460" x2="480" y2="441.6" class="dim"/>
+  <text x="468" y="454.1" class="dm" text-anchor="end">23</text>
   
   <!-- stigningen, høyre -->
   <line x1="941.4" y1="1660" x2="1150" y2="1660" class="ext"/>
   <line x1="1004.6" y1="1422.4" x2="1150" y2="1422.4" class="ext"/>
-  <line x1="941.4" y1="1202.4" x2="1150" y2="1202.4" class="ext"/>
-  <line x1="941.4" y1="981.6" x2="1150" y2="981.6" class="ext"/>
-  <line x1="941.4" y1="801.6" x2="1150" y2="801.6" class="ext"/>
-  <line x1="941.4" y1="621.6" x2="1150" y2="621.6" class="ext"/>
+  <line x1="941.4" y1="1268.8" x2="1150" y2="1268.8" class="ext"/>
+  <line x1="941.4" y1="1114.4" x2="1150" y2="1114.4" class="ext"/>
+  <line x1="941.4" y1="890.4" x2="1150" y2="890.4" class="ext"/>
+  <line x1="941.4" y1="666.4" x2="1150" y2="666.4" class="ext"/>
   <line x1="1051" y1="441.6" x2="1150" y2="441.6" class="ext"/>
   <line x1="1130" y1="1660" x2="1130" y2="1422.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1122" y="1548.7" class="dm" text-anchor="end">297</text>
-  <line x1="1130" y1="1422.4" x2="1130" y2="1202.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1122" y="1319.9" class="dm" text-anchor="end">275</text>
-  <line x1="1130" y1="1202.4" x2="1130" y2="981.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1122" y="1099.5" class="dm" text-anchor="end">276</text>
-  <line x1="1130" y1="981.6" x2="1130" y2="801.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1122" y="899.1" class="dm" text-anchor="end">225</text>
-  <line x1="1130" y1="801.6" x2="1130" y2="621.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1122" y="719.1" class="dm" text-anchor="end">225</text>
-  <line x1="1130" y1="621.6" x2="1130" y2="441.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1122" y="539.1" class="dm" text-anchor="end">225</text>
-  <!-- løftesjakten: uk plateenhet 614, ok bordplate 700, uk trinn 3 = 800 -->
+  <text x="1122" y="1544.5" class="dm" text-anchor="end">297</text>
+  <line x1="1130" y1="1422.4" x2="1130" y2="1268.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1122" y="1348.9" class="dm" text-anchor="end">192</text>
+  <line x1="1130" y1="1268.8" x2="1130" y2="1114.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1122" y="1194.9" class="dm" text-anchor="end">193</text>
+  <line x1="1130" y1="1114.4" x2="1130" y2="890.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1122" y="1005.7" class="dm" text-anchor="end">280</text>
+  <line x1="1130" y1="890.4" x2="1130" y2="666.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1122" y="781.7" class="dm" text-anchor="end">280</text>
+  <line x1="1130" y1="666.4" x2="1130" y2="441.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1122" y="557.3" class="dm" text-anchor="end">281</text>
+  <!-- løftesjakten: uk plateenhet 614, ok bordplate 700, uk trinn 4 = 914 -->
   <line x1="1004.6" y1="1168.8" x2="1150" y2="1168.8" class="ext"/>
   <line x1="1004.6" y1="1100" x2="1150" y2="1100" class="ext"/>
-  <line x1="941.4" y1="1020" x2="1075" y2="1020" class="ext"/>
-  <line x1="1060" y1="1100" x2="1060" y2="1020" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="1052" y="1067.5" class="dm" text-anchor="end">100  løft</text>
-  <line x1="943" y1="1141.6" x2="1006" y2="1141.6" class="ext"/>
-  <text x="1160" y="1652" class="sml" text-anchor="start">0  gulv</text>
-  <text x="1160" y="1414.4" class="sml" text-anchor="start">297  ok trinn 1</text>
-  <text x="1160" y="1194.4" class="sml" text-anchor="start">572  ok trinn 2</text>
-  <text x="1160" y="1160.8" class="sml" text-anchor="start">614  uk plateenhet</text>
-  <text x="1160" y="973.6" class="sml" text-anchor="start">848  ok trinn 3</text>
-  <text x="1160" y="793.6" class="sml" text-anchor="start">1073  ok trinn 4</text>
-  <text x="1160" y="613.6" class="sml" text-anchor="start">1298  ok trinn 5</text>
-  <text x="1160" y="433.6" class="sml" text-anchor="start">1523  spilebunn</text>
-  <text x="1160" y="1690" class="sml" text-anchor="start">Stigningen er to løp</text>
-  <text x="1160" y="1720" class="sml" text-anchor="start">om løftesjakten:</text>
-  <text x="1160" y="1750" class="sml" text-anchor="start">275 + 276 under den,</text>
-  <text x="1160" y="1780" class="sml" text-anchor="start">225 + 225 + 225 over.</text>
-  <text x="1160" y="1810" class="sml" text-anchor="start">Største steg 276 mm –</text>
-  <text x="1160" y="1840" class="sml" text-anchor="start">grensen er 280 mm.</text>
+  <line x1="941.4" y1="928.8" x2="1075" y2="928.8" class="ext"/>
+  <line x1="1060" y1="1100" x2="1060" y2="928.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="1052" y="1018" class="dm" text-anchor="end">214  løft</text>
+  <text x="1160" y="1652" class="zl" text-anchor="start">0  gulv</text>
+  <text x="1160" y="1414.4" class="zl" text-anchor="start">297  ok trinn 1</text>
+  <text x="1160" y="1260.8" class="zl" text-anchor="start">489  ok trinn 2</text>
+  <text x="1160" y="1106.4" class="zl" text-anchor="start">682  ok støttetrinn</text>
+  <text x="1160" y="1160.8" class="zl" text-anchor="start">614  uk plateenhet</text>
+  <text x="1160" y="920.8" class="zl" text-anchor="start">914  uk trinn 4</text>
+  <text x="1160" y="882.4" class="sml" text-anchor="start">962  ok trinn 4</text>
+  <text x="1160" y="658.4" class="zl" text-anchor="start">1242  ok trinn 5</text>
+  <text x="1160" y="433.6" class="zl" text-anchor="start">1523  spilebunn</text>
+  <text x="1160" y="1690" class="zl" text-anchor="start">Stigningen er to løp som</text>
+  <text x="1160" y="1720" class="sml" text-anchor="start">MØTES på trinn 3:</text>
+  <text x="1160" y="1750" class="sml" text-anchor="start">192 + 193 opp til setet,</text>
+  <text x="1160" y="1780" class="sml" text-anchor="start">280 + 280 + 281 over det.</text>
+  <text x="1160" y="1810" class="sml" text-anchor="start">Største steg 281 mm; EN 131s</text>
+  <text x="1160" y="1840" class="sml" text-anchor="start">bånd er 250–300 mm.</text>
 
   <polyline points="760,500 1408,472" class="ldr" marker-start="url(#aE)"/>
   <text x="1420" y="480" class="lbl" text-anchor="start">Øvre sidevange 48×98 + køyespiler 23×98 – ligger BAK stigen</text>
@@ -291,24 +283,24 @@
   <text x="1420" y="790" class="lbl" text-anchor="start">Stigevange 36×48 × 2037 – 48 mm i X, 36 mm i Y.</text>
   <text x="1420" y="820" class="sml" text-anchor="start">Vangen står med den TYNNE siden mot rommet, i samme plan</text>
   <text x="1420" y="850" class="sml" text-anchor="start">som de fremre hjørnestolpene: Y 752–788.</text>
-  <polyline points="780,820.8 1408,942" class="ldr" marker-start="url(#aE)"/>
+  <polyline points="780,909.6 1408,942" class="ldr" marker-start="url(#aE)"/>
   <text x="1420" y="950" class="lbl" text-anchor="start">Rungetrinn 48×68 × 320 – fem identiske trinn, Y 720–788</text>
-  <polyline points="903,1039.2 1408,1042" class="ldr" marker-start="url(#aE)"/>
+  <polyline points="903,948 1408,1050" class="ldr" marker-start="url(#aE)"/>
   <text x="1420" y="1050" class="lbl" text-anchor="start">Stigekloss 36×48 × 36 – 36 mm er stokktykkelsen og står</text>
   <text x="1420" y="1080" class="sml" text-anchor="start">inn i stigeåpningen. Lengden 36 er vangens egen dybde</text>
   <text x="1420" y="1110" class="sml" text-anchor="start">(Y 752–788), ikke trinnets. 10 stk., to per trinn.</text>
-  <polyline points="661.4,1221.6 1408,1232" class="ldr" marker-start="url(#aE)"/>
+  <polyline points="661.4,1288 1200,1302 1408,1232" class="ldr" marker-start="url(#aE)"/>
   <text x="1420" y="1240" class="lbl" text-anchor="start">J4 per trinnende: 1 × treskrue 6×120 fra UTSIDEN av vangen,</text>
   <text x="1420" y="1270" class="sml" text-anchor="start">inn i trinnets endeved. INGENTING gjennom trinnets overside.</text>
   <text x="1420" y="1300" class="sml" text-anchor="start">J5: 1 × treskrue 5×60 fra stigeåpningen, gjennom klossen og</text>
   <text x="1420" y="1330" class="sml" text-anchor="start">inn i vangens innside – klossens eneste skrue. Se snitt B–B.</text>
-  <polyline points="903,1152.8 1408,1357" class="ldr" marker-start="url(#aE)"/>
-  <text x="1420" y="1365" class="lbl" text-anchor="start">Bordkloss 48×68 × 91 – Z 614–682, Y 697–788. Bærer</text>
-  <text x="1420" y="1395" class="sml" text-anchor="start">bordplaten i bordstilling. J5-B: 2 × 6×80 utenfra. Se snitt D.</text>
+  <polyline points="903,1133.6 1200,1186 1408,1357" class="ldr" marker-start="url(#aE)"/>
+  <text x="1420" y="1365" class="lbl" text-anchor="start">STØTTETRINNET – trinn 3, ok 682 = bordplatens underside.</text>
+  <text x="1420" y="1395" class="sml" text-anchor="start">Samme 48×68 × 320 og samme J4 som de fire andre. Se snitt D.</text>
   <polyline points="780,1415 1408,1432" class="ldr" marker-start="url(#aE)"/>
   <text x="1420" y="1440" class="lbl" text-anchor="start">Løs plate 18 mm i sengestilling – forkanten hviler direkte</text>
   <text x="1420" y="1470" class="sml" text-anchor="start">på de bakre 32 mm av trinn 1, med 30 mm opplegg. Se snitt B–B.</text>
-  <text x="1420" y="1500" class="sml" text-anchor="start">I bordstilling bæres den av bordklossene, ikke av trinn 2.</text>
+  <text x="1420" y="1500" class="sml" text-anchor="start">I bordstilling hviler den likedan på trinn 3, med de samme 30 mm.</text>
   <line x1="640" y1="1476.8" x2="640" y2="1508" class="ext"/>
   <text x="640" y="1530" class="jl" text-anchor="middle">J13a</text>
   <line x1="550" y1="1446.4" x2="550" y2="1508" class="ext"/>
@@ -324,88 +316,97 @@
   
   <!-- ==================================================== D
        Samme snittplan som B (X = 853), men i bordstillingens høyde.
-       y = 500 + 2,4*(870 - Z)   ·   x = 2900 - 2,4*(788 - Y) -->
-  <text x="2300" y="400" class="pt" text-anchor="start">D · SNITT VED X = 853, BORDSTILLING OG LØFTESJAKT (Y–Z), 2,4:1</text>
-  <rect x="2813.6" y="530" width="86.4" height="610" class="pstb"/>
-  <!-- trinn 3: Z 800-848, Y 720-788, med stigekloss Z 752-800 -->
-  <rect x="2813.6" y="668" width="86.4" height="115.2" class="blk"/>
-  <rect x="2736.8" y="552.8" width="163.2" height="115.2" class="brd"/>
-  <!-- bordkloss: Z 614-682, Y 697-788 -->
-  <rect x="2681.6" y="951.2" width="218.4" height="163.2" class="blk"/>
+       X16: platen ligger på et TRINN her, ikke på bordklosser, og lokket
+       over løftet er trinnet OVER setet.
+       y = 470 + 1,8*(962 - Z)   ·   x = 2900 - 1,8*(788 - Y) -->
+  <text x="2300" y="400" class="pt" text-anchor="start">D · SNITT VED X = 853, BORDSTILLING OG LØFTESJAKT (Y–Z), 1,8:1</text>
+  <rect x="2835.2" y="470" width="64.8" height="676.8" class="pstb"/>
+  <!-- trinn 4, ok 962 / uk 914 - lokket over loeftet, med sin stigekloss -->
+  <rect x="2835.2" y="556.4" width="64.8" height="86.4" class="blk"/>
+  <rect x="2777.6" y="470" width="122.4" height="86.4" class="brd"/>
+  <!-- STOETTETRINNET, trinn 3: ok 682 / uk 634, med sin stigekloss 586-634 -->
+  <rect x="2835.2" y="1060.4" width="64.8" height="86.4" class="blk"/>
+  <rect x="2777.6" y="974" width="122.4" height="86.4" class="brd"/>
   <!-- bordplaten i bordstilling: Z 682-700, forkant Y 750 -->
-  <rect x="2580" y="908" width="228.8" height="43.2" class="pnl"/>
-  <polyline points="2608.8,951.2 2580,929.6 2608.8,908" class="brk"/>
+  <rect x="2669.6" y="941.6" width="162" height="32.4" class="pnl"/>
+  <polyline points="2698.4,974 2669.6,957.8 2698.4,941.6" class="brk"/>
   <!-- plateenhetens egen avstivningslekt, bak snittplanet: Z 614-682 -->
-  <rect x="2580" y="951.2" width="228.8" height="163.2" class="pnlg"/>
-  <polyline points="2608.8,1114.4 2580,1093 2608.8,1071.6" class="brk"/>
-  <!-- J5-B: to 6x80 stablet i hoeyden, Z 660 og 636, begge i Y 770 -->
-  <circle cx="2856.8" cy="1004" r="11" class="scrg"/>
-  <circle cx="2856.8" cy="1061.6" r="11" class="scrg"/>
-  <text x="2856.8" y="985" class="jl" text-anchor="middle">J5-B</text>
-  <!-- de 100 mm enheten må rett opp for å komme fri av trinn 3 -->
-  <line x1="2700" y1="900" x2="2700" y2="676" class="dim" marker-end="url(#aE)"/>
-  <text x="2712" y="800" class="lbl" text-anchor="start">løft 100</text>
+  <rect x="2669.6" y="974" width="162" height="122.4" class="pnlg"/>
+  <polyline points="2698.4,1096.4 2669.6,1080.2 2698.4,1064" class="brk"/>
+  <!-- J4 i stoettetrinnets endeved (Y 770, Z 658) og J5 i klossen (Y 770, Z 610) -->
+  <circle cx="2835.2" cy="1017.2" r="11" class="scrg"/>
+  <circle cx="2867.6" cy="1103.6" r="11" class="scrg"/>
+  <text x="2851.2" y="999.2" class="jl" text-anchor="start">J4</text>
+  <text x="2883.6" y="1143.6" class="jl" text-anchor="start">J5</text>
+  <!-- de 214 mm enheten kan gaa rett opp foer trinn 4 stopper den -->
+  <line x1="2700" y1="941.6" x2="2700" y2="564.4" class="dim" marker-end="url(#aE)"/>
+  <text x="2712" y="749" class="lbl" text-anchor="start">løft 214</text>
 
-  <line x1="2900" y1="552.8" x2="3135" y2="552.8" class="ext"/>
-  <line x1="2900" y1="668" x2="3010" y2="668" class="ext"/>
-  <line x1="2808.8" y1="908" x2="3010" y2="908" class="ext"/>
-  <line x1="2900" y1="951.2" x2="3010" y2="951.2" class="ext"/>
-  <line x1="2808.8" y1="1114.4" x2="3135" y2="1114.4" class="ext"/>
-  <line x1="2985" y1="552.8" x2="2985" y2="668" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="2997" y="617.9" class="dm" text-anchor="start">48</text>
-  <line x1="2985" y1="668" x2="2985" y2="908" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="2997" y="795.5" class="dm" text-anchor="start">100</text>
-  <line x1="2985" y1="908" x2="2985" y2="951.2" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="2997" y="937.1" class="dm" text-anchor="start">18</text>
-  <line x1="2985" y1="951.2" x2="2985" y2="1114.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="2997" y="1040.3" class="dm" text-anchor="start">68</text>
-  <line x1="3110" y1="552.8" x2="3110" y2="1114.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="3122" y="841.1" class="dm" text-anchor="start">234  løftesjakt</text>
-  <text x="3150" y="544.8" class="sml" text-anchor="start">848  ok trinn 3</text>
-  <text x="3150" y="660" class="sml" text-anchor="start">800  uk trinn 3</text>
-  <text x="3150" y="900" class="sml" text-anchor="start">700  ok bordplate</text>
-  <text x="3150" y="1106.4" class="sml" text-anchor="start">614  uk plateenhet</text>
+  <line x1="2900" y1="470" x2="3135" y2="470" class="ext"/>
+  <line x1="2900" y1="556.4" x2="3010" y2="556.4" class="ext"/>
+  <line x1="2831.6" y1="941.6" x2="3010" y2="941.6" class="ext"/>
+  <line x1="2900" y1="974" x2="3135" y2="974" class="ext"/>
+  <line x1="2900" y1="1060.4" x2="3010" y2="1060.4" class="ext"/>
+  <line x1="2831.6" y1="1096.4" x2="3010" y2="1096.4" class="ext"/>
+  <line x1="2985" y1="470" x2="2985" y2="556.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="2997" y="521.2" class="dm" text-anchor="start">48</text>
+  <line x1="2985" y1="556.4" x2="2985" y2="941.6" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="2997" y="749" class="dm" text-anchor="start">214</text>
+  <line x1="2985" y1="941.6" x2="2985" y2="974" class="dim"/>
+  <text x="2997" y="965.8" class="dm" text-anchor="start">18</text>
+  <line x1="2985" y1="974" x2="2985" y2="1060.4" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="2997" y="1025.2" class="dm" text-anchor="start">48</text>
+  <line x1="2985" y1="1060.4" x2="2985" y2="1096.4" class="dim"/>
+  <text x="2997" y="1086.4" class="dm" text-anchor="start">20</text>
+  <line x1="3110" y1="556.4" x2="3110" y2="974" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="3122" y="765.2" class="dm" text-anchor="start">232  kryssebånd</text>
+  <text x="3150" y="462" class="sml" text-anchor="start">962  ok trinn 4</text>
+  <text x="3150" y="548.4" class="sml" text-anchor="start">914  uk trinn 4</text>
+  <text x="3150" y="933.6" class="sml" text-anchor="start">700  ok bordplate</text>
+  <text x="3150" y="996" class="sml" text-anchor="start">682  ok støttetrinn</text>
+  <text x="3150" y="1088.4" class="sml" text-anchor="start">614  uk plateenhet</text>
 
-  <line x1="2681.6" y1="1150" x2="2681.6" y2="1260" class="ext"/>
-  <line x1="2808.8" y1="1150" x2="2808.8" y2="1200" class="ext"/>
-  <line x1="2813.6" y1="1150" x2="2813.6" y2="1200" class="ext"/>
-  <line x1="2900" y1="1150" x2="2900" y2="1260" class="ext"/>
-  <line x1="2681.6" y1="1183" x2="2808.8" y2="1183" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="2745.2" y="1175" class="dm" text-anchor="middle">53  opplegg</text>
-  <line x1="2813.6" y1="1183" x2="2900" y2="1183" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="2856.8" y="1175" class="dm" text-anchor="middle">36</text>
-  <line x1="2681.6" y1="1245" x2="2900" y2="1245" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
-  <text x="2790.8" y="1237" class="dm" text-anchor="middle">91  bordkloss</text>
+  <line x1="2777.6" y1="1150.8" x2="2777.6" y2="1264.8" class="ext"/>
+  <line x1="2831.6" y1="1150.8" x2="2831.6" y2="1204.8" class="ext"/>
+  <line x1="2835.2" y1="1150.8" x2="2835.2" y2="1204.8" class="ext"/>
+  <line x1="2900" y1="1150.8" x2="2900" y2="1264.8" class="ext"/>
+  <line x1="2777.6" y1="1183.8" x2="2831.6" y2="1183.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="2767.6" y="1191.8" class="dm" text-anchor="end">30  opplegg</text>
+  <line x1="2835.2" y1="1183.8" x2="2900" y2="1183.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="2867.6" y="1175.8" class="dm" text-anchor="middle">36</text>
+  <line x1="2777.6" y1="1249.8" x2="2900" y2="1249.8" class="dim" marker-start="url(#aS)" marker-end="url(#aE)"/>
+  <text x="2838.8" y="1276.8" class="dm" text-anchor="middle">68  trinndybde (Y 720–788)</text>
 
-  <polyline points="2760,600 2560,570" class="ldr" marker-start="url(#aE)"/>
-  <text x="2548" y="578" class="lbl" text-anchor="end">Trinn 3, ok 848 / uk 800</text>
-  <polyline points="2700,929.6 2560,880" class="ldr" marker-start="url(#aE)"/>
+  <polyline points="2813.6,509.6 2620,700" class="ldr" marker-start="url(#aE)"/>
+  <text x="2608" y="708" class="lbl" text-anchor="end">Trinn 4, ok 962 / uk 914</text>
+  <text x="2608" y="738" class="sml" text-anchor="end">– lokket over løftet</text>
+  <polyline points="2741.6,957.8 2560,880" class="ldr" marker-start="url(#aE)"/>
   <text x="2548" y="888" class="lbl" text-anchor="end">Bordplate 18 mm, Z 682–700</text>
-  <polyline points="2720,1040 2560,1002" class="ldr" marker-start="url(#aE)"/>
-  <text x="2548" y="1010" class="lbl" text-anchor="end">Bordkloss 48×68 × 91</text>
-  <polyline points="2620,1110 2556,1150" class="ldr" marker-start="url(#aE)"/>
+  <polyline points="2804.6,1017.2 2560,1002" class="ldr" marker-start="url(#aE)"/>
+  <text x="2548" y="1010" class="lbl" text-anchor="end">Støttetrinn 48×68 × 320 – Z 634–682</text>
+  <polyline points="2723.6,1049.6 2556,1150" class="ldr" marker-start="url(#aE)"/>
   <text x="2548" y="1158" class="sml" text-anchor="end">Plateenhetens avstivningslekt 68 mm –</text>
   <text x="2548" y="1186" class="sml" text-anchor="end">bak snittplanet (X 785–833 / 1157–1205)</text>
 
-  <text x="2300" y="1300" class="lbl" text-anchor="start">LØFTESJAKTEN – hvorfor trinn 3 står på 848</text>
+  <text x="2300" y="1300" class="lbl" text-anchor="start">LØFTESJAKTEN – hvorfor støttetrinnet står på 682</text>
   <text x="2300" y="1330" class="sml" text-anchor="start">Bordplaten i bordstilling ligger med underkant 682 og overkant 700, og plateenhetens egne</text>
-  <text x="2300" y="1360" class="sml" text-anchor="start">68 mm avstivningslekter henger under den: den sittende enheten opptar Z 614–700. Enheten er</text>
-  <text x="2300" y="1390" class="sml" text-anchor="start">fri av bordklossene etter 68 mm rett opp – lektas egen høyde – men kravet er 100 mm klart løft,</text>
-  <text x="2300" y="1420" class="sml" text-anchor="start">så et løft blir et løft. Derfor får ingen trinnoverkant ligge i båndet 614–848: trinn 3 er skjøvet</text>
-  <text x="2300" y="1450" class="sml" text-anchor="start">opp til 848 nøyaktig fordi underkanten 848 − 48 = 800 ligger 100 mm over platetoppen 700.</text>
-  <text x="2300" y="1495" class="lbl" text-anchor="start">TO LØP OM SJAKTEN</text>
-  <text x="2300" y="1525" class="sml" text-anchor="start">Stigningen er ikke lenger jevn: 297 + 275 + 276 under løftesjakten, 225 + 225 + 225 over den,</text>
-  <text x="2300" y="1555" class="sml" text-anchor="start">til sammen 1523. Innenfor hvert løp er den jevn til 1 mm (grensen er 2 mm); mellom løpene er</text>
-  <text x="2300" y="1585" class="sml" text-anchor="start">forskjellen 51 mm (grensen er 60 mm). Største opptrinn er 276 mot grensen 280 mm.</text>
+  <text x="2300" y="1360" class="sml" text-anchor="start">68 mm avstivningslekter henger under den: den sittende enheten opptar Z 614–700. X9 leste 682 som</text>
+  <text x="2300" y="1390" class="sml" text-anchor="start">en høyde INGEN trinnoverkant fikk ligge i, og måtte henge to bordklosser under platens forkant.</text>
+  <text x="2300" y="1420" class="sml" text-anchor="start">X16 snudde det: 682 er høyden et trinn SKAL stå på. Trinnet er gulvet i løftet og er unntatt fra</text>
+  <text x="2300" y="1450" class="sml" text-anchor="start">forbudet; alt annet i båndet 614–848 er fortsatt forbudt. Lokket er trinn 4 – uk 914 gir 214 mm løft.</text>
+  <text x="2300" y="1495" class="lbl" text-anchor="start">TO LØP SOM MØTES PÅ ET TRINN</text>
+  <text x="2300" y="1525" class="sml" text-anchor="start">Stigningen er ikke jevn: 297 + 192 + 193 opp til setet, 280 + 280 + 281 over det, til sammen 1523.</text>
+  <text x="2300" y="1555" class="sml" text-anchor="start">Innenfor hvert løp er den jevn til 1 mm (grensen er 2 mm); mellom løpene er forskjellen 89 mm</text>
+  <text x="2300" y="1585" class="sml" text-anchor="start">(grensen er 90 mm) – det nedre løpet har 385 mm å klatre og det øvre 841, i to og tre steg.</text>
   <text x="2300" y="1615" class="sml" text-anchor="start">Første stigning 297 er benkevangens høyde – en avsats du trår opp på, ikke et klatretrinn.</text>
-  <text x="2300" y="1660" class="lbl" text-anchor="start">BORDKLOSS OG J5-B</text>
-  <text x="2300" y="1690" class="sml" text-anchor="start">48×68-lekt kappet 91 mm, én på hver stigevanges innerflate. Den står 48 mm inn i stigeåpningen</text>
-  <text x="2300" y="1720" class="sml" text-anchor="start">(X 835–883 og 1107–1155) – ytterkanten i flukt med trinnenden. De fremre 36 mm (Y 752–788)</text>
-  <text x="2300" y="1750" class="sml" text-anchor="start">ligger mot vangen og er festet; de 53 mm bak vangens bakplan (Y 697–750) er hylla bordplatens</text>
-  <text x="2300" y="1780" class="sml" text-anchor="start">forkant hviler på, med den samme 2 mm klaringen (Y 750–752) som ved trinnet. J5-B: 2 × treskrue</text>
-  <text x="2300" y="1810" class="sml" text-anchor="start">6×80 per kloss, stablet i høyden (Z 636 og 660), fra vangens UTSIDE: 48 mm vange + 32 i klossen.</text>
-  <text x="2300" y="1840" class="sml" text-anchor="start">Klossen står 68 mm i Z, så festeflaten er 36 × 68 – plass til to med 3d til hver kant. Én skrue tok</text>
-  <text x="2300" y="1870" class="sml" text-anchor="start">momentet fra den løse platen, 55 mm foran skruelinjen, i friksjon; to tar det i motsatt skjær.</text>
+  <text x="2300" y="1660" class="lbl" text-anchor="start">STØTTETRINNET ER IKKE EN EGEN DEL</text>
+  <text x="2300" y="1690" class="sml" text-anchor="start">Trinn 3 er det samme 48×68 × 320 som de fire andre, i det samme Y-båndet (720–788), på de samme</text>
+  <text x="2300" y="1720" class="sml" text-anchor="start">to stigeklossene og med den samme J4-skruen. De bakre 32 mm står fritt bak vangeplanet; platens</text>
+  <text x="2300" y="1750" class="sml" text-anchor="start">forkant dekker 30 av dem og de siste 2 mm (Y 750–752) er innsettingsklaringen – nøyaktig som ved</text>
+  <text x="2300" y="1780" class="sml" text-anchor="start">trinn 1 i sengestilling. Bæreflaten er 320 × 30 = 9600 mm², mot 5088 på X9s to bordklosser.</text>
+  <text x="2300" y="1810" class="sml" text-anchor="start">Det som forsvant med klossene: to deler, fire treskruer 6×80, ett ledd (J5-B) – og den ene</text>
+  <text x="2300" y="1840" class="sml" text-anchor="start">skrueraden i hele sengen som hadde last stående foran sin egen skruelinje.</text>
+  <text x="2300" y="1870" class="sml" text-anchor="start">Har du boret etter X9-arket: fire J4-hull står tomt, og J5-B-hullet står 2 mm fra det nye. Plugg det.</text>
 
   <!-- ==================================================== B -->
   <text x="330" y="1930" class="pt" text-anchor="start">B · SNITT B–B VED X = 853, gjennom stigeklossen (Y–Z), 2,4:1</text>
@@ -556,7 +557,7 @@
   <rect x="114" y="2752" width="50" height="26" class="brd"/>
   <text x="180" y="2773" class="sml" text-anchor="start">Rungetrinn 48×68 / bord</text>
   <rect x="114" y="2794" width="50" height="26" class="blk"/>
-  <text x="180" y="2815" class="sml" text-anchor="start">Stigekloss 36×48 / bordkloss 48×68</text>
+  <text x="180" y="2815" class="sml" text-anchor="start">Stigekloss 36×48 (36 mm lang, ett par per trinn)</text>
   <rect x="880" y="2710" width="50" height="26" class="pnl"/>
   <text x="946" y="2731" class="sml" text-anchor="start">Løs plate 18 mm (stiplet omriss = bordstilling)</text>
   <rect x="880" y="2752" width="50" height="26" class="pnlg"/>
@@ -575,7 +576,6 @@
   <text x="2660" y="2833" class="sml" text-anchor="start">⌀4 i mottakerdelen; ⌀3,5 / ⌀3 for 5 mm skrue.</text>
 
   <text x="555" y="505" class="jl" text-anchor="start">J3</text>
-  <text x="555" y="1211" class="jl" text-anchor="start">J4</text>
-  <text x="690" y="1248" class="jl" text-anchor="start">J5</text>
-  <text x="1012" y="1150" class="jl" text-anchor="start">J5-B</text>
+  <text x="555" y="1277.4" class="jl" text-anchor="start">J4</text>
+  <text x="690" y="1314.4" class="jl" text-anchor="start">J5</text>
 </svg>

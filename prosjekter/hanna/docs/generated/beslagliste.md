@@ -10,8 +10,8 @@ Alt er elforsinket eller varmforsinket. Handelsnavn som i norsk byggevarehandel.
 | Post | Behov | Kjøp |
 |---|---:|---|
 | Treskrue 5×60 forsenket Torx | 86 | 1 pk. à 100 stk. |
-| Treskrue 6×80 forsenket Torx | 38 | 1 pk. à 50 stk. |
 | Treskrue 5×40 forsenket Torx | 36 | 1 pk. à 50 stk. |
+| Treskrue 6×80 forsenket Torx | 34 | 1 pk. à 50 stk. |
 | Treskrue 6×120 forsenket Torx | 14 | 1 pk. à 20 stk. |
 | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) | 9 | 9 stk. |
 | Filtknott / møbeltapp ⌀40 | 8 | 1 pk. |
@@ -32,7 +32,6 @@ I tillegg trengs **D3 trelim**, én liten flaske. Den er ikke en post i tabellen
 | **J3** | Stigevange → fremre sidevange | 2 | 3× Treskrue 6×80 forsenket Torx | ⌀6 gjennom sidevangen, ⌀4 i stigevangen | Fra sidevangens innside — inne fra sengen — gjennom vangen og inn i stigevangen. Stigevangens forside er urørt |
 | **J4** | Rungetrinn → stigevange (per trinnende) | 10 | 1× Treskrue 6×120 forsenket Torx | ⌀6 gjennom stigevangen inn i trinnenden, ⌀4 i trinnet | 6×120 fra utsiden av stigevangen, inn i trinnets endeved. Ingenting gjennom trinnets overside — trinnet ligger på stigeklossen og klossen har sin egen skrue (J5) |
 | **J5** | Stigekloss → stigevange | 10 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom klossen, ⌀3 i vangen | Fra stigeåpningen, inn i vangens innside |
-| **J5-B** | Bordkloss → stigevange | 2 | 2× Treskrue 6×80 forsenket Torx | 2 × ⌀6 gjennom stigevangen, ⌀4 i klossen — stablet i høyden | Fra stigevangens utside — fra benkerommet — gjennom vangen og inn i klossen. Klossens egen underside er urørt |
 | **J6** | Køyespile → sidevange (per spileende) | 28 | 1× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom spilen, forsenk hodet under flaten | Ovenfra, ned i vangen |
 | **J7** | Rekkverksbord → hjørnestolpe / stigevange (per omlegg) | 8 | 2× Treskrue 5×60 forsenket Torx | ⌀3,5 gjennom bordet, ⌀3 i stolpen | Fra sengesiden, inn i stolpens/stigevangens innside |
 | **J8** | Fremre benkevange → fremre hjørnestolpe | 2 | 2× Treskrue 6×80 forsenket Torx | ⌀6 gjennom vangen, ⌀4 i stolpen | Fra vangens innside — inne fra benkerommet — gjennom vangen og inn i stolpen. Stolpens forside er urørt |

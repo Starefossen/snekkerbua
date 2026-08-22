@@ -367,15 +367,18 @@ def levels(M):
          "puteoverside = sittehøyde = nedre soveflate"),
         (M.z("Table Ledger Back", 0), "uk bordbærelekt"),
         (M.z("Table Ledger Back", 1),
-         "ok bordbærelekt = ok bordkloss = platen i bordstilling"),
+         f"ok bordbærelekt = trinn {G.CLIMB_LANDING + 1} = platen i "
+         f"bordstilling"),
         (M.z("Movable Panel (table mode)", 1), "bordplate — pulthøyde"),
         (M.z("Back Cushion Left (table mode)", 1),
          "ryggputas topp i sofastilling"),
         # Trinn 1 er ok benkevange og står allerede over (RUNG_TOPS[0] ER
         # BENCH_RAIL_TOP), så stigen leses fra indeks 1 og ut. Håndlista var
         # 2-3-4 og mistet det femte trinnet da even_climb ga fem  [was 4].
+        # X16: og støttetrinnet står allerede over på bordbærelektas linje -
+        # samme høyde, samme strek - så det hoppes over her av samme grunn.
         *[(M.z(f"Ladder Rung_{i + 1}", 1), f"trinn {i + 1}")
-          for i in range(1, len(G.RUNG_TOPS))],
+          for i in range(1, len(G.RUNG_TOPS)) if i != G.CLIMB_LANDING],
         (M.z("End Beam Left", 0), "uk endebjelke — står fritt"),
         (M.z("End Beam Left", 1),
          "ok endebjelke = uk sidevange = ok bakre stolpe"),

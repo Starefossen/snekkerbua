@@ -151,6 +151,17 @@ def run_kappliste(rig, text=None):
         T._assert_kappliste_ink(rig.M, rig.kappliste if text is None else text)
 
 
+def run_seat_rung(rig, bygg=None):
+    """X16: the step guide names the seat rung and prints its own height.
+
+    The rung the table plate lands on is the same section, the same length and
+    the same two screws as the other four - the paper is the only place it is
+    told apart, so the paper is checked."""
+    G = rig.G()
+    with contextlib.redirect_stdout(io.StringIO()):
+        T.assert_seat_rung_ink(G, rig.bygg if bygg is None else bygg)
+
+
 def run_step_dim_datum(rig, recs=None):
     """X15: no placement measure on a step sheet is taken off a foot or off
     the floor, and every height is measured downwards."""
@@ -184,6 +195,7 @@ CONTROLS = [
     ("tallsveipet over håndprosaen", run_prose),
     ("X10 verdikommentarene", run_value_comments),
     ("X14 kapplistas løse deler", run_kappliste),
+    ("X16 støttetrinnet i stegveiledningen", run_seat_rung),
 ]
 
 
@@ -240,10 +252,17 @@ def inj_bench_bores_a_wall_end(rig):
 
 
 def inj_measured_from_the_foot(rig):
-    """Re-datum a ladder hole to the foot - the end that is still 15 mm long."""
-    run_datum(rig, bygg=_sub(rig.bygg,
-                             "1377 / 1401 mm fra toppen",
-                             "1377 / 1401 mm fra nedre ende"))
+    """Re-datum a ladder hole to the foot - the end that is still 15 mm long.
+
+    X16: the victim used to be NAMED as J5-B's «1377 / 1401 mm fra toppen»,
+    and J5-B was struck with the bordklosser it held. The row is derived now -
+    the ladder stile's own J4 line, whichever heights it carries this round -
+    so the case keeps aiming at the RULE and not at two numbers.
+    """
+    row = next(l for l in rig.bygg.split("\n")
+               if l.startswith("| **J4**") and "mm fra toppen" in l)
+    run_datum(rig, bygg=_sub(rig.bygg, row,
+                             row.replace("mm fra toppen", "mm fra nedre ende")))
 
 
 def inj_wall_fixing_gets_an_x(rig):
@@ -322,9 +341,21 @@ def inj_readme_retells_a_count(rig):
 
 
 def inj_readme_quotes_a_line_the_model_lost(rig):
-    """Keep quoting a printed line the model no longer prints."""
-    run_readme(rig, _sub(rig.readme, "189 festemidler plassert i 23 ledd",
-                         "189 festemidler plassert i 24 ledd"))
+    """Keep quoting a printed line the model no longer prints.
+
+    X16: the two counts were TYPED here, and X16 struck a joint and four
+    screws - so the injection stopped finding its own victim and the case
+    proved nothing instead of going red. Read off the README's own quote now:
+    whatever it says the model prints, bump the joint count by one and demand
+    the port notice that the model prints something else.
+    """
+    m = re.search(r"`(\d+) festemidler plassert i (\d+) ledd`", rig.readme)
+    assert m, ("README siterer ikke lenger «N festemidler plassert i M ledd» - "
+               "injeksjonen har mistet målet sitt og må skrives om")
+    n, joints = int(m.group(1)), int(m.group(2))
+    run_readme(rig, _sub(rig.readme,
+                         f"{n} festemidler plassert i {joints} ledd",
+                         f"{n} festemidler plassert i {joints + 1} ledd"))
 
 
 def inj_prose_keeps_an_old_number(rig):
@@ -402,12 +433,22 @@ def inj_kappliste_moves_a_loose_piece_off_the_floor(rig):
     carries it has to BE a piece standing on the floor and nowhere near a
     wall, and a piece that hangs in the air with the mark on it is a lie the
     other way round.
+
+    X16: the victim used to be NAMED - «Bordkloss» - and X16 struck the
+    bordkloss off the cut list with the seat rung that replaced it. A named
+    injection whose target has left the building does not go red, it goes
+    away, which is the one thing this harness must never do quietly. So the
+    row is DERIVED: the first workshop row that is not already marked loose
+    and whose own Z column does not start on the floor.
     """
-    row = next(l for l in rig.kappliste.split("\n")
-               if l.startswith("| Bordkloss "))
-    run_kappliste(rig, _sub(rig.kappliste, row,
-                            row.replace("| Bordkloss ",
-                                        f"| Bordkloss {T.LOOSE_MARK} ", 1)))
+    rows = [l for l in rig.kappliste.split("\n")
+            if l.startswith("| ") and "**" in l and T.LOOSE_MARK not in l]
+    row = next(l for l in rows
+               if not l.rsplit("|", 2)[1].strip().startswith("0.."))
+    cells = row.split("|")
+    marked = "|".join([cells[0], f"{cells[1].rstrip()} {T.LOOSE_MARK} "]
+                      + cells[2:])
+    run_kappliste(rig, _sub(rig.kappliste, row, marked))
 
 
 def inj_stale_value_comment(rig):
@@ -432,6 +473,25 @@ def inj_stale_value_comment(rig):
     # NOT an AssertionError: the harness reads that as «the gate bit», and
     # «I could not find anything to break» is the opposite of a proof.
     raise RuntimeError("fant ingen verdikommentar å perturbere")
+
+
+def inj_step_guide_forgets_the_seat_rung(rig):
+    """Let step 6 stop saying WHICH rung the table plate lands on.
+
+    The silence case, and X16 is what made it possible: before this round the
+    plate's front seat was two blocks with their own part, their own joint and
+    their own line in every list. Now it is a rung among rungs, and if the
+    sentence goes, nothing else in the manual says which one.
+    """
+    seat = f"Trinn {rig.M.CLIMB_LANDING + 1} er STØTTETRINNET"
+    run_seat_rung(rig, _sub(rig.bygg, seat, "Ett av trinnene er STØTTETRINNET"))
+
+
+def inj_step_guide_misprints_the_seat_height(rig):
+    """Type a different height for the one rung the table top rests on."""
+    down = T._upright_top(rig.M) - rig.M.PANEL_UNDER_TABLE
+    run_seat_rung(rig, _sub(rig.bygg, f"{T._fmt(down)} mm i begge ender",
+                            f"{T._fmt(down + 12)} mm i begge ender"))
 
 
 INJECTIONS = [
@@ -473,6 +533,10 @@ INJECTIONS = [
      "tallsveip", inj_prose_moves_a_computed_stress),
     ("en verdikommentar står igjen fra en gammel runde",
      "X10 verdikommentarer", inj_stale_value_comment),
+    ("stegveiledningen slutter å si HVILKET trinn platen lander på",
+     "X16 støttetrinnet", inj_step_guide_forgets_the_seat_rung),
+    ("stegveiledningen setter støttetrinnet i feil høyde",
+     "X16 støttetrinnet", inj_step_guide_misprints_the_seat_height),
 ]
 
 
