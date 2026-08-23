@@ -72,7 +72,7 @@ jobs:
           if [ -x "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ]; then
             echo "ok   Google Chrome (tools/build_pdf.py prints with it)"
           else
-            echo "::error::No Google Chrome at /Applications - tools/build_pdf.py has nothing to print docs/hanna.pdf with."
+            echo "::error::No Google Chrome at /Applications - tools/build_pdf.py has nothing to print the two booklets with."
             exit 1
           fi
 
@@ -106,6 +106,7 @@ jobs:
           cd prosjekter/hanna
           {
             echo docs/hanna.pdf
+            echo docs/hanna-referanse.pdf
             for mode in bed_mode table_mode; do
               for ext in step stl glb usdz; do
                 echo "loftbed_$mode.$ext"
@@ -140,7 +141,8 @@ jobs:
             if [ -n "$body" ]; then printf '%s\n\n' "$body"; fi
             echo "Built by [\`.github/workflows/release.yml\`]($REPO_URL/blob/$TAG/.github/workflows/release.yml) off the tag itself: the manual and the 3D models come out of the same model as everything in the repo."
             echo
-            echo "* \`hanna.pdf\` - the print-ready assembly manual."
+            echo "* \`hanna.pdf\` - the print-ready build booklet: the numbered step sheets and what belongs on the bench beside them."
+            echo "* \`hanna-referanse.pdf\` - the reference booklet: the reasoning, the generated tables and the remaining drawings."
             echo "* \`loftbed_*.step\` / \`.stl\` / \`.glb\` / \`.usdz\` - both panel positions, for CAD, slicing, the web and Quick Look / AR."
             echo
             echo "The sources, the drawings and \`mise run check\` are in the repo: [README]($REPO_URL/blob/$TAG/README.md)."
@@ -156,6 +158,7 @@ jobs:
           retention-days: 7
           path: |
             prosjekter/hanna/docs/hanna.pdf
+            prosjekter/hanna/docs/hanna-referanse.pdf
             prosjekter/hanna/loftbed_*.step
             prosjekter/hanna/loftbed_*.stl
             prosjekter/hanna/loftbed_*.glb

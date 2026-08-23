@@ -111,29 +111,46 @@ def n_artefacts():
     return len([p for p in out.stdout.split("\0") if p])
 
 
-def n_pages():
-    """(pages, where) for the printed manual, or (None, why not).
+# THE TWO PRINTED BOOKLETS. `mise run pdf` writes both, and they are counted
+# separately because they are two separately paginated documents: the build
+# booklet is what goes to the bench, the reference is what stays on the shelf,
+# and a sentence about one of them may not be checked against the other.
+#   hefte -> (filnavn, forhandsvisningsmonster)
+PDFS = {
+    "bygg": ("hanna.pdf", "page-*.png"),
+    "ref": ("hanna-referanse.pdf", "ref-*.png"),
+}
 
-    docs/hanna.pdf is deliberately outside git and `mise run pdf` needs a
-    headless Chrome, so on a machine that has never built it there is nothing
-    to count. That is said out loud rather than passed silently: an unmeasured
-    number is not a checked number, and the port should not pretend otherwise.
+
+def n_pages():
+    """{hefte: (sider, hvor)} for de trykte heftene, sider=None nar utellelig.
+
+    De to PDF-ene er bevisst utenfor git og `mise run pdf` trenger en headless
+    Chrome, sa pa en maskin som aldri har bygget dem er det ingenting a telle.
+    Det sies hoyt i stedet for a ga stille: et umalt tall er ikke et sjekket
+    tall, og porten skal ikke late som noe annet.
     """
-    pdf = os.path.join(ROOT, "docs", "hanna.pdf")
-    if os.path.exists(pdf):
-        try:
-            out = subprocess.run(["pdfinfo", pdf], capture_output=True,
-                                 text=True).stdout
-            m = re.search(r"^Pages:\s+(\d+)", out, flags=re.M)
-            if m:
-                return int(m.group(1)), "pdfinfo docs/hanna.pdf"
-        except FileNotFoundError:
-            pass
-    pngs = glob.glob(os.path.join(ROOT, "docs", "preview", "page-*.png"))
-    if pngs:
-        return len(pngs), "docs/preview/page-*.png"
-    return None, ("docs/hanna.pdf finnes ikke og docs/preview er tom - "
-                  "kjør `mise run pdf` for å måle sidetallet")
+    out = {}
+    for book, (name, pattern) in PDFS.items():
+        pdf = os.path.join(ROOT, "docs", name)
+        pages = None
+        where = (f"docs/{name} finnes ikke og docs/preview har ingen "
+                 f"{pattern} - kjør `mise run pdf` for å måle sidetallet")
+        if os.path.exists(pdf):
+            try:
+                info = subprocess.run(["pdfinfo", pdf], capture_output=True,
+                                      text=True).stdout
+                m = re.search(r"^Pages:\s+(\d+)", info, flags=re.M)
+                if m:
+                    pages, where = int(m.group(1)), f"pdfinfo docs/{name}"
+            except FileNotFoundError:
+                pass
+        if pages is None:
+            pngs = glob.glob(os.path.join(ROOT, "docs", "preview", pattern))
+            if pngs:
+                pages, where = len(pngs), f"docs/preview/{pattern}"
+        out[book] = (pages, where)
+    return out
 
 
 def run_model():
@@ -233,7 +250,7 @@ def readme_claims(M, log):
         same_cut[(sec, ln)] = same_cut.get((sec, ln), 0) + q
     modelled = len([f for f in M.FASTENER_SPECS if not f.get("wall")])
     placed = len(M.FASTENER_SPECS)
-    pages, where = n_pages()
+    pages = n_pages()
     # The direction sheet counts itself, so they are read back off the sheet
     # rather than recomputed here - the number the reader sees is the number
     # the claim is about.
@@ -295,23 +312,40 @@ def readme_claims(M, log):
         ("takhøyde", r"i et rom med (\d+) mm takhøyde", [M.ROOM_H]),
         ("fri høyde", r"gir (\d+) mm fri høyde under køya", [M.SLAT_Z0]),
     ]
-    # THE PAGE COUNT, AND THE ONE HOLE IN THIS FILE. docs/hanna.pdf is outside
+    # THE PAGE COUNTS, AND THE ONE HOLE IN THIS FILE. The two PDFs are outside
     # git and `mise run pdf` needs a headless Chrome, so on a machine that has
-    # never printed the manual - CI, for one - there is nothing to count. The
-    # five sentences are then held to EACH OTHER instead: they may not be
-    # measured, but they may not disagree either, and the print says which of
-    # the two happened.
-    for what, rx in PAGE_CLAIMS:
-        claims.append((what, rx, [pages if pages is not None else "same"]))
-    return claims, where
+    # never printed them - CI, for one - there is nothing to count. The
+    # sentences are then held to EACH OTHER instead, one group per booklet:
+    # they may not be measured, but they may not disagree either, and the
+    # print says which of the two happened. Two groups and not one, because
+    # two booklets of the same length would otherwise be the only shape the
+    # README could not get wrong.
+    for what, rx, books in PAGE_CLAIMS:
+        claims.append((what, rx,
+                       [pages[b][0] if pages[b][0] is not None else f"same:{b}"
+                        for b in books]))
+    return claims, "; ".join(f"{b}: {w}" for b, (_p, w) in sorted(pages.items()))
 
 
+# One row per counted page claim: what it is called, the sentence it lives in,
+# and WHICH BOOKLET each captured group is about.
 PAGE_CLAIMS = [
-    ("sider (NO)", r"alle (\d+) sidene i den trykte"),
-    ("sider, PDF", r"En \*\*trykkeklar PDF på (\d+) sider\*\*"),
-    ("sider, oppgave", r"docs/hanna\.pdf, (\d+) sider"),
-    ("sider, kart", r"Manualen på (\d+) sider"),
-    ("sider (EN)", r"all (\d+) pages of the printed"),
+    ("sider (NO)",
+     r"alle (\d+) sidene i byggeheftet og alle (\d+) i referanseheftet",
+     ["bygg", "ref"]),
+    ("sider, PDF",
+     r"et byggehefte på \*\*(\d+) sider\*\* og et referansehefte på \*\*(\d+)\*\*",
+     ["bygg", "ref"]),
+    ("sider, oppgave",
+     r"docs/hanna\.pdf, (\d+) sider \+ docs/hanna-referanse\.pdf, (\d+) sider",
+     ["bygg", "ref"]),
+    ("sider, kart", r"Byggeheftet på (\d+) sider", ["bygg"]),
+    ("sider, kart ref", r"Referanseheftet på (\d+) sider", ["ref"]),
+    ("sider, kontaktark", r"De ni første av byggeheftets (\d+) sider",
+     ["bygg"]),
+    ("sider (EN)",
+     r"all (\d+) pages of the printed build booklet and all (\d+) of its",
+     ["bygg", "ref"]),
 ]
 
 
@@ -349,9 +383,10 @@ def check_readme(M, log, text=None):
             continue
         got = [g.replace(",", ".") for g in m.groups()]
         for g, w in zip(got, want):
-            if w == "same":
-                # Unmeasurable here: hold the sentences to one another.
-                w = agreed.setdefault("sider", float(g))
+            if isinstance(w, str) and w.startswith("same:"):
+                # Unmeasurable here: hold the sentences about THIS booklet to
+                # one another.
+                w = agreed.setdefault(w, float(g))
             if abs(float(g) - float(w)) > 1e-9:
                 bad.append(f"«{what}»: README sier {m.group(0)!r} - målt "
                            f"{w}, ikke {g}")

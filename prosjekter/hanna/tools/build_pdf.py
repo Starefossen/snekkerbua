@@ -1,22 +1,33 @@
 #!/usr/bin/env python3
-"""Bygger den trykkeklare PDF-en av HANNA-manualen.
+"""Bygger de to trykkeklare PDF-ene av HANNA-manualen.
 
   mise run pdf
 
-Setter sammen EN print-HTML av
-  1. docs/MONTERING.md   - selve manualen: forside, forberedelser, beslag,
-                           deler og de nummererte stegsidene med strektegning,
-  2. docs/ASSEMBLY.md    - referansedelen med begrunnelser og vedlegg,
-  3. docs/generated/*.md - de genererte tabellene,
-  4. docs/schematics/*.svg - tegningene,
-og skriver den ut til docs/hanna.pdf med headless Chrome.
+TO HEFTER, OG HVORFOR. Sengen er bygget (2026-08-23), og byggmesteren sa hva
+han faktisk brukte: de nummererte stegsidene. Resten er oppslag. Et hefte som
+skal ligge apent pa benken og bli sølt pa, og et hefte som skal sta i hylla,
+er to forskjellige trykksaker - sa de trykkes hver for seg:
+
+  docs/hanna.pdf            BYGGEHEFTET. Forside, innhold, sengen i mal, mal
+                            rommet forst, for du begynner, beslag, deler,
+                            steg 0-12, kappliste, innkjopsliste og
+                            spikerslagarket. Dette er det som skrives ut.
+  docs/hanna-referanse.pdf  REFERANSEHEFTET. Byggeveiledningen med vedlegg,
+                            nokkelmal, beslagliste, skrueretninger, de ovrige
+                            tegningene, bruksarkene og kolofonen.
+
+Kildene er de samme som for: docs/MONTERING.md, docs/ASSEMBLY.md,
+docs/generated/*.md og docs/schematics/*.svg. Hva som havner hvor star i
+TARGETS, ett sted, fordi to ting leser det: sidebyggerne og lenkemaskineriet.
 
 Ingenting i docs/ endres. Bildene refereres som absolutte file://-URL-er, slik
 at Chrome laster dem fra disk uten nettverk.
 
-Sidetallene i innholdsfortegnelsen finnes ved a rendre PDF-en to ganger: forste
-runde plasserer usynlige merkelapper, pdftotext forteller hvilken side hver
-merkelapp havnet pa, andre runde setter tallet inn.
+Sidetallene i innholdsfortegnelsen finnes ved a rendre hvert hefte to ganger:
+forste runde plasserer usynlige merkelapper, pdftotext forteller hvilken side
+hver merkelapp havnet pa, andre runde setter tallet inn. Det virker BARE
+innenfor ett hefte - en kryssreferanse mellom de to kan ikke bare et sidetall,
+og bærer seksjonstittelen i stedet.
 """
 
 from __future__ import annotations
@@ -42,7 +53,11 @@ except ImportError:  # pragma: no cover
 ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
 PDF_OUT = DOCS / "hanna.pdf"
+REF_OUT = DOCS / "hanna-referanse.pdf"
 PREVIEW_DIR = DOCS / "preview"
+
+# The two booklets, and what a cross-reference calls the other one.
+BOOKS = {"bygg": "byggeheftet", "ref": "referanseheftet"}
 
 MD_EXTENSIONS = ["tables", "attr_list", "md_in_html", "sane_lists"]
 
@@ -61,26 +76,58 @@ CHROME_GLOBS = [
     (Path.home() / ".cache/puppeteer", "chrome/*/chrome-mac*/*.app/Contents/MacOS/*"),
 ]
 
-# Interne lenkemal: filnavn (uten mappe og suffiks) -> anker i PDF-en.
-ANCHORS = {
-    "MONTERING": "montering",
-    "ASSEMBLY": "ref-assembly",
-    "kappliste": "doc-kappliste",
-    "innkjopsliste": "doc-innkjopsliste",
-    "nokkelmal": "doc-nokkelmal",
-    "beslagliste": "doc-beslagliste",
-    "skrueretninger": "doc-skrueretninger",
-    "byggesteg": "doc-byggesteg",
-    "byggerekkefolge": "sch-byggerekkefolge",
-    "end-elevation": "sch-end-elevation",
-    "ladder-detail": "sch-ladder-detail",
-    "bench-detail": "sch-bench-detail",
-    "panel-detail": "sch-panel-detail",
-    "setedetalj": "sch-setedetalj",
-    "bruk-sengestilling": "sch-bruk-sengestilling",
-    "bruk-bordstilling": "sch-bruk-bordstilling",
-    "schematics/": "tegninger",
+# HVA SOM TRYKKES HVOR. Ett bord, fordi to ting leser det: sidebyggerne
+# lenger nede, som legger seksjonen i det ene heftet eller det andre, og
+# fix_links(), som ma vite om en doc-lenke blir staende inne i sitt eget hefte
+# eller ma sende leseren til det andre.
+#
+# `None` som hefte betyr IKKE TRYKT I DET HELE TATT.
+# docs/generated/byggesteg.md er den ene: den er stegsidene i ord, og
+# stegsidene er det byggmesteren faktisk brukte. A trykke begge er a trykke
+# manualen to ganger. Fragmentet lever videre - stegsidene og blekk-assertene
+# leser det - det bindes bare ikke inn i noen av heftene.
+#
+#   filnavn (uten mappe og suffiks) -> (hefte, anker, seksjonstittel)
+DOCS_IN = [                     # docs/generated/*.md, i trykkerekkefolge
+    ("kappliste", "bygg", "Kappliste"),
+    ("innkjopsliste", "bygg", "Innkjøpsliste"),
+    ("nokkelmal", "ref", "Nøkkelmål"),
+    ("beslagliste", "ref", "Beslagliste"),
+    ("skrueretninger", "ref", "Skrueretninger"),
+    ("byggesteg", None, "Byggesteg i ord"),
+]
+SCHEMATICS = [
+    # Veggarket star i BYGGEHEFTET, og det er det eneste snittet som gjor det:
+    # det skal leses for veggen lukkes, altsa for noe annet i boka er
+    # aktuelt, og da ma det ligge i heftet som er med pa plassen.
+    ("spikerslag", "bygg", "Bakveggen — spikerslagsoner"),
+    ("byggerekkefolge", "ref", "Byggerekkefølgen"),
+    ("end-elevation", "ref", "Kortside, snitt A–A"),
+    ("ladder-detail", "ref", "Stigen"),
+    ("bench-detail", "ref", "Benken"),
+    ("panel-detail", "ref", "Den løse platen"),
+    ("setedetalj", "ref", "Skråskruesetene"),
+]
+# BRUKSARKENE står sist blant tegningene og kommer fra docs/img, ikke fra
+# docs/schematics: de er strektegninger fra samme skjulte-linje-maskineri som
+# stegsidene, ikke skjemategninger. De to er de eneste sidene i boka der noen
+# BRUKER sengen - to som sover, to som sitter - og hvert mål på dem er målt på
+# referansekroppene i modellen.
+USE_SHEETS = [
+    ("bruk-sengestilling", "ref", "Sengestillingen, i bruk"),
+    ("bruk-bordstilling", "ref", "Bordstillingen, i bruk"),
+]
+
+TARGETS = {
+    "MONTERING": ("bygg", "montering", "Stegsidene"),
+    "ASSEMBLY": ("ref", "ref-assembly", "Byggeveiledning — hvorfor"),
+    # «schematics/» som helhet: den forste av tegningene i referanseheftet.
+    "schematics/": ("ref", "sch-byggerekkefolge", "Tegninger"),
 }
+TARGETS.update({stem: (book, f"doc-{stem}", title)
+                for stem, book, title in DOCS_IN})
+TARGETS.update({stem: (book, f"sch-{stem}", title)
+                for stem, book, title in SCHEMATICS + USE_SHEETS})
 
 PX_TO_MM = 25.4 / 96.0
 
@@ -123,25 +170,54 @@ def fix_images(chunk: str, base: Path, scale: float = 1.0) -> str:
     return re.sub(r'height="(\d+)"', repl_height, chunk)
 
 
-def fix_links(chunk: str) -> str:
-    """Doc-lenker blir interne PDF-anker; alt er i samme fil na."""
+A_RE = re.compile(r'<a href="([^"]+)">(.*?)</a>', re.S)
+# En paragraf som ikke er annet enn en henvisning til noe som ikke trykkes.
+# Den skal ikke sta igjen som en setning uten mal: «Steg 5 i ord» nederst pa
+# hver stegside pekte pa byggesteg.md, og byggesteg.md trykkes ikke lenger.
+LONE_UNPRINTED = re.compile(r'<p>\s*<span class="unprinted">.*?</span>\s*</p>\s*',
+                            re.S)
+
+
+def fix_links(chunk: str, book: str) -> str:
+    """Doc-lenker, sett fra heftet de star i.
+
+    Tre utfall, og TARGETS avgjor hvilket: malet trykkes i DETTE heftet og
+    blir et internt anker; det trykkes i DET ANDRE og blir en henvisning med
+    seksjonstittel - aldri med sidetall, for de to heftene nummereres hver for
+    seg og et tall pa tvers av dem kunne verken settes inn eller asserteres;
+    eller det trykkes ikke, og da sier henvisningen hvilken fil den er.
+    """
 
     def repl(m: re.Match[str]) -> str:
-        href = m.group(1)
-        if href.startswith(("http:", "https:", "#")):
+        href, text = m.group(1), m.group(2)
+        if href.startswith(("http:", "https:")):
             return m.group(0)
+        if href.startswith("#"):
+            return f'<a href="{href}" class="xref">{text}</a>'
         target = href.split("#", 1)[0]
         key = Path(target).stem if target else ""
-        anchor = ANCHORS.get(key) or ANCHORS.get(target)
-        if anchor:
-            return f'href="#{anchor}" class="xref"'
-        return 'class="deadlink" href="#"'
+        hit = TARGETS.get(key) or TARGETS.get(target)
+        if hit is None:
+            return f'<span class="deadlink">{text}</span>'
+        where, anchor, title = hit
+        if where == book:
+            return f'<a href="#{anchor}" class="xref">{text}</a>'
+        if where is None:
+            # Sier hvilken fil den er. Er lenketeksten allerede stien, sies
+            # den én gang og ikke to.
+            path = f'<code>docs/{html.escape(target)}</code>'
+            if text.strip("` ") in (target, f"docs/{target}"):
+                return f'<span class="unprinted">{path}</span>'
+            return f'<span class="unprinted">{text} ({path})</span>'
+        return (f'<span class="xbook">«{html.escape(title)}» i '
+                f'{BOOKS[where]}</span>')
 
-    return re.sub(r'href="([^"]+)"', repl, chunk)
+    return A_RE.sub(repl, chunk)
 
 
-def render(text: str, base: Path, scale: float = 1.0) -> str:
-    return fix_links(fix_images(md_to_html(text), base, scale))
+def render(text: str, base: Path, book: str, scale: float = 1.0) -> str:
+    out = fix_links(fix_images(md_to_html(text), base, scale), book)
+    return LONE_UNPRINTED.sub("", out)
 
 
 def svg_aspect(path: Path) -> float:
@@ -183,9 +259,10 @@ def split_blocks(text: str) -> list[str]:
     return [b.strip() for b in re.split(r"\n\s*\n", text.strip()) if b.strip()]
 
 
-def build_manual(marks: PageMarks) -> tuple[list[str], list[tuple[str, str]]]:
-    """Returnerer (sider, innholdsfortegnelse) for bildemanualen."""
+def build_manual(marks: PageMarks) -> tuple[str, list[str], list[tuple[str, str]]]:
+    """Returnerer (forside, sider, innholdsfortegnelse) for byggeheftet."""
     src = strip_generated_comment((DOCS / "MONTERING.md").read_text(encoding="utf-8"))
+    cover = ""
     pages: list[str] = []
     toc: list[tuple[str, str]] = []
 
@@ -194,7 +271,7 @@ def build_manual(marks: PageMarks) -> tuple[list[str], list[tuple[str, str]]]:
         head = lines[0].strip()
 
         if head == "# HANNA":
-            pages.append(cover_page(section, marks))
+            cover = cover_page(section, marks)
         elif head == "# Før du begynner":
             key = "prep"
             toc.append((key, "Før du begynner"))
@@ -236,7 +313,7 @@ def build_manual(marks: PageMarks) -> tuple[list[str], list[tuple[str, str]]]:
         # Den siste bolken i MONTERING.md er en merknad om git og
         # `mise run montering`. Den horer ikke hjemme i en trykt manual.
 
-    return pages, toc
+    return cover, pages, toc
 
 
 def cover_page(section: str, marks: PageMarks) -> str:
@@ -249,12 +326,12 @@ def cover_page(section: str, marks: PageMarks) -> str:
         elif b.startswith("## "):
             sub = b[3:].strip()
         elif b.startswith("!["):
-            hero = render(b, DOCS)
+            hero = render(b, DOCS, "bygg")
         elif b.startswith("|"):
-            dims = render(b, DOCS)
+            dims = render(b, DOCS, "bygg")
         else:
             rest.append(b)
-    body = render("\n\n".join(rest), DOCS)
+    body = render("\n\n".join(rest), DOCS, "bygg")
     return f"""<section class="page cover" id="montering">
   {marks.mark('forside')}
   <div class="cover-top">
@@ -267,7 +344,14 @@ def cover_page(section: str, marks: PageMarks) -> str:
 </section>"""
 
 
-def toc_page(marks: PageMarks, manual_toc, ref_toc) -> str:
+def toc_page(marks: PageMarks, cols, foot: str) -> str:
+    """Innholdsfortegnelsen for ETT hefte.
+
+    `cols` er [(spaltetittel, [(nokkel, tekst), ...]), ...]. Sidetallene er
+    tomme her og settes inn av andre runde - og de er heftets EGNE sidetall,
+    som er hele grunnen til at det andre heftet ikke star i denne lista.
+    """
+
     def rows(items) -> str:
         out = []
         for key, label in items:
@@ -277,25 +361,19 @@ def toc_page(marks: PageMarks, manual_toc, ref_toc) -> str:
             )
         return "\n".join(out)
 
+    body = "\n".join(
+        f'<div><h2>{html.escape(head)}</h2>'
+        f'<ol class="toc-list">{rows(items)}</ol></div>'
+        for head, items in cols)
     return f"""<section class="page toc">
   <h1>Innhold</h1>
-  <div class="toc-cols">
-    <div>
-      <h2>Monter sengen</h2>
-      <ol class="toc-list">{rows(manual_toc)}</ol>
-    </div>
-    <div>
-      <h2>Referanse</h2>
-      <ol class="toc-list">{rows(ref_toc)}</ol>
-    </div>
-  </div>
-  <p class="toc-foot">Bildedelen er nok til å bygge sengen. Referansedelen
-  forklarer hvorfor, og eier alle tallene.</p>
+  <div class="toc-cols">{body}</div>
+  <p class="toc-foot">{foot}</p>
 </section>"""
 
 
 def simple_page(section: str, marks: PageMarks, key: str, css: str, scale: float = 1.0) -> str:
-    body = render(strip_first_heading(section), DOCS, scale)
+    body = render(strip_first_heading(section), DOCS, "bygg", scale)
     title = section.split("\n", 1)[0].lstrip("# ").strip()
     return f"""<section class="page {css}" id="{key}">
   {marks.mark(key)}
@@ -332,13 +410,18 @@ def step_page(num: str, title: str, rest: str, marks: PageMarks, key: str) -> st
     notes: list[str] = []
     for b in split_blocks(rest):
         if b.startswith("!["):
-            figure = render(b, DOCS)
+            figure = render(b, DOCS, "bygg")
         elif b.startswith("|"):
-            tables.append(render(b, DOCS))
+            tables.append(render(b, DOCS, "bygg"))
         elif b.startswith("⚠"):
-            notes.append(f'<p class="warn">{render(b, DOCS)[3:-4]}</p>')
+            notes.append(f'<p class="warn">{render(b, DOCS, "bygg")[3:-4]}</p>')
         else:
-            notes.append(render(b, DOCS))
+            # En bolk som var en henvisning til noe utrykt - «Steg N i ord» -
+            # kommer tilbake tom herfra, og en tom <p> er en tynn strek over
+            # notatfeltet som ikke sier noe.
+            block = render(b, DOCS, "bygg")
+            if block.strip():
+                notes.append(block)
 
     fig_html = f'<figure class="step-figure">{figure}</figure>' if figure else ""
     tab_html = f'<div class="step-tables">{"".join(tables)}</div>' if tables else ""
@@ -366,101 +449,123 @@ def step_page(num: str, title: str, rest: str, marks: PageMarks, key: str) -> st
 
 
 # --------------------------------------------------------------------------
-# Referansedelen
+# De genererte tabellene og tegningene - hver til sitt hefte
 # --------------------------------------------------------------------------
 
-REF_DOCS = [
-    ("kappliste", "Kappliste"),
-    ("innkjopsliste", "Innkjøpsliste"),
-    ("nokkelmal", "Nøkkelmål"),
-    ("beslagliste", "Beslagliste"),
-    ("skrueretninger", "Skrueretninger"),
-    ("byggesteg", "Byggesteg i ord"),
-]
-
-SCHEMATICS = [
-    ("byggerekkefolge", "Byggerekkefølgen"),
-    # Veggarket star forst blant snittene: det er det eneste som skal leses
-    # for veggen lukkes, altsa for noe annet pa disse sidene er aktuelt.
-    ("spikerslag", "Bakveggen — spikerslagsoner"),
-    ("end-elevation", "Kortside, snitt A–A"),
-    ("ladder-detail", "Stigen"),
-    ("bench-detail", "Benken"),
-    ("panel-detail", "Den løse platen"),
-    ("setedetalj", "Skråskruesetene"),
-]
-
-# BRUKSARKENE står sist blant tegningene og kommer fra docs/img, ikke fra
-# docs/schematics: de er strektegninger fra samme skjulte-linje-maskineri som
-# stegsidene, ikke skjemategninger. De to er de eneste sidene i boka der noen
-# BRUKER sengen - to som sover, to som sitter - og hvert mål på dem er målt på
-# referansekroppene i modellen.
-USE_SHEETS = [
-    ("bruk-sengestilling", "Sengestillingen, i bruk"),
-    ("bruk-bordstilling", "Bordstillingen, i bruk"),
-]
-
-
-def build_reference(marks: PageMarks) -> tuple[list[str], list[tuple[str, str]]]:
+def doc_pages(marks: PageMarks, book: str) -> tuple[list[str], list[tuple[str, str]]]:
+    """De genererte tabellene som horer hjemme i `book`, i DOCS_IN-rekkefolge."""
     pages: list[str] = []
     toc: list[tuple[str, str]] = []
-
-    # ASSEMBLY.md: apningen blir skilleark for referansedelen, og hver ##
-    # etter det begynner pa ny side.
-    assembly = (DOCS / "ASSEMBLY.md").read_text(encoding="utf-8")
-    a_lines = assembly.split("\n")
-    a_title = a_lines[0].lstrip("# ").strip()
-    a_body = insert_section_marks(render("\n".join(a_lines[1:]), DOCS), marks, "as")
-    cut = a_body.find("<h2>")
-    a_head, a_rest = a_body[:cut], a_body[cut:]
-
-    pages.append(f"""<section class="page divider" id="ref-assembly">
-  {marks.mark('assembly')}
-  <p class="eyebrow">Referanse</p>
-  <h1>{html.escape(a_title)}</h1>
-  {a_head}
-  <p class="divider-sub">Byggeveiledningen, de genererte tabellene og
-  tegningene. Alle tall er regnet ut av modellen.</p>
-</section>""")
-    pages.append(f'<section class="page assembly">{a_rest}</section>')
-    toc.append(("assembly", "Byggeveiledning — hvorfor"))
-    toc.append(("as-vedlegg-a--lastbane", "Vedlegg A — lastbane"))
-    toc.append(("as-vedlegg-b--aksepterte-avvik", "Vedlegg B — avvik"))
-
-    for stem, label in REF_DOCS:
-        text = strip_generated_comment((DOCS / "generated" / f"{stem}.md").read_text(encoding="utf-8"))
+    for stem, where, label in DOCS_IN:
+        if where != book:
+            continue
+        text = strip_generated_comment(
+            (DOCS / "generated" / f"{stem}.md").read_text(encoding="utf-8"))
         key = f"doc-{stem}"
         toc.append((key, label))
         pages.append(f"""<section class="page refdoc" id="{key}">
   {marks.mark(key)}
-  {render(text, DOCS / "generated")}
+  {render(text, DOCS / "generated", book)}
 </section>""")
+    return pages, toc
 
-    toc.append(("tegninger", "Tegninger"))
-    for i, (stem, label) in enumerate(SCHEMATICS):
-        path = (DOCS / "schematics" / f"{stem}.svg").resolve()
-        first = '<span id="tegninger"></span>' if i == 0 else ""
+
+def sheet_pages(marks: PageMarks, folder: str, wanted) -> tuple[list[str], list[tuple[str, str]]]:
+    """En tegning per side, hver med sin egen merkelapp.
+
+    Egen merkelapp per ark og ikke en felles «Tegninger»-rad: na som boka er
+    to hefter er tegningene delt mellom dem, og en samlerad ville sendt
+    leseren til den forste av dem uansett hvilken han slo opp.
+    """
+    pages: list[str] = []
+    toc: list[tuple[str, str]] = []
+    for stem, label in wanted:
+        path = (DOCS / folder / f"{stem}.svg").resolve()
         # Tegningene er tegnet for skjerm og er tette. Den som blir storst
         # liggende, trykkes liggende.
         orient = "land" if svg_aspect(path) > 1.1 else "port"
-        pages.append(f"""<section class="page schematic {orient}" id="sch-{stem}">
-  {first}{marks.mark('tegninger') if i == 0 else ''}
+        key = f"sch-{stem}"
+        toc.append((key, label))
+        pages.append(f"""<section class="page schematic {orient}" id="{key}">
+  {marks.mark(key)}
   <h1>{html.escape(label)}</h1>
   <figure><img src="{path.as_uri()}" alt="{html.escape(label)}"></figure>
-  <p class="cap">docs/schematics/{stem}.svg</p>
+  <p class="cap">docs/{folder}/{stem}.svg</p>
 </section>""")
-
-    for stem, label in USE_SHEETS:
-        path = (DOCS / "img" / f"{stem}.svg").resolve()
-        orient = "land" if svg_aspect(path) > 1.1 else "port"
-        pages.append(f"""<section class="page schematic {orient}" id="sch-{stem}">
-  <h1>{html.escape(label)}</h1>
-  <figure><img src="{path.as_uri()}" alt="{html.escape(label)}"></figure>
-  <p class="cap">docs/img/{stem}.svg</p>
-</section>""")
-
-    pages.append(colophon())
     return pages, toc
+
+
+def build_manual_book(marks: PageMarks) -> list[str]:
+    """BYGGEHEFTET: forside, innhold, stegsidene og det de trenger ved benken."""
+    cover, pages, toc = build_manual(marks)
+    docs, doc_toc = doc_pages(marks, "bygg")
+
+    sheets, sheet_toc = sheet_pages(
+        marks, "schematics",
+        [(stem, label) for stem, where, label in SCHEMATICS if where == "bygg"])
+
+    toc_html = toc_page(
+        marks,
+        [("Monter sengen", toc), ("Lister og ark", doc_toc + sheet_toc)],
+        "Dette heftet er nok til å bygge sengen. Referanseheftet "
+        "(<code>docs/hanna-referanse.pdf</code>) forklarer hvorfor, og eier "
+        "alle tallene.")
+    return [cover, toc_html] + pages + docs + sheets
+
+
+def build_reference_book(marks: PageMarks) -> list[str]:
+    """REFERANSEHEFTET: begrunnelsene, tallene og de ovrige tegningene."""
+    pages: list[str] = []
+
+    # ASSEMBLY.md: apningen blir forsiden pa dette heftet, og hver ## etter
+    # det begynner pa ny side.
+    assembly = (DOCS / "ASSEMBLY.md").read_text(encoding="utf-8")
+    a_lines = assembly.split("\n")
+    a_title = a_lines[0].lstrip("# ").strip()
+    a_body = insert_section_marks(
+        render("\n".join(a_lines[1:]), DOCS, "ref"), marks, "as")
+    cut = a_body.find("<h2>")
+    a_head, a_rest = a_body[:cut], a_body[cut:]
+
+    cover = f"""<section class="page divider" id="ref-assembly">
+  <p class="eyebrow">HANNA — referanse</p>
+  <h1>{html.escape(a_title)}</h1>
+  {a_head}
+  <p class="divider-sub">Byggeveiledningen, de genererte tabellene og
+  tegningene. Alle tall er regnet ut av modellen. Selve byggingen står i
+  byggeheftet, <code>docs/hanna.pdf</code>.</p>
+</section>"""
+    # Merkelappen star pa den forste TEKSTsiden, ikke pa forsiden: raden i
+    # innholdsfortegnelsen skal sende leseren dit veiledningen begynner. Den
+    # legges INNE i den forste h2-en, ikke foran den, for `.assembly > h2
+    # :first-child` er det som lar det forste kapitlet stå pa samme ark som
+    # sitt eget oppslag - et span foran den koster et helt blankt ark.
+    pages.append('<section class="page assembly">'
+                 + a_rest.replace("<h2>", "<h2>" + marks.mark("assembly"), 1)
+                 + '</section>')
+    a_toc = [("assembly", "Byggeveiledning — hvorfor"),
+             ("as-vedlegg-a--lastbane", "Vedlegg A — lastbane"),
+             ("as-vedlegg-b--aksepterte-avvik", "Vedlegg B — avvik")]
+
+    docs, doc_toc = doc_pages(marks, "ref")
+    pages += docs
+
+    sheets, sheet_toc = sheet_pages(
+        marks, "schematics",
+        [(stem, label) for stem, where, label in SCHEMATICS if where == "ref"])
+    use, use_toc = sheet_pages(
+        marks, "img", [(stem, label) for stem, _w, label in USE_SHEETS])
+    sheets += use
+    sheet_toc += use_toc
+    pages += sheets
+    pages.append(colophon())
+
+    toc_html = toc_page(
+        marks,
+        [("Hvorfor", a_toc), ("Tall og tegninger", doc_toc + sheet_toc)],
+        "Ingenting her trengs ved benken. Stegsidene står i byggeheftet, "
+        "<code>docs/hanna.pdf</code>.")
+    return [cover, toc_html] + pages
 
 
 def insert_section_marks(body: str, marks: PageMarks, prefix: str) -> str:
@@ -511,7 +616,13 @@ img { max-width: 100%; }
 figure { margin: 0; }
 a { color: inherit; text-decoration: none; }
 a.xref { border-bottom: 0.4pt dotted #999; }
-a.deadlink { border: 0; }
+/* En henvisning til det ANDRE heftet. Ingen prikket understrek, for det er
+   ingenting a folge her - den er satt i kursiv fordi den er en tittel, og
+   det er tittelen som er adressen: to hefter nummereres hver for seg, sa et
+   sidetall pa tvers av dem kunne verken settes inn eller sjekkes. */
+.xbook { font-style: italic; }
+.unprinted, .deadlink { border: 0; }
+.unprinted code { font-style: normal; }
 code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.88em; }
 .pagemark { color: #fff; font-size: 2pt; }
 
@@ -656,15 +767,22 @@ td img { display: block; margin: 0 auto; }
 """
 
 
-def assemble_html(marks: PageMarks) -> str:
-    manual_pages, manual_toc = build_manual(marks)
-    ref_pages, ref_toc = build_reference(marks)
-    pages = [manual_pages[0], toc_page(marks, manual_toc, ref_toc)] + manual_pages[1:] + ref_pages
+BOOK_BUILDERS = {
+    "bygg": (build_manual_book, PDF_OUT,
+             "HANNA — loftseng, byggehefte"),
+    "ref": (build_reference_book, REF_OUT,
+            "HANNA — loftseng, referansehefte"),
+}
+
+
+def assemble_html(book: str, marks: PageMarks) -> str:
+    build, _out, title = BOOK_BUILDERS[book]
+    pages = build(marks)
     return f"""<!DOCTYPE html>
 <html lang="no">
 <head>
 <meta charset="utf-8">
-<title>HANNA — loftseng, monteringsanvisning</title>
+<title>{html.escape(title)}</title>
 <style>{CSS}</style>
 </head>
 <body>
@@ -744,18 +862,25 @@ def apply_page_numbers(doc: str, found: dict[str, int]) -> str:
     return re.sub(r'<span class="pnum" data-key="([^"]+)">&#160;</span>', repl, doc)
 
 
-def make_previews(pdf: Path, width: int) -> list[Path]:
-    # Only the page previews are this run's to throw away. docs/preview is the
-    # review shelf, and other things live on it - the fill-code contrast proof
-    # (`render_lineart.py --fill-contrast`) among them - which a PDF build has
-    # no business deleting just because it is about to write beside them.
-    for old in PREVIEW_DIR.glob("page-*.png"):
+def make_previews(pdf: Path, width: int, stem: str) -> list[Path]:
+    """docs/preview/<stem>-NN.png - en per side i heftet.
+
+    `stem` skiller de to heftene fra hverandre pa hylla: byggeheftets sider
+    heter fortsatt page-NN, som er det check_tall og kontaktarket leter etter,
+    og referanseheftets heter ref-NN.
+    """
+    # Only this booklet's page previews are this run's to throw away.
+    # docs/preview is the review shelf, and other things live on it - the
+    # fill-code contrast proof (`render_lineart.py --fill-contrast`) among
+    # them - which a PDF build has no business deleting just because it is
+    # about to write beside them.
+    for old in PREVIEW_DIR.glob(f"{stem}-*.png"):
         old.unlink()
     PREVIEW_DIR.mkdir(parents=True, exist_ok=True)
     if shutil.which("pdftoppm"):
         subprocess.run(
             ["pdftoppm", "-png", "-scale-to-x", str(width), "-scale-to-y", "-1",
-             str(pdf), str(PREVIEW_DIR / "page")],
+             str(pdf), str(PREVIEW_DIR / stem)],
             check=True,
         )
     else:  # pragma: no cover
@@ -767,20 +892,50 @@ def make_previews(pdf: Path, width: int) -> list[Path]:
         for i, page in enumerate(doc, 1):
             zoom = width / page.rect.width
             page.get_pixmap(matrix=fitz.Matrix(zoom, zoom)).save(
-                PREVIEW_DIR / f"page-{i:02d}.png"
+                PREVIEW_DIR / f"{stem}-{i:02d}.png"
             )
-    return sorted(PREVIEW_DIR.glob("page-*.png"))
+    return sorted(PREVIEW_DIR.glob(f"{stem}-*.png"))
+
+
+def build_book(book: str, out: Path, chrome: str, work: Path,
+               keep_html: Path | None) -> int:
+    """Skriver ett hefte og returnerer sidetallet.
+
+    To runder, som for: forste plasserer merkelappene, pdftotext sier hvilken
+    side hver havnet pa, andre setter tallet inn. Hvert hefte har sitt eget
+    sett merkelapper, for det er sine egne sider det teller.
+    """
+    marks = PageMarks()
+    doc = assemble_html(book, marks)
+    html_path = work / f"hanna-{book}.html"
+
+    html_path.write_text(doc, encoding="utf-8")
+    print_pdf(html_path, out, chrome)
+    found = locate_marks(out, marks.tokens)
+    missing = [t for t in marks.tokens if t not in found]
+    if missing:
+        print(f"  merkelapper uten side i {out.name}: {', '.join(missing)}",
+              file=sys.stderr)
+
+    doc = apply_page_numbers(doc, found)
+    html_path.write_text(doc, encoding="utf-8")
+    print_pdf(html_path, out, chrome)
+    if keep_html:
+        keep_html.write_text(doc, encoding="utf-8")
+    return page_count(out)
 
 
 # --------------------------------------------------------------------------
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("-o", "--out", type=Path, default=PDF_OUT)
+    ap.add_argument("-o", "--out", type=Path, default=PDF_OUT,
+                    help="Byggeheftet. Referanseheftet legges ved siden av "
+                         "det, som hanna-referanse.pdf")
     ap.add_argument("--preview-width", type=int, default=1200)
     ap.add_argument("--no-preview", action="store_true")
     ap.add_argument("--keep-html", type=Path, default=None,
-                    help="Skriv den sammensatte print-HTML-en hit ogsa")
+                    help="Skriv byggeheftets print-HTML hit ogsa")
     args = ap.parse_args()
 
     chrome = find_chrome()
@@ -803,38 +958,23 @@ def main() -> None:
             "trengs: `brew install poppler` / `apt install poppler-utils`."
         )
 
-    marks = PageMarks()
-    doc = assemble_html(marks)
-
     work = args.out.parent / ".hanna-print"
     work.mkdir(parents=True, exist_ok=True)
-    html_path = work / "hanna.html"
+    outs = {"bygg": args.out, "ref": args.out.with_name(REF_OUT.name)}
+    stems = {"bygg": "page", "ref": "ref"}
 
-    # Runde 1: finn sidetallene til innholdsfortegnelsen.
-    html_path.write_text(doc, encoding="utf-8")
-    print_pdf(html_path, args.out, chrome)
-    found = locate_marks(args.out, marks.tokens)
-    missing = [t for t in marks.tokens if t not in found]
-    if missing:
-        print(f"  merkelapper uten side: {', '.join(missing)}", file=sys.stderr)
+    for book in ("bygg", "ref"):
+        out = outs[book]
+        total = build_book(book, out, chrome, work,
+                           args.keep_html if book == "bygg" else None)
+        print(f"{out.relative_to(ROOT)} — {total} sider, "
+              f"{out.stat().st_size / 1_000_000:.1f} MB")
+        if not args.no_preview:
+            pngs = make_previews(out, args.preview_width, stems[book])
+            print(f"{PREVIEW_DIR.relative_to(ROOT)}/{stems[book]}-*.png — "
+                  f"{len(pngs)} forhandsvisninger ({args.preview_width} px)")
 
-    # Runde 2: samme oppsett, med tallene satt inn.
-    doc = apply_page_numbers(doc, found)
-    html_path.write_text(doc, encoding="utf-8")
-    print_pdf(html_path, args.out, chrome)
-
-    if args.keep_html:
-        args.keep_html.write_text(doc, encoding="utf-8")
     shutil.rmtree(work, ignore_errors=True)
-
-    total = page_count(args.out)
-    print(f"{args.out.relative_to(ROOT)} — {total} sider, "
-          f"{args.out.stat().st_size / 1_000_000:.1f} MB")
-
-    if not args.no_preview:
-        pngs = make_previews(args.out, args.preview_width)
-        print(f"{PREVIEW_DIR.relative_to(ROOT)}/ — {len(pngs)} forhandsvisninger "
-              f"({args.preview_width} px)")
 
 
 if __name__ == "__main__":

@@ -86,7 +86,7 @@ Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøy
 
 **Bokstaven i ringen** (Ⓐ, Ⓑ …) sier hvilken av stegets typer et festemiddel er, og går igjen i tabellen under bildet. Den sitter alltid **på** skruen den gjelder, eller har en tynn strek bort til den — den peker aldri i løse lufta. Der to skruer på samme side er nesten like lange, skilles de i tillegg med **fyll** i silhuetten — den samme bokstaven én gang til, så du ser hvilken av dem det er uten å lese: åpen, skravert, krysskravert, heldekt. Ellers står skruene i ren kontur, for da skiller lengden dem selv. Hele koden står på [beslagsiden](#beslag).
 
-**Antallet står ikke i bildet.** Festemidlene er tegnet ett for ett, der de går — bare to som havner nøyaktig oppå hverandre på papiret er tegnet én gang. Hvor mange det er i alt står i ruta i hjørnet og i tabellen under bildet. **Ruta i hjørnet** viser leddet i snitt, med delene i riktig innbyrdes størrelse, skravur på snittflatene og festemidlene i full lengde — hodet på skrusiden, spissen inne i mottakerdelen.
+**Antallet står ikke i bildet.** Festemidlene er tegnet ett for ett, der de går — bare to som havner nøyaktig oppå hverandre på papiret er tegnet én gang. Hvor mange det er i alt står i tabellen under bildet, og bare der. Hvilken vei hver enkelt drives, og hva som forbores, står i [beslaglista](generated/beslagliste.md) og [skrueretningene](generated/skrueretninger.md).
 
 | Slik | Ikke slik | |
 |:---:|:---:|---|

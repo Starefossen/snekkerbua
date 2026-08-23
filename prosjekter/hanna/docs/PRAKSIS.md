@@ -1,8 +1,8 @@
 # PRAKSIS — hvordan HANNA er bygd
 
-Dette er ikke en del av manualen. `docs/hanna.pdf` settes sammen av en
-eksplisitt liste i `tools/build_pdf.py` (`REF_DOCS`), og denne filen står ikke
-i den. Den er skrevet for den som skal endre modellen eller tegningene, og den
+Dette er ikke en del av manualen. De to heftene — `docs/hanna.pdf` og
+`docs/hanna-referanse.pdf` — settes sammen av en eksplisitt liste i
+`tools/build_pdf.py` (`TARGETS`), og denne filen står ikke i noen av dem. Den er skrevet for den som skal endre modellen eller tegningene, og den
 sier hvilke regler som gjelder og hvorfor de er som de er.
 
 De **felles** reglene i snekkerbua — én kilde, assertfilosofien, regler framfor
@@ -31,7 +31,8 @@ Kilden her er `generate_loftbed.py`, og dette er veien ut av den:
       ├─ tools/render_spikerslag.py  → docs/schematics/spikerslag.svg
       ├─ tools/gen_figurhode.py  landemerkene → figurikonenes hoder og §4
       ├─ tools/gen_glyphs.py     ikoner og piktogrammer
-      └─ tools/build_pdf.py      setter sammen docs/hanna.pdf av det ferdige
+      └─ tools/build_pdf.py      setter sammen docs/hanna.pdf (byggeheftet)
+                                 og docs/hanna-referanse.pdf av det ferdige
 
 `docs/ASSEMBLY.md` er den ene håndskrevne teksten. Den har lov til å navngi
 deler og sitere J-numre, men den skal aldri gjenta et mål som et generert
@@ -283,16 +284,16 @@ stått et festemiddel.
 ### Én skrue, ett billedspråk
 
 **Silhuetten finnes ett sted: `gen_glyphs.screw_profile()`.** Katalogglyfen i
-beslagtabellen, raden i innsettpanelet og skruen som tegnes inn i selve
-stegtegningen er den samme konturen, lagt inn i hvert sitt koordinatsystem —
-forsenket hode, kjerne, gjenge, spiss.
+beslagtabellen, raden i stegets egen beslaglegende og skruen som tegnes inn i
+selve stegtegningen er den samme konturen, lagt inn i hvert sitt
+koordinatsystem — forsenket hode, kjerne, gjenge, spiss.
 
 Det var ikke slik før, og det er den feilen dette avsnittet finnes for.
 Stegsiden tegnet sin egen sju-punkts kapsel: en flens i den ene enden, en pigg
 i den andre, ingenting imellom. Blåst opp 3,0 ganger leste den som en **pil** —
 og pil er reservert for tredeler som skal føres på plass, så siden brukte
 byggerens ene formkode til å si feil ting. Samtidig sto den ekte silhuetten
-i panelet ti centimeter unna. To billedspråk for én ting er det en
+i legenden ti centimeter unna. To billedspråk for én ting er det en
 monteringsanvisning ikke har råd til, for det er formen leseren kjenner delen
 igjen på.
 
@@ -400,8 +401,8 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
 * **Fyllkoden: bokstaven én gang til, som mønster.** Et hjørne med fire
   festemidler i tvang leseren til å finne og lese et 5 mm tegn for å se hvilken
   skrue som var hvilken. Hver bokstav har derfor sitt eget fyll, og skruens
-  silhuett bærer det — på stegtegningen, i snittene i innsettpanelet, i
-  panelraden og i stegets egen festetabell:
+  silhuett bærer det — på stegtegningen og i stegets egen festetabell under
+  bildet:
 
   | | Fyll | Hvorfor der |
   |---|---|---|
@@ -471,7 +472,7 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
 
   **Settet er bevist, ikke valgt.** `python tools/render_lineart.py
   --fill-contrast` skriver `docs/preview/fyllkontrast.png`: hver kode i den
-  størrelsen den minste bokstavsiden faktisk gir en skrue, i innsettets
+  størrelsen den minste bokstavsiden faktisk gir en skrue, i tabellglyfens
   størrelse, og i halv størrelse som stresstest. Prøven blir stående selv om
   ingen side i dag bruker koden: den er dokumentasjonen på hvorfor settet ser
   ut som det gjør, og den skal leses igjen den dagen et ledd bytter skrue.
@@ -487,14 +488,17 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   kode med bare én verdi koder ingenting.
 * **Antallet står ikke i bildet.** Hver skrue steget driver tegnes som sin egen
   kropp, så «2×» ved siden av én av dem sier ingenting bildet ikke sier.
-  Antallene står i innsettpanelet og i stegets tabell, der tall leses i stedet
-  for å telles. Kontrollen svekkes ikke av det: `check_coverage` teller
+  Antallene står i stegets tabell under bildet, og bare der, der tall leses i
+  stedet for å telles. De sto en gang begge steder — også i en hvit rute i
+  hjørnet av tegningen — og det var én kilde for mye: byggmesteren leste
+  tabellen, og ruta dekket strektegning for å si det samme en gang til
+  (erfaringsrunde 1). Kontrollen svekkes ikke av det: `check_coverage` teller
   KROPPENE siden har satt av, ikke tallene den har trykt.
 * **Ett merke per tegnet kropp (R4), og bare én kropp der to silhuetter faller
   sammen (R2).** Spørsmålet er ikke hvor langt fra hverandre to festemidler er
   — det er om de to SILHUETTENE siden tegner havner på samme papir. To som gjør
   det kan bare tegnes én gang, og det ene merket står da for begge (antallet
-  ligger i panelet). To som ikke rører hverandre er to ting leseren kan telle,
+  ligger i stegets tabell). To som ikke rører hverandre er to ting leseren kan telle,
   selv 30 mm fra hverandre, og da er de to merker. Blir det trangt, er svaret
   ikke å slå dem sammen, men det ene trekket et eksplodert festemiddel uansett
   har: lenger ut langs sin egen akse. Begge deler er asserter som måler blekket
@@ -523,9 +527,9 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   innenfor `CLUSTER_R_BADGES` = 16 merkeradier fra en kjerne — uansett ledd,
   uansett type — og inne i én klynge bærer hver TYPE nøyaktig ett merke, det
   første i sidens egen tegnerekkefølge. Merket står for hele familien sin.
-  Innsettpanelet er fortsatt hele nøkkelen: hver type på siden har sin rad der,
-  med antall, så ingenting av det leseren blir fortalt er borte — bare hvor
-  mange ganger.
+  Beslaglegenden under bildet er hele nøkkelen: hver type på siden har sin rad
+  der, med bokstav, glyf, antall og handelsnavn, så ingenting av det leseren
+  blir fortalt er borte — bare hvor mange ganger.
 
   Klyngen er en KULE og ikke en kjede, med vilje. Kjeding er transitiv, og på
   en side som spilefeltet ville én kjede slukt hele sengen og latt én bokstav i
@@ -592,9 +596,10 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
   der de LANDET, og hvert av dem må ha en av kroppene det står for som
   nærmeste kropp — målt mot kroppenes egne kapsler, ikke mot punkter i
   nærheten av dem.
-* **Innsettpanelet har ingen lederlinjer (R3).** Bokstaven knytter allerede
-  merket til raden i panelet, og den gjør det for alle merkene — ikke for de
-  fire som tilfeldigvis lå nærmest. Lupen er noe annet og blir stående: den
+* **Ingen lederlinjer ut i tegningen (R3).** Bokstaven knytter allerede merket
+  til raden i legenden under bildet, og den gjør det for alle merkene — ikke
+  for de fire som tilfeldigvis lå nærmest. Da hjørneruta fantes, trakk den opp
+  til fire lange grå streker tvers over strektegningen for å si det samme. Lupen er noe annet og blir stående: den
   bærer virkelig strektegning, og den korte lederen sier hvilket sted som er
   forstørret. R6-lederen er en tredje ting igjen: den er kort, den går fra ett
   merke til den ene kroppen merket navngir, og den finnes bare der merket ikke
@@ -611,7 +616,7 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
 `tools/gen_glyphs.py` tegner alt som ikke er en projeksjon av sengen.
 
 * **Festemiddelikonene** tegnes i én felles skala og bærer den i `viewBox`-
-  høyden sin, så en 6×120 forblir lengre enn en 5×40 også inne i panelet på
+  høyden sin, så en 6×120 forblir lengre enn en 5×40 også nede i legenden på
   stegsiden. Navnene leses ut av `docs/generated/beslagliste.md`, så en ny
   skruestørrelse i leddtabellen gir et nytt ikon uten at noen rører glyphfila.
 * **Piktogrammene** («før du begynner») er Lucide-baserte, ingen tekst i
@@ -863,7 +868,7 @@ ble avgjort i: `docs/preview/krop-steg1-v3.png` og `krop-steg5-v3.png`.
 * **De kodede glyfene.** Der et steg koder festemidlene sine, skrives
   skrueglyfen også i sin egen fyllkode — glyfens navn med koden hengt på
   (`coded_slug()`: `treskrue-6x80` blir `treskrue-6x80-hatch.svg`) — og det er
-  den fila både innsettpanelets rad og stegets tabell bruker. Hvilke par som
+  den fila stegets tabell bruker. Hvilke par som
   finnes bestemmes av STEGENE — av hvem som deler ut bokstaver **og** hvem
   regelen over slår til på; et par ingen side viser er en fil ingen leser, og
   den skal ut av katalogen. Med dagens ledd slår regelen ikke til på noe steg,
@@ -886,7 +891,7 @@ mise run montering       strektegningene i docs/img/
 mise run setedetalj      docs/schematics/setedetalj.svg
 mise run endelevation    docs/schematics/end-elevation.svg
 mise run spikerslag      docs/schematics/spikerslag.svg
-mise run pdf             docs/hanna.pdf
+mise run pdf             docs/hanna.pdf + docs/hanna-referanse.pdf
 ```
 
 De må være grønne i den rekkefølgen. `build` importerer modellen, så alle

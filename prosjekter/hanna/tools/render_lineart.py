@@ -2422,177 +2422,6 @@ def comp(parts):
     return Compound(children=list(parts))
 
 
-# ---------------------------------------------------------------------------
-# THE INSET
-# ---------------------------------------------------------------------------
-def _long_axis(part):
-    sizes = [part.extents[j][1] - part.extents[j][0] for j in range(3)]
-    return sizes.index(max(sizes))
-
-
-def joint_section(page, box, specs, codes, letter_label=""):
-    """ONE joint, cut through and drawn honestly.
-
-    Both members keep their real cross-section: an axis is only trimmed where
-    it is the member's own LENGTH, because a 1794 mm rail drawn whole beside a
-    36 mm post would leave the joint a line. The cut faces are hatched the way
-    a sawn piece of timber is hatched, and every fastener the joint takes is
-    drawn AT ITS OWN ANCHOR, LENGTH AND DIRECTION - the record the model made
-    the solid from - entering on the face it is driven from with its point
-    buried in the member it grips. A bracket is the black bent plate lying on
-    the faces it is screwed to.
-    """
-    x, y, w, h = box
-    contact = specs[0]["contact"]
-    k = contact[1]
-    pa, pb = specs[0]["pa"], specs[0]["pb"]
-
-    # The second axis of the cut: the one the fasteners actually travel along,
-    # so a section always shows a screw at its length rather than end on.
-    # Failing that, cut along Z whenever one of the two members RUNS THROUGH
-    # the joint vertically - a post, a ladder stile - because then the section
-    # is an elevation and the reader can see which member is the continuous
-    # one. Only where neither applies does the cut fall back to the narrower
-    # axis, which keeps the detail compact.
-    across = [j for j in range(3) if j != k]
-    weight = {j: sum(abs(f["direction"][j]) for f in specs) for j in across}
-    if max(weight.values()) > 1e-6:
-        u = max(across, key=lambda j: weight[j])
-    elif 2 in across and 2 in (_long_axis(pa), _long_axis(pb)):
-        u = 2
-    else:
-        u = min(across,
-                key=lambda j: min(pa.extents[j][1] - pa.extents[j][0],
-                                  pb.extents[j][1] - pb.extents[j][0]))
-
-    # Every fastener as a 2-D run in the (k, u) plane: where it starts and
-    # where it ends, straight off the record.
-    draw = []
-    for f in specs:
-        a0 = (f["anchor"][k], f["anchor"][u])
-        if f["kind"] == "plate":
-            draw.append(dict(kind="plate", a=a0,
-                             run=(f["run"][k], f["run"][u]),
-                             nrm=(f["direction"][k], f["direction"][u]),
-                             reach=f["reach"], t=f["t"]))
-            continue
-        v = (f["direction"][k], f["direction"][u])
-        n = math.hypot(*v)
-        if n < 1e-6:                       # straight out of the section
-            continue
-        draw.append(dict(kind="screw", a=a0, v=(v[0] / n, v[1] / n),
-                         length=f["length"] * n, d=f["d"],
-                         code=codes.get(f["name"])))
-
-    # The window: whole cross-sections, trimmed lengths, and room for the
-    # fasteners that stick out of them.
-    win = {}
-    for i, j in ((0, k), (1, u)):
-        lo, hi = None, None
-        for part in (pa, pb):
-            if _long_axis(part) == j:
-                continue
-            a0, a1 = part.extents[j]
-            lo = a0 if lo is None else min(lo, a0)
-            hi = a1 if hi is None else max(hi, a1)
-        for sdr in draw:
-            pts = [sdr["a"][i]]
-            if sdr["kind"] == "plate":
-                pts.append(sdr["a"][i] + sdr["run"][i] * sdr["reach"])
-                pts.append(sdr["a"][i] - sdr["nrm"][i] * sdr["reach"])
-            else:
-                pts.append(sdr["a"][i] + sdr["v"][i] * sdr["length"])
-                pts.append(sdr["a"][i] - sdr["v"][i] * 8)
-            lo = min([lo] + pts) if lo is not None else min(pts)
-            hi = max([hi] + pts) if hi is not None else max(pts)
-        if lo is None:                     # both members run along this axis
-            lo, hi = contact[0][j] - 60, contact[0][j] + 60
-        runs_through = any(_long_axis(part) == j for part in (pa, pb))
-        pad = (max((hi - lo) * 0.34, 30.0) if runs_through
-               else max((hi - lo) * 0.16, 14.0))
-        win[j] = (lo - pad, hi + pad)
-
-    def rect_of(part):
-        return {j: (max(part.extents[j][0], win[j][0]),
-                    min(part.extents[j][1], win[j][1])) for j in (k, u)}
-
-    # Z always goes up the page; the joint axis takes the other direction.
-    v_ax = k if k == 2 else u
-    h_ax = u if k == 2 else k
-    span_x = win[h_ax][1] - win[h_ax][0]
-    span_y = win[v_ax][1] - win[v_ax][0]
-    scale = min(w * 0.92 / max(span_x, 1e-6), h * 0.80 / max(span_y, 1e-6))
-    cx, cy = x + w / 2, y + h * 0.44
-
-    def px(v):
-        return cx + (v - (win[h_ax][0] + win[h_ax][1]) / 2) * scale
-
-    def py(v):
-        return cy + (v - (win[v_ax][0] + win[v_ax][1]) / 2) * scale
-
-    def pt(a):
-        """(k-value, u-value) -> the page."""
-        return (px(a[0] if h_ax == k else a[1]),
-                py(a[0] if v_ax == k else a[1]))
-
-    for part in (pa, pb):
-        r = rect_of(part)
-        if r[k][1] <= r[k][0] or r[u][1] <= r[u][0]:
-            continue
-        x0, y0 = px(r[h_ax][0]), py(r[v_ax][0])
-        pw = (r[h_ax][1] - r[h_ax][0]) * scale
-        ph = (r[v_ax][1] - r[v_ax][0]) * scale
-        page.rect(x0, y0, pw, ph, fill="#ffffff", width=T.W_RULE)
-        page.hatch(x0, y0, pw, ph, max(min(pw, ph) / 4.2, T.HATCH_MIN))
-
-    for sdr in draw:
-        o = pt(sdr["a"])
-        if sdr["kind"] == "plate":
-            # Two flanges at right angles: one along `run` out of the corner,
-            # one along the drive vector reversed. That IS the bracket.
-            t = sdr["t"] * scale
-            for along, side in ((sdr["run"], sdr["nrm"]),
-                                (tuple(-c for c in sdr["nrm"]), sdr["run"])):
-                al = pt((sdr["a"][0] + along[0] * sdr["reach"],
-                         sdr["a"][1] + along[1] * sdr["reach"]))
-                ux, uy = al[0] - o[0], al[1] - o[1]
-                n = math.hypot(ux, uy) or 1.0
-                nx, ny = -uy / n * t, ux / n * t
-                page.poly([o, al, (al[0] - nx, al[1] - ny),
-                           (o[0] - nx, o[1] - ny)],
-                          fill=INK, stroke=INK, width=T.W_RULE * 0.6)
-            continue
-        # The screw itself, drawn along its own vector.
-        vx, vy = sdr["v"]
-        dx, dy = pt((sdr["a"][0] + vx, sdr["a"][1] + vy))
-        ux, uy = dx - o[0], dy - o[1]
-        n = math.hypot(ux, uy) or 1.0
-        ux, uy = ux / n, uy / n
-        L = sdr["length"] * scale
-        d = max(sdr["d"] * scale, T.SEC_SCREW_MIN)
-        # The SAME seven points the step page draws, at the section's own
-        # scale: `d` is already the drawn width here, so the diameter licence
-        # is spent and fatten is 1. It does not declare its span to the page,
-        # because a section screw is a schematic detail at a deliberately
-        # reduced scale - it rides on the pattern the page's real fasteners
-        # set, rather than dragging the whole page down to its size.
-        head_d = d * 1.9
-        outline = screw_outline(o, (ux, uy), L, d, 1.0)
-        page.poly(outline, fill=page.fill_paint(sdr["code"]), stroke=INK,
-                  width=T.W_RULE * 0.8)
-
-        def P(t_, q, o=o, ux=ux, uy=uy):
-            return (o[0] + ux * t_ - uy * q, o[1] + uy * t_ + ux * q)
-
-        # A short arrow behind the head: the way the screwdriver goes.
-        page.arrow(P(-L * 0.42, 0), P(-head_d * 0.55, 0), INK, T.W_MARK * 0.7,
-                   head_d * 0.7)
-
-    for i, ch in enumerate(letter_label):
-        badge(page, (x + T.BADGE_R * 0.9 + i * T.BADGE_R * 1.7,
-                     y + h - T.BADGE_R * 0.9), ch, T.BADGE_R * 0.82)
-
-
 def badge(page, centre, letter, r=None, owner=None, body=None, leader=None,
           family=None, family_owners=None, family_lens=None):
     """One circled sans letter - the same mark the step table carries.
@@ -3479,74 +3308,6 @@ def thin_clusters(captions):
     return sorted(keep, key=lambda c: order[id(c["family"][0])])
 
 
-# The inset panel is the same shape on every page: the same fraction of the
-# page's width, the same fastener-row height, the same glyph scale. A step
-# with one fastener therefore gets a SHORTER panel, never a smaller one - the
-# rows do not stretch to fill it and the glyphs do not shrink to fit it.
-INSET_W_FRAC = 0.345          # of the page width
-INSET_ROW_FRAC = 0.185        # row height, of the panel width
-INSET_CELL_FRAC = 0.62        # section-cell height, of the cell width
-
-
-def inset_layout(page, n_sections, n_rows):
-    """(w, h, cols, cell_w, cell_h, row_h) - worked out before it is drawn,
-    because the panel has to be placed before the markers are chosen."""
-    w = page.w * INSET_W_FRAC
-    row_h = w * INSET_ROW_FRAC
-    cols = 1 if n_sections <= 1 else 2
-    rows_of_cells = -(-n_sections // cols) if n_sections else 0
-    cell_w = (w - 2 * T.INSET_PAD) / cols
-    cell_h = cell_w * INSET_CELL_FRAC
-    h = (2 * T.INSET_PAD + rows_of_cells * cell_h
-         + (10 if n_sections else 0) + n_rows * row_h)
-    return w, h, cols, cell_w, cell_h, row_h
-
-
-def draw_inset(page, box, sections, step_fasteners, glyph_dir, codes):
-    """The corner panel: one section per joint in the step, then the
-    fasteners at large scale with their counts.
-
-    `codes` is the page's fill code - empty on a page that draws bare, and
-    then the sections in the panel draw bare too. The panel is the same page
-    as the drawing above it and answers for the same screws.
-    """
-    x, y, w, h = box
-    rows = step_fasteners[:4]
-    _w, _h, cols, cell_w, cell_h, row_h = inset_layout(page, len(sections),
-                                                       len(rows))
-    page.rect(x, y, w, h, fill="#ffffff", stroke=INK, width=T.W_RULE)
-
-    top = y + h - T.INSET_PAD
-    for i, (specs, label) in enumerate(sections):
-        cx = x + T.INSET_PAD + (i % cols) * cell_w
-        cy = top - (i // cols + 1) * cell_h
-        joint_section(page, (cx, cy, cell_w, cell_h), specs, codes, label)
-    if sections:
-        top -= (-(-len(sections) // cols)) * cell_h + 10
-        page.line((x + T.INSET_PAD, top + 4), (x + w - T.INSET_PAD, top + 4),
-                  GREY, T.W_LEAD)
-
-    for name, qty, svg, letter in rows:
-        left = x + T.INSET_PAD
-        if letter:
-            badge(page, (left + T.BADGE_R, top - row_h / 2), letter)
-            left += 2 * T.BADGE_R + 14
-        gw, gh = glyph_dims(os.path.join(glyph_dir, svg))
-        # Every glyph is drawn to one scale and carries it in its viewBox
-        # height, so a long screw stays longer than a short one here too.
-        eh = min(row_h * 0.70 * gh / 120.0, row_h * 0.90)
-        ew = eh * gw / gh
-        avail = x + w - T.INSET_PAD - row_h * 1.6 - left
-        if ew > avail:
-            eh *= avail / ew
-            ew = avail
-        page.embed_svg(os.path.join(glyph_dir, svg),
-                       left, top - row_h / 2 - eh / 2, ew, eh)
-        page.text((x + w - T.INSET_PAD, top - row_h / 2 - row_h * 0.20),
-                  f"{qty}x", row_h * 0.60, anchor="end", weight="bold")
-        top -= row_h
-
-
 # ---------------------------------------------------------------------------
 # THE STEP PAGES
 # ---------------------------------------------------------------------------
@@ -3589,6 +3350,22 @@ PANEL_GROW = 30.0
 # point on the boundary counts as inside. This is the hairline that makes
 # "beside the subject" mean beside it.
 PANEL_CLEAR = 8.0
+# EVERY OPAQUE BLOCK A STEP PAGE CAN PARK IN A CORNER, as a fraction of the
+# page width, in one place - because two things read this list: render_step(),
+# which draws them, and crop_to_subject(), which has to cut a page wide enough
+# to hold the widest of them. They were three loose numbers in three calls,
+# and the day the panel came off the sheets the crop went on reserving room
+# for it, which is exactly the sort of quiet disagreement a manual made of one
+# source is not allowed to have.
+#
+# `lens` is a RADIUS fraction; the other two are widths. The mirror pictogram
+# is the widest, because it carries a whole little drawing of the bed with the
+# mirror line through it and an "x2" beside it.
+LENS_R_FRAC = 0.10
+CORNER_BLOCK_FRAC = {
+    "half_view": 0.38,        # the mirror pictogram
+    "info_panel": 0.32,       # the mattress page's three lines and a section
+}
 
 
 def _sampled(plines, pitch):
@@ -3976,39 +3753,6 @@ def info_panel(page, box, G):
             f"{int(round(barrier))}", f"min {G.MIN_GUARD_OVER_MATTRESS}")
 
 
-def step_sections(marks):
-    """One section per joint family in the step, biggest joint first.
-
-    A step with three families - the ladder has three - gets three little
-    sections, each labelled with the badge letters of what is driven in it.
-    One section per KIND of joint, not per instance: the two ends of a bench
-    rail are the same joint mirrored and want one drawing, but J4's two rows -
-    a 5x60 down into the block and a 6x120 sideways into the rung end - are
-    two different things and want two.
-    """
-    best = {}
-    for m in marks:
-        f = m["spec"]
-        if f["contact"] is None:              # a wall fixing: nothing to cut
-            continue
-        key = (f["jid"], id(f["crow"]), tuple(f["contact"][0]))
-        best.setdefault(key, []).append(m)
-    by_joint = {}
-    for key, ms in best.items():
-        jkey = (key[0], key[1])
-        cur = by_joint.get(jkey)
-        if cur is None or ms[0]["area"] > cur[0]["area"]:
-            by_joint[jkey] = ms
-    out = []
-    for _jkey, ms in sorted(by_joint.items(), key=lambda kv: -kv[1][0]["area"]):
-        letters = []
-        for m in ms:
-            if m["letter"] and m["letter"] not in letters:
-                letters.append(m["letter"])
-        out.append(([m["spec"] for m in ms], "".join(sorted(letters))))
-    return out[:4]
-
-
 def check_coverage(st, kept, fasteners, families, share=1):
     """The hard check: everything the step's tables list is on the drawing.
 
@@ -4142,28 +3886,39 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # No step number in the drawing: the page header already carries it, and
     # two of them is one too many.
 
-    sections = step_sections(marks)
+    # THE FASTENER LIST IS NOT ON THE DRAWING ANY MORE (erfaringsrunde 1).
+    # It used to be here twice: an opaque white panel in the corner of the
+    # figure - joint sections, then a row per type with its count - and the
+    # very same rows again as the beslag legend under the figure on the step
+    # page. The builder read the legend, because that is where the glyph is
+    # printed at a size a hand can match against a screw and where the trade
+    # name is spelled out; the panel was the copy that covered line work to
+    # say it. So the legend is the one that stays, and the sheet gets its
+    # corner back. Where the screws GO IN, which is what the joint sections
+    # carried, is the reference booklet's question and is answered there by
+    # «Skrueretninger» and by the beslagliste each step page links to.
+    #
+    # The only panel left on a sheet is the mattress page's information
+    # panel, which is not a list of anything: it is three lines and a section
+    # about how the mattress meets the wall, and it has no copy anywhere.
+    box = None
     if st.get("info_panel"):
-        # The information panel carries a section as well as three lines of
-        # text, so it needs more room than a fastener list does.
-        inset_w, inset_h = page.w * 0.32, page.h * 0.36
-    else:
-        inset_w, inset_h = inset_layout(page, len(sections),
-                                        len(fasteners[:4]))[:2]
-    # A step with no fastener marks has nothing to steer the panel away from,
-    # and the mattress itself is only a handful of outline points - so
-    # "emptiest" would pick the top left corner, which is exactly the corner
-    # the panel is about: the mattress meeting the back wall. The step says so
-    # itself with avoid_top_left.
-    # The measures count as SUBJECT to the panel placer, not as line work: a
-    # fastener list parked over a dimension hides a number, and an opaque
-    # white box over a number is the one drawing fault that cannot be read
-    # round.
-    bx, by = emptiest_corner(combined.get("prior", []),
-                             page, inset_w, inset_h, marks,
-                             avoid_top_left=st.get("avoid_top_left"),
-                             subject=new_only + dim_ink_lines)
-    box = (bx, by, inset_w, inset_h)
+        inset_w = page.w * CORNER_BLOCK_FRAC["info_panel"]
+        inset_h = page.h * 0.36
+        # A step with no fastener marks has nothing to steer the panel away
+        # from, and the mattress itself is only a handful of outline points -
+        # so "emptiest" would pick the top left corner, which is exactly the
+        # corner the panel is about: the mattress meeting the back wall. The
+        # step says so itself with avoid_top_left.
+        # The measures count as SUBJECT to the panel placer, not as line
+        # work: a panel parked over a dimension hides a number, and an opaque
+        # white box over a number is the one drawing fault that cannot be
+        # read round.
+        bx, by = emptiest_corner(combined.get("prior", []),
+                                 page, inset_w, inset_h, marks,
+                                 avoid_top_left=st.get("avoid_top_left"),
+                                 subject=new_only + dim_ink_lines)
+        box = (bx, by, inset_w, inset_h)
     # Both of these are measured on the SHORT side of the page, so a step
     # that gets a tall page of its own - the ladder - does not get arrows and
     # spacings scaled off a height it never uses across.
@@ -4172,10 +3927,8 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
                            {families[l] for l in st["labels"]
                             if l in families})
 
-    if st.get("info_panel"):
-        info_panel(page, (bx, by, inset_w, inset_h), G)
-    elif fasteners:
-        draw_inset(page, box, sections, fasteners, glyph_dir, codes)
+    if box is not None:
+        info_panel(page, box, G)
     if not st.get("no_fasteners"):
         check_coverage(st, keep, fasteners, families, share=2 if half else 1)
 
@@ -4184,11 +3937,11 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # line work when it lands.
     note_box = None
     if half:
-        note_w = page.w * 0.38
+        note_w = page.w * CORNER_BLOCK_FRAC["half_view"]
         note_h = note_w * 0.42
         nx, ny = emptiest_corner(combined.get("prior", []),
                                  page, note_w, note_h, keep,
-                                 avoid=(box,),
+                                 avoid=() if box is None else (box,),
                                  subject=new_only + dim_ink_lines)
         note_box = (nx, ny, note_w, note_h)
 
@@ -4210,7 +3963,8 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     occ.add_lines(combined.get("prior", []), weight=0.15, tag="grey")
     occ.add_lines(new_only + combined.get("new", []), weight=1.0, tag="dark")
     occ.add_lines(dim_ink_lines, weight=1.0, tag="dark")
-    occ.add_box(box, weight=40.0)
+    if box is not None:
+        occ.add_box(box, weight=40.0)
     stacks = {}
     captions = []
     # The brackets are placed BEFORE anything is drawn: a bracket's own screws
@@ -4444,23 +4198,27 @@ def render_step(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     if not st.get("no_fasteners"):
         assert_joint_marks_drawn(page, st, marks)
 
-    # R3 - NO LEADERS FROM THE INSET.
-    # The panel used to trail up to four long grey dashed lines across the
-    # drawing to the nearest fastening points. They said nothing: the badge
-    # letter already ties every mark to its row in the panel, and it does it
-    # for ALL the marks rather than for the four that happen to be closest.
-    # What the lines did do was cross the line work at every angle, and on a
-    # half view they ran straight through the corner the page exists to show.
-    # A magnifier is different and stays: it carries real line work, and its
-    # short leader says which spot has been blown up.
+    # THE MAGNIFIER, on a page whose whole fastening is in one or two places.
+    # It carries real line work and its short leader says which spot has been
+    # blown up, which is why it stayed when the panel's leaders went (R3: the
+    # panel used to trail four grey dashed lines to the nearest fastening
+    # points, and the badge letters already said what they said).
+    # It used to be parked under the fastener panel and sized off it. With the
+    # panel gone it is placed the way every other block on this page is
+    # placed - through emptiest_corner, on its own square footprint - so the
+    # lens lands where the drawing is not instead of where the list used to
+    # be, and it keeps clear of the mirror pictogram if the page has one.
     if keep and fasteners:
         if len(mark_clusters(keep, T.BADGE_R * 2)) <= 2:
             src = keep[0]["p2"]
             src_r = max(page.w, page.h) * 0.055
-            dst_r = inset_w * 0.30
-            dst_c = (bx + inset_w / 2, by + inset_h + dst_r + 60)
-            if dst_c[1] + dst_r > y1 - 20:
-                dst_c = (bx + inset_w / 2, by - dst_r - 60)
+            dst_r = page.w * LENS_R_FRAC
+            lx, ly = emptiest_corner(combined.get("prior", []),
+                                     page, 2 * dst_r, 2 * dst_r, keep,
+                                     avoid=tuple(b for b in (box, note_box)
+                                                 if b is not None),
+                                     subject=new_only + dim_ink_lines)
+            dst_c = (lx + dst_r, ly + dst_r)
             magnifier(page, src, dst_c, dst_r, src_r, new_only,
                       combined.get("prior", []))
 
@@ -4593,7 +4351,6 @@ def fill_contrast_strip(out_dir, px_per_mm, worst=None):
         ("6x90 EKSPLODERT", "screw", 6.0, 90.0, 1.0),
         ("5x60 I SITU (FANTOM)", "situ", 5.0, 60.0, 1.0),
         ("5x60 HODET ALENE", "head", 5.0, 0.30, 1.0),
-        ("INNSETT (SNITT)", "sect", 5.0, 50.0, 1.0),
         # The smallest a fastener is ever drawn in this manual: the same 5x40,
         # on the widest page there is. The pattern it carries is the sheet's,
         # which is the pattern a FULL-SIZE page gets, so this row is a shade
@@ -4681,15 +4438,6 @@ def fill_contrast_strip(out_dir, px_per_mm, worst=None):
                 page.poly([(x, cy + w_s * 0.95), (x + hl, cy + w_s / 2),
                            (x + hl, cy - w_s / 2), (x, cy - w_s * 0.95)],
                           fill=paint, stroke=INK, width=T.W_SCREW * 0.8 * k)
-            else:
-                # The inset's own section screw: floored at SEC_SCREW_MIN and
-                # drawn with the section's lighter pen - through the same
-                # seven points joint_section() uses, because a proof drawn by
-                # a second copy of the code proves the copy.
-                w_s = max(d * 0.8, T.SEC_SCREW_MIN) * k
-                page.poly(screw_outline((x, cy), (1.0, 0.0), arg * k, w_s,
-                                        1.0),
-                          fill=paint, stroke=INK, width=T.W_RULE * 0.8 * k)
         page.line((10.0, top - row_h), (w - 10.0, top - row_h), GREY,
                   T.W_LEAD * 0.5)
         top -= row_h
@@ -4897,15 +4645,18 @@ def step_fastener_glyphs(st, glyph_dir):
         qty, name = line.split("× ", 1)
         rows.append((name, int(qty.strip())))
     rows.sort(key=lambda r: (-r[1], r[0]))
-    # The inset panel draws at most FOUR fastener rows (draw_inset), and the
-    # panel is the page's whole key: a fifth kind would silently fall off it.
-    # No step has ever needed five; the day one does, the panel has to grow -
-    # not the row quietly disappear.
-    assert len(rows) <= 4, (
-        f"steg {st['n']} driver {len(rows)} slags festemidler - innsettpanelet "
-        f"har plass til 4 rader, og en rad som faller utenfor er en deletype "
-        f"leseren aldri får nøkkelen til. Utvid draw_inset() før steget får "
-        f"en femte type.")
+    # FOUR KINDS TO A PAGE, and the limit is the fill code's, not a panel's.
+    # gen_glyphs.FILL_CODES has four patterns, one per badge letter, and a
+    # fifth kind on a coded page would come out with `code=None` - a bare
+    # silhouette among four patterned ones, which is exactly the thing the
+    # code exists to prevent. No step has ever needed five; the day one does,
+    # the SET has to grow (a fifth pattern, proven in the contrast strip) -
+    # the fifth type may not quietly go uncoded.
+    assert len(rows) <= len(gen_glyphs.FILL_CODES), (
+        f"steg {st['n']} driver {len(rows)} slags festemidler, og fyllkoden "
+        f"har {len(gen_glyphs.FILL_CODES)} mønstre. Den femte typen ville "
+        f"blitt tegnet uten kode blant fire kodede. Utvid "
+        f"gen_glyphs.FILL_CODES før steget får en femte type.")
     letters = gen_glyphs.BADGE_ALPHABET if len(rows) > 1 else [None] * len(rows)
     coded = bool(st.get("fill_code"))
 
@@ -4932,7 +4683,7 @@ def step_fastener_glyphs(st, glyph_dir):
     return out
 
 
-def crop_to_subject(view, page_box, new_parts):
+def crop_to_subject(view, page_box, st, new_parts):
     """A tighter page for a step whose subject is a narrow thing in a wide bed.
 
     Every page is cut from the FINISHED bed, so nothing jumps between drawings
@@ -4954,21 +4705,31 @@ def crop_to_subject(view, page_box, new_parts):
     bx0, by0, bx1, by1 = bounds(project(view, [("s", comp(new_parts))])["s"])
     sw = bx1 - bx0
     mx = sw * 1.05                         # room for arrows and badges
-    # ...AND ROOM FOR THE PAGE'S OWN PANEL, which is not an annotation the
-    # crop may leave out: it is INSET_W_FRAC of the finished page width, it is
-    # opaque, and every one of emptiest_corner()'s four candidates puts it in a
-    # side margin. Cut the page to 1.05 subject widths and that margin comes
-    # out 437 mm against a 445 mm panel, so all four corners cover the ladder
-    # and the placer's only decision is which upright to hide - which is how
-    # the fastener list ended up lying over the right stile's top.
+    # ...AND ROOM FOR WHATEVER OPAQUE BLOCK THIS STEP PARKS IN A CORNER, which
+    # is not an annotation the crop may leave out: every one of them is a
+    # fraction of the FINISHED page width and every one of emptiest_corner()'s
+    # candidates puts it in a side margin. Cut the page to 1.05 subject widths
+    # and that margin comes out 437 mm against a 445 mm block, so all four
+    # corners cover the ladder and the placer's only decision is which upright
+    # to hide - which is how the fastener list used to end up lying over the
+    # right stile's top.
     #
-    # The margin that can hold the panel is the fixed point of
-    #     mx = INSET_W_FRAC * (sw + 2 mx)
-    #            + PANEL_EDGE + PANEL_GROW + PANEL_CLEAR
-    # and it is solved rather than guessed, so the day the panel or the crop
+    # The margin that can hold a block of fraction f is the fixed point of
+    #     mx = f * (sw + 2 mx) + PANEL_EDGE + PANEL_GROW + PANEL_CLEAR
+    # and it is solved rather than guessed, so the day a block or the crop
     # changes width the page follows it instead of going quietly opaque.
-    room = ((INSET_W_FRAC * sw + PANEL_EDGE + PANEL_GROW + PANEL_CLEAR)
-            / (1.0 - 2 * INSET_W_FRAC))
+    #
+    # WHICH blocks - the step says, except for the lens, which any page can
+    # earn by having all its fastening in one place, so it is always allowed
+    # for. The fastener list is gone from the sheets (erfaringsrunde 1), so
+    # the widest thing left is the mirror pictogram on a half view, then the
+    # mattress page's information panel, then the lens - and a step that
+    # carries only the lens, as the ladder does, keeps the rest of the margin
+    # for its own drawing, which is what the crop is for.
+    f = max([2 * LENS_R_FRAC]
+            + [frac for key, frac in CORNER_BLOCK_FRAC.items() if st.get(key)])
+    room = ((f * sw + PANEL_EDGE + PANEL_GROW + PANEL_CLEAR)
+            / (1.0 - 2 * f))
     mx = max(mx, room)
     my = (by1 - by0) * 0.06
     return (bx0 - mx, by0 - my, bx1 + mx, by1 + my)
@@ -5038,7 +4799,7 @@ def render_all(G, data, out_dir, width, only):
             half = st.get("half_view")
             box = pages[key]
             if st.get("crop_to_subject"):
-                box = crop_to_subject(views[key], box,
+                box = crop_to_subject(views[key], box, st,
                                       [uni[l] for l in st["highlight"]])
             if st.get("thumbnails"):
                 # The one step that changes the workpiece's orientation shows

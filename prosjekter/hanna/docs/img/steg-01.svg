@@ -14,110 +14,6 @@
 <path d="M-1310.24,-230.53 L-1320.07,-197.75 L-1300.41,-197.75 Z" fill="#111111" stroke="#111111" stroke-width="1.97" stroke-linejoin="round"/>
 <path d="M-1310.24,778.94 L-1300.41,746.17 L-1320.07,746.17 Z" fill="#111111" stroke="#111111" stroke-width="1.97" stroke-linejoin="round"/>
 <text x="-1321.97" y="274.21" font-family="Helvetica, Arial, sans-serif" font-size="34.5" font-weight="bold" text-anchor="middle" fill="#111111" paint-order="stroke" stroke="#ffffff" stroke-width="7.59" stroke-linejoin="round" transform="rotate(90 -1321.97 274.21)">1105 mm</text>
-<rect x="-655.46" y="476.4" width="406.67" height="576.04" rx="0" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<rect x="-555.57" y="576.18" width="15.47" height="28.15" rx="0" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<path d="M-555.57,584.73 L-547.02,576.18 M-555.57,594.45 L-540.1,578.98 M-555.57,604.17 L-540.1,588.7 M-546.01,604.33 L-540.1,598.42" fill="none" stroke="#111111" stroke-width="1.63"/>
-<rect x="-555.57" y="534.08" width="20.62" height="42.1" rx="0" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<path d="M-555.57,536.13 L-553.52,534.08 M-555.57,545.85 L-543.8,534.08 M-555.57,555.57 L-534.95,534.95 M-555.57,565.29 L-534.95,544.67 M-555.57,575.01 L-534.95,554.38 M-547.02,576.18 L-534.95,564.1 M-537.3,576.18 L-534.95,573.82" fill="none" stroke="#111111" stroke-width="1.63"/>
-<path d="M-553.12,534.08 L-549.78,537.14 L-549.78,551.69 L-550.54,551.69 L-550.54,576.43 L-547.83,585.64 L-545.13,576.43 L-545.13,551.69 L-545.88,551.69 L-545.88,537.14 L-542.55,534.08 Z" fill="#ffffff" stroke="#111111" stroke-width="2.26" stroke-linejoin="round"/>
-<path d="M-547.83,512.43 L-547.83,528.42" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-547.83,528.42 L-544.12,522.25" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-547.83,528.42 L-551.55,522.25" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-553.12,534.08 L-549.78,537.14 L-549.78,551.69 L-550.54,551.69 L-550.54,576.43 L-547.83,585.64 L-545.13,576.43 L-545.13,551.69 L-545.88,551.69 L-545.88,537.14 L-542.55,534.08 Z" fill="#ffffff" stroke="#111111" stroke-width="2.26" stroke-linejoin="round"/>
-<path d="M-547.83,512.43 L-547.83,528.42" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-547.83,528.42 L-544.12,522.25" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-547.83,528.42 L-551.55,522.25" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<circle cx="-614.35" cy="517.51" r="21.9" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<text x="-614.35" y="526.27" font-family="Helvetica, Arial, sans-serif" font-size="26.28" font-weight="bold" text-anchor="middle" fill="#111111">B</text>
-<rect x="-444.67" y="537.93" width="54.16" height="40.42" rx="0" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<path d="M-444.67,541.87 L-440.73,537.93 M-444.67,551.59 L-431.01,537.93 M-444.67,561.31 L-421.29,537.93 M-444.67,571.03 L-411.57,537.93 M-442.27,578.35 L-401.85,537.93 M-432.55,578.35 L-392.13,537.93 M-422.83,578.35 L-390.52,546.03 M-413.11,578.35 L-390.52,555.75 M-403.39,578.35 L-390.52,565.47 M-393.67,578.35 L-390.52,575.19" fill="none" stroke="#111111" stroke-width="1.63"/>
-<rect x="-390.52" y="548.03" width="82.53" height="30.32" rx="0" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<path d="M-390.52,555.75 L-382.8,548.03 M-390.52,565.47 L-373.08,548.03 M-390.52,575.19 L-363.36,548.03 M-383.95,578.35 L-353.64,548.03 M-374.23,578.35 L-343.92,548.03 M-364.51,578.35 L-334.2,548.03 M-354.79,578.35 L-324.48,548.03 M-345.07,578.35 L-314.76,548.03 M-335.35,578.35 L-307.99,550.98 M-325.63,578.35 L-307.99,560.7 M-315.91,578.35 L-307.99,570.42" fill="none" stroke="#111111" stroke-width="1.63"/>
-<path d="M-406.12,549.83 L-401.93,548.11 L-384.45,556.26 L-384.77,556.95 L-352.32,572.08 L-342.83,573.52 L-350.03,567.17 L-382.48,552.04 L-382.8,552.73 L-400.28,544.57 L-401.65,540.26 Z" fill="#ffffff" stroke="#111111" stroke-width="2.26" stroke-linejoin="round"/>
-<path d="M-429.53,533.09 L-409.01,542.65" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-409.01,542.65 L-413.04,536.68" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-409.01,542.65 L-416.18,543.41" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-406.12,549.83 L-401.93,548.11 L-384.45,556.26 L-384.77,556.95 L-352.32,572.08 L-342.83,573.52 L-350.03,567.17 L-382.48,552.04 L-382.8,552.73 L-400.28,544.57 L-401.65,540.26 Z" fill="#ffffff" stroke="#111111" stroke-width="2.26" stroke-linejoin="round"/>
-<path d="M-429.53,533.09 L-409.01,542.65" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-409.01,542.65 L-413.04,536.68" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-409.01,542.65 L-416.18,543.41" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<circle cx="-428.08" cy="517.51" r="21.9" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<text x="-428.08" y="526.27" font-family="Helvetica, Arial, sans-serif" font-size="26.28" font-weight="bold" text-anchor="middle" fill="#111111">C</text>
-<rect x="-560.02" y="627.43" width="49.9" height="92.39" rx="0" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<path d="M-560.02,631.31 L-556.14,627.43 M-560.02,643.19 L-544.26,627.43 M-560.02,655.07 L-532.38,627.43 M-560.02,666.95 L-520.5,627.43 M-560.02,678.84 L-510.12,628.93 M-560.02,690.72 L-510.12,640.82 M-560.02,702.6 L-510.12,652.7 M-560.02,714.48 L-510.12,664.58 M-553.48,719.82 L-510.12,676.46 M-541.6,719.82 L-510.12,688.34 M-529.72,719.82 L-510.12,700.22 M-517.84,719.82 L-510.12,712.1" fill="none" stroke="#111111" stroke-width="1.63"/>
-<rect x="-604.28" y="646.13" width="44.26" height="34.63" rx="0" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<path d="M-604.28,652.88 L-597.53,646.13 M-604.28,662.6 L-587.81,646.13 M-604.28,672.32 L-578.09,646.13 M-603,680.75 L-568.37,646.13 M-593.28,680.75 L-560.02,647.5 M-583.56,680.75 L-560.02,657.22 M-573.84,680.75 L-560.02,666.94 M-564.12,680.75 L-560.02,676.66" fill="none" stroke="#111111" stroke-width="1.63"/>
-<path d="M-560.02,680.75 L-560.02,701.12 L-561.04,701.12 L-561.04,680.75 Z" fill="#111111" stroke="#111111" stroke-width="1.69" stroke-linejoin="round"/>
-<path d="M-560.02,680.75 L-580.39,680.75 L-580.39,679.74 L-560.02,679.74 Z" fill="#111111" stroke="#111111" stroke-width="1.69" stroke-linejoin="round"/>
-<path d="M-560.02,696.22 L-556.96,692.89 L-551.77,692.89 L-551.77,693.65 L-548.86,693.65 L-539.66,690.94 L-548.86,688.23 L-551.77,688.23 L-551.77,688.99 L-556.96,688.99 L-560.02,685.66 Z" fill="#ffffff" stroke="#111111" stroke-width="2.26" stroke-linejoin="round"/>
-<path d="M-568.58,690.94 L-565.68,690.94" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-565.68,690.94 L-571.86,687.22" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-565.68,690.94 L-571.86,694.65" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-564.93,680.75 L-568.26,677.69 L-568.26,672.5 L-567.5,672.5 L-567.5,669.59 L-570.21,660.39 L-572.92,669.59 L-572.92,672.5 L-572.16,672.5 L-572.16,677.69 L-575.49,680.75 Z" fill="#ffffff" stroke="#111111" stroke-width="2.26" stroke-linejoin="round"/>
-<path d="M-570.21,689.31 L-570.21,686.41" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-570.21,686.41 L-573.92,692.59" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<path d="M-570.21,686.41 L-566.49,692.59" fill="none" stroke="#111111" stroke-width="3.9" stroke-linecap="round"/>
-<circle cx="-614.35" cy="632.99" r="21.9" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<text x="-614.35" y="641.75" font-family="Helvetica, Arial, sans-serif" font-size="26.28" font-weight="bold" text-anchor="middle" fill="#111111">A</text>
-<circle cx="-568.94" cy="632.99" r="21.9" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<text x="-568.94" y="641.75" font-family="Helvetica, Arial, sans-serif" font-size="26.28" font-weight="bold" text-anchor="middle" fill="#111111">D</text>
-<path d="M-638.39,730.44 L-265.85,730.44" fill="none" stroke="#9a9a9a" stroke-width="2.6" stroke-linecap="round"/>
-<circle cx="-611.68" cy="772.06" r="26.71" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<text x="-611.68" y="782.74" font-family="Helvetica, Arial, sans-serif" font-size="32.05" font-weight="bold" text-anchor="middle" fill="#111111">A</text>
-<svg x="-570.97" y="745.72" width="80.75" height="52.66" viewBox="0 0 184 120" preserveAspectRatio="xMidYMid meet">
-  <title>Treskrue 5×40 forsenket Torx</title>
-  <g fill="none" stroke="#111" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
-    <g transform="scale(4) translate(3 15)" stroke-width="1.38">
-      <path d="M 0 -4.88 L 2.83 -1.8 L 13.98 -1.8 L 13.98 -1.8 L 16.86 -2.5 L 19.73 -1.8 L 22.61 -2.5 L 25.48 -1.8 L 28.36 -2.5 L 31.23 -1.8 L 34.11 -1.73 L 36.98 -0.64 L 39.86 -0.04 L 40 0 L 40 0 L 40 0 L 39.86 0.04 L 36.98 0.64 L 34.11 1.73 L 31.23 1.8 L 28.36 2.5 L 25.48 1.8 L 22.61 2.5 L 19.73 1.8 L 16.86 2.5 L 13.98 1.8 L 13.98 1.8 L 2.83 1.8 L 0 4.88 Z"/>
-      <path d="M 4.49 0 L 4.26 0.37 L 3.8 0.6 L 3.5 0.78 L 3.49 1.13 L 3.53 1.64 L 3.32 2.03 L 2.88 2.02 L 2.45 1.73 L 2.15 1.56 L 1.85 1.73 L 1.42 2.02 L 0.98 2.03 L 0.77 1.64 L 0.81 1.13 L 0.8 0.78 L 0.5 0.6 L 0.04 0.37 L -0.19 0 L 0.04 -0.37 L 0.5 -0.6 L 0.8 -0.78 L 0.81 -1.13 L 0.77 -1.64 L 0.98 -2.03 L 1.42 -2.02 L 1.85 -1.73 L 2.15 -1.56 L 2.45 -1.73 L 2.88 -2.02 L 3.32 -2.03 L 3.53 -1.64 L 3.49 -1.13 L 3.5 -0.78 L 3.8 -0.6 L 4.26 -0.37 Z" stroke-width="0.88"/>
-    </g>
-  </g>
-</svg>
-<text x="-265.85" y="787.1" font-family="Helvetica, Arial, sans-serif" font-size="45.14" font-weight="bold" text-anchor="end" fill="#111111">4x</text>
-<circle cx="-611.68" cy="847.29" r="26.71" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<text x="-611.68" y="857.97" font-family="Helvetica, Arial, sans-serif" font-size="32.05" font-weight="bold" text-anchor="middle" fill="#111111">B</text>
-<svg x="-570.97" y="825.3" width="184.74" height="43.99" viewBox="0 0 504 120" preserveAspectRatio="xMidYMid meet">
-  <title>Treskrue 6×120 forsenket Torx</title>
-  <g fill="none" stroke="#111" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
-    <g transform="scale(4) translate(3 15)" stroke-width="1.38">
-      <path d="M 0 -5.85 L 3.39 -2.16 L 38.38 -2.16 L 38.38 -2.16 L 41.83 -3 L 45.28 -2.16 L 48.73 -3 L 52.18 -2.16 L 55.63 -3 L 59.08 -2.16 L 62.53 -3 L 65.98 -2.16 L 69.43 -3 L 72.88 -2.16 L 76.33 -3 L 79.78 -2.16 L 83.23 -3 L 86.68 -2.16 L 90.13 -3 L 93.58 -2.16 L 97.03 -3 L 100.48 -2.16 L 103.93 -3 L 107.38 -2.16 L 110.83 -2.7 L 114.28 -1.21 L 117.73 -0.67 L 120 0 L 120 0 L 120 0 L 117.73 0.67 L 114.28 1.21 L 110.83 2.7 L 107.38 2.16 L 103.93 3 L 100.48 2.16 L 97.03 3 L 93.58 2.16 L 90.13 3 L 86.68 2.16 L 83.23 3 L 79.78 2.16 L 76.33 3 L 72.88 2.16 L 69.43 3 L 65.98 2.16 L 62.53 3 L 59.08 2.16 L 55.63 3 L 52.18 2.16 L 48.73 3 L 45.28 2.16 L 41.83 3 L 38.38 2.16 L 38.38 2.16 L 3.39 2.16 L 0 5.85 Z"/>
-      <path d="M 5.35 0 L 5.07 0.45 L 4.52 0.72 L 4.16 0.94 L 4.15 1.35 L 4.19 1.97 L 3.94 2.43 L 3.42 2.42 L 2.91 2.07 L 2.54 1.87 L 2.17 2.07 L 1.66 2.42 L 1.14 2.43 L 0.89 1.97 L 0.93 1.35 L 0.92 0.94 L 0.56 0.72 L 0.01 0.45 L -0.27 0 L 0.01 -0.45 L 0.56 -0.72 L 0.92 -0.94 L 0.93 -1.35 L 0.89 -1.97 L 1.14 -2.43 L 1.66 -2.42 L 2.17 -2.07 L 2.54 -1.87 L 2.91 -2.07 L 3.42 -2.42 L 3.94 -2.43 L 4.19 -1.97 L 4.15 -1.35 L 4.16 -0.94 L 4.52 -0.72 L 5.07 -0.45 Z" stroke-width="0.88"/>
-    </g>
-  </g>
-</svg>
-<text x="-265.85" y="862.34" font-family="Helvetica, Arial, sans-serif" font-size="45.14" font-weight="bold" text-anchor="end" fill="#111111">4x</text>
-<circle cx="-611.68" cy="922.52" r="26.71" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<text x="-611.68" y="933.21" font-family="Helvetica, Arial, sans-serif" font-size="32.05" font-weight="bold" text-anchor="middle" fill="#111111">C</text>
-<svg x="-570.97" y="896.19" width="150.97" height="52.66" viewBox="0 0 344 120" preserveAspectRatio="xMidYMid meet">
-  <title>Treskrue 6×80 forsenket Torx</title>
-  <g fill="none" stroke="#111" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
-    <g transform="scale(4) translate(3 15)" stroke-width="1.38">
-      <path d="M 0 -5.85 L 3.39 -2.16 L 26.38 -2.16 L 26.38 -2.16 L 29.83 -3 L 33.28 -2.16 L 36.73 -3 L 40.18 -2.16 L 43.63 -3 L 47.08 -2.16 L 50.53 -3 L 53.98 -2.16 L 57.43 -3 L 60.88 -2.16 L 64.33 -3 L 67.78 -2.16 L 71.23 -2.58 L 74.68 -1.13 L 78.13 -0.55 L 80 0 L 80 0 L 80 0 L 78.13 0.55 L 74.68 1.13 L 71.23 2.58 L 67.78 2.16 L 64.33 3 L 60.88 2.16 L 57.43 3 L 53.98 2.16 L 50.53 3 L 47.08 2.16 L 43.63 3 L 40.18 2.16 L 36.73 3 L 33.28 2.16 L 29.83 3 L 26.38 2.16 L 26.38 2.16 L 3.39 2.16 L 0 5.85 Z"/>
-      <path d="M 5.35 0 L 5.07 0.45 L 4.52 0.72 L 4.16 0.94 L 4.15 1.35 L 4.19 1.97 L 3.94 2.43 L 3.42 2.42 L 2.91 2.07 L 2.54 1.87 L 2.17 2.07 L 1.66 2.42 L 1.14 2.43 L 0.89 1.97 L 0.93 1.35 L 0.92 0.94 L 0.56 0.72 L 0.01 0.45 L -0.27 0 L 0.01 -0.45 L 0.56 -0.72 L 0.92 -0.94 L 0.93 -1.35 L 0.89 -1.97 L 1.14 -2.43 L 1.66 -2.42 L 2.17 -2.07 L 2.54 -1.87 L 2.91 -2.07 L 3.42 -2.42 L 3.94 -2.43 L 4.19 -1.97 L 4.15 -1.35 L 4.16 -0.94 L 4.52 -0.72 L 5.07 -0.45 Z" stroke-width="0.88"/>
-    </g>
-  </g>
-</svg>
-<text x="-265.85" y="937.57" font-family="Helvetica, Arial, sans-serif" font-size="45.14" font-weight="bold" text-anchor="end" fill="#111111">4x</text>
-<circle cx="-611.68" cy="997.76" r="26.71" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<text x="-611.68" y="1008.44" font-family="Helvetica, Arial, sans-serif" font-size="32.05" font-weight="bold" text-anchor="middle" fill="#111111">D</text>
-<svg x="-570.97" y="963.9" width="55.01" height="67.71" viewBox="0 0 187.2 230.4" preserveAspectRatio="xMidYMid meet">
-  <title>Vinkelbeslag 40×40×20</title>
-  <g fill="none" stroke="#111" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
-    <g transform="scale(4) translate(23.8 43)" stroke-width="1.38">
-      <path d="M 20 0 L 20 -40 L 18.96 -39.42 L 18.96 0.58 Z" fill="#fff"/>
-      <path d="M 0 -40 L 20 -40 L 18.96 -39.42 L -1.04 -39.42 Z" fill="#fff"/>
-      <path d="M -1.04 0.58 L 18.96 0.58 L 18.96 -39.42 L -1.04 -39.42 Z" fill="#fff"/>
-      <path d="M 18.96 0.58 L -0.8 11.6 L -0.8 9.6 L 18.96 -1.42 Z" fill="#fff"/>
-      <path d="M -1.04 -1.42 L 18.96 -1.42 L -0.8 9.6 L -20.8 9.6 Z" fill="#fff"/>
-      <path d="M -20.8 11.6 L -0.8 11.6 L -0.8 9.6 L -20.8 9.6 Z" fill="#fff"/>
-      <circle cx="8.96" cy="-15.42" r="3.4" stroke-width="0.88"/>
-      <circle cx="8.96" cy="-29.02" r="3.4" stroke-width="0.88"/>
-      <ellipse cx="0.66" cy="3.21" rx="3.57" ry="1.7" stroke-width="0.88"/>
-      <ellipse cx="-6.85" cy="7.4" rx="3.57" ry="1.7" stroke-width="0.88"/>
-    </g>
-  </g>
-</svg>
-<text x="-265.85" y="1012.8" font-family="Helvetica, Arial, sans-serif" font-size="45.14" font-weight="bold" text-anchor="end" fill="#111111">2x</text>
 <path d="M-1004.11,-532.6 L-996.73,-525.81 L-996.73,-494.96 L-996.73,-494.96 L-998.41,-491.51 L-996.73,-488.06 L-998.41,-484.61 L-996.73,-481.16 L-998.41,-477.71 L-996.73,-474.26 L-998.41,-470.81 L-996.73,-467.36 L-998.41,-463.91 L-996.73,-460.46 L-998.41,-457.01 L-996.73,-453.56 L-998.41,-450.11 L-996.73,-446.66 L-998.36,-443.21 L-995.97,-439.76 L-996.34,-436.31 L-994.51,-432.86 L-994.31,-429.41 L-993.05,-425.96 L-992.41,-422.98 L-992.41,-422.98 L-992.41,-422.98 L-991.78,-425.96 L-990.52,-429.41 L-990.32,-432.86 L-988.49,-436.31 L-988.86,-439.76 L-986.46,-443.21 L-988.09,-446.66 L-986.41,-450.11 L-988.09,-453.56 L-986.41,-457.01 L-988.09,-460.46 L-986.41,-463.91 L-988.09,-467.36 L-986.41,-470.81 L-988.09,-474.26 L-986.41,-477.71 L-988.09,-481.16 L-986.41,-484.61 L-988.09,-488.06 L-986.41,-491.51 L-988.09,-494.96 L-988.09,-494.96 L-988.09,-525.81 L-980.71,-532.6 Z" fill="#ffffff" stroke="#111111" stroke-width="2.97" stroke-linejoin="round"/>
 <path d="M-992.41,-422.98 L-992.41,-394.69" fill="none" stroke="#9a9a9a" stroke-width="3.26" stroke-linecap="round" stroke-dasharray="4 13"/>
 <circle cx="-992.41" cy="-394.69" r="6.46" fill="#111111"/>
@@ -145,11 +41,11 @@
 <text x="-990.45" y="478.99" font-family="Helvetica, Arial, sans-serif" font-size="32.05" font-weight="bold" text-anchor="middle" fill="#111111">D</text>
 <circle cx="-818.98" cy="740.46" r="26.71" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
 <text x="-818.98" y="751.14" font-family="Helvetica, Arial, sans-serif" font-size="32.05" font-weight="bold" text-anchor="middle" fill="#111111">C</text>
-<rect x="-1387.53" y="-702.44" width="447.92" height="188.13" rx="0" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
-<path d="M-1150.03,-610.03 L-1148.41,-608.89 M-1148.41,-604.71 L-1148.41,-608.89 M-1253.49,-584.59 L-1253.09,-584.31 M-1253.09,-580.12 L-1253.09,-584.31 M-1253.49,-580.41 L-1253.09,-580.12 M-1150.03,-610.03 L-1253.49,-585.73 M-1148.41,-604.71 L-1253.09,-580.12 M-1148.41,-608.89 L-1253.09,-584.31 M-1143.1,-592.24 L-1143.1,-678.15 M-1150.03,-591.75 L-1150.03,-604.33 M-1150.03,-610.03 L-1150.03,-628.02 M-1150.03,-633.73 L-1150.03,-676.52 M-1148.82,-590.9 L-1148.82,-604.61 M-1148.82,-609.18 L-1148.82,-628.31 M-1148.82,-632.87 L-1148.82,-676.81 M-1150.03,-591.75 L-1148.82,-590.9 M-1143.1,-592.24 L-1148.82,-590.9 M-1253.49,-566.31 L-1253.49,-652.23 M-1260.42,-565.83 L-1260.42,-652.12 M-1260.42,-652.12 L-1259.21,-651.26 M-1259.21,-564.97 L-1259.21,-651.26 M-1260.42,-565.83 L-1259.21,-564.97 M-1260.25,-652.16 L-1260.42,-652.12 M-1253.49,-566.31 L-1259.21,-564.97 M-1259.03,-651.3 L-1259.21,-651.26 M-1150.03,-633.73 L-1148.41,-632.59 M-1148.41,-628.4 L-1148.41,-632.59 M-1253.49,-608.29 L-1253.09,-608.01 M-1253.09,-603.82 L-1253.09,-608.01 M-1253.49,-604.11 L-1253.09,-603.82 M-1150.03,-633.73 L-1253.49,-609.43 M-1148.41,-628.4 L-1253.09,-603.82 M-1148.41,-632.59 L-1253.09,-608.01 M-1144.49,-685.37 L-1142.87,-684.24 M-1142.87,-678.2 L-1142.87,-684.24 M-1260.25,-652.16 L-1260.25,-658.19 M-1260.25,-658.19 L-1258.63,-657.05 M-1258.63,-651.02 L-1258.63,-657.05 M-1260.25,-652.16 L-1258.63,-651.02 M-1144.49,-685.37 L-1260.25,-658.19 M-1142.87,-678.2 L-1258.63,-651.02 M-1142.87,-684.24 L-1258.63,-657.05" fill="none" stroke="#111111" stroke-width="3.26" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="-1256.75" cy="-611.58" r="32.21" fill="none" stroke="#111111" stroke-width="3.1"/>
-<circle cx="-1146.45" cy="-638.14" r="32.21" fill="none" stroke="#111111" stroke-width="3.1"/>
-<path d="M-1201.6,-564.97 L-1201.6,-685.37" fill="none" stroke="#111111" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="30 10 6 10"/>
-<text x="-956.68" y="-605.02" font-family="Helvetica, Arial, sans-serif" font-size="57.11" font-weight="bold" text-anchor="end" fill="#111111">×2</text>
-<text x="-1163.57" y="-526.26" font-family="Helvetica, Arial, sans-serif" font-size="20.83" font-weight="bold" text-anchor="middle" fill="#111111">ANTALL GJELDER HELE RAMMEN</text>
+<rect x="-696.71" y="864.31" width="447.92" height="188.13" rx="0" fill="#ffffff" stroke="#111111" stroke-width="2.82"/>
+<path d="M-459.21,956.72 L-457.59,957.86 M-457.59,962.04 L-457.59,957.86 M-562.67,982.16 L-562.27,982.44 M-562.27,986.63 L-562.27,982.44 M-562.67,986.34 L-562.27,986.63 M-459.21,956.72 L-562.67,981.02 M-457.59,962.04 L-562.27,986.63 M-457.59,957.86 L-562.27,982.44 M-452.28,974.51 L-452.28,888.6 M-459.21,975 L-459.21,962.42 M-459.21,956.72 L-459.21,938.73 M-459.21,933.02 L-459.21,890.23 M-457.99,975.85 L-457.99,962.14 M-457.99,957.57 L-457.99,938.44 M-457.99,933.88 L-457.99,889.94 M-459.21,975 L-457.99,975.85 M-452.28,974.51 L-457.99,975.85 M-562.67,1000.44 L-562.67,914.52 M-569.6,1000.92 L-569.6,914.63 M-569.6,914.63 L-568.39,915.49 M-568.39,1001.78 L-568.39,915.49 M-569.6,1000.92 L-568.39,1001.78 M-569.43,914.59 L-569.6,914.63 M-562.67,1000.44 L-568.39,1001.78 M-568.21,915.45 L-568.39,915.49 M-459.21,933.02 L-457.59,934.16 M-457.59,938.35 L-457.59,934.16 M-562.67,958.46 L-562.27,958.74 M-562.27,962.93 L-562.27,958.74 M-562.67,962.64 L-562.27,962.93 M-459.21,933.02 L-562.67,957.32 M-457.59,938.35 L-562.27,962.93 M-457.59,934.16 L-562.27,958.74 M-453.66,881.38 L-452.05,882.51 M-452.05,888.55 L-452.05,882.51 M-569.43,914.59 L-569.43,908.56 M-569.43,908.56 L-567.81,909.7 M-567.81,915.73 L-567.81,909.7 M-569.43,914.59 L-567.81,915.73 M-453.66,881.38 L-569.43,908.56 M-452.05,888.55 L-567.81,915.73 M-452.05,882.51 L-567.81,909.7" fill="none" stroke="#111111" stroke-width="3.26" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="-565.93" cy="955.17" r="32.21" fill="none" stroke="#111111" stroke-width="3.1"/>
+<circle cx="-455.63" cy="928.61" r="32.21" fill="none" stroke="#111111" stroke-width="3.1"/>
+<path d="M-510.78,1001.78 L-510.78,881.38" fill="none" stroke="#111111" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="30 10 6 10"/>
+<text x="-265.85" y="961.73" font-family="Helvetica, Arial, sans-serif" font-size="57.11" font-weight="bold" text-anchor="end" fill="#111111">×2</text>
+<text x="-472.75" y="1040.49" font-family="Helvetica, Arial, sans-serif" font-size="20.83" font-weight="bold" text-anchor="middle" fill="#111111">ANTALL GJELDER HELE RAMMEN</text>
 </svg>

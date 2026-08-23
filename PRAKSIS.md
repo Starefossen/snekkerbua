@@ -107,7 +107,7 @@ av ett eneste mål:
     penn = diagonalen i tegningsobjektets egen bbox / 400
 
 Tallet er gjenstandens, ikke sidens, så hele pennsettet følger det som tegnes.
-Sidenære størrelser — innsettpanelets bredde, eksplosjonens sprang, den hvite
+Sidenære størrelser — hjørneblokkenes bredde, eksplosjonens sprang, den hvite
 margen — er fortsatt brøkdeler av SIDEN, for det er det de er. Regelen er den
 samme som ellers: skal en strek bli tykkere, endres forholdstallet ett sted, og
 alle sidene følger etter.

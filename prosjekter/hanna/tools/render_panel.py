@@ -71,9 +71,13 @@ import os
 DROP_BATTEN = (0.0, 0.0, -1150.0)
 
 PAGE_PAD = 90.0        # white around the exploded assembly, model mm
-COL_EXTRA = 130.0      # the left column is the inset panel plus this margin
-THUMB_FRAC = 0.62      # thumbnail width, of the left column - they are
-                       # CONTEXT, so they stay smaller than the fastener panel
+COL_EXTRA = 130.0      # air on either side of the thumbnails in that column
+# The left column, as a fraction of the finished page. It used to be the
+# fastener panel's own width with the thumbnails set at 0.62 of it; the panel
+# came off every step sheet in erfaringsrunde 1 (see render_lineart's note
+# where the corner blocks are declared), so the column is now the thumbnails
+# and nothing else, and it is a quarter of the page rather than a third.
+THUMB_COL_FRAC = 0.25
 
 # The footprints on the plate, in model millimetres. GHOST_EDGE is how far a
 # ghost is pulled in off a plate edge it would otherwise be drawn ON; GHOST_GAP
@@ -350,14 +354,16 @@ def _thumbnail(page, RL, G, view, box, panel, battens, title):
 # ---------------------------------------------------------------------------
 # THE PAGE
 # ---------------------------------------------------------------------------
-def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
+def render(G, view, st, uni, placed, out_dir, width, page_box, _glyph_dir,
            fasteners, families, centre):
     """Writes <out_dir>/steg-10.svg and steg-10.png. Returns the png path.
 
     Same signature as render_lineart.render_step(), so the driver does not
-    have to special-case the call. Two of the arguments are deliberately not
-    used: `placed`, because nothing standing from an earlier step is in this
-    picture at all, and `page_box`, because the shared rectangle for this
+    have to special-case the call. Three of the arguments are deliberately
+    not used: `placed`, because nothing standing from an earlier step is in
+    this picture at all, `_glyph_dir`, because the fastener glyphs are printed
+    in the step page's own beslag legend and nowhere on the drawing, and
+    `page_box`, because the shared rectangle for this
     camera is the size of the whole BED - the page here is cut from the
     exploded assembly's own bounds instead. `view` is replaced for the same
     reason: it looks at the bed's centre, and this drawing wants the panel's.
@@ -391,11 +397,10 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     word_plan = _edge_word_plan(RL, view, panel)
 
     letters = {name: letter for name, _q, _s, letter in fasteners if letter}
-    # The panel page follows the same rule as every other page: it codes its
-    # fasteners only where the step says the shapes need it. It draws no screw
-    # bodies of its own - the drilling pattern and a dotted line into each
-    # hole is what it draws - so in practice this decides its panel rows.
-    codes = RL.page_fill_codes(st, letters)
+    # NO FILL CODE ON THIS PAGE, and not because it was forgotten: the code
+    # goes in a drawn fastener's body, and this page draws no fastener bodies
+    # at all - it draws the drilling pattern on the lekt and a dotted line
+    # into each hole. There is nothing here for a pattern to live in.
     names = [name for name, _q, _s, _l in fasteners]
 
     def by_prefix(prefix):
@@ -454,22 +459,18 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
             ay0 = min(ay0, c[1] - w_h / 2)
             ay1 = max(ay1, c[1] + w_h / 2)
 
-    # The left column is exactly as wide as the inset panel, whose width is a
-    # fixed fraction of the PAGE - so the page width is what falls out of
-    # "the drawing, plus a column the inset fits in".
+    # The left column is a fixed fraction of the PAGE - so the page width is
+    # what falls out of "the drawing, plus a column the thumbnails fit in".
     art_w = ax1 - ax0 + 2 * PAGE_PAD
-    page_w = (art_w + COL_EXTRA) / (1.0 - RL.INSET_W_FRAC)
+    page_w = (art_w + COL_EXTRA) / (1.0 - THUMB_COL_FRAC)
     col_w = page_w - art_w
     x0 = ax0 - PAGE_PAD - col_w
     x1 = x0 + page_w
 
-    rows = fasteners[:4]
-    tmp = RL.Page(x0, 0.0, x1, 1.0)
-    inset_w, inset_h = RL.inset_layout(tmp, 0, len(rows))[:2]
-    cell_w = (col_w - COL_EXTRA) * THUMB_FRAC
+    cell_w = col_w - COL_EXTRA
     cell_h = cell_w / 1.25
     gap = 2.6 * RL.T.BADGE_R
-    left_h = 2 * (cell_h + gap) + inset_h + 3 * gap
+    left_h = 2 * (cell_h + gap) + 2 * gap
     page_h = max((ay1 - ay0) + 2 * PAGE_PAD, left_h)
     y0 = ay0 - PAGE_PAD - (page_h - ((ay1 - ay0) + 2 * PAGE_PAD)) * 0.5
     y1 = y0 + page_h
@@ -524,10 +525,16 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     dx, dy = view.dir_xy((0, 0, 1))
     nrm = math.hypot(dx, dy) or 1.0
     dx, dy = dx / nrm, dy / nrm
-    bx = x0 + (col_w - inset_w) / 2
-    box = (bx, y0 + gap, inset_w, inset_h)
-    if rows:
-        RL.draw_inset(page, box, [], rows, glyph_dir, codes)
+
+    # WHAT STANDS IN THE LEFT COLUMN, worked out here and drawn at the very
+    # bottom of this function: the two thumbnails go on top of everything, but
+    # every placer below is entitled to know about every opaque thing on the
+    # paper, and a footprint known late is a footprint the words and badges
+    # were free to walk into. This used to be the fastener panel's box, and
+    # the thumbnails rode along on it by standing in the same column.
+    tx = x0 + (col_w - cell_w) / 2
+    thumb_boxes = [(tx, y1 - gap - cell_h, cell_w, cell_h),
+                   (tx, y1 - 2 * gap - 2 * cell_h - 1.2 * gap, cell_w, cell_h)]
 
     import layout
 
@@ -544,7 +551,8 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     for pl in batten_lines:
         field.add_lines(pl)
     field.add_lines(insert_lines, weight=0.6, tag="ghost")
-    field.add_box(box, weight=RL.CAP_PANEL)
+    for rect in thumb_boxes:
+        field.add_box(rect, weight=RL.CAP_PANEL)
     word_boxes = _draw_edge_words(page, RL, layout, word_plan, field)
 
     # Dotted, not an arrow: on this page as on every other, a dotted line is a
@@ -554,7 +562,8 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
     # not its own rules - so R5 holds here too: a badge may not land nearer a
     # fastener it does not name than its own.
     occ = layout.Occupancy()
-    occ.add_box(box, weight=RL.CAP_PANEL)
+    for rect in thumb_boxes:
+        occ.add_box(rect, weight=RL.CAP_PANEL)
     for rect in word_boxes:
         occ.add_box(rect, weight=RL.CAP_PANEL)
     placed_marks = []
@@ -581,12 +590,9 @@ def render(G, view, st, uni, placed, out_dir, width, page_box, glyph_dir,
 
     # --- where it lands ----------------------------------------------------
     thumb_view = RL.View(RL.camera_direction(az, elev), centre)
-    tx = x0 + (col_w - cell_w) / 2
-    ty = y1 - gap - cell_h
-    _thumbnail(page, RL, G, thumb_view, (tx, ty, cell_w, cell_h),
+    _thumbnail(page, RL, G, thumb_view, thumb_boxes[0],
                G.panel_bed, G.battens_bed, "SENGESTILLING")
-    ty -= cell_h + 2.2 * gap
-    _thumbnail(page, RL, G, thumb_view, (tx, ty, cell_w, cell_h),
+    _thumbnail(page, RL, G, thumb_view, thumb_boxes[1],
                G.panel_table, G.battens_table, "BORDSTILLING")
 
     RL.check_coverage(st, marks, fasteners, families)

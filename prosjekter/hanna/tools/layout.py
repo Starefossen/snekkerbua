@@ -87,7 +87,7 @@ RATIOS = {
     "W_PRIOR": 0.32,        # 2.2   parts already standing
     "W_NEW": 1.00,          # 7.0   the parts this step is about
     "W_HERO": 0.80,         # 5.6   the cover drawing
-    "W_RULE": 0.38,         # 2.6   inset borders, section outlines
+    "W_RULE": 0.38,         # 2.6   panel borders, section outlines
     "W_LEAD": 0.35,         # 2.4   leader lines
     "W_MARK": 0.75,         # 5.2   fastening-point markers
     "W_HATCH": 0.22,        # 1.5   the 45 deg hatching on a cut face
@@ -104,7 +104,7 @@ RATIOS = {
     # --- marks and margins -------------------------------------------------
     "BADGE_R": 3.60,        # 25.0  the circled letters
     "PAD": 10.00,           # 70    white margin round the subject
-    "INSET_PAD": 2.30,      # 16.0  inside the inset panel's border
+    "INSET_PAD": 2.30,      # 16.0  inside a corner panel's border
     # --- the fill code -----------------------------------------------------
     # NOT HERE. The fill code's period used to be a pen multiple, and that was
     # wrong twice over: a drawn fastener is 15-18 mm wide whatever size the bed
@@ -123,8 +123,6 @@ RATIOS = {
     "RING_R": 2.04,         # 14.0  the head-on ring for a screw with no axis
     "RING_DOT_R": 0.73,     # 5.0   its centre
     "ENTRY_R": 0.87,        # 6.0   the dot on the hole a fastener enters
-    "HATCH_MIN": 1.31,      # 9.0   smallest hatch pitch in a section
-    "SEC_SCREW_MIN": 0.73,  # 5.0   smallest drawn screw diameter in one
     "THUMB_PRIOR_MIN": 0.20,  # 1.4 grey weight floor in a thumbnail
     "THUMB_NEW_MIN": 0.44,  # 3.0   black weight floor in one
 }
@@ -238,8 +236,8 @@ class Occupancy:
     Three kinds of tenant, because they are in the way in three different
     ways. LINE WORK is what the drawing is - a caption may lie over the grey
     ghost of a frame that is already standing, never over the black part the
-    step is about, so the two go in under different tags. A BOX is opaque: the
-    inset panel does not merely crowd what is under it, it hides it. A POINT
+    step is about, so the two go in under different tags. A BOX is opaque: a
+    corner panel does not merely crowd what is under it, it hides it. A POINT
     is a thing that has landed and carries an OWNER, which is the whole reason
     a badge can tell its own screw from the neighbour's.
     """
@@ -355,7 +353,7 @@ class Occupancy:
 # THE PLACER
 # ---------------------------------------------------------------------------
 # One scoring loop for every free position on the page. What varies between an
-# inset panel, a badge and a floated bracket is the list of candidates and the
+# corner panel, a badge and a floated bracket is the list of candidates and the
 # weights - never the loop, and never the tie-break: `min` over
 # (score, index) keeps the drawing byte-identical from run to run.
 FOREIGN_PENALTY = 40.0

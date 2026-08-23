@@ -1,9 +1,14 @@
-"""Kontaktark av manualen - de første sidene i docs/hanna.pdf, side ved side.
+"""Kontaktark av byggeheftet - de første sidene i docs/hanna.pdf, side ved side.
 
 README-en påstår at manualen er kompilert ut av modellen. Påstanden er lettere
 å tro på når man ser sidene: forsiden, innholdet, kuttplanen og de første
 byggestegene i ett bilde, i den rekkefølgen de kommer i heftet. Dette er det
 bildet - et rutenett med sidene i leserekkefølge, radvis.
+
+BYGGEHEFTET og ikke referanseheftet: manualen er to PDF-er, og det er
+byggeheftet den som står ved sagen slår opp. Referanseheftet er oppslag, og et
+kontaktark av oppslag sier ingenting. `--pdf` tar den andre om noen vil se
+den.
 
 Sidene rendres med poppler (`pdftoppm`) og settes sammen med Pillow. Ingenting
 her vet noe om innholdet i manualen: verktøyet ber om N sider, får vite hvor
@@ -15,7 +20,7 @@ samme luft mellom sidene som rundt dem, og en hårfin grå kant per side så to
 hvite ark ved siden av hverandre ikke flyter sammen. Ingen skygger, ingen
 rammer, ingen sidetall - heftet har sine egne.
 
-Trenger en ferdig docs/hanna.pdf (`mise run pdf`). Den bygges ikke her: PDF-en
+Trenger et ferdig docs/hanna.pdf (`mise run pdf`). Det bygges ikke her: PDF-en
 koster en Chrome-runde, og dette verktøyet er en avlesning av den, ikke en ny
 kilde.
 

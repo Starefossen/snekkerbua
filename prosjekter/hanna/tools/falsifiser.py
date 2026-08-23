@@ -358,6 +358,30 @@ def inj_readme_quotes_a_line_the_model_lost(rig):
                          f"{n} festemidler plassert i {joints + 1} ledd"))
 
 
+def inj_readme_swaps_the_two_booklets(rig):
+    """Let a sentence about the build booklet quote the reference's length.
+
+    The two PDFs are paginated separately, and on a machine that has never
+    printed them the page claims are only held to EACH OTHER - so the one way
+    that check can go slack is by holding all of them to ONE number. It does
+    not: there is a group per booklet. This proves it, and it proves it
+    without depending on either PDF existing, because the injection makes the
+    two groups disagree with each other rather than with a measurement.
+    """
+    flat = check_tall._flat(rig.readme)
+    m = re.search(r"alle (\d+) sidene i byggeheftet og alle (\d+) i "
+                  r"referanseheftet", flat)
+    assert m, ("README sier ikke lenger «alle N sidene i byggeheftet og alle "
+               "M i referanseheftet» - injeksjonen har mistet målet sitt og "
+               "må skrives om")
+    bygg, ref = m.group(1), m.group(2)
+    assert bygg != ref, ("de to heftene er blitt like lange, og da kan ikke "
+                         "denne injeksjonen skille gruppene fra hverandre - "
+                         "bytt ut den ene setningen den perturberer")
+    run_readme(rig, _sub(rig.readme, f"Byggeheftet på {bygg} sider",
+                         f"Byggeheftet på {ref} sider"))
+
+
 def inj_prose_keeps_an_old_number(rig):
     """Put a superseded stress back in the load-path appendix."""
     texts = dict(rig.prose)
@@ -523,6 +547,8 @@ INJECTIONS = [
      "README-tall", inj_readme_retells_a_count),
     ("README siterer en linje modellen ikke lenger skriver",
      "README-tall", inj_readme_quotes_a_line_the_model_lost),
+    ("README gir byggeheftet referanseheftets sidetall",
+     "README-tall", inj_readme_swaps_the_two_booklets),
     ("håndprosaen beholder en spenning modellen har regnet om",
      "tallsveip", inj_prose_keeps_an_old_number),
     ("håndprosaen finner opp en millimeter",

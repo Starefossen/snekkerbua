@@ -39,7 +39,7 @@ depends = ["build"]
 run = "python tools/render_lineart.py --width 1600"
 
 [tasks.pdf]
-description = "Sett sammen den trykkeklare PDF-en (docs/hanna.pdf) av MONTERING, ASSEMBLY, tabellene og tegningene - med sideforhandsvisninger i docs/preview/"
+description = "Sett sammen de to trykkeklare PDF-ene - byggeheftet (docs/hanna.pdf) og referanseheftet (docs/hanna-referanse.pdf) - av MONTERING, ASSEMBLY, tabellene og tegningene, med sideforhandsvisninger i docs/preview/"
 # Bruker de innsjekkede dokumentene som de er, sa den gar uten build123d.
 # Trenger python-markdown (requirements.txt) og en Chrome/Chromium a printe med.
 run = "python tools/build_pdf.py"
@@ -54,7 +54,7 @@ description = "Tegn repoets sosiale forhåndsvisning - GitHubs og:image (docs/im
 run = "python tools/render_poster.py"
 
 [tasks.manualsider]
-description = "Kontaktark av manualen - de ni første sidene i docs/hanna.pdf side ved side (docs/img/hanna-manual-sider.png, 3x3)"
+description = "Kontaktark av byggeheftet - de ni første sidene i docs/hanna.pdf side ved side (docs/img/hanna-manual-sider.png, 3x3)"
 # Leser den ferdige PDF-en med poppler og setter sidene sammen med Pillow -
 # den bygger den ikke. PDF-en koster en Chrome-runde, og dette er en avlesning
 # av den, ikke en ny kilde: kjør `mise run pdf` først, ellers sier oppgaven fra.

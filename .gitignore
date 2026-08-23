@@ -36,11 +36,13 @@ bed_frame.bin
 # the macOS USD tools, and the manual does not use them.
 prosjekter/hanna/docs/img/skyggelagt/
 
-# The printable manual. `mise run pdf` builds it from the tracked documents in
-# a few seconds, it is several megabytes, and every rebuild replaces the whole
-# binary - so the tooling is tracked and the output is not. The page previews
-# are review material for the same run and are equally disposable.
+# The two printable booklets - the build booklet and its reference companion.
+# `mise run pdf` builds them from the tracked documents in a few seconds, they
+# are several megabytes, and every rebuild replaces the whole binary - so the
+# tooling is tracked and the output is not. The page previews are review
+# material for the same run and are equally disposable.
 prosjekter/hanna/docs/hanna.pdf
+prosjekter/hanna/docs/hanna-referanse.pdf
 prosjekter/hanna/docs/preview/
 prosjekter/hanna/docs/.hanna-print/
 

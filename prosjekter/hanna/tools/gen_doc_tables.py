@@ -3766,14 +3766,17 @@ def emit_montering(G, root, steps, idx):
              "krysskravert, heldekt. Ellers står skruene i ren kontur, for da "
              "skiller lengden dem selv. Hele koden står på [beslagsiden]"
              "(#beslag).\n\n")
+    # Erfaringsrunde 1: the corner box came off the step sheets - it printed
+    # the same fastener rows the table under the picture already prints - so
+    # the sentence that sent the reader to it comes off too. The table is the
+    # one place the counts stand now, and this says so.
     L.append("**Antallet står ikke i bildet.** Festemidlene er tegnet ett for "
              "ett, der de går — bare to som havner nøyaktig oppå hverandre på "
-             "papiret er tegnet én gang. Hvor mange det er i alt står i ruta i "
-             "hjørnet og i tabellen under bildet. **Ruta i hjørnet** viser "
-             "leddet i snitt, med "
-             "delene i riktig innbyrdes størrelse, skravur på snittflatene og "
-             "festemidlene i full lengde — hodet på skrusiden, spissen inne i "
-             "mottakerdelen.\n\n")
+             "papiret er tegnet én gang. Hvor mange det er i alt står i "
+             "tabellen under bildet, og bare der. Hvilken vei hver enkelt "
+             "drives, og hva som forbores, står i "
+             "[beslaglista](generated/beslagliste.md) og "
+             "[skrueretningene](generated/skrueretninger.md).\n\n")
     L.append("| Slik | Ikke slik | |\n|:---:|:---:|---|\n")
     for do, dont, line in prep_rows(steps):
         yes = (_img("img/ikon/" + pikto[do], 72, do) + " "
