@@ -3711,10 +3711,14 @@ def info_panel(page, box, G):
     bounds, and they pull opposite ways off the same two fixed heights - the
     slat top the mattress lies on, and the guard above it:
 
-        too THIN  and the gap under the lower guard band opens past the
-                  EN 747 entrapment limit. The arrow is UNDER the mattress.
-        too THICK and the barrier standing above the sleeper falls under the
-                  EN 747 minimum. The arrow is ABOVE it.
+        too THIN  and the gap under the lower guard band opens up into the
+                  wedge band, where part of a limb goes in and does not come
+                  out. The arrow is UNDER the mattress.
+        too THICK and the mattress top passes the board's own underside - the
+                  board stops capping the mattress edge and is buried in it.
+                  X18: on the BUILT bed that is the bound that bites, and the
+                  barrier bound above it (which the arrow still draws) is a
+                  long way from being reached.
 
     So the panel draws the mattress at its modelled thickness with a
     constraint arrow on each side, and prints the range rather than a number.
@@ -3765,7 +3769,7 @@ def info_panel(page, box, G):
     gap = G.GUARD_BAND_Z0[0] - G.MATTRESS_Z1
     barrier = G.GUARD_TOP - G.MATTRESS_Z1
     between(sx + sw * 0.51, G.MATTRESS_Z1, G.GUARD_BAND_Z0[0],
-            f"{int(round(gap))}", f"maks {G.MAX_GUARD_OPENING}")
+            f"{int(round(gap))}", f"maks {G.MAX_GUARD_INBOARD_CAPPED} lukket")
     between(sx + sw * 0.78, G.MATTRESS_Z1, G.GUARD_TOP,
             f"{int(round(barrier))}", f"min {G.MIN_GUARD_OVER_MATTRESS}")
 

@@ -435,7 +435,7 @@ PAGE_CLAIMS = [
 # Compared with runs of whitespace collapsed, because the model's own line is
 # laid out in columns and the README quotes it as a sentence.
 README_QUOTES = [
-    "TOTAL 85 pcs 54.65 m in 5 timber profiles + 1 sheet",
+    "TOTAL 85 pcs 55.07 m in 5 timber profiles + 1 sheet",
     "203 festemidler plassert i 26 ledd",
     "194 festemidler modellert som kropper",
 ]

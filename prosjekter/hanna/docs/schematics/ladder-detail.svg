@@ -245,8 +245,9 @@
   <text x="1420" y="1748" class="lbl" text-anchor="start">SOM BYGGET: FIRE TRINN, IKKE FEM</text>
   <text x="1420" y="1778" class="sml" text-anchor="start">Trinnet på 489 ble tegnet og aldri kappet, så det nedre løpet er ETT steg på</text>
   <text x="1420" y="1808" class="sml" text-anchor="start">385 mm mot grensen 281 og mot EN 131s bånd 250–300. Over setet er stigen</text>
-  <text x="1420" y="1838" class="sml" text-anchor="start">uendret: 280 + 280 + 281. Dommen, begge stillinger målt, og anbefalingen om</text>
-  <text x="1420" y="1868" class="sml" text-anchor="start">å kappe det femte trinnet står i ASSEMBLY vedlegg B, avvik 5.</text>
+  <text x="1420" y="1838" class="sml" text-anchor="start">uendret: 280 + 280 + 281. AKSEPTERT (aug. 2026): barna går over BENKEKANTEN —</text>
+  <text x="1420" y="1868" class="sml" text-anchor="start">297 → benkesetet 420 → 682 — og største virkelige steg er da 262 mm. Dommen,</text>
+  <text x="1420" y="1898" class="sml" text-anchor="start">begge stillinger målt, og det femte trinnet som opsjon: ASSEMBLY vedlegg B, avvik 5.</text>
 
   <polyline points="760,500 1408,472" class="ldr" marker-start="url(#aE)"/>
   <text x="1420" y="480" class="lbl" text-anchor="start">Øvre sidevange 48×98 + køyespiler 23×98 – ligger BAK stigen</text>

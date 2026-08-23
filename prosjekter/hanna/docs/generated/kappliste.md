@@ -16,7 +16,7 @@ Mål rommet før du kapper romdelene: se [byggesteg](byggesteg.md#før-steg-0--m
 | Løs plate | 18 mm plate, 574 bred | **798** | 1 | 708..1282 | -48..750 | 297..315 |
 | Benkespile | 23×98 | **800** | 10 | 98..1892 (fordelt) | -48..752 | 297..320 |
 | Køyespile | 23×98 | **800** | 14 | 20..1970 (fordelt) | -48..752 | 1500..1523 |
-| Rekkverksavstiver | 23×98 | **128** | 8 | 157,4..1832,6 (fordelt) | 752..775 | 1841..1969 |
+| Rekkverksavstiver | 23×98 | **180** | 8 | 157,4..1832,6 (fordelt) | 752..775 | 1721..1901 |
 | Benkespileledd | 36×48 | **547** | 2 | 98..1892 (fordelt) | 704..740 | 249..297 |
 | Stigekloss | 36×48 | **36** | 8 | 835..1155 (fordelt) | 752..788 | 201..1194 (fordelt) |
 | Endebjelke | 36×98 | **836** | 2 | 98..1892 (fordelt) | -48..788 | 1304..1402 |
@@ -41,7 +41,7 @@ Mål rommet før du kapper romdelene: se [byggesteg](byggesteg.md#før-steg-0--m
 | Endelist, fremre | 36×48 | **98** | 2 | **+10** i veggenden — finkappes | 0..1990 (fordelt) | 716..752 | 249..297 |
 | Hjørnestolpe, front | 36×98 | **2037** | 2 | **+20** — trimmes i bunn · siden mot veggen strekes opp ved bul | 0..1990 (fordelt) | 752..788 | 0..2037 |
 | Hjørnestolpe, bak (veggside) | 36×98 | **1402** | 2 | **+20** — trimmes i bunn · siden mot veggen strekes opp ved bul | 0..1990 (fordelt) | -48..-12 | 0..1402 |
-| Rekkverksbord, front | 36×98 | **832** | 4 | **+10** i veggenden — finkappes | 3..1987 (fordelt) | 716..752 | 1773..2037 (fordelt) |
+| Rekkverksbord, front | 36×98 | **832** | 4 | **+10** i veggenden — finkappes | 3..1987 (fordelt) | 716..752 | 1653..1969 (fordelt) |
 | Stubbefot | 48×68 | **229** | 4 | **+20** — trimmes i bunn | 577..1413 (fordelt) | -48..788 (fordelt) | 0..229 |
 | Sidevange, øvre | 48×98 | **1984** | 2 | **+10** i hver ende — finkappes | 3..1987 | -48..752 (fordelt) | 1402..1500 |
 

@@ -449,10 +449,13 @@ er med vilje platens to stillinger — «trinnene er laget for den opprinnelige
 høyden av benk og bord» — og de to øverste er den samme utledningen X2 skrev.
 Trinnet på 489 ble tegnet og aldri kappet, og uten det er steget fra trinn 1 opp
 på støttetrinnet **385 mm**. Grensen i denne fila er 281 og er ikke rørt; det
-bygde steget er 104 mm for langt, og hele dommen — begge stillinger målt, EN
-747-vurderingen og anbefalingen om å kappe det femte trinnet — står i **vedlegg
-B, avvik 5**. Alt som følger i dette avsnittet er utledningen slik den var
-tegnet, og den er beholdt fordi det er den anbefalingen peker tilbake på.
+bygde steget er 104 mm for langt. **Men veien barna faktisk går, er ikke den:**
+de setter foten på **benkekanten** underveis — 297 → benkesetet 420 → 682 — og
+da er største virkelige steg **262 mm**, innenfor grensen. Avviket er derfor
+**akseptert**, ikke «bør rettes», og hele dommen — begge stillinger målt, EN
+747-vurderingen og det femte trinnet som **opsjon** — står i **vedlegg B,
+avvik 5**. Alt som følger i dette avsnittet er utledningen slik den var tegnet,
+og den er beholdt fordi det er den opsjonen peker tilbake på.
 
 **Stigen er to løp, og X16 flyttet skillet mellom dem opp i et trinn.**
 Trinnoverkantene ble tegnet på 297, 489, 682, 962 og 1242, og stigningskjeden fra
@@ -622,27 +625,42 @@ Skruene drives fra sengesiden. Bordene stopper i flukt med stigevangenes
 innside, slik at klatreåpningen fortsetter rett opp forbi rekkverket. Man
 klatrer **gjennom**, ikke over.
 
-**X18 flyttet begge bånd, og det øverste er nå i flukt med stolpetoppen.**
-Nedre bord ligger på 1773–1871 og øvre på 1939–2037. Det som følger av det:
+**X18 flyttet begge bånd, og de er målt fra SPILENE.** Byggherrens to mål er
+130 mm fra spiletoppen opp til det nederste bordets underkant, og 120 mm fra
+det bordets overkant opp til det øverste. Begge stemmer samtidig: nedre bord
+ligger på **1653–1751** og øvre på **1871–1969**, med 68 mm bar stolpe over.
+Det som følger av det:
 
-* åpningen over det øverste bordet er **lukket** — vedlegg B, avvik 0, er
-  strøket som avvik og står igjen som historikk;
-* barrieren står 394 mm over madrassen mot EN 747s krav på 160;
-* **åpningen under det nederste bordet er 130 mm mot grensen 75.** Det er
-  sengens ene ulovlige mål, og det står i vedlegg B, avvik 6, med to
-  regnestykker for hvordan det lukkes.
+* **åpningen under det nederste bordet er 10 mm.** Bordet ligger like over
+  madrassen og dekker forkanten dens — det er en *lukket* åpning, ikke et
+  klemvindu, og vedlegg B, avvik 6, er lukket med den. (Den første runden av
+  X18 leste de 130 fra madrasstoppen i stedet for fra spilene og fikk 130 mm
+  åpning ut av det. Det var ikke byggherrens tommestokk, det var
+  koordinatorens datum.)
+* **båndet mellom bordene er 120 mm, og 120 er over grensen 75 alene.** Det er
+  avstiverraden som gjør det lovlig: fire avstivere per felt deler de 689
+  millimeterne i luker på **59,4 mm**. Raden er ikke pynt, og den er ikke bare
+  et opphengspunkt for det øverste bordet — den er selve klemdommen for det
+  båndet.
+* åpningen over det øverste bordet er **68 mm** mot grensen 75. Det er den
+  samme åpningen vedlegg B, avvik 0, ble skrevet om da den var 58, og
+  argumentet der dekker den fortsatt: ingen annen del i sengen står i det
+  høydebåndet, så åpningen er ikke engang delvis omsluttet.
+* barrieren står **326 mm** over madrassen mot EN 747s krav på 160.
 
 **Og det er bare seks omlegg igjen, ikke åtte.** Stigevangene er kappet ved
-1871, altså i flukt med det nederste bordets overkant, så det **øverste**
-bordet har ingen vange å skrus i ved den indre enden. Det bæres av
-avstiverraden, og det er vedlegg B, avvik 7.
+1871, altså i flukt med det **øverste** bordets underkant, så det øverste
+bordet har ingen vange å skrus i ved den indre enden — vangen slutter nøyaktig
+der bordet begynner. Det bæres av avstiverraden, og det er vedlegg B, avvik 7.
 
-**J21 — avstiverne.** Fire per felt av bunnspilevirket, 23×98 × 128 mm, lagt på
+**J21 — avstiverne.** Fire per felt av bunnspilevirket, 23×98 × 180 mm, lagt på
 tvers over de to bordene i sporet mellom bordet og stolpeplanet, med 30 mm
 omlegg på hvert bord. De 30 millimeterne er ikke valgt: en 5 mm skrue skal stå
 3d fra avstiverens egen kappende og 3d fra bordets kant, altså 6d = 30 mm, og
-128 = 68 + 30 + 30. Antallet er heller ikke valgt: tre avstivere i et 689 mm
+180 = 120 + 30 + 30. Antallet er heller ikke valgt: tre avstivere i et 689 mm
 felt gir 98,75 mm luker og faller på grensen, fire gir **59,4 mm** og holder.
+Antallet settes av feltet og grensen, ikke av båndhøyden, så det er de samme
+fire som før — det er bare lengden som fulgte båndet.
 To 5×40 i hvert omlegg, drevet fra rommet.
 
 **Dette er det ene stedet i sengen der stål synes på forsiden**, og det er
@@ -1267,19 +1285,21 @@ sengen som er bygd etter madrassen. Rommet er noen millimeter smalere enn
 200 cm, så madrassen presses de siste millimeterne inn mellom veggene. Det er
 meningen: da ligger den i ro.
 
-**Tykkelsen er 120 mm, og vinduet er smalt: 110–125.** Dette er ikke en
-smakssak, og det er den ene grensen i sengen som er lett å bryte uten å vite
-det. Spalten mellom madrassens overside og undersiden av det nederste
-rekkverksbordet skal ligge i EN 747-båndet **60–75 mm**:
+**Tykkelsen er 120 mm, og vinduet er 105–130.** Dette er ikke en smakssak, og
+det er den ene grensen i sengen som er lett å bryte uten å vite det. Spalten
+mellom madrassens overside og undersiden av det nederste rekkverksbordet skal
+enten være **lukket** — under 25 mm — eller ligge i EN 747-båndet **60–75 mm**.
+På den bygde sengen ligger bordet lavt, så det er den lukkede grenen som
+gjelder:
 
-* **For tynn** madrass åpner spalten forbi 75 mm, og et barn kan gli ut.
-* **For tykk** madrass lukker den ned under 60 mm — inn i det gapet et lem
-  kiler seg fast i i stedet for å gå igjennom.
+* **For tynn** madrass åpner spalten seg opp i klemvinduet 25–60 mm — det gapet
+  et lem kiler seg fast i i stedet for å gå igjennom.
+* **For tykk** madrass står over bordets underkant, og bordet dekker ikke
+  lenger madrasskanten — det ligger begravet i den.
 
-**En vanlig 150 mm madrass er ulovlig i denne sengen.** Den legger spalten på
-35 mm. Kjøp 12 cm; da ligger den på 65, midt i båndet, med margin begge veier.
-Hele resonnementet og det tekniske unntaket for svært tykke madrasser står i
-avsnitt 7.3 og vedlegg B.
+**En vanlig 150 mm madrass er ulovlig i denne sengen.** Kjøp 12 cm; da ligger
+bordet 10 mm over madrassen og dekker forkanten. Hele resonnementet og den
+andre, tynne grenen står i avsnitt 7.3 og vedlegg B.
 
 Tallene regnes ut av modellen av de to faste høydene — spilebunnen og
 rekkverket — og står i [nøkkelmålene](generated/nokkelmal.md#madrass-og-puter).
@@ -1458,7 +1478,7 @@ sklir de fra hverandre den første natta noen sover der.
   tredel av alle trebitene i sengen — 14 køyespiler og 10 benkespiler à 800 mm
   pluss de to endespilene à 764 — så valget tar 20,7 løpemeter ned fra det dyre bordet
   til det billige, sparer rundt 11 kg og gjør spilebunnen 13 mm lavere. **Og
-  X18 la åtte biter til på det samme bordet:** rekkverkets avstivere er 128 mm
+  X18 la åtte biter til på det samme bordet:** rekkverkets avstivere er 180 mm
   av det samme virket, kappet av restene. 23×98
   justert er en hyllevare. Rekkverk, stolper og vanger står igjen på 36×98 og
   48×98 — de er belastet på høykant, og der er tykkelsen verdt å betale for.
@@ -1510,38 +1530,41 @@ tatt.
 **7.2 Rekkverket foran har en klatreåpning.** Man klatrer gjennom, ikke over
 toppbordet. Åpningen er like bred som stigen og ligger rett over den.
 
-**7.3 Madrasstykkelsen skal være 110–125 mm, og 120 er anbefalt — MEN LES
-7.3b FØRST HVIS DU LESER DETTE VED DEN BYGDE SENGEN.** Dette er den viktigste
-tallgrensen i hele sengen, og den er ikke et tak — den er et **bånd**. EN 747-1
-krever at åpningen mellom madrassens overflate og undersiden av det nederste
-rekkverksbordet enten er **≤ 5 mm** eller ligger i **60–75 mm**. Alt imellom er
-nettopp det gapet et lem kiler seg fast i i stedet for å gå igjennom.
+**7.3 Madrasstykkelsen skal være 105–130 mm, og 120 er anbefalt.** Dette er den
+viktigste tallgrensen i hele sengen, og den er ikke et tak — den er et **bånd**.
+Åpningen mellom madrassens overflate og undersiden av det nederste
+rekkverksbordet skal enten være **lukket**, altså under 25 mm, der ingenting
+kan komme inn — eller ligge i **60–75 mm**, der hele lemmet går fritt
+igjennom. Alt imellom, **25–60 mm**, er nettopp det gapet et lem kiler seg fast
+i i stedet for å gå igjennom.
 
-Madrassen er det eneste som styrer den åpningen. Tabellen under gjelder
-rekkverket **slik det er tegnet**, med nederste bord 65 mm over en 120 mm
-madrass:
+Madrassen er det eneste som styrer den åpningen. På den **bygde** sengen står
+nederste bords underkant 130 mm over spilene, og da ser tabellen slik ut:
 
 | Madrass | Åpning | Dom |
 |---:|---:|---|
-| 110 mm | 75 mm | lovlig, men **nøyaktig på grensen** — ingen margin |
-| **120 mm** | **65 mm** | ✓ **anbefalt, midt i båndet** |
-| 125 mm | 60 mm | lovlig, på den andre grensen |
-| 126–175 mm | 59–10 mm | ✗ **FORBUDT** — klemvinduet |
-| 180 mm og over | ≤ 5 mm | teknisk lovlig, se vedlegg B |
+| 100 mm og under | 30 mm og mer | ✗ **FORBUDT** — klemvinduet |
+| 105 mm | 25 mm | lovlig, **nøyaktig på grensen** — ingen margin |
+| **120 mm** | **10 mm** | ✓ **anbefalt** — bordet ligger like over madrassen og dekker forkanten |
+| 130 mm | 0 mm | lovlig, madrassen rekker akkurat opp i bordet |
+| 140 mm og over | — | ✗ **FORBUDT** — madrassen står inne i selve rekkverksbordet, som da ikke dekker kanten lenger, det ligger begravet i den |
 
-**Kjøp 12 cm.** En helt vanlig 15 cm madrass er *ulovlig* i denne sengen — den
-legger åpningen på 35 mm, midt i klemvinduet. Det er ikke opplagt, og det er
-grunnen til at maksmålet skal merkes permanent på sengen (steg 11).
+**Kjøp 12 cm.** En helt vanlig 15 cm madrass er *ulovlig* i denne sengen. Det er
+ikke opplagt, og det er grunnen til at maksmålet skal merkes permanent på
+sengen (steg 11) — linja 1653 mm over gulvet, som er nederste bords underkant
+og altså en strek du kan se.
 
-**7.3b PÅ SENGEN SOM STÅR ER DENNE ÅPNINGEN 130 mm, OG DEN ER FOR STOR.**
-Rekkverksbordene ble satt høyere enn tegnet (X18). Nederste bords underkant
-står 130 mm over madrasstoppen der tegningen har 65, grensen er 75, og det står
-ingen avstivere i det båndet. Lest gjennom tabellen over betyr det at det bygde
-rekkverket krever en madrass på **175–190 mm** — og madrassen i sengen er 120.
-**Dette er sengens ene mål som ikke holder**, og det skal ikke løses ved å
-kjøpe en tykkere madrass: hele vedlegg B, avvik 6, med de to måtene å lukke det
-på og hva hver av dem koster. Den anbefalte er å ta det nederste bordet 65 mm
-ned, dit det var tegnet; da gjelder tabellen over igjen som den står.
+**7.3b HVORFOR TABELLEN SER ANNERLEDES UT ENN PÅ TEGNINGEN.** Tegningen hadde
+nederste bord 185 mm over spilene, altså 65 mm over en 120 mm madrass, og da
+var vinduet 110–125 mm og åpningen lå i 60–75-båndet: *luft* under bordet.
+Byggherren satte bordet lavere, og da bytter regelen gren — åpningen er
+**lukket** i stedet for klar. Begge er lovlige svar på det samme kravet, og den
+bygde er den strammere av dem: 10 mm der tegningen hadde 65.
+
+*(En tidligere runde leste byggherrens 130 mm fra madrasstoppen i stedet for
+fra spilene, fikk 130 mm åpning ut av det og skrev det opp som sengens ene
+ulovlige mål — vedlegg B, avvik 6, med krav om en mye tykkere madrass [var 175–190 mm]. Det var
+en feillesning av datumet, ikke av tommestokken. Avviket er lukket.)*
 
 **7.4 Ikke sett hele vekten på én bar spile.** Å gå på bar spilebunn er greit —
 en fotsåle rekker alltid over minst to spiler, og det er den lasten spilen er
@@ -1724,10 +1747,11 @@ er øverst i `generate_loftbed.py`.
 hodets overside til køyespilenes underside.
 
 **8.4 Over den som ligger i køya står ingenting.** Køya er åpen oppover — det
-er en assert. Rekkverket står **151 mm** over kroppens høyeste punkt og **216
-mm** over ansiktet, og barrieren er 394 mm over madrassen (7. avsnitt) — alle
-tre tallene løftet av X18, som satte det øverste bordet i flukt med
-stolpetoppen.
+er en assert. Rekkverket står **83 mm** over kroppens høyeste punkt og **148
+mm** over ansiktet, og barrieren er 326 mm over madrassen (7. avsnitt) — alle
+tre tallene satt av X18, som la det øverste bordet 120 mm over det nederste og
+ikke i flukt med stolpetoppen. Rekkverket står altså lavere over den som ligger
+der enn tegningen hadde det, og fortsatt godt over EN 747s 160 mm.
 
 **8.5 Plassen å vokse i.** Et barn på 1200 mm legger beslag på 1402 av de 1990
 millimeterne madrassen er lang. **588 mm igjen bak føttene.**
@@ -1927,8 +1951,8 @@ utkraging foran den, og da finnes momentet ikke.
 | Bordbærelekt → stolpe (X18) | Skruskjær, 2 × 6 mm skråskruer per ende — samme ledd som J8-B | 4,0 kN | 0,13 kN | 0,03 | ✓ Beslaget som bar enden er ute; de to lommeskruene tar reaksjonen i skjær |
 | Rekkverksbord 36×98 | Bøyning om svak akse, vannrett last, innspent i begge ender | ≈ 760 mm | 0,5 kN | **0,10** | ✓ σ ≈ 2,2 MPa mot 21,6 |
 | Rekkverksbord → stolpe | Skruskjær, 2 × 5 mm per omlegg | 3,0 kN | 0,25 kN | 0,08 | ✓ |
-| Øvre rekkverksbords indre ende (X18) | Ingen vange å skru i — stigevangen er kappet 68 mm under båndet. Enden henger i avstiverraden, som binder de to bordene til én fagverksbjelke | — | — | — | ⚠ Se vedlegg B, avvik 7 |
-| Rekkverksavstiver → bord (J21, X18) | Skruskjær, 2 × 5 mm per omlegg, 4 omlegg per bordpar | 3,0 kN | — | — | ✓ Raden er lastbanen for det øvre bordets indre ende |
+| Øvre rekkverksbords indre ende (X18) | Ingen vange å skru i — stigevangen er kappet nøyaktig i bordets underkant, så omlegget er 0 og ikke bare kort. Enden henger i avstiverraden, som binder de to bordene til én fagverksbjelke | — | — | — | ⚠ Se vedlegg B, avvik 7 |
+| Rekkverksavstiver → bord (J21, X18) | Skruskjær, 2 × 5 mm per omlegg, 4 omlegg per bordpar | 3,0 kN | — | — | ✓ Raden er lastbanen for det øvre bordets indre ende — **og klemdommen for de 120 mm mellom bordene**, se vedlegg B, avvik 6 |
 
 ### A.5 Global stabilitet
 
@@ -1994,9 +2018,9 @@ fra NS-EN 338. Kravene i avsnitt 7 er fra EN 747:
 
 **Et ærlig forbehold om utgaven.** Den fritt tilgjengelige samplen av
 EN 747-1:2024 stopper før kravkapitlet, så de eksakte millimeterne i
-2024-utgaven er **ikke** verifisert her. Madrassvinduet 110–125 mm er valgt
-fordi det er lovlig under begge utgavene vi *kan* lese, og fordi det er den
-strengeste av de to lesningene. Skulle 2024-teksten vise seg å være mildere,
+2024-utgaven er **ikke** verifisert her. Madrassvinduet 105–130 mm er utledet
+av det bygde rekkverkets egen høyde over spilene og er lovlig under begge
+utgavene vi *kan* lese. Skulle 2024-teksten vise seg å være mildere,
 er sengen fortsatt riktig bygget; er den strengere, er dette stedet å se etter.
 
 **Kilelekta under platehjørnet er den ene delen i sengen der skjær, ikke bøyning, er
@@ -2025,33 +2049,39 @@ monteres.
 Her står de bevisste valgene som ikke er det lærebokrene, med begrunnelsen,
 slik at den som bygger vet hva han går med på.
 
-**Avvik 0 — de 58 mm over rekkverket er ikke en åpning. LUKKET AV X18.**
-*Beholdt i sin helhet, fordi resonnementet er det som gjør at raden kunne
-lukkes uten at noen ble redd.* Slik det sto: de fire loddrette delene i fronten
-gikk til 2037 og det øverste rekkverksbordet sluttet på 1979, og mellom dem sto
-det 58 mm som ligger i klemvinduet. Det var likevel ikke en åpning i
-standardens forstand, og påstanden var målt og ikke antatt: det fantes ingen
-del i hele sengen i det høydebåndet utenom de fire stolpeendene selv. En åpning
-som kan klemme, må være omsluttet — EN 747-1:2024 skiller uttrykkelig mellom
-«completely bound» og «partially bound» åpninger (def. 3.8/3.9) — og dette var
-ikke engang delvis omsluttet oppover.
+**Avvik 0 — de 68 mm over rekkverket er ikke en åpning.**
+De fire loddrette delene i fronten går til 2037 og det øverste
+rekkverksbordet slutter på 1969, så mellom dem står det **68 mm**. Grensen for
+en åpning over liggeflaten er 75, så tallet holder på egen hånd — men det er
+ikke engang en åpning i standardens forstand, og påstanden er målt og ikke
+antatt: det finnes ingen del i hele sengen i det høydebåndet utenom de fire
+stolpeendene selv. En åpning som kan klemme, må være omsluttet — EN 747-1:2024
+skiller uttrykkelig mellom «completely bound» og «partially bound» åpninger
+(def. 3.8/3.9) — og dette er ikke engang delvis omsluttet oppover.
 
-**Som bygget står det ingenting der.** Byggherren la det øverste
-rekkverksbordet med overkanten i flukt med stolpetoppen, så bordet slutter på
-2037 og stolpen gjør det samme. Åpningen er 0 mm, barrieren står 394 mm over
-madrassen mot EN 747s krav på 160, og raden trenger ingen unnskyldning lenger.
-Det som ble igjen av avviket, er kantbrytingssaken: nå er det bordets egen
-overkant og stolpeenden som møtes i én kant, og den kanten skal brytes som alle
-andre.
+*Raden har vært skrevet tre ganger og handler om det samme stedet hver gang:*
+tegningen hadde 58 mm der, X18s første runde satte det øverste bordet i flukt
+med stolpetoppen og lukket åpningen til 0, og da byggherrens eget mål — 120 mm
+over det nederste bordet — ble lest riktig, kom den tilbake på 68. Argumentet
+over gjelder alle tre tallene, fordi det ikke handler om størrelsen.
 
-**Avvik 4b — den tykke madrassen er teknisk lovlig, og frarådes likevel.**
-Åpningen mellom madrass og nederste rekkverksbord er lovlig både i 60–75-båndet
-og når den er lukket til ≤ 5 mm. Det siste inntreffer ved madrasser fra 180 mm
-og oppover, der madrassen rekker opp til bordets underkant. Det er en gyldig
-lesning av kravet, men den er ikke tegnet, ikke målt på en bygget seng, og den
-flytter liggeflaten 60 mm opp med det rekkverkshøyden det koster. **Bygg etter
-110–125 mm.** Det øvre vinduet står her fordi det er sant, ikke fordi det er en
-anbefaling, og det er med vilje holdt ute av billedmanualen.
+Det som følger med avviket er kantbrytingssaken: stolpeenden står fritt over
+bordet, og den kanten skal brytes som alle andre.
+
+**Avvik 4b — den TYNNE madrassen er teknisk lovlig, og frarådes likevel.**
+Åpningen mellom madrass og nederste rekkverksbord er lovlig både når den er
+**lukket** — under 25 mm — og når den ligger i **60–75**-båndet, der hele
+lemmet går fritt igjennom. På den bygde sengen er den lukkede grenen vinduet
+105–130 mm, og den andre grenen tilsvarer en madrass på **55–70 mm**. Det er en
+gyldig lesning av kravet, men 55–70 mm er ikke en madrass noen selger til en
+loftseng, og den ville lagt liggeflaten 50–65 mm lavere med det
+rekkverkshøyden gir tilbake. **Bygg etter 105–130 mm.** Den andre grenen står
+her fordi den er sann, ikke fordi den er en anbefaling, og den er med vilje
+holdt ute av billedmanualen.
+
+*(På tegningen var det motsatt vei: der var 110–125 mm den ene grenen og «180
+mm og oppover» den andre. Bordet flyttet seg, og med det byttet grenene
+plass.)*
 
 **Avvik 1 — veggen erstatter det bakre rekkverket.**
 Sengen har rekkverk bare på framsiden. På baksiden er veggen sperren. Madrassen
@@ -2169,7 +2199,7 @@ og det er heller ikke skjult: modellen måler de 10 millimeterne og asserterer
 dem.
 
 **Avvik 5 — stigen har fire trinn der regelen sier fem, og ett klatresteg er
-385 mm.**
+385 mm. AKSEPTERT aug. 2026.**
 Byggherren kappet fire trinn, ikke fem: overkantene står på 297, 682, 962 og
 1242 mm. De to nederste er med vilje platens to stillinger — «trinnene er laget
 for den opprinnelige høyden av benk og bord» — og de to øverste er den samme
@@ -2178,8 +2208,7 @@ steget fra trinn 1 til støttetrinnet **385 mm** mot husets grense på 281 og mo
 EN 131s bånd 250–300 for jevn trinnavstand. Grensen er ikke hevet. De tre andre
 stegene (280, 280 og 281) holder den som før.
 
-*Målt i rommet, ikke på tegningen, og det er verre i én stilling og bedre i
-ingen:*
+*Målt i rommet, ikke på tegningen, og det er verre i én stilling:*
 
 * **I sengestilling** ligger platen på 297–315 tvers over hele stigeåpningen,
   så foten starter på platens egen overside og steget opp til støttetrinnet er
@@ -2189,72 +2218,103 @@ ingen:*
   trinnet på 962 — **642 mm** over benkeflaten du står på. Stigen klatres ikke
   i bordstilling; det første trinnet nås fra benken.
 
-*EN 747-vurderingen, sagt rett ut:* standarden krever at en stige til en
-overkøye har jevn og gripbar trinndeling, og 385 mm er verken jevnt mot
-280-stegene over eller innenfor det båndet noen bruksstandard opererer i. Dette
-er den ene raden i hele dette vedlegget der modellen ikke sier «akseptert» —
-den sier **bør rettes**.
+**AKSEPTERT (aug. 2026) — og det er byggherrens observasjon som avgjør det.**
+Barna klatrer ikke stigen slik en tegning leser den. De setter foten på
+**benkekanten** på veien opp, «uten problemer», og den veien er
 
-*Anbefaling, og modellen kan forsvare hver millimeter av den:* **kapp det femte
+| Fra | Til | Steg |
+|---|---|---:|
+| trinn 1, 297 | benkesetet (pute), 420 | **123 mm** |
+| benkesetet, 420 | støttetrinnet, 682 | **262 mm** |
+
+— altså et største virkelig steg på **262 mm**, innenfor både husets 281 og EN
+131s 250–300. Benkeflaten ligger 142 mm ved siden av stigen (D13s gangpassasje)
+og er 663 mm lang, så det er et sidesteg opp på en avsats, ikke et strekk.
+
+*Hva aksepten IKKE er:* grensen er ikke hevet, trinnet er ikke tegnet inn, og
+stigens egen geometri er fortsatt 385 mm — modellen måler og skriver det tallet
+hver gang den kjører, og
+[nøkkelmålene](generated/nokkelmal.md#sikkerhetsmål-en-747) har begge radene
+ved siden av hverandre. Det som er akseptert, er at klatreveien i dette rommet,
+med denne benken, ikke går gjennom de 385 millimeterne.
+
+*Opsjon, og modellen kan forsvare hver millimeter av den:* **kapp det femte
 trinnet og sett det på 489 mm.** Samme 48×68 × 320 mm som de fire andre, samme
 to stigeklosser, samme fire skruer, samme boremønster; hullet i vangen ligger
 **1406 mm** fra vangetoppen. Med det på plass er det nedre løpet 192 + 193 mm,
-hele stigen ligger innenfor 281, og ingenting annet i sengen flytter seg.
-Byggherren bestemmer; tallet står her ferdig regnet.
+hele stigen ligger innenfor 281 uten hjelp av benken, og ingenting annet i
+sengen flytter seg. Dette var en **anbefaling** til aug. 2026 og er nå en
+opsjon: byggherren bestemmer, og tallet står her ferdig regnet den dagen
+benken flyttes eller putene byttes.
 
-**Avvik 6 — åpningen mellom madrass og nederste rekkverksbord er 130 mm, og
-grensen er 75.**
-Rekkverksbordene ble satt høyere enn tegnet. Nederste bords underkant står
-**130 mm** over madrasstoppen der tegningen hadde 65, og **det står ingen
-avstivere i det båndet**. EN 747s grense for en åpning over liggeflaten er
-75 mm, så dette er **55 mm for mye**. Lest den andre veien — som er den veien
-en madrass kjøpes — krever det bygde rekkverket en madrass på **175–190 mm**,
-og madrassen i sengen er 120.
+**Avvik 6 — LUKKET. Åpningen mellom madrass og nederste rekkverksbord er
+10 mm, ikke 130.**
+Avviket sto her i én runde og var **koordinatorens feillesning av et datum**,
+ikke en feil på sengen. Byggherren målte 130 mm fra **spiletoppen** opp til
+nederste bords underkant; modellen leste de 130 fra **madrasstoppen**, fikk en
+130 mm åpning der grensen er 75, kunne ikke få byggherrens andre mål (120 mm
+mellom bordene) til å gå opp samtidig, og skrev de 52 millimeterne som ikke
+stemte inn i dette vedlegget sammen med et krav om en mye tykkere
+madrass [var 175–190 mm]. Alt
+det er strøket. En som bygger et rekkverk måler fra dekket han står på, ikke
+fra en madrass som ikke ligger der ennå — og på hans datum går begge tallene
+opp, de 52 millimeterne finnes ikke, og åpningen under bordet er 10 mm.
 
 *Bånd for bånd på den bygde sengen, som modellen regner det:*
 
 | Bånd | Høyde | Avstivere | Smaleste vei | Dom |
 |---|---:|---:|---:|---|
-| Madrasstopp → nedre bord | 130 mm | 0 | 130 mm | **✗ over 75** |
-| Nedre bord → øvre bord | 68 mm | 4 per felt | 59,4 mm | ✓ |
-| Øvre bord → stolpetopp | 0 mm | — | lukket | ✓ |
+| Madrasstopp → nedre bord | 10 mm | 0 | 10 mm | ✓ **lukket** — under 25 mm kommer ingenting inn, og det bordet dekker er madrasskanten |
+| Nedre bord → øvre bord | 120 mm | 4 per felt | 59,4 mm | ✓ **bare på grunn av avstiverne** — 120 alene er over 75 |
+| Øvre bord → stolpetopp | 68 mm | — | 68 mm | ✓ under 75, og ikke omsluttet (avvik 0) |
 
-Barrieren over madrassen er 394 mm mot EN 747s krav på 160, så det er ikke
-høyden på rekkverket som feiler — det er den ene luken under det.
+Barrieren over madrassen er 326 mm mot EN 747s krav på 160.
 
-*To veier lukker den, begge regnet:*
+**Den ene raden å lese to ganger er den midterste.** Avstiverraden ble først
+forstått som opphenget for det øverste bordets indre ende (avvik 7) og som en
+bonus for klemvinduet. Med riktig datum er det omvendt rangert: uten raden er
+båndet mellom bordene 120 mm mot grensen 75, og **da hadde sengen hatt et
+ulovlig mål**. Avstiverne er det som gjør rekkverket lovlig. Tas én av dem ut,
+er det ikke pynt som forsvinner.
 
-* **Ta det nederste bordet 65 mm ned**, til 1708, der det var tegnet. To bord,
-  åtte skruer, én ettermiddag; madrassvinduet er 110–125 mm igjen, og
-  avstiverraden over kan bli stående som den er.
-* **Sett en avstiverrad i det nedre båndet også.** Fire avstivere per felt av
-  det samme bunnspilevirket deler de 689 millimeterne i fem luker på
-  **59,4 mm** hver, og da er den smaleste veien gjennom båndet 59,4 og ikke
-  130. Åtte biter til, 32 skruer til, ingen bord flyttes.
-
-Modellen velger ikke. Den måler, og den nekter å skrive OK. **Anbefalingen er
-den første av de to** — den gir vinduet tilbake til madrassen som ligger der.
+*Madrassvinduet som følger av dette* står i 7.3: **105–130 mm, kjøp 120.** Ikke
+kjøp en tykkere madrass for å «tette» noe — det er ingenting å tette, og over
+130 mm står madrassen inne i selve rekkverksbordet.
 
 **Avvik 7 — det øverste rekkverksbordets indre ende henger i avstiverraden.**
-Stigevangene er kappet ved **1871 mm**, i flukt med det nederste
-rekkverksbordets overkant og 166 mm under hjørnestolpene. Det nederste bordet
-har dermed hele sitt omlegg på vangen som før. Det **øverste** bordet begynner
-først på 1939, altså 68 mm over vangetoppen, og har ingenting å skrus i ved den
-indre enden: J7 har seks omlegg der tegningen hadde åtte.
+Stigevangene er kappet ved **1871 mm**, i flukt med det **øverste**
+rekkverksbordets underkant og 166 mm under hjørnestolpene. Det nederste bordet
+ligger på 1653–1751 og har dermed hele sitt omlegg på vangen som før — 48 × 98
+mm, i full høyde. Det **øverste** bordet begynner på 1871, nøyaktig der vangen
+slutter, og har ingenting å skrus i ved den indre enden: omlegget er ikke kort,
+det er **null**. J7 har seks omlegg der tegningen hadde åtte.
 
-*Det som bærer den enden:* avstiverraden. De fire avstiverne per felt binder de
-to bordene til én fagverksbjelke, og det nederste bordet er festet i vangen. Det
-er en ekte lastbane og den er tegnet, men den er ikke den lastbanen dette huset
-signerte på: et rekkverksbord skal ha eget feste i begge ender.
+*Hvem bærer det øverste bordet, ende for ende:*
+
+* **den ytre enden:** hjørnestolpen, 95 × 98 mm omlegg, to 5×60 — uendret fra
+  tegningen;
+* **den indre enden:** avstiverraden. De fire avstiverne per felt binder de to
+  bordene til én fagverksbjelke, og det nederste bordet er festet i vangen med
+  fullt omlegg. Lasten går fra det øverste bordet, gjennom fire 23×98-biter i
+  skjær, ned i det nederste bordet og derfra inn i stigevangen.
+
+Det er en ekte lastbane, den er tegnet og den er regnet (vedlegg A: 3,0 kN per
+omlegg), men den er ikke den lastbanen dette huset signerte på: et
+rekkverksbord skal ha eget feste i begge ender. Datumrettelsen gjorde dessuten
+avviket litt *renere* og ikke mindre — før sto bordets ende 68 mm over en
+vangetopp og kunne ha fått en kloss under seg uten videre; nå møtes de to
+delene i én linje.
 
 *Tre veier, i stigende pris:*
 
 * **La det stå, med avstiverraden som bærer.** Dagens tilstand. Betingelsen er
   at avstiverne faktisk sitter med to 5×40 i hvert omlegg, i alle fire, og at
-  ingen av dem tas ut senere «fordi de bare er pynt». De er ikke pynt.
-* **Sett en kloss på vangetoppen** — 36×48, 68 mm høy, skrudd på vangens
-  innside — så det øverste bordet får 48 × 98 mm omlegg å skrus i, akkurat som
-  det nederste. To klosser, fire skruer, ingen del flyttes.
+  ingen av dem tas ut senere «fordi de bare er pynt». De er ikke pynt — de er
+  både denne lastbanen og klemdommen for båndet mellom bordene.
+* **Sett en kloss på vangetoppen** — 36×48, 98 mm høy, skrudd på vangens
+  innside slik at den fortsetter vangen opp langs hele det øverste bordet — så
+  bordet får 48 × 98 mm omlegg å skrus i, akkurat som det nederste. To klosser,
+  fire skruer, ingen del flyttes.
 * **Skjøt vangen opp til 2037** og skru bordet i den. Det er det tegningen
   hadde, og det er den dyreste av de tre nå som stigen står.
 
@@ -2290,6 +2350,13 @@ bordbærelekta på Z 614–682 og bordplaten på 700, uendret siden X9; og de to
 figurene i `bruk-bordstilling.svg`, som sitter alminnelig med knærne under
 platen. Har du skrevet ut et ark før denne runden, er trinnhøydene og klossene
 feil på det — se hulltabellen i J4.
+
+**Og videre til X18 der arkene rører den bygde sengen.** `ladder-detail.svg`
+har stigen med fire trinn, vangetoppen på 1871 og aksepten av avvik 5 skrevet
+på arket; `byggerekkefolge.svg` har steg 9 med rekkverksbåndene der de faktisk
+står — **Z 1653–1751 og 1871–1969** — og de åtte avstiverne 23×98 × 180 som
+hører med. Står de tegnede båndene der i stedet (var 1708–1806 / 1881–1979),
+er arket ditt eldre enn målingen.
 
 **Tre av arkene regenereres av modellen: `setedetalj.svg`, `end-elevation.svg`
 og `spikerslag.svg`.** De fire andre er håndtegnet. De er gått gjennom mot

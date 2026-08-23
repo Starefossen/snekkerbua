@@ -446,9 +446,24 @@ def draw_depth(sh, M):
     xg = why(M.y("Guard Rail Front Left_1", 1)) + 150.0
     sh.dim((xg, zed(mz)), (xg, zed(g1)), nb(g1 - mz, 0), 0.0, 1, "dmh")
     sh.dim((xg, zed(g1t)), (xg, zed(g2)), nb(g2 - g1t, 0), 0.0, 1, "dmh")
-    lo, hi = M.G.EN_LIMB_BAND
-    sh.text((xg + 30.0, zed(g1) - 8.0), "EN 747: begge åpninger i båndet "
-            f"{nb(lo, 0)}–{nb(hi, 0)}", "sml")
+    # X18: the two openings are judged by two different rules on the built bed
+    # - the lower one is CLOSED against the mattress, the upper one is over the
+    # cap on its own and is divided by the brace row. One line cannot say both,
+    # so it says what each of them is.
+    # The note goes in the BRACED BAND, which is the one piece of empty sheet
+    # in this corner: the 10 mm opening under the lower board is far too tight
+    # to hang two lines of text beside without landing on its own dimension.
+    G = M.G
+    band_mid = zed((M.G.MATTRESS_Z1 + M.G.SLAT_Z1) / 2.0)
+    sh.text((xg + 60.0, band_mid - 18.0),
+            f"EN 747, som bygget: nedre åpning "
+            f"{nb(G.AS_BUILT_MATTRESS_GAP, 0)} mm er LUKKET "
+            f"(≤ {nb(G.MAX_GUARD_INBOARD_CAPPED, 0)}),", "sml")
+    sh.text((xg + 60.0, band_mid + 16.0),
+            f"og båndet på {nb(G.GUARD_BRACE_BAND, 0)} er delt av "
+            f"{G.GUARD_BRACE_N} avstivere per felt → "
+            f"{nb(G.GUARD_BRACE_GAP, 1)} mm "
+            f"(≤ {nb(G.MAX_GUARD_OPENING, 0)})", "sml")
 
 
 # ---------------------------------------------------------------------------
@@ -546,22 +561,24 @@ def notes(M):
             f"{mm(G.MATTRESS_H_MIN)}–{mm(G.MATTRESS_H_MAX)} mm. Tegnet er "
             f"{mm(G.MATTRESS_H)}, som gir {mm(g1 - mz)} mm opp til nedre "
             f"rekkverksbånd. Tynnere enn {mm(G.MATTRESS_H_MIN)} og åpningen "
-            f"blir over {mm(G.MAX_GUARD_OPENING)}; tykkere enn "
-            f"{mm(G.MATTRESS_H_MAX)} og den faller ned i klemvinduet under "
-            f"{mm(G.EN_LIMB_BAND[0])}. Vinduet er trangt: allerede en vanlig "
-            f"{mm(too_thick)} mm madrass er ulovlig her, og alt over den "
-            f"også.",
-            # X18: og dette arket tegner den BYGDE sengen, der rekkverket
-            # står 65 mm høyere enn tegnet. Vinduet flyttet seg med bordet;
-            # madrassen gjorde det ikke.
+            f"vokser opp i klemvinduet {mm(G.MAX_GUARD_INBOARD_CAPPED)}–"
+            f"{mm(G.MIN_GUARD_INBOARD_CLEAR)}; tykkere enn "
+            f"{mm(G.MATTRESS_H_MAX)} og madrassen står inne i selve bordet. "
+            f"Allerede en vanlig {mm(too_thick)} mm madrass er ulovlig her, "
+            f"og alt over den også.",
+            # X18: dette arket tegner den BYGDE sengen. Byggherrens 130 er
+            # målt fra SPILENE, ikke fra madrasstoppen - det var den ene
+            # feillesningen i X18s første runde, og den tok avvik 6 med seg.
             f"SOM BYGGET: nederste rekkverksbord står "
-            f"{mm(G.AS_BUILT_GUARD_RISE)} mm over madrasstoppen, ikke "
-            f"{mm(G.MATTRESS_H_WINDOW_DRAWN[0] + G.MAX_GUARD_OPENING - G.MATTRESS_H)}"
-            f", så åpningen er {mm(G.AS_BUILT_MATTRESS_GAP)} mm mot grensen "
-            f"{mm(G.MAX_GUARD_OPENING)} — {mm(G.AS_BUILT_GAP_OVER)} mm for "
-            f"mye, og ingen avstivere i det båndet. Madrassen på senga er "
-            f"{mm(G.MATTRESS_H)} mm og vinduet over krever "
-            f"{mm(G.MATTRESS_H_MIN)}. Se vedlegg B, avvik 6.",
+            f"{mm(G.GUARD_RISE_OVER_SLATS)} mm over SPILENE — byggherrens "
+            f"eget mål, tatt fra dekket han sto på — altså "
+            f"{mm(G.AS_BUILT_MATTRESS_GAP)} mm over madrasstoppen. Bordet "
+            f"ligger like over madrassen og dekker forkanten; åpningen er "
+            f"lukket og ikke et klemvindu. Båndet MELLOM bordene er "
+            f"{mm(G.GUARD_BRACE_BAND)} mm og er over grensen "
+            f"{mm(G.MAX_GUARD_OPENING)} alene — det er avstiverraden, "
+            f"{G.GUARD_BRACE_N} per felt, som deler det i "
+            f"{nb(G.GUARD_BRACE_GAP, 1)} mm luker.",
         ]),
         ("BENKEN, PUTENE OG DEN LØSE PLATEN", [
             f"Benkeflaten ligger på Z {mm(bench)} og puteoversiden på "

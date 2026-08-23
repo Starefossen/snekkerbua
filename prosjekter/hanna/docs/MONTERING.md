@@ -131,7 +131,7 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Benkespile | 23×98 | 800 | **10** | nå |
 | Køyespile | 23×98 | 800 | **14** | nå |
 | Endespile | 23×98 | 764 | **2** | på stedet |
-| Rekkverksavstiver | 23×98 | 128 | **8** | nå |
+| Rekkverksavstiver | 23×98 | 180 | **8** | nå |
 | Stigevange | 36×48 | 1871 | **2** | på stedet |
 | Benkespileledd | 36×48 | 547 | **2** | nå |
 | Endelist | 36×48 | 98 | **2** | på stedet |
@@ -386,7 +386,7 @@ Ledd **J6** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **8×** | Rekkverksavstiver | 23×98 | 128 |
+| **8×** | Rekkverksavstiver | 23×98 | 180 |
 | **4×** | Rekkverksbord, front | 36×98 | 832 |
 
 | | | |
@@ -437,7 +437,7 @@ Ledd **J13a**, **J13b** → [beslagliste](generated/beslagliste.md)
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **2×** | Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten) |  |  |
-| **1×** | Madrass 80 × 200 cm, **120 mm tykk** (vindu 175–190 mm) |  |  |
+| **1×** | Madrass 80 × 200 cm, **120 mm tykk** (vindu 105–130 mm) |  |  |
 | **2×** | Ryggpute, skum **100 mm** (332 × 800 mm) |  |  |
 
 ⚠️ Ettertrekk alle festemidler som kan ettertrekkes.

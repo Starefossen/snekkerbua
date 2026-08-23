@@ -363,7 +363,7 @@ Spilene ligger OPPÅ begge sidevanger — ikke i et spor og ikke på en lekt. Al
 
 To bånd, hvert delt i to bord, med klatreåpningen i midten. Man klatrer GJENNOM rekkverket, ikke over. Det er ikke rekkverk på baksiden — der er veggen sperren. Bordene ligger på INNSIDEN av stolpene, mot sengen, ikke utenpå.
 
-**Deler:** 8× Rekkverksavstiver 23×98 × 128 · 4× Rekkverksbord, front 36×98 × 832
+**Deler:** 8× Rekkverksavstiver 23×98 × 180 · 4× Rekkverksbord, front 36×98 × 832
 
 **Festemidler:** 32× Treskrue 5×40 forsenket Torx · 12× Treskrue 5×60 forsenket Torx
 
@@ -374,14 +374,14 @@ To bånd, hvert delt i to bord, med klatreåpningen i midten. Man klatrer GJENNO
 | Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
 |---|---|---|---|---:|
 | **J7** 2× Treskrue 5×60 | rekkverksbord 36×98 × 832, baksiden (mot veggen) | 47,5 mm fra ytterenden · 24 mm fra innerenden | 22,5 mm fra under- og overkanten | 53 |
-| **J21** 2× Treskrue 5×40 | rekkverksavstiver 23×98 × 128, forsiden (mot rommet) | 15 mm fra begge ender | 22,5 mm fra begge langkanter | 53 |
+| **J21** 2× Treskrue 5×40 | rekkverksavstiver 23×98 × 180, forsiden (mot rommet) | 15 mm fra begge ender | 22,5 mm fra begge langkanter | 53 |
 
 **Slik gjør du:**
 
-1. Legg det nederste båndet an mot innsiden av hjørnestolpen og stigevangen, i flukt med stolpenes innerplan.
+1. Legg det nederste båndet an mot innsiden av hjørnestolpen og stigevangen, i flukt med stolpenes innerplan. **Underkanten står 130 mm over spilene (X18)** — mål fra spilebunnen, ikke fra madrassen, som ikke ligger der ennå.
 1. Skru fra sengesiden inn i stolpen og i stigevangen (J7). Forbor — bordet sprekker lett nær enden.
-1. Gjenta for det øverste båndet. **Det øverste bordet legges med overkanten i flukt med stolpetoppen (X18)** — og det har ingen stigevange å skru i ved den indre enden, for vangene er kappet lavere. Den enden bæres av avstiverraden.
-1. **AVSTIVERNE, 4 per felt (X18).** 23×98 × 128 mm av bunnspilerestene, lagt PÅ TVERS over de to bordene i sporet mellom bordet og stolpeplanet, med 30 mm omlegg på hvert bord. Delingen er jevn: 59,4 mm luft mellom to avstivere. To 5×40 i hvert omlegg (J21), drevet fra rommet — det er den eneste flaten en drill når, og de 32 hodene er det ene stedet i sengen der stål synes på forsiden.
+1. Gjenta for det øverste båndet. **Det legges 120 mm over det nederste bordets overkant (X18)**, altså med underkanten i flukt med stigevangens kappede topp — og det har ingen stigevange å skru i ved den indre enden, for vangen slutter der bordet begynner. Den enden bæres av avstiverraden.
+1. **AVSTIVERNE, 4 per felt (X18).** 23×98 × 180 mm av bunnspilerestene, lagt PÅ TVERS over de to bordene i sporet mellom bordet og stolpeplanet, med 30 mm omlegg på hvert bord. Delingen er jevn: 59,4 mm luft mellom to avstivere. To 5×40 i hvert omlegg (J21), drevet fra rommet — det er den eneste flaten en drill når, og de 32 hodene er det ene stedet i sengen der stål synes på forsiden.
 
 **Sjekk før du går videre:**
 
@@ -425,9 +425,9 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke 
 
 ## Steg 11 — Madrass og puter
 
-Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er TYKKELSEN, og der er det bare ett riktig svar: 120 mm. Vinduet er 175–190 mm, og en helt vanlig 160 mm madrass er ULOVLIG i denne sengen — den legger spalten opp til rekkverket midt i klemvinduet.
+Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er TYKKELSEN, og der er det bare ett riktig svar: 120 mm. Vinduet på den BYGDE sengen er 105–130 mm: rekkverkets nederste bord ligger 130 mm over spilene, altså 10 mm over en 120 mm madrass, så bordet dekker madrasskanten i stedet for å stå over en spalte. En helt vanlig 160 mm madrass er ULOVLIG i denne sengen.
 
-**Deler:** 2× Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten) · 1× Madrass 80 × 200 cm, **120 mm tykk** (vindu 175–190 mm) · 2× Ryggpute, skum **100 mm** (332 × 800 mm)
+**Deler:** 2× Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten) · 1× Madrass 80 × 200 cm, **120 mm tykk** (vindu 105–130 mm) · 2× Ryggpute, skum **100 mm** (332 × 800 mm)
 
 **Slik gjør du:**
 
@@ -435,8 +435,8 @@ Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikk
 1. UNDERETASJEN: fire puter, alle 100 mm tykke og 800 mm dype. To benkeputer på 663 mm og to ryggputer på 332 mm — lagt etter hverandre dekker de nedre soveflate nøyaktig, 663 + 332 + 332 + 663 = 1990 mm.
 1. Skjær et 98 × 36 mm hakk i veggkanten på hver av de to benkeputene, der den bakre hjørnestolpen står. Brødkniv.
 1. SOFASTILLING: benkeputene ligger der de ligger — de flyttes aldri. Ryggputene reises på høykant ytterst på hver benk, med ryggen mot bordbærelekta.
-1. MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er ikke en tusjstrek som skal kunne tørkes bort: skriv «MAKS MADRASS 190 MM» på innsiden av en fremre stolpe, i høyden 1713 mm over gulvet. Den som bytter madrass om ti år skal kunne lese grensen av sengen selv.
-1. Skriv nedre grense, 175 mm, ved siden av. For tynn madrass åpner spalten under nederste rekkverksbord; for tykk lukker den seg ned i klemvinduet.
+1. MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er ikke en tusjstrek som skal kunne tørkes bort: skriv «MAKS MADRASS 130 MM» på innsiden av en fremre stolpe, i høyden 1653 mm over gulvet. Den som bytter madrass om ti år skal kunne lese grensen av sengen selv.
+1. Skriv nedre grense, 105 mm, ved siden av. For tynn madrass åpner spalten under nederste rekkverksbord seg opp i klemvinduet 25–60 mm; for tykk står madrassen inne i bordet i stedet for under det.
 
 **Sjekk før du går videre:**
 

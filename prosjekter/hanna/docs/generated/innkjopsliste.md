@@ -12,7 +12,7 @@ Romdelene kappes for lange og finkappes i rommet — se [kapplista](kappliste.md
 | Dimensjon | Kjøp | Svinn |
 |---|---|---:|
 | **18 mm plate, 574 bred** | 1 plate 18 mm kryssfiner furu, minst 574 × 798 mm. **Legg dekkfineren langs de 574 mm** (sengens lengderetning): platas styrende arkrad spenner den veien. Det er en MARGIN og ikke lenger et krav — raden holder 0,69 også snudd — men det koster ingenting, så legg den riktig vei. Se X16 | — |
-| **23×98** | **5 stk. 4,8 m** | 9 % |
+| **23×98** | **5 stk. 4,8 m** | 8 % |
 | **36×48** | **2 stk. 4,8 m** | 42 % |
 | **36×98** | **3 stk. 4,8 m** | 13 % |
 | **48×68** | **3 stk. 4,8 m** | 23 % |
@@ -26,12 +26,12 @@ Romdelene kappes for lange og finkappes i rommet — se [kapplista](kappliste.md
 
 ### 23×98
 
-Kjøpt 24,00 m, brukt 21,75 m, svinn 9 %.
+Kjøpt 24,00 m, brukt 22,17 m, svinn 8 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 5 × 800 (Køyespile) + 5 × 128 (Rekkverksavstiver) | 124 |
-| 2 | 4800 | 5 × 800 (Køyespile) + 3 × 128 (Rekkverksavstiver) | 388 |
+| 1 | 4800 | 5 × 800 (Køyespile) + 4 × 180 (Rekkverksavstiver) | 48 |
+| 2 | 4800 | 5 × 800 (Køyespile) + 4 × 180 (Rekkverksavstiver) | 48 |
 | 3 | 4800 | 5 × 800 (Benkespile) + 1 × 764 (Endespile) | 16 |
 | 4 | 4800 | 5 × 800 (Benkespile) + 1 × 764 (Endespile) | 16 |
 | 5 | 4800 | 4 × 800 (Køyespile) | 1588 |
@@ -81,7 +81,7 @@ Ikke trelast, men det står på samme handletur. Skum kjøpes som plate eller so
 
 | Hva | Mål | Ant. | Merknad |
 |---|---|---:|---|
-| Madrass, overkøye | 80 × 200 cm, **120 mm tykk** | 1 | Vindu 175–190 mm. Hyllevarene over vinduet —  mm — er ULOVLIGE her. Se nøkkelmål |
+| Madrass, overkøye | 80 × 200 cm, **120 mm tykk** | 1 | Vindu 105–130 mm på den bygde sengen. Hyllevarene utenfor vinduet — 100, 140, 150, 160 mm — er ULOVLIGE her. Se nøkkelmål |
 | **Benkepute**, underetasjen | **663 × 800 × 100 mm** | 2 | Hakk 98 × 36 mm i veggkanten, der den bakre hjørnestolpen står |
 | **Ryggpute**, underetasjen | **332 × 800 × 100 mm** | 2 | Rene rektangler |
 | Trekk | — | 5 | Skum uten trekk smuldrer. Regn det som en egen post |

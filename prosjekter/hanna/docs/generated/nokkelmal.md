@@ -43,11 +43,12 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **1402** | **bakre stolpetopp** = endebjelkens overkant = sidevangens underkant (fri høyde under sengen) |
 | **1500** | sidevangens overkant |
 | **1523** | spilebunn / madrassens underside |
-| **1643** | madrassens overside (ved 120 mm madrass; lovlig band 175–190) |
-| **1773** | rekkverk, nedre bånd underkant |
-| **1871** | rekkverk, nedre bånd overkant |
-| **1939** | rekkverk, øvre bånd underkant |
-| **2037** | rekkverk, øvre bånd overkant = fremre stolpetopp |
+| **1643** | madrassens overside (ved 120 mm madrass; lovlig band 105–130) |
+| **1653** | rekkverk, nedre bånd underkant |
+| **1751** | rekkverk, nedre bånd overkant |
+| **1871** | rekkverk, øvre bånd underkant |
+| **1969** | rekkverk, øvre bånd overkant |
+| **2037** | fremre stolpetopp |
 
 Stigningen fra gulv til spilebunn: 297 + 385 + 280 + 280 + 281 mm. Første stigning er benkevangens høyde — det er en avsats du trår opp på, ikke et klatretrinn. De 4 klatretrinnene er 280–385 mm.
 
@@ -127,8 +128,8 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 | | Mål |
 |---|---|
 | Madrass, overkøye | **standard 80 × 200 cm.** Sengen er dimensjonert rundt den; liggeflaten er 1990 × 800 mm, så madrassen presses de siste 10 mm inn mellom veggene og fyller bredden nøyaktig |
-| **Madrasstykkelse** | **175–190 mm — kjøp 120 mm.** Åpningen fra madrassens overside opp til nedre rekkverksbånd skal ligge i EN 747-båndet 60–75 mm. Tynnere enn 175 og åpningen blir større enn 75; **tykkere enn 190 og den faller ned i klemvinduet under 60 mm**. Hyllevarene over vinduet —  mm — er altså ULOVLIGE her, og det er ikke en detalj: det er den ene tingen ved denne sengen du må huske i butikken. Modellen tegner 120 mm, som gir 130 mm — midt i båndet |
-| **Maks madrasstykkelse merkes på sengen** | 190 mm. EN 747 krever at maksmålet står permanent på sengen. Merk linja 1713 mm over gulvet — 190 mm over spilene — på innsiden av en fremre stolpe (steg 11) |
+| **Madrasstykkelse** | **105–130 mm — kjøp 120 mm.** Åpningen fra madrassens overside opp til nedre rekkverksbånd skal enten være LUKKET — under 25 mm, der ingenting kommer inn — eller ligge i EN 747-båndet 60–75 mm, der hele lemmet går fritt igjennom. Mellom de to, 25–60 mm, er klemvinduet. Det bygde rekkverket står 130 mm over spilene, så vinduet er den LUKKEDE grenen: tynnere enn 105 og åpningen vokser opp i klemvinduet; **tykkere enn 130 og madrassen står inne i selve rekkverksbordet — bordet dekker ikke lenger kanten, det ligger begravet i den**. Hyllevarene utenfor vinduet — 100, 140, 150, 160 mm — er altså ULOVLIGE her, og det er ikke en detalj: det er den ene tingen ved denne sengen du må huske i butikken. Modellen tegner 120 mm, som gir 10 mm — bordet ligger like over madrassen og dekker forkanten |
+| **Maks madrasstykkelse merkes på sengen** | 130 mm. EN 747 krever at maksmålet står permanent på sengen. Merk linja 1653 mm over gulvet — 130 mm over spilene — på innsiden av en fremre stolpe (steg 11) |
 | Madrassens sideveis vandring | ingen — madrassen fyller hele bredden mellom veggen og de fremre stolpene |
 | **Soveflate, underetasjen** | **1990 × 800 mm** — samme lengde som overkøyen. De to bakre hjørnestolpene står i flaten og tar et 98 × 36 mm hjørne i hver ende; ellers er den hel |
 | **Puter, tykkelse** | **100 mm, alle fire.** Lik tykkelse er hele poenget: fire like tykke puter er én seng. Sittehøyden blir 320 + 100 = **420 mm** |
@@ -171,20 +172,22 @@ Modellen har fire *referansekropper*: et barn på **1200 mm** (EN 747 åpner ove
 | Fotbrettets plass | X 787..1203 × Y 216..488 × Z 0..146 — bukta mellom de to gangpassasjene, løs, under platen i begge stillinger (151 mm / 536 mm luft) |
 | Låret på puta | barnet står 12.7 mm ned i skummet — samme dybde som rumpa selv (12.7 mm), og puta bærer låret helt ut til sin egen kant på X 663 |
 | **Fri høyde over ansiktet, nede** | **902 mm** til køyespilene |
-| Over den som ligger i køya | ingenting — køya er åpen oppover. Rekkverket står 151 mm over kroppens høyeste punkt og 216 mm over ansiktet |
+| Over den som ligger i køya | ingenting — køya er åpen oppover. Rekkverket står 83 mm over kroppens høyeste punkt og 148 mm over ansiktet |
 | Madrass igjen bak føttene | 588 mm av 1990 — plassen å vokse i |
 
 ## Sikkerhetsmål (EN 747)
 
 | | Mål | Krav |
 |---|---:|---:|
-| Madrassoverside → nedre rekkverksbånd | 130 | ≤ 5 eller 60–75 |
-| Mellom de to rekkverksbåndene | 68 | ≤ 5 eller 60–75 |
+| Madrassoverside → nedre rekkverksbånd | 10 | ≤ 25 (lukket) eller 60–75 |
+| Mellom de to rekkverksbåndene — 120 mm delt av 4 avstivere per felt, smaleste vei | 59,4 | ≤ 75 |
+| Øvre rekkverksbånd → fremre stolpetopp | 68 | ≤ 75 |
 | Klatreåpningens bredde | 320 | 300–400 |
-| Rekkverkets høyde over madrassen | 394 | ≥ 160 |
+| Rekkverkets høyde over madrassen | 326 | ≥ 160 |
 | Åpning mellom madrass og vegg (verste stilling) | 0 | ≤ 75 |
 | Fri klatreåpning i stigen | 320 | ≥ 300 |
-| Største klatretrinn | 385 | ≤ 281 |
+| Største klatretrinn i stigen selv | 385 | ≤ 281 |
+| — største steg på veien barna faktisk går (297 → 420 → 682, over benkekanten) | 262 | ≤ 281 |
 | Hodehøyde over nedre soveflate | 1080 | ≥ 900 (én sittehøyde) |
 | — laveste faste del over soveflaten (målt) | 194 (Table Ledger Back) | ingen grense — det er stigen |
 | — over putestripa ved veggen (målt) | 194 (Table Ledger Back) | ingen grense — lekta er permanent |

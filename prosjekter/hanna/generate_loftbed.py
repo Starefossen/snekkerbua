@@ -55,6 +55,20 @@ X18 THE SENG IS FINISHED AND STANDING IN THE ROOM, AND EVERY ROUND UNTIL THIS
     is a fact about a bed, and the only decisions in the round are what the
     model does with a fact it did not choose.
 
+    AND THE ROUND HAS BEEN CORRECTED ONCE, BY THE MAN WHO BUILT IT. Two of the
+    facts above were read wrong on the way in, and both corrections make the bed
+    BETTER than the first pass said it was:
+      * the guard boards' 130 mm is measured from the SLATS, not from the
+        mattress top. Both of the builder's readings then fit at once, the
+        52 mm contradiction the file wrote up disappears, and AVVIK 6 - «the
+        bed's one illegal measurement» - goes with it. See (4).
+      * the children climb over the BENCH EDGE, which makes the biggest real
+        step 262 mm and not 385. The 385 is still in the stile and still
+        printed; avvik 5 is ACCEPTED rather than «bør rettes». See (1).
+    Neither correction moved a limit. Both moved a DATUM, which is the thing a
+    measurement is worthless without, and the file says so where the numbers
+    are rather than quietly restating them.
+
     THE RULE OF THE ROUND, AND IT IS THE WHOLE OF IT: THE MODEL COMES TO THE
     BED, AND THE ASSERTS DO NOT COME WITH IT. Where the built thing satisfies a
     rule, the rule is re-derived on the built geometry and says OK. Where it
@@ -80,23 +94,29 @@ X18 THE SENG IS FINISHED AND STANDING IN THE ROOM, AND EVERY ROUND UNTIL THIS
     EN 131's 250..300 band. That limit is NOT raised. The other three steps
     (280/280/281) are held to it as before, the 385 is asserted to be exactly
     the step the missing tread would have halved, and the model prints AVVIK 5.
-    Read on the bed rather than on the drawing it is worse in one mode and
-    better in none: in bed mode the plate lies at 297..315 across the whole
-    ladder bay, so the foot starts at 315 and the step is 367; in TABLE mode
-    the plate lies ON rung 2, so rung 2 is not a tread at all and the first
-    thing above the floor is rung 3 at 962. RECOMMENDATION, and the model can
-    defend it to the millimetre: cut the fifth tread at 489. Same 48x68 x 320,
-    same two blocks, same four screws, same holes - the derivation already
-    names every one of them.
+    Read on the bed rather than on the drawing it is worse in one mode: in bed
+    mode the plate lies at 297..315 across the whole ladder bay, so the foot
+    starts at 315 and the step is 367; in TABLE mode the plate lies ON rung 2,
+    so rung 2 is not a tread at all and the first thing above the floor is rung
+    3 at 962.
+        AND THEN THE BUILDER WATCHED THE CHILDREN CLIMB IT (aug. 2026): they put
+    a foot on the BENCH EDGE on the way up, «uten problemer». That route is
+    297 -> bench seat 420 -> 682, i.e. steps of 123 and 262, and 262 is inside
+    the limit. So the number stands, the limit stands, the stile still has one
+    385 mm gap in it - and avvik 5 is ACCEPTED, dated, on an observation of
+    children rather than of wood. The fifth tread at 489 drops from
+    RECOMMENDATION to OPTION and stays costed to the millimetre: same 48x68 x
+    320, same two blocks, same four screws, same holes.
 
     2. THE LADDER UPRIGHTS ARE 166 mm SHORTER THAN THE POSTS. He cut them «ca.
     150 mm» short; the model looks for the FLUSH the saw was held to and finds
-    exactly one line in that region - the top edge of the lower guard board,
-    1871 - which is also the last thing screwed to the upright. Above it the
-    piece touches nothing. THE COST IS THE UPPER GUARD BOARD'S INNER END: the
+    exactly one line in that region - the UNDERSIDE OF THE UPPER GUARD BOARD,
+    1871. The upright's cut end and that board's bottom edge are one line across
+    the front of the bed. THE COST IS THE UPPER GUARD BOARD'S INNER END: the
     segments are drawn to lap both a corner post and an upright, and after X18
-    the upper pair laps one. J7 goes from eight laps to six, and what carries
-    those two ends is the brace row (4). Avvik 7.
+    the upper pair laps one - and not by a little, by all of it, because the
+    board begins exactly where the upright stops. J7 goes from eight laps to
+    six, and what carries those two ends is the brace row (4). Avvik 7.
 
     3. THE FRONT BENCH CHEEK IS BUTTED, NOT LAPPED - AND «I FLUKT» IS A
     GEOMETRIC NECESSITY. His words: «ligger i flukt mellom stolpene og
@@ -137,41 +157,53 @@ X18 THE SENG IS FINISHED AND STANDING IN THE ROOM, AND EVERY ROUND UNTIL THIS
     V13 already gave that slat's other end (J20). Both are the bed's own 36x48
     block stock.
 
-    4. THE RAILING BOARDS MOVED, AND THE TWO NUMBERS HE GAVE DO NOT BOTH FIT.
-    Measured on the finished bed: the LOWER board's underside about 130 mm over
-    the mattress top, and the UPPER about 120 mm over the lower one's top edge.
-    Written out on the 120 mm mattress that is 1643 + 130 + 98 + 120 + 98 =
-    2089, and the front posts are 2037. The model keeps the reading that is a
-    measurement off a fixed datum - the mattress - and derives the other off the
-    wood: band 1 at 1773..1871, band 2 at 1939..2037, FLUSH WITH THE POST TOPS,
-    which is what a man does when he runs out of post. The band between the
-    boards is therefore 68 mm and not the 120 he remembered, and the 52 mm is
-    written up rather than split between the two.
-        WHAT IT BUYS: avvik 0 is CLOSED. The 58 mm that used to stand between
-    the top board and the post tops - legal, but only after a paragraph of
-    argument about bound and unbound openings - is 0. The barrier stands 394 mm
-    over the mattress against EN 747's 160.
-        WHAT IT COSTS, AND THIS IS THE ONE PLACE THE BUILT BED DOES NOT HOLD.
-    The opening from the mattress top to the underside of the lowest board is
-    130 mm against EN 747's 75, and there is NOTHING in it. Read the other way
-    round, which is the way the mattress is bought: the built guard demands a
-    175..190 mm mattress and the bed has a 120. The model asserts both numbers
-    and refuses to print OK - AVVIK 6. Two ways close it and both are costed in
-    vedlegg B: take the lower board down 65 mm to where it was drawn, or put a
-    brace row in that band the way he already put one in the band above.
+    4. THE RAILING BOARDS MOVED, AND BOTH NUMBERS HE GAVE ARE TRUE - THEY ARE
+    MEASURED OFF THE SLATS. The LOWER board's underside is 130 mm over the
+    SLAT TOP, and the UPPER is 120 mm over the lower one's top edge. Band 1 is
+    1653..1751, band 2 is 1871..1969, and 68 mm of bare post stands above that
+    to 2037.
+        THE FIRST PASS OF X18 READ THE 130 OFF THE MATTRESS TOP, and that is
+    the whole of what went wrong with it. On that datum the two readings came to
+    2089 against 2037 posts, so the file called them 52 mm apart, kept one,
+    derived band 2 flush with the post tops, and wrote a 130 mm opening over the
+    mattress up as AVVIK 6 - the bed's one illegal measurement, with a demand
+    for a 175..190 mm mattress attached. None of that was the builder's tape. A
+    man building a guard rail measures off the deck he is standing on. On his
+    datum the arithmetic closes, the 52 mm does not exist, AND SO DOES AVVIK 6.
+        WHAT THE BED ACTUALLY HAS, band by band, all three under the 75 mm cap:
+    10 mm from the mattress top to the lower board - it lies just clear of the
+    mattress and laps its front edge; 120 mm between the boards, which is over
+    the cap on its own and is the band THE BRACE ROW DIVIDES into 59,4 mm
+    openings; and 68 mm from the top board to the post tops, which is the
+    opening avvik 0 was written about at 58 and the same argument covers. The
+    barrier stands 326 mm over the mattress against EN 747's 160.
+        THE MATTRESS WINDOW MOVED WITH THE BOARD AND CHANGED BRANCH. On the
+    drawing a 110..125 mattress put the opening in the 60..75 limb band - air
+    under the rail. Built, the board is low enough that the opening is CAPPED
+    instead: 105..130 mm of mattress, and the bed's 120 sits in the middle of
+    it. The floor of "capped" is not a new number, it is EN_GAP_BAND's own top,
+    25 - and the reason the finger sub-bands do not apply is that the lower face
+    of this gap is 800 mm of pinned foam, not a piece of wood. The ceiling is
+    the board: at 130 the mattress touches it and the opening is 0. So the
+    reader's instruction is what it always was - buy 12 cm - and the number that
+    goes on the post is 130 rather than 125.
 
-    5. THE BRACE ROW, AND IT IS A LOAD PATH AND NOT A DECORATION. Short pieces
-    of the bottom-slat stock laid across the two boards, «på tvers», about five
-    per field in the photograph. Two things ask for them and only one is the one
-    he said out loud: the upper board has NOTHING at its inner end after (2), so
-    the row hangs it off the lower board, which is lapped on the upright over
-    its full width. Nothing about the piece is chosen: the section is the offcut
-    he had, and the cut length is the band plus two laps where the lap is what a
-    5 mm screw needs to sit 3d from the brace's own end AND 3d from the board's
-    edge - 6d each, so 68 + 60 = 128. The COUNT is the fewest that bring every
-    opening in the row under MAX_GUARD_OPENING: three leaves 98,75 mm and fails,
-    four leaves 59,4 and holds. FOUR per field, and the photograph's «about
-    five» is four counted by the rule.
+    5. THE BRACE ROW, AND IT IS A LOAD PATH AND NOT A DECORATION - AND ON THE
+    CORRECTED DATUM IT IS ALSO THE THING THAT KEEPS THE GUARD LEGAL. Short
+    pieces of the bottom-slat stock laid across the two boards, «på tvers»,
+    about five per field in the photograph. TWO things ask for them and both are
+    now load-bearing arguments: the upper board has NOTHING at its inner end
+    after (2), so the row hangs it off the lower board, which is lapped on the
+    upright over its full width; and the band between the boards is 120 mm,
+    which is OVER the 75 mm entrapment cap, so an unbraced band would be the one
+    opening in this bed that failed. Nothing about the piece is chosen: the
+    section is the offcut he had, and the cut length is the band plus two laps
+    where the lap is what a 5 mm screw needs to sit 3d from the brace's own end
+    AND 3d from the board's edge - 6d each, so 120 + 60 = 180. The COUNT is the
+    fewest that bring every opening in the row under MAX_GUARD_OPENING: three
+    leaves 98,75 mm and fails, four leaves 59,4 and holds. It is set by the
+    FIELD and the cap, so the datum correction did not move it - FOUR per field,
+    and the photograph's «about five» is four counted by the rule.
         AND THE ONE AESTHETIC RULE IN THIS FILE IS BROKEN, ONCE, IN THE OPEN.
     V5 asserts that no screw head shows on the front face. The brace sits in the
     slot between the boards and the post plane and the only face of it a drill
@@ -2823,36 +2855,43 @@ RUNG_BLOCK_X = [LADDER_INNER_L,                          # 835 .. 871
 # the mattress the reader buys or the EN 747 arithmetic changes with the lift;
 # the whole assembly simply stands 150 mm further off the floor.
 #
-# X18 (as-built) - THE BOARDS ARE NOT WHERE THEY WERE DRAWN, AND THE TWO
-# NUMBERS THE BUILDER GAVE DO NOT BOTH FIT.
-# What he measured on the finished bed: the LOWER board's underside about
-# 130 mm over the mattress top, and the UPPER board about 120 mm over the lower
-# one's top edge. Written out on a 120 mm mattress that is
-#     1643 + 130 + 98 + 120 + 98 = 2089
-# and the front posts are 2037. The two readings are 52 mm apart and only one
-# of them can be true, so the model takes the one that is a MEASUREMENT off a
-# fixed datum (the mattress) and derives the other off the wood:
-#   BAND 1  MATTRESS_Z1 + AS_BUILT_GUARD_RISE = 1773..1871. The rise is the
-#           builder's own 130.
-#   BAND 2  POST_HEIGHT - GUARD_W = 1939..2037, FLUSH WITH THE POST TOPS. That
-#           is what a man does when he runs out of post, it is a line he can
-#           see and hold a board to, and it makes the band between the boards
-#           68 mm rather than the 120 he remembered. The 52 mm is written up in
-#           vedlegg B rather than split between the two.
-# WHAT IT COSTS AND WHAT IT BUYS, BOTH MEASURED BELOW:
-#     1643 -> 1773  130 mm  (mattress top to the underside of band 1) - OVER
-#                           the 75 mm EN 747 entrapment limit. This is the one
-#                           opening in the built bed that does not hold, it has
-#                           no braces in it, and it is avvik 6.
-#     1871 -> 1939   68 mm  (between the bands) - legal, and braced besides.
-#     2037 -> 2037    0 mm  (band 2 to the top of the FRONT posts) - CLOSED.
-#                           Avvik 0 was written about the 58 mm that used to
-#                           stand there; the board is flush with the post tops
-#                           now and there is nothing left to excuse.
-# The barrier top is 2037 - 1643 = 394 mm above the mattress (EN 747 asks 160).
-AS_BUILT_GUARD_RISE = 130        # X18: measured on the built bed
-GUARD_BAND_Z0 = [MATTRESS_Z1 + AS_BUILT_GUARD_RISE,
-                 POST_HEIGHT - GUARD_W]  # [1773, 1939]  [X1/X3: was 1401, 1574]
+# X18 (as-built) - THE BOARDS ARE NOT WHERE THEY WERE DRAWN, AND THE DATUM IS
+# THE SLAT TOP.
+# What he measured on the finished bed: the LOWER board's underside 130 mm over
+# THE SLATS, and the UPPER board 120 mm over the lower one's top edge. Both
+# readings are off WOOD - the deck he can lay a tape on, and a board edge he can
+# hook it over - and both of them hold at once:
+#   BAND 1  SLAT_Z1 + AS_BUILT_GUARD_RISE          = 1653..1751
+#   BAND 2  band 1's top + AS_BUILT_GUARD_BAND     = 1871..1969
+#   and 68 mm of bare post above that, up to POST_HEIGHT 2037.
+# X18 AS FIRST WRITTEN READ THE 130 OFF THE MATTRESS TOP, and that is why it had
+# to throw one of the builder's two numbers away: 1643 + 130 + 98 + 120 + 98 =
+# 2089 against 2037 posts, so it kept the "measurement" and derived band 2 flush
+# with the post tops, leaving 68 mm between the boards where he had said 120.
+# The 52 mm was never his tape being wrong - it was this file measuring his 130
+# from the wrong datum. A man building a guard rail measures off the deck he is
+# standing on, not off the top of a mattress that is not on the bed yet. Both
+# numbers are true, the arithmetic closes, and the 52 mm does not exist.
+# WHAT THE CORRECTED DATUM GIVES, ALL OF IT MEASURED BELOW:
+#     1643 -> 1653   10 mm  (mattress top to the underside of band 1) - the
+#                           board lies just clear of the mattress and laps its
+#                           front edge. Nothing limb-scale gets under it, and
+#                           avvik 6 - the one opening in the built bed that did
+#                           not hold - goes with the datum that invented it.
+#     1751 -> 1871  120 mm  (between the bands) - over the 75 mm cap on its own,
+#                           and this is the band the brace row divides. It is
+#                           the reason the braces are there.
+#     1969 -> 2037   68 mm  (band 2 to the top of the FRONT posts) - under the
+#                           75 mm limit, and the avvik 0 argument (nothing else
+#                           in the bed stands in that height band, so the
+#                           opening is not even partially bound) covers it as
+#                           it covered the 58 that was drawn there.
+# The barrier top is 1969 - 1643 = 326 mm above the mattress (EN 747 asks 160).
+AS_BUILT_GUARD_RISE = 130        # X18: measured on the built bed, off the SLATS
+AS_BUILT_GUARD_BAND = 120        # X18: lower board's top edge to the upper one
+GUARD_BAND_Z0 = [SLAT_Z1 + AS_BUILT_GUARD_RISE,
+                 SLAT_Z1 + AS_BUILT_GUARD_RISE + GUARD_W + AS_BUILT_GUARD_BAND]
+# [1653, 1871]  [X18 first pass: 1773, 1939]  [X1/X3: was 1401, 1574]
 MAX_GUARD_OPENING = 75           # EN 747 entrapment limit, above the mattress
 MIN_GUARD_OVER_MATTRESS = 160    # EN 747 barrier height above the mattress
 # D14: the guards hang inboard of the verticals now, so they overhang the
@@ -2867,28 +2906,52 @@ MIN_GUARD_OVER_MATTRESS = 160    # EN 747 barrier height above the mattress
 # the 75 it used to copy off the opening cap. At 75 it pinned the mattress to
 # exactly the thinnest legal one and left no margin at all.
 MIN_GUARD_INBOARD_CLEAR = 60
+# X18 (corrected datum): AND IT IS A TWO-SIDED RULE, WHICH IT ALWAYS WAS - ONLY
+# ONE SIDE HAD EVER BEEN NEEDED. A board hanging over the mattress footprint is
+# a non-event in TWO ways, not one:
+#   * clear of the mattress by a whole limb band (>= 60), which is what the
+#     drawing did and what the constant above says, or
+#   * so close to the mattress that nothing limb-scale gets under it at all,
+#     which is what the BUILT bed does at 10 mm. The mattress is 800 mm of foam
+#     pinned between the wall and the front verticals (W5/W6), and the board
+#     caps its front edge instead of standing over a slot.
+# The floor of "limb-scale" is not a new number: EN_GAP_BAND tops out at 25 mm
+# because that is where a finger stops being the thing that fits and a hand
+# starts. Under 25 mm nothing that could be trapped enters, and what it would
+# land on is foam, not a shear edge.
+# BETWEEN THE TWO IS THE WEDGE, and it is exactly the zone the drawing was
+# steered away from: 25..60 mm of air over the mattress is where part of a limb
+# goes in and does not come out. That is the band the rule forbids, and the
+# built bed is 15 mm below its floor rather than inside it.
+MAX_GUARD_INBOARD_CAPPED = 25    # = EN_GAP_BAND[1], asserted where it is defined
 # ---------------------------------------------------------------------------
 # X18 (as-built) - THE LADDER UPRIGHTS ARE SHORTER THAN THE POSTS
 # ---------------------------------------------------------------------------
 # The builder cut them «ca. 150 mm» short of the corner posts. That is a tape
 # reading, not a cut list line, so the model does what it does with every other
 # height in this bed: it looks for the FLUSH the saw was held to. There is
-# exactly one line in that region a man can hold a piece of wood against - the
-# TOP EDGE OF THE LOWER GUARD BOARD - and it is also the last thing screwed to
-# the upright. Above it the upright touches nothing at all. So:
-#     UPRIGHT_H = GUARD_BAND_Z0[0] + GUARD_W = 1871
-# which is 166 mm off the corner posts: the builder's «ca. 150», measured.
-# The piece stops where its last fixing stops, and that is the whole rule.
+# exactly one line in that region a man can hold a saw to - the UNDERSIDE OF
+# THE UPPER GUARD BOARD, the last line he struck before he cut - and the
+# uprights stop dead on it:
+#     UPRIGHT_H = GUARD_BAND_Z0[1] = 1871
+# which is 166 mm off the corner posts: the builder's «ca. 150», measured. The
+# upright's cut end and the upper board's bottom edge are one line across the
+# front of the bed, and that is a line you can see on the built bed.
+# (X18 first pass read the same 1871 off the LOWER board's top edge, because on
+# the wrong datum that is where the number landed. Same cut, same shortfall -
+# but the line the saw was held to is the one that is still visible, and it is
+# the underside of the board above.)
 #
 # WHAT IT COSTS, AND IT IS NOT SMALL. The UPPER guard segments are drawn from
 # the corner post to the upright inner face and they lap BOTH. After X18 they
-# lap one: their inner ends stand 68 mm above the top of the upright, over
-# nothing. What carries them is the brace row (GUARD_BRACE below) - the two
-# boards are stitched into one lattice and the lower one is fixed to the
-# upright. That is a real load path and it is also a deviation from the detail
-# this file signed off on, so it is measured, asserted and written up as avvik
-# 7 rather than drawn away.
-UPRIGHT_H = GUARD_BAND_Z0[0] + GUARD_W   # 1871  [X18: was POST_HEIGHT, 2037]
+# lap one: their inner ends START at the top of the upright and go up from
+# there, so there is no face to screw to at all - not a short lap, none. What
+# carries them is the brace row (GUARD_BRACE below) - the two boards are
+# stitched into one lattice and the lower one is fixed to the upright over its
+# full 98 mm. That is a real load path and it is also a deviation from the
+# detail this file signed off on, so it is measured, asserted and written up as
+# avvik 7 rather than drawn away.
+UPRIGHT_H = GUARD_BAND_Z0[1]             # 1871  [X18: was POST_HEIGHT, 2037]
 UPRIGHT_SHORTFALL = POST_HEIGHT - UPRIGHT_H              # 166
 # U2: the narrowest face lap the guard detail has ever been signed off on - the
 # 36 mm of a v10 ladder upright, two 5x60 into 36 x 98 = 3528 mm2. Every lap in
@@ -2903,31 +2966,49 @@ MIN_GUARD_LAP = 36
 # reads about five per field. Two things ask for them and only one of them is
 # the one he said out loud:
 #   1  THE UPPER BOARD HAS NOTHING AT ITS INNER END. The ladder uprights are
-#      cut at 1871 (UPRIGHT_H) and the upper band starts at 1939, so the inner
-#      half of the upper segment is over air. The brace row hangs it off the
-#      LOWER board, which is lapped on the upright over its full width - two
-#      boards stitched into one lattice. That is what «avstiver» means here.
-#   2  it divides the band. The band between the boards is 68 mm and legal on
-#      its own; the braces make every opening in it smaller still.
+#      cut at 1871 (UPRIGHT_H) and the upper band STARTS at 1871, so the inner
+#      half of the upper segment is over air from its very first millimetre.
+#      The brace row hangs it off the LOWER board, which is lapped on the
+#      upright over its full width - two boards stitched into one lattice. That
+#      is what «avstiver» means here.
+#   2  IT DIVIDES THE BAND, and after the datum correction that is not a bonus,
+#      it is the job. The band between the boards is 120 mm - the builder's own
+#      second reading - and 120 is OVER the 75 mm entrapment cap. Unbraced it
+#      would be the one opening in this bed that fails. With the row in it the
+#      narrow way through is the brace gap, and that is what is measured.
 #
 # THE PIECE IS NOT CHOSEN, IT IS SOLVED. Two rules and no taste:
 #   * the section is the offcut he had - 23x98, the bottom slat;
 #   * the CUT LENGTH is the band plus two laps, and the lap is what a 5 mm
 #     screw needs to sit 3d from the brace's own cut end AND 3d from the
-#     board's edge: 6d = 30 mm each. So 68 + 60 = 128 mm, and nothing about
-#     that number was picked.
-# THE COUNT IS THE SAME KIND OF ANSWER. The clear field between the corner
-# post's inner face and the ladder upright's outer face is 689 mm, and the
-# braces are spaced evenly in it: the FEWEST that bring every opening in the
-# row under MAX_GUARD_OPENING. Three leaves 98,75 mm openings and fails; four
-# leaves 59,4 and holds. Four per field, eight in the bed - and the photograph's
-# «about five» is four, counted by the rule rather than off a picture.
+#     board's edge: 6d = 30 mm each. So 120 + 60 = 180 mm, and nothing about
+#     that number was picked. (On the first X18 datum the band read 68 and the
+#     brace 128; the band is the builder's 120 now and the brace follows it.)
+# THE COUNT IS THE SAME KIND OF ANSWER, AND IT IS RE-RUN ON THE NEW BAND. The
+# clear field between the corner post's inner face and the ladder upright's
+# outer face is 689 mm, and the braces are spaced evenly in it: the FEWEST that
+# bring every opening in the row under MAX_GUARD_OPENING. Three leaves 98,75 mm
+# openings and fails; four leaves 59,4 and holds. Four per field, eight in the
+# bed - the same four as before, because the count is set by the FIELD and the
+# cap, and neither of those moved; only the braces' length did. The
+# photograph's «about five» is four, counted by the rule rather than off a
+# picture.
 GUARD_BRACE_T = BOARD23_T                     # 23, in Y - the slat's thickness
 GUARD_BRACE_W = BOARD36_W                     # 98, in X - the slat's width
-GUARD_BRACE_BAND = GUARD_BAND_Z0[1] - (GUARD_BAND_Z0[0] + GUARD_W)   # 68
+GUARD_BRACE_BAND = GUARD_BAND_Z0[1] - (GUARD_BAND_Z0[0] + GUARD_W)   # 120
 GUARD_BRACE_LAP = 6 * 5                       # 30 = 6d for the 5 mm screw
-GUARD_BRACE_H = GUARD_BRACE_BAND + 2 * GUARD_BRACE_LAP               # 128
-GUARD_BRACE_Z0 = GUARD_BAND_Z0[0] + GUARD_W - GUARD_BRACE_LAP        # 1841
+GUARD_BRACE_H = GUARD_BRACE_BAND + 2 * GUARD_BRACE_LAP               # 180
+GUARD_BRACE_Z0 = GUARD_BAND_Z0[0] + GUARD_W - GUARD_BRACE_LAP        # 1721
+# The band the braces stand in is READ BACK off the two board positions, and it
+# has to come out as the builder's own second reading. If it ever does not, the
+# bands have been moved and this row is sized for a bed that is not there.
+assert GUARD_BRACE_BAND == AS_BUILT_GUARD_BAND, \
+    f"X18: the band between the boards measures {GUARD_BRACE_BAND} and the " \
+    f"builder read {AS_BUILT_GUARD_BAND}"
+assert GUARD_BRACE_BAND > MAX_GUARD_OPENING, \
+    "X18: an unbraced band under the cap would not need a brace row to be " \
+    "legal - if that is true, the row's second job has gone and the comment " \
+    "above has to be rewritten before this assert is"
 # THE BRACE GOES ON THE ROOM SIDE, AND THAT IS NOT A PREFERENCE. The boards
 # hang INBOARD of the verticals (D14), so the slot Y 752..788 between two
 # uprights is empty over the whole guard height - the brace drops into it,
@@ -3325,6 +3406,14 @@ PANEL_OPENING = WALL_SPAN - 2 * BENCH_LEN      # 700, bench end to bench end
 PANEL_SIDE_GAP = 63                            # EN 747: inside the 60..75 band
 EN_GAP_BAND = (12.0, 25.0)                     # a finger passes freely
 EN_LIMB_BAND = (60.0, 75.0)                    # a limb passes; EN 747's own limit
+# X18: the guard-board overhang rule up at MIN_GUARD_INBOARD_CLEAR needs both
+# ends of the same band and is written 450 lines before this line exists, so the
+# number is typed there and tied here rather than the other way round.
+assert MAX_GUARD_INBOARD_CAPPED == EN_GAP_BAND[1], \
+    f"X18: the capped-overhang floor is {MAX_GUARD_INBOARD_CAPPED} and " \
+    f"EN_GAP_BAND tops out at {EN_GAP_BAND[1]:g} - they are the same rule"
+assert MIN_GUARD_INBOARD_CLEAR == EN_LIMB_BAND[0], \
+    "V7: the clear-overhang floor is the limb band's own lower edge"
 PANEL_X0 = BENCH_LEN + PANEL_SIDE_GAP          # 708  [was 669]
 PANEL_X1 = WALL_SPAN - BENCH_LEN - PANEL_SIDE_GAP   # 1282  [was 1321]
 PANEL_W = PANEL_X1 - PANEL_X0                  # 574  [was 652, 680]
@@ -5561,7 +5650,9 @@ JOINTS = [
              drive("Treskrue 5×60 forsenket Torx", 1, frm="bed_slat")])]),
     # X18: SIX OMLEGG, NOT EIGHT. The eighth and seventh are the upper band's
     # inner ends, and the wood they were screwed to is gone - the built ladder
-    # uprights stop at 1871, 68 mm under the upper board. See UPRIGHT_H, and
+    # uprights stop at 1871, dead level with the upper board's UNDERSIDE, so
+    # there is no lap at all at those two ends - not a short one, none. See
+    # UPRIGHT_H, and
     # ASSEMBLY vedlegg B avvik 7 for what carries those two ends instead.
     dict(id="J7", title="Rekkverksbord → hjørnestolpe / stigevange "
                         "(per omlegg)", n=6,
@@ -8637,7 +8728,7 @@ print(f"OK  D1/W2/W6/U2: exactly 6 frame verticals - 2 front corner posts "
       f"plane, Y {BACK_POST_Y0}..{BACK_POST_Y1} of {BACK_RAIL_Y0}.."
       f"{BACK_RAIL_Y1}, stopping under the rail), 2 ladder uprights "
       f"{sec(UPRIGHT_T, UPRIGHT_W)} x {UPRIGHT_H} (X18: cut {UPRIGHT_SHORTFALL} "
-      f"mm short of the posts, flush with the lower guard board's top edge) "
+      f"mm short of the posts, flush with the UPPER guard board's underside) "
       f"({UPRIGHT_W} along X / {UPRIGHT_T} along Y after the U2 turn, so the "
       f"whole front plane Y {FRONT_POST_Y0}..{FRONT_POST_Y1} is one {POST_T} mm "
       f"layer); no intermediate back posts")
@@ -9359,12 +9450,19 @@ for g in front_guards:
         f"Y={FRONT_POST_Y0} (D14)"
     assert y[1] <= FRONT_POST_Y1 - POST_T + TOL, \
         f"'{g.label}' still stands outside the post plane - D14 puts it inboard"
-    # D14: the board hangs GUARD_T past the mattress front edge (752 -> 718).
-    # That has to be clear AIR: the band starts 75 mm above the mattress top.
-    assert z[0] - MATTRESS_Z1 >= MIN_GUARD_INBOARD_CLEAR, \
+    # D14: the board hangs GUARD_T past the mattress front edge (752 -> 716).
+    # X18: and that is a non-event in either of two ways - a whole limb band of
+    # air under it, or too little air for anything limb-scale to get in. What is
+    # forbidden is the WEDGE between them. See MIN_GUARD_INBOARD_CLEAR.
+    _inboard = z[0] - MATTRESS_Z1
+    assert _inboard >= MIN_GUARD_INBOARD_CLEAR or \
+        _inboard <= MAX_GUARD_INBOARD_CAPPED, \
         f"'{g.label}' overhangs the mattress by {FRONT_GUARD_Y1 - y[0]} mm and " \
-        f"is only {z[0] - MATTRESS_Z1} mm above it (want " \
-        f">= {MIN_GUARD_INBOARD_CLEAR})"
+        f"stands {_inboard} mm above it - in the wedge band " \
+        f"{MAX_GUARD_INBOARD_CAPPED}..{MIN_GUARD_INBOARD_CLEAR}, where part of " \
+        f"a limb goes in and does not come out. It has to be clear " \
+        f"(>= {MIN_GUARD_INBOARD_CLEAR}) or capped (<= " \
+        f"{MAX_GUARD_INBOARD_CAPPED})"
     assert x1 - x0 == FRONT_GUARD_SEG_LEN, f"'{g.label}' is {x1 - x0} long"
     lap_post = max(min(x1, a1) - max(x0, a0) for a0, a1 in post_x_ranges)
     lap_up = max(min(x1, a1) - max(x0, a0) for a0, a1 in up_x_ranges)
@@ -9428,72 +9526,98 @@ for z0 in GUARD_BAND_Z0:
 GUARD_TOP = GUARD_BAND_Z0[-1] + GUARD_W
 # V7: THE WINDOW IS A BAND, NOT A CEILING. EN 747-1 does not merely cap the
 # opening between the mattress top and the underside of the lowest guard board
-# at 75 mm - it requires that opening to be <= 5 mm OR in the 60..75 mm band,
-# because an opening between the two is the one a limb wedges in instead of
-# passing through. The mattress sets that opening, so the mattress window is
-# the band read backwards:
-#   thinnest  -> the opening is at its widest, and 75 is the top of the band
-#   thickest  -> the opening is at its narrowest, and 60 is the bottom of it
-# The old MAX came off MIN_GUARD_OVER_MATTRESS (barrier height above the
-# sleeping surface) and gave 326 - true as far as it went, but it was not the
-# governing bound, and a 16 cm mattress inside it put the opening at 55 mm,
-# squarely in the trap window. The barrier-height bound is still checked; it is
-# simply never the one that bites.
-MATTRESS_H_MIN = GUARD_BAND_Z0[0] - SLAT_Z1 - MAX_GUARD_OPENING
-MATTRESS_H_MAX = int(GUARD_BAND_Z0[0] - SLAT_Z1 - EN_LIMB_BAND[0])
-MATTRESS_H_MAX_BARRIER = GUARD_TOP - SLAT_Z1 - MIN_GUARD_OVER_MATTRESS
-assert MATTRESS_H_MAX < MATTRESS_H_MAX_BARRIER, \
-    "V7: the band bound is supposed to be the governing one"
-# X18 - AND THIS IS THE ONE PLACE THE BUILT BED DOES NOT HOLD.
-# The window is the arithmetic above, run on the band the builder PUT THE BOARD
-# IN rather than the band it was drawn in, and it comes out
-#     175 .. 190 mm of mattress
-# against the 120 mm that is on the bed. The rule has not changed and the
-# arithmetic has not changed; the board went up 65 mm and took the window with
-# it. Written the other way round - which is the way the family reads it - the
-# opening between the mattress top and the underside of the lowest board is
-# 130 mm where EN 747 allows 75, and there is nothing in it.
+# at 75 mm - the opening also has to stay OUT of the range a limb wedges in
+# instead of passing through. The mattress sets that opening, so the window is
+# the legal range of openings read backwards through
+#     opening(h) = GUARD_RISE_OVER_SLATS - h
+# and GUARD_RISE_OVER_SLATS is the one number the guard contributes: how far the
+# lower board's underside stands over the deck the mattress lies on.
 #
-# THE MODEL SAYS SO OUT LOUD RATHER THAN MOVING THE BOARD BACK ON PAPER. Both
-# numbers are asserted: the window is what the built guard demands, and the
-# built mattress is OUTSIDE it by a measured amount. What closes it is in
-# vedlegg B, avvik 6, and there are exactly two ways, both of them costed:
-#   * take the lower board down to MATTRESS_Z1 + 65 = 1708, where it was drawn.
-#     Two boards, four screws, one afternoon, and the window is 110..125 again;
-#   * put a BRACE ROW in the lower band the way the builder already put one in
-#     the upper: GUARD_BRACE_N braces per field turn one 130 mm opening into
-#     GUARD_BRACE_N + 1 openings whose least dimension is the brace gap, and
-#     that gap is inside EN 747's limb band. Eight more offcuts.
-# The model does not choose. It measures, and it refuses to print OK.
+# X18 (corrected datum) - THE BOARD IS 130 OVER THE SLATS, AND THE WINDOW IS
+# THE OTHER BRANCH OF THE SAME RULE. On the drawing the board stood 185 over the
+# slats and a 110..125 mattress put the opening in the 60..75 limb band: air
+# under the rail, a whole limb's worth, which is one legal answer. The BUILT
+# board stands 130 over the slats, and a 120 mattress puts the opening at 10 -
+# the board lies just clear of the mattress and laps its front edge. That is the
+# OTHER legal answer, and it is the one the drawing called avvik 4b and kept out
+# of the manual: the opening is capped rather than clear.
+#
+# WHERE THE FLOOR OF "CAPPED" COMES FROM, AND IT IS NOT A NEW NUMBER. An
+# entrapment gap is a gap between two RIGID faces; the finger sub-bands
+# (EN_FINGER_FREE, EN_GAP_BAND) are written for two pieces of wood. Here the
+# lower face is 800 mm of foam pinned on all four sides (W5/W6), so the only
+# question it can answer is the limb-scale one, and limb scale starts where the
+# finger band stops: MAX_GUARD_INBOARD_CAPPED = EN_GAP_BAND[1] = 25. Under
+# 25 mm nothing that could be trapped gets in, and what it would land on is
+# foam. Between 25 and 60 is the wedge, and that is the band the window forbids.
+#
+# So the built guard has TWO windows, not one, and they do not touch:
+#     h in 55..70    opening 60..75, the limb band  - legal, and not a mattress
+#                    anyone sells for a bed like this. Named, not recommended.
+#     h in 105..130  opening 25 down to 0           - legal, CAPPED, and this
+#                    is the window the bed is in, dead centre.
+# THE UPPER BOUND IS THE BOARD ITSELF and it is the tightest thing in sight: at
+# 130 mm the mattress top touches the board's underside and the opening is 0.
+# One millimetre more and the mattress is standing INSIDE the guard board's own
+# height band - there is no opening to measure any more, the board is buried in
+# the mattress edge instead of capping it, and the arithmetic every one of these
+# rules runs on inverts. The barrier bound is still computed and still checked -
+# EN 747 wants 160 mm of guard over the sleeping surface and GUARD_TOP 1969 runs
+# out at 286 mm of mattress - and it is still not the one that bites, exactly as
+# V7 said. It is simply a very long way from being the one that bites now.
+GUARD_RISE_OVER_SLATS = GUARD_BAND_Z0[0] - SLAT_Z1              # 130
+MATTRESS_H_MIN = GUARD_RISE_OVER_SLATS - MAX_GUARD_INBOARD_CAPPED   # 105
+MATTRESS_H_MAX_BARRIER = GUARD_TOP - SLAT_Z1 - MIN_GUARD_OVER_MATTRESS  # 286
+MATTRESS_H_MAX = GUARD_RISE_OVER_SLATS                          # 130
+assert MATTRESS_H_MAX < MATTRESS_H_MAX_BARRIER, \
+    "V7: the barrier bound is not supposed to be the governing one"
+# The other branch, kept because a rule that only reports the answer it likes
+# is a preference: the thicknesses that put the opening in the limb band.
+MATTRESS_H_WINDOW_LIMB = (GUARD_RISE_OVER_SLATS - int(EN_LIMB_BAND[1]),
+                          GUARD_RISE_OVER_SLATS - int(EN_LIMB_BAND[0]))  # 55,70
 MATTRESS_H_WINDOW_DRAWN = (110, 125)     # V7/X4, the band the drawing had
-AS_BUILT_MATTRESS_GAP = GUARD_BAND_Z0[0] - MATTRESS_Z1          # 130
-AS_BUILT_GAP_OVER = AS_BUILT_MATTRESS_GAP - MAX_GUARD_OPENING   # 55
-GUARD_BOARD_DROP_WANTED = GUARD_BAND_Z0[0] - (MATTRESS_Z1 + 65)  # 65
-assert (MATTRESS_H_MIN, MATTRESS_H_MAX) == (175, 190), \
-    f"X18: the AS-BUILT mattress window is {MATTRESS_H_MIN}.." \
-    f"{MATTRESS_H_MAX}, and 175..190 is what the board at " \
-    f"{GUARD_BAND_Z0[0]} demands"
-assert not MATTRESS_H_MIN <= MATTRESS_H <= MATTRESS_H_MAX, \
-    "X18: the built mattress has come back inside the built guard's own " \
-    "window - if that is true, avvik 6 is closed and this assert is the " \
-    "thing that has to go, together with it"
-assert AS_BUILT_GAP_OVER > 0 and GUARD_BOARD_DROP_WANTED > 0, \
-    "X18: avvik 6 only exists while the built gap is over the limit"
+AS_BUILT_MATTRESS_GAP = GUARD_BAND_Z0[0] - MATTRESS_Z1          # 10
+AS_BUILT_GAP_MARGIN = MAX_GUARD_INBOARD_CAPPED - AS_BUILT_MATTRESS_GAP  # 15
+# X18: AVVIK 6 IS CLOSED, AND THIS IS THE ASSERT THAT CLOSED IT. What stood here
+# demanded a 175..190 mm mattress and asserted that the bed's 120 was OUTSIDE
+# the built guard's window. Both statements were arithmetic run off a datum this
+# file had guessed wrong: the builder's 130 was measured off the SLATS, not off
+# the mattress top. On the datum he actually used, the bed's own mattress is
+# inside the built guard's own window and there is nothing to close.
+assert MATTRESS_H_MIN <= MATTRESS_H <= MATTRESS_H_MAX, \
+    f"X18: the built mattress is {MATTRESS_H} mm and the built guard's " \
+    f"window is {MATTRESS_H_MIN}..{MATTRESS_H_MAX} - avvik 6 is closed only " \
+    f"while this holds"
+assert 0 <= AS_BUILT_MATTRESS_GAP <= MAX_GUARD_INBOARD_CAPPED, \
+    f"X18: the built opening over the mattress is {AS_BUILT_MATTRESS_GAP} mm " \
+    f"and the capped branch runs 0..{MAX_GUARD_INBOARD_CAPPED}"
+assert GUARD_BAND_Z0[0] - (SLAT_Z1 + MATTRESS_H_MAX) == 0, \
+    "X18: at the top of the window the mattress touches the board and the " \
+    "opening is 0 - past that there is no opening left to judge"
+assert MATTRESS_H_WINDOW_LIMB[1] < MATTRESS_H_MIN, \
+    "X18: the two windows are supposed to be disjoint, with the wedge " \
+    "between them"
 # ...and the two bounds have to be checked at the bound, not at the modelled
 # thickness: it is the EXTREMES that either pass or do not.
-assert GUARD_BAND_Z0[0] - (SLAT_Z1 + MATTRESS_H_MIN) <= MAX_GUARD_OPENING
+assert GUARD_BAND_Z0[0] - (SLAT_Z1 + MATTRESS_H_MIN) <= MAX_GUARD_INBOARD_CAPPED
 assert GUARD_TOP - (SLAT_Z1 + MATTRESS_H_MAX) >= MIN_GUARD_OVER_MATTRESS
 assert MATTRESS_H_MAX > MATTRESS_H_MIN, \
     "no mattress thickness satisfies both guard rules"
-print(f"AVVIK 6  EN 747 madrasstykkelse: den BYGDE rekkverksstillingen krever "
-      f"{MATTRESS_H_MIN}..{MATTRESS_H_MAX} mm madrass på en spiletopp på "
-      f"{SLAT_Z1}, og madrassen på senga er {MATTRESS_H} mm. Åpningen mellom "
-      f"madrasstopp og nederste bords underkant er "
-      f"{AS_BUILT_MATTRESS_GAP} mm mot grensen {MAX_GUARD_OPENING} - "
-      f"{AS_BUILT_GAP_OVER} mm for mye, og ingen avstivere i båndet. Tegnet "
-      f"vindu var {MATTRESS_H_WINDOW_DRAWN[0]}..{MATTRESS_H_WINDOW_DRAWN[1]} "
-      f"med bordet {GUARD_BOARD_DROP_WANTED} mm lenger ned. Se vedlegg B, "
-      f"avvik 6")
+print(f"OK  X18 (AVVIK 6 LUKKET) EN 747 madrasstykkelse: nederste rekkverksbord "
+      f"står {GUARD_RISE_OVER_SLATS} mm over SPILENE - byggherrens eget mål, "
+      f"lest fra det dekket han sto på - så madrassvinduet på den bygde sengen "
+      f"er {MATTRESS_H_MIN}..{MATTRESS_H_MAX} mm og madrassen på senga er "
+      f"{MATTRESS_H}. Åpningen mellom madrasstopp og bordets underkant er "
+      f"{AS_BUILT_MATTRESS_GAP} mm: bordet ligger like over madrassen og "
+      f"dekker forkanten, {AS_BUILT_GAP_MARGIN} mm under taket "
+      f"{MAX_GUARD_INBOARD_CAPPED} for en lukket åpning, og godt under "
+      f"klemvinduet {MAX_GUARD_INBOARD_CAPPED}.."
+      f"{MIN_GUARD_INBOARD_CLEAR}. Det andre "
+      f"lovlige vinduet - {MATTRESS_H_WINDOW_LIMB[0]}.."
+      f"{MATTRESS_H_WINDOW_LIMB[1]} mm, der åpningen havner i limb-båndet "
+      f"{EN_LIMB_BAND[0]:g}..{EN_LIMB_BAND[1]:g} - er nevnt og ikke anbefalt. "
+      f"Tegnet vindu var {MATTRESS_H_WINDOW_DRAWN[0]}.."
+      f"{MATTRESS_H_WINDOW_DRAWN[1]} med bordet 185 over spilene")
 
 print(f"OK  D2/D7/D13/D14: 4 front guard segments {sec(GUARD_T, GUARD_W)} x "
       f"{FRONT_GUARD_SEG_LEN} at X {FRONT_GUARD_SEGMENTS[0][0]}.."
@@ -9548,11 +9672,18 @@ print(f"OK  D14 collision sweep: Y {sweep_y[0]}..{sweep_y[1]} above Z "
 # it is not one long slot any more, it is GUARD_BRACE_N + 1 openings whose
 # narrow way is the brace gap. So each band carries the count of braces standing
 # in it and the verdict comes off that, not off the band height alone.
-#   band 0  mattress top -> board 1   130 mm, NO braces  -> 130 > 75   FAILS
-#   band 1  board 1 -> board 2         68 mm, 4 braces   ->  59,4 <= 75  ok
-#   band 2  board 2 -> post tops        0 mm             ->  closed
-# The third one is the 58 mm avvik 0 was written about, and it is 0 now: the
-# builder ran the upper board flush with the post tops.
+#   band 0  mattress top -> board 1    10 mm, NO braces  ->  10 <= 75   ok
+#   band 1  board 1 -> board 2        120 mm, 4 braces   ->  59,4 <= 75  ok
+#   band 2  board 2 -> post tops       68 mm, NO braces  ->  68 <= 75   ok
+# ALL THREE HOLD, and the middle one holds BECAUSE of the brace row: 120 mm of
+# bare band would be the one opening in this bed that failed. The braces were
+# read off a photograph and derived off a rule, and on the corrected datum they
+# turn out to be the thing that keeps the guard legal rather than a bonus.
+# Band 0 is the one the first pass of X18 read as 130 mm and wrote up as avvik
+# 6; it is 10, because the builder measured his 130 off the slats.
+# Band 2 is the one avvik 0 was written about at 58 mm: 68 now, still under the
+# cap, and still not even partially bound - nothing else in the bed stands in
+# that height band except the four post ends themselves.
 guard_openings = [
     ("mattress top -> band 1", GUARD_BAND_Z0[0] - MATTRESS_Z1, 0),
     ("band 1 -> band 2", GUARD_BRACE_BAND, GUARD_BRACE_N),
@@ -9571,11 +9702,18 @@ for what, o, n_brace in guard_openings:
     GUARD_BAND_VERDICTS.append((what, o, n_brace, least,
                                 least <= MAX_GUARD_OPENING + TOL))
 _failed = [v for v in GUARD_BAND_VERDICTS if not v[4]]
-assert [v[0] for v in _failed] == ["mattress top -> band 1"], (
+assert _failed == [], (
     "X18: the bands that fail EN 747 on the built bed are "
-    f"{[v[0] for v in _failed]}, and avvik 6 covers exactly one of them - "
-    "the unbraced 130 mm over the mattress. Any other one is a new finding "
-    "and has to be written up before this assert is changed")
+    f"{[v[0] for v in _failed]}. On the corrected datum every band holds and "
+    "avvik 6 is closed; a band that fails again is a NEW finding and has to be "
+    "written up in vedlegg B before this assert is changed")
+# ...and the middle one is only legal because the braces are in it. Say so with
+# a test rather than a sentence: take the row out and the band fails.
+assert GUARD_BRACE_BAND > MAX_GUARD_OPENING >= GUARD_BRACE_GAP, (
+    f"X18: the braced band is {GUARD_BRACE_BAND} mm and the brace gap "
+    f"{GUARD_BRACE_GAP:g} - the row is what makes it legal, and if the band "
+    f"ever comes in under {MAX_GUARD_OPENING} on its own the row's second job "
+    f"has gone")
 print(f"OK  X18 avstiverraden: {GUARD_BRACE_N} per felt, "
       f"{sec(GUARD_BRACE_T, GUARD_BRACE_W)} x {GUARD_BRACE_H} av "
       f"bunnspilevirket, {GUARD_BRACE_LAP} mm omlegg på hvert bord (6d for "
@@ -9585,7 +9723,7 @@ print(f"OK  X18 avstiverraden: {GUARD_BRACE_N} per felt, "
       f"{GUARD_BRACE_GAP_TOO_FEW:g} mm og falt på grensen "
       f"{MAX_GUARD_OPENING}. Fotoet leser «rundt fem»; regelen sier "
       f"{GUARD_BRACE_N}")
-print("AVVIK 6  EN 747 klemvindu, bånd for bånd på den BYGDE sengen: "
+print("OK  X18 EN 747 klemvindu, bånd for bånd på den BYGDE sengen: "
       + " · ".join(
           f"{w} {o:g} mm"
           + (f" med {n} avstivere → smaleste vei {least:g}" if n else
@@ -9615,7 +9753,8 @@ print(f"OK  D6/W1 (front side): guard bands Z "
       f"and {GUARD_BAND_Z0[1]}..{GUARD_BAND_Z0[1] + GUARD_W}; openings above "
       f"the mattress top ({MATTRESS_Z1}): "
       + " / ".join(f"{o:.0f}" for _, o, _n in guard_openings)
-      + f" mm (limit {MAX_GUARD_OPENING}; the first one is avvik 6), barrier "
+      + f" mm (limit {MAX_GUARD_OPENING}; the middle one is legal only because "
+      f"the brace row divides it), barrier "
       f"{guard_over_mattress} mm "
       f"above the mattress (min {MIN_GUARD_OVER_MATTRESS}); back side: no "
       f"boards, a {MAX_MATTRESS_GAP} mm worst-case mattress gap instead (W5)")
@@ -10977,6 +11116,34 @@ AS_BUILT_CLIMB_STEP_BY_RULE = MISSING_RUNG_TOP - BENCH_RAIL_TOP  # 192
 AS_BUILT_STEP_FROM_PLATE = PANEL_UNDER_TABLE - PANEL_TOP_BED          # 367
 AS_BUILT_STEP_IN_TABLE_MODE = (RUNG_TOPS[RUNG_TOPS.index(PANEL_UNDER_TABLE)
                                + 1] - BENCH_TOP)                       # 642
+# X18 (aug. 2026) - AND THE ROUTE THE CHILDREN ACTUALLY TAKE, REPORTED BY THE
+# BUILDER: they put a foot on the BENCH EDGE on the way up, «uten problemer».
+# That is not an excuse, it is a third reading of the same climb, and it is the
+# only one measured on children rather than on wood. Written out it is
+#     rung 1  297  ->  bench seat 420  ->  rung 2  682
+# so the real steps are 123 and 262, and the biggest of them is INSIDE
+# MAX_CLIMB_STEP. The bench top is 142 mm to the side of the ladder (the D13
+# walk-around), which is a sideways step onto a 663 mm long seat, not a reach.
+# WHAT THIS DOES AND DOES NOT DO. It does not move MAX_CLIMB_STEP, it does not
+# cut the fifth tread, and it does not make the LADDER's own geometry legal -
+# the stile still has one 385 mm gap in it and the assert below still says so.
+# What it does is decide what vedlegg B writes underneath the number: avvik 5
+# goes from «bør rettes» to ACCEPTED, dated, on the builder's own observation,
+# and the fifth tread drops from a recommendation to an OPTION that is still
+# costed to the millimetre.
+AS_BUILT_CLIMB_VIA_BENCH = [BENCH_RAIL_TOP, CUSHION_TOP_BENCH,
+                            PANEL_UNDER_TABLE]                    # 297/420/682
+AS_BUILT_STEPS_VIA_BENCH = [b - a for a, b in zip(AS_BUILT_CLIMB_VIA_BENCH,
+                                                  AS_BUILT_CLIMB_VIA_BENCH[1:])]
+AS_BUILT_STEP_VIA_BENCH = max(AS_BUILT_STEPS_VIA_BENCH)               # 262
+assert AS_BUILT_STEP_VIA_BENCH <= MAX_CLIMB_STEP, \
+    f"X18: the route over the bench edge steps {AS_BUILT_STEPS_VIA_BENCH} and " \
+    f"the biggest of them is {AS_BUILT_STEP_VIA_BENCH} against " \
+    f"{MAX_CLIMB_STEP} - if THAT goes over, the acceptance in vedlegg B has " \
+    f"nothing left to stand on"
+assert AS_BUILT_CLIMB_VIA_BENCH[1] == CUSHION_TOP_BENCH > BENCH_TOP, \
+    "X18: the intermediate tread is the bench SEAT - the cushion top, which " \
+    "is what a foot lands on"
 # ...and where the fifth tread's hole would go, measured the way every other
 # hole in the stile is measured: down from the upright's own top.
 MISSING_RUNG_HOLE = UPRIGHT_H - (MISSING_RUNG_TOP - RUNG_T // 2)      # 1406
@@ -10998,8 +11165,16 @@ print(f"AVVIK 5  stigen som STÅR har {len(RUNG_TOPS)} trinn, ikke "
       f"fra platens overside og steget er {AS_BUILT_STEP_FROM_PLATE} mm; i "
       f"bordstilling ligger platen PÅ støttetrinnet, så første trinn en fot "
       f"finner er {RUNG_TOPS[RUNG_TOPS.index(PANEL_UNDER_TABLE) + 1]}, "
-      f"{AS_BUILT_STEP_IN_TABLE_MODE} mm over benkeflaten. Det manglende "
-      f"trinnets J4-hull ville stått {MISSING_RUNG_HOLE} mm ned fra "
+      f"{AS_BUILT_STEP_IN_TABLE_MODE} mm over benkeflaten. AKSEPTERT (aug. "
+      f"2026): byggherren melder at barna bruker BENKEKANTEN som mellomtrinn "
+      f"«uten problemer», og den veien - "
+      + "/".join(str(t) for t in AS_BUILT_CLIMB_VIA_BENCH)
+      + " - stiger "
+      + "+".join(str(s) for s in AS_BUILT_STEPS_VIA_BENCH)
+      + f", største virkelige steg {AS_BUILT_STEP_VIA_BENCH} mm mot grensen "
+      f"{MAX_CLIMB_STEP}. Grensen er ikke rørt og stigens egen geometri er "
+      f"fortsatt {AS_BUILT_CLIMB_STEP}. Det femte trinnet er en OPSJON: "
+      f"J4-hullet ville stått {MISSING_RUNG_HOLE} mm ned fra "
       f"stigevangens topp. Se vedlegg B, avvik 5")
 # X9/X16: THE CLIMB IS TWO FLIGHTS, AND EACH ONE IS JUDGED ON ITS OWN. Under
 # X9 the split was at the CROSSING of an empty corridor; under X16 it is at the
