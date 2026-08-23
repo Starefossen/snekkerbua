@@ -40,7 +40,7 @@ hvert merke står på det festemiddelet det navngir.*
 | **Ytre mål** | 1990 × 836 × 2037 mm — fyller nisjen fra vegg til vegg på 1990 mm, i et rom med 2450 mm takhøyde, og gir 1500 mm fri høyde under køya. Gjennomgående deler kappes 1984 mm, for et bord på 1990 mm lar seg ikke svinge inn i en åpning på 1990 mm |
 | **Trevirke** | **76 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 53,25 løpemeter. Fordelingen: 23×98 26 stk. · 48×68 21 stk. · 36×48 14 stk. · 36×98 12 stk. · 48×98 2 stk. · plata 1 stk. 24 av de 76 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling. Tallene telles av modellen og står nederst i [kapplista](docs/generated/kappliste.md) — `TOTAL 76 pcs 53.25 m in 5 timber profiles + 1 sheet` er det modellen skriver ut mens den bygger |
 | **Stål** | **185 festemidler fordelt på 22 ledd**, **176 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. De 9 som mangler er de to veggfestene, J14 og J12-V: de går rett inn i veggen og har ingen andre del å ende i, så de er plassert, men ikke modellert. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert. Begge tallene skriver modellen ut selv — `185 festemidler plassert i 22 ledd` og `176 festemidler modellert som kropper` |
-| **Kontroller** | **507 asserter i modellen** og 190 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått, og de telles som `ast.Assert`-noder i syntakstreet, ikke med grep: en grep på linjer som begynner med ordet «assert» tar med brødtekst som gjør det samme, og gir 514 her. Metoden er `python -c "import ast,sys;print(sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse(open(sys.argv[1]).read()))))" generate_loftbed.py`, og den samme summen over `tools/*.py` (23 filer) — men ingen runde arver dem lenger: `tools/check_tall.py` teller dem på nytt i porten og feller bygget hvis denne tabellen sier noe annet enn det den finner. Skrueretningene er utledet av fysikk (7 av de 24 radene i [skrueretningene](docs/generated/skrueretninger.md) er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — 25 linjer over 22 skrueretninger og alle 176 festemidlene, en bijeksjon som asserteres på det ferdige blekket. De to siste radene er veggfestene: de får hver sin egen plasseringslinje over 9 fester, satt etter stender og ikke etter mål, og telles derfor for seg; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
+| **Kontroller** | **507 asserter i modellen** og 194 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått, og de telles som `ast.Assert`-noder i syntakstreet, ikke med grep: en grep på linjer som begynner med ordet «assert» tar med brødtekst som gjør det samme, og gir 514 her. Metoden er `python -c "import ast,sys;print(sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse(open(sys.argv[1]).read()))))" generate_loftbed.py`, og den samme summen over `tools/*.py` (23 filer) — men ingen runde arver dem lenger: `tools/check_tall.py` teller dem på nytt i porten og feller bygget hvis denne tabellen sier noe annet enn det den finner. Skrueretningene er utledet av fysikk (7 av de 24 radene i [skrueretningene](docs/generated/skrueretninger.md) er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — 25 linjer over 22 skrueretninger og alle 176 festemidlene, en bijeksjon som asserteres på det ferdige blekket. De to siste radene er veggfestene: de får hver sin egen plasseringslinje over 9 fester, satt etter stender og ikke etter mål, og telles derfor for seg; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
 | **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **138 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. 138 er ikke et anslag: det er `git ls-files` over nøyaktig de stiene `snap()` i `mise.toml` hasjer. Determinismen er en assert, ikke en forventning |
 | **Ut av det** | **To trykkeklare PDF-er** med én kommando — et byggehefte på **30 sider** og et referansehefte på **54**, `pdfinfo docs/hanna.pdf` og `pdfinfo docs/hanna-referanse.pdf` sier hvor mange det ble. Byggeheftet er det som tas med til benken; referanseheftet blir stående i hylla. Pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
@@ -112,7 +112,7 @@ papir.
 
 **Manualen kan ikke lyve.** Assertene sier nesten aldri at et tall er det
 tallet — de er forhold, utledet av noe utenfor tegningen, og de sier hvor man
-retter det når de ryker. Fem familier:
+retter det når de ryker. Seks familier:
 
 * **Skruelengde.** En gjennomgående skrue må gå klar av delen den drives fra og
   ende inne i den andre: `t(fra) < lengde < t(fra) + t(inn i)`. Der bare én
@@ -136,6 +136,15 @@ retter det når de ryker. Fem familier:
 * **Orientering.** Et beslag som er skrudd fast i tre er ikke nødvendigvis
   riktig vei. Et beslag som *bærer* noe må ha den vannrette fliken skrudd rett
   opp, i undersiden av det den bærer.
+* **Avstiving.** Hva holder kroppen et steg nettopp laget, i det byggmesteren
+  slipper den? Målt på festene: tre fester som *ikke* ligger på én linje låser
+  en stiv kropp; ligger de på én, kan kroppen dreie om den, og om det betyr
+  noe er en arm mot festenes egen rekkevidde. En kropp som ennå er et hengsel
+  får et avstivingspunkt i steget sitt — enten «monter denne permanente delen
+  straks» (utledet: en senere del som allerede kan skrus både til kroppen og
+  til noe som står) eller «sett en midlertidig lekt hit». Regelen kom av
+  byggherrens rapport etter at senga var bygget, og en assert holder den til
+  de to kroppene han navnga.
 
 **Og assertene prøves selv.** En assert som aldri har feilet er ikke en bevist
 assert, den er en uprøvd en. `tools/falsifiser.py` tar de asserene som VOKTER —
@@ -144,8 +153,9 @@ de som måler ferdig blekk eller plasserte kropper på tvers av filer, der
 dagens innhold, og perturberer så én ting om gangen i minnet: bærer bakrammen
 inn gjennom en åpning like bred som seg selv, tar et ledd ut av steg 0s
 utsettelsesliste, gir et veggfeste et X-mål som fasit, lar et stegark slutte
-stille å tegne et plasseringsmål det skylder, lar README gjenfortelle et tall
-som har flyttet seg. Hver eneste feilinjisering må felle sin assert.
+stille å tegne et plasseringsmål det skylder, gir en løs kropp et feste ute i
+sitt eget frie hjørne så avstivingsregelen slutter å fyre, lar README
+gjenfortelle et tall som har flyttet seg. Hver eneste feilinjisering må felle sin assert.
 Ingen av dem rører en fil på disk, og porten kjører dem.
 
 Og siden alt utledet er sjekket inn — nettopp for at `git diff --stat` etter et
@@ -251,7 +261,7 @@ To filer, ingen av dem en del av den trykte manualen.
   tilfeller, tegnekonvensjonene som holder på tvers av prosjektene, og hvorfor
   determinismen er en assert.
 * **[docs/PRAKSIS.md](docs/PRAKSIS.md)** — HANNAs egen: kjeden ut av
-  `generate_loftbed.py`, de fire assertfamiliene og standardene de kommer av,
+  `generate_loftbed.py`, de fem assertfamiliene og standardene de kommer av,
   boksinvarianten og dens ene kileformede unntak, hvor grensen mellom stål og
   tre går, og hver eneste konvensjon i billedspråket i denne manualen —
   fyllkoder, merkeregler, kjeden i et beslaghjørne, ikonspesifikasjonen — med

@@ -54,7 +54,8 @@ platekutt, kløyving/langsgående kutt (→ se kjøpsplan).
 flush-trim. **Dekker ikke:** innstikk midt på flaten (ingen dykk-funksjon) —
 runde sete-forsenkninger tas fortsatt med **forstnerbor i drillen**, og
 skråskruene bores NED I hullet i de to hjemmelagde vinkelklossene
-(se kapplista) — én kloss per vinkel, og hver av dem trenger to tvinger.
+(se kapplista) — én kloss per vinkel, og hver av dem trenger to tvinger
+(som er ett av mange bruk: se håndverktøylista under).
 
 ### Skinnesag — Ryobi ONE+ HP RPLS18X-0 (kjøpt aug. 2026)
 
@@ -80,8 +81,18 @@ til innholdet er verifisert mot behovet.
 
 ### Håndverktøy (fra HANNA-byggelista, antatt i hus)
 
-Vater, vinkelhake, tommestokk/målebånd, skrutvinger ×2, sag (hånd),
-Torx-bits, blyant/syl, skrustikke.
+Vater, vinkelhake, tommestokk/målebånd, **skrutvinger — minst 2, helst 4**,
+sag (hånd), Torx-bits, blyant/syl, skrustikke.
+
+⚠️ **Tvingene er standardverktøy, ikke jiggutstyr.** De stod her lenge som «×2»
+fordi vinkelklossen til skråskruene trenger to av dem. Det er ett bruk av
+mange: en treskrue drar skjøten ut av flukt på vei inn, så delene klemmes
+sammen i riktig stilling *før* skruen går i — hver gang, ikke bare i jiggen.
+Og før sengen har fått forankring holder ikke alt seg selv i flukt: HANNA har
+byggesteg der en kropp henger i ett feste til neste steg binder den, og der er
+tvingen eller den midlertidige lekta det som holder fluktet (se
+`prosjekter/hanna/docs/PRAKSIS.md` §2, «Avstiving»). To tvinger er minimum; med fire slipper du
+å velge mellom å holde og å skru.
 
 ## Kjøpsplan — prioritert
 
@@ -91,7 +102,7 @@ Rangert etter hva som låser opp mest per krone, gitt eksisterende park:
 |---|---|---|---|
 | 1 | **Eksentersliper — ONE+ HP-variant** | Finish-kvalitet på alt; HANNA: 72 deler skal slipes før maling | Kjøp før malejobben. HP børsteløs-utgave finnes i sortimentet — verifiser modellnr. (ikke ta brushed R18ROS hvis HP står ved siden av) |
 | 2 | **Linjelaser, selvnivellerende — 360° horisontal + vertikal** | Høyderiss rundt nisja og loddlinje midt i den. Uten den kan ikke romdelene i HANNA kappes: nisjas minste bredde og gulvets høyeste punkt måles fra risset, ikke fra gulvet | **Lånt eksemplar dekker behovet inntil videre — ikke kjøpt.** Anbefaling når den skal kjøpes: **Bosch UniversalLevel 360 Premium Set**, ~1 730 kr, ±0,4 mm/m, 360° horisontal linje **og** vertikal linje, stativ inkludert. Budsjett: **Jula Meec 360°**, 999 kr. ⚠️ **Unngå Bosch PLL 360-1** — den mangler vertikal linje, og loddlinja midt i nisja er halve jobben. Batteriuavhengig. **Trengs FØR kapp av romdelene** |
-| 3 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | «Tredje hånd» ved boring, liming, montering | Batteriuavhengig; billigst per nytte på lista |
+| 3 | **Flere tvinger** (4+ F-tvinger, 2 hurtigtvinger) | Ikke «tredje hånd» ved anledning, men standardverktøy ved **hver** skruing: skruen flytter delen ut av flukt på vei inn. I tillegg holder de kroppene som ennå ikke har forankring — se avstivingspunktene i byggeheftet | Batteriuavhengig; billigst per nytte på lista |
 | 4 | **Forstnerbor-sett** | Flatbunnede hull: HANNA trenger ⌀18 (skråskrue-setene) og ⌀40 (filtknottene) | Drives av drillen (13 mm chuck ✓). **Trengs til HANNA-byggingen** |
 | 5 | **Japansk sag (ryoba) + stemjern-sett** | Rene hakk og presisjon for hånd; billigste vei til skjult treskjøt | Batteriuavhengig, ~200–400 kr |
 | 6 | Blokkhøvel | Finjustering av skribede føtter og kanter som møter vegg — de siste millimeterne etter finkapp | Valgfri: båndsliper eller pussekloss duger. Batteriuavhengig |

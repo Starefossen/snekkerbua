@@ -47,12 +47,12 @@ være enige om et tall, er tallet på feil sted.**
 
 ---
 
-## 2. De fire assertfamiliene
+## 2. De fem assertfamiliene
 
 Hva som gjør en assert verdt å skrive står i
 [PRAKSIS §2](../../../PRAKSIS.md#2-assertfilosofien). Modellen har over hundre
-av dem, og de faller i fire familier som følger av hva sengen er laget av: tre,
-stål og en flate å skru i.
+av dem, og de faller i fem familier som følger av hva sengen er laget av: tre,
+stål, en flate å skru i — og en rekkefølge de settes sammen i.
 
 Inndataene er standardene. EC5 gir 3d kantavstand og 4d avstand mellom skruer;
 EN 747 gir 75 mm åpning og 160 mm rekkverk over madrassen. Alt som følger av
@@ -106,6 +106,41 @@ på stål. Derfor to asserter, ikke én:
 * hver flik må ha tre bak seg i sin egen skrueretning, og
 * et beslag som **bærer** noe (`bears=`) må ha den vannrette fliken skrudd rett
   opp, i undersiden av delen det bærer.
+
+**Avstiving (X17).** De fire over spør om den ferdige sengen. Denne spør om
+sengen *underveis*: hva holder kroppen et steg nettopp har laget, i det
+byggmesteren slipper den? Kilden er byggherrens egen rapport etter at senga var
+bygget (august 2026): «når bygget ikke har noen forankring ennå, trengs
+midlertidige stivere for at nedre del av rammen skal holde seg i flukt».
+
+Målt på den samme grafen X12 bygger — `step_units` sine kropper — og på
+festene, ikke på et skjønn. Forankringsskyen er de festene *dette* steget
+driver mellom kroppen og noe som allerede står (eller inn i veggen). Tre
+fester som ikke ligger på én linje låser en stiv kropp; tre punkter à tre
+translasjoner er ni bindinger mot seks frihetsgrader. Ligger de på **én**
+linje, står det igjen én frihet, og om den betyr noe er en **arm**, målt mot
+festenes egen rekkevidde:
+
+> **ustabil ⟺ festene ligger på én linje, og kroppens ytterste hjørne står
+> lenger fra den linjen enn festene står fra hverandre.**
+
+Derfor går en benkespile fri — den er skrudd i hver sin ende, og ingen del av
+den stikker nevneverdig utenfor linjen mellom de to skruene — mens en fremre
+stolpe med endebjelke ikke gjør det: to skruer 44 mm fra hverandre, og et
+hjørne 829 mm ute.
+Gulvet regnes ikke som feste; det er ikke i vater, og det er derfor føttene
+kappes til slutt (samme grunn som at et plasseringsmål ikke måles fra gulvet,
+§ X15).
+
+Det steget så *får* er utledet, ikke skrevet: finnes det en senere del som
+allerede kan skrus både til kroppen og til noe som står, sier punktet at den
+delen monteres straks — byggherrens eget steg 5-grep, «ett toppbord
+umiddelbart» — og ellers at det må en midlertidig lekt til, med hvilken
+stående del den skal nå bort til og hvor langt det er. To asserter holder det
+på plass: en bijeksjon mellom «steg med ustabil kropp» og «steg med
+avstivingspunkt», lest av det ferdige blekket, og en fasit-assert som krever
+at regelen fortsatt fyrer på de to kroppene rapporten navngir. Blir kriteriet
+løsere, er det den siste som sier fra.
 
 ### Unntaket: delen som ikke er en boks
 

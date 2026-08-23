@@ -80,6 +80,24 @@ endrer navn.
 Det samme gjelder valg som kunne vært en bryter: er vilkåret regnbart, regnes
 det ut av dataene og skrus verken av eller på for hånd.
 
+### Erfaring blir kriterium, ikke huskeliste
+
+Det som kommer tilbake fra en som faktisk har bygget, er den beste inndataen
+et prosjekt her får — og den mest fristende å skrive rett inn som en merknad
+i det steget den gjelder. Gjør ikke det. En merknad i et steg er et `if` med
+et menneske i seg: den gjelder akkurat den tingen, akkurat den gangen, og den
+blir stående igjen når geometrien flytter seg.
+
+Spør i stedet hva rapporten *måler*, og let etter det målet i dataene
+prosjektet allerede har. Da blir erfaringen et kriterium som fyrer av seg
+selv, også på tilfeller ingen har rapportert ennå. Og siden rapporten var
+konkret, kan den gjøres om til en **fasit**: en liten navngitt liste over de
+tilfellene byggmesteren faktisk pekte på, med en assert som krever at det
+utledede kriteriet fortsatt treffer dem. Kriteriet kan da strammes og løsnes
+i fred — fasiten sier fra den dagen det slutter å dekke det den kom av.
+Skriv datoen og sitatet inn i koden ved siden av lista; kilden er en del av
+regelen.
+
 ---
 
 ## 4. Tegnekonvensjoner som holder på tvers

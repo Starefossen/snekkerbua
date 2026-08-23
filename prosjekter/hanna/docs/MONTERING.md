@@ -88,13 +88,15 @@ Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøy
 
 **Antallet står ikke i bildet.** Festemidlene er tegnet ett for ett, der de går — bare to som havner nøyaktig oppå hverandre på papiret er tegnet én gang. Hvor mange det er i alt står i tabellen under bildet, og bare der. Hvilken vei hver enkelt drives, og hva som forbores, står i [beslaglista](generated/beslagliste.md) og [skrueretningene](generated/skrueretninger.md).
 
+**Tving før du skrur — hele veien.** En treskrue drar skjøten ut av flukt på vei inn: den siste halve omdreiningen flytter delen noen tiendeler før den klemmer. Klem derfor delene sammen i den stillingen de skal ha, og skru så. Minst **to tvinger** i huset, fire er bedre — to av dem er dessuten bundet opp i steg 0, der vinkelklossen skal holdes mot flaten mens lomma bores. Og på steg 3 og 5 står det en kropp igjen som ikke holder seg selv i flukt før neste steg kommer: de stegene har hvert sitt **avstivingspunkt** nederst i «Slik gjør du», og der sier tvingen eller den midlertidige lekta hva som skal holdes mot hva.
+
 | Slik | Ikke slik | |
 |:---:|:---:|---|
 | <img src="img/ikon/to-personer.svg" alt="to-personer" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/en-person-nei.svg" alt="en-person-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Én person — men to ved reisningen, steg 2 og 4.** Bakrammen tippes opp om underkanten, og den fremre sidevangen løftes opp på endebjelkene. Begge deler krever fire hender. Resten av sengen er skrevet for én mann med tvinger og lister. |
 | <img src="img/ikon/underlag.svg" alt="underlag" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/dra-nei.svg" alt="dra-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Mykt underlag.** Bygg rammene flatt på papp eller teppe. Ikke dra delene over gulvet. |
 | <img src="img/ikon/sorter.svg" alt="sorter" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Sorter delene** etter kapplista, og merk hver del på en flate som blir skjult. |
 | <img src="img/ikon/blyant-foerst.svg" alt="blyant-foerst" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/skrutrekker-foerst-nei.svg" alt="skrutrekker-foerst-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Blyanten først.** Merk av hvert kapp og hvert hull før du skrur — all saging og all boring skjer før delen reises: verksteddelene i steg 0, romdelene så snart de er finkappet i rommet. |
-| <img src="img/ikon/verktoy.svg" alt="verktoy" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Verktøy:** drill med bor, torxbits, tommestokk, vater og vinkelhake. |
+| <img src="img/ikon/verktoy.svg" alt="verktoy" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Verktøy:** drill med bor, torxbits, tommestokk, vater, vinkelhake og tvinger — minst to, fire er bedre. |
 | <img src="img/ikon/forbor.svg" alt="forbor" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> |  | **Forbor.** I bordene og i all endeved er forboring et krav. |
 | <img src="img/ikon/veggfeste-ja.svg" alt="veggfeste-ja" height="72"> <img src="img/ikon/hake.svg" alt="ja" height="26"> | <img src="img/ikon/fritt-staaende-nei.svg" alt="fritt-staaende-nei" height="72"> <img src="img/ikon/kryss.svg" alt="nei" height="26"> | **Sengen skal skrus fast i veggen.** Den er ikke beregnet på å stå fritt — veggen er sperren på baksiden. |
 
@@ -242,6 +244,8 @@ Ledd **J1** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Vater på begge endebjelker, og kontroller at de ligger i nøyaktig samme høyde.
 
+🗜️ **Avstiving.** Endebjelke og hjørnestolpe, front henger i ett feste og kan dreie langs veggen, inn mot endeveggen og ut igjen — sett en midlertidig lekt fra det frie hjørnet bort til hjørnestolpe, bak (veggside), og bruk tvinger mens du skrur.
+
 [Steg 3 i ord](generated/byggesteg.md#steg-3--endebjelkene-og-de-fremre-stolpene)
 
 ---
@@ -292,6 +296,8 @@ Bokstavene viser hvor på tegningen hver type går.
 Ledd **J8**, **J10**, **J17** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Ingenting skal krysse gulvet mellom de to benkene.
+
+🗜️ **Avstiving.** Benkevange, front (bit) og stubbefot henger i ett feste og kan dreie inn mot bakveggen og ut i rommet — monter én benkespile med det samme, og bruk tvinger mens du skrur.
 
 [Steg 5 i ord](generated/byggesteg.md#steg-5--fremre-benkevanger-stubbeføtter-og-endelister)
 

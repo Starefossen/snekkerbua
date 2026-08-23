@@ -179,6 +179,23 @@ def run_step_dim_ink(rig, sheets=None):
                              rig.sheets() if sheets is None else sheets)
 
 
+def run_brace_ink(rig, G=None, text=None):
+    """X17's bijection: a step whose body is still a hinge has to carry a
+    brace point on paper, and a step whose bodies are all held may not."""
+    G = G or rig.G()
+    with contextlib.redirect_stdout(io.StringIO()):
+        T.assert_brace_ink(G, rig.steps(G), T.cut_index(G),
+                           rig.bygg if text is None else text)
+
+
+def run_brace_report(rig, G=None):
+    """X17's fasit: the two bodies the builder wrote down after building the
+    bed have to be among the ones the derived rule still catches."""
+    G = G or rig.G()
+    with contextlib.redirect_stdout(io.StringIO()):
+        T.apply_braces(G, rig.steps(G), T.cut_index(G))
+
+
 def run_value_comments(rig, source=None):
     src = rig.M.VALUE_COMMENT_SOURCE if source is None else source
     stale, checked, _skip = rig.M.stale_value_comments(src, vars(rig.M))
@@ -196,6 +213,8 @@ CONTROLS = [
     ("X10 verdikommentarene", run_value_comments),
     ("X14 kapplistas løse deler", run_kappliste),
     ("X16 støttetrinnet i stegveiledningen", run_seat_rung),
+    ("X17 avstivingspunktene mot de ubundne kroppene", run_brace_ink),
+    ("X17 byggherrens to kropper mot regelen", run_brace_report),
 ]
 
 
@@ -518,6 +537,88 @@ def inj_step_guide_misprints_the_seat_height(rig):
                             f"{T._fmt(down + 12)} mm i begge ender"))
 
 
+def _first_brace(rig, G):
+    """The brace point the builder's own report names first, derived.
+
+    Not «step 3» and not a label: the first of BRACE_REPORTED, matched against
+    the bodies the rule fires on. If the rule ever stops firing on it the
+    control has already gone red, so this cannot fail quietly.
+    """
+    braces = T.brace_points(G, rig.steps(G), T.cut_index(G))
+    for n in sorted(braces):
+        for rec in braces[n]:
+            if any(T._match(T.BRACE_REPORTED[0], l) for l in rec["labels"]):
+                return n, rec
+    raise RuntimeError("X17 fyrer ikke lenger på den første av kroppene "
+                       "byggherren skrev ned - injeksjonen har mistet målet")
+
+
+def inj_brace_point_rubbed_out(rig):
+    """Rub one brace point off the step guide and leave the body a hinge.
+
+    THE SILENCE CASE, and it is the one this bijection exists for: a step that
+    has stopped printing the paragraph looks exactly like a step that never
+    owed one. The bed is unchanged, the body still turns on two screws 44 mm
+    apart, and the only thing that moved is the paper.
+    """
+    _n, rec = _first_brace(rig, rig.G())
+    run_brace_ink(rig, text=_sub(rig.bygg, "1. " + rec["text"] + "\n", ""))
+
+
+def inj_brace_point_invented(rig):
+    """...and the other way round: a step that holds everything it makes gets
+    a brace point anyway. A licence to print the paragraph is not the same
+    thing as the rule that decides where it goes."""
+    n, rec = _first_brace(rig, rig.G())
+    other = next(st["n"] for st in rig.bygg_steps
+                 if st["n"] > n and st["do"]
+                 and not any(T.BRACE_MARK in d for d in st["do"]))
+    head = f"\n## Steg {other} — "
+    before, after = rig.bygg.split(head, 1)
+    mark = "**Slik gjør du:**\n\n"
+    if mark not in after:
+        raise RuntimeError(f"steg {other} har ingen «{mark.strip()}» - "
+                           f"injeksjonen har mistet målet sitt")
+    cut = after.index(mark) + len(mark)
+    run_brace_ink(rig, text=(before + head + after[:cut]
+                             + "1. " + rec["text"] + "\n" + after[cut:]))
+
+
+def inj_body_is_held_after_all(rig):
+    """Give a hinged body a second fixing out at its own free corner.
+
+    This is the graph half of X17, and it is the injection that keeps the
+    CRITERION honest rather than the ink: move one of the two screws that hold
+    the body out to the corner that swings, and the anchors stop being a short
+    line with a long lever - the rule says «held» and stops firing. Nothing on
+    paper changes. What has to bite is the assert that holds the derived rule
+    to the two bodies the builder wrote down after he had built the bed: if it
+    does not, the rule has quietly stopped covering his report and the manual
+    would go to the next builder without the point.
+    """
+    G = rig.G()
+    _n, rec = _first_brace(rig, G)
+    # BOTH ends, because the bed is mirrored: the sentence is one instruction
+    # and the hinges are two, and fixing one of them proves nothing while the
+    # other still fires.
+    want = {}
+    for hold in rec["mirrors"]:
+        jid, _grips, _mine, anchor = hold["cloud"][0]
+        want[(jid, anchor)] = hold["far"]
+    specs, moved = [], set()
+    for f in G.FASTENER_SPECS:
+        key = (f["jid"], tuple(f["anchor"]))
+        if key in want and key not in moved:
+            f = dict(f, anchor=want[key])
+            moved.add(key)
+        specs.append(f)
+    if moved != set(want):
+        raise RuntimeError(f"fant ikke {sorted(set(want) - moved)} blant de "
+                           f"plasserte festene - injeksjonen har mistet målet")
+    G.FASTENER_SPECS = specs
+    run_brace_report(rig, G)
+
+
 INJECTIONS = [
     ("bakrammen bæres inn gjennom en åpning like bred som seg selv",
      "X12 manøvrerbarhet", inj_frame_is_carried),
@@ -563,6 +664,12 @@ INJECTIONS = [
      "X16 støttetrinnet", inj_step_guide_forgets_the_seat_rung),
     ("stegveiledningen setter støttetrinnet i feil høyde",
      "X16 støttetrinnet", inj_step_guide_misprints_the_seat_height),
+    ("et avstivingspunkt viskes ut av et steg som fortsatt har en løs kropp",
+     "X17 avstiving", inj_brace_point_rubbed_out),
+    ("et steg som holder alt det bygger får et avstivingspunkt likevel",
+     "X17 avstiving", inj_brace_point_invented),
+    ("en løs kropp får et feste ute i det frie hjørnet og blir «stabil»",
+     "X17 avstiving", inj_body_is_held_after_all),
 ]
 
 

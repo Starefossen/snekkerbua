@@ -1422,6 +1422,513 @@ def check_step_units(G, steps):
     return units
 
 
+# ---------------------------------------------------------------------------
+# X17 - THE BED DOES NOT HOLD ITSELF UNTIL IT DOES, AND THE STEPS HAVE TO SAY
+#       WHICH BODY IS STILL A HINGE
+# ---------------------------------------------------------------------------
+# THE BUILDER'S SECOND ROUND OF NOTES, and this one is not a number. The bed is
+# built. What it cost him was this, in his words:
+#
+#   «Det vi glemte å ta høyde for var at når bygget ikke har noen forankring
+#    ennå, trengs midlertidige stivere for at nedre del av rammen skal holde
+#    seg i flukt (som i steg 3 burde det vært en tilsvarende del montert
+#    nederst på rammen for å holde ytterdelen i flukt; samme med steg 5 der
+#    jeg endte med å montere ett toppbord umiddelbart for å sikre flukt). Jeg
+#    brukte tvinger for å hindre at deler flyttet seg under festing.»
+#                                              - byggherren, august 2026
+#
+# AND THE TRADE HAS KNOWN IT FOR A CENTURY. A framer does not nail a wall up
+# and walk away: the wall is plumbed, LINED and braced - let-in or temporary
+# diagonal braces at about 45 degrees - and the braces stay until the
+# sheathing arrives, because the sheathing is what will finally hold it. A
+# cabinetmaker squaring a carcass tacks a batten across the front, and the
+# good ones cut that batten to the length of a SHELF, because then it can stop
+# being temporary. And every pocket-screw manual in print opens with the same
+# sentence: clamp before you drive, because the screw pulls the joint out of
+# line on its way in. Three habits, one fact - a joint holds a body only after
+# it is tight, and until then something else has to.
+#
+# WHAT IS MEASURED, AND IT IS MEASURED ON THE SAME GRAPH X12 ALREADY BUILT.
+# `step_units` derives the bodies a step hands the builder. This asks one more
+# question of each of them: WHAT HOLDS IT while he lets go?
+#
+#   * The ANCHOR CLOUD is the set of fastener anchors THIS step drives between
+#     the body and wood that is already standing (or into the wall). It is the
+#     whole of the restraint: nothing else in this bed is glued, housed or
+#     notched, so a body is held by its screws and by nothing else.
+#   * Three pins that do not lie on one line fix a rigid body. That is not a
+#     convention, it is the count: three points times three translations is
+#     nine constraints against six freedoms. So a cloud of rank 2 or more is
+#     HELD, and the trade says the same thing in four words - two fixings, and
+#     not on top of each other.
+#   * A cloud on ONE LINE leaves exactly one freedom: the body turns about
+#     that line. Whether that matters is a LEVER, and the lever is measured
+#     against the joint's own reach - how far apart its own anchors stand. A
+#     bench slat is screwed at both ends, 752 mm apart, and no corner of it is
+#     more than 54 mm off that line: the joint reaches round the whole piece
+#     and there is nothing to swing. A front post hangs on two screws 44 mm
+#     apart and its foot stands 829 mm out. That is a hinge.
+#
+#         UNSTABLE  <=>  the anchors are collinear and the body's own far
+#                        corner stands further off that line than the anchors
+#                        stand from each other.
+#
+# AND THE FLOOR IS NOT A RESTRAINT. It is not in vater - that is WHY every
+# standing part is cut long and trimmed - so it is not a datum on a step sheet
+# (X15) and it is not a fixing here either. Both bodies this rule catches turn
+# about a PLUMB line, where a floor could not help even if it were flat.
+#
+# WHAT THE STEP IS THEN TOLD TO DO is derived too, and it has two shapes,
+# because the bed sometimes owns the cure already:
+#
+#   1. A PERMANENT MEMBER THAT CAN GO ON NOW. A part from a later step that is
+#      fastened BOTH to this body and to something already standing breaks the
+#      line the moment it is screwed on. Then the instruction is to fit that
+#      one member immediately and leave its brothers for their own step - the
+#      builder's own step 5 move, and the cabinetmaker's batten-cut-to-a-shelf.
+#      Which one of a family: the one whose anchors reach furthest from the
+#      hinge, because that is the longest lever the bed can offer against it.
+#   2. NOTHING IN THE BED REACHES. Then it is a temporary batten or a clamp,
+#      and the ink says what to hold against what: the standing member nearest
+#      the free corner, and how far away it is.
+#
+# The step that finally holds it is derived as well - the first later step
+# after which the growing body's cloud stops being a line - so the ink can say
+# when the brace comes off instead of leaving it up.
+BRACE_MARK = "**Avstiving —"
+
+# THE TWO BODIES THE BUILDER WROTE DOWN, named as PART SPECS and not as step
+# numbers, because a step number is a place in a list and these are pieces of
+# wood. The rule above is derived from the solids; this is the report it has
+# to keep agreeing with. Loosen the criterion, move a joint, add a fixing that
+# quietly makes one of these bodies rank 2 - and the assert says which of the
+# builder's two cases the model just stopped seeing.
+BRACE_REPORTED = [
+    # «som i steg 3 burde det vært en tilsvarende del montert nederst»
+    "Corner Post Front *",
+    # «samme med steg 5 der jeg endte med å montere ett toppbord umiddelbart»
+    "Bench Rail Front *",
+]
+
+
+def _hinge_line(pts):
+    """(a point on the line, its unit direction, the anchors' own reach).
+
+    The widest pair of anchors IS the line - two points define one - and the
+    distance between them is the reach the joint has round the body. A cloud
+    that is really one point has no direction and no reach.
+    """
+    best, pair = 0.0, (pts[0], pts[0])
+    for i, a in enumerate(pts):
+        for b in pts[i + 1:]:
+            d = math.dist(a, b)
+            if d > best:
+                best, pair = d, (a, b)
+    if best <= UNIT_TOL:
+        return pts[0], None, 0.0
+    a, b = pair
+    return a, tuple((q - p) / best for p, q in zip(a, b)), best
+
+
+def _off_line(p0, v, p):
+    """How far `p` stands off the line - or off the point, if there is no
+    line to be off."""
+    d = tuple(q - r for q, r in zip(p, p0))
+    if v is None:
+        return math.hypot(*d)
+    t = sum(x * y for x, y in zip(d, v))
+    return math.hypot(*[x - t * y for x, y in zip(d, v)])
+
+
+def _box_corners(G, labels):
+    """The eight corners of a body's box - where its far end can be."""
+    by_label = {p.label: p for p in G.CUT_PARTS}
+    ext = [(min(by_label[l].extents[j][0] for l in labels),
+            max(by_label[l].extents[j][1] for l in labels)) for j in range(3)]
+    return [(ext[0][i], ext[1][j], ext[2][k])
+            for i in (0, 1) for j in (0, 1) for k in (0, 1)]
+
+
+def anchor_cloud(G, jids, inside, outside):
+    """[(jid, what it grips, anchor point), ...] - sorted, so it is a value.
+
+    `inside` is the body, `outside` the wood that is already standing. A wall
+    fixing counts too and grips «veggen»: a body screwed to the studs is held
+    by the room and this rule has nothing to say about it.
+    """
+    out = []
+    for f in G.FASTENER_SPECS:
+        if f["jid"] not in jids:
+            continue
+        if f.get("wall"):
+            if f["through"].label in inside:
+                out.append((f["jid"], "veggen", f["through"].label,
+                            tuple(f["anchor"])))
+            continue
+        pa, pb = f.get("pa"), f.get("pb")
+        if pa is None or pb is None:
+            continue
+        la, lb = pa.label, pb.label
+        if la in inside and lb in outside:
+            out.append((f["jid"], lb, la, tuple(f["anchor"])))
+        elif lb in inside and la in outside:
+            out.append((f["jid"], la, lb, tuple(f["anchor"])))
+    return sorted(out)
+
+
+def unit_hold(G, jids, labels, standing):
+    """What holds this body when the builder lets go of it.
+
+    None when nothing this step drives ties it to anything standing - a loose
+    piece of furniture, or the one body X12 rule 3 has already sent to a
+    raising step. Otherwise a record: the line its anchors stand on, the reach
+    they have round it, and the far corner that is outside that reach.
+    """
+    cloud = anchor_cloud(G, jids, set(labels), set(standing))
+    if not cloud:
+        return None
+    if any(c[1] == "veggen" for c in cloud):
+        return dict(held=True, why="vegg", cloud=cloud)
+    p0, v, reach = _hinge_line([c[3] for c in cloud])
+    if any(_off_line(p0, v, c[3]) > UNIT_TOL for c in cloud):
+        return dict(held=True, why="to fester", cloud=cloud)
+    corners = _box_corners(G, labels)
+    lever = max(_off_line(p0, v, c) for c in corners)
+    # WHICH of the far corners, and it is not a tie-break: a body turning on a
+    # plumb hinge swings its whole outboard EDGE, so every corner on that edge
+    # is equally free and the reader has to be sent to ONE of them. He is sent
+    # to the one a brace is shortest from - the corner with the least wood
+    # between it and the standing assembly - because that is where the batten
+    # he has to cut is cheapest and where his hand reaches.
+    far = min((c for c in corners
+               if _off_line(p0, v, c) >= lever - UNIT_TOL),
+              key=lambda c: (_nearest_member(G, standing, c)[1], c))
+    return dict(held=lever <= reach + UNIT_TOL, why="én linje", cloud=cloud,
+                p0=p0, v=v, reach=reach, lever=lever, far=far)
+
+
+def _swing_axis(hold):
+    """Which way the far corner travels when the body turns on its hinge.
+
+    The tangent at that corner: the hinge direction crossed with the radius.
+    Its dominant component is the direction a tape would measure the wander
+    in, and that is what the reader needs - not an angle.
+    """
+    v, p0, far = hold["v"], hold["p0"], hold["far"]
+    r = tuple(a - b for a, b in zip(far, p0))
+    if v is None:
+        t = r                                   # a point, not a line: any way
+    else:
+        t = (v[1] * r[2] - v[2] * r[1],
+             v[2] * r[0] - v[0] * r[2],
+             v[0] * r[1] - v[1] * r[0])
+    return max(range(3), key=lambda j: abs(t[j]))
+
+
+SWING_NO = ("langs veggen, inn mot endeveggen og ut igjen",
+            "inn mot bakveggen og ut i rommet",
+            "opp og ned")
+HINGE_NO = ("én vannrett linje langs veggen",
+            "én vannrett linje på tvers av senga",
+            "én loddrett linje")
+
+
+def _hinge_word(hold):
+    v = hold["v"]
+    if v is None:
+        return "ett eneste punkt"
+    return HINGE_NO[max(range(3), key=lambda j: abs(v[j]))]
+
+
+def _no(idx, label):
+    """A part's Norwegian name, off the cut list - the name the reader has
+    already met in the parts table and on the step's own «Deler»-line."""
+    return idx[label][0]
+
+
+def _no_list(idx, labels):
+    names = sorted({_no(idx, l) for l in labels})
+    return _og(names).lower()
+
+
+def brace_cure(G, steps, n, labels, standing, hold):
+    """The permanent member that could go on NOW and stop the swing.
+
+    A part from a later step qualifies when the bed's own joints fasten it
+    both to this body and to something already standing: screw it on and the
+    anchor cloud stops being a line. The one that reaches FURTHEST from the
+    hinge wins, because that is the longest lever on offer, and the tie is
+    broken by the label so the pick is a value and not an ordering.
+    """
+    every = set().union(*[set(st["joints"]) for st in steps])
+    best = None
+    for st in steps:
+        if st["n"] <= n:
+            continue
+        for lbl in sorted(st["labels"]):
+            to_body = anchor_cloud(G, every, {lbl}, set(labels))
+            to_stand = anchor_cloud(G, every, {lbl}, set(standing))
+            if not to_body or not to_stand:
+                continue
+            pts = [c[3] for c in hold["cloud"]] + \
+                  [c[3] for c in to_body + to_stand]
+            q0, qv, _r = _hinge_line(pts)
+            if all(_off_line(q0, qv, p) <= UNIT_TOL for p in pts):
+                continue                        # still one line: no help
+            reach = max(_off_line(hold["p0"], hold["v"], c[3])
+                        for c in to_body + to_stand)
+            key = (-reach, lbl)
+            if best is None or key < best[0]:
+                best = (key, dict(
+                    label=lbl, step=st["n"], reach=reach,
+                    joints=sorted({c[0] for c in to_body + to_stand}),
+                    grips=sorted({c[1] for c in to_stand})))
+    return None if best is None else best[1]
+
+
+def brace_release(G, steps, n, labels, standing):
+    """The step after which this body stops being a hinge.
+
+    The body GROWS - later steps screw more wood to it - so the question is
+    asked of the growing body against the assembly that was standing when it
+    arrived. The first step whose joints leave that cloud off one line is
+    where the brace comes off.
+    """
+    placed = {l: st["n"] for st in steps for l in st["labels"]}
+    for m in [st["n"] for st in steps if st["n"] > n]:
+        jids = set().union(*[set(st["joints"]) for st in steps
+                             if st["n"] <= m])
+        pool = {l for l, s in placed.items() if n <= s <= m}
+        body = set(labels)
+        grew = True
+        while grew:
+            grew = False
+            for f in G.FASTENER_SPECS:
+                if f["jid"] not in jids:
+                    continue
+                pa, pb = f.get("pa"), f.get("pb")
+                if pa is None or pb is None:
+                    continue
+                la, lb = pa.label, pb.label
+                if la in pool and lb in pool and (la in body) != (lb in body):
+                    body |= {la, lb}
+                    grew = True
+        hold = unit_hold(G, jids, sorted(body), standing)
+        if hold and hold["held"]:
+            return m
+    return None
+
+
+def _nearest_member(G, labels, point):
+    """(label, distance) - whose wood comes closest to a point in the room.
+
+    Asked twice: of the standing assembly, to find what a temporary batten
+    can reach to, and of the body itself, to find which of its own pieces
+    owns the far corner its box put out there.
+    """
+    by_label = {p.label: p for p in G.CUT_PARTS}
+    best = None
+    for lbl in sorted(labels):
+        p = by_label[lbl]
+        d = math.sqrt(sum(max(lo - v, 0.0, v - hi) ** 2
+                          for (lo, hi), v in zip(p.extents, point)))
+        if best is None or (d, lbl) < best:
+            best = (d, lbl)
+    return best[1], best[0]
+
+
+def brace_points(G, steps, idx):
+    """{step number: [record, ...]} - every body a step leaves as a hinge.
+
+    One record per body, with the sentence the step guide prints. Nothing
+    here is a list of steps: move a joint and the bodies move with it, and a
+    step that stops leaving anything free stops carrying a point.
+    """
+    units = step_units(G, steps)
+    placed = {l: st["n"] for st in steps for l in st["labels"]}
+    out = {}
+    for st in steps:
+        n = st["n"]
+        standing = sorted(l for l, s in placed.items()
+                          if s < n and l in {p.label for p in G.CUT_PARTS})
+        for u in units[n]:
+            hold = unit_hold(G, set(st["joints"]), u["labels"], standing)
+            if hold is None or hold["held"]:
+                continue
+            cure = brace_cure(G, steps, n, u["labels"], standing, hold)
+            # WHOSE far corner it is, and which of the body's own pieces
+            # carries the hinge. The corner comes off the body's BOX, so it
+            # belongs to whichever piece reaches it; the hinge is on the piece
+            # the fasteners actually pass through.
+            rec = dict(step=n, labels=list(u["labels"]), hold=hold, cure=cure,
+                       free=_nearest_member(G, u["labels"], hold["far"])[0],
+                       spans=sorted({c[2] for c in hold["cloud"]}),
+                       swing=_swing_axis(hold),
+                       release=brace_release(G, steps, n, u["labels"],
+                                             standing))
+            rec["target"] = None if cure else _nearest_member(
+                G, standing, hold["far"])
+            out.setdefault(n, []).append(rec)
+    # THE MIRROR IS ONE INSTRUCTION, NOT TWO. This bed is mirrored about the
+    # middle of the niche, so a step that leaves one end free leaves the other
+    # end free in exactly the same words and exactly the same millimetres -
+    # and X15 already settled what to do about that: two things that measure
+    # the same are ONE measurement with two places it could be drawn. So the
+    # records are grouped by the sentence they generate, and the count of
+    # bodies goes INTO the sentence rather than printing it twice.
+    for n in list(out):
+        merged = {}
+        for rec in sorted(out[n], key=lambda r: r["labels"]):
+            key = _brace_text(G, idx, rec, 1)
+            merged.setdefault(key, []).append(rec)
+        rows = []
+        for _key, group in sorted(merged.items()):
+            # `mirrors` keeps every body the sentence speaks for, so what got
+            # merged is still readable off the record: the two ends are one
+            # instruction on paper and two hinges in the room.
+            rec = dict(group[0], bodies=len(group),
+                       mirrors=[r["hold"] for r in group],
+                       labels=sorted({l for r in group for l in r["labels"]}))
+            rec["text"] = _brace_text(G, idx, rec, len(group))
+            rec["short"] = _brace_short(idx, rec)
+            rows.append(rec)
+        out[n] = sorted(rows, key=lambda r: r["labels"])
+    return out
+
+
+def _mm(v):
+    """A brace is set by eye and held by a clamp. Whole millimetres."""
+    return f"{v:.0f}"
+
+
+def _brace_text(G, idx, rec, bodies):
+    """The step's own paragraph, built out of the record and nothing else.
+
+    `bodies` is how many mirrored copies of this body the step makes, and it
+    is a PARAMETER because the grouping is done by comparing the sentence for
+    one body: two ends that read the same are one instruction.
+    """
+    hold = rec["hold"]
+    grips = _og(sorted({_no(idx, c[1]) for c in hold["cloud"]})).lower()
+    jid = _og(sorted({c[0] for c in hold["cloud"]}))
+    txt = (f"{BRACE_MARK} enheten henger i ETT feste.** "
+           f"{_no_list(idx, rec['labels']).capitalize()} er skrudd til det "
+           f"som allerede står i ett eneste punkt: {jid} i {grips}, "
+           f"{len(hold['cloud'])} fester på {_hinge_word(hold)} og bare "
+           f"{_mm(hold['reach'])} mm fra hverandre. Enheten kan dreie om den "
+           f"linjen, og det ytterste hjørnet av "
+           f"{_no(idx, rec['free']).lower()} står {_mm(hold['lever'])} mm "
+           f"ute — det vandrer {SWING_NO[rec['swing']]}. Gulvet stopper det "
+           f"ikke: gulvet er ikke i vater, og det er nettopp derfor føttene "
+           f"kappes til slutt. ")
+    if rec["cure"]:
+        c = rec["cure"]
+        txt += (f"**Her finnes det en PERMANENT del som gjør jobben, og den "
+                f"er bedre enn en midlertidig:** monter én "
+                f"{_no(idx, c['label']).lower()} med det samme — den "
+                f"innerste, lengst fra dreielinjen — og skru den i begge "
+                f"ender ({_og(c['joints'])}). Den binder enheten til "
+                f"{_og([_no(idx, g).lower() for g in c['grips']])} "
+                f"{_mm(c['reach'])} mm fra dreielinjen, og da holdes fluktet "
+                f"av sengens eget treverk i stedet for av en lekt du siden "
+                f"skal ta av. Resten av dem venter på steg {c['step']}, der "
+                f"de hører hjemme.")
+    else:
+        lbl, d = rec["target"]
+        spans = _og([_no(idx, s).lower() for s in rec["spans"]])
+        txt += (f"**Ingen permanent del i sengen når fram hit ennå, så sett "
+                f"en MIDLERTIDIG:** en lekt fra det frie hjørnet bort til "
+                f"{_no(idx, lbl).lower()}, {_mm(d)} mm — altså den samme "
+                f"enden nederst som {spans} tar øverst. Klem eller skru den i "
+                f"begge ender, i en flate som ikke blir synlig.")
+        if rec["release"] is not None:
+            txt += (f" La den stå til steg {rec['release']} er ferdig — det "
+                    f"er da enheten er bundet av sengen selv.")
+    if bodies > 1:
+        txt += (f" Det samme gjelder i {'begge' if bodies == 2 else 'alle'} "
+                f"{'endene' if bodies == 2 else 'de %d stedene' % bodies}: "
+                f"enhetene er speilbilder og får hver sin.")
+    txt += (" Og tving delene sammen før du skrur, ikke etterpå — skruen drar "
+            "skjøten ut av flukt på vei inn.")
+    return txt
+
+
+def _brace_short(idx, rec):
+    """The one line the picture page carries - same fact, no arithmetic."""
+    what = ("monter én " + _no(idx, rec["cure"]["label"]).lower()
+            + " med det samme" if rec["cure"]
+            else "sett en midlertidig lekt fra det frie hjørnet bort til "
+                 + _no(idx, rec["target"][0]).lower())
+    return (f"{_no_list(idx, rec['labels']).capitalize()} henger i ett feste "
+            f"og kan dreie {SWING_NO[rec['swing']]} — {what}, og bruk tvinger "
+            f"mens du skrur.")
+
+
+def apply_braces(G, steps, idx):
+    """Hang each brace point on the step it belongs to, and check the report.
+
+    The paragraph goes LAST in the step's own «Slik gjør du», because it is
+    what the builder does before he lets go - not before he starts.
+    """
+    braces = brace_points(G, steps, idx)
+    for st in steps:
+        for rec in braces.get(st["n"], []):
+            st["do"] = list(st["do"]) + [rec["text"]]
+    fired = {l for recs in braces.values() for r in recs for l in r["labels"]}
+    missing = [spec for spec in BRACE_REPORTED
+               if not any(_match(spec, l) for l in fired)]
+    assert not missing, (
+        "X17: byggherren skrev ned to kropper som ikke holdt fluktet av seg "
+        f"selv, og regelen finner ikke {missing} blant de {len(fired)} delene "
+        "den fyrer på. Da er det KRITERIET som er feil, ikke rapporten - "
+        "juster kriteriet, ikke lista")
+    n_cure = sum(1 for recs in braces.values() for r in recs if r["cure"])
+    n_body = sum(r["bodies"] for recs in braces.values() for r in recs)
+    n_txt = sum(len(v) for v in braces.values())
+    print(f"  X17 avstiving: {n_body} av kroppene i {len(braces)} steg står "
+          f"igjen som hengsler når byggherren slipper dem — fester på én "
+          f"linje, og et hjørne lenger ute enn festene rekker. Speilbildene "
+          f"faller sammen, så det blir {n_txt} punkter, og {n_cure} av dem "
+          f"kan bindes med en permanent del som monteres tidlig i stedet for "
+          f"med en lekt som siden skal av")
+    return braces
+
+
+def assert_brace_ink(G, steps, idx, text):
+    """The bijection, on the finished step guide.
+
+    A step whose body is a hinge has to carry a brace point, and a step whose
+    bodies are all held may not carry one. Read off the ink, because that is
+    where the two can drift apart: a paragraph deleted by hand and a body that
+    never needed one look exactly the same in a diff.
+    """
+    braces = brace_points(G, steps, idx)
+    want = {st["n"]: len(braces.get(st["n"], [])) for st in steps}
+    got = {}
+    for chunk in text.split("\n## ")[1:]:
+        m = re.match(r"Steg (\d+) —", chunk)
+        if m:
+            got[int(m.group(1))] = chunk.count(BRACE_MARK)
+    assert set(got) == set(want), (
+        f"X17: stegveiledningen har overskrifter for {sorted(got)} og "
+        f"modellen har steg {sorted(want)}")
+    bad = [f"steg {n}: blekket har {got[n]} avstivingspunkt, modellen måler "
+           f"{want[n]}" for n in sorted(want) if got[n] != want[n]]
+    assert not bad, (
+        "X17: avstivingspunktene og de ustabile kroppene er ikke den samme "
+        "lista:\n  " + "\n  ".join(bad))
+    for n in sorted(braces):
+        chunk = next(c for c in text.split("\n## ")[1:]
+                     if re.match(rf"Steg {n} —", c))
+        for rec in braces[n]:
+            assert rec["text"] in chunk, (
+                f"X17: steg {n} har et avstivingspunkt, men ikke det "
+                f"modellen skrev for {rec['labels']}")
+    print(f"  X17 avstivingsblekket: {sum(want.values())} punkter i "
+          f"{len([n for n in want if want[n]])} av {len(want)} steg, én mot "
+          f"én med kroppene som ennå ikke er bundet")
+
+
 def SOFT_BUY(G, label):
     """The shopping line for a part that is foam: the reference mattress and
     the four cushions. They have no cut-list key because nothing is sawn."""
@@ -3503,8 +4010,8 @@ def prep_rows(steps):
          "verksteddelene i steg 0, romdelene så snart de er finkappet i "
          "rommet."),
         ("verktoy", None,
-         "**Verktøy:** drill med bor, torxbits, tommestokk, vater og "
-         "vinkelhake."),
+         "**Verktøy:** drill med bor, torxbits, tommestokk, vater, "
+         "vinkelhake og tvinger — minst to, fire er bedre."),
         ("forbor", None,
          "**Forbor.** I bordene og i all endeved er forboring et krav."),
         ("veggfeste-ja", "fritt-staaende-nei",
@@ -3586,7 +4093,7 @@ def _glyph_height(path, screw_px, cap=None):
     return min(h, cap) if cap else max(h, 12)
 
 
-def emit_montering(G, root, steps, idx):
+def emit_montering(G, root, steps, idx, braces):
     """docs/MONTERING.md - the pictorial manual. Same steps, same numbers.
 
     Page 1 is the cover, page 2 the bed's own six dimensions, page 3 the
@@ -3777,6 +4284,25 @@ def emit_montering(G, root, steps, idx):
              "drives, og hva som forbores, står i "
              "[beslaglista](generated/beslagliste.md) og "
              "[skrueretningene](generated/skrueretninger.md).\n\n")
+    # X17: THE CLAMP IS NOT A JIG TOOL IN THIS BED, IT IS A HAND. The two
+    # angle blocks in step 0 need two clamps each, and that is where the
+    # clamps used to be mentioned - as shop aids for one operation. The
+    # builder's own note put them everywhere: «Jeg brukte tvinger for å hindre
+    # at deler flyttet seg under festing.» The sentence is generated because
+    # the count of steps it names is: those are the bodies the brace rule
+    # finds, and the day the bed stops leaving one free the sentence follows.
+    L.append(
+        f"**Tving før du skrur — hele veien.** En treskrue drar skjøten ut av "
+        f"flukt på vei inn: den siste halve omdreiningen flytter delen noen "
+        f"tiendeler før den klemmer. Klem derfor delene sammen i den "
+        f"stillingen de skal ha, og skru så. Minst **to tvinger** i huset, "
+        f"fire er bedre — to av dem er dessuten bundet opp i steg 0, der "
+        f"vinkelklossen skal holdes mot flaten mens lomma bores. Og på "
+        f"steg {_og(sorted(braces))} står det en kropp igjen som ikke holder "
+        f"seg "
+        f"selv i flukt før neste steg kommer: de stegene har hvert sitt "
+        f"**avstivingspunkt** nederst i «Slik gjør du», og der sier tvingen "
+        f"eller den midlertidige lekta hva som skal holdes mot hva.\n\n")
     L.append("| Slik | Ikke slik | |\n|:---:|:---:|---|\n")
     for do, dont, line in prep_rows(steps):
         yes = (_img("img/ikon/" + pikto[do], 72, do) + " "
@@ -3881,6 +4407,11 @@ def emit_montering(G, root, steps, idx):
                 + " → [beslagliste](generated/beslagliste.md)\n\n")
         for c in st["check"][:1]:
             L.append(f"⚠️ {c}\n\n")
+        # X17: and the one warning that is not about what he just built, but
+        # about what happens if he walks away from it. It is derived, so a
+        # step only carries it while its own body is still a hinge.
+        for rec in braces.get(st["n"], []):
+            L.append(f"🗜️ **Avstiving.** {rec['short']}\n\n")
         L.append(f"[Steg {st['n']} i ord]"
                  f"(generated/byggesteg.md#steg-{st['n']}"
                  f"--{_anchor(st['title'])})\n\n")
@@ -4268,6 +4799,10 @@ def emit(ns):
     steps = resolve_steps(G, build_steps(G))
     check_step_units(G, steps)
     idx = cut_index(G)
+    # X17: the brace points are hung on the steps BEFORE anything is written,
+    # so every emitter - the words, the pictures, the JSON - sees the same
+    # step. They are derived from the bodies X12 just measured.
+    braces = apply_braces(G, steps, idx)
 
     emit_kappliste(G, out_dir)
     emit_innkjopsliste(G, out_dir)
@@ -4279,7 +4814,8 @@ def emit(ns):
     assert_datum_ink(G, bygg)
     assert_seat_rung_ink(G, bygg)
     assert_step_dims(G, steps)
-    emit_montering(G, G.OUT_DIR, steps, idx)
+    assert_brace_ink(G, steps, idx, bygg)
+    emit_montering(G, G.OUT_DIR, steps, idx, braces)
     emit_json(G, out_dir, steps, idx, rows)
     emit_step_meshes(G, steps, G.GROUP_DIR)
 

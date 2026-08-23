@@ -404,6 +404,13 @@ def _png_shape(src: str) -> tuple[int, int] | None:
             int.from_bytes(head[20:24], "big"))
 
 
+# X17: stegsidens avstivingsnotat. Det staar sist i notatfeltet og er det
+# ENESTE notatet som kan komme til uten aa vaere der - et steg baerer det bare
+# saa lenge kroppen det bygger fortsatt henger i ett feste - saa siden maa
+# kunne gi plass til det uten aa deles. Se `.step.braced` i stilarket.
+BRACE_NOTE = "\N{COMPRESSION}"        # 🗜️, tvingen
+
+
 def step_page(num: str, title: str, rest: str, marks: PageMarks, key: str) -> str:
     figure = ""
     tables: list[str] = []
@@ -415,6 +422,8 @@ def step_page(num: str, title: str, rest: str, marks: PageMarks, key: str) -> st
             tables.append(render(b, DOCS, "bygg"))
         elif b.startswith("⚠"):
             notes.append(f'<p class="warn">{render(b, DOCS, "bygg")[3:-4]}</p>')
+        elif b.startswith(BRACE_NOTE):
+            notes.append(f'<p class="brace">{render(b, DOCS, "bygg")[3:-4]}</p>')
         else:
             # En bolk som var en henvisning til noe utrykt - «Steg N i ord» -
             # kommer tilbake tom herfra, og en tom <p> er en tynn strek over
@@ -436,6 +445,11 @@ def step_page(num: str, title: str, rest: str, marks: PageMarks, key: str) -> st
     # full lengde. Den vil ha bredden, og far derfor en liggende A4 for seg.
     if num == "0":
         kind += " cut"
+    # Et steg med avstivingsnotat har to linjer mer under tegningen enn de
+    # andre. Samme regningen som paa kappesiden under: tegningen gir fra seg
+    # hoyden, for alternativet er en hel side med to linjer paa.
+    if any('class="brace"' in n for n in notes):
+        kind += " braced"
     return f"""<section class="page step{kind}" id="{key}">
   {marks.mark(key)}
   <header class="step-head">
@@ -718,6 +732,11 @@ td img { display: block; margin: 0 auto; }
 .step.cut .step-tables { column-count: 2; }
 .step.cut .step-tables table { font-size: 8pt; margin-bottom: 1.5mm; }
 .step.cut .step-notes { font-size: 8.5pt; padding-top: 1.5mm; }
+/* X17: avstivingsnotatet er to linjer til under tegningen, og paa den tetteste
+   stegsiden var det nok til aa skyve dem alene over paa neste ark. Tegningen
+   gir fra seg 12mm i stedet - samme avveining som kappesiden over. */
+.step.braced .step-figure img { max-height: 110mm; }
+.step.braced.tall .step-figure img { max-height: 124mm; }
 .step-tables { column-count: 2; column-gap: 8mm; }
 .step-tables table { break-inside: avoid; margin-bottom: 3mm; font-size: 8.5pt; }
 .step-tables table td:first-child { white-space: nowrap; }
