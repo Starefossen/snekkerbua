@@ -435,9 +435,9 @@ PAGE_CLAIMS = [
 # Compared with runs of whitespace collapsed, because the model's own line is
 # laid out in columns and the README quotes it as a sentence.
 README_QUOTES = [
-    "TOTAL 76 pcs 53.25 m in 5 timber profiles + 1 sheet",
-    "185 festemidler plassert i 22 ledd",
-    "176 festemidler modellert som kropper",
+    "TOTAL 85 pcs 54.65 m in 5 timber profiles + 1 sheet",
+    "203 festemidler plassert i 26 ledd",
+    "194 festemidler modellert som kropper",
 ]
 
 
@@ -542,9 +542,11 @@ PROSE_ALLOW = {
         # da fotbrettet re-poserte de to sittende figurene. Tallene er de
         # samme; det er potten som flyttet seg, og det er nøyaktig den
         # grovheten sveipet selv sier at den har.
-        "175 mm": "øvre rad i madrasstabellens forbudte vindu - håndsatt så "
-                  "radene flisleger 126..175 og 180+; modellen regner "
-                  "vinduet 110..125 og ikke tabellens rader",
+        # X18 STRØK «175 mm». Det var den øvre raden i madrasstabellens
+        # forbudte vindu, håndsatt fordi modellen regnet vinduet 110..125.
+        # Den bygde rekkverksstillingen krever 175..190, så 175 er nå
+        # modellens eget tall og dekkes av potten. Raden må ut: en hviteliste
+        # som overlever det den unnskyldte, skjuler neste feil.
         "584 mm": "spennet vedlegg A regner den fremre benkevangebiten på, "
                   "håndregnet der; sto i potten til X14 fordi en "
                   "referansekropp tilfeldigvis målte 583,8 mm bred",

@@ -29,7 +29,7 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 1. **Mål nisjedybden på BEGGE endevegger** — fra bakveggen og ut til nisjas åpning, i de samme 5 høydene. Minste dybde må være minst **1500 mm**, og det er bakrammen som setter kravet, ikke senga: senga er 836 mm dyp, men bakrammen bygges liggende på gulvet inne i nisja og tippes opp derfra (steg 1 og 2). Liggende tar den sin egen høyde, 1500 mm, ut fra bakveggen. Er nisja grunnere enn det, får rammen ikke ligge — og da lar den seg ikke reise heller, for 1990 mm bredde går ikke å svinge inn i en 1990 mm åpning.
 1. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
 1. Gulv: mål ned fra risset i sengas fire hjørner og på midten. Merk det høyeste punktet på gulvet. Senga bygges ned fra det.
-1. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 15 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
+1. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 20 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
 1. **Romdelenes hull bores først når romdelen er finkappet.** Hvert hull i dem er målt fra den enden som ennå har 10 mm overmål på seg, så rekkefølgen er kapp først, drill etterpå. Kapplistas rombolk sier hvilke deler, og siste punkt i steg 0 sier hvilke ledd.
 1. **De fire hjørnestolpene står helt inntil endeveggen — null klaring.** Derfor strekes veggsiden på hver av dem, hver gang: sett stolpen på plass, hold den i lodd, og strek opp veggsiden med avstandskloss der veggen buler. Høvle av til stolpen står i lodd inntil veggen. Ingen monn i bredden — det er tre som skal bort, ikke legges til. Buler veggen og du lar det stå, skyver bulen hele rammen ut av lodd.
 1. Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
@@ -84,7 +84,7 @@ Gjør alt sagarbeid og all boring på bukk, før noe reises. Etterpå kommer du 
 1. På den bakre benkevangen står to lommer ved siden av hverandre i hver ende, 24 mm fra senter til senter. **Bor den som ligger nærmest kanten først** — da har klossen hel flate å stå på. Når den andre skal bores, hviler klossen delvis over den ferdige lomma; legg en tynn list under den enden så den ikke vipper.
 1. Forbor for skruen med det samme, mens delen ligger som den ligger: **lommebunnen er forborets egen jigg.** Bunnen står vinkelrett på skrueaksen, så et brad-point-bor satt i senter av den flate bunnen (⌀6 på J8-B, ⌀3,5 på J10) retter seg selv inn i riktig vinkel. Ikke prøv å sikte den på frihånd.
 1. Slå filtknotter under alle fire hjørnestolper og alle fire stubbeføtter.
-1. **IKKE PÅ BUKKEN — 10 romdeler skal bores senere.** Delene i 4 kapplinjer under «[Kapp når rommet er ferdig — romdeler](kappliste.md#kapp-når-rommet-er-ferdig--romdeler)» har 10 mm overmål i hver ende som møter vegg, og hullene deres er målt **fra ytterenden** — nettopp den enden. **En ende som ikke er kappet, er ikke et utgangspunkt.** Rekkefølgen er: mål nisja, finkapp veggendene etter målt bredde, og bor først da. Det gjelder J2, J2-B, J3, J7, J8, J17. Legg delene på bukk i rommet når de er finkappet; alt annet i dette steget gjøres ferdig i verkstedet.
+1. **IKKE PÅ BUKKEN — 10 romdeler skal bores senere.** Delene i 4 kapplinjer under «[Kapp når rommet er ferdig — romdeler](kappliste.md#kapp-når-rommet-er-ferdig--romdeler)» har 10 mm overmål i hver ende som møter vegg, og hullene deres er målt **fra ytterenden** — nettopp den enden. **En ende som ikke er kappet, er ikke et utgangspunkt.** Rekkefølgen er: mål nisja, finkapp veggendene etter målt bredde, og bor først da. Det gjelder J2, J2-B, J3, J7, J20, J17. Legg delene på bukk i rommet når de er finkappet; alt annet i dette steget gjøres ferdig i verkstedet.
 
 **Sjekk før du går videre:**
 
@@ -98,7 +98,7 @@ Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannret
 
 **Deler:** 1× Benkevange, bak (gjennomgående) 48×68 × 1794 · 1× Bordbærelekt, bak 48×68 × 1794 · 2× Hjørnestolpe, bak (veggside) 36×98 × 1402 · 1× Sidevange, øvre 48×98 × 1984
 
-**Festemidler:** 4× Treskrue 5×40 forsenket Torx · 4× Treskrue 6×120 forsenket Torx · 4× Treskrue 6×80 forsenket Torx · 2× Vinkelbeslag 40×40×20
+**Festemidler:** 4× Treskrue 6×120 forsenket Torx · 8× Treskrue 6×80 forsenket Torx
 
 **Ledd:** J2-B, J8-B, J12 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
@@ -107,10 +107,8 @@ Hele baksiden av sengen er ett eneste flatt lag: to korte stolper og tre vannret
 | Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
 |---|---|---|---|---:|
 | **J2-B** 2× Treskrue 6×120 | bakre sidevange 48×98 × 1984, oversiden | 36 / 77 mm fra ytterenden | 18 mm fra bakkanten | 41 |
-| **J8-B** 2× Treskrue 6×80 | bakre benkevange 48×68 × 1794, forsiden (mot rommet) | 34 mm fra ytterenden | 20 / 44 mm fra overkanten | 24 |
-| **J12** 1× Treskrue 5×40 | bakre hjørnestolpe 36×98 × 1402, innersiden (mot sengas midte) | 808 mm fra toppen | midt på (18 mm fra hver side) | — |
-| **J12** 1× Treskrue 5×40 | bordbærelekt 48×68 × 1794, undersiden | 20 mm fra ytterenden | 18 mm fra bakkanten | — |
-| **J12** 1× Vinkelbeslag 40×40×20 | bakre hjørnestolpe 36×98 × 1402, innersiden (mot sengas midte) | 788 mm fra toppen | midt på (18 mm fra hver side) | — |
+| **J8-B** 2× Treskrue 6×80 | bakre benkevange 48×68 × 1794, forsiden (mot rommet) | 40 mm fra ytterenden | 20 / 44 mm fra overkanten | 24 |
+| **J12** 2× Treskrue 6×80 | bordbærelekt 48×68 × 1794, forsiden (mot rommet) | 40 mm fra ytterenden | 20 / 44 mm fra overkanten | 24 |
 
 **Slik gjør du:**
 
@@ -149,7 +147,7 @@ Sengen festes til veggen i to høyder: gjennom den bakre sidevangen øverst og g
 1. **Tipp rammen opp om sin egen underkant, der den ligger.** Den skal ikke bæres inn og ikke skyves sidelengs mot sideveggene: rammen er 1990 mm bred og nisja er 1990 mm — null klaring i begge ender, og en 1990 mm del lar seg ikke svinge inn i en 1990 mm åpning. Derfor ble den bygget liggende på plassen sin i steg 1. Underkanten er hengselet og blir liggende mot gulvet hele veien opp.
 1. To personer, én på hver stolpe. Rammens øverste hjørne sveiper 1501 mm på vei opp — taket er på 2450 mm, så den går klar, men få lamper og lister ut av veien først.
 1. Skyv rammen inntil bakveggen. Bare bakover — sidelengs er det ingen vei å gå.
-1. **Trim de 2 bakstolpene i bunn nå.** De er kappet 15 mm for lange. Mål ned fra høyderisset i begge ender, strek opp foten med avstandskloss, legg rammen ned igjen og kapp. Tipp opp på nytt og vater langs sidevangen. Gjenta til vangen ligger vannrett — det er den høyden hele sengen arves fra.
+1. **Trim de 2 bakstolpene i bunn nå.** De er kappet 20 mm for lange. Mål ned fra høyderisset i begge ender, strek opp foten med avstandskloss, legg rammen ned igjen og kapp. Tipp opp på nytt og vater langs sidevangen. Gjenta til vangen ligger vannrett — det er den høyden hele sengen arves fra.
 1. Finn stenderne i veggen. Merk av senterlinjene på sidevangen og på bordbærelekta.
 1. Loddsjekk begge stolper, og vater langs sidevangen.
 1. Skru rammen fast i veggen gjennom sidevangen (J14). Ta et feste i hver stender du treffer — minst i endene og på midten.
@@ -182,7 +180,7 @@ Nå bygges de to endene ut fra bakrammen. Endebjelken går fra den bakre stolpen
 
 **Slik gjør du:**
 
-1. **Trim de 2 fremre stolpene i bunn før de reises.** De har samme 15 mm overmål som bakstolpene: still stolpen opp mot sideveggen, mål ned fra høyderisset, strek opp foten med avstandskloss og kapp. Toppen er referansen — hvert hull i stolpen er målt derfra, og det er derfor foten er den enden som kappes.
+1. **Trim de 2 fremre stolpene i bunn før de reises.** De har samme 20 mm overmål som bakstolpene: still stolpen opp mot sideveggen, mål ned fra høyderisset, strek opp foten med avstandskloss og kapp. Toppen er referansen — hvert hull i stolpen er målt derfra, og det er derfor foten er den enden som kappes.
 1. Reis den fremre stolpen på plass mot sideveggen.
 1. Legg endebjelken opp mellom de to stolpene og fest den til begge etter J1. **Det er ingen bærekloss under bjelkeenden, og hullene fra steg 0 er jiggen:** bjelken har nøyaktig én høyde der hullene i bjelken og hullene i stolpen møtes, så du kan ikke sette den skjevt. Klem en list på stolpens innside i høyde med bjelkens underkant hvis du bygger alene — den listen tas av igjen.
 1. **De to bakerste J1-skruene står 18 mm fra bakveggen.** Der får du ikke inn en drill med vanlig bits. Ta lang bits eller vinkelbits, og prøv rekkevidden før bjelken ligger på plass — etterpå er det ingen vei rundt.
@@ -227,33 +225,36 @@ Den fremre vangen lukker rammen i overetasjen. Den hviler på begge endebjelker 
 
 Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gulvet foran stigen er helt fritt. Endelisten hører hjemme i dette steget og ikke blant spilene: den er bæreverk som vangene, den står i samme høyde som dem, og den skal stå ferdig før noe legges oppå.
 
-**Deler:** 2× Benkevange, front (bit) 48×68 × 642 · 2× Endelist 36×48 × 98 · 4× Stubbefot 48×68 × 229
+**Deler:** 2× Benkespileledd 36×48 × 547 · 2× Benkevange, front (bit) 48×68 × 547 · 2× Endelist 36×48 × 98 · 2× Endelist, fremre 36×48 × 98 · 4× Stubbefot 48×68 × 229
 
-**Festemidler:** 16× Treskrue 5×40 forsenket Torx · 8× Treskrue 5×60 forsenket Torx · 4× Treskrue 6×80 forsenket Torx · 4× Vinkelbeslag 90×90×40×2,5 varmforsinket
+**Festemidler:** 20× Treskrue 5×60 forsenket Torx · 4× Treskrue 6×120 forsenket Torx · 4× Treskrue 6×80 forsenket Torx
 
-**Ledd:** J8, J10, J17 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+**Ledd:** J8, J10, J19, J20, J17 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
 **Festeplassering — mål på delen:**
 
 | Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
 |---|---|---|---|---:|
-| **J8** 2× Treskrue 6×80 | fremre benkevange 48×68 × 642, baksiden (mot veggen) | 47,5 mm fra ytterenden | 22 mm fra under- og overkanten | 24 |
-| **J10** 2× Treskrue 5×40 | stubbefot 48×68 × 229, yttersiden (mot sideveggen) | 22,5 / 67,5 mm fra toppen | midt på (24 mm fra hver side) | 45 |
-| **J10** 2× Treskrue 5×40 | benkevange 48×68 × 1794, undersiden | 411,5 / 456,5 mm fra ytterenden | midt på (24 mm fra hver side) | 45 |
-| **J10** 2× Treskrue 5×40 | benkevange 48×68 × 642, undersiden | 90,5 / 135,5 mm fra innerenden | midt på (24 mm fra hver side) | 45 |
-| **J10** 1× Treskrue 5×60 | stubbefot 48×68 × 229, innersiden (mot sengas midte) | 35 mm fra toppen | midt på (24 mm fra hver side) | — |
-| **J10** 1× Vinkelbeslag 90×90×40×2,5 | stubbefot 48×68 × 229, yttersiden (mot sideveggen) | i flukt med toppen | midt på (24 mm fra hver side) | — |
+| **J8** 2× Treskrue 6×80 | fremre benkevange 48×68 × 547, baksiden (mot veggen) | 40 mm fra ytterenden | 20 / 44 mm fra overkanten | 24 |
+| **J10** 1× Treskrue 5×60 | stubbefot 48×68 × 229, innersiden (mot sengas midte) | 40 mm fra toppen | 15 mm fra bak- og forkanten | — |
+| **J10** 1× Treskrue 6×120 | benkevange 48×68 × 1794, oversiden | 513 mm fra ytterenden | 18 mm fra bakkanten | — |
+| **J10** 1× Treskrue 6×120 | benkevange 48×68 × 547, oversiden | 34 mm fra innerenden | 18 mm fra forkanten | — |
+| **J19** 1× Treskrue 5×60 | benkespileledd 36×48 × 547, baksiden (mot veggen) | 105,1 / 217,4 mm fra begge ender | midt på (24 mm fra hver side) | 112,3 |
+| **J20** 2× Treskrue 5×60 | fremre endelist 36×48 × 98, baksiden (mot veggen) | 22,5 mm fra begge ender | 16 mm fra underkanten | 53 |
 | **J17** 2× Treskrue 5×60 | endelist 36×48 × 98, forsiden (mot rommet) | 22,5 mm fra begge ender | 16 mm fra underkanten | 53 |
 
 **Slik gjør du:**
 
-1. Fest hver vangebit til sin fremre hjørnestolpe etter J8. **Skruene drives innenfra**, fra vangens innside og inn i stolpen, så stolpens forside blir stående uten skruehoder. Du kommer til ovenfra: benken er åpen til spilene går på i steg 7. Ingen kloss under enden — hullene holder vangen i riktig høyde. Vangebiten er en romdel: hullene i den ble boret etter finkapp, se det siste punktet i steg 0 og [kapplistas rombolk](kappliste.md#kapp-når-rommet-er-ferdig--romdeler).
-1. **Trim de 4 stubbeføttene i bunn.** De er kappet 15 mm for lange. Hold foten opp under vangen der den skal stå, strek av mot gulvet med avstandskloss, og kapp. Én fot om gangen — gulvet er ikke i vater, og de fire blir ikke like lange.
+1. **Vangebiten står BUTTET mellom den fremre hjørnestolpen og stubbefoten, i stolpenes eget plan** — forkanten i flukt med stolpens forside (X18). Den ligger ikke lenger utenpå stolpen, så det finnes ingen omlegg å skru gjennom: enden festes med LOMMESKRUER etter J8, to per ende, ut av flatbunnede seter i vangens innside. Setene er boret i steg 0 med den samme 25°-vinkelklossen J8-B bruker. Vangebiten er en romdel: hullene i den ble boret etter finkapp, se det siste punktet i steg 0 og [kapplistas rombolk](kappliste.md#kapp-når-rommet-er-ferdig--romdeler).
+1. **Trim de 4 stubbeføttene i bunn.** De er kappet 20 mm for lange. Hold foten opp under vangen der den skal stå, strek av mot gulvet med avstandskloss, og kapp. Én fot om gangen — gulvet er ikke i vater, og de fire blir ikke like lange.
 1. Sett en stubbefot under den innerste enden av hver vangebit. Vangebiten skal slutte akkurat der foten står — ingen utstikk forbi foten.
 1. Sett de to bakre stubbeføttene under den bakre benkevangen, rett under de samme punktene.
-1. Fest alle fire føtter etter J10. Den ene 5×60 per fot er en skråskrue nedenfra og opp i vangen, og setet er boret i steg 0 — ⌀18 flatbunnet lomme 18 mm ned langs aksen, 30° på fotens innerside. Skru beslaget først, skråskruen sist.
+1. Fest alle fire føtter etter J10. **Det er ikke noe vinkelbeslag her lenger (X18)** — det er to skruer per fot, én OVENFRA og én FRA SIDEN, som byggherren gjorde det: en 6×120 rett ned gjennom vangens overkant og inn i fotens endeved (hodet forsenket, det ligger under spilene), og en 5×60 skråskrue opp i vangen ut av et flatbunnet sete i fotens innerside — ⌀18 lomme 18 mm ned langs aksen, 30° vipp, boret i steg 0.
 1. ENDELISTEN, én i hver ende: skru den flatt på FORSIDEN av den bakre hjørnestolpen, med overkanten i flukt med benkevangens overkant (297 mm over gulvet). To 5×60 ved siden av hverandre (J17) — 36 mm gjennom listen og 24 mm inn i stolpen, så det står 12 mm igjen til veggflaten bak. Ikke bruk lengre skrue.
-1. **Avstiving — enheten henger i ETT feste.** Benkevange, front (bit) og stubbefot er skrudd til det som allerede står i ett eneste punkt: J8 i hjørnestolpe, front, 2 fester på én loddrett linje og bare 24 mm fra hverandre. Enheten kan dreie om den linjen, og det ytterste hjørnet av stubbefot står 596 mm ute — det vandrer inn mot bakveggen og ut i rommet. Gulvet stopper det ikke: gulvet er ikke i vater, og det er nettopp derfor føttene kappes til slutt. **Her finnes det en PERMANENT del som gjør jobben, og den er bedre enn en midlertidig:** monter én benkespile med det samme — den innerste, lengst fra dreielinjen — og skru den i begge ender (J11). Den binder enheten til benkevange, bak (gjennomgående) 910 mm fra dreielinjen, og da holdes fluktet av sengens eget treverk i stedet for av en lekt du siden skal ta av. Resten av dem venter på steg 7, der de hører hjemme. Det samme gjelder i begge endene: enhetene er speilbilder og får hver sin. Og tving delene sammen før du skrur, ikke etterpå — skruen drar skjøten ut av flukt på vei inn.
+1. **BENKESPILELEDDET, ett per benk (X18).** Vangen står 36 mm lenger fram enn før, så spileendene får bare 12 mm av den å ligge på. Leddet er 36×48 × 547 mm og skrus vannrett på vangens INNSIDE med overkanten i flukt med vangens overkant (297 mm), fire 5×60 per ledd (J19) satt i MELLOMROMMENE mellom spilene. Da ligger spileenden på ledd og vange i ett plan, 48 mm bredt.
+1. **FREMRE ENDELIST, én i hver ende (X18).** Endespilen rekker ikke inn på vangen lenger — vangen begynner først ved stolpens innerside. Skru listen flatt på BAKSIDEN av den fremre hjørnestolpen, overkanten i flukt med vangens overkant, to 5×60 (J20). Speilbildet av endelisten i den andre enden av samme spile.
+1. **Avstiving — enheten henger i ETT feste.** Benkespileledd, benkevange, front (bit) og stubbefot er skrudd til det som allerede står i ett eneste punkt: J8 i hjørnestolpe, front, 2 fester på én loddrett linje og bare 24 mm fra hverandre. Enheten kan dreie om den linjen, og det ytterste hjørnet av stubbefot står 527 mm ute — det vandrer inn mot bakveggen og ut i rommet. Gulvet stopper det ikke: gulvet er ikke i vater, og det er nettopp derfor føttene kappes til slutt. **Her finnes det en PERMANENT del som gjør jobben, og den er bedre enn en midlertidig:** monter én benkespile med det samme — den innerste, lengst fra dreielinjen — og skru den i begge ender (J11 og J11-F). Den binder enheten til benkevange, bak (gjennomgående) 907 mm fra dreielinjen, og da holdes fluktet av sengens eget treverk i stedet for av en lekt du siden skal ta av. Resten av dem venter på steg 7, der de hører hjemme. Det samme gjelder i begge endene: enhetene er speilbilder og får hver sin. Og tving delene sammen før du skrur, ikke etterpå — skruen drar skjøten ut av flukt på vei inn.
+1. **Avstiving — enheten henger i ETT feste.** Stubbefot er skrudd til det som allerede står i ett eneste punkt: J10 i benkevange, bak (gjennomgående), 2 fester på én loddrett linje og bare 97 mm fra hverandre. Enheten kan dreie om den linjen, og det ytterste hjørnet av stubbefot står 126 mm ute — det vandrer inn mot bakveggen og ut i rommet. Gulvet stopper det ikke: gulvet er ikke i vater, og det er nettopp derfor føttene kappes til slutt. **Ingen permanent del i sengen når fram hit ennå, så sett en MIDLERTIDIG:** en lekt fra det frie hjørnet bort til benkevange, bak (gjennomgående), 229 mm — altså den samme enden nederst som stubbefot tar øverst. Klem eller skru den i begge ender, i en flate som ikke blir synlig. Det samme gjelder i begge endene: enhetene er speilbilder og får hver sin. Og tving delene sammen før du skrur, ikke etterpå — skruen drar skjøten ut av flukt på vei inn.
 
 **Sjekk før du går videre:**
 
@@ -267,9 +268,9 @@ Den fremre benkevangen er delt i to. Midtpartiet er med vilje åpent, slik at gu
 
 Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre sidevangen.
 
-**Deler:** 5× Rungetrinn 48×68 × 320 · 10× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 2037
+**Deler:** 4× Rungetrinn 48×68 × 320 · 8× Stigekloss 36×48 × 36 · 2× Stigevange 36×48 × 1871
 
-**Festemidler:** 10× Treskrue 5×60 forsenket Torx · 10× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×80 forsenket Torx
+**Festemidler:** 8× Treskrue 5×60 forsenket Torx · 8× Treskrue 6×120 forsenket Torx · 6× Treskrue 6×80 forsenket Torx
 
 **Ledd:** J3, J4, J5 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
@@ -278,24 +279,24 @@ Bygg hele stigen ferdig liggende på gulvet, og skru den så på den fremre side
 | Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
 |---|---|---|---|---:|
 | **J3** 3× Treskrue 6×80 | fremre sidevange 48×98 × 1984, baksiden (mot veggen) | 808 mm fra ytterenden | 25 / 49 / 73 mm fra underkanten | 24 |
-| **J4** 1× Treskrue 6×120 | stigevange 36×48 × 2037, yttersiden (mot sideveggen) | 819 / 1099 / 1379 / 1572 / 1764 mm fra toppen | midt på (18 mm fra hver side) | — |
+| **J4** 1× Treskrue 6×120 | stigevange 36×48 × 1871, yttersiden (mot sideveggen) | 653 / 933 / 1213 / 1598 mm fra toppen | midt på (18 mm fra hver side) | — |
 | **J5** 1× Treskrue 5×60 | stigekloss 36×48 × 36, innersiden (mot sengas midte) | midt på (24 mm fra hver ende) | midt på (18 mm fra hver side) | — |
 
 **Slik gjør du:**
 
 1. Skru stigeklossene på innsiden av hver stigevange (J5). Klossen er 36 mm lang — nøyaktig så dyp som stigevangen — og skal ligge i flukt med vangens for- og bakkant, ikke stikke bakover slik trinnet gjør. Klosshøyden er trinnhøyden — mål to ganger.
 1. Legg trinnene på klossene og fest dem (J4).
-1. **Stigningen skifter over trinn 3, og det er tilsiktet.** 192 / 193 mm mellom de nederste trinnene, 280 mm mellom de øverste. Stigen er to løp (X9): det nederste er trappa opp på benken, det øverste er klatringen opp i senga. Måler du 192 / 193 der det skal være 280, har du satt en kloss feil — ikke rett opp stigningen, rett opp klossen.
-1. **Trinn 3 er STØTTETRINNET — det er bordplatens forkant i bordstilling.** Ingen egen del og ingen ekstra skrue: det er det samme trinnet som de andre, satt med overkanten på 682 mm over gulvet. Har du en eldre tegning med to BORDKLOSSER på vangenes innside her, er den utgått — klossene er strøket, og trinnet gjør jobben deres.
+1. **Stigningen skifter over trinn 2, og det er tilsiktet.** 385 mm mellom de nederste trinnene, 280 mm mellom de øverste. Stigen er to løp (X9): det nederste er trappa opp på benken, det øverste er klatringen opp i senga. Måler du 385 der det skal være 280, har du satt en kloss feil — ikke rett opp stigningen, rett opp klossen.
+1. **Trinn 2 er STØTTETRINNET — det er bordplatens forkant i bordstilling.** Ingen egen del og ingen ekstra skrue: det er det samme trinnet som de andre, satt med overkanten på 682 mm over gulvet. Har du en eldre tegning med to BORDKLOSSER på vangenes innside her, er den utgått — klossene er strøket, og trinnet gjør jobben deres.
 1. Reis stigen mot den fremre sidevangen. Trinnenes forkant skal ligge i flukt med stigevangenes forkant — trinnene stikker BAKOVER, ikke framover. Det som stikker bakover er hylla den løse platen skal hvile på.
-1. **Trim de 2 stigevangene i bunn — og gjør det nå, mens stigen står prøvd opp.** De er kappet 15 mm for lange. Stigen ble bygget liggende, så trimmingen går i tre trekk: hold stigen i lodd med toppen der den skal sitte, strek av mot gulvet med avstandskloss, ta den ned og legg den flatt, og kapp begge vanger. Prøv opp igjen før du skrur.
+1. **Trim de 2 stigevangene i bunn — og gjør det nå, mens stigen står prøvd opp.** De er kappet 20 mm for lange. Stigen ble bygget liggende, så trimmingen går i tre trekk: hold stigen i lodd med toppen der den skal sitte, strek av mot gulvet med avstandskloss, ta den ned og legg den flatt, og kapp begge vanger. Prøv opp igjen før du skrur.
 1. Skru stigen fast til vangen etter J3 — **innenfra**, gjennom sidevangen og inn i stigevangen, så stigevangens forside blir uten skruehoder. Klem stigen fast mot vangen først; du står på den andre siden når du skrur. Gjennomgangshullene sitter i sidevangen, som er en romdel: de ble boret etter finkapp, se det siste punktet i steg 0.
 
 **Sjekk før du går videre:**
 
 * Mål lysåpningen mellom stigevangene øverst og nederst — den skal være lik.
-* Alle 5 trinn i vater.
-* Mål ned fra STIGEVANGENS TOPP til STØTTETRINNETS overkant: 1355 mm i begge ender, og trinnet i vater. Målt ovenfra, som alt annet på en stående del — foten er nettopp trimmet og er ikke et utgangspunkt. Bordplaten hviler på dette trinnet og på bordbærelekta samtidig; står de i ulik høyde, vipper platen.
+* Alle 4 trinn i vater.
+* Mål ned fra STIGEVANGENS TOPP til STØTTETRINNETS overkant: 1189 mm i begge ender, og trinnet i vater. Målt ovenfra, som alt annet på en stående del — foten er nettopp trimmet og er ikke et utgangspunkt. Bordplaten hviler på dette trinnet og på bordbærelekta samtidig; står de i ulik høyde, vipper platen.
 * Stå på nederste trinn og kjenn etter. Sitter noe løst nå, sitter det løst for alltid.
 
 ## Steg 7 — Benkespiler og endespiler
@@ -306,22 +307,23 @@ Fem spiler per benk, lagt oppå benkevangene — og helt ute ved hver vegg en 76
 
 **Festemidler:** 24× Treskrue 5×60 forsenket Torx
 
-**Ledd:** J11, J11-E, J16 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+**Ledd:** J11, J11-F, J11-E, J16 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
 **Festeplassering — mål på delen:**
 
 | Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
 |---|---|---|---|---:|
-| **J11** 1× Treskrue 5×60 | benkespile 23×98 × 800, oversiden | 24 mm fra vegg- og romenden | midt på (49 mm fra hver side) | — |
-| **J11-E** 1× Treskrue 5×60 | endespile 23×98 × 764, oversiden | 24 mm fra romenden | 23 mm fra innerkanten | — |
+| **J11** 1× Treskrue 5×60 | benkespile 23×98 × 800, oversiden | 24 mm fra veggenden | midt på (49 mm fra hver side) | — |
+| **J11-F** 1× Treskrue 5×60 | benkespile 23×98 × 800, oversiden | 30 mm fra romenden | midt på (49 mm fra hver side) | — |
+| **J11-E** 1× Treskrue 5×60 | endespile 23×98 × 764, oversiden | 18 mm fra romenden | midt på (49 mm fra hver side) | — |
 | **J16** 1× Treskrue 5×60 | endespile 23×98 × 764, oversiden | 18 mm fra veggenden | midt på (49 mm fra hver side) | — |
 
 **Slik gjør du:**
 
 1. Legg ut alle fem spilene på én benk før du skrur, og sjekk delingen mot kapplista.
-1. Skru hver spile ned i den bakre og den fremre benkevangen, én skrue per ende (J11). Forsenk hodene — dette er en sitteflate.
+1. Skru hver spile ned i den bakre benkevangen (J11) og i benkespileleddet foran (J11-F), én skrue per ende. Forsenk hodene — dette er en sitteflate. Den fremre skruen står i LEDDET, ikke i vangen: vangen har bare 12 mm under spileenden, og det er for lite til en 5 mm skrues kantavstand.
 1. Gjenta speilvendt på den andre benken.
-1. ENDESPILEN er kortere enn de andre, 764 mm: den starter på stolpens forside, ikke på veggen — stolpen står i soveflaten her. Endelisten den skal hvile på sitter ferdig på stolpen fra steg 5; her legges bare spilen. Legg den mot veggen, tett inntil naboen, og skru én skrue ned i endelisten (J16) og én ned i den fremre benkevangen (J11-E).
+1. ENDESPILEN er kortere enn de andre, 764 mm: den starter på stolpens forside, ikke på veggen — stolpen står i soveflaten her. Endelisten den skal hvile på sitter ferdig på stolpen fra steg 5; her legges bare spilen. Legg den mot veggen, tett inntil naboen, og skru én skrue ned i den bakre endelisten (J16) og én ned i den fremre endelisten (J11-E).
 
 **Sjekk før du går videre:**
 
@@ -361,23 +363,25 @@ Spilene ligger OPPÅ begge sidevanger — ikke i et spor og ikke på en lekt. Al
 
 To bånd, hvert delt i to bord, med klatreåpningen i midten. Man klatrer GJENNOM rekkverket, ikke over. Det er ikke rekkverk på baksiden — der er veggen sperren. Bordene ligger på INNSIDEN av stolpene, mot sengen, ikke utenpå.
 
-**Deler:** 4× Rekkverksbord, front 36×98 × 832
+**Deler:** 8× Rekkverksavstiver 23×98 × 128 · 4× Rekkverksbord, front 36×98 × 832
 
-**Festemidler:** 16× Treskrue 5×60 forsenket Torx
+**Festemidler:** 32× Treskrue 5×40 forsenket Torx · 12× Treskrue 5×60 forsenket Torx
 
-**Ledd:** J7 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
+**Ledd:** J7, J21 — se J-oversikten i [ASSEMBLY.md](../ASSEMBLY.md#4-j--leddene) og [beslagliste](beslagliste.md)
 
 **Festeplassering — mål på delen:**
 
 | Ledd | Merkes opp på | Fra enden | Fra kanten | c/c |
 |---|---|---|---|---:|
 | **J7** 2× Treskrue 5×60 | rekkverksbord 36×98 × 832, baksiden (mot veggen) | 47,5 mm fra ytterenden · 24 mm fra innerenden | 22,5 mm fra under- og overkanten | 53 |
+| **J21** 2× Treskrue 5×40 | rekkverksavstiver 23×98 × 128, forsiden (mot rommet) | 15 mm fra begge ender | 22,5 mm fra begge langkanter | 53 |
 
 **Slik gjør du:**
 
 1. Legg det nederste båndet an mot innsiden av hjørnestolpen og stigevangen, i flukt med stolpenes innerplan.
 1. Skru fra sengesiden inn i stolpen og i stigevangen (J7). Forbor — bordet sprekker lett nær enden.
-1. Gjenta for det øverste båndet.
+1. Gjenta for det øverste båndet. **Det øverste bordet legges med overkanten i flukt med stolpetoppen (X18)** — og det har ingen stigevange å skru i ved den indre enden, for vangene er kappet lavere. Den enden bæres av avstiverraden.
+1. **AVSTIVERNE, 4 per felt (X18).** 23×98 × 128 mm av bunnspilerestene, lagt PÅ TVERS over de to bordene i sporet mellom bordet og stolpeplanet, med 30 mm omlegg på hvert bord. Delingen er jevn: 59,4 mm luft mellom to avstivere. To 5×40 i hvert omlegg (J21), drevet fra rommet — det er den eneste flaten en drill når, og de 32 hodene er det ene stedet i sengen der stål synes på forsiden.
 
 **Sjekk før du går videre:**
 
@@ -421,9 +425,9 @@ Platen er ikke et løst bord. Den er en liten enhet som løftes ut i ett stykke 
 
 ## Steg 11 — Madrass og puter
 
-Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er TYKKELSEN, og der er det bare ett riktig svar: 120 mm. Vinduet er 110–125 mm, og en helt vanlig 160 mm madrass er ULOVLIG i denne sengen — den legger spalten opp til rekkverket midt i klemvinduet.
+Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikke spesialmål og skal ikke spesialbestilles. Det eneste målet du må velge selv er TYKKELSEN, og der er det bare ett riktig svar: 120 mm. Vinduet er 175–190 mm, og en helt vanlig 160 mm madrass er ULOVLIG i denne sengen — den legger spalten opp til rekkverket midt i klemvinduet.
 
-**Deler:** 2× Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten) · 1× Madrass 80 × 200 cm, **120 mm tykk** (vindu 110–125 mm) · 2× Ryggpute, skum **100 mm** (332 × 800 mm)
+**Deler:** 2× Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten) · 1× Madrass 80 × 200 cm, **120 mm tykk** (vindu 175–190 mm) · 2× Ryggpute, skum **100 mm** (332 × 800 mm)
 
 **Slik gjør du:**
 
@@ -431,8 +435,8 @@ Sengen er dimensjonert rundt en STANDARD madrass på 80 × 200 cm — den er ikk
 1. UNDERETASJEN: fire puter, alle 100 mm tykke og 800 mm dype. To benkeputer på 663 mm og to ryggputer på 332 mm — lagt etter hverandre dekker de nedre soveflate nøyaktig, 663 + 332 + 332 + 663 = 1990 mm.
 1. Skjær et 98 × 36 mm hakk i veggkanten på hver av de to benkeputene, der den bakre hjørnestolpen står. Brødkniv.
 1. SOFASTILLING: benkeputene ligger der de ligger — de flyttes aldri. Ryggputene reises på høykant ytterst på hver benk, med ryggen mot bordbærelekta.
-1. MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er ikke en tusjstrek som skal kunne tørkes bort: skriv «MAKS MADRASS 125 MM» på innsiden av en fremre stolpe, i høyden 1648 mm over gulvet. Den som bytter madrass om ti år skal kunne lese grensen av sengen selv.
-1. Skriv nedre grense, 110 mm, ved siden av. For tynn madrass åpner spalten under nederste rekkverksbord; for tykk lukker den seg ned i klemvinduet.
+1. MERK MAKSMÅLET PERMANENT. EN 747 krever det, og det er ikke en tusjstrek som skal kunne tørkes bort: skriv «MAKS MADRASS 190 MM» på innsiden av en fremre stolpe, i høyden 1713 mm over gulvet. Den som bytter madrass om ti år skal kunne lese grensen av sengen selv.
+1. Skriv nedre grense, 175 mm, ved siden av. For tynn madrass åpner spalten under nederste rekkverksbord; for tykk lukker den seg ned i klemvinduet.
 
 **Sjekk før du går videre:**
 

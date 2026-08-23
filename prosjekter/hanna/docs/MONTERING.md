@@ -12,7 +12,7 @@
 |---:|---:|---:|
 | **1990 mm** | **836 mm** | **2037 mm** |
 
-76 deler · 13 steg (0–12) · 1 person — 2 ved reisning (steg 2 og 4) · passer standard madrass 80 × 200 cm
+85 deler · 13 steg (0–12) · 1 person — 2 ved reisning (steg 2 og 4) · passer standard madrass 80 × 200 cm
 
 Sengen står inntil bakveggen og inntil begge sidevegger, og skrus fast i bakveggen. **Bygg bakfra og utover.**
 
@@ -43,7 +43,7 @@ Nisja er hverken i vinkel eller i vater, og senga skal stå i begge deler. **Sen
 5. **Mål nisjedybden på BEGGE endevegger** — fra bakveggen og ut til nisjas åpning, i de samme 5 høydene. Minste dybde må være minst **1500 mm**, og det er bakrammen som setter kravet, ikke senga: senga er 836 mm dyp, men bakrammen bygges liggende på gulvet inne i nisja og tippes opp derfra (steg 1 og 2). Liggende tar den sin egen høyde, 1500 mm, ut fra bakveggen. Er nisja grunnere enn det, får rammen ikke ligge — og da lar den seg ikke reise heller, for 1990 mm bredde går ikke å svinge inn i en 1990 mm åpning.
 6. Er minste bredde et annet tall enn 1990: sett den inn som `WALL_SPAN` i `generate_loftbed.py` og kjør `mise run build`. Kapplista regner seg om.
 7. Gulv: mål ned fra risset i sengas fire hjørner og på midten. Merk det høyeste punktet på gulvet. Senga bygges ned fra det.
-8. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 15 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
+8. Kapp verksteddelene nå. Romdelene tilpasses på stedet: stolper og føtter kappes 20 mm for lange og trimmes i bunn til rammen står i vater — strek opp med avstandskloss, meddrag. Sidevangene kappes 10 mm for lange i hver veggende og finkappes etter målt bredde. Ytterste endespile strekes opp etter veggen med fast avstand, så fugen blir jevn.
 9. **Romdelenes hull bores først når romdelen er finkappet.** Hvert hull i dem er målt fra den enden som ennå har 10 mm overmål på seg, så rekkefølgen er kapp først, drill etterpå. Kapplistas rombolk sier hvilke deler, og siste punkt i steg 0 sier hvilke ledd.
 10. **De fire hjørnestolpene står helt inntil endeveggen — null klaring.** Derfor strekes veggsiden på hver av dem, hver gang: sett stolpen på plass, hold den i lodd, og strek opp veggsiden med avstandskloss der veggen buler. Høvle av til stolpen står i lodd inntil veggen. Ingen monn i bredden — det er tre som skal bort, ikke legges til. Buler veggen og du lar det stå, skyver bulen hele rammen ut av lodd.
 11. Kapp kanter som møter vegg eller gulv med lite bakfall. Da er det bare den synlige kanten som bestemmer fugen.
@@ -112,14 +112,12 @@ Gulv-kolonnen er fra **ferdig gulv**. Legges gulvet etterpå, må påforingshøy
 
 | | |
 |:---:|---|
-| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **86x** | Treskrue 5×60 forsenket Torx |
-| <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="44"> **36x** | Treskrue 5×40 forsenket Torx |
-| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **34x** | Treskrue 6×80 forsenket Torx |
-| <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="44"> **14x** | Treskrue 6×120 forsenket Torx |
+| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="44"> **92x** | Treskrue 5×60 forsenket Torx |
+| <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="44"> **48x** | Treskrue 5×40 forsenket Torx |
+| <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="44"> **38x** | Treskrue 6×80 forsenket Torx |
+| <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="44"> **16x** | Treskrue 6×120 forsenket Torx |
 | <img src="img/beslag/veggfeste-8x100.svg" alt="Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur)" height="44"> **9x** | Veggfeste etter veggtype (treskrue 8×100 i stender, eller plugg + skrue i mur) |
 | <img src="img/beslag/filtknott-d40.svg" alt="Filtknott / møbeltapp ⌀40" height="44"> **8x** | Filtknott / møbeltapp ⌀40 |
-| <img src="img/beslag/vinkelbeslag-90x90x40.svg" alt="Vinkelbeslag 90×90×40×2,5 varmforsinket" height="179"> **4x** | Vinkelbeslag 90×90×40×2,5 varmforsinket |
-| <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="84"> **2x** | Vinkelbeslag 40×40×20 |
 
 Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.md). Hvilken vei hver enkelt drives, og hvorfor: [skrueretninger](generated/skrueretninger.md).
 
@@ -133,9 +131,12 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Benkespile | 23×98 | 800 | **10** | nå |
 | Køyespile | 23×98 | 800 | **14** | nå |
 | Endespile | 23×98 | 764 | **2** | på stedet |
-| Stigevange | 36×48 | 2037 | **2** | på stedet |
+| Rekkverksavstiver | 23×98 | 128 | **8** | nå |
+| Stigevange | 36×48 | 1871 | **2** | på stedet |
+| Benkespileledd | 36×48 | 547 | **2** | nå |
 | Endelist | 36×48 | 98 | **2** | på stedet |
-| Stigekloss | 36×48 | 36 | **10** | nå |
+| Endelist, fremre | 36×48 | 98 | **2** | på stedet |
+| Stigekloss | 36×48 | 36 | **8** | nå |
 | Hjørnestolpe, front | 36×98 | 2037 | **2** | på stedet |
 | Hjørnestolpe, bak (veggside) | 36×98 | 1402 | **2** | på stedet |
 | Endebjelke | 36×98 | 836 | **2** | nå |
@@ -144,14 +145,14 @@ Hvor hver enkelt går, og hva som forbores: [beslagliste](generated/beslagliste.
 | Benkevange, bak (gjennomgående) | 48×68 | 1794 | **1** | nå |
 | Bordbærelekt, bak | 48×68 | 1794 | **1** | nå |
 | Avstivningslekt under plate | 48×68 | 750 | **2** | nå |
-| Benkevange, front (bit) | 48×68 | 642 | **2** | på stedet |
+| Benkevange, front (bit) | 48×68 | 547 | **2** | nå |
 | Fotbrettbord | 48×68 | 416 | **4** | nå |
-| Rungetrinn | 48×68 | 320 | **5** | nå |
+| Rungetrinn | 48×68 | 320 | **4** | nå |
 | Stubbefot | 48×68 | 229 | **4** | på stedet |
 | Kilelekt under platens forkant (skråkappet) | 48×68 | 77 | **2** | nå |
 | Sidevange, øvre | 48×98 | 1984 | **2** | på stedet |
 
-**76 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
+**85 deler.** **Ant.** er antallet — det samme tallet som står som `4×` på stegsidene. **Dim.** og **Lengde** er i millimeter.
 
 **Kapp:** «nå» er delene verkstedet gjør ferdig. «på stedet» er de 22 delene som møter en endevegg eller gulvet — de kappes med overmål og finkappes i rommet. Overmålet står i [kapplista](generated/kappliste.md).
 
@@ -192,10 +193,8 @@ Ledd **J15** → [beslagliste](generated/beslagliste.md)
 
 | | | |
 |:---:|:---:|---|
-| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="30"> **4x** | Treskrue 5×40 |
+| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **8x** | Treskrue 6×80 |
 | <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **4x** | Treskrue 6×120 |
-| <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **4x** | Treskrue 6×80 |
-| <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/vinkelbeslag-40x40x20.svg" alt="Vinkelbeslag 40×40×20" height="58"> **2x** | Vinkelbeslag 40×40×20 |
 
 Bokstavene viser hvor på tegningen hver type går.
 
@@ -280,24 +279,27 @@ Ledd **J2** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **2×** | Benkevange, front (bit) | 48×68 | 642 |
+| **2×** | Benkespileledd | 36×48 | 547 |
+| **2×** | Benkevange, front (bit) | 48×68 | 547 |
 | **2×** | Endelist | 36×48 | 98 |
+| **2×** | Endelist, fremre | 36×48 | 98 |
 | **4×** | Stubbefot | 48×68 | 229 |
 
 | | | |
 |:---:|:---:|---|
-| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="30"> **16x** | Treskrue 5×40 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **8x** | Treskrue 5×60 |
+| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **20x** | Treskrue 5×60 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **4x** | Treskrue 6×120 |
 | <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **4x** | Treskrue 6×80 |
-| <img src="img/ikon/merke-d.svg" alt="D" height="20"> | <img src="img/beslag/vinkelbeslag-90x90x40.svg" alt="Vinkelbeslag 90×90×40×2,5 varmforsinket" height="72"> **4x** | Vinkelbeslag 90×90×40×2,5 |
 
 Bokstavene viser hvor på tegningen hver type går.
 
-Ledd **J8**, **J10**, **J17** → [beslagliste](generated/beslagliste.md)
+Ledd **J8**, **J10**, **J19**, **J20**, **J17** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Ingenting skal krysse gulvet mellom de to benkene.
 
-🗜️ **Avstiving.** Benkevange, front (bit) og stubbefot henger i ett feste og kan dreie inn mot bakveggen og ut i rommet — monter én benkespile med det samme, og bruk tvinger mens du skrur.
+🗜️ **Avstiving.** Benkespileledd, benkevange, front (bit) og stubbefot henger i ett feste og kan dreie inn mot bakveggen og ut i rommet — monter én benkespile med det samme, og bruk tvinger mens du skrur.
+
+🗜️ **Avstiving.** Stubbefot henger i ett feste og kan dreie inn mot bakveggen og ut i rommet — sett en midlertidig lekt fra det frie hjørnet bort til benkevange, bak (gjennomgående), og bruk tvinger mens du skrur.
 
 [Steg 5 i ord](generated/byggesteg.md#steg-5--fremre-benkevanger-stubbeføtter-og-endelister)
 
@@ -311,14 +313,14 @@ Ledd **J8**, **J10**, **J17** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
-| **5×** | Rungetrinn | 48×68 | 320 |
-| **10×** | Stigekloss | 36×48 | 36 |
-| **2×** | Stigevange | 36×48 | 2037 |
+| **4×** | Rungetrinn | 48×68 | 320 |
+| **8×** | Stigekloss | 36×48 | 36 |
+| **2×** | Stigevange | 36×48 | 1871 |
 
 | | | |
 |:---:|:---:|---|
-| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **10x** | Treskrue 5×60 |
-| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **10x** | Treskrue 6×120 |
+| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **8x** | Treskrue 5×60 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-6x120.svg" alt="Treskrue 6×120 forsenket Torx" height="30"> **8x** | Treskrue 6×120 |
 | <img src="img/ikon/merke-c.svg" alt="C" height="20"> | <img src="img/beslag/treskrue-6x80.svg" alt="Treskrue 6×80 forsenket Torx" height="30"> **6x** | Treskrue 6×80 |
 
 Bokstavene viser hvor på tegningen hver type går.
@@ -346,7 +348,7 @@ Ledd **J3**, **J4**, **J5** → [beslagliste](generated/beslagliste.md)
 |:---:|---|
 | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **24x** | Treskrue 5×60 |
 
-Ledd **J11**, **J11-E**, **J16** → [beslagliste](generated/beslagliste.md)
+Ledd **J11**, **J11-F**, **J11-E**, **J16** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Kjenn over hele benken med håndflaten: ingen skruehoder skal stikke opp.
 
@@ -384,13 +386,17 @@ Ledd **J6** → [beslagliste](generated/beslagliste.md)
 
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
+| **8×** | Rekkverksavstiver | 23×98 | 128 |
 | **4×** | Rekkverksbord, front | 36×98 | 832 |
 
-| | |
-|:---:|---|
-| <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **16x** | Treskrue 5×60 |
+| | | |
+|:---:|:---:|---|
+| <img src="img/ikon/merke-a.svg" alt="A" height="20"> | <img src="img/beslag/treskrue-5x40.svg" alt="Treskrue 5×40 forsenket Torx" height="30"> **32x** | Treskrue 5×40 |
+| <img src="img/ikon/merke-b.svg" alt="B" height="20"> | <img src="img/beslag/treskrue-5x60.svg" alt="Treskrue 5×60 forsenket Torx" height="30"> **12x** | Treskrue 5×60 |
 
-Ledd **J7** → [beslagliste](generated/beslagliste.md)
+Bokstavene viser hvor på tegningen hver type går.
+
+Ledd **J7**, **J21** → [beslagliste](generated/beslagliste.md)
 
 ⚠️ Mål åpningene over madrassoverflaten mot tallene i nøkkelmålene. De er sikkerhetskravet i denne sengen.
 
@@ -431,7 +437,7 @@ Ledd **J13a**, **J13b** → [beslagliste](generated/beslagliste.md)
 | Ant. | Del | Dim. | Lengde |
 |---:|---|---|---:|
 | **2×** | Benkepute, skum **100 mm** (663 × 800 mm, hakk 98 × 36 i veggkanten) |  |  |
-| **1×** | Madrass 80 × 200 cm, **120 mm tykk** (vindu 110–125 mm) |  |  |
+| **1×** | Madrass 80 × 200 cm, **120 mm tykk** (vindu 175–190 mm) |  |  |
 | **2×** | Ryggpute, skum **100 mm** (332 × 800 mm) |  |  |
 
 ⚠️ Ettertrekk alle festemidler som kan ettertrekkes.

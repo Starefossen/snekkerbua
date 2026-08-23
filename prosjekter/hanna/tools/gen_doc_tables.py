@@ -853,7 +853,8 @@ def build_steps(G):
             n=5,
             title="Fremre benkevanger, stubbeføtter og endelister",
             parts=["Bench Rail Front *", "Bench Stub Leg *",
-                   "Bench End Cleat *"],
+                   "Bench End Cleat *", "Bench Front Cleat *",
+                   "Bench Post Cleat *"],
             camera=(330, 20, 3.4),
             half_view=True,
             intro="Den fremre benkevangen er delt i to. Midtpartiet er med "
@@ -862,14 +863,17 @@ def build_steps(G):
                   "spilene: den er bæreverk som vangene, den står i samme "
                   "høyde som dem, og den skal stå ferdig før noe legges oppå.",
             do=[
-                f"Fest hver vangebit til sin fremre hjørnestolpe etter J8. "
-                  f"**Skruene drives innenfra**, fra vangens innside og inn i "
-                  f"stolpen, så stolpens forside blir stående uten "
-                  f"skruehoder. Du kommer til ovenfra: benken er åpen til "
-                  f"spilene går på i steg 7. Ingen kloss under enden — "
-                  f"hullene holder vangen i riktig høyde. Vangebiten er en "
-                  f"romdel: hullene i den ble boret etter finkapp, se det "
-                  f"siste punktet i steg 0 og {kapp_room_link()}.",
+                f"**Vangebiten står BUTTET mellom den fremre hjørnestolpen "
+                  f"og stubbefoten, i stolpenes eget plan** — forkanten i "
+                  f"flukt med stolpens forside (X18). Den ligger ikke lenger "
+                  f"utenpå stolpen, så det finnes ingen omlegg å skru "
+                  f"gjennom: enden festes med LOMMESKRUER etter J8, to per "
+                  f"ende, ut av flatbunnede seter i vangens innside. Setene "
+                  f"er boret i steg 0 med den samme "
+                  f"{G.TOE_JIG_ANGLES['J8-B']:g}°-vinkelklossen J8-B bruker. "
+                  f"Vangebiten er en romdel: hullene i den ble boret etter "
+                  f"finkapp, se det siste punktet i steg 0 og "
+                  f"{kapp_room_link()}.",
                 f"**Trim de {floor_trim(G, 'Bench Stub Leg *')[0]} "
                   f"stubbeføttene i bunn.** De er kappet "
                   f"{floor_trim(G, 'Bench Stub Leg *')[1]} mm for lange. Hold "
@@ -881,12 +885,15 @@ def build_steps(G):
                   "ingen utstikk forbi foten.",
                 "Sett de to bakre stubbeføttene under den bakre benkevangen, "
                   "rett under de samme punktene.",
-                "Fest alle fire føtter etter J10. Den ene 5×60 per fot er "
-                  "en skråskrue nedenfra og opp i vangen, og setet er boret "
-                  f"i steg 0 — ⌀{G.TOE_SEAT_D:g} flatbunnet lomme "
-                  f"{G.TOE_JIG_SEATS['J10']:g} mm ned langs aksen, "
-                  f"{G.TOE_JIG_ANGLES['J10']:g}° på fotens innerside. Skru "
-                  "beslaget først, skråskruen sist.",
+                f"Fest alle fire føtter etter J10. **Det er ikke noe "
+                  f"vinkelbeslag her lenger (X18)** — det er to skruer per "
+                  f"fot, én OVENFRA og én FRA SIDEN, som byggherren gjorde "
+                  f"det: en 6×120 rett ned gjennom vangens overkant og inn i "
+                  f"fotens endeved (hodet forsenket, det ligger under "
+                  f"spilene), og en 5×60 skråskrue opp i vangen ut av et "
+                  f"flatbunnet sete i fotens innerside — ⌀{G.TOE_SEAT_D:g} "
+                  f"lomme {G.TOE_JIG_SEATS['J10']:g} mm ned langs aksen, "
+                  f"{G.TOE_JIG_ANGLES['J10']:g}° vipp, boret i steg 0.",
                 f"ENDELISTEN, én i hver ende: skru den flatt på FORSIDEN av "
                   f"den bakre hjørnestolpen, med overkanten i flukt med "
                   f"benkevangens overkant ({G.END_CLEAT_Z1} mm over gulvet). "
@@ -894,6 +901,22 @@ def build_steps(G):
                   f"gjennom listen og {G.END_CLEAT_BITE} mm inn i stolpen, så "
                   f"det står {G.POST_T - G.END_CLEAT_BITE} mm igjen til "
                   f"veggflaten bak. Ikke bruk lengre skrue.",
+                f"**BENKESPILELEDDET, ett per benk (X18).** Vangen står "
+                  f"{G.POST_T} mm lenger fram enn før, så spileendene får "
+                  f"bare {G.BENCH_SLAT_ON_CHEEK} mm av den å ligge på. "
+                  f"Leddet er {G.sec(G.BENCH_LEDGER_T, G.BENCH_LEDGER_H).replace('x', '×')}"
+                  f" × {G.BENCH_LEDGER_LEN} mm og skrus vannrett på vangens "
+                  f"INNSIDE med overkanten i flukt med vangens overkant "
+                  f"({G.BENCH_LEDGER_Z1} mm), fire 5×60 per ledd (J19) satt "
+                  f"i MELLOMROMMENE mellom spilene. Da ligger spileenden på "
+                  f"ledd og vange i ett plan, "
+                  f"{G.BENCH_SLAT_Y1 - G.BENCH_LEDGER_Y0} mm bredt.",
+                f"**FREMRE ENDELIST, én i hver ende (X18).** Endespilen "
+                  f"rekker ikke inn på vangen lenger — vangen begynner først "
+                  f"ved stolpens innerside. Skru listen flatt på BAKSIDEN av "
+                  f"den fremre hjørnestolpen, overkanten i flukt med "
+                  f"vangens overkant, to 5×60 (J20). Speilbildet av "
+                  f"endelisten i den andre enden av samme spile.",
             ],
             check=[
                 "Ingenting skal krysse gulvet mellom de to benkene.",
@@ -908,7 +931,7 @@ def build_steps(G):
                 "Ingen skruespiss skal være synlig eller følbar på baksiden "
                   "av den bakre stolpen. Det er veggflaten.",
             ],
-            joints={'J8': 2, 'J10': 4, 'J17': 2},
+            joints={'J8': 2, 'J10': 4, 'J17': 2, 'J19': 8, 'J20': 2},
         ),
         dict(
             n=6,
@@ -986,17 +1009,20 @@ def build_steps(G):
             do=[
                 "Legg ut alle fem spilene på én benk før du skrur, og sjekk "
                   "delingen mot kapplista.",
-                "Skru hver spile ned i den bakre og den fremre benkevangen, "
-                  "én skrue per ende (J11). Forsenk hodene — dette er en "
-                  "sitteflate.",
+                "Skru hver spile ned i den bakre benkevangen (J11) og i "
+                  "benkespileleddet foran (J11-F), én skrue per ende. "
+                  "Forsenk hodene — dette er en sitteflate. Den fremre "
+                  "skruen står i LEDDET, ikke i vangen: vangen har bare "
+                  f"{G.BENCH_SLAT_ON_CHEEK} mm under spileenden, og det er "
+                  "for lite til en 5 mm skrues kantavstand.",
                 "Gjenta speilvendt på den andre benken.",
                 f"ENDESPILEN er kortere enn de andre, {G.END_SLAT_LEN} mm: "
                   f"den starter på stolpens forside, ikke på veggen — "
                   f"stolpen står i soveflaten her. Endelisten den skal hvile "
                   f"på sitter ferdig på stolpen fra steg 5; her legges bare "
                   f"spilen. Legg den mot veggen, tett inntil naboen, og skru "
-                  f"én skrue ned i endelisten (J16) og én ned i den fremre "
-                  f"benkevangen (J11-E).",
+                  f"én skrue ned i den bakre endelisten (J16) og én ned i "
+                  f"den fremre endelisten (J11-E).",
             ],
             check=[
                 "Kjenn over hele benken med håndflaten: ingen skruehoder skal "
@@ -1006,7 +1032,7 @@ def build_steps(G):
                   "legg en rett list på tvers over hele benken og se etter "
                   "lys under.",
             ],
-            joints={'J11': 20, 'J11-E': 2, 'J16': 2},
+            joints={'J11': 10, 'J11-F': 10, 'J11-E': 2, 'J16': 2},
         ),
         dict(
             n=8,
@@ -1033,8 +1059,13 @@ def build_steps(G):
         dict(
             n=9,
             title="Rekkverk foran",
-            parts=["Guard Rail Front *"],
-            camera=(330, 22, 3.4),
+            parts=["Guard Rail Front *", "Guard Brace *"],
+            # X18: 330 -> 300. The brace row's 5×40 are driven straight in -Y
+            # and at 330 they projected to the foreshortening floor - 1,48 of
+            # their own drawn head, under STUB_ASPECT, i.e. a dart and not a
+            # screw. The tripwire in render_lineart fired exactly as it was
+            # written to, and what gives is the CAMERA and not the rule.
+            camera=(300, 22, 3.4),
             intro="To bånd, hvert delt i to bord, med klatreåpningen i "
                   "midten. Man klatrer GJENNOM rekkverket, ikke over. Det er "
                   "ikke rekkverk på baksiden — der er veggen sperren. Bordene "
@@ -1044,14 +1075,29 @@ def build_steps(G):
                   "stigevangen, i flukt med stolpenes innerplan.",
                 "Skru fra sengesiden inn i stolpen og i stigevangen (J7). "
                   "Forbor — bordet sprekker lett nær enden.",
-                "Gjenta for det øverste båndet.",
+                "Gjenta for det øverste båndet. **Det øverste bordet legges "
+                  "med overkanten i flukt med stolpetoppen (X18)** — og det "
+                  "har ingen stigevange å skru i ved den indre enden, for "
+                  "vangene er kappet lavere. Den enden bæres av "
+                  "avstiverraden.",
+                f"**AVSTIVERNE, {G.GUARD_BRACE_N} per felt (X18).** "
+                  f"{G.sec(G.GUARD_BRACE_T, G.GUARD_BRACE_W).replace('x', '×')}"
+                  f" × {G.GUARD_BRACE_H} mm av bunnspilerestene, lagt PÅ "
+                  f"TVERS over de to bordene i sporet mellom bordet og "
+                  f"stolpeplanet, med {G.GUARD_BRACE_LAP} mm omlegg på hvert "
+                  f"bord. Delingen er jevn: "
+                  + f"{G.GUARD_BRACE_GAP:.1f}".replace(".", ",")
+                  + f" mm luft mellom to avstivere. To 5×40 i hvert omlegg "
+                  f"(J21), drevet fra rommet — det er den eneste flaten en "
+                  f"drill når, og de {2 * 2 * 2 * G.GUARD_BRACE_N} hodene er "
+                  f"det ene stedet i sengen der stål synes på forsiden.",
             ],
             check=[
                 "Mål åpningene over madrassoverflaten mot tallene i "
                   "nøkkelmålene. De er sikkerhetskravet i denne sengen.",
                 "Ta tak i toppbordet og dra. Det skal ikke gi seg.",
             ],
-            joints={'J7': 8},
+            joints={'J7': 6, 'J21': 16},
         ),
         dict(
             n=10,
@@ -1981,7 +2027,7 @@ NO_NAMES = {
     "End beam": "Endebjelke",
     "Corner post, back (W2, wall side)": "Hjørnestolpe, bak (veggside)",
     "Corner post, front": "Hjørnestolpe, front",
-    "Ladder upright (D13)": "Stigevange",
+    "Ladder upright (D13/X18)": "Stigevange",
     "Ladder rung (tread)": "Rungetrinn",
     "Ladder rung block": "Stigekloss",
     "Bench rail, back (C5)": "Benkevange, bak (gjennomgående)",
@@ -1990,6 +2036,9 @@ NO_NAMES = {
     "Bench slat (C3)": "Benkespile",
     "Bench end slat (V13)": "Endespile",
     "Bench end cleat (V13)": "Endelist",
+    "Benkespileledd (X18)": "Benkespileledd",
+    "Fremre endelist (X18)": "Endelist, fremre",
+    "Rekkverksavstiver (X18)": "Rekkverksavstiver",
     "Upper bed slat, short (D5/W4)": "Køyespile, kort (mot bakre stolpe)",
     "Upper bed slat, to the wall (W4)": "Køyespile, lang (inn til veggen)",
     "Upper bed slat": "Køyespile",
@@ -2013,7 +2062,7 @@ LABEL_TO_CUT = [
     ("End Beam", "End beam"),
     ("Corner Post Back", "Corner post, back (W2, wall side)"),
     ("Corner Post Front", "Corner post, front"),
-    ("Ladder Upright", "Ladder upright (D13)"),
+    ("Ladder Upright", "Ladder upright (D13/X18)"),
     ("Rung Block", "Ladder rung block"),
     ("Ladder Rung_", "Ladder rung (tread)"),
     ("Bench Rail Back", "Bench rail, back (C5)"),
@@ -2022,6 +2071,9 @@ LABEL_TO_CUT = [
     ("Bench Slat", "Bench slat (C3)"),
     ("Bench End Slat", "Bench end slat (V13)"),
     ("Bench End Cleat", "Bench end cleat (V13)"),
+    ("Bench Front Cleat", "Benkespileledd (X18)"),
+    ("Bench Post Cleat", "Fremre endelist (X18)"),
+    ("Guard Brace", "Rekkverksavstiver (X18)"),
     ("Guard Rail Front", "Guard rail, front segment (D2/D7/D13)"),
     ("Table Ledger Back", "Table ledger, back"),
     ("Movable Panel", "Movable panel"),

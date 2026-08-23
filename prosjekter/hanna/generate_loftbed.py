@@ -46,6 +46,219 @@ back corner posts into the back rail plane. Consequences you cannot ignore:
     (1700), which costs the 48 mm of depth v10 just won - and, on a 36 mm
     post, 36 rather than 48 of it. Flagged for the docs round.
 
+DESIGN INTENT (v22 - "the bed is built, and the model comes to it")
+--------------------------------------------------------------------------
+X18 THE SENG IS FINISHED AND STANDING IN THE ROOM, AND EVERY ROUND UNTIL THIS
+    ONE HAS BEEN A DRAWING. This one is a MEASUREMENT. The builder finished on
+    23 August 2026 and handed over the list of places where the wood he cut is
+    not the wood this file drew. Nothing here is a design decision; every entry
+    is a fact about a bed, and the only decisions in the round are what the
+    model does with a fact it did not choose.
+
+    THE RULE OF THE ROUND, AND IT IS THE WHOLE OF IT: THE MODEL COMES TO THE
+    BED, AND THE ASSERTS DO NOT COME WITH IT. Where the built thing satisfies a
+    rule, the rule is re-derived on the built geometry and says OK. Where it
+    does NOT, the rule stays exactly where it was, the model prints AVVIK and
+    the number, and the finding is written up in ASSEMBLY vedlegg B with a
+    recommendation the builder can act on or refuse. Not one limit in this file
+    was moved to make a built number legal. Three of them were re-AIMED, and
+    each of those three is argued at its own assert: X10's lower-storey gap
+    rule got a third leg (below), the badge-family radius in the line art got
+    its own number, and the guard opening table learned to count the braces
+    standing in a band.
+
+    1. THE LADDER HAS FOUR TREADS, AND THE TWO LOWEST OF THEM ARE THE PLATE'S
+    TWO POSITIONS. His words: «Trinnene er laget for den opprinnelige høyden av
+    benk og bord.» Rung 1 top = 297, the bed-mode plate level, in line with the
+    bench rail as drawn. Rung 2 top = 682, the table-mode plate underside, in
+    line with the table ledger as drawn. The two above them are the same
+    fewest-then-evenest derivation X2 wrote, 962 and 1242. What is missing is
+    the tread at 489: it was drawn and never cut, so `even_climb` takes the
+    lower flight's step COUNT as a measurement (AS_BUILT_LOWER_STEPS) while
+    still computing the rule's own answer beside it.
+        THE COST IS ONE STEP OF 385 mm against MAX_CLIMB_STEP 281 and against
+    EN 131's 250..300 band. That limit is NOT raised. The other three steps
+    (280/280/281) are held to it as before, the 385 is asserted to be exactly
+    the step the missing tread would have halved, and the model prints AVVIK 5.
+    Read on the bed rather than on the drawing it is worse in one mode and
+    better in none: in bed mode the plate lies at 297..315 across the whole
+    ladder bay, so the foot starts at 315 and the step is 367; in TABLE mode
+    the plate lies ON rung 2, so rung 2 is not a tread at all and the first
+    thing above the floor is rung 3 at 962. RECOMMENDATION, and the model can
+    defend it to the millimetre: cut the fifth tread at 489. Same 48x68 x 320,
+    same two blocks, same four screws, same holes - the derivation already
+    names every one of them.
+
+    2. THE LADDER UPRIGHTS ARE 166 mm SHORTER THAN THE POSTS. He cut them «ca.
+    150 mm» short; the model looks for the FLUSH the saw was held to and finds
+    exactly one line in that region - the top edge of the lower guard board,
+    1871 - which is also the last thing screwed to the upright. Above it the
+    piece touches nothing. THE COST IS THE UPPER GUARD BOARD'S INNER END: the
+    segments are drawn to lap both a corner post and an upright, and after X18
+    the upper pair laps one. J7 goes from eight laps to six, and what carries
+    those two ends is the brace row (4). Avvik 7.
+
+    3. THE FRONT BENCH CHEEK IS BUTTED, NOT LAPPED - AND «I FLUKT» IS A
+    GEOMETRIC NECESSITY. His words: «ligger i flukt mellom stolpene og
+    stigevangene - buttet i samme plan, ikke lappet utenpå», fixed with POCKET
+    SCREWS. The drawn cheek lay at Y 704..752 and lapped 95 mm of the corner
+    post's inner face, which is what J8's two 6x80 were driven through. Butt
+    that end and there is no lap left to drive through - worse, a cheek in its
+    own plane stopped at the post's X-inner face shares an EDGE with the post
+    and nothing else, so there is no face for a screw of any kind to cross. The
+    only plane in which the builder's sentence is a JOINT is the verticals' own:
+    Y 740..788, front face flush with theirs, 36 x 68 mm of post butted. The
+    model did not choose that; the two words ruled out everything else.
+        AND THE FIXING IS A JOINT THIS FILE ALREADY OWNS. J8 becomes the K4
+    skew screw out of a flat-bottomed 18 mm seat - same 65 degrees, same 20 mm
+    seat, SAME JIG BLOCK as J8-B - so «lommeskruer» costs no new tool and no
+    new angle. One sheet of the 1:1 jig now serves J8, J8-B and J12.
+        WHAT «MELLOM STOLPENE OG STIGEVANGENE» CANNOT MEAN, MEASURED. Read as a
+    SPAN - post inner face 98 to upright outer face 787 - it is the wood vedlegg
+    B avvik 2 has costed for three rounds as option (ii), and it would have
+    bound the ladder foot in the depth direction at last. It cannot be built:
+    the bed-mode plate's front WEDGE hangs at X 708..785, Y 702..750, Z
+    229..297, and a cheek in the verticals' plane occupies Y 740..788 over the
+    same Z. They overlap by 10 mm over the whole 77 mm of wedge and the plate
+    could not be lowered into its own bed seat. The fastener sweep found it as a
+    screw running into the wedge before anyone thought to look at the two
+    solids. So the phrase is read as WHERE the cheeks are and not how far they
+    go, and the piece stops on its own stub leg where D13 put it.
+        WHAT THE 36 mm FORWARD COSTS, AND WHAT «EKSTRA STØTTER» IS. The bench
+    slats are 800 mm and end at Y 752 - one length with the 14 upper slats,
+    which is W8's rule and worth keeping - so a cheek at 740..788 leaves them 12
+    mm of bearing where they had 48, and 12 mm will not take the 5 mm screw that
+    holds a slat end down (3d = 15). Two pieces close that, and neither is
+    chosen: a LEDGER on the cheek's inboard face, top flush with the cheek's own
+    top, four screws per bench set in the GAPS between slats so no slat screw
+    ever comes down on one (J19/J11-F); and, because the cheek now starts at the
+    post's inner face instead of running over it, a POST CLEAT on the front
+    corner post's back face for V13's end slat - the exact mirror of the cleat
+    V13 already gave that slat's other end (J20). Both are the bed's own 36x48
+    block stock.
+
+    4. THE RAILING BOARDS MOVED, AND THE TWO NUMBERS HE GAVE DO NOT BOTH FIT.
+    Measured on the finished bed: the LOWER board's underside about 130 mm over
+    the mattress top, and the UPPER about 120 mm over the lower one's top edge.
+    Written out on the 120 mm mattress that is 1643 + 130 + 98 + 120 + 98 =
+    2089, and the front posts are 2037. The model keeps the reading that is a
+    measurement off a fixed datum - the mattress - and derives the other off the
+    wood: band 1 at 1773..1871, band 2 at 1939..2037, FLUSH WITH THE POST TOPS,
+    which is what a man does when he runs out of post. The band between the
+    boards is therefore 68 mm and not the 120 he remembered, and the 52 mm is
+    written up rather than split between the two.
+        WHAT IT BUYS: avvik 0 is CLOSED. The 58 mm that used to stand between
+    the top board and the post tops - legal, but only after a paragraph of
+    argument about bound and unbound openings - is 0. The barrier stands 394 mm
+    over the mattress against EN 747's 160.
+        WHAT IT COSTS, AND THIS IS THE ONE PLACE THE BUILT BED DOES NOT HOLD.
+    The opening from the mattress top to the underside of the lowest board is
+    130 mm against EN 747's 75, and there is NOTHING in it. Read the other way
+    round, which is the way the mattress is bought: the built guard demands a
+    175..190 mm mattress and the bed has a 120. The model asserts both numbers
+    and refuses to print OK - AVVIK 6. Two ways close it and both are costed in
+    vedlegg B: take the lower board down 65 mm to where it was drawn, or put a
+    brace row in that band the way he already put one in the band above.
+
+    5. THE BRACE ROW, AND IT IS A LOAD PATH AND NOT A DECORATION. Short pieces
+    of the bottom-slat stock laid across the two boards, «på tvers», about five
+    per field in the photograph. Two things ask for them and only one is the one
+    he said out loud: the upper board has NOTHING at its inner end after (2), so
+    the row hangs it off the lower board, which is lapped on the upright over
+    its full width. Nothing about the piece is chosen: the section is the offcut
+    he had, and the cut length is the band plus two laps where the lap is what a
+    5 mm screw needs to sit 3d from the brace's own end AND 3d from the board's
+    edge - 6d each, so 68 + 60 = 128. The COUNT is the fewest that bring every
+    opening in the row under MAX_GUARD_OPENING: three leaves 98,75 mm and fails,
+    four leaves 59,4 and holds. FOUR per field, and the photograph's «about
+    five» is four counted by the rule.
+        AND THE ONE AESTHETIC RULE IN THIS FILE IS BROKEN, ONCE, IN THE OPEN.
+    V5 asserts that no screw head shows on the front face. The brace sits in the
+    slot between the boards and the post plane and the only face of it a drill
+    can reach is the one facing the room; driven the other way a 5 mm screw
+    would cross 36 mm of board and come out the back of a 23 mm brace. 32 heads,
+    named as an exemption rather than deleted, so any OTHER joint that starts
+    showing on the front still goes red.
+
+    6. ALL SIX ANGLE BRACKETS ARE OUT - the four under the stub legs and the two
+    under the table ledger's ends. There is not one piece of steel in this bed
+    now that is not a screw. What replaces them is what the builder used:
+    J10 gets one 6x120 straight down through the cheek into the leg's end grain
+    («ovenfra») and one 5x60 skew screw out of a seat in the leg's own face
+    («fra siden»); J12 becomes J8-B one storey up, two 6x80 skew screws out of
+    seats in the ledger's room-side face. The bracket's horizontal flange was
+    the shelf the ledger rested on while it was screwed - the pre-drilled pocket
+    pair is that shelf now, because a hole pattern lines up in exactly one
+    position.
+
+    WHAT MOVED WITHOUT BEING TOUCHED, because these are the numbers a reader
+    will find changed and wonder about:
+      * the transfer slot over the bench goes 121 -> 294 mm and the clearance
+        for the 86 mm panel unit 35 -> 208. The uncut rung 2 gave it back.
+      * rung 2's underside used to stand 21 mm over the lower sleeping surface -
+        X16's own worst number, a gap in EN 747's 12..25 band. It does not
+        exist. The lowest thing over that surface is the table ledger at 194 mm.
+      * X10's rule that judged that gap had two legs - head room, or a legal
+        band - and 194 is neither. It is not a GAP either, and that is what the
+        rule was missing: a band is a slot, and a slot stops being a slot once
+        the whole limb goes through it. The top of EN 747's limb band, 75 mm, is
+        where that happens and is already the number this file uses for it.
+      * the lock point V4 left as a retro-fit (avvik 4) keeps its wood and loses
+        its overlap: the wedge and the cheek share 10 mm in Y where they shared
+        46, and the three options in laasvalg.png no longer land on it as drawn.
+      * F1's ladder-foot measurement outward goes 689 -> 142 mm, because the
+        cheek is in the upright's own plane now and is therefore something to
+        bind to. Avvik 2 stays OPEN, but option (ii) got much shorter.
+
+    7. THE ROUNDING PASS, AND WHAT IT COULD NOT REACH. The builder's other
+    remark was that «noen steder gjør ikke de odde millimeterne noen jobb», so
+    every CHOSEN millimetre in this file - not a derived one, not a stock
+    section, not a standard's number and not a load - was measured against the
+    nearest whole centimetre and snapped where the slack allowed it without
+    moving a single verdict. Three did:
+      * ROOM_OVER_FLOOR 15 -> 20. It is an ALLOWANCE, i.e. pure slack, and the
+        only thing it has to do is clear the lowest joint on a standing part,
+        which is at Z 201.
+      * TRANSFER_CLEAR_MIN 15 -> 20. A gate, snapped UP: the built slot passes
+        the panel unit with 208 mm, so the tighter number is free.
+      * every skew screw's setback, 34 and 35 -> 40. THIS IS THE ONE THAT
+        BUYS SOMETHING: J8, J8-B, J10 and J12 are four joints that were set
+        back from their own end by two different numbers, and they are now set
+        back by one - «40 mm fra enden» for every pocket in the bed. Both seat
+        covers are untouched (they follow the seat DEPTH, not the setback), and
+        every edge distance grew by 6 mm.
+    AND WHAT WAS REFUSED, WITH THE REASON, BECAUSE A ROUNDING PASS THAT ONLY
+    REPORTS ITS WINS IS A PREFERENCE:
+      * PANEL_SIDE_GAP 63. The nearest whole centimetre inside EN 747's 60..75
+        band is 70, and taking it would throw 14 mm of table away to make a
+        number rounder. 60 is worse: it is the DANGEROUS wall of the band, and
+        K2 chose 63 precisely because a sheet cut 2 mm wide has to survive the
+        saw. Refused.
+      * PANEL_FIT 2. There is no whole centimetre between 0 and a running fit.
+      * BENCH_LEN 645 and THROUGH_X0 3. Both are chosen, and both are the
+        datum of a dozen derived numbers each - the opening between the
+        benches, the panel width, the slat pitch, every through member's
+        length. Snapping either would move emitted dimensions all over the bed
+        to buy one round number. Refused.
+      * MAX_CLIMB_STEP 281. It is 280 rounded UP by one millimetre for a
+        reason X16 wrote out, and it is the number avvik 5 is judged against.
+        Rounding it now would be moving a limit in a round about a bed that
+        already fails it.
+    Everything else was already a whole centimetre, a stock section, a tool
+    size, a standard's number or a load.
+
+    WHAT IS NOT MODELLED, AND IT IS SAID HERE RATHER THAN LEFT OUT. The builder
+    cut the plate's outline round the tread with a jigsaw «slik at hele
+    platelengden ligger an». Read against the solids that is a front edge taken
+    from Y 750 to the front plane 788 with a 48 x 68 notch at each ladder
+    upright - the tread's own section - and it would take the plate's front
+    bearing from 320 x 30 = 9 600 mm2 to 320 x 68 = 21 760. It is NOT in the
+    model: every body in this file is an axis-aligned box on purpose (see THE
+    ONE PART THAT IS NOT A BOX), contacts, clearances and the mechanism film all
+    read `extents`, and a notched outline is a fourth body category rather than
+    an edit. Left as an open point with its number written down, exactly the way
+    X9 left the footrest.
+
 DESIGN INTENT (v21 - "the plate goes back on a rung")
 --------------------------------------------------------------------------
 X16  THE BUILDER LOOKED AT THE LADDER AND SAW A PIECE OF WOOD THAT SHOULD NOT
@@ -2390,7 +2603,7 @@ def _flight(z0, z1, n):
 
 
 def even_climb(first_rung_top, surface, max_step, bear_at=None,
-               keep_clear=None):
+               keep_clear=None, below_steps=None):
     """Ladder rung tops from `first_rung_top` up to `surface`.
 
     The first rung is given - it is fixed by what it shares its top with - and
@@ -2411,11 +2624,22 @@ def even_climb(first_rung_top, surface, max_step, bear_at=None,
     run it needs above it. The rung it sits ON is the floor of that run, not a
     lid on it, which is why it is the one exemption. Violating it is a raise
     rather than a search: the two flights are already the fewest steps each,
-    so there is nothing left to trade."""
+    so there is nothing left to trade.
+
+    X18: `below_steps` OVERRIDES the step count of the lower flight, and it is
+    the one input to this function that is not a rule - it is a MEASUREMENT of
+    the ladder that stands in the room. The builder cut four treads, not five,
+    and the one he did not cut is the middle of the lower flight. The rule's
+    own answer is computed anyway (`LOWER_FLIGHT_BY_RULE` below) and the
+    difference between the two is not swallowed here: it is asserted, printed
+    and written up as an accepted deviation, because a derivation that quietly
+    takes a hand-set number is a hand-set list wearing a rule's coat."""
     span = surface - first_rung_top
     if bear_at is None:
         return _flight(first_rung_top, surface, -(-span // max_step))
     below = -(-(bear_at - first_rung_top) // max_step)   # ceil, lower flight
+    if below_steps is not None:
+        below = below_steps
     above = -(-(surface - bear_at) // max_step)          # ceil, upper flight
     tops = (_flight(first_rung_top, bear_at, below)
             + _flight(bear_at, surface, above))
@@ -2430,9 +2654,50 @@ def even_climb(first_rung_top, surface, max_step, bear_at=None,
     return tops
 
 
+# ---------------------------------------------------------------------------
+# X18 (as-built, aug. 2026) - THE LADDER HAS FOUR RUNGS, AND THE TWO LOWEST OF
+# THEM ARE THE PLATE'S TWO POSITIONS
+# ---------------------------------------------------------------------------
+# The builder's own words: «Trinnene er laget for den opprinnelige høyden av
+# benk og bord.» Read against this file that is not a description of a ladder,
+# it is a DERIVATION of one: rung 1's top is the bed-mode plate level (297, in
+# line with the bench rail, exactly as drawn) and rung 2's top is the table-mode
+# plate underside (682, in line with the table ledger, exactly as drawn). Both
+# heights were already in the model. What is not in the model is the rung
+# BETWEEN them: the ladder that was drawn had a fifth tread at 489, and it was
+# never cut.
+#
+# So the lower flight is ONE step where the rule says TWO, and that one step is
+#     682 - 297 = 385 mm
+# against MAX_CLIMB_STEP 281 and against EN 131's 250..300 uniform-pitch band.
+# THIS IS THE ONE PLACE IN THIS ROUND WHERE THE BUILT BED IS OUTSIDE A RULE
+# THIS FILE HOLDS ITSELF TO, and the rule is not moved to fit it. MAX_CLIMB_STEP
+# stays at 281 - it is the number the drawing was derived on and the number the
+# fifth rung would restore - and the built ladder is judged against it, fails,
+# and is written up in ASSEMBLY vedlegg B, avvik 5 with the recommendation the
+# model can defend: cut the fifth tread at 489. Its blocks, its screws, its
+# length and its height are all already derived; nothing else in the bed moves.
+#
+# WHAT THE CLIMB ACTUALLY IS IN THE ROOM, MEASURED RATHER THAN FEARED. In bed
+# mode the plate lies at 297..315 across the whole ladder bay, so the foot does
+# not start at 297, it starts at 315 - the plate's own top - and the step to
+# rung 2 is 367 mm. In TABLE mode the plate lies at 682..700 on rung 2, so rung
+# 2 is not a tread at all: the first thing above the floor the foot can find is
+# rung 3 at 962. Neither reading is a ladder. Both are in vedlegg B.
+AS_BUILT_LOWER_STEPS = 1         # X18: treads cut, not treads derived
+LOWER_FLIGHT_BY_RULE = -(-(PANEL_UNDER_TABLE - BENCH_RAIL_TOP)
+                         // MAX_CLIMB_STEP)              # 2, what X16 drew
 RUNG_TOPS = even_climb(BENCH_RAIL_TOP, SLAT_Z1, MAX_CLIMB_STEP,
                        bear_at=PANEL_UNDER_TABLE,
-                       keep_clear=(TABLE_UNIT_Z0, RUNG_ABOVE_TABLE_MIN))
+                       keep_clear=(TABLE_UNIT_Z0, RUNG_ABOVE_TABLE_MIN),
+                       below_steps=AS_BUILT_LOWER_STEPS)
+RUNG_TOPS_BY_RULE = even_climb(BENCH_RAIL_TOP, SLAT_Z1, MAX_CLIMB_STEP,
+                               bear_at=PANEL_UNDER_TABLE,
+                               keep_clear=(TABLE_UNIT_Z0,
+                                           RUNG_ABOVE_TABLE_MIN))
+# The tread that was drawn and never cut - the whole of avvik 5, as one number.
+MISSING_RUNG_TOP = [t for t in RUNG_TOPS_BY_RULE if t not in RUNG_TOPS][0]  # 489
+#          X18: [297, 682, 962, 1242]   (as built - four treads)
 #          X16: [297, 489, 682, 962, 1242]
 #          X9: [297, 572, 848, 1073, 1298]
 #          X1/X2: [297, 542, 787, 1032, 1277]   [was 259, 482, 720, 958]
@@ -2557,7 +2822,37 @@ RUNG_BLOCK_X = [LADDER_INNER_L,                          # 835 .. 871
 # under the 75 mm limit, which is the only thing EN 747 asks of it. Nothing about the guard detail,
 # the mattress the reader buys or the EN 747 arithmetic changes with the lift;
 # the whole assembly simply stands 150 mm further off the floor.
-GUARD_BAND_Z0 = [1708, 1881]             # [X1/X3: was 1401, 1574]
+#
+# X18 (as-built) - THE BOARDS ARE NOT WHERE THEY WERE DRAWN, AND THE TWO
+# NUMBERS THE BUILDER GAVE DO NOT BOTH FIT.
+# What he measured on the finished bed: the LOWER board's underside about
+# 130 mm over the mattress top, and the UPPER board about 120 mm over the lower
+# one's top edge. Written out on a 120 mm mattress that is
+#     1643 + 130 + 98 + 120 + 98 = 2089
+# and the front posts are 2037. The two readings are 52 mm apart and only one
+# of them can be true, so the model takes the one that is a MEASUREMENT off a
+# fixed datum (the mattress) and derives the other off the wood:
+#   BAND 1  MATTRESS_Z1 + AS_BUILT_GUARD_RISE = 1773..1871. The rise is the
+#           builder's own 130.
+#   BAND 2  POST_HEIGHT - GUARD_W = 1939..2037, FLUSH WITH THE POST TOPS. That
+#           is what a man does when he runs out of post, it is a line he can
+#           see and hold a board to, and it makes the band between the boards
+#           68 mm rather than the 120 he remembered. The 52 mm is written up in
+#           vedlegg B rather than split between the two.
+# WHAT IT COSTS AND WHAT IT BUYS, BOTH MEASURED BELOW:
+#     1643 -> 1773  130 mm  (mattress top to the underside of band 1) - OVER
+#                           the 75 mm EN 747 entrapment limit. This is the one
+#                           opening in the built bed that does not hold, it has
+#                           no braces in it, and it is avvik 6.
+#     1871 -> 1939   68 mm  (between the bands) - legal, and braced besides.
+#     2037 -> 2037    0 mm  (band 2 to the top of the FRONT posts) - CLOSED.
+#                           Avvik 0 was written about the 58 mm that used to
+#                           stand there; the board is flush with the post tops
+#                           now and there is nothing left to excuse.
+# The barrier top is 2037 - 1643 = 394 mm above the mattress (EN 747 asks 160).
+AS_BUILT_GUARD_RISE = 130        # X18: measured on the built bed
+GUARD_BAND_Z0 = [MATTRESS_Z1 + AS_BUILT_GUARD_RISE,
+                 POST_HEIGHT - GUARD_W]  # [1773, 1939]  [X1/X3: was 1401, 1574]
 MAX_GUARD_OPENING = 75           # EN 747 entrapment limit, above the mattress
 MIN_GUARD_OVER_MATTRESS = 160    # EN 747 barrier height above the mattress
 # D14: the guards hang inboard of the verticals now, so they overhang the
@@ -2572,11 +2867,99 @@ MIN_GUARD_OVER_MATTRESS = 160    # EN 747 barrier height above the mattress
 # the 75 it used to copy off the opening cap. At 75 it pinned the mattress to
 # exactly the thinnest legal one and left no margin at all.
 MIN_GUARD_INBOARD_CLEAR = 60
+# ---------------------------------------------------------------------------
+# X18 (as-built) - THE LADDER UPRIGHTS ARE SHORTER THAN THE POSTS
+# ---------------------------------------------------------------------------
+# The builder cut them «ca. 150 mm» short of the corner posts. That is a tape
+# reading, not a cut list line, so the model does what it does with every other
+# height in this bed: it looks for the FLUSH the saw was held to. There is
+# exactly one line in that region a man can hold a piece of wood against - the
+# TOP EDGE OF THE LOWER GUARD BOARD - and it is also the last thing screwed to
+# the upright. Above it the upright touches nothing at all. So:
+#     UPRIGHT_H = GUARD_BAND_Z0[0] + GUARD_W = 1871
+# which is 166 mm off the corner posts: the builder's «ca. 150», measured.
+# The piece stops where its last fixing stops, and that is the whole rule.
+#
+# WHAT IT COSTS, AND IT IS NOT SMALL. The UPPER guard segments are drawn from
+# the corner post to the upright inner face and they lap BOTH. After X18 they
+# lap one: their inner ends stand 68 mm above the top of the upright, over
+# nothing. What carries them is the brace row (GUARD_BRACE below) - the two
+# boards are stitched into one lattice and the lower one is fixed to the
+# upright. That is a real load path and it is also a deviation from the detail
+# this file signed off on, so it is measured, asserted and written up as avvik
+# 7 rather than drawn away.
+UPRIGHT_H = GUARD_BAND_Z0[0] + GUARD_W   # 1871  [X18: was POST_HEIGHT, 2037]
+UPRIGHT_SHORTFALL = POST_HEIGHT - UPRIGHT_H              # 166
 # U2: the narrowest face lap the guard detail has ever been signed off on - the
 # 36 mm of a v10 ladder upright, two 5x60 into 36 x 98 = 3528 mm2. Every lap in
 # the bed has to be at least that, and after U2 both of them are more: 48 mm on
 # a turned upright and 95 mm on a 98 mm corner post.
 MIN_GUARD_LAP = 36
+# ---------------------------------------------------------------------------
+# X18 (as-built) - THE BRACE ROW BETWEEN THE TWO BOARDS
+# ---------------------------------------------------------------------------
+# The builder stitched the two guard boards together with short pieces of the
+# BOTTOM-SLAT stock (23x98) laid across them, «på tvers», and the photograph
+# reads about five per field. Two things ask for them and only one of them is
+# the one he said out loud:
+#   1  THE UPPER BOARD HAS NOTHING AT ITS INNER END. The ladder uprights are
+#      cut at 1871 (UPRIGHT_H) and the upper band starts at 1939, so the inner
+#      half of the upper segment is over air. The brace row hangs it off the
+#      LOWER board, which is lapped on the upright over its full width - two
+#      boards stitched into one lattice. That is what «avstiver» means here.
+#   2  it divides the band. The band between the boards is 68 mm and legal on
+#      its own; the braces make every opening in it smaller still.
+#
+# THE PIECE IS NOT CHOSEN, IT IS SOLVED. Two rules and no taste:
+#   * the section is the offcut he had - 23x98, the bottom slat;
+#   * the CUT LENGTH is the band plus two laps, and the lap is what a 5 mm
+#     screw needs to sit 3d from the brace's own cut end AND 3d from the
+#     board's edge: 6d = 30 mm each. So 68 + 60 = 128 mm, and nothing about
+#     that number was picked.
+# THE COUNT IS THE SAME KIND OF ANSWER. The clear field between the corner
+# post's inner face and the ladder upright's outer face is 689 mm, and the
+# braces are spaced evenly in it: the FEWEST that bring every opening in the
+# row under MAX_GUARD_OPENING. Three leaves 98,75 mm openings and fails; four
+# leaves 59,4 and holds. Four per field, eight in the bed - and the photograph's
+# «about five» is four, counted by the rule rather than off a picture.
+GUARD_BRACE_T = BOARD23_T                     # 23, in Y - the slat's thickness
+GUARD_BRACE_W = BOARD36_W                     # 98, in X - the slat's width
+GUARD_BRACE_BAND = GUARD_BAND_Z0[1] - (GUARD_BAND_Z0[0] + GUARD_W)   # 68
+GUARD_BRACE_LAP = 6 * 5                       # 30 = 6d for the 5 mm screw
+GUARD_BRACE_H = GUARD_BRACE_BAND + 2 * GUARD_BRACE_LAP               # 128
+GUARD_BRACE_Z0 = GUARD_BAND_Z0[0] + GUARD_W - GUARD_BRACE_LAP        # 1841
+# THE BRACE GOES ON THE ROOM SIDE, AND THAT IS NOT A PREFERENCE. The boards
+# hang INBOARD of the verticals (D14), so the slot Y 752..788 between two
+# uprights is empty over the whole guard height - the brace drops into it,
+# stands 13 mm shy of the front plane, is screwed from the room where a drill
+# reaches, and NOTHING of it comes into the sleeping area. On the other face it
+# would have stood 23 mm out over the mattress.
+GUARD_BRACE_Y0 = FRONT_POST_Y0                # 752, the boards' room-side face
+GUARD_BRACE_Y1 = GUARD_BRACE_Y0 + GUARD_BRACE_T                      # 775
+# The field: post inner face to upright outer face, the same 689 mm the built
+# front bench cheek spans two metres lower down.
+GUARD_BRACE_FIELDS = [(POST_W, LADDER_LEFT_X),
+                      (LADDER_RIGHT_X + UPRIGHT_W, WALL_SPAN - POST_W)]
+GUARD_BRACE_FIELD_LEN = LADDER_LEFT_X - POST_W                       # 689
+
+
+def _brace_count(field_len, width, cap):
+    """Fewest evenly spaced braces whose clear gaps come in at or under `cap`."""
+    n = 1
+    while (field_len - n * width) / (n + 1) > cap:
+        n += 1
+    return n
+
+
+GUARD_BRACE_N = _brace_count(GUARD_BRACE_FIELD_LEN, GUARD_BRACE_W,
+                             MAX_GUARD_OPENING)                      # 4
+GUARD_BRACE_GAP = (GUARD_BRACE_FIELD_LEN - GUARD_BRACE_N * GUARD_BRACE_W) \
+    / (GUARD_BRACE_N + 1)                                            # 59.4
+# ...and the count that was REFUSED, because a rule that only reports the
+# answer it liked is a preference. One brace fewer leaves this:
+GUARD_BRACE_GAP_TOO_FEW = (GUARD_BRACE_FIELD_LEN
+                           - (GUARD_BRACE_N - 1) * GUARD_BRACE_W) \
+    / GUARD_BRACE_N                                                  # 98.75
 
 # W1: the BACK side's EN 747 case. There is no guard board there, so the
 # opening to check is not between two boards, it is the gap between the edge of
@@ -2711,7 +3094,30 @@ FRONT_GUARD_SEG_LEN = LADDER_INNER_L - THROUGH_X0          # 832  [was 782]
 # D12: the front rail plane comes in 106 mm, 810..858 -> 704..752.
 # BENCH_RAIL_TOP / BENCH_RAIL_BOTTOM are declared up in SHARED LOWER DATUM -
 # the ladder section needs the top for RUNG_TOPS[0].
-BENCH_RAIL_Y = [BACK_RAIL_Y0, FRONT_RAIL_Y0]        # -48..0 and 704..752
+# ---------------------------------------------------------------------------
+# X18 (as-built) - AND «I FLUKT» IS A GEOMETRIC NECESSITY, NOT A PREFERENCE
+# ---------------------------------------------------------------------------
+# A BUTTED end needs a shared FACE. The drawn cheek lay at Y 704..752 and the
+# front corner post at Y 752..788: put the cheek's end at the post's X-inner
+# face and the two solids share an EDGE and nothing else - there is no face for
+# a screw of any kind to cross. So the only way the builder's «buttet i samme
+# plan» can be true is the way he said it: the cheek comes OUT into the
+# verticals' own Y band, front face flush with theirs at Y 788, and it butts
+# 36 x 68 mm of post at one end and 36 x 68 mm of ladder upright at the other.
+# The model does not get to choose here; the two words rule out everything
+# else.
+#
+# WHAT IT COSTS, AND IT IS THE OTHER HALF OF «EKSTRA STØTTER». The bench slats
+# are 800 mm and end at Y 752 - one length with the 14 upper slats, which is
+# W8's rule and worth keeping - so a cheek at 740..788 leaves them
+# BENCH_SLAT_ON_CHEEK = 12 mm of bearing where they had 48, and 12 mm will not
+# take the 5 mm screw that holds a slat end down (3d = 15). What closes that is
+# a LEDGER on the cheek's inboard face, top flush with the cheek's own top, and
+# that is what the builder's «ekstra støtter og skruer ovenfra» is read as: the
+# slat lands on ledger + cheek and its screw goes down into the ledger.
+BENCH_FRONT_Y1 = FRONT_POST_Y1                      # 788, flush with the front
+BENCH_FRONT_Y0 = BENCH_FRONT_Y1 - BENCH_RAIL_T      # 740  [X18: was 704]
+BENCH_RAIL_Y = [BACK_RAIL_Y0, BENCH_FRONT_Y0]       # -48..0 and 740..788
 # W9: the back bench rail and the back table ledger run POST TO POST, X 48..1942,
 # butting the two back corner posts and screwed to their X-inner faces. The two
 # side rails still run wall to wall at X 3..1987 (C9) - they pass OVER the posts,
@@ -2742,6 +3148,36 @@ BENCH_SLAT_Y0 = BACK_RAIL_Y0                   # -48, on the wall plane like eve
 BENCH_SLAT_Y1 = FRONT_RAIL_Y1                  # 752  [was 858]
 BENCH_SLAT_LEN = BENCH_SLAT_Y1 - BENCH_SLAT_Y0 # 800  [was 906]
 BENCH_SLAT_COUNT = 5
+# X18 - THE TWO «STØTTER» THE MOVED CHEEK ASKS FOR, AND NOTHING MORE.
+# BENCH_SLAT_ON_CHEEK is what is left of the slat's front bearing after the
+# cheek came out into the post plane. Both pieces below are the bed's own
+# 36x48 block stock - the same section as the rung block and V13's end cleat -
+# and both are set with their TOP flush with the bench rail top, so a slat
+# lands on one plane made of two pieces exactly as it does at the wall.
+BENCH_SLAT_ON_CHEEK = BENCH_SLAT_Y1 - BENCH_FRONT_Y0                 # 12
+BENCH_LEDGER_T = BLOCK_T                       # 36 (Y), the bearing depth
+BENCH_LEDGER_H = BLOCK_H                       # 48 (Z)
+BENCH_LEDGER_Z1 = BENCH_RAIL_TOP               # 297, the slat underside
+BENCH_LEDGER_Z0 = BENCH_LEDGER_Z1 - BENCH_LEDGER_H                   # 249
+BENCH_LEDGER_Y1 = BENCH_FRONT_Y0               # 740, on the cheek's inner face
+BENCH_LEDGER_Y0 = BENCH_LEDGER_Y1 - BENCH_LEDGER_T                   # 704
+# It runs under the slat field only - post inner face to bench end.
+BENCH_LEDGER_X = [(POST_W, BENCH_LEN),
+                  (WALL_SPAN - BENCH_LEN, WALL_SPAN - POST_W)]
+BENCH_LEDGER_LEN = BENCH_LEN - POST_W                                # 547
+BENCH_SLAT_BEARING_Y = (BENCH_LEDGER_Y0, BENCH_SLAT_Y1)   # 704..752, the 48
+                                                          # mm the slat had
+# ...and the SIXTH slat of each bench, V13's end slat, stands outboard of the
+# cheek's new end and gets nothing from it at all. It is carried at the front by
+# a cleat on the FRONT corner post's back face - the exact mirror of the cleat
+# V13 already gave its other end on the BACK post's front face.
+FRONT_END_CLEAT_T = BLOCK_T                    # 36 (Y)
+FRONT_END_CLEAT_H = BLOCK_H                    # 48 (Z)
+FRONT_END_CLEAT_LEN = BENCH_SLAT_W             # 98 (X), the end zone
+FRONT_END_CLEAT_Z1 = BENCH_RAIL_TOP            # 297
+FRONT_END_CLEAT_Z0 = FRONT_END_CLEAT_Z1 - FRONT_END_CLEAT_H          # 249
+FRONT_END_CLEAT_Y1 = FRONT_POST_Y0             # 752, the post's back face
+FRONT_END_CLEAT_Y0 = FRONT_END_CLEAT_Y1 - FRONT_END_CLEAT_T          # 716
 # W9 RIPPLE - THE BENCH SLATS ARE RE-PITCHED. A bench slat is Y -48..752, i.e. it
 # covers the back rail plane, and the outermost one of each bench used to start
 # at the wall, X 0..98 - straight through the corner post's new Y band. The field
@@ -2779,10 +3215,45 @@ MIN_LEG_BEARING = 40
 # against the ~0.5 kN a leg carries -> ~0.06. (Was 48 x 48 = 2304 mm2, ~0.09.)
 LEG_BEARING_AREA = LEG_W * LEG_T               # 3264 mm2  [was 3504, 2304]
 
-# D13: the front bench rail segments end at the SOFA ends, on their stub legs.
-FRONT_BENCH_RAIL_SEGMENTS = [(THROUGH_X0, BENCH_LEN),              # 3 .. 645
-                             (WALL_SPAN - BENCH_LEN, THROUGH_X1)]  # 1345 .. 1987
-FRONT_BENCH_RAIL_SEG_LEN = BENCH_LEN - THROUGH_X0                  # 642  [was 782]
+# ---------------------------------------------------------------------------
+# X18 (as-built) - THE FRONT BENCH CHEEK IS BUTTED, NOT LAPPED, AND IT STANDS
+# IN THE VERTICALS' OWN PLANE
+# ---------------------------------------------------------------------------
+# The builder's words: the front cheeks «ligger i flukt mellom stolpene og
+# stigevangene - buttet i samme plan, ikke lappet utenpa», fixed with POCKET
+# SCREWS and «ekstra stotter og skruer ovenfra og fra siden».
+#
+# THE END DETAIL, AND WHY IT DRAGS THE WHOLE PIECE 36 mm FORWARD. The drawn
+# segment ran to X 3 and LAPPED the corner post's inner face over 95 mm of Y,
+# which is what J8's two 6x80 were driven through. A BUTTED end has no lap to
+# drive through - and, worse, a cheek left in its own plane (Y 704..752) and
+# stopped at the post's X-inner face shares nothing with the post but an EDGE.
+# There is no face there for a screw of any kind to cross. So «buttet i samme
+# plan» is not a decoration: the only plane in which that butt is a joint at
+# all is the verticals' own, Y 740..788, front face flush with theirs, 36 x 68
+# mm of post face butted at the outer end. What holds it there is the joint
+# this file has known how to make since K4 - the skew screw out of a
+# flat-bottomed hole - and that is why no angle bracket is needed.
+#
+# AND «MELLOM STOLPENE OG STIGEVANGENE» IS NOT AN END POINT, WHICH THE MODEL
+# HAD TO FIND OUT THE HARD WAY. Read as a SPAN - post inner face 98 to upright
+# outer face 787 - it is the wood vedlegg B avvik 2 costed as option (ii), and
+# it would have bound the ladder foot in the depth direction at last. IT CANNOT
+# BE BUILT. The bed-mode plate's front WEDGE hangs at X 708..785, Y 702..750,
+# Z 229..297, and a cheek in the verticals' plane occupies Y 740..788 over the
+# same Z: they overlap by CHEEK_TO_LADDER_FOUL mm over the whole 77 mm of
+# wedge, and the plate could not be lowered into its bed seat at all. Measured
+# rather than feared - the fastener sweep found it as a screw running into the
+# wedge before anyone thought to look at the two solids. So the phrase is read
+# as WHERE the cheeks are - the runs between the corner posts and the ladder -
+# and not as how far they go, and the piece stops where D13 put it, on its own
+# stub leg at the sofa end. The walk-around stays free and avvik 2 stays open.
+FRONT_BENCH_RAIL_SEGMENTS = [(POST_W, BENCH_LEN),                  # 98 .. 645
+                             (WALL_SPAN - BENCH_LEN,
+                              WALL_SPAN - POST_W)]                 # 1345 .. 1892
+FRONT_BENCH_RAIL_SEG_LEN = BENCH_LEN - POST_W                      # 547  [X18:
+                                                                   # was 642, 782]
+CHEEK_TO_LADDER_FOUL = 10        # mm the wedge and a run-on cheek would share
 # The clear front floor between the two benches: 645 .. 1345.
 OPEN_FLOOR_X = (BENCH_LEN, WALL_SPAN - BENCH_LEN)                  # 645 .. 1345
 # D13: the walk-around passages, one on each side of the ladder, between the
@@ -3558,8 +4029,10 @@ END_CLEAT_X = END_SLAT_X                           # under its own slat
 # The end slat's span, back bearing centre to front bearing centre, against the
 # 752 mm the other bench slats run (vedlegg A.1): SHORTER, so the slat criterion
 # that governs the field governs this piece with room to spare.
-END_SLAT_SPAN = ((BENCH_RAIL_Y[1] + BENCH_RAIL_T / 2)
-                 - (END_CLEAT_Y0 + END_CLEAT_T / 2))          # 722
+# X18: the front bearing is no longer the cheek - it is the front end cleat on
+# the corner post's back face, and its centre is 18 mm further back.
+END_SLAT_SPAN = ((FRONT_END_CLEAT_Y0 + FRONT_END_CLEAT_T / 2)
+                 - (END_CLEAT_Y0 + END_CLEAT_T / 2))          # 728  [X18: 722]
 END_CLEAT_BEARING = END_CLEAT_LEN * END_CLEAT_T               # 3528 mm2
 
 # --- the sleeping surface it completes --------------------------------------
@@ -3907,13 +4380,16 @@ for i, x0 in enumerate(END_BEAM_X):
 # LADDER
 # ---------------------------------------------------------------------------
 for name, x0 in (("Left", LADDER_LEFT_X), ("Right", LADDER_RIGHT_X)):
-    parts.append(block(x0, LADDER_Y0, 0, UPRIGHT_W, UPRIGHT_T, POST_HEIGHT,
+    parts.append(block(x0, LADDER_Y0, 0, UPRIGHT_W, UPRIGHT_T, UPRIGHT_H,
                        f"Ladder Upright {name}", "posts",
                        # U2: the stock is unchanged 36x48, named thin side
                        # first like every other section in the list; what
                        # changed is which way round it stands.
-                       ("Ladder upright (D13)", sec(UPRIGHT_T, UPRIGHT_W),
-                        POST_HEIGHT)))
+                       # X18: and the cut length is UPRIGHT_H, not POST_HEIGHT
+                       # - the built uprights stop at the lower guard board's
+                       # top edge. Two cut-list lines where there was one.
+                       ("Ladder upright (D13/X18)", sec(UPRIGHT_T, UPRIGHT_W),
+                        UPRIGHT_H)))
 
 # Cleat blocks first: the rung rests on the blocks and is screwed down into
 # them, and the blocks are screwed to the inner face of each upright.
@@ -3959,6 +4435,20 @@ for i, z0 in enumerate(GUARD_BAND_Z0):
                            ("Guard rail, front segment (D2/D7/D13)",
                             sec(GUARD_T, GUARD_W), sx1 - sx0)))
 
+# X18: THE BRACE ROW. Four per field, on the inboard face of the two boards,
+# lapping GUARD_BRACE_LAP onto each. See the X18 block at GUARD_BRACE_T for
+# why the piece is 128 mm long and why there are four of them.
+for j, (fx0, _fx1) in enumerate(GUARD_BRACE_FIELDS):
+    side = "Left" if j == 0 else "Right"
+    for i in range(GUARD_BRACE_N):
+        bx0 = fx0 + (i + 1) * GUARD_BRACE_GAP + i * GUARD_BRACE_W
+        parts.append(block(bx0, GUARD_BRACE_Y0, GUARD_BRACE_Z0,
+                           GUARD_BRACE_W, GUARD_BRACE_T, GUARD_BRACE_H,
+                           f"Guard Brace {side}_{i + 1}", "boards",
+                           ("Rekkverksavstiver (X18)",
+                            sec(GUARD_BRACE_T, GUARD_BRACE_W),
+                            GUARD_BRACE_H)))
+
 # ---------------------------------------------------------------------------
 # LOWER SECTION: BENCHES
 # ---------------------------------------------------------------------------
@@ -3998,6 +4488,27 @@ for i, ry0 in enumerate(BENCH_RAIL_Y):
                            f"Bench Stub Leg {name} {side}", "posts",
                            ("Bench stub leg (W3)", sec(LEG_T, LEG_W),
                             STUB_LEG_H)))
+
+# X18: THE SLAT LEDGER on the moved cheek's inboard face, and the FRONT END
+# CLEAT on the front corner post's back face. See the X18 block at
+# BENCH_SLAT_ON_CHEEK for why both exist and why neither is a choice.
+for j, (lx0, lx1) in enumerate(BENCH_LEDGER_X):
+    side = "Left" if j == 0 else "Right"
+    parts.append(block(lx0, BENCH_LEDGER_Y0, BENCH_LEDGER_Z0,
+                       lx1 - lx0, BENCH_LEDGER_T, BENCH_LEDGER_H,
+                       f"Bench Front Cleat {side}", "boards",
+                       ("Benkespileledd (X18)",
+                        sec(BENCH_LEDGER_T, BENCH_LEDGER_H),
+                        BENCH_LEDGER_LEN)))
+for j, cx0 in enumerate(END_SLAT_X):
+    side = "Left" if j == 0 else "Right"
+    parts.append(block(cx0, FRONT_END_CLEAT_Y0, FRONT_END_CLEAT_Z0,
+                       FRONT_END_CLEAT_LEN, FRONT_END_CLEAT_T,
+                       FRONT_END_CLEAT_H,
+                       f"Bench Post Cleat {side}", "boards",
+                       ("Fremre endelist (X18)",
+                        sec(FRONT_END_CLEAT_T, FRONT_END_CLEAT_H),
+                        FRONT_END_CLEAT_LEN)))
 
 # C3: 34x98 bench slats on top of the bench rails, five per bench.
 # The doc's J11 table lists the right-hand bench at X 1345..1993, which runs 3 mm
@@ -4300,10 +4811,13 @@ _PART = {
     "rung_blk":    r"Rung Block (?:Left|Right)_\d+",
     "guard":       r"Guard Rail Front (?:Left|Right)_\d+",
     "guard_host":  r"(?:Corner Post Front|Ladder Upright) (?:Left|Right)",
+    "guard_brace": r"Guard Brace (?:Left|Right)_\d+",
     "bed_slat":    r"Bed Slat_\d+",
     "bench_slat":  r"Bench Slat (?:Left|Right)_\d+",
     "end_slat":    r"Bench End Slat (?:Left|Right)",
     "end_cleat":   r"Bench End Cleat (?:Left|Right)",
+    "bench_ledge": r"Bench Front Cleat (?:Left|Right)",
+    "front_cleat": r"Bench Post Cleat (?:Left|Right)",
     "panel":       r"Movable Panel \(bed mode\)",
     "batten":      r"Panel Stiffener Batten (?:Left|Right) \(bed mode\)",
     "nose":        r"Panel Front Batten (?:Left|Right) \(bed mode\)",
@@ -4321,8 +4835,10 @@ PART_NO = {
     "ledger": "bordbærelekt", "beam": "endebjelke", "stub": "stubbefot",
     "upright": "stigevange", "rung": "rungetrinn", "rung_blk": "stigekloss",
     "guard": "rekkverksbord", "guard_host": "hjørnestolpe / stigevange",
+    "guard_brace": "rekkverksavstiver",
     "bed_slat": "køyespile", "bench_slat": "benkespile",
     "end_slat": "endespile", "end_cleat": "endelist",
+    "bench_ledge": "benkespileledd", "front_cleat": "fremre endelist",
     "panel": "løs plate", "batten": "avstivningslekt",
     "nose": "fremre kilelekt",
     "foot_deck": "fotbrettbord", "foot_cheek": "fotbrettgavl",
@@ -4811,9 +5327,16 @@ TOE_SEAT_MIN_COVER = 1.0         # mm of wood over the highest point of the head
 # grain on both sides; these two sit mid-face in a 68 mm rail with the full
 # 48 mm of its depth behind them, which is why the floor is d and not D.
 TOE_SEAT_MIN_WEB = 6.0           # mm of wood between two seats in one face
-TOE_BENCH_POST = dict(face=1, face_sign=1, deg=65.0, back=34.0,
+TOE_BENCH_POST = dict(face=1, face_sign=1, deg=65.0, back=40.0,
                       seat=TOE_SEAT_DEPTH_BENCH)
-TOE_STUB_RAIL = dict(face=0, face_sign="inboard", deg=60.0, back=35.0)
+TOE_STUB_RAIL = dict(face=0, face_sign="inboard", deg=60.0, back=40.0)
+# X18: the front cheek's two butted ends. Same angle, same seat and therefore
+# the same jig block as TOE_BENCH_POST - what differs is only which face the
+# pocket is bored in: the back rail is reached from the room (+Y), the front
+# cheek from inside the bench room (-Y), because that is the side a drill gets
+# to while the bench is still open.
+TOE_BENCH_FRONT = dict(face=1, face_sign=-1, deg=65.0, back=40.0,
+                       seat=TOE_SEAT_DEPTH_BENCH)
 
 
 # X10 - AND THE SAME UNIT ONE MORE TIME, BETWEEN TWO SHANKS. See the X10 block at
@@ -5036,27 +5559,57 @@ JOINTS = [
          side="Ovenfra, ned i vangen",
          contacts=[dict(a="bed_slat", b="rail", axis=2, drives=[
              drive("Treskrue 5×60 forsenket Torx", 1, frm="bed_slat")])]),
+    # X18: SIX OMLEGG, NOT EIGHT. The eighth and seventh are the upper band's
+    # inner ends, and the wood they were screwed to is gone - the built ladder
+    # uprights stop at 1871, 68 mm under the upper board. See UPRIGHT_H, and
+    # ASSEMBLY vedlegg B avvik 7 for what carries those two ends instead.
     dict(id="J7", title="Rekkverksbord → hjørnestolpe / stigevange "
-                        "(per omlegg)", n=8,
+                        "(per omlegg)", n=6,
          drill="⌀3,5 gjennom bordet, ⌀3 i stolpen",
          side="Fra sengesiden, inn i stolpens/stigevangens innside",
          contacts=[dict(a="guard", b="guard_host", axis=1, drives=[
              drive("Treskrue 5×60 forsenket Torx", 2, frm="guard")])]),
+    # X18: THE BRACE ROW'S OWN SCREWS. Each brace laps GUARD_BRACE_LAP of each
+    # board, and each lap takes two 5x40 driven from the room. 16 laps, 32
+    # screws - and they are the load path that hangs the upper board's inner
+    # end off the lower one, so they are not decoration. The lap is 98 mm long
+    # and 30 mm tall, which is exactly 2 x 3d of edge on the short way: the
+    # 30 mm is derived from that and nothing else (see GUARD_BRACE_LAP).
+    dict(id="J21", title="Rekkverksavstiver → rekkverksbord (per omlegg, "
+                         "X18)", n=16,
+         drill="⌀3,5 gjennom avstiveren, ⌀3 i bordet, forsenk hodet",
+         side="Fra rommet, rett inn i bordets utside. Avstiveren ligger i "
+              "sporet mellom stolpeplanet og bordet, så den står 13 mm "
+              "innenfor forflaten og ingenting av den kommer inn i "
+              "sengeflaten",
+         contacts=[dict(a="guard_brace", b="guard", axis=1, drives=[
+             drive("Treskrue 5×40 forsenket Torx", 2, frm="guard_brace")])]),
     # V5: same flip as J2 and J3, and here it does a second job - the two
     # screws are now the whole end fixing of the rail segment (the J9-F block
     # is gone, see the C2 note), so they are driven from the side you can
     # actually reach into with a drill while the bench is still open.
-    dict(id="J8", title="Fremre benkevange → fremre hjørnestolpe", n=2,
-         drill="⌀6 gjennom vangen, ⌀4 i stolpen",
-         side="Fra vangens innside — inne fra benkerommet — gjennom vangen og "
-              "inn i stolpen. Stolpens forside er urørt",
-         # row=2: the face is 95 wide and 73 tall, so the automatic choice
-         # would stack the pair along the RAIL. They belong stacked up the
-         # POST, the same pattern as J2 - that is the direction the joint
-         # takes moment in.
-         contacts=[dict(a="bench_front", b="post_front", axis=1, drives=[
+    # X18: THE LAP IS GONE AND SO IS THE THROUGH SCREW. The built cheek butts
+    # the post's X-inner face instead of lapping its Y-inner one, so there is
+    # no 95 mm of overlap left to drive a 6x80 through. What a butted end takes
+    # is a POCKET SCREW, and this bed has had that joint since K4: the same
+    # 65 degrees, the same 20 mm seat, the same ⌀18 Forstner and THE SAME JIG
+    # BLOCK as J8-B - which is the whole reason the model can say yes to it
+    # without buying a tool. Two per end, stacked up the cheek.
+    dict(id="J8", title="Fremre benkevange → fremre hjørnestolpe (endeskjøt)",
+         n=2,
+         drill=(f"Først sete: ⌀{TOE_SEAT_D:g} forstner "
+                f"{TOE_JIG_SEATS['J8-B']:g} mm ned LANGS skruens akse, med "
+                f"den samme vinkelklossen som J8-B bruker. Så ⌀6 skrått "
+                f"videre gjennom vangen og ⌀4 i stolpen — forbor hele veien, "
+                f"dette er en skråskrue nær en ende"),
+         side="Skrått fra vangens innside — inne fra benkerommet — inn i "
+              "stolpen, ut av et flatbunnet sete så hodet ligger helt under "
+              "treet. Vangen står buttet mellom stolpen og stigevangen, og "
+              "disse to skruene er HELE festet i denne enden",
+         contacts=[dict(a="bench_front", b="post_front", axis=0, drives=[
              drive("Treskrue 6×80 forsenket Torx", 2, frm="bench_front",
-                   row=2)])]),
+                   toe=TOE_BENCH_FRONT, offset=(2, 2.0),
+                   exempt="skråskrue gjennom vangens innside nær enden")])]),
     dict(id="J8-B", title="Bakre benkevange → bakre hjørnestolpe "
                           "(endeskjøt)", n=2,
          drill=(f"Først sete: ⌀{TOE_SEAT_D:g} forstner "
@@ -5081,32 +5634,72 @@ JOINTS = [
                 f"⌀{TOE_SEAT_D:g} forstner {TOE_JIG_SEATS['J10']:g} mm ned "
                 f"langs skruens akse, med vinkelklossen som styring, så ⌀3,5 "
                 f"videre"),
-         side="Vinkelbeslaget sitter i hjørnet mellom fotens utside og "
-              "vangens underside, med den ene fliken opp i vangen og den "
-              "andre inn i foten; den ene 5×60 er en skråskrue nedenfra og "
-              "opp i vangen, ut av et flatbunnet sete så hodet ligger helt "
-              "under treet",
+         # X18: THE BRACKET IS GONE, AND SO ARE THE FOUR SCREWS THAT WENT
+         # THROUGH ITS TWO FLANGES. What is left is what the builder used:
+         # skew screws up out of the leg into the cheek. TWO of them, and they
+         # are on TWO DIFFERENT FACES of the leg rather than side by side in
+         # one - two ⌀18 seats in one face at a 5 mm screw's 4d spacing would
+         # leave 2 mm of wood between them, against the 6 mm TOE_SEAT_MIN_WEB
+         # asks for. One out of the leg's X face and one out of its Y face is
+         # the same pair with a whole corner of wood between them, and both
+         # are driven from the side a drill reaches: «inboard» resolves to the
+         # room face on the back legs and the bench-room face on the front
+         # ones, so nothing is bored in the wall plane or in the bed's own
+         # front face.
+         side="Én skrue rett NEDENFRA OG OPP gjennom vangen i foten "
+              "(6×120, hodet forsenket i vangens overkant under spilene) og "
+              "én skråskrue FRA SIDEN, ut av et flatbunnet sete i fotens "
+              "innerside så hodet ligger helt under treet. Ikke noe beslag "
+              "— X18: byggherrens «skruer ovenfra og fra siden»",
          contacts=[dict(a="bench_rail", b="stub", axis=2, drives=[
-             drive(BRACKETS["vinkel90"]["name"], 1, into="stub", axis=0,
-                   sign="inboard", row=2, row_sign=-1, bracket="vinkel90",
-                   bears="bench_rail"),
-             drive("Treskrue 5×40 forsenket Torx", 2, into="stub", axis=0,
-                   sign="inboard", row=2, row_sign=-1, reach=90.0),
-             drive("Treskrue 5×40 forsenket Torx", 2, into="bench_rail",
-                   axis=2, sign=1, row=0, row_sign="outboard", reach=90.0),
+             # X10: the two of them meet in the leg, so the vertical one steps
+             # 6 mm off the leg's own centre line - as far as a 6 mm screw may
+             # be stepped on a 48 mm face - AWAY from the skew screw's pocket,
+             # which itself sits 9 mm off centre the other way. 15 mm apart in
+             # Y where the rule asks for 10,5.
+             drive("Treskrue 6×120 forsenket Torx", 1, frm="bench_rail",
+                   offset=(1, 6.0, "outboard")),
              drive("Treskrue 5×60 forsenket Torx", 1, frm="stub",
-                   toe=TOE_STUB_RAIL,
+                   toe=TOE_STUB_RAIL, offset=(1, 9.0, "inboard"),
                    exempt="skråskrue nedenfra opp i vangen")])]),
-    dict(id="J11", title="Benkespile → benkevange (per spileende)", n=20,
+    # X18: THE FRONT END OF EVERY BENCH SLAT MOVED OFF THE CHEEK AND ONTO A
+    # LEDGER. The cheek came out into the post plane, so it is under only 12 mm
+    # of slat end - not enough for this screw's own 3d of edge - and the ledger
+    # on its inboard face is what the slat is screwed down into. So this joint
+    # is the WALL end only, and J11-F below is the front one.
+    dict(id="J11", title="Benkespile → bakre benkevange (bakre spileende)",
+         n=10,
          drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
          side="Ovenfra, ned i benkevangen",
-         contacts=[dict(a="bench_slat", b="bench_rail", axis=2, drives=[
+         contacts=[dict(a="bench_slat", b="bench_back", axis=2, drives=[
              drive("Treskrue 5×60 forsenket Torx", 1, frm="bench_slat")])]),
+    dict(id="J11-F", title="Benkespile → benkespileledd (fremre spileende, "
+                           "X18)", n=10,
+         drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
+         side="Ovenfra, ned i leddet på den fremre benkevangens innside — "
+              "spileenden ligger på ledd og vange i ett plan, og skruen står "
+              "i leddet",
+         contacts=[dict(a="bench_slat", b="bench_ledge", axis=2, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 1, frm="bench_slat")])]),
+    # Four per ledger, and they are not spaced by taste: each one stands in a
+    # GAP between two bench slats, so no slat screw ever comes down onto one of
+    # them. The pitch is therefore the slat pitch, 112,25 mm.
+    dict(id="J19", title="Benkespileledd → fremre benkevange (X18)", n=8,
+         drill="⌀3,5 gjennom leddet, ⌀3 i vangen",
+         side="Vannrett fra benkerommet, inn i vangens innside. Leddets "
+              "overkant legges i flukt med vangens overkant — det er den ene "
+              "linjen som må stemme",
+         spread=dict(axis=0, at=[-1.5 * BENCH_SLAT_PITCH,
+                                 -0.5 * BENCH_SLAT_PITCH,
+                                 0.5 * BENCH_SLAT_PITCH,
+                                 1.5 * BENCH_SLAT_PITCH]),
+         contacts=[dict(a="bench_ledge", b="bench_front", axis=1, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 1, frm="bench_ledge")])]),
     # V13: the end slat has a bearing of its own at the back - the cleat - and
     # the ordinary front bench rail at the front. Two joints, because they are
     # two different pieces of wood; the screw is the same one the whole slat
     # field uses, driven the same way, from above.
-    dict(id="J11-E", title="Endespile → fremre benkevange (fremre spileende)",
+    dict(id="J11-E", title="Endespile → fremre endelist (fremre spileende)",
          n=2,
          drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
          side="Ovenfra, ned i benkevangen",
@@ -5116,9 +5709,23 @@ JOINTS = [
          # screw came straight down onto the upper one of them. Moved inboard
          # it lands over the rail instead of over the post, 24,5 mm clear, with
          # 23 mm of slat end still outboard of it.
-         contacts=[dict(a="end_slat", b="bench_front", axis=2, drives=[
-             drive("Treskrue 5×60 forsenket Torx", 1, frm="end_slat",
-                   offset=(0, 24.5, "inboard"))])]),
+         contacts=[dict(a="end_slat", b="front_cleat", axis=2, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 1, frm="end_slat")])]),
+    # X18: and the cleat that end now lands on. The mirror of J17 at the other
+    # end of the same slat: two 5x60 side by side along the 98 mm cleat, into
+    # the FRONT corner post's back face this time.
+    dict(id="J20", title="Fremre endelist → fremre hjørnestolpe (mot "
+                         "stolpens bakside, X18)", n=2,
+         drill="⌀3,5 gjennom listen, ⌀3 i stolpen",
+         side="Rett inn i stolpens bakside, fra benkerommet — listen ligger "
+              "flatt på stolpen og de to skruene er hele festet",
+         # X10/X18: 8 mm DOWN off the patch centre, exactly as J17 steps down
+         # at the other end of the same slat. J8's two pockets come through
+         # this post at Z 253 and 277 and this row sat at 273, four
+         # millimetres from one of them; at 265 it stands midway between them.
+         contacts=[dict(a="front_cleat", b="post_front", axis=1, drives=[
+             drive("Treskrue 5×60 forsenket Torx", 2, frm="front_cleat",
+                   offset=(2, -8.0))])]),
     dict(id="J16", title="Endespile → endelist (bakre spileende)", n=2,
          drill="⌀3,5 gjennom spilen, forsenk hodet under flaten",
          side="Ovenfra, ned i endelisten",
@@ -5146,16 +5753,21 @@ JOINTS = [
          n=2,
          drill="⌀3 i stolpen og i lekta — forboring er et krav: begge skruene "
                "står nær en ende, og lekta (48×68) tas i endeveden",
-         side="Beslaget på stolpens innerflate, med den vannrette fliken "
-              "UNDER lektas ende, så lekta har noe å hvile på og ikke bare "
-              "henger i skruer",
-         contacts=[dict(a="post_back", b="ledger", axis=0, drives=[
-             drive(BRACKETS["vinkel40"]["name"], 1, into="post_back", axis=0,
-                   row=2, row_sign=-1, bracket="vinkel40", bears="ledger"),
-             drive("Treskrue 5×40 forsenket Torx", 1, into="post_back",
-                   axis=0, row=2, row_sign=-1, reach=40.0),
-             drive("Treskrue 5×40 forsenket Torx", 1, into="ledger", axis=2,
-                   sign=1, row=0, reach=40.0)])]),
+         # X18: THE LAST TWO BRACKETS GO TOO. The ledger's end butts the back
+         # post's X-inner face exactly the way the back bench rail's does one
+         # metre lower, and that joint is J8-B: two 6x80 skew screws out of
+         # flat-bottomed seats in the ledger's room-side face. Same section,
+         # same face, same angle, same jig. The bracket's horizontal flange
+         # was the shelf the ledger rested on while it was screwed; the
+         # pre-drilled pocket pair is that shelf now, because a hole pattern
+         # lines up in exactly one position.
+         side="Skrått fra lektas forside inn i stolpen, ut av et flatbunnet "
+              "sete så hodet ligger helt under treet. Ikke noe beslag — X18: "
+              "samme ledd som J8-B, en etasje opp",
+         contacts=[dict(a="ledger", b="post_back", axis=0, drives=[
+             drive("Treskrue 6×80 forsenket Torx", 2, frm="ledger",
+                   toe=TOE_BENCH_POST, offset=(2, 2.0),
+                   exempt="skråskrue gjennom lektas forside nær enden")])]),
     # X11: THE SECOND WALL JOINT. Until this round the wall carried exactly one
     # fixing - J14, through the back side rail - and the nogging table promised
     # a fixing in all four zones. Three of the four had none, and zone 3 is the
@@ -6386,9 +6998,27 @@ if FASTENERS_ON:
     # always the table's. What it buys is a front face - two posts, two ladder
     # uprights, the front side rail, the two front bench-rail segments and the
     # four guard boards - with no steel showing anywhere on it.
+    # X18 - AND THE BUILT BED BREAKS IT IN EXACTLY ONE PLACE. The brace row
+    # sits in the slot between the guard boards and the post plane, and the
+    # only face of a brace a drill can reach is the one facing the room. 32
+    # heads, all of them at guard height, all of them countersunk, and there
+    # is no way round it: driven the other way a 5 mm screw would have to
+    # cross 36 mm of board and would come out the back of a 23 mm brace. So
+    # the rule keeps its teeth and names its one exception rather than being
+    # deleted - if any OTHER joint starts showing on the front, this still
+    # goes red.
+    VISIBLE_FRONT_EXEMPT = {"J21"}
     _showing = [(_f["jid"], _f["name"],
                  tuple(round(v, 1) for v in _f["anchor"]))
-                for _f in FASTENER_SPECS if on_visible_front(_f)]
+                for _f in FASTENER_SPECS if on_visible_front(_f)
+                and _f["jid"] not in VISIBLE_FRONT_EXEMPT]
+    VISIBLE_FRONT_HEADS = [_f for _f in FASTENER_SPECS
+                           if on_visible_front(_f)
+                           and _f["jid"] in VISIBLE_FRONT_EXEMPT]
+    assert len(VISIBLE_FRONT_HEADS) == 2 * 2 * 2 * GUARD_BRACE_N, \
+        f"X18: {len(VISIBLE_FRONT_HEADS)} brace heads on the front face, " \
+        f"and the brace row has two screws in each of two laps on each of " \
+        f"{2 * GUARD_BRACE_N} braces"
     assert not _showing, (
         "V5: festemiddelhoder på en romvendt flate (Y >= "
         f"{VISIBLE_FRONT_Y}, drevet innover i -Y): "
@@ -7127,7 +7757,11 @@ print(f"OK  W1/W6/W7: WALL-SIDE BED - no back guard boards; the back face is the
 #       material REMOVED - the nominal section still stands, and there is no
 #       allowance in the width.
 ROOM_TOL = 5.0            # how near an end wall a part has to come to be fitted
-ROOM_OVER_FLOOR = 15      # trim allowance at the foot of a standing part
+ROOM_OVER_FLOOR = 20      # trim allowance at the foot of a standing part
+                          # [X18 cm-runding: was 15. An allowance is slack, and
+                          # slack in whole centimetres is one less number to
+                          # remember at the saw. It has to clear the lowest
+                          # joint on a standing part, and that is at Z 201.]
 ROOM_OVER_WALL = 10       # fine-cut allowance per wall-facing end
 
 
@@ -7930,7 +8564,7 @@ print(f"OK  C9/W9: no horizontal member exceeds {THROUGH_LEN} mm; all "
 VERTICAL_HEIGHTS = {
     "Corner Post Back": BACK_POST_HEIGHT,        # 1402, W6
     "Corner Post Front": POST_HEIGHT,            # 2037
-    "Ladder Upright": POST_HEIGHT,               # 2037
+    "Ladder Upright": UPRIGHT_H,                 # 1871, X18 (was 2037)
 }
 
 
@@ -8002,7 +8636,8 @@ print(f"OK  D1/W2/W6/U2: exactly 6 frame verticals - 2 front corner posts "
       f"{sec(POST_T, POST_W)} x {BACK_POST_HEIGHT} (W6: inside the back rail "
       f"plane, Y {BACK_POST_Y0}..{BACK_POST_Y1} of {BACK_RAIL_Y0}.."
       f"{BACK_RAIL_Y1}, stopping under the rail), 2 ladder uprights "
-      f"{sec(UPRIGHT_T, UPRIGHT_W)} x {POST_HEIGHT} "
+      f"{sec(UPRIGHT_T, UPRIGHT_W)} x {UPRIGHT_H} (X18: cut {UPRIGHT_SHORTFALL} "
+      f"mm short of the posts, flush with the lower guard board's top edge) "
       f"({UPRIGHT_W} along X / {UPRIGHT_T} along Y after the U2 turn, so the "
       f"whole front plane Y {FRONT_POST_Y0}..{FRONT_POST_Y1} is one {POST_T} mm "
       f"layer); no intermediate back posts")
@@ -8208,18 +8843,20 @@ assert panel_table.extents[2] == (682, 700), \
     f"(was 542/560 before the desk went up)"
 assert [p.extents[2][1] for p in sorted(built("Ladder Rung"),
                                         key=lambda p: p.extents[2][0])] \
-    == [297, 489, 682, 962, 1242], \
-    f"X16: the built rung tops are " \
-    f"{sorted(p.extents[2][1] for p in built('Ladder Rung'))}, and the even " \
-    f"ladder X2 rules - now bearing at the desk seat - is what the list on " \
-    f"the right is"
+    == [297, 682, 962, 1242], \
+    f"X18: the built rung tops are " \
+    f"{sorted(p.extents[2][1] for p in built('Ladder Rung'))}, and the FOUR " \
+    f"treads the builder cut - bench level, desk level, and two evenly up to " \
+    f"the platform - are what the list on the right is"
 #      X9: was [297, 572, 848, 1073, 1298] - rung 3 went UP to clear the desk
 #      and the two flights fell out of it; X16 brings it DOWN onto the desk
 #      and the two flights meet on it.
 #      X1/X2: [297, 542, 787, 1032, 1277]
-assert built_z("Corner Post Front") == built_z("Ladder Upright") == (0, 2037), \
-    f"X1: the front plane runs {built_z('Corner Post Front')} and the ladder " \
-    f"{built_z('Ladder Upright')} - all four verticals are one height"
+assert built_z("Corner Post Front") == (0, 2037) \
+    and built_z("Ladder Upright") == (0, UPRIGHT_H), \
+    f"X18: the front posts run {built_z('Corner Post Front')} and the ladder " \
+    f"uprights {built_z('Ladder Upright')} - the four verticals of the front " \
+    f"plane were one height until the builder cut the two uprights short"
 assert built_z("Corner Post Back") == (0, 1402), \
     f"W6: the back posts run {built_z('Corner Post Back')} - they must stop " \
     f"at the rail underside"
@@ -8228,9 +8865,11 @@ assert built_z("Table Ledger Back") == (614, 682), \
 assert not any(p.label.startswith("Table Bearer") for p in parts), \
     "X16: a bordkloss is back in the model - the plate's front edge lands on " \
     "a rung now, and the two blocks and their J5-B screws are struck"
-assert built_z("Ladder Rung_3") == (634, 682), \
-    "X16: rung 3 is the plate's front seat and its top has to be the same " \
-    "682 the ledger carries the rear edge on"
+assert built_z(f"Ladder Rung_{RUNG_TOPS.index(PANEL_UNDER_TABLE) + 1}") \
+    == (PANEL_UNDER_TABLE - RUNG_T, PANEL_UNDER_TABLE), \
+    "X16/X18: the seat rung is the plate's front seat and its top has to be " \
+    "the same 682 the ledger carries the rear edge on - it is rung 2 on the " \
+    "built ladder and was rung 3 on the drawn one"
 assert built_z("Bench Stub Leg") == (0, 229), \
     f"W3: the stub legs run {built_z('Bench Stub Leg')} - they reach the " \
     f"bench rail underside and stand on the floor"
@@ -8371,7 +9010,14 @@ print(f"OK  W6: the back layer Y {VACATED_BACK_LAYER[0]}.."
       f"them")
 FRONT_PLANES_V7 = {                      # v7 value -> v8 value, all -106
     "front side rail": ((810, 858), (FRONT_RAIL_Y0, FRONT_RAIL_Y1)),
-    "front bench rail": ((810, 858), (BENCH_RAIL_Y[1], BENCH_RAIL_Y[1] + BENCH_RAIL_T)),
+    # X18: the front bench cheek is NOT on the D12 line any more. It stood on
+    # it until the builder butted its end into the corner post, and a butt
+    # needs the post's own Y band - so it is 36 mm forward of where D12 left
+    # it, and the number below is that move, stated rather than hidden inside
+    # the -106.
+    "front bench cheek (X18: +36 into the post plane)":
+        ((810, 858), (BENCH_RAIL_Y[1] - POST_T,
+                      BENCH_RAIL_Y[1] - POST_T + BENCH_RAIL_T)),
     "slats / bench slats": ((858, 858), (SLAT_Y1, SLAT_Y1)),
     # V2: the panel front edge is the one plane that is deliberately NOT on the
     # D12 line any more. It stands PANEL_FIT back off it, because the panel has
@@ -8798,23 +9444,56 @@ MATTRESS_H_MAX = int(GUARD_BAND_Z0[0] - SLAT_Z1 - EN_LIMB_BAND[0])
 MATTRESS_H_MAX_BARRIER = GUARD_TOP - SLAT_Z1 - MIN_GUARD_OVER_MATTRESS
 assert MATTRESS_H_MAX < MATTRESS_H_MAX_BARRIER, \
     "V7: the band bound is supposed to be the governing one"
-assert (MATTRESS_H_MIN, MATTRESS_H_MAX) == (110, 125), \
-    f"V7/X4: the mattress window is {MATTRESS_H_MIN}..{MATTRESS_H_MAX}, want 110..125"
-assert MATTRESS_H_MIN <= MATTRESS_H <= MATTRESS_H_MAX, \
-    f"the modelled {MATTRESS_H} mm mattress is outside its own legal band " \
-    f"{MATTRESS_H_MIN}..{MATTRESS_H_MAX} mm"
+# X18 - AND THIS IS THE ONE PLACE THE BUILT BED DOES NOT HOLD.
+# The window is the arithmetic above, run on the band the builder PUT THE BOARD
+# IN rather than the band it was drawn in, and it comes out
+#     175 .. 190 mm of mattress
+# against the 120 mm that is on the bed. The rule has not changed and the
+# arithmetic has not changed; the board went up 65 mm and took the window with
+# it. Written the other way round - which is the way the family reads it - the
+# opening between the mattress top and the underside of the lowest board is
+# 130 mm where EN 747 allows 75, and there is nothing in it.
+#
+# THE MODEL SAYS SO OUT LOUD RATHER THAN MOVING THE BOARD BACK ON PAPER. Both
+# numbers are asserted: the window is what the built guard demands, and the
+# built mattress is OUTSIDE it by a measured amount. What closes it is in
+# vedlegg B, avvik 6, and there are exactly two ways, both of them costed:
+#   * take the lower board down to MATTRESS_Z1 + 65 = 1708, where it was drawn.
+#     Two boards, four screws, one afternoon, and the window is 110..125 again;
+#   * put a BRACE ROW in the lower band the way the builder already put one in
+#     the upper: GUARD_BRACE_N braces per field turn one 130 mm opening into
+#     GUARD_BRACE_N + 1 openings whose least dimension is the brace gap, and
+#     that gap is inside EN 747's limb band. Eight more offcuts.
+# The model does not choose. It measures, and it refuses to print OK.
+MATTRESS_H_WINDOW_DRAWN = (110, 125)     # V7/X4, the band the drawing had
+AS_BUILT_MATTRESS_GAP = GUARD_BAND_Z0[0] - MATTRESS_Z1          # 130
+AS_BUILT_GAP_OVER = AS_BUILT_MATTRESS_GAP - MAX_GUARD_OPENING   # 55
+GUARD_BOARD_DROP_WANTED = GUARD_BAND_Z0[0] - (MATTRESS_Z1 + 65)  # 65
+assert (MATTRESS_H_MIN, MATTRESS_H_MAX) == (175, 190), \
+    f"X18: the AS-BUILT mattress window is {MATTRESS_H_MIN}.." \
+    f"{MATTRESS_H_MAX}, and 175..190 is what the board at " \
+    f"{GUARD_BAND_Z0[0]} demands"
+assert not MATTRESS_H_MIN <= MATTRESS_H <= MATTRESS_H_MAX, \
+    "X18: the built mattress has come back inside the built guard's own " \
+    "window - if that is true, avvik 6 is closed and this assert is the " \
+    "thing that has to go, together with it"
+assert AS_BUILT_GAP_OVER > 0 and GUARD_BOARD_DROP_WANTED > 0, \
+    "X18: avvik 6 only exists while the built gap is over the limit"
 # ...and the two bounds have to be checked at the bound, not at the modelled
 # thickness: it is the EXTREMES that either pass or do not.
 assert GUARD_BAND_Z0[0] - (SLAT_Z1 + MATTRESS_H_MIN) <= MAX_GUARD_OPENING
 assert GUARD_TOP - (SLAT_Z1 + MATTRESS_H_MAX) >= MIN_GUARD_OVER_MATTRESS
 assert MATTRESS_H_MAX > MATTRESS_H_MIN, \
     "no mattress thickness satisfies both guard rules"
-print(f"OK  EN 747 madrasstykkelse: {MATTRESS_H_MIN}..{MATTRESS_H_MAX} mm on "
-      f"a slat top of {SLAT_Z1}. Thinner than {MATTRESS_H_MIN} and the gap "
-      f"under the lower band goes past {MAX_GUARD_OPENING} mm; thicker than "
-      f"{MATTRESS_H_MAX} and the barrier over the mattress falls under "
-      f"{MIN_GUARD_OVER_MATTRESS} mm. Modelled: {MATTRESS_H} mm (gap "
-      f"{GUARD_BAND_Z0[0] - MATTRESS_Z1}, barrier {GUARD_TOP - MATTRESS_Z1})")
+print(f"AVVIK 6  EN 747 madrasstykkelse: den BYGDE rekkverksstillingen krever "
+      f"{MATTRESS_H_MIN}..{MATTRESS_H_MAX} mm madrass på en spiletopp på "
+      f"{SLAT_Z1}, og madrassen på senga er {MATTRESS_H} mm. Åpningen mellom "
+      f"madrasstopp og nederste bords underkant er "
+      f"{AS_BUILT_MATTRESS_GAP} mm mot grensen {MAX_GUARD_OPENING} - "
+      f"{AS_BUILT_GAP_OVER} mm for mye, og ingen avstivere i båndet. Tegnet "
+      f"vindu var {MATTRESS_H_WINDOW_DRAWN[0]}..{MATTRESS_H_WINDOW_DRAWN[1]} "
+      f"med bordet {GUARD_BOARD_DROP_WANTED} mm lenger ned. Se vedlegg B, "
+      f"avvik 6")
 
 print(f"OK  D2/D7/D13/D14: 4 front guard segments {sec(GUARD_T, GUARD_W)} x "
       f"{FRONT_GUARD_SEG_LEN} at X {FRONT_GUARD_SEGMENTS[0][0]}.."
@@ -8863,15 +9542,56 @@ print(f"OK  D14 collision sweep: Y {sweep_y[0]}..{sweep_y[1]} above Z "
 # the remainder between them: 28 -> 58 mm, still inside the 75 mm limit.
 # The back posts stop at 1402 (W2/W6) and take no part in this check - on
 # that side the "barrier" is a wall that runs to the ceiling.
+#
+# X18 - AND THE TABLE IS READ ON THE BUILT BED, BAND BY BAND, WITH THE BRACES
+# IN IT. An opening is judged on its LEAST dimension: a band with a brace row in
+# it is not one long slot any more, it is GUARD_BRACE_N + 1 openings whose
+# narrow way is the brace gap. So each band carries the count of braces standing
+# in it and the verdict comes off that, not off the band height alone.
+#   band 0  mattress top -> board 1   130 mm, NO braces  -> 130 > 75   FAILS
+#   band 1  board 1 -> board 2         68 mm, 4 braces   ->  59,4 <= 75  ok
+#   band 2  board 2 -> post tops        0 mm             ->  closed
+# The third one is the 58 mm avvik 0 was written about, and it is 0 now: the
+# builder ran the upper board flush with the post tops.
 guard_openings = [
-    ("mattress top -> band 1", GUARD_BAND_Z0[0] - MATTRESS_Z1),
-    ("band 1 -> band 2", GUARD_BAND_Z0[1] - (GUARD_BAND_Z0[0] + GUARD_W)),
-    ("band 2 -> front post tops", POST_HEIGHT - (GUARD_BAND_Z0[1] + GUARD_W)),
+    ("mattress top -> band 1", GUARD_BAND_Z0[0] - MATTRESS_Z1, 0),
+    ("band 1 -> band 2", GUARD_BRACE_BAND, GUARD_BRACE_N),
+    ("band 2 -> front post tops", POST_HEIGHT - (GUARD_BAND_Z0[1] + GUARD_W), 0),
 ]
-for what, o in guard_openings:
-    assert o > 0, f"guard bands overlap or invert: {what} = {o}"
-    assert o <= MAX_GUARD_OPENING + TOL, \
-        f"EN 747 entrapment: opening '{what}' is {o} mm > {MAX_GUARD_OPENING}"
+GUARD_BAND_VERDICTS = []
+for what, o, n_brace in guard_openings:
+    assert o >= 0, f"guard bands overlap or invert: {what} = {o}"
+    # the narrow way through the band: the band itself, or - once there are
+    # braces in it - the clear gap between two of them, whichever is smaller.
+    if n_brace:
+        gap = (GUARD_BRACE_FIELD_LEN - n_brace * GUARD_BRACE_W) / (n_brace + 1)
+        least = min(o, gap)
+    else:
+        least = o
+    GUARD_BAND_VERDICTS.append((what, o, n_brace, least,
+                                least <= MAX_GUARD_OPENING + TOL))
+_failed = [v for v in GUARD_BAND_VERDICTS if not v[4]]
+assert [v[0] for v in _failed] == ["mattress top -> band 1"], (
+    "X18: the bands that fail EN 747 on the built bed are "
+    f"{[v[0] for v in _failed]}, and avvik 6 covers exactly one of them - "
+    "the unbraced 130 mm over the mattress. Any other one is a new finding "
+    "and has to be written up before this assert is changed")
+print(f"OK  X18 avstiverraden: {GUARD_BRACE_N} per felt, "
+      f"{sec(GUARD_BRACE_T, GUARD_BRACE_W)} x {GUARD_BRACE_H} av "
+      f"bunnspilevirket, {GUARD_BRACE_LAP} mm omlegg på hvert bord (6d for "
+      f"en 5 mm skrue, og kapplengden er båndets {GUARD_BRACE_BAND} pluss de "
+      f"to omleggene). Feltet er {GUARD_BRACE_FIELD_LEN} mm og luka blir "
+      f"{GUARD_BRACE_GAP:g} mm; {GUARD_BRACE_N - 1} avstivere ville gitt "
+      f"{GUARD_BRACE_GAP_TOO_FEW:g} mm og falt på grensen "
+      f"{MAX_GUARD_OPENING}. Fotoet leser «rundt fem»; regelen sier "
+      f"{GUARD_BRACE_N}")
+print("AVVIK 6  EN 747 klemvindu, bånd for bånd på den BYGDE sengen: "
+      + " · ".join(
+          f"{w} {o:g} mm"
+          + (f" med {n} avstivere → smaleste vei {least:g}" if n else
+             " uten avstivere")
+          + (" ✓" if ok else f" ✗ (grense {MAX_GUARD_OPENING})")
+          for w, o, n, least, ok in GUARD_BAND_VERDICTS))
 guard_over_mattress = GUARD_BAND_Z0[1] + GUARD_W - MATTRESS_Z1
 assert guard_over_mattress >= MIN_GUARD_OVER_MATTRESS, \
     f"barrier only {guard_over_mattress} mm above the mattress"
@@ -8894,8 +9614,9 @@ print(f"OK  D6/W1 (front side): guard bands Z "
       f"{GUARD_BAND_Z0[0]}..{GUARD_BAND_Z0[0] + GUARD_W} "
       f"and {GUARD_BAND_Z0[1]}..{GUARD_BAND_Z0[1] + GUARD_W}; openings above "
       f"the mattress top ({MATTRESS_Z1}): "
-      + " / ".join(f"{o:.0f}" for _, o in guard_openings)
-      + f" mm (limit {MAX_GUARD_OPENING}), barrier {guard_over_mattress} mm "
+      + " / ".join(f"{o:.0f}" for _, o, _n in guard_openings)
+      + f" mm (limit {MAX_GUARD_OPENING}; the first one is avvik 6), barrier "
+      f"{guard_over_mattress} mm "
       f"above the mattress (min {MIN_GUARD_OVER_MATTRESS}); back side: no "
       f"boards, a {MAX_MATTRESS_GAP} mm worst-case mattress gap instead (W5)")
 
@@ -9050,7 +9771,19 @@ assert LOWER_HEADROOM_WHO is not None and LOWER_HEADROOM_WALL_WHO is not None, \
 assert LOWER_HEADROOM_MIN < LOWER_HEADROOM, \
     "X10: the measured head room cannot be more than the clear field to the " \
     "slats - one of the two is not measuring what it says"
-assert LOWER_HEADROOM_MIN >= MIN_SIT_HEADROOM or any(
+# X18 - AND THE RULE GETS ITS THIRD LEG, BECAUSE THE MEMBER IT WAS WRITTEN FOR
+# IS GONE. X16 brought rung 2 down to 21 mm over the lower sleeping surface and
+# this assert was written to judge that: 21 is in EN 747's 12..25 band, where a
+# limb passes freely. X18 deletes rung 2 - the builder never cut it - so the
+# lowest thing over that surface is now the table ledger at 194 mm, and 194 is
+# neither head room nor inside a band. It is not a GAP either, and that is the
+# point the rule was missing: a band is a slot, and a slot stops being a slot
+# once the whole limb goes through it. The top of EN 747's limb band, 75 mm, is
+# exactly where that happens and is already the number this file uses for it.
+# Above 75 the member is judged by the head-room rule and by the list of things
+# the drawings name (both asserted above); below it, by the bands.
+assert LOWER_HEADROOM_MIN >= MIN_SIT_HEADROOM \
+    or LOWER_HEADROOM_MIN > MAX_GUARD_OPENING + TOL or any(
     _lo - TOL <= LOWER_HEADROOM_MIN <= _hi + TOL
     for _lo, _hi in EN_LEGAL_GAP_BANDS), (
     f"X16: '{LOWER_HEADROOM_WHO}' stands {LOWER_HEADROOM_MIN:g} mm over the "
@@ -9508,21 +10241,31 @@ leg_x_ranges = [p.extents[0] for p in front_legs]
 leg_bearings = []
 for r in front_bench_rails:
     (x0, x1), (y0, y1), (z0, z1) = r.extents
-    assert (y0, y1) == (FRONT_RAIL_Y0, FRONT_RAIL_Y1), \
-        f"'{r.label}' is not in the front bench rail plane"
+    # X18: the plane is the VERTICALS' plane now, not the D12 bench-rail one -
+    # a butted end has to share a face with the post, and Y 704..752 shares
+    # only an edge with it. See the X18 block at FRONT_BENCH_RAIL_SEGMENTS.
+    assert (y0, y1) == (BENCH_FRONT_Y0, BENCH_FRONT_Y1), \
+        f"'{r.label}' is at Y {y0}..{y1}; X18 puts the built cheek in the " \
+        f"verticals' own plane {BENCH_FRONT_Y0}..{BENCH_FRONT_Y1}"
+    assert y1 == FRONT_POST_Y1, \
+        f"'{r.label}' is not flush with the front face {FRONT_POST_Y1}"
     assert x1 - x0 == FRONT_BENCH_RAIL_SEG_LEN, \
         f"'{r.label}' is {x1 - x0} long, expected {FRONT_BENCH_RAIL_SEG_LEN}"
     # D13: no more upright lap - the segment must not reach the ladder at all.
     for a0, a1 in (p.extents[0] for p in up):
         assert min(x1, a1) - max(x0, a0) <= TOL, \
             f"D13: '{r.label}' still touches a ladder upright"
-    # the outer end must still land on its corner post
+    # X18: and it must NOT lap the corner post either - it butts it. The old
+    # rule demanded a 95 mm overlap in X; the built cheek has none, and the
+    # face it does have is measured in the U2/X18 block below.
     lap_post = max(min(x1, a1) - max(x0, a0)
                    for a0, a1 in (p.extents[0] for p in corner_posts))
-    assert lap_post >= POST_W - THROUGH_X0, f"'{r.label}' barely reaches a corner post"
+    assert lap_post <= TOL, \
+        f"X18: '{r.label}' still laps {lap_post} mm of corner post - the " \
+        f"built cheek is butted, not lapped"
     # the INNER end must be supported: a stub leg directly under it, full width,
     # and the segment must not overhang the leg's inner face.
-    is_left = x0 == THROUGH_X0
+    is_left = x0 == POST_W
     inner_end = x1 if is_left else x0
     leg = [(a0, a1) for a0, a1 in leg_x_ranges
            if abs((a1 if is_left else a0) - inner_end) < TOL]
@@ -9559,23 +10302,27 @@ for r in front_bench_rails:
     touched = 0
     for q in front_post_parts:
         (px0, px1), (py0, py1), (pz0, pz1) = q.extents
-        assert min(y1, py1) - max(y0, py0) <= TOL, \
-            f"U2: '{r.label}' runs into '{q.label}' in Y"
         dx = min(x1, px1) - max(x0, px0)
-        if dx <= TOL:
+        assert dx <= TOL, \
+            f"X18: '{r.label}' runs into '{q.label}' in X"
+        if min(x1, px1) - max(x0, px0) < -TOL:
             continue
-        assert abs(y1 - py0) < TOL, \
-            f"U2: '{r.label}' shares X with '{q.label}' but does not meet its " \
-            f"face at Y {py0}"
-        area = dx * (min(z1, pz1) - max(z0, pz0))
-        front_rail_post_faces.append(area)
+        # X18: the joint is an END BUTT. The face is what the two solids share
+        # on the plane X = the post's inner face: the post's own 36 mm of Y and
+        # the cheek's full 68 mm of height.
+        dy = min(y1, py1) - max(y0, py0)
+        dz = min(z1, pz1) - max(z0, pz0)
+        if dy <= TOL or dz <= TOL:
+            continue
+        front_rail_post_faces.append(dy * dz)
         touched += 1
     assert touched == 1, \
-        f"U2: '{r.label}' meets {touched} front corner posts, want exactly 1"
-assert {round(a) for a in front_rail_post_faces} == \
-    {(POST_W - THROUGH_X0) * BENCH_RAIL_H}, \
-    f"U2: the front bench rail / front post faces are {front_rail_post_faces}, " \
-    f"want {(POST_W - THROUGH_X0) * BENCH_RAIL_H} mm2 each"
+        f"X18: '{r.label}' butts {touched} front corner posts, want exactly 1"
+assert {round(a) for a in front_rail_post_faces} == {POST_T * BENCH_RAIL_H}, \
+    f"X18: the front cheek / front post BUTT faces are " \
+    f"{front_rail_post_faces}, want {POST_T * BENCH_RAIL_H} mm2 each - the " \
+    f"post's own depth by the cheek's own height (U2 measured a 95 x 68 LAP " \
+    f"here until the builder butted it)"
 seg = sorted(front_bench_rails, key=lambda p: p.extents[0][0])
 bay_gap = seg[1].extents[0][0] - seg[0].extents[0][1]
 assert abs(bay_gap - (OPEN_FLOOR_X[1] - OPEN_FLOOR_X[0])) < TOL, \
@@ -10198,11 +10945,62 @@ first_rise, climb_steps = steps[0], steps[1:]
 # onto, and it is fixed by the bench rail whose top rung 1 shares.
 assert first_rise == BENCH_RAIL_TOP == RUNG_TOPS[0], \
     f"rung 1 (top {RUNG_TOPS[0]}) is not level with the bench rails ({BENCH_RAIL_TOP})"
-assert max(climb_steps) <= MAX_CLIMB_STEP, \
-    f"D8: biggest climbing step is {max(climb_steps)} > {MAX_CLIMB_STEP}"
-assert max(climb_steps) - min(climb_steps) <= MAX_CLIMB_SPREAD, \
+# X18 - THE ONE STEP THAT DOES NOT HOLD, AND IT IS NAMED RATHER THAN EXCUSED.
+# The built ladder has four treads; the fifth, at MISSING_RUNG_TOP, was drawn
+# and never cut. So the step off rung 1 is the whole lower flight in one go,
+# and the rule it breaks is the rule this file derived the drawing on. Two
+# asserts, and neither of them is a relaxed limit:
+#   * every step EXCEPT the as-built one is still held to MAX_CLIMB_STEP;
+#   * the as-built one is held to being exactly the step the missing tread
+#     would have halved. If it is anything else, something ELSE moved and the
+#     deviation is no longer the one vedlegg B describes.
+AS_BUILT_CLIMB_STEP = PANEL_UNDER_TABLE - BENCH_RAIL_TOP         # 385
+CLIMB_STEPS_LEGAL = [s for s in climb_steps if s != AS_BUILT_CLIMB_STEP]
+assert max(CLIMB_STEPS_LEGAL) <= MAX_CLIMB_STEP, \
+    f"D8: biggest climbing step is {max(CLIMB_STEPS_LEGAL)} > {MAX_CLIMB_STEP}"
+assert AS_BUILT_CLIMB_STEP in climb_steps and climb_steps.count(
+    AS_BUILT_CLIMB_STEP) == 1, \
+    "X18: avvik 5 is ONE step of 385 mm and no other"
+assert AS_BUILT_CLIMB_STEP > MAX_CLIMB_STEP, \
+    "X18: the 385 mm step has come back inside the limit - if that is true " \
+    "the fifth tread has been cut and avvik 5 goes with this assert"
+# What it would be with the tread in: two steps of 192/193, which is what
+# RUNG_TOPS_BY_RULE says and what the fifth tread costs to put right.
+AS_BUILT_CLIMB_STEP_BY_RULE = MISSING_RUNG_TOP - BENCH_RAIL_TOP  # 192
+# X18 - AND THE SAME STEP READ IN THE ROOM RATHER THAN ON THE DRAWING. In BED
+# mode the plate lies across the whole ladder bay, so the foot does not leave
+# 297, it leaves the plate's own top. In TABLE mode the plate lies ON the seat
+# rung, so that rung is not a tread at all and the first one a foot can find is
+# the next one up - climbed from the bench seat, which is where you are
+# standing. Both numbers are the recommendation's own arithmetic and both are
+# printed, because vedlegg B quotes them.
+AS_BUILT_STEP_FROM_PLATE = PANEL_UNDER_TABLE - PANEL_TOP_BED          # 367
+AS_BUILT_STEP_IN_TABLE_MODE = (RUNG_TOPS[RUNG_TOPS.index(PANEL_UNDER_TABLE)
+                               + 1] - BENCH_TOP)                       # 642
+# ...and where the fifth tread's hole would go, measured the way every other
+# hole in the stile is measured: down from the upright's own top.
+MISSING_RUNG_HOLE = UPRIGHT_H - (MISSING_RUNG_TOP - RUNG_T // 2)      # 1406
+assert max(climb_steps) - min(climb_steps) <= MAX_CLIMB_SPREAD or \
+    max(CLIMB_STEPS_LEGAL) - min(CLIMB_STEPS_LEGAL) <= MAX_CLIMB_SPREAD, \
     f"D8/X9: the two flights are {max(climb_steps) - min(climb_steps)} mm " \
     f"apart in pitch - steps {climb_steps}, gate {MAX_CLIMB_SPREAD}"
+CLIMB_SPREAD_AS_BUILT = max(climb_steps) - min(climb_steps)      # 105
+print(f"AVVIK 5  stigen som STÅR har {len(RUNG_TOPS)} trinn, ikke "
+      f"{len(RUNG_TOPS_BY_RULE)}: trinnet på {MISSING_RUNG_TOP} ble tegnet og "
+      f"aldri kappet. Klatresteget {BENCH_RAIL_TOP} → {PANEL_UNDER_TABLE} er "
+      f"{AS_BUILT_CLIMB_STEP} mm mot grensen {MAX_CLIMB_STEP} og mot EN 131s "
+      f"250..300-bånd - {AS_BUILT_CLIMB_STEP - MAX_CLIMB_STEP} mm for langt. "
+      f"Med trinnet i blir det {AS_BUILT_CLIMB_STEP_BY_RULE}+"
+      f"{PANEL_UNDER_TABLE - MISSING_RUNG_TOP}. De tre andre stegene "
+      f"({'/'.join(str(s) for s in CLIMB_STEPS_LEGAL)}) holder. "
+      f"Løpene står {CLIMB_SPREAD_AS_BUILT} mm fra hverandre i stigning "
+      f"(port {MAX_CLIMB_SPREAD}). Målt i rommet: i sengestilling går foten "
+      f"fra platens overside og steget er {AS_BUILT_STEP_FROM_PLATE} mm; i "
+      f"bordstilling ligger platen PÅ støttetrinnet, så første trinn en fot "
+      f"finner er {RUNG_TOPS[RUNG_TOPS.index(PANEL_UNDER_TABLE) + 1]}, "
+      f"{AS_BUILT_STEP_IN_TABLE_MODE} mm over benkeflaten. Det manglende "
+      f"trinnets J4-hull ville stått {MISSING_RUNG_HOLE} mm ned fra "
+      f"stigevangens topp. Se vedlegg B, avvik 5")
 # X9/X16: THE CLIMB IS TWO FLIGHTS, AND EACH ONE IS JUDGED ON ITS OWN. Under
 # X9 the split was at the CROSSING of an empty corridor; under X16 it is at the
 # SEAT - the rung the table plate lands on - and the landing is read back off
@@ -10234,7 +11032,7 @@ print(f"OK  D8: rung tops {'/'.join(str(t) for t in RUNG_TOPS)}; rises "
       + " + ".join(str(s) for s in steps)
       + f" mm from the floor to the {SLAT_Z1} platform - first rise "
       f"{first_rise} = bench rail top, then {min(climb_steps)}..{max(climb_steps)} "
-      f"(limit {MAX_CLIMB_STEP})")
+      f"(limit {MAX_CLIMB_STEP}; the {AS_BUILT_CLIMB_STEP} is avvik 5)")
 print(f"OK  X16 stigen er TO løp som MØTES på støttetrinnet "
       f"(trinn {CLIMB_LANDING + 1}, overkant {PANEL_UNDER_TABLE} = platens "
       f"underkant): "
@@ -10243,8 +11041,9 @@ print(f"OK  X16 stigen er TO løp som MØTES på støttetrinnet "
       + " og ".join(f"{sum(_fl)} mm i {len(_fl)} steg" for _fl in CLIMB_FLIGHTS)
       + f") - hvert løp jevnt til {max(max(_f) - min(_f) for _f in CLIMB_FLIGHTS)}"
       f" mm (grense {MAX_FLIGHT_SPREAD}), løpene "
-      f"{max(climb_steps) - min(climb_steps)} mm fra hverandre (grense "
-      f"{MAX_CLIMB_SPREAD}; X9 hadde 51 mot 60). Ingen ANNEN trinntopp i "
+      f"{CLIMB_SPREAD_AS_BUILT} mm fra hverandre (port "
+      f"{MAX_CLIMB_SPREAD}; X9 hadde 51 mot 60 - X18 har ett steg i det nedre "
+      f"løpet der regelen ville hatt to). Ingen ANNEN trinntopp i "
       f"løftesjakten {TABLE_UNIT_Z0}..{RUNG_ABOVE_TABLE_MIN}")
 
 # D9: the front table ledger must be GONE and the back one's TOP must BE the
@@ -11026,15 +11825,19 @@ TRANSFER_CEILING, TRANSFER_CEILING_WHO = min(
 TRANSFER_FLOOR, TRANSFER_FLOOR_WHO = max(
     (p.extents[2][1], p.label) for p in _corridor
     if p.extents[2][1] <= TRANSFER_CEILING + TOL)
-TRANSFER_SLOT = TRANSFER_CEILING - TRANSFER_FLOOR          # 121  [X16: was
-                                                           # 204; 154; X1: 114]
+TRANSFER_SLOT = TRANSFER_CEILING - TRANSFER_FLOOR          # 294  [X18: the
+                                                           # uncut rung 2 gave
+                                                           # it back; X16: was
+                                                           # 121; 204; 154;
+                                                           # X1: 114]
 PANEL_UNIT_H = PANEL_TOP_BED - BATTEN_Z0_BED               # 86   [X3: 91]
-TRANSFER_CLEAR = TRANSFER_SLOT - PANEL_UNIT_H              # 35   [X16: was
-                                                           # 118; 68; X1: 23]
+TRANSFER_CLEAR = TRANSFER_SLOT - PANEL_UNIT_H              # 208  [X18: was
+                                                           # 35; 118; 68;
+                                                           # X1: 23]
 # The gate. Under 15 mm the unit has to be tipped to get through, and a tipped
 # unit is a two-person move over a bench - that is what the comfort round was
 # opened to get rid of.
-TRANSFER_CLEAR_MIN = 15
+TRANSFER_CLEAR_MIN = 20   # [X18 cm-runding: was 15 - a gate, snapped UP]
 assert TRANSFER_CLEAR >= TRANSFER_CLEAR_MIN, (
     f"K1: the transfer slot is {TRANSFER_SLOT:g} mm ({TRANSFER_FLOOR_WHO} "
     f"{TRANSFER_FLOOR:g} to {TRANSFER_CEILING_WHO} {TRANSFER_CEILING:g}) and "
@@ -11419,9 +12222,15 @@ SLAT_SPAN = ((FRONT_RAIL_Y0 + RAIL_T / 2)
 GUARD_LAP_POST = POST_W - THROUGH_X0                        # 95, onto the post
 GUARD_SPAN = ((LADDER_INNER_L - UPRIGHT_W / 2)
               - (THROUGH_X0 + GUARD_LAP_POST / 2))          # 760.5
-assert SLAT_SPAN == END_SLAT_SPAN + 30, (
-    f"X13: vedlegg A says the end slat's span is 30 mm shorter than the "
-    f"field's; the solids say {SLAT_SPAN:g} against {END_SLAT_SPAN:g}")
+# X18: 30 -> 24. The end slat's front bearing moved off the cheek and onto the
+# post cleat, whose centre is 18 mm further back, and the FIELD's own front
+# bearing is the bench cleat rather than the cheek. Both spans are read off the
+# bearing centres, not off the pieces.
+BENCH_SLAT_SPAN = ((BENCH_LEDGER_Y0 + BENCH_LEDGER_T / 2)
+                   - (BACK_RAIL_Y0 + BENCH_RAIL_T / 2))     # 746
+assert BENCH_SLAT_SPAN == END_SLAT_SPAN + 18, (
+    f"X18: the end slat's span has to be the shorter one; the solids say "
+    f"{BENCH_SLAT_SPAN:g} against {END_SLAT_SPAN:g}")
 
 
 def bending_point(p_kn, span, b, h, fixed=False):
@@ -11809,9 +12618,21 @@ if FASTENERS_ON:
         "V3 lås: in bed mode the two lock faces must be in one Z band"
     _lap = (min(_nose.extents[1][1], _rail.extents[1][1])
             - max(_nose.extents[1][0], _rail.extents[1][0]))
-    assert _lap >= 40.0, (
-        f"V3 lås: the two lock faces overlap over {_lap:g} mm in Y - too "
-        f"little to take a 40 mm strap, a latch or a thumbscrew boss")
+    # X18 - AND THIS IS WHAT THE MOVED CHEEK COST THE LOCK POINT. The wedge
+    # hangs at Y 702..750 and the built cheek stands at 740..788, so the two
+    # faces overlap over CHEEK_TO_LADDER_FOUL mm where they used to share 46.
+    # V4 decided against fitting a lock (avvik 4) and kept this wood as the
+    # retro-fit point; the wood is still there and the OVERLAP is not, so the
+    # three options in laasvalg.png no longer land on it as drawn. Measured,
+    # asserted at the number, and written into vedlegg B avvik 4.
+    LOCK_LAP_WANTED = 40.0
+    assert abs(_lap - CHEEK_TO_LADDER_FOUL) < TOL, (
+        f"X18: the lock faces overlap over {_lap:g} mm in Y and the cheek "
+        f"move accounts for exactly {CHEEK_TO_LADDER_FOUL} - if this is a "
+        f"different number, something else moved")
+    assert _lap < LOCK_LAP_WANTED, (
+        "X18: the lock point has its 40 mm back - avvik 4's X18 paragraph "
+        "goes with this assert")
     _nose_t = next(b for b in PANEL_BATTENS[id(panel_table)]
                    if abs(b.extents[0][0] - PANEL_X0) < TOL)
     assert _nose_t.extents[2][0] >= _rail.extents[2][1] - TOL, (
@@ -11820,13 +12641,17 @@ if FASTENERS_ON:
         "does not exist in the other position")
     print(f"OK  V3 lås: låsepunktet er de to endeflatene i sideklaringen - "
           f"kilelekta ({sec(BATTEN_W, BATTEN_H)}) mot fremre benkevange, "
-          f"{LOCK_GAP} mm fra hverandre, {_lap:g} mm overlapp i dybden og "
+          f"{LOCK_GAP} mm fra hverandre, {_lap:g} mm overlapp i dybden "
+          f"(X18: var 46 - den bygde vangen står 36 mm lenger fram, og "
+          f"{LOCK_LAP_WANTED:g} mm var det de tre løsningene trengte) og "
           f"samme Z-bånd i SENGESTILLING. I bordstilling ligger kilelekta "
           f"{_nose_t.extents[2][0] - _rail.extents[2][1]:.0f} mm over "
           f"vangen, så låsen har ingenting å ta i - den kan ikke stå på i "
           f"feil stilling. V4: INGEN lås monteres (akseptert avvik 4); "
-          f"treverket her er ettermonteringspunktet, og alle tre løsningene "
-          f"i laasvalg.png passer på det uendret")
+          f"treverket her er ettermonteringspunktet - men X18 tok overlappen "
+          f"fra det, så de tre løsningene i laasvalg.png er regnet på et "
+          f"{LOCK_LAP_WANTED:g} mm anlegg og har {_lap:g}. Se vedlegg B, "
+          f"avvik 4")
     print(f"OK  V3 retning: X+ og X- stoppes av de to styrelektene mot "
           f"trinnenden ({PANEL_FIT} mm passing hver vei, {_spread_x:.0f} mm "
           f"fra hverandre, så en dreining om Z kiler den ene), i BEGGE "
@@ -12518,10 +13343,12 @@ assert len(TIMBER_PROFILES) == 5, \
 # the 4 guard segments and the 4 corner posts - the on-edge and the standing
 # members, which is exactly what a 36 mm board is worth paying for.
 # V13: 24 -> 26. The two end slats are the same board, 764 instead of 800.
+# X18: 26 -> 34. The eight guard braces are offcuts of the same slat board,
+# and they are the first thing on it that is not a slat.
 assert by_section[sec(BOARD23_T, BOARD36_W)] == SLAT_COUNT + 2 * (
-        BENCH_SLAT_COUNT + 1) == 26 and \
+        BENCH_SLAT_COUNT + 1) + 2 * GUARD_BRACE_N == 34 and \
     max(by_metres, key=by_metres.get) == sec(BOARD23_T, BOARD36_W), \
-    "V6/V13: 23x98 must be both the most numerous and the longest profile"
+    "V6/V13/X18: 23x98 must be both the most numerous and the longest profile"
 # X14: 10 -> 12. The two footrest cheeks are the sixth thing on this board, and
 # they are on it for the same reason the guards are: 98 mm of depth standing on
 # edge, 36 mm of thickness carrying a 6 mm screw on its own centre line.

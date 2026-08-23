@@ -458,7 +458,8 @@ def draw_depth(sh, M):
 # model only knows its own window - but it is the shelf the window has to be
 # read against, and the note below names the thinnest shelf height that no
 # longer fits rather than asserting one.
-SHELF_MATTRESS_H = (80, 100, 110, 120, 130, 140, 150, 160)
+SHELF_MATTRESS_H = (80, 100, 110, 120, 130, 140, 150, 160, 180,
+                    200)
 
 
 def notes(M):
@@ -548,7 +549,19 @@ def notes(M):
             f"blir over {mm(G.MAX_GUARD_OPENING)}; tykkere enn "
             f"{mm(G.MATTRESS_H_MAX)} og den faller ned i klemvinduet under "
             f"{mm(G.EN_LIMB_BAND[0])}. Vinduet er trangt: allerede en vanlig "
-            f"{mm(too_thick)} mm madrass er ulovlig her, og alt over den også.",
+            f"{mm(too_thick)} mm madrass er ulovlig her, og alt over den "
+            f"også.",
+            # X18: og dette arket tegner den BYGDE sengen, der rekkverket
+            # står 65 mm høyere enn tegnet. Vinduet flyttet seg med bordet;
+            # madrassen gjorde det ikke.
+            f"SOM BYGGET: nederste rekkverksbord står "
+            f"{mm(G.AS_BUILT_GUARD_RISE)} mm over madrasstoppen, ikke "
+            f"{mm(G.MATTRESS_H_WINDOW_DRAWN[0] + G.MAX_GUARD_OPENING - G.MATTRESS_H)}"
+            f", så åpningen er {mm(G.AS_BUILT_MATTRESS_GAP)} mm mot grensen "
+            f"{mm(G.MAX_GUARD_OPENING)} — {mm(G.AS_BUILT_GAP_OVER)} mm for "
+            f"mye, og ingen avstivere i det båndet. Madrassen på senga er "
+            f"{mm(G.MATTRESS_H)} mm og vinduet over krever "
+            f"{mm(G.MATTRESS_H_MIN)}. Se vedlegg B, avvik 6.",
         ]),
         ("BENKEN, PUTENE OG DEN LØSE PLATEN", [
             f"Benkeflaten ligger på Z {mm(bench)} og puteoversiden på "

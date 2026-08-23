@@ -3091,6 +3091,10 @@ COINCIDENT_MARKS = {
                         "24 mm fra hverandre i Z og hodene er 23,4 mm"),
     (5, "J8"): (2, 1, "fremre benkevangeende → fremre stolpe: samme par, "
                       "samme 24 mm, sett omtrent rett forfra"),
+    # X18: og det samme paret en tredje gang, en etasje opp. J12 mistet
+    # vinkelbeslaget sitt og er nå den samme skråskrueenden som J8-B.
+    (1, "J12"): (2, 1, "bordbærelektas ende → bakre stolpe: samme par, "
+                       "samme 24 mm i Z, samme 23,4 mm hoder"),
 }
 
 
@@ -3170,6 +3174,9 @@ def assert_joint_marks_drawn(page, st, marks):
 # away. A seed and a radius cannot do that: a badge is never further from the
 # body it stands for than the radius the rule is written with.
 CLUSTER_R_BADGES = 16.0        # cluster radius, in badge radii
+FAMILY_R_BADGES = 11.0         # X18: how far one badge may STAND FOR, same
+                               # unit - the cluster radius less the room the
+                               # badge itself is allowed to step aside into
 
 
 def caption_clusters(captions, radius):
@@ -3267,6 +3274,16 @@ def reach_runs(fam, radius):
     it, and one letter for both would have left the second corner's bracket
     bare with its badge most of a page away.
     """
+    # X18 - AND THE RADIUS THE FAMILY IS GATHERED WITH IS NOT THE ONE THE
+    # PROMISE IS MEASURED WITH. The promise is about the BADGE, and a badge
+    # does not sit on its seed: it is placed clear of the line work, up to a
+    # leader's length off it. Gather the family at the full cluster radius and
+    # the badge starts outside its own guarantee the moment it steps aside -
+    # which is exactly what step 5 did the day the bench grew a slat ledger and
+    # ten identical 5x60 landed in one place. So the family is gathered at the
+    # cluster radius LESS the room a badge is allowed to step, and the two
+    # numbers are written down separately instead of being the same one twice.
+    reach = radius * FAMILY_R_BADGES / CLUSTER_R_BADGES
     left = list(fam)
     out = []
     while left:
@@ -3275,7 +3292,7 @@ def reach_runs(fam, radius):
         for c in left:
             if (seed["body"] is not None and c["body"] is not None
                     and _seg_seg_dist(seed["body"][0], seed["body"][1],
-                                      c["body"][0], c["body"][1]) <= radius):
+                                      c["body"][0], c["body"][1]) <= reach):
                 grp.append(c)
             else:
                 rest.append(c)

@@ -506,14 +506,14 @@ def rejected(G):
                       if all(a["cc"] is None for a in pl["axes"])
                       and pl["jid"] not in ("J4", "J13a")})
     return [
-        f"J4 stigevangen: {nb(span, 0)} mm mellom ytterhullene. Målestokk i "
-        f"tre, ikke fire teipede A4.",
+        f"J4 stigevangen: {nb(span, 0)} mm mellom ytterhullene — "
+        f"målestokk, ikke teipede A4.",
         f"J13a lektene: jevn c/c {nb(cc13, 0)} mm, toleranse i centimeter. "
         f"Blyant og målebånd.",
-        f"Ledd med ett hull i raden ({len(singles)} av dem): ett hull har "
-        f"ingen innbyrdes avstand.",
-        "J14/J12-V veggfestene: stenderne finnes bare i rommet, og har "
-        "ingen X-mål.",
+        f"Ett hull i raden ({len(singles)} ledd): ingen innbyrdes avstand.",
+        "J14/J12-V: stenderne finnes bare i rommet, uten X-mål.",
+        # X18: J8 og J12 mistet omlegget sitt og beslaget sitt og ble
+        # skråskrueender - de SAMME skråskrueendene som J8-B.
     ]
 
 
@@ -816,8 +816,7 @@ SHEET1 = [
     ("J2", 79.5, 123.0, {}),
     ("J3", 137.0, 123.0, {"align": 10.0}),
     ("J1", 157.0, 123.0, {"mirror": True}),
-    ("J8", 23.0, 196.0, {}),
-    ("J17", 80.5, 196.0, {"whole": True}),
+    ("J17", 23.0, 196.0, {"whole": True}),
     ("J2-B", 23.0, 240.0, {"mirror": True}),
 ]
 def sheet1_note(p):

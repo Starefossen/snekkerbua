@@ -86,7 +86,7 @@
   </style>
   <rect x="0" y="0" width="210" height="297" fill="#ffffff"/>
   <text x="23" y="15.5" class="head" text-anchor="start">1:1 — DETTE ARKET ER ET MÅL</text>
-  <text x="23" y="20" class="sect" text-anchor="start">ARK 1 · RAMMELEDDENE — sju mønstre å klippe ut og legge på treet</text>
+  <text x="23" y="20" class="sect" text-anchor="start">ARK 1 · RAMMELEDDENE — seks mønstre å klippe ut og legge på treet</text>
   <text x="23" y="24.8" class="body" text-anchor="start">Skriv ut på A4 i 100 % — i Acrobat «Faktisk størrelse»; slå AV «Tilpass» og «Krymp til utskriftsområde». ENKELTSIDIG: arket skal klippes opp.</text>
   <text x="23" y="28" class="body" text-anchor="start">MÅL BEGGE LINJALENE MED STÅLMÅL FØR DU KLIPPER — en skriver kan treffe den ene retningen og bomme den andre. Avvik over 1 mm på én av dem:</text>
   <text x="23" y="31.2" class="body" text-anchor="start">kast arket. Den loddrette er 250 mm: 0,4 % matretningsfeil viser seg der som 1 mm. Den vannrette er 190 mm — det lengste et A4 kan bære.</text>
@@ -252,53 +252,30 @@
   <text x="161.4" y="117.5" class="fig" text-anchor="middle" transform="rotate(-90 161.4 117.5)">MOT OVERKANTEN</text>
   <text x="157" y="48.6" class="nm" text-anchor="start">J1 · ENDEBJELKE</text>
   <text x="157" y="51.4" class="nm2" text-anchor="start">36×98 × 836 · innersiden · ⌀6</text>
-  <line x1="22.4" y1="196" x2="76.5" y2="196" class="fold"/>
-  <line x1="22.4" y1="205" x2="76.5" y2="205" class="edge"/>
-  <line x1="23" y1="144" x2="23" y2="205" class="knife"/>
-  <polyline points="23,144 27.115,144.8 31.231,143.2 35.346,144.8 39.462,143.2 43.577,144.8 47.692,143.2 51.808,144.8 55.923,143.2 60.038,144.8 64.154,143.2 68.269,144.8 72.385,143.2 76.5,144" class="edge"/>
-  <polyline points="76.5,144 75.7,148.067 77.3,152.133 75.7,156.2 77.3,160.267 75.7,164.333 77.3,168.4 75.7,172.467 77.3,176.533 75.7,180.6 77.3,184.667 75.7,188.733 77.3,192.8 75.7,196.867 77.3,200.933 76.5,205" class="edge"/>
-  <circle cx="70.5" cy="174" r="3" class="ring"/>
-  <line x1="74.3" y1="174" x2="76.1" y2="174" class="tk"/>
-  <line x1="66.7" y1="174" x2="64.9" y2="174" class="tk"/>
-  <line x1="70.5" y1="177.8" x2="70.5" y2="179.6" class="tk"/>
-  <line x1="70.5" y1="170.2" x2="70.5" y2="168.4" class="tk"/>
-  <circle cx="70.5" cy="150" r="3" class="ring"/>
-  <line x1="74.3" y1="150" x2="76.1" y2="150" class="tk"/>
-  <line x1="66.7" y1="150" x2="64.9" y2="150" class="tk"/>
-  <line x1="70.5" y1="153.8" x2="70.5" y2="155.6" class="tk"/>
-  <line x1="70.5" y1="146.2" x2="70.5" y2="144.4" class="tk"/>
-  <text x="29.8" y="185.8" class="figb" text-anchor="start">22</text>
-  <text x="46.75" y="148.4" class="figb" text-anchor="middle">47,5</text>
-  <text x="74.9" y="162" class="fig" text-anchor="end">c/c 24</text>
+  <line x1="22.4" y1="196" x2="121" y2="196" class="fold"/>
+  <line x1="22.4" y1="205" x2="121" y2="205" class="edge"/>
+  <line x1="23" y1="148" x2="23" y2="205" class="knife"/>
+  <line x1="121" y1="148" x2="121" y2="205" class="knife"/>
+  <text x="119.6" y="157" class="fig" text-anchor="middle" transform="rotate(-90 119.6 157)">ANDRE ENDEN</text>
+  <line x1="23" y1="148" x2="121" y2="148" class="edge"/>
+  <circle cx="45.5" cy="180" r="1.75" class="ring"/>
+  <line x1="48.05" y1="180" x2="49.85" y2="180" class="tk"/>
+  <line x1="42.95" y1="180" x2="41.15" y2="180" class="tk"/>
+  <line x1="45.5" y1="182.55" x2="45.5" y2="184.35" class="tk"/>
+  <line x1="45.5" y1="177.45" x2="45.5" y2="175.65" class="tk"/>
+  <circle cx="98.5" cy="180" r="1.75" class="ring"/>
+  <line x1="101.05" y1="180" x2="102.85" y2="180" class="tk"/>
+  <line x1="95.95" y1="180" x2="94.15" y2="180" class="tk"/>
+  <line x1="98.5" y1="182.55" x2="98.5" y2="184.35" class="tk"/>
+  <line x1="98.5" y1="177.45" x2="98.5" y2="175.65" class="tk"/>
+  <text x="29.8" y="188.8" class="figb" text-anchor="start">16</text>
+  <text x="34.25" y="178.4" class="figb" text-anchor="middle">22,5</text>
+  <text x="72" y="151" class="fig" text-anchor="middle">c/c 53</text>
   <line x1="25" y1="194" x2="25" y2="187" class="tk"/>
   <polyline points="23.8,189.2 25,186.6 26.2,189.2" class="tk"/>
   <text x="27.4" y="190.5" class="fig" text-anchor="middle" transform="rotate(-90 27.4 190.5)">MOT OVERKANTEN</text>
-  <text x="23" y="138.6" class="nm" text-anchor="start">J8 · FREMRE BENKEVANGE</text>
-  <text x="23" y="141.4" class="nm2" text-anchor="start">48×68 × 642 · baksiden · ⌀6</text>
-  <line x1="79.9" y1="196" x2="178.5" y2="196" class="fold"/>
-  <line x1="79.9" y1="205" x2="178.5" y2="205" class="edge"/>
-  <line x1="80.5" y1="148" x2="80.5" y2="205" class="knife"/>
-  <line x1="178.5" y1="148" x2="178.5" y2="205" class="knife"/>
-  <text x="177.1" y="157" class="fig" text-anchor="middle" transform="rotate(-90 177.1 157)">ANDRE ENDEN</text>
-  <line x1="80.5" y1="148" x2="178.5" y2="148" class="edge"/>
-  <circle cx="103" cy="180" r="1.75" class="ring"/>
-  <line x1="105.55" y1="180" x2="107.35" y2="180" class="tk"/>
-  <line x1="100.45" y1="180" x2="98.65" y2="180" class="tk"/>
-  <line x1="103" y1="182.55" x2="103" y2="184.35" class="tk"/>
-  <line x1="103" y1="177.45" x2="103" y2="175.65" class="tk"/>
-  <circle cx="156" cy="180" r="1.75" class="ring"/>
-  <line x1="158.55" y1="180" x2="160.35" y2="180" class="tk"/>
-  <line x1="153.45" y1="180" x2="151.65" y2="180" class="tk"/>
-  <line x1="156" y1="182.55" x2="156" y2="184.35" class="tk"/>
-  <line x1="156" y1="177.45" x2="156" y2="175.65" class="tk"/>
-  <text x="87.3" y="188.8" class="figb" text-anchor="start">16</text>
-  <text x="91.75" y="178.4" class="figb" text-anchor="middle">22,5</text>
-  <text x="129.5" y="151" class="fig" text-anchor="middle">c/c 53</text>
-  <line x1="82.5" y1="194" x2="82.5" y2="187" class="tk"/>
-  <polyline points="81.3,189.2 82.5,186.6 83.7,189.2" class="tk"/>
-  <text x="84.9" y="190.5" class="fig" text-anchor="middle" transform="rotate(-90 84.9 190.5)">MOT OVERKANTEN</text>
-  <text x="80.5" y="142.6" class="nm" text-anchor="start">J17 · ENDELIST</text>
-  <text x="80.5" y="145.4" class="nm2" text-anchor="start">36×48 × 98 · forsiden · ⌀3,5</text>
+  <text x="23" y="142.6" class="nm" text-anchor="start">J17 · ENDELIST</text>
+  <text x="23" y="145.4" class="nm2" text-anchor="start">36×48 × 98 · forsiden · ⌀3,5</text>
   <line x1="22.4" y1="240" x2="136" y2="240" class="fold"/>
   <line x1="22.4" y1="249" x2="136" y2="249" class="edge"/>
   <line x1="23" y1="216" x2="23" y2="249" class="knife"/>
@@ -345,10 +322,10 @@
   <text x="23" y="266" class="note" text-anchor="start">5 Prikk med syl gjennom ringen — ringen sentrerer, et kryss ikke.</text>
   <text x="23" y="268.6" class="note" text-anchor="start">6 TA AV PAPIRET, og bor på prikken. Papir under boret river seg.</text>
   <text x="109" y="252" class="sect" text-anchor="start">IKKE SJABLONG — OG HVORFOR</text>
-  <text x="109" y="255.6" class="note" text-anchor="start">J4 stigevangen: 945 mm mellom ytterhullene. Målestokk i tre, ikke fire teipede A4.</text>
+  <text x="109" y="255.6" class="note" text-anchor="start">J4 stigevangen: 945 mm mellom ytterhullene — målestokk, ikke teipede A4.</text>
   <text x="109" y="258.2" class="note" text-anchor="start">J13a lektene: jevn c/c 141 mm, toleranse i centimeter. Blyant og målebånd.</text>
-  <text x="109" y="260.8" class="note" text-anchor="start">Ledd med ett hull i raden (8 av dem): ett hull har ingen innbyrdes avstand.</text>
-  <text x="109" y="263.4" class="note" text-anchor="start">J14/J12-V veggfestene: stenderne finnes bare i rommet, og har ingen X-mål.</text>
+  <text x="109" y="260.8" class="note" text-anchor="start">Ett hull i raden (8 ledd): ingen innbyrdes avstand.</text>
+  <text x="109" y="263.4" class="note" text-anchor="start">J14/J12-V: stenderne finnes bare i rommet, uten X-mål.</text>
   <text x="109" y="267.2" class="note" text-anchor="start">Hvert mål på arket er lest ut av generate_loftbed.py (FASTENER_PLACEMENTS). Tegnet</text>
   <text x="109" y="269.8" class="note" text-anchor="start">av tools/render_boresjablong.py → docs/schematics/boresjablong-ramme.svg — rediger</text>
   <text x="109" y="272.4" class="note" text-anchor="start">ikke for hånd.</text>

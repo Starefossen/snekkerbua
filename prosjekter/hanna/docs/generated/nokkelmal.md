@@ -32,26 +32,24 @@ En 1990 mm lang del lar seg ikke svinge inn i en 1990 mm åpning. Derfor er hver
 | **315** | platens overside i sengestilling |
 | **320** | benkeoverflate (sittehøyde uten pute) |
 | **420** | **puteoverflate — nedre soveflate og sittehøyde med pute** (V13) |
-| **489** | trinn 2 |
 | **614** | bordbærelektas underkant |
 | **634** | støttetrinnets underkant |
-| **682** | bordbærelektas og STØTTETRINNETS overkant = platens underside i bordstilling (X16: et trinn igjen; X9 hadde to bordklosser her) = trinn 3 |
+| **682** | trinn 2 = bordbærelektas og STØTTETRINNETS overkant = platens underside i bordstilling (X16: et trinn igjen; X9 hadde to bordklosser her) |
 | **700** | **bordplate — pulthøyde** (X9) |
 | **752** | ryggputens topp i sofastilling (V13) |
-| **962** | trinn 4 |
-| **1242** | trinn 5 |
+| **962** | trinn 3 |
+| **1242** | trinn 4 |
 | **1304** | endebjelkens underkant |
 | **1402** | **bakre stolpetopp** = endebjelkens overkant = sidevangens underkant (fri høyde under sengen) |
 | **1500** | sidevangens overkant |
 | **1523** | spilebunn / madrassens underside |
-| **1643** | madrassens overside (ved 120 mm madrass; lovlig band 110–125) |
-| **1708** | rekkverk, nedre bånd underkant |
-| **1806** | rekkverk, nedre bånd overkant |
-| **1881** | rekkverk, øvre bånd underkant |
-| **1979** | rekkverk, øvre bånd overkant |
-| **2037** | fremre stolpetopp |
+| **1643** | madrassens overside (ved 120 mm madrass; lovlig band 175–190) |
+| **1773** | rekkverk, nedre bånd underkant |
+| **1871** | rekkverk, nedre bånd overkant |
+| **1939** | rekkverk, øvre bånd underkant |
+| **2037** | rekkverk, øvre bånd overkant = fremre stolpetopp |
 
-Stigningen fra gulv til spilebunn: 297 + 192 + 193 + 280 + 280 + 281 mm. Første stigning er benkevangens høyde — det er en avsats du trår opp på, ikke et klatretrinn. De 5 klatretrinnene er 192–281 mm.
+Stigningen fra gulv til spilebunn: 297 + 385 + 280 + 280 + 281 mm. Første stigning er benkevangens høyde — det er en avsats du trår opp på, ikke et klatretrinn. De 4 klatretrinnene er 280–385 mm.
 
 ## Dybdeplan (Y)
 
@@ -75,7 +73,7 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | Stigens senterlinje | 995 |
 | Stigevanger | 787..835 og 1155..1203 |
 | Fri åpning mellom stigevangene | **320** |
-| Trinn (5 stk.) | 835..1155, 320 mm lange |
+| Trinn (4 stk.) | 835..1155, 320 mm lange |
 | Stigeklosser | 835..871 og 1119..1155 |
 | Rekkverksbord | 3..835 og 1155..1987 |
 | Klatreåpning i begge rekkverksbånd | **320** |
@@ -100,7 +98,7 @@ Fri bredde mellom de to sidevangene: **704**. Spilebunnen fra vange til vange: *
 | — | **581–649 mm** | **forbudt** — klaringer 25,5–59,5 mm, midt i klembåndet |
 | — | **677–689 mm** | **forbudt** — klaringer 5,5–11,5 mm, midt i klembåndet |
 
-Bredden deltar **ikke** i begrensningene på stillingsbyttet — det er høyden og dybden på plateenheten som møter overføringssjakten (121 mm fri høyde mot en 86 mm høy enhet). Å smalne platen gir mer slingring ved innsettingen og mindre bordflate, ingenting annet. Modellen asserter vinduene: en «bare litt smalere»-endring stopper byggeporten med akkurat denne tabellen.
+Bredden deltar **ikke** i begrensningene på stillingsbyttet — det er høyden og dybden på plateenheten som møter overføringssjakten (294 mm fri høyde mot en 86 mm høy enhet). Å smalne platen gir mer slingring ved innsettingen og mindre bordflate, ingenting annet. Modellen asserter vinduene: en «bare litt smalere»-endring stopper byggeporten med akkurat denne tabellen.
 
 **Køyespiler:** 14 stk., første spile starter på X 20, deling 142,46 mm, siste spile slutter på X 1970. Åpning mellom spilene 44,46 mm.
 
@@ -116,7 +114,7 @@ Ingen bolt går inn i en stolpe. Stolpen er 36 mm tykk, og på den tykkelsen har
 |---|---:|---|---|---:|---|
 | J1 — endebjelke 36×98 | 2 per ledd | **1323** og **1367** | 19 / 35 | 44 | Y -30 og 770 (midt i stolpedybden) |
 | J2 — sidevange 48×98 | 2 per ledd | **1429** og **1473** | 27 / 27 | 44 | X 50,5 fra hver vegg |
-| J8 — benkevange 48×68 | 2 per ledd | **251** og **275** | 22 / 22 | 24 | X 50,5 fra hver vegg |
+| J8 — benkevange 48×68 | 2 per ledd | **253** og **277** | 24 / 20 | 24 | X 119,87 fra hver vegg |
 
 Minstekrav for en forboret 6 mm treskrue: kantavstand 18 mm (3d), avstand mellom to skruer langs fiberretningen 30 mm (5d). Alle radene over holder kravet.
 
@@ -129,8 +127,8 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 | | Mål |
 |---|---|
 | Madrass, overkøye | **standard 80 × 200 cm.** Sengen er dimensjonert rundt den; liggeflaten er 1990 × 800 mm, så madrassen presses de siste 10 mm inn mellom veggene og fyller bredden nøyaktig |
-| **Madrasstykkelse** | **110–125 mm — kjøp 120 mm.** Åpningen fra madrassens overside opp til nedre rekkverksbånd skal ligge i EN 747-båndet 60–75 mm. Tynnere enn 110 og åpningen blir større enn 75; **tykkere enn 125 og den faller ned i klemvinduet under 60 mm**. Hyllevarene over vinduet — 140, 150, 160 mm — er altså ULOVLIGE her, og det er ikke en detalj: det er den ene tingen ved denne sengen du må huske i butikken. Modellen tegner 120 mm, som gir 65 mm — midt i båndet |
-| **Maks madrasstykkelse merkes på sengen** | 125 mm. EN 747 krever at maksmålet står permanent på sengen. Merk linja 1648 mm over gulvet — 125 mm over spilene — på innsiden av en fremre stolpe (steg 11) |
+| **Madrasstykkelse** | **175–190 mm — kjøp 120 mm.** Åpningen fra madrassens overside opp til nedre rekkverksbånd skal ligge i EN 747-båndet 60–75 mm. Tynnere enn 175 og åpningen blir større enn 75; **tykkere enn 190 og den faller ned i klemvinduet under 60 mm**. Hyllevarene over vinduet —  mm — er altså ULOVLIGE her, og det er ikke en detalj: det er den ene tingen ved denne sengen du må huske i butikken. Modellen tegner 120 mm, som gir 130 mm — midt i båndet |
+| **Maks madrasstykkelse merkes på sengen** | 190 mm. EN 747 krever at maksmålet står permanent på sengen. Merk linja 1713 mm over gulvet — 190 mm over spilene — på innsiden av en fremre stolpe (steg 11) |
 | Madrassens sideveis vandring | ingen — madrassen fyller hele bredden mellom veggen og de fremre stolpene |
 | **Soveflate, underetasjen** | **1990 × 800 mm** — samme lengde som overkøyen. De to bakre hjørnestolpene står i flaten og tar et 98 × 36 mm hjørne i hver ende; ellers er den hel |
 | **Puter, tykkelse** | **100 mm, alle fire.** Lik tykkelse er hele poenget: fire like tykke puter er én seng. Sittehøyden blir 320 + 100 = **420 mm** |
@@ -140,7 +138,7 @@ Endeavstanden fra vangens ende inn til J2- og J8-skruen er 47,5 mm, godt over mi
 | Regnestykket | 663 + 332 + 332 + 663 = **1990 mm**. 1990 deler seg ikke på 6, så tredelen er rundet ned og sjettedelen opp — summen er eksakt, og det er summen som må stemme |
 | Alle fire av én skumplate | 80 × 200 cm dekker dem: 800 mm er nøyaktig dybden og 2000 mm er 10 mm mer enn lengden. Fire tverrkapp |
 | Midtsonen ligger | 5 mm lavere enn benkene (415 mot 420 mm). Putene er like tykke likevel — skummet tar de 5 millimeterne, og ingen puteskjøt ligger på en sonegrense |
-| Hodehøyde over nedre soveflate | 1080 mm til køyespilene (982 mm under sidevangene) — men det er høyden i det ÅPNE feltet. Målt på kroppene over hele soveflatens fotavtrykk er laveste faste del «Ladder Rung_2» på 21 mm, og over putestripa langs veggen er det «Table Ledger Back» på 194 mm |
+| Hodehøyde over nedre soveflate | 1080 mm til køyespilene (982 mm under sidevangene) — men det er høyden i det ÅPNE feltet. Målt på kroppene over hele soveflatens fotavtrykk er laveste faste del «Table Ledger Back» på 194 mm, og over putestripa langs veggen er det «Table Ledger Back» på 194 mm |
 | Ryggpute i sofastilling | står på høykant ytterst på hver benk: 100 mm tykk, 800 mm dyp, 332 mm høy, topp 752 mm. Ryggen mot bordbærelekta |
 
 ## Kasserommet under benkene
@@ -173,21 +171,21 @@ Modellen har fire *referansekropper*: et barn på **1200 mm** (EN 747 åpner ove
 | Fotbrettets plass | X 787..1203 × Y 216..488 × Z 0..146 — bukta mellom de to gangpassasjene, løs, under platen i begge stillinger (151 mm / 536 mm luft) |
 | Låret på puta | barnet står 12.7 mm ned i skummet — samme dybde som rumpa selv (12.7 mm), og puta bærer låret helt ut til sin egen kant på X 663 |
 | **Fri høyde over ansiktet, nede** | **902 mm** til køyespilene |
-| Over den som ligger i køya | ingenting — køya er åpen oppover. Rekkverket står 93 mm over kroppens høyeste punkt og 158 mm over ansiktet |
+| Over den som ligger i køya | ingenting — køya er åpen oppover. Rekkverket står 151 mm over kroppens høyeste punkt og 216 mm over ansiktet |
 | Madrass igjen bak føttene | 588 mm av 1990 — plassen å vokse i |
 
 ## Sikkerhetsmål (EN 747)
 
 | | Mål | Krav |
 |---|---:|---:|
-| Madrassoverside → nedre rekkverksbånd | 65 | ≤ 5 eller 60–75 |
-| Mellom de to rekkverksbåndene | 75 | ≤ 5 eller 60–75 |
+| Madrassoverside → nedre rekkverksbånd | 130 | ≤ 5 eller 60–75 |
+| Mellom de to rekkverksbåndene | 68 | ≤ 5 eller 60–75 |
 | Klatreåpningens bredde | 320 | 300–400 |
-| Rekkverkets høyde over madrassen | 336 | ≥ 160 |
+| Rekkverkets høyde over madrassen | 394 | ≥ 160 |
 | Åpning mellom madrass og vegg (verste stilling) | 0 | ≤ 75 |
 | Fri klatreåpning i stigen | 320 | ≥ 300 |
-| Største klatretrinn | 281 | ≤ 281 |
+| Største klatretrinn | 385 | ≤ 281 |
 | Hodehøyde over nedre soveflate | 1080 | ≥ 900 (én sittehøyde) |
-| — laveste faste del over soveflaten (målt) | 21 (Ladder Rung_2) | ingen grense — det er stigen |
+| — laveste faste del over soveflaten (målt) | 194 (Table Ledger Back) | ingen grense — det er stigen |
 | — over putestripa ved veggen (målt) | 194 (Table Ledger Back) | ingen grense — lekta er permanent |
 | Hodehøyde over øvre madrass | 807 | ≥ 750 (køya er sovesone) |

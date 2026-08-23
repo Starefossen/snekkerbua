@@ -12,10 +12,10 @@ Romdelene kappes for lange og finkappes i rommet — se [kapplista](kappliste.md
 | Dimensjon | Kjøp | Svinn |
 |---|---|---:|
 | **18 mm plate, 574 bred** | 1 plate 18 mm kryssfiner furu, minst 574 × 798 mm. **Legg dekkfineren langs de 574 mm** (sengens lengderetning): platas styrende arkrad spenner den veien. Det er en MARGIN og ikke lenger et krav — raden holder 0,69 også snudd — men det koster ingenting, så legg den riktig vei. Se X16 | — |
-| **23×98** | **5 stk. 4,8 m** | 14 % |
-| **36×48** | **1 stk. 4,8 m** | 2 % |
+| **23×98** | **5 stk. 4,8 m** | 9 % |
+| **36×48** | **2 stk. 4,8 m** | 42 % |
 | **36×98** | **3 stk. 4,8 m** | 13 % |
-| **48×68** | **3 stk. 4,8 m** | 20 % |
+| **48×68** | **3 stk. 4,8 m** | 23 % |
 | **48×98** | **1 stk. 4,2 m** | 5 % |
 
 ## Kappeplan, bord for bord
@@ -26,42 +26,43 @@ Romdelene kappes for lange og finkappes i rommet — se [kapplista](kappliste.md
 
 ### 23×98
 
-Kjøpt 24,00 m, brukt 20,73 m, svinn 14 %.
+Kjøpt 24,00 m, brukt 21,75 m, svinn 9 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 5 × 800 (Benkespile) + 1 × 764 (Endespile) | 16 |
-| 2 | 4800 | 5 × 800 (Benkespile) + 1 × 764 (Endespile) | 16 |
-| 3 | 4800 | 5 × 800 (Køyespile) | 784 |
-| 4 | 4800 | 5 × 800 (Køyespile) | 784 |
+| 1 | 4800 | 5 × 800 (Køyespile) + 5 × 128 (Rekkverksavstiver) | 124 |
+| 2 | 4800 | 5 × 800 (Køyespile) + 3 × 128 (Rekkverksavstiver) | 388 |
+| 3 | 4800 | 5 × 800 (Benkespile) + 1 × 764 (Endespile) | 16 |
+| 4 | 4800 | 5 × 800 (Benkespile) + 1 × 764 (Endespile) | 16 |
 | 5 | 4800 | 4 × 800 (Køyespile) | 1588 |
 
 ### 36×48
 
-Kjøpt 4,80 m, brukt 4,68 m, svinn 2 %.
+Kjøpt 9,60 m, brukt 5,60 m, svinn 42 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 2 × 98 + 10 (Endelist) + 10 × 36 (Stigekloss) + 2 × 2037 + 15 (Stigevange) | 68 |
+| 1 | 4800 | 1 × 547 (Benkespileledd) + 8 × 36 (Stigekloss) | 3933 |
+| 2 | 4800 | 1 × 547 (Benkespileledd) + 2 × 98 + 10 (Endelist) + 2 × 98 + 10 (Endelist, fremre) + 2 × 1871 + 20 (Stigevange) | 15 |
 
 ### 36×98
 
-Kjøpt 14,40 m, brukt 12,52 m, svinn 13 %.
+Kjøpt 14,40 m, brukt 12,54 m, svinn 13 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 2 × 272 (Fotbrettgavl) + 2 × 2037 + 15 (Hjørnestolpe, front) | 140 |
-| 2 | 4800 | 2 × 1402 + 15 (Hjørnestolpe, bak (veggside)) + 2 × 832 + 10 (Rekkverksbord, front) | 270 |
+| 1 | 4800 | 2 × 272 (Fotbrettgavl) + 2 × 2037 + 20 (Hjørnestolpe, front) | 130 |
+| 2 | 4800 | 2 × 1402 + 20 (Hjørnestolpe, bak (veggside)) + 2 × 832 + 10 (Rekkverksbord, front) | 260 |
 | 3 | 4800 | 2 × 836 (Endebjelke) + 2 × 832 + 10 (Rekkverksbord, front) | 1432 |
 
 ### 48×68
 
-Kjøpt 14,40 m, brukt 11,59 m, svinn 20 %.
+Kjøpt 14,40 m, brukt 11,08 m, svinn 23 %.
 
 | Bord | Kjøpelengde | Kappes til | Rest |
 |---:|---:|---|---:|
-| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 2 × 642 + 10 (Benkevange, front (bit)) + 3 × 416 (Fotbrettbord) + 2 × 77 (Kilelekt under platens forkant (skråkappet)) + 4 × 320 (Rungetrinn) | 20 |
-| 2 | 4800 | 1 × 320 (Rungetrinn) + 4 × 229 + 15 (Stubbefot) + 2 × 200 (Vinkelkloss 25° (J8-B)) + 2 × 200 (Vinkelkloss 30° (J10)) | 2672 |
+| 1 | 4800 | 1 × 750 (Avstivningslekt under plate) + 2 × 547 (Benkevange, front (bit)) + 3 × 416 (Fotbrettbord) + 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 4 × 320 (Rungetrinn) + 1 × 229 + 20 (Stubbefot) | 58 |
+| 2 | 4800 | 1 × 77 (Kilelekt under platens forkant (skråkappet)) + 3 × 229 + 20 (Stubbefot) + 2 × 200 (Vinkelkloss 25° (J8-B)) + 2 × 200 (Vinkelkloss 30° (J10)) | 3148 |
 | 3 | 4800 | 1 × 750 (Avstivningslekt under plate) + 1 × 1794 (Benkevange, bak (gjennomgående)) + 1 × 1794 (Bordbærelekt, bak) + 1 × 416 (Fotbrettbord) | 34 |
 
 Hjelpedelene på denne dimensjonen — 2 × 200 mm (Vinkelkloss 25° (J8-B)) + 2 × 200 mm (Vinkelkloss 30° (J10)), til sammen 812 mm med sagsnitt — står i kappeplanen over. De er ikke deler i senga, men de er virke du må sage, og da er de kjøpt inn som alt annet. Se [kapplista](kappliste.md).
@@ -80,7 +81,7 @@ Ikke trelast, men det står på samme handletur. Skum kjøpes som plate eller so
 
 | Hva | Mål | Ant. | Merknad |
 |---|---|---:|---|
-| Madrass, overkøye | 80 × 200 cm, **120 mm tykk** | 1 | Vindu 110–125 mm. Hyllevarene over vinduet — 140, 150, 160 mm — er ULOVLIGE her. Se nøkkelmål |
+| Madrass, overkøye | 80 × 200 cm, **120 mm tykk** | 1 | Vindu 175–190 mm. Hyllevarene over vinduet —  mm — er ULOVLIGE her. Se nøkkelmål |
 | **Benkepute**, underetasjen | **663 × 800 × 100 mm** | 2 | Hakk 98 × 36 mm i veggkanten, der den bakre hjørnestolpen står |
 | **Ryggpute**, underetasjen | **332 × 800 × 100 mm** | 2 | Rene rektangler |
 | Trekk | — | 5 | Skum uten trekk smuldrer. Regn det som en egen post |

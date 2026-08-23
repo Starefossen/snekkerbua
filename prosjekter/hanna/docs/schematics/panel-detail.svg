@@ -255,7 +255,7 @@
   <polyline points="1990,498 2003,450" class="ldr" marker-end="url(#aE)"/>
 
   <!-- stoettetrinnet: tekstblokk i det frie feltet mellom de to stillingene -->
-  <text x="2260" y="480" class="lbl" text-anchor="start">STØTTETRINNET – trinn 3, ok 682</text>
+  <text x="2260" y="480" class="lbl" text-anchor="start">STØTTETRINNET – trinn 2, ok 682</text>
   <text x="2260" y="516" class="sml" text-anchor="start">Forkanten hviler på et RUNGETRINN her, ikke på påskrudde</text>
   <text x="2260" y="548" class="sml" text-anchor="start">klosser: 48×68 × 320, X 835–1155, Y 720–788, Z 634–682 –</text>
   <text x="2260" y="580" class="sml" text-anchor="start">samme profil, samme plan og samme J4 som trinn 1 nede.</text>
@@ -291,7 +291,7 @@
   <text x="3097" y="340" class="dm" text-anchor="start">18</text>
   <text x="3145" y="340" class="sml" text-anchor="start">ok 700 = pulthøyde</text>
   <text x="3145" y="372" class="sml" text-anchor="start">uk 682 = ok bordbærelekt</text>
-  <text x="3145" y="404" class="sml" text-anchor="start">= ok støttetrinn (trinn 3)</text>
+  <text x="3145" y="404" class="sml" text-anchor="start">= ok støttetrinn (trinn 2)</text>
   <text x="3145" y="436" class="sml" text-anchor="start">280 over seteputa 420</text>
   <text x="3145" y="468" class="sml" text-anchor="start">262 fritt under plata</text>
   <text x="2020" y="1030" class="sml" text-anchor="start">stiplet: plateenheten i sengestilling (A)</text>
@@ -304,7 +304,7 @@
   <text x="1730" y="1554" class="sml" text-anchor="start">nøyaktig som i sengestilling. Ingen kile, ingen lås og ingen nedholder: et bord</text>
   <text x="1730" y="1586" class="sml" text-anchor="start">belastes nedover, og de to avstivningslektene tar sidekreftene mot en trinnende</text>
   <text x="1730" y="1618" class="sml" text-anchor="start">i BEGGE stillinger. Enheten er fri av opplegget etter 68 mm rett opp – lektas</text>
-  <text x="1730" y="1650" class="sml" text-anchor="start">egen høyde – og sjakten gir 214 (ok 700 → uk trinn 4 = 914).</text>
+  <text x="1730" y="1650" class="sml" text-anchor="start">egen høyde – og sjakten gir 214 (ok 700 → uk trinn 3 = 914).</text>
 
   <!-- ================================================== C  PLAN -->
   <text x="330" y="1700" class="pt" text-anchor="start">C · PLATEENHETEN SETT OVENFRA (X–Y), 0,95:1</text>
@@ -407,7 +407,7 @@
   <text x="1140" y="2222" class="sml" text-anchor="start">Lekta står 2 mm utenfor endeflaten (lekt X 785–833 og 1157–1205). I senge-</text>
   <text x="1140" y="2254" class="sml" text-anchor="start">stilling er endeflaten trinn 1s endeved (trinn X 835–1155): de siste 30 mm av</text>
   <text x="1140" y="2286" class="sml" text-anchor="start">hver lekt løper i den frie sjakten bak stigevanga – 48 mm høy og 32 mm dyp.</text>
-  <text x="1140" y="2318" class="sml" text-anchor="start">I bordstilling er endeflaten støttetrinnets (trinn 3, X 835–1155) – samme profil,</text>
+  <text x="1140" y="2318" class="sml" text-anchor="start">I bordstilling er endeflaten støttetrinnets (trinn 2, X 835–1155) – samme profil,</text>
   <text x="1140" y="2350" class="sml" text-anchor="start">samme plan, samme 2 mm passing og de samme 48 × 30 mm tre. Sjakten er like</text>
   <text x="1140" y="2382" class="sml" text-anchor="start">dyp i begge stillinger etter X16; X9 hadde bordklosser her, 68 mm i Z og 53 mm</text>
   <text x="1140" y="2414" class="sml" text-anchor="start">dype, og da var de to stillingene ikke like. Se D.</text>

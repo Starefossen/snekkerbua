@@ -342,7 +342,11 @@ def inj_bench_bores_a_wall_end(rig):
     end the room has not cut yet, and the instruction sends the builder to the
     bench with a drill anyway.
     """
-    run_datum(rig, bygg=_sub(rig.bygg, "J2, J2-B, J3, J7, J8, J17",
+    # X18: the victim used to be J8, whose holes were a through-lap into the
+    # corner post and therefore measured off a wall end. The built cheek is
+    # butted and pocket-screwed, so J8 left this list and J20 - the front end
+    # cleat on the post's back face - took its place.
+    run_datum(rig, bygg=_sub(rig.bygg, "J2, J2-B, J3, J7, J20, J17",
                              "J2, J2-B, J3, J7, J17"))
 
 

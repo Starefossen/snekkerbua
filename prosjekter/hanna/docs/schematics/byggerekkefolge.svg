@@ -103,7 +103,7 @@
   <text x="262" y="542" class="sml" text-anchor="start">J2-B: 2× treskrue 6×120 rett ned gjennom vangen i stolpens endeved. Aldri noe på veggsiden.</text>
   <text x="262" y="576" class="sml" text-anchor="start">J14 (steg 2): 6 veggfester gjennom vangen inn i stenderne – prikkene. J12-V: 3 til, i lekta.</text>
   <text x="262" y="636" class="lbl" text-anchor="start">Hjørnestolpe, bak (veggside) 36×98 × 1402 – bakflaten ER veggflaten.</text>
-  <text x="262" y="790" class="lbl" text-anchor="start">Bordbærelekt, bak 48×68 × 1794 – på høykant (Z 614–682), J12 vinkelbeslag i hver ende.</text>
+  <text x="262" y="790" class="lbl" text-anchor="start">Bordbærelekt, bak 48×68 × 1794 – på høykant (Z 614–682), J12 to lommeskruer i hver ende (X18).</text>
   <text x="262" y="826" class="lbl" text-anchor="start">Benkevange, bak 48×68 × 1794 (Z 229–297) – J8-B: 2 skrå 6×80 i hver ende, og det er hele festet.</text>
   <text x="262" y="860" class="sml" text-anchor="start">Ingen bærekloss under enden. Hullene fra steg 0 er jiggen: vangen har én høyde der de møtes.</text>
   <text x="262" y="1090" class="sml" text-anchor="start">Stubbeføtter: steg 5</text>
@@ -226,11 +226,11 @@
 
   <circle cx="1520" cy="1440" r="19" class="bal"/><text x="1520" y="1449" class="baln" text-anchor="middle">5</text>
   <text x="1560" y="1448" class="st" text-anchor="start">Fremre benkevanger, stubbeføtter og endelister</text>
-  <text x="1560" y="1482" class="sml" text-anchor="start">2 vangebiter 48×68×642 · 4 stubbeføtter 48×68×229 · 2 endelister 36×48×98 på de bakre stolpenes forside.  Ledd: J8 (Z 251 og 275), J10, J17.</text>
+  <text x="1560" y="1482" class="sml" text-anchor="start">2 vangebiter 48×68×547 · 4 stubbeføtter 48×68×229 · 2 benkespileledd 36×48×547 · 4 endelister 36×48×98.  Ledd: J8, J10, J17, J19, J20 (X18).</text>
 
   <circle cx="1520" cy="1558" r="19" class="bal"/><text x="1520" y="1567" class="baln" text-anchor="middle">6</text>
   <text x="1560" y="1566" class="st" text-anchor="start">Stigen</text>
-  <text x="1560" y="1600" class="sml" text-anchor="start">Bygges ferdig liggende: 2 stigevanger 36×48×2037 · 10 stigeklosser · 5 rungetrinn 48×68×320 (ok 297 / 489 / 682 / 962 / 1242).  Ledd: J3, J4, J5.</text>
+  <text x="1560" y="1600" class="sml" text-anchor="start">Bygges ferdig liggende: 2 stigevanger 36×48×1871 · 8 stigeklosser · 4 rungetrinn 48×68×320 (ok 297 / 682 / 962 / 1242 – X18).  Ledd: J3, J4, J5.</text>
 
   <circle cx="1520" cy="1676" r="19" class="bal"/><text x="1520" y="1685" class="baln" text-anchor="middle">7</text>
   <text x="1560" y="1684" class="st" text-anchor="start">Benkespiler og endespiler</text>
