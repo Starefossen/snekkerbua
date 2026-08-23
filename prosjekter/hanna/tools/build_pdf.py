@@ -108,6 +108,22 @@ SCHEMATICS = [
     ("panel-detail", "ref", "Den løse platen"),
     ("setedetalj", "ref", "Skråskruesetene"),
 ]
+# BORESJABLONGENE er ikke tegninger. De er MÅL: to A4-ark som skrives ut i
+# 100 %, klippes fra hverandre og legges på treet, og de står bakerst i
+# BYGGEHEFTET fordi det er de siste bladene man kan rive ut uten å ødelegge
+# resten av heftet - og fordi de skal opp av permen og ned på benken.
+#
+# De settes INN I SIDEN som SVG-kildekode, ikke som <img>. En CSS-boks
+# snappes til hele devicepiksler når Chrome skriver PDF (opptil 0,265 mm), og
+# et bilde som skaleres til en snappet boks tar den feilen med seg inn i
+# geometrien. Én <svg width="210mm" height="297mm" viewBox="0 0 210 297"> på
+# en side med `@page jig { size: A4; margin: 0 }` gjør derimot én brukerenhet
+# til én millimeter av papiret.
+JIGS = [
+    ("boresjablong-ramme", "Boresjablong 1:1 — rammeleddene"),
+    ("boresjablong-skraaskrue", "Boresjablong 1:1 — skråskruene"),
+]
+
 # BRUKSARKENE står sist blant tegningene og kommer fra docs/img, ikke fra
 # docs/schematics: de er strektegninger fra samme skjulte-linje-maskineri som
 # stegsidene, ikke skjemategninger. De to er de eneste sidene i boka der noen
@@ -509,6 +525,67 @@ def sheet_pages(marks: PageMarks, folder: str, wanted) -> tuple[list[str], list[
     return pages, toc
 
 
+def scope_css(css: str, prefix: str) -> str:
+    """Skriv om hver velger i en <style>-blokk til aa gjelde bare under
+    `prefix`.
+
+    EN SVG SOM LEGGES INLINE I HTML TAR CSS-EN SIN MED SEG UT I HELE
+    DOKUMENTET. Det er ikke en teori: uten denne funksjonen krympet
+    byggeheftet fra 30 til 28 sider fordi skjemafamiliens typeregler la seg
+    over manualens - og et hefte som blir kortere av at man legger til to ark
+    er et hefte der noe annet har flyttet seg i det stille.
+    """
+    out = []
+    for chunk in css.split("}"):
+        if "{" not in chunk:
+            out.append(chunk)
+            continue
+        sel, body = chunk.split("{", 1)
+        lead = sel[:len(sel) - len(sel.lstrip())]
+        sels = [f"{prefix} {t.strip()}" for t in sel.split(",") if t.strip()]
+        out.append(f"{lead}{', '.join(sels)} {{{body}")
+    return "}".join(out)
+
+
+def jig_pages(marks: PageMarks) -> tuple[list[str], list[tuple[str, str]]]:
+    """Ett ark per side, satt inn som SVG-kildekode og ikke som bilde.
+
+    XML-deklarasjonen og <title> strippes: den forste hoerer ikke hjemme
+    inne i et HTML-dokument, og den andre ville blitt en tooltip. Alt annet -
+    <style>, <defs>, hver eneste strek - staar som det ble tegnet.
+    """
+    pages: list[str] = []
+    toc: list[tuple[str, str]] = []
+    for stem, label in JIGS:
+        path = DOCS / "schematics" / f"{stem}.svg"
+        svg = path.read_text(encoding="utf-8")
+        svg = re.sub(r"<\?xml[^>]*\?>\s*", "", svg)
+        svg = re.sub(r"\s*<title>.*?</title>\s*", "\n", svg, count=1,
+                     flags=re.S)
+        assert svg.lstrip().startswith('<svg '), \
+            f"{path.name} begynner ikke med <svg> etter strippingen"
+        key = f"jig-{stem}"
+        toc.append((key, label))
+        # CSS-en inni SVG-en scopes til `.jig` - se scope_css().
+        assert "<style>" in svg, f"{path.name} har ingen <style>-blokk"
+        svg = re.sub(r"<style>(.*?)</style>",
+                     lambda m: f"<style>{scope_css(m.group(1), '.jig')}"
+                               f"</style>", svg, flags=re.S)
+        # Merkelappen legges INNE i SVG-en, som hvit tekst rett etter
+        # aapningstaggen. Et <span class="pagemark"> FORAN arket er en
+        # linjeboks paa noen tideler, og en linjeboks foran et 297 mm hoyt
+        # ark skyver arket over paa neste side - som foerste gang ble et
+        # blankt ark per sjablong. Inne i SVG-en koster den ingen hoyde.
+        token = re.search(r">(@@[^<]+@@)<", marks.mark(key)).group(1)
+        svg, n = re.subn(
+            r"(<svg\b[^>]*>)",
+            rf'\1<text x="2" y="4" fill="#ffffff" font-size="1">'
+            rf'{token}</text>', svg, count=1)
+        assert n == 1, f"{path.name} har ingen <svg>-aapningstagg"
+        pages.append(f'<section class="page jig" id="{key}">{svg}</section>')
+    return pages, toc
+
+
 def build_manual_book(marks: PageMarks) -> list[str]:
     """BYGGEHEFTET: forside, innhold, stegsidene og det de trenger ved benken."""
     cover, pages, toc = build_manual(marks)
@@ -517,14 +594,17 @@ def build_manual_book(marks: PageMarks) -> list[str]:
     sheets, sheet_toc = sheet_pages(
         marks, "schematics",
         [(stem, label) for stem, where, label in SCHEMATICS if where == "bygg"])
+    jigs, jig_toc = jig_pages(marks)
 
     toc_html = toc_page(
         marks,
-        [("Monter sengen", toc), ("Lister og ark", doc_toc + sheet_toc)],
+        [("Monter sengen", toc),
+         ("Lister og ark", doc_toc + sheet_toc + jig_toc)],
         "Dette heftet er nok til å bygge sengen. Referanseheftet "
         "(<code>docs/hanna-referanse.pdf</code>) forklarer hvorfor, og eier "
-        "alle tallene.")
-    return [cover, toc_html] + pages + docs + sheets
+        "alle tallene. De to siste sidene er 1:1-sjablonger — skriv dem ut "
+        "i 100 % og klipp dem fra hverandre.")
+    return [cover, toc_html] + pages + docs + sheets + jigs
 
 
 def build_reference_book(marks: PageMarks) -> list[str]:
@@ -778,6 +858,18 @@ td img { display: block; margin: 0 auto; }
 .schematic.land img { width: 100%; max-height: 163mm; object-fit: contain; }
 .cap { font-size: 8pt; color: var(--muted); margin-top: 2mm; }
 
+/* ---------- boresjablongene ----------
+   Full utfalling: @page jig har ingen marg, siden har ingen padding, og
+   SVG-en er det eneste elementet paa den. Da er den eneste boksen mellom
+   papiret og geometrien selve <svg>-elementet, og det er den maalte
+   0,002 mm-veien. `display:block` fjerner linjeboksens grunnlinjeluft, som
+   ellers ville skjovet arket ned og ut av MediaBox-en. */
+@page jig { size: A4; margin: 0; }
+/* `break-after` staar IKKE her: neste seksjon har sin egen `break-before`,
+   og to sideskift paa rad blir et blankt ark mellom sjablongene. */
+.jig { page: jig; margin: 0; padding: 0; break-before: page; }
+.jig svg { display: block; }
+
 /* ---------- kolofon ---------- */
 .colophon { padding-top: 60mm; }
 .colophon p { max-width: 130mm; }
@@ -848,6 +940,153 @@ def print_pdf(html_path: Path, pdf_path: Path, chrome: str) -> None:
     if not pdf_path.exists():
         sys.stderr.write(res.stdout + res.stderr)
         sys.exit("Chrome klarte ikke a skrive PDF-en.")
+    pdf_path.write_bytes(set_print_scaling(pdf_path.read_bytes()))
+
+
+# --------------------------------------------------------------------------
+# «FAKTISK STØRRELSE» - /PrintScaling /None
+# --------------------------------------------------------------------------
+# Boresjablongene er bare sjablonger hvis de kommer ut i 100 %, og
+# utskriftsdialogen er der de fleste av dem doer: Acrobat og Preview aapner
+# paa «Tilpass til side» med mindre dokumentet SIER noe annet. Det finnes en
+# maate aa si det paa - /ViewerPreferences << /PrintScaling /None >> i
+# katalogen - og Chrome skriver den ikke.
+#
+# Saa den settes inn etterpaa, som en INKREMENTELL OPPDATERING: den
+# opprinnelige fila roeres ikke, katalogobjektet skrives paa nytt bakerst med
+# noekkelen i seg, og en ny xref-seksjon med /Prev tilbake til den gamle
+# legges etter det. Det er den ene maaten som ikke trenger aa vite hvor noe
+# ANNET i fila ligger - og en PDF-patch som gjetter paa offsets er en PDF-
+# patch som oedelegger fila den dagen Chrome bytter versjon.
+PRINT_SCALING = b"/PrintScaling /None"
+
+
+def _last_trailer(data: bytes) -> bytes:
+    i = data.rfind(b"trailer")
+    assert i >= 0, "PDF-en har ingen trailer - Skia har byttet format"
+    return data[i:i + 600]
+
+
+def _startxref(data: bytes) -> int:
+    i = data.rfind(b"startxref")
+    assert i >= 0, "PDF-en har ingen startxref"
+    return int(data[i + 9:i + 40].split()[0])
+
+
+def xref_table(data: bytes) -> tuple[dict[int, int], int]:
+    """{objektnummer: offset} og /Root, lest slik en leser leser det.
+
+    Foelger startxref til siste xref-seksjon og derfra /Prev bakover, saa den
+    inkrementelle oppdateringen under blir lest paa nøyaktig samme maate som
+    Acrobat leser den. Skia skriver flat xref uten objektstroemmer; skulle
+    det endre seg, stopper asserten her.
+    """
+    table: dict[int, int] = {}
+    root = None
+    at: int | None = _startxref(data)
+    seen = set()
+    while at is not None and at not in seen:
+        seen.add(at)
+        assert data[at:at + 4] == b"xref", \
+            (f"xref-seksjonen paa {at} begynner ikke med «xref» - PDF-en har "
+             f"objektstroemmer, og denne leseren kan ikke lese dem")
+        pos = at + 4
+        while True:
+            m = re.compile(rb"\s*(\d+)\s+(\d+)\s*\n").match(data, pos)
+            if not m:
+                break
+            first, count = int(m.group(1)), int(m.group(2))
+            pos = m.end()
+            for k in range(count):
+                entry = data[pos:pos + 20]
+                pos += 20
+                if entry[17:18] == b"n":
+                    table.setdefault(first + k, int(entry[:10]))
+        m = re.compile(rb"\s*trailer\s*").match(data, pos)
+        assert m, f"xref-seksjonen paa {at} har ingen trailer etter seg"
+        tail = data[m.end():m.end() + 600]
+        if root is None:
+            r = re.search(rb"/Root\s+(\d+)\s+0\s+R", tail)
+            assert r, "traileren har ingen /Root"
+            root = int(r.group(1))
+        prev = re.search(rb"/Prev\s+(\d+)", tail)
+        at = int(prev.group(1)) if prev else None
+    assert root is not None
+    return table, root
+
+
+def catalog_body(data: bytes) -> bytes:
+    """Katalogens ordbok, hentet gjennom xref-en og ikke ved aa lete.
+
+    Det er forskjellen som betyr noe naar fila er inkrementelt oppdatert: den
+    gamle katalogen ligger fortsatt i fila, og et sok finner den foerst. Det
+    er den NYE en leser ser, saa det er den som maa sjekkes.
+    """
+    table, root = xref_table(data)
+    at = table.get(root)
+    assert at is not None, f"katalogen (objekt {root}) staar ikke i xref-en"
+    m = re.compile(rb"\s*(\d+)\s+0\s+obj\b").match(data, at)
+    assert m and int(m.group(1)) == root, \
+        f"xref-en peker paa {at}, men der staar ikke «{root} 0 obj»"
+    end = data.find(b"endobj", m.end())
+    assert end > 0, "katalogen har ingen endobj"
+    return data[m.end():end]
+
+
+def has_print_scaling(data: bytes) -> bool:
+    return PRINT_SCALING.replace(b" ", b"") in \
+        catalog_body(data).replace(b" ", b"").replace(b"\n", b"")
+
+
+def set_print_scaling(data: bytes) -> bytes:
+    """Legg /PrintScaling /None i katalogen, som en inkrementell oppdatering.
+
+    Chrome skriver allerede en /ViewerPreferences-ordbok (for
+    /DisplayDocTitle), saa noekkelen legges INNI den. To
+    /ViewerPreferences-noekler i samme ordbok er ikke en PDF.
+
+    Idempotent: er noekkelen der fra foer, gjoeres ingenting.
+    """
+    body = catalog_body(data)
+    if b"/PrintScaling" in body:
+        return data
+    num = xref_table(data)[1]
+    i = body.find(b"/ViewerPreferences")
+    if i >= 0:
+        j = body.index(b"<<", i) + 2
+        new_body = body[:j] + b"\n" + PRINT_SCALING + b"\n" + body[j:]
+    else:
+        close = body.rfind(b">>")
+        assert close > 0, "katalogen er ingen ordbok"
+        new_body = (body[:close] + b"/ViewerPreferences << "
+                    + PRINT_SCALING + b" >>\n" + body[close:])
+
+    out = bytearray(data)
+    if not out.endswith(b"\n"):
+        out += b"\n"
+    offset = len(out)
+    out += f"{num} 0 obj".encode() + new_body + b"endobj\n"
+    xref_at = len(out)
+    # Den nye traileren arver /Size, /Info og /ID fra den gamle, og /Prev
+    # peker paa den forrige xref-en - saa ingen andre objekter maa flyttes,
+    # og ingen offset i fila endrer seg.
+    old = _last_trailer(data)
+    size = re.search(rb"/Size\s+(\d+)", old)
+    assert size, "traileren har ingen /Size"
+    keep = b""
+    for key in (rb"/Info\s+\d+\s+0\s+R", rb"/ID\s*\[[^\]]*\]"):
+        m = re.search(key, old)
+        if m:
+            keep += b" " + m.group(0)
+    out += (b"xref\n" + f"{num} 1\n".encode()
+            + f"{offset:010d} 00000 n \n".encode()
+            + b"trailer\n<< /Size " + size.group(1)
+            + f" /Root {num} 0 R /Prev {_startxref(data)}".encode() + keep
+            + b" >>\nstartxref\n" + str(xref_at).encode() + b"\n%%EOF\n")
+    out = bytes(out)
+    assert has_print_scaling(out), \
+        "patchen gikk inn, men en leser som foelger xref-en finner den ikke"
+    return out
 
 
 def page_count(pdf: Path) -> int:

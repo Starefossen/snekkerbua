@@ -68,6 +68,7 @@ import io
 import math
 import os
 import re
+import shutil
 import subprocess
 import sys
 
@@ -85,6 +86,7 @@ SNAP_PATHS = ["docs/generated", "docs/MONTERING.md", "docs/img", "parts.tsv",
               "docs/schematics/setedetalj.svg",
               "docs/schematics/end-elevation.svg",
               "docs/schematics/spikerslag.svg",
+              "docs/schematics/boresjablong-*",
               "docs/icons/hanna", "docs/PRAKSIS.md"]
 
 
@@ -151,6 +153,85 @@ def n_pages():
                 pages, where = len(pngs), f"docs/preview/{pattern}"
         out[book] = (pages, where)
     return out
+
+
+# ---------------------------------------------------------------------------
+# BORESJABLONGENE, MÅLT PÅ DEN FERDIGE PDF-EN
+# ---------------------------------------------------------------------------
+# Arkene er 1:1, og et 1:1-ark har to påstander som bare den FERDIGE fila kan
+# bekrefte: at siden er hele A4 (Chromes MediaBox, 594,96 × 841,92 pt) og at
+# dokumentet ber leseren om «Faktisk størrelse». Begge leses her, av den
+# trykte fila, og ingen av dem kan leses av tegneprogrammet.
+JIG_MEDIABOX = (594.96, 841.92)     # pt - Chromes A4, malt pa dens egen strom
+JIG_MEDIABOX_TOL = 0.2
+
+
+def jig_pages(pdf, tokens):
+    """{merkelapp: sidetall} for sjablongsidene i en ferdig PDF."""
+    total = subprocess.run(["pdfinfo", pdf], capture_output=True,
+                           text=True).stdout
+    m = re.search(r"^Pages:\s+(\d+)", total, flags=re.M)
+    if not m:
+        return {}
+    found = {}
+    for page in range(1, int(m.group(1)) + 1):
+        text = subprocess.run(
+            ["pdftotext", "-f", str(page), "-l", str(page), pdf, "-"],
+            capture_output=True, text=True).stdout
+        for tok in tokens:
+            if tok in text:
+                found[tok] = page
+    return found
+
+
+def assert_print_scaling(data, what="byggeheftet"):
+    """Dokumentet ber leseren om «Faktisk størrelse».
+
+    Egen funksjon fordi den tar BYTES og ikke en filsti: tools/falsifiser.py
+    river nøkkelen ut av en kopi i minnet og krever at denne feller.
+    """
+    sys.path.insert(0, TOOLS)
+    import build_pdf as BP
+    assert BP.has_print_scaling(data), (
+        f"{what}s katalog mangler /ViewerPreferences /PrintScaling /None - "
+        f"da åpner Acrobat sjablongene på «Tilpass til side», og et ark som "
+        f"er skalert er ikke et mål")
+    return True
+
+
+def check_jig_pdf():
+    """Assert 8: MediaBox-en og /PrintScaling, lest ut av den trykte fila."""
+    sys.path.insert(0, TOOLS)
+    import build_pdf as BP
+    pdf = os.path.join(ROOT, "docs", PDFS["bygg"][0])
+    if not os.path.exists(pdf) or not shutil.which("pdfinfo"):
+        print(f"  ! boresjablongene ikke målt: {os.path.basename(pdf)} eller "
+              f"pdfinfo mangler - kjør `mise run pdf`")
+        return None
+    with open(pdf, "rb") as fh:
+        data = fh.read()
+    assert_print_scaling(data)
+    tokens = [f"@@jig-{stem}@@" for stem, _label in BP.JIGS]
+    found = jig_pages(pdf, tokens)
+    missing = [t for t in tokens if t not in found]
+    assert not missing, f"fant ikke {missing} i {os.path.basename(pdf)}"
+    for tok in tokens:
+        page = found[tok]
+        info = subprocess.run(["pdfinfo", "-f", str(page), "-l", str(page),
+                               pdf], capture_output=True, text=True).stdout
+        m = re.search(rf"^Page\s+{page} size:\s+([\d.]+) x ([\d.]+) pts",
+                      info, flags=re.M)
+        assert m, f"pdfinfo sier ingenting om størrelsen på side {page}"
+        got = (float(m.group(1)), float(m.group(2)))
+        assert all(abs(a - b) <= JIG_MEDIABOX_TOL
+                   for a, b in zip(got, JIG_MEDIABOX)), (
+            f"sjablongsiden {page} er {got[0]} × {got[1]} pt, ikke "
+            f"{JIG_MEDIABOX[0]} × {JIG_MEDIABOX[1]} - arket er ikke A4 og "
+            f"1:1 er ikke 1:1")
+    print(f"  boresjablongene: {len(found)} sider på "
+          f"{JIG_MEDIABOX[0]:g} × {JIG_MEDIABOX[1]:g} pt, og katalogen ber om "
+          f"«Faktisk størrelse» (/PrintScaling /None)")
+    return sorted(found.values())
 
 
 def run_model():
@@ -567,6 +648,7 @@ def main():
     M, log = run_model()
     check_readme(M, log)
     check_prose(achievable(M, log))
+    check_jig_pdf()
 
 
 if __name__ == "__main__":

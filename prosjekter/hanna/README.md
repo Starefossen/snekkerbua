@@ -16,7 +16,7 @@ samme modell gir samme bytes.*
 
 En parametrisk loftseng i [build123d](https://github.com/gumyr/build123d) /
 OpenCascade, bygd for én nisje på 199 cm mellom to vegger. Modellen er den
-eneste kilden: **hver tegning, hver tabell og alle 30 sidene i byggeheftet og
+eneste kilden: **hver tegning, hver tabell og alle 32 sidene i byggeheftet og
 alle 54 i referanseheftet genereres av solidene og maskinsjekkes før de får
 finnes.** Ikke ett mål er skrevet av. Unntaket er fire skjemaark i `docs/schematics/`,
 som er tegnet for hånd — der et tall på et slikt ark er i strid med en
@@ -40,9 +40,9 @@ hvert merke står på det festemiddelet det navngir.*
 | **Ytre mål** | 1990 × 836 × 2037 mm — fyller nisjen fra vegg til vegg på 1990 mm, i et rom med 2450 mm takhøyde, og gir 1500 mm fri høyde under køya. Gjennomgående deler kappes 1984 mm, for et bord på 1990 mm lar seg ikke svinge inn i en åpning på 1990 mm |
 | **Trevirke** | **76 stykker** i **5 dimensjoner** pluss én 18 mm kryssfinerplate — 53,25 løpemeter. Fordelingen: 23×98 26 stk. · 48×68 21 stk. · 36×48 14 stk. · 36×98 12 stk. · 48×98 2 stk. · plata 1 stk. 24 av de 76 stykkene er ett og samme stykke: spilen, 23×98 × 800 mm, kappet i én innstilling. Tallene telles av modellen og står nederst i [kapplista](docs/generated/kappliste.md) — `TOTAL 76 pcs 53.25 m in 5 timber profiles + 1 sheet` er det modellen skriver ut mens den bygger |
 | **Stål** | **185 festemidler fordelt på 22 ledd**, **176 av dem modellert som solide kropper** — hode, forsenking, skaft og spiss, hver med sin egen drivvektor. De 9 som mangler er de to veggfestene, J14 og J12-V: de går rett inn i veggen og har ingen andre del å ende i, så de er plassert, men ikke modellert. **Ikke ett eneste hode står i en romvendt flate**, og det er en assert. Begge tallene skriver modellen ut selv — `185 festemidler plassert i 22 ledd` og `176 festemidler modellert som kropper` |
-| **Kontroller** | **507 asserter i modellen** og 194 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått, og de telles som `ast.Assert`-noder i syntakstreet, ikke med grep: en grep på linjer som begynner med ordet «assert» tar med brødtekst som gjør det samme, og gir 514 her. Metoden er `python -c "import ast,sys;print(sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse(open(sys.argv[1]).read()))))" generate_loftbed.py`, og den samme summen over `tools/*.py` (23 filer) — men ingen runde arver dem lenger: `tools/check_tall.py` teller dem på nytt i porten og feller bygget hvis denne tabellen sier noe annet enn det den finner. Skrueretningene er utledet av fysikk (7 av de 24 radene i [skrueretningene](docs/generated/skrueretninger.md) er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — 25 linjer over 22 skrueretninger og alle 176 festemidlene, en bijeksjon som asserteres på det ferdige blekket. De to siste radene er veggfestene: de får hver sin egen plasseringslinje over 9 fester, satt etter stender og ikke etter mål, og telles derfor for seg; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
-| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **138 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. 138 er ikke et anslag: det er `git ls-files` over nøyaktig de stiene `snap()` i `mise.toml` hasjer. Determinismen er en assert, ikke en forventning |
-| **Ut av det** | **To trykkeklare PDF-er** med én kommando — et byggehefte på **30 sider** og et referansehefte på **54**, `pdfinfo docs/hanna.pdf` og `pdfinfo docs/hanna-referanse.pdf` sier hvor mange det ble. Byggeheftet er det som tas med til benken; referanseheftet blir stående i hylla. Pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to bruksark og eksport til STEP / STL / GLB / USDZ |
+| **Kontroller** | **507 asserter i modellen** og 237 til i verktøyene, alle sammen stopper bygget — tallene er talt, ikke anslått, og de telles som `ast.Assert`-noder i syntakstreet, ikke med grep: en grep på linjer som begynner med ordet «assert» tar med brødtekst som gjør det samme, og gir 514 her. Metoden er `python -c "import ast,sys;print(sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse(open(sys.argv[1]).read()))))" generate_loftbed.py`, og den samme summen over `tools/*.py` (24 filer) — men ingen runde arver dem lenger: `tools/check_tall.py` teller dem på nytt i porten og feller bygget hvis denne tabellen sier noe annet enn det den finner. Skrueretningene er utledet av fysikk (7 av de 24 radene i [skrueretningene](docs/generated/skrueretninger.md) er tvunget av tykkelsene alene), og hver av dem har en plasseringslinje som sier hvor på delen hullet står — 25 linjer over 22 skrueretninger og alle 176 festemidlene, en bijeksjon som asserteres på det ferdige blekket. De to siste radene er veggfestene: de får hver sin egen plasseringslinje over 9 fester, satt etter stender og ikke etter mål, og telles derfor for seg; antall skruer må få plass på flaten de står på; hver del må røre resten av sengen og kollidere med ingenting |
+| **Determinisme** | `mise run check` kjører hele kjeden to ganger og krever **142 byte-identiske artefakter** — de tre filmene inkludert, pluss et hash-stempel som feller porten hvis en film er eldre enn modellen den viser. 142 er ikke et anslag: det er `git ls-files` over nøyaktig de stiene `snap()` i `mise.toml` hasjer. Determinismen er en assert, ikke en forventning |
+| **Ut av det** | **To trykkeklare PDF-er** med én kommando — et byggehefte på **32 sider** og et referansehefte på **54**, `pdfinfo docs/hanna.pdf` og `pdfinfo docs/hanna-referanse.pdf` sier hvor mange det ble. Byggeheftet er det som tas med til benken; referanseheftet blir stående i hylla. Pluss en ren billedmanual, en skrevet byggeveiledning, sju skjemategninger, to boresjablonger i 1:1, to bruksark og eksport til STEP / STL / GLB / USDZ |
 | **Standarder** | Klaringer, rekkverkshøyder og vinduet for madrasstykkelse kommer av EN 747; kantavstander og skrueavstander av Eurokode 5 |
 | **Menneskene** | **Fire referansekropper** — et barn på **1200 mm** bygget av 14 primitiver etter [AnthroKids](https://math.nist.gov/~SRessler/anthrokids/), to som sover og to som sitter, som ekte solider i modellen. De kappes ikke og bærer ingenting, men de **måler**: 426 mm over hodet på den som sitter rett opp, 902 mm over ansiktet til den som ligger nede — og de er grunnen til at bordplaten ble en pult: på 542 gikk et lår under den, men ikke et kne, og på 682 sitter begge barna med knærne inn under |
 
@@ -66,6 +66,7 @@ generate_loftbed.py           modellen: mål, deler, festemidler, asserter
   ├─ tools/render_setedetalj.py → docs/schematics/setedetalj.svg
   ├─ tools/render_endelevation.py → docs/schematics/end-elevation.svg
   ├─ tools/render_spikerslag.py → docs/schematics/spikerslag.svg
+  ├─ tools/render_boresjablong.py → docs/schematics/boresjablong-*.svg (1:1)
   ├─ tools/gen_figurhode.py   → figurikonenes hoder + landemerkene i PRAKSIS §4
   ├─ tools/gen_glyphs.py      → skrueikoner og piktogrammer
   ├─ tools/render_animasjon.py → docs/img/hanna-*.gif  (de tre filmene)
@@ -187,7 +188,7 @@ denne katalogen, så disse virker uendret uansett hvor i treet du står:
 mise run build      # modellen + alle genererte tabeller + docs/MONTERING.md
 mise run montering  # tegn strektegningene i docs/img/ på nytt
 mise run check      # kjør hele kjeden to ganger, krev byte-identisk resultat
-mise run pdf        # docs/hanna.pdf, 30 sider + docs/hanna-referanse.pdf, 54 sider
+mise run pdf        # docs/hanna.pdf, 32 sider + docs/hanna-referanse.pdf, 54 sider
 ```
 
 | Oppgave | Hva den gjør |
@@ -198,8 +199,9 @@ mise run pdf        # docs/hanna.pdf, 30 sider + docs/hanna-referanse.pdf, 54 si
 | `setedetalj` | Tegner detaljarket for skråskruesetene til `docs/schematics/setedetalj.svg` |
 | `endelevation` | Tegner kortsnittet (sengen sett fra enden) til `docs/schematics/end-elevation.svg` |
 | `spikerslag` | Tegner bakveggen som oppriss med sonene som skal ha spikerslag til `docs/schematics/spikerslag.svg` |
+| `boresjablong` | Tegner de to 1:1-boresjablongene til `docs/schematics/boresjablong-*.svg` — arkene som skrives ut i full størrelse, klippes fra hverandre og legges på treet |
 | `figurhode` | Regner hodet på konturfiguren inn i de fire figurikonene og skriver landemerketabellene i PRAKSIS §4 |
-| `check` | Determinismeasserten: to fulle kjøringer, 138 artefakter, byte-identisk eller feil — og etterpå `check_tall` (README-ens talte tall + tallsveipet over håndprosaen) og `falsifiser` (feilinjisering av vokterne) |
+| `check` | Determinismeasserten: to fulle kjøringer, 142 artefakter, byte-identisk eller feil — og etterpå `check_tall` (README-ens talte tall + tallsveipet over håndprosaen) og `falsifiser` (feilinjisering av vokterne) |
 | `pdf` | Setter sammen `docs/hanna.pdf` (byggeheftet) og `docs/hanna-referanse.pdf` av de innsjekkede dokumentene (trenger ikke build123d) |
 | `schematics` | Rendrer `docs/schematics/*.svg` til PNG for korrektur |
 | `usdz` | Konverterer nettene til `.usdz` for Quick Look / Xcode / AR, ett materiale per fargegruppe |
@@ -219,7 +221,7 @@ Alt under ligger i `prosjekter/hanna/`, og alle stier er relative til den.
 | `tools/` | Alt som leser modellen: dokumenttabeller, strektegninger, kappeside, plateside, ikoner, PDF, USD-hjelpere |
 | `docs/generated/` | Maskinskrevet, aldri redigert for hånd: kappliste, innkjøpsliste, nøkkelmål, beslagliste, skrueretninger, stegtekst, `byggesteg.json` |
 | `docs/img/`, `docs/schematics/` | De innsjekkede tegningene — så manualen kan leses og skrives ut på en maskin uten noe av denne verktøykjeden |
-| `docs/hanna.pdf` | Byggeheftet på 30 sider — stegsidene og det som trengs ved benken. Bevisst utenfor git; verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
+| `docs/hanna.pdf` | Byggeheftet på 32 sider — stegsidene og det som trengs ved benken. Bevisst utenfor git; verktøyet ligger i repoet, og fila er én `mise run pdf` unna |
 | `docs/hanna-referanse.pdf` | Referanseheftet på 54 sider — begrunnelsene, tallene og de øvrige tegningene. Samme sak: bygges, ikke sjekkes inn |
 | `parts.tsv` | Innsjekket regresjonsavtrykk: navn, fargegruppe og omskrevet boks for hver del, i begge stillinger. En diff på den er diffen på modellen |
 | `v1/` | Den første køyesengrammen for nisjen, beholdt som historikk |
@@ -232,7 +234,7 @@ Dette er det den som står ved sagen faktisk leser.
 
 <img src="docs/img/hanna-manual-sider.png" alt="De ni første sidene i byggeheftet, tre og tre" width="760">
 
-*De ni første av byggeheftets 30 sider, lest rett tilbake ut av `docs/hanna.pdf`
+*De ni første av byggeheftets 32 sider, lest rett tilbake ut av `docs/hanna.pdf`
 av `tools/render_pdf_matrix.py`: forsiden, innholdet, senga med sine seks mål,
 de tre sidene om å måle rommet, de to sidene med konvensjoner og sikkerhet, og
 beslagsiden. Hver eneste side på det arket er kompilert —
@@ -285,11 +287,11 @@ som ikke lenger går opp — men den er ingen konfigurator, og sengen er laget f
 **HANNA** is a parametric loft bed — a bed platform over a bench, table and
 spare bed, built for one 199 cm alcove between two walls — modelled in build123d
 / OpenCascade. The model is the only source of truth: every drawing, every
-table, all 30 pages of the printed build booklet and all 54 of its reference
+table, all 32 pages of the printed build booklet and all 54 of its reference
 companion are generated from the solids and machine-checked before they are
 allowed to exist, and no number is hand-transcribed. Four schematic sheets in `docs/schematics/` are the one
 exception: they are drawn by hand, and where one of them disagrees with a
 generated table, the table wins. The documentation is in Norwegian, because
 that is what someone standing at the saw actually reads. The proofs run in CI:
-`mise run check` builds the whole chain twice and demands 138 byte-identical
+`mise run check` builds the whole chain twice and demands 142 byte-identical
 artefacts, and the badge at the top of this page is that gate.

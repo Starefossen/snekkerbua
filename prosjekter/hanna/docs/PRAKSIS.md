@@ -29,6 +29,7 @@ Kilden her er `generate_loftbed.py`, og dette er veien ut av den:
       ├─ tools/render_setedetalj.py  → docs/schematics/setedetalj.svg
       ├─ tools/render_endelevation.py → docs/schematics/end-elevation.svg
       ├─ tools/render_spikerslag.py  → docs/schematics/spikerslag.svg
+      ├─ tools/render_boresjablong.py → docs/schematics/boresjablong-*.svg
       ├─ tools/gen_figurhode.py  landemerkene → figurikonenes hoder og §4
       ├─ tools/gen_glyphs.py     ikoner og piktogrammer
       └─ tools/build_pdf.py      setter sammen docs/hanna.pdf (byggeheftet)
@@ -926,6 +927,7 @@ mise run montering       strektegningene i docs/img/
 mise run setedetalj      docs/schematics/setedetalj.svg
 mise run endelevation    docs/schematics/end-elevation.svg
 mise run spikerslag      docs/schematics/spikerslag.svg
+mise run boresjablong    docs/schematics/boresjablong-*.svg (1:1)
 mise run pdf             docs/hanna.pdf + docs/hanna-referanse.pdf
 ```
 
@@ -1014,15 +1016,19 @@ JSON har ingen kommentarer). Skal et tall endres, endres det i modellen.
 
 Alt utledet er sjekket inn — også `.png`-ene, `.svg`-ene og `parts.tsv` —
 og `mise run check` kjører hele kjeden (`build` + `montering` + `setedetalj` +
-`endelevation` + `spikerslag`) to fulle ganger og krever at alle sju stiene
+`endelevation` + `spikerslag` + `boresjablong`) to fulle ganger og krever at alle sju stiene
 `snap()` hasher kommer ut byte-identisk begge ganger:
 
 1. `docs/generated/`
 2. `docs/MONTERING.md`
 3. `docs/img/`
 4. `parts.tsv`
-5. de tre genererte skjemaarkene `docs/schematics/setedetalj.svg`,
-   `end-elevation.svg` og `spikerslag.svg`
+5. de genererte skjemaarkene `docs/schematics/setedetalj.svg`,
+   `end-elevation.svg`, `spikerslag.svg` og de to boresjablongene
+   `boresjablong-ramme.svg` / `boresjablong-skraaskrue.svg` med sine PNG-er.
+   Sjablongene trykkes i 1:1 og legges på treet, så for dem er determinisme
+   ikke en vane men en måleenhet: en tidel som flytter seg mellom to
+   kjøringer er en tidel i et hull
 6. `docs/icons/hanna/` — figurikonene, som er regnet ut av landemerketabellen
    i `tools/gen_figurhode.py`
 7. `docs/PRAKSIS.md` — landemerketabellene i §4 kommer fra den samme kilden, og

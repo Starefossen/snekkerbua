@@ -69,8 +69,11 @@ description = "Determinismesjekk: kjør hele kjeden to ganger og krev byte-ident
 # den samme slags kilde - landemerketabellen i tools/gen_figurhode.py - og
 # hasjes derfor sammen med resten. De tolv andre ikonene i katalogen er tegnet,
 # ikke regnet; de er med fordi katalogen er med, og de skal ikke endre seg.
-# De tre genererte skjemaarkene - setedetalj, end-elevation og spikerslag -
-# er med av samme grunn som resten.
+# De genererte skjemaarkene - setedetalj, end-elevation, spikerslag og de to
+# boresjablongene - er med av samme grunn som resten. Sjablongene er
+# dessuten de eneste arkene i huset der determinisme er en MALEENHET og ikke
+# bare en vane: de trykkes 1:1 og legges pa treet, sa en tidel som flytter
+# seg mellom to kjoringer er en tidel i et hull.
 #
 # Alt dette er sjekket inn for at en diff skal vise hva en endring i modellen
 # gjorde med tegningene, og den avlesningen er verdiløs hvis
@@ -96,6 +99,7 @@ snap() {
                      docs/schematics/setedetalj.svg \\
                      docs/schematics/end-elevation.svg \\
                      docs/schematics/spikerslag.svg \\
+                     'docs/schematics/boresjablong-*' \\
                      docs/icons/hanna docs/PRAKSIS.md \\
     | xargs -0 shasum -a 256
 }
@@ -110,6 +114,8 @@ for pass in 1 2; do
     || { cat "$work/kort-$pass.log"; exit 1; }
   python tools/render_spikerslag.py > "$work/spik-$pass.log" 2>&1 \\
     || { cat "$work/spik-$pass.log"; exit 1; }
+  python tools/render_boresjablong.py > "$work/jig-$pass.log" 2>&1 \\
+    || { cat "$work/jig-$pass.log"; exit 1; }
   snap > "$work/sum-$pass"
 done
 if ! diff -u "$work/sum-1" "$work/sum-2" > "$work/delta"; then
@@ -159,6 +165,16 @@ description = "Bakveggen som oppriss: sonene som skal ha spikerslag, malt fra fe
 # kommer han ikke til.
 depends = ["build"]
 run = "python tools/render_spikerslag.py"
+
+[tasks.boresjablong]
+description = "De to 1:1-boresjablongene: A4-arkene som skrives ut i full størrelse, klippes fra hverandre og legges på treet (docs/schematics/boresjablong-*.svg)"
+# Det eneste arket i huset som er et MAL og ikke en tegning: hver linje er en
+# millimeter av papiret, og hvert hullsenter er lest ut av FASTENER_PLACEMENTS.
+# Bygges inn i byggeheftet av `mise run pdf` - som SVG-kildekode og ikke som
+# bilde, for en CSS-boks snappes til hele devicepiksler og et 1:1-ark taler
+# ikke 0,265 mm.
+depends = ["build"]
+run = "python tools/render_boresjablong.py"
 
 [tasks.figurhode]
 description = "Regn hodet på konturfiguren inn i de fire figurikonene og skriv landemerketabellene i PRAKSIS §4 (tools/gen_figurhode.py)"

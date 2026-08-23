@@ -196,11 +196,17 @@ class Sheet:
     """
 
     def __init__(self, w, h, style_k, title, width=2400, origin=(0.0, 0.0),
-                 extra_css=""):
+                 extra_css="", height=None):
         self.w, self.h = w, h
         self.k = style_k
         self.title = title
+        # `width` is normally a PIXEL number - these sheets are read on a
+        # screen and printed to fit. A sheet that has to come out at a
+        # PHYSICAL size instead passes the pair as CSS lengths ("210mm",
+        # "297mm"); then one user unit is one millimetre of paper no matter
+        # what renders it, which is what tools/render_boresjablong.py is for.
         self.width = width
+        self.height = height
         self.origin = origin
         # A sheet may need a class the family does not have - a wall, a member
         # behind the cut plane. It gets it HERE, after the family's own block,
@@ -416,10 +422,13 @@ class Sheet:
     # -- output -------------------------------------------------------------
     def write(self, path):
         ox, oy = self.origin
+        size = f'width="{self.width}"'
+        if self.height is not None:
+            size += f' height="{self.height}"'
         head = (f'<?xml version="1.0" encoding="UTF-8"?>\n'
                 f'<svg xmlns="http://www.w3.org/2000/svg" '
                 f'viewBox="{f(ox)} {f(oy)} {f(self.w)} {f(self.h)}" '
-                f'width="{self.width}">\n'
+                f'{size}>\n'
                 f'  <title>{esc(self.title)}</title>\n')
         # An explicit ground, not a CSS `background`: rsvg-convert renders
         # the CSS one to transparency, and a transparent sheet is a black

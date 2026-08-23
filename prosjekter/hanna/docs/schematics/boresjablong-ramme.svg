@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 297" width="210mm" height="297mm">
+  <title>Boresjablong 1:1 - rammeleddene</title>
+  <defs>
+    <marker id="aE" markerWidth="13" markerHeight="10" refX="12" refY="4.5"
+      orient="auto"><path d="M0,0 L12,4.5 L0,9 z" fill="#000"/></marker>
+    <marker id="aS" markerWidth="13" markerHeight="10" refX="1" refY="4.5"
+      orient="auto"><path d="M12,0 L0,4.5 L12,9 z" fill="#000"/></marker>
+    <pattern id="hatch" width="1.4" height="1.4"
+      patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="1.4" height="1.4"
+        fill="#dcdcdc"/>
+      <line x1="0" y1="0" x2="0" y2="1.4" stroke="#000"
+        stroke-width="0.17"/></pattern>
+  </defs>
+  <style>
+    svg  { background:#fff; }
+    text { font-family:Helvetica,Arial,sans-serif; fill:#000;
+           font-size:2.2px; }
+    .ttl { font-size:5px; font-weight:bold; }
+    .sub { font-size:2.6px; }
+    .pt  { font-size:3.1px; font-weight:bold; }
+    .big { font-size:2.7px; font-weight:bold; }
+    .sml { font-size:2.2px; }
+    .tiny{ font-size:1.9px; }
+    .tinyh{ font-size:1.9px; paint-order:stroke; stroke:#fff;
+           stroke-width:0.6px; }
+    .smh { font-size:2.2px; paint-order:stroke; stroke:#fff;
+           stroke-width:0.6px; }
+    .dm  { font-size:2.3px; }
+    .dmh { font-size:2.3px; paint-order:stroke; stroke:#fff;
+           stroke-width:0.6px; }
+    .leg { font-size:2.6px; font-weight:bold; }
+    .jl  { font-size:2.7px; font-weight:bold; paint-order:stroke;
+           stroke:#fff; stroke-width:0.6px; }
+    .wood{ fill:url(#hatch); stroke:#000; stroke-width:0.26; }
+    .mate{ fill:#c4c4c4; stroke:#000; stroke-width:0.3; }
+    .brd { fill:#ececec; stroke:#000; stroke-width:0.26; }
+    .plain{ fill:#fff; stroke:#000; stroke-width:0.26; }
+    .gho { fill:none; stroke:#000; stroke-width:0.17;
+           stroke-dasharray:1.09 0.68; }
+    .ctr { fill:none; stroke:#000; stroke-width:0.11;
+           stroke-dasharray:0.9 0.3
+           0.15 0.3; }
+    .dot { fill:none; stroke:#000; stroke-width:0.18;
+           stroke-dasharray:0.06 0.45;
+           stroke-linecap:round; }
+    .dim { fill:none; stroke:#000; stroke-width:0.14; }
+    .ext { fill:none; stroke:#000; stroke-width:0.09; }
+    .ldr { fill:none; stroke:#000; stroke-width:0.15; }
+    .brk { fill:none; stroke:#000; stroke-width:0.2; }
+    .cut { fill:none; stroke:#000; stroke-width:0.26; }
+    .scr { fill:#fff; stroke:#000; stroke-width:0.18; }
+    .scrd{ fill:none; stroke:#000; stroke-width:0.18;
+           stroke-dasharray:0.88 0.57; }
+    .pic { fill:none; stroke:#000; stroke-width:0.26;
+           stroke-linecap:round; stroke-linejoin:round; }
+    .picf{ fill:#fff; stroke:#000; stroke-width:0.26;
+           stroke-linecap:round; stroke-linejoin:round; }
+    .pic2{ fill:none; stroke:#000; stroke-width:0.16;
+           stroke-linecap:round; stroke-linejoin:round; }
+    .fld { fill:none; stroke:#000; stroke-width:0.16; }
+    .era { fill:none; stroke:#fff; stroke-width:0.26; }
+  </style>
+  <style>
+    .rul { fill:none; stroke:#000; stroke-width:0.3;
+           stroke-linecap:butt; }
+    .tk  { fill:none; stroke:#000; stroke-width:0.25;
+           stroke-linecap:butt; }
+    .tkb { fill:none; stroke:#000; stroke-width:0.45;
+           stroke-linecap:butt; }
+    .ring{ fill:none; stroke:#000; stroke-width:0.25; }
+    .fold{ fill:none; stroke:#000; stroke-width:0.3;
+           stroke-dasharray:3 2; }
+    .knife{ fill:none; stroke:#000; stroke-width:0.6;
+           stroke-linecap:butt; }
+    .edge{ fill:none; stroke:#000; stroke-width:0.25; }
+    .fig { font-size:2.2px; paint-order:stroke; stroke:#fff; stroke-width:0.7px; }
+    .figb { font-size:2.2px; font-weight:bold; paint-order:stroke; stroke:#fff; stroke-width:0.7px; }
+    .nm { font-size:2.6px; font-weight:bold; }
+    .nm2 { font-size:2.1px; }
+    .body { font-size:2.4px; }
+    .head { font-size:5px; font-weight:bold; }
+    .sect { font-size:2.9px; font-weight:bold; }
+    .note { font-size:2.1px; }
+  </style>
+  <rect x="0" y="0" width="210" height="297" fill="#ffffff"/>
+  <text x="23" y="15.5" class="head" text-anchor="start">1:1 — DETTE ARKET ER ET MÅL</text>
+  <text x="23" y="20" class="sect" text-anchor="start">ARK 1 · RAMMELEDDENE — sju mønstre å klippe ut og legge på treet</text>
+  <text x="23" y="24.8" class="body" text-anchor="start">Skriv ut på A4 i 100 % — i Acrobat «Faktisk størrelse»; slå AV «Tilpass» og «Krymp til utskriftsområde». ENKELTSIDIG: arket skal klippes opp.</text>
+  <text x="23" y="28" class="body" text-anchor="start">MÅL BEGGE LINJALENE MED STÅLMÅL FØR DU KLIPPER — en skriver kan treffe den ene retningen og bomme den andre. Avvik over 1 mm på én av dem:</text>
+  <text x="23" y="31.2" class="body" text-anchor="start">kast arket. Den loddrette er 250 mm: 0,4 % matretningsfeil viser seg der som 1 mm. Den vannrette er 190 mm — det lengste et A4 kan bære.</text>
+  <line x1="10" y1="283" x2="200" y2="283" class="rul"/>
+  <line x1="10" y1="283" x2="10" y2="277" class="tkb"/>
+  <text x="10" y="286.2" class="fig" text-anchor="start">0</text>
+  <line x1="20" y1="283" x2="20" y2="279.5" class="tk"/>
+  <line x1="30" y1="283" x2="30" y2="279.5" class="tk"/>
+  <line x1="40" y1="283" x2="40" y2="279.5" class="tk"/>
+  <line x1="50" y1="283" x2="50" y2="279.5" class="tk"/>
+  <line x1="60" y1="283" x2="60" y2="277" class="tk"/>
+  <text x="60" y="286.2" class="fig" text-anchor="middle">50</text>
+  <line x1="70" y1="283" x2="70" y2="279.5" class="tk"/>
+  <line x1="80" y1="283" x2="80" y2="279.5" class="tk"/>
+  <line x1="90" y1="283" x2="90" y2="279.5" class="tk"/>
+  <line x1="100" y1="283" x2="100" y2="279.5" class="tk"/>
+  <line x1="110" y1="283" x2="110" y2="277" class="tk"/>
+  <text x="110" y="286.2" class="fig" text-anchor="middle">100</text>
+  <line x1="120" y1="283" x2="120" y2="279.5" class="tk"/>
+  <line x1="130" y1="283" x2="130" y2="279.5" class="tk"/>
+  <line x1="140" y1="283" x2="140" y2="279.5" class="tk"/>
+  <line x1="150" y1="283" x2="150" y2="279.5" class="tk"/>
+  <line x1="160" y1="283" x2="160" y2="277" class="tk"/>
+  <text x="160" y="286.2" class="fig" text-anchor="middle">150</text>
+  <line x1="170" y1="283" x2="170" y2="279.5" class="tk"/>
+  <line x1="180" y1="283" x2="180" y2="279.5" class="tk"/>
+  <line x1="190" y1="283" x2="190" y2="279.5" class="tk"/>
+  <line x1="200" y1="283" x2="200" y2="277" class="tkb"/>
+  <text x="200" y="286.2" class="fig" text-anchor="end">190</text>
+  <line x1="10" y1="15" x2="10" y2="265" class="rul"/>
+  <line x1="10" y1="15" x2="16" y2="15" class="tkb"/>
+  <text x="19.2" y="15" class="fig" text-anchor="middle" transform="rotate(-90 19.2 15)">0</text>
+  <line x1="10" y1="25" x2="13.5" y2="25" class="tk"/>
+  <line x1="10" y1="35" x2="13.5" y2="35" class="tk"/>
+  <line x1="10" y1="45" x2="13.5" y2="45" class="tk"/>
+  <line x1="10" y1="55" x2="13.5" y2="55" class="tk"/>
+  <line x1="10" y1="65" x2="16" y2="65" class="tk"/>
+  <text x="19.2" y="65" class="fig" text-anchor="middle" transform="rotate(-90 19.2 65)">50</text>
+  <line x1="10" y1="75" x2="13.5" y2="75" class="tk"/>
+  <line x1="10" y1="85" x2="13.5" y2="85" class="tk"/>
+  <line x1="10" y1="95" x2="13.5" y2="95" class="tk"/>
+  <line x1="10" y1="105" x2="13.5" y2="105" class="tk"/>
+  <line x1="10" y1="115" x2="16" y2="115" class="tk"/>
+  <text x="19.2" y="115" class="fig" text-anchor="middle" transform="rotate(-90 19.2 115)">100</text>
+  <line x1="10" y1="125" x2="13.5" y2="125" class="tk"/>
+  <line x1="10" y1="135" x2="13.5" y2="135" class="tk"/>
+  <line x1="10" y1="145" x2="13.5" y2="145" class="tk"/>
+  <line x1="10" y1="155" x2="13.5" y2="155" class="tk"/>
+  <line x1="10" y1="165" x2="16" y2="165" class="tk"/>
+  <text x="19.2" y="165" class="fig" text-anchor="middle" transform="rotate(-90 19.2 165)">150</text>
+  <line x1="10" y1="175" x2="13.5" y2="175" class="tk"/>
+  <line x1="10" y1="185" x2="13.5" y2="185" class="tk"/>
+  <line x1="10" y1="195" x2="13.5" y2="195" class="tk"/>
+  <line x1="10" y1="205" x2="13.5" y2="205" class="tk"/>
+  <line x1="10" y1="215" x2="16" y2="215" class="tk"/>
+  <text x="19.2" y="215" class="fig" text-anchor="middle" transform="rotate(-90 19.2 215)">200</text>
+  <line x1="10" y1="225" x2="13.5" y2="225" class="tk"/>
+  <line x1="10" y1="235" x2="13.5" y2="235" class="tk"/>
+  <line x1="10" y1="245" x2="13.5" y2="245" class="tk"/>
+  <line x1="10" y1="255" x2="13.5" y2="255" class="tk"/>
+  <line x1="10" y1="265" x2="16" y2="265" class="tkb"/>
+  <text x="19.2" y="265" class="fig" text-anchor="middle" transform="rotate(-90 19.2 265)">250</text>
+  <line x1="22.4" y1="123" x2="75.25" y2="123" class="fold"/>
+  <line x1="22.4" y1="132" x2="75.25" y2="132" class="edge"/>
+  <line x1="23" y1="42.75" x2="23" y2="132" class="knife"/>
+  <text x="24.4" y="51.75" class="fig" text-anchor="middle" transform="rotate(-90 24.4 51.75)">YTTERENDEN</text>
+  <line x1="46.5" y1="42.75" x2="46.5" y2="132" class="knife"/>
+  <text x="47.9" y="51.75" class="fig" text-anchor="middle" transform="rotate(-90 47.9 51.75)">INNERENDEN</text>
+  <polyline points="23,42.75 27.019,43.55 31.038,41.95 35.058,43.55 39.077,41.95 43.096,43.55 47.115,41.95 51.135,43.55 55.154,41.95 59.173,43.55 63.192,41.95 67.212,43.55 71.231,41.95 75.25,42.75" class="edge"/>
+  <polyline points="75.25,42.75 74.45,46.807 76.05,50.864 74.45,54.92 76.05,58.977 74.45,63.034 76.05,67.091 74.45,71.148 76.05,75.205 74.45,79.261 76.05,83.318 74.45,87.375 76.05,91.432 74.45,95.489 76.05,99.545 74.45,103.602 76.05,107.659 74.45,111.716 76.05,115.773 74.45,119.83 76.05,123.886 74.45,127.943 75.25,132" class="edge"/>
+  <circle cx="70.5" cy="100.5" r="1.75" class="ring"/>
+  <line x1="73.05" y1="100.5" x2="74.85" y2="100.5" class="tk"/>
+  <line x1="67.95" y1="100.5" x2="66.15" y2="100.5" class="tk"/>
+  <line x1="70.5" y1="103.05" x2="70.5" y2="104.85" class="tk"/>
+  <line x1="70.5" y1="97.95" x2="70.5" y2="96.15" class="tk"/>
+  <circle cx="70.5" cy="47.5" r="1.75" class="ring"/>
+  <line x1="73.05" y1="47.5" x2="74.85" y2="47.5" class="tk"/>
+  <line x1="67.95" y1="47.5" x2="66.15" y2="47.5" class="tk"/>
+  <line x1="70.5" y1="50.05" x2="70.5" y2="51.85" class="tk"/>
+  <line x1="70.5" y1="44.95" x2="70.5" y2="43.15" class="tk"/>
+  <text x="29.8" y="112.55" class="figb" text-anchor="start">22,5</text>
+  <text x="46.75" y="45.9" class="figb" text-anchor="middle">47,5</text>
+  <text x="58.5" y="45.9" class="figb" text-anchor="middle">24</text>
+  <text x="73.65" y="74" class="fig" text-anchor="end">c/c 53</text>
+  <line x1="25" y1="121" x2="25" y2="114" class="tk"/>
+  <polyline points="23.8,116.2 25,113.6 26.2,116.2" class="tk"/>
+  <text x="27.4" y="117.5" class="fig" text-anchor="middle" transform="rotate(-90 27.4 117.5)">MOT OVERKANTEN</text>
+  <text x="23" y="37.35" class="nm" text-anchor="start">J7 · REKKVERKSBORD</text>
+  <text x="23" y="40.15" class="nm2" text-anchor="start">36×98 × 832 · baksiden · ⌀3,5</text>
+  <line x1="78.9" y1="123" x2="133" y2="123" class="fold"/>
+  <line x1="78.9" y1="132" x2="133" y2="132" class="edge"/>
+  <line x1="79.5" y1="46" x2="79.5" y2="132" class="knife"/>
+  <polyline points="79.5,46 83.615,46.8 87.731,45.2 91.846,46.8 95.962,45.2 100.077,46.8 104.192,45.2 108.308,46.8 112.423,45.2 116.538,46.8 120.654,45.2 124.769,46.8 128.885,45.2 133,46" class="edge"/>
+  <polyline points="133,46 132.2,49.909 133.8,53.818 132.2,57.727 133.8,61.636 132.2,65.545 133.8,69.455 132.2,73.364 133.8,77.273 132.2,81.182 133.8,85.091 132.2,89 133.8,92.909 132.2,96.818 133.8,100.727 132.2,104.636 133.8,108.545 132.2,112.455 133.8,116.364 132.2,120.273 133.8,124.182 132.2,128.091 133,132" class="edge"/>
+  <circle cx="127" cy="96" r="3" class="ring"/>
+  <line x1="130.8" y1="96" x2="132.6" y2="96" class="tk"/>
+  <line x1="123.2" y1="96" x2="121.4" y2="96" class="tk"/>
+  <line x1="127" y1="99.8" x2="127" y2="101.6" class="tk"/>
+  <line x1="127" y1="92.2" x2="127" y2="90.4" class="tk"/>
+  <circle cx="127" cy="52" r="3" class="ring"/>
+  <line x1="130.8" y1="52" x2="132.6" y2="52" class="tk"/>
+  <line x1="123.2" y1="52" x2="121.4" y2="52" class="tk"/>
+  <line x1="127" y1="55.8" x2="127" y2="57.6" class="tk"/>
+  <line x1="127" y1="48.2" x2="127" y2="46.4" class="tk"/>
+  <text x="86.3" y="110.3" class="figb" text-anchor="start">27</text>
+  <text x="103.25" y="50.4" class="figb" text-anchor="middle">47,5</text>
+  <text x="131.4" y="74" class="fig" text-anchor="end">c/c 44</text>
+  <line x1="81.5" y1="121" x2="81.5" y2="114" class="tk"/>
+  <polyline points="80.3,116.2 81.5,113.6 82.7,116.2" class="tk"/>
+  <text x="83.9" y="117.5" class="fig" text-anchor="middle" transform="rotate(-90 83.9 117.5)">MOT OVERKANTEN</text>
+  <text x="79.5" y="40.6" class="nm" text-anchor="start">J2 · FREMRE SIDEVANGE</text>
+  <text x="79.5" y="43.4" class="nm2" text-anchor="start">48×98 × 1984 · baksiden · ⌀6</text>
+  <line x1="136.4" y1="123" x2="153" y2="123" class="fold"/>
+  <line x1="136.4" y1="132" x2="153" y2="132" class="edge"/>
+  <line x1="147" y1="44" x2="147" y2="124.5" class="fold"/>
+  <polyline points="137,44 136.2,48 137.8,52 136.2,56 137.8,60 136.2,64 137.8,68 136.2,72 137.8,76 136.2,80 137.8,84 136.2,88 137.8,92 136.2,96 137.8,100 136.2,104 137.8,108 136.2,112 137.8,116 136.2,120 137.8,124 136.2,128 137,132" class="edge"/>
+  <text x="145.6" y="115" class="fig" text-anchor="middle" transform="rotate(-90 145.6 115)">LEGG PÅ MERKET</text>
+  <polyline points="137,44 141,44.8 145,43.2 149,44.8 153,44" class="edge"/>
+  <polyline points="153,44 152.2,48 153.8,52 152.2,56 153.8,60 152.2,64 153.8,68 152.2,72 153.8,76 152.2,80 153.8,84 152.2,88 153.8,92 152.2,96 153.8,100 152.2,104 153.8,108 152.2,112 153.8,116 152.2,120 153.8,124 152.2,128 153,132" class="edge"/>
+  <circle cx="147" cy="98" r="3" class="ring"/>
+  <line x1="150.8" y1="98" x2="152.6" y2="98" class="tk"/>
+  <line x1="143.2" y1="98" x2="141.4" y2="98" class="tk"/>
+  <line x1="147" y1="101.8" x2="147" y2="103.6" class="tk"/>
+  <line x1="147" y1="94.2" x2="147" y2="92.4" class="tk"/>
+  <circle cx="147" cy="74" r="3" class="ring"/>
+  <line x1="150.8" y1="74" x2="152.6" y2="74" class="tk"/>
+  <line x1="143.2" y1="74" x2="141.4" y2="74" class="tk"/>
+  <line x1="147" y1="77.8" x2="147" y2="79.6" class="tk"/>
+  <line x1="147" y1="70.2" x2="147" y2="68.4" class="tk"/>
+  <circle cx="147" cy="50" r="3" class="ring"/>
+  <line x1="150.8" y1="50" x2="152.6" y2="50" class="tk"/>
+  <line x1="143.2" y1="50" x2="141.4" y2="50" class="tk"/>
+  <line x1="147" y1="53.8" x2="147" y2="55.6" class="tk"/>
+  <line x1="147" y1="46.2" x2="147" y2="44.4" class="tk"/>
+  <text x="149" y="111.3" class="figb" text-anchor="start">25</text>
+  <text x="151.4" y="86" class="fig" text-anchor="end">c/c 24</text>
+  <line x1="139" y1="121" x2="139" y2="114" class="tk"/>
+  <polyline points="137.8,116.2 139,113.6 140.2,116.2" class="tk"/>
+  <text x="141.4" y="117.5" class="fig" text-anchor="middle" transform="rotate(-90 141.4 117.5)">MOT OVERKANTEN</text>
+  <text x="137" y="38.6" class="nm" text-anchor="start">J3 · FREMRE SIDEVANGE</text>
+  <text x="137" y="41.4" class="nm2" text-anchor="start">48×98 × 1984 · baksiden · ⌀6</text>
+  <line x1="156.4" y1="123" x2="193" y2="123" class="fold"/>
+  <line x1="156.4" y1="132" x2="193" y2="132" class="edge"/>
+  <line x1="157" y1="54" x2="157" y2="132" class="knife"/>
+  <line x1="193" y1="54" x2="193" y2="132" class="knife"/>
+  <text x="191.6" y="63" class="fig" text-anchor="middle" transform="rotate(-90 191.6 63)">ANDRE ENDEN</text>
+  <polyline points="157,54 161,54.8 165,53.2 169,54.8 173,53.2 177,54.8 181,53.2 185,54.8 189,53.2 193,54" class="edge"/>
+  <circle cx="175" cy="104" r="3" class="ring"/>
+  <line x1="178.8" y1="104" x2="180.6" y2="104" class="tk"/>
+  <line x1="171.2" y1="104" x2="169.4" y2="104" class="tk"/>
+  <line x1="175" y1="107.8" x2="175" y2="109.6" class="tk"/>
+  <line x1="175" y1="100.2" x2="175" y2="98.4" class="tk"/>
+  <circle cx="175" cy="60" r="3" class="ring"/>
+  <line x1="178.8" y1="60" x2="180.6" y2="60" class="tk"/>
+  <line x1="171.2" y1="60" x2="169.4" y2="60" class="tk"/>
+  <line x1="175" y1="63.8" x2="175" y2="65.6" class="tk"/>
+  <line x1="175" y1="56.2" x2="175" y2="54.4" class="tk"/>
+  <text x="163.8" y="114.3" class="figb" text-anchor="start">19</text>
+  <text x="166" y="58.4" class="figb" text-anchor="middle">18</text>
+  <text x="191.4" y="82" class="fig" text-anchor="end">c/c 44</text>
+  <line x1="159" y1="121" x2="159" y2="114" class="tk"/>
+  <polyline points="157.8,116.2 159,113.6 160.2,116.2" class="tk"/>
+  <text x="161.4" y="117.5" class="fig" text-anchor="middle" transform="rotate(-90 161.4 117.5)">MOT OVERKANTEN</text>
+  <text x="157" y="48.6" class="nm" text-anchor="start">J1 · ENDEBJELKE</text>
+  <text x="157" y="51.4" class="nm2" text-anchor="start">36×98 × 836 · innersiden · ⌀6</text>
+  <line x1="22.4" y1="196" x2="76.5" y2="196" class="fold"/>
+  <line x1="22.4" y1="205" x2="76.5" y2="205" class="edge"/>
+  <line x1="23" y1="144" x2="23" y2="205" class="knife"/>
+  <polyline points="23,144 27.115,144.8 31.231,143.2 35.346,144.8 39.462,143.2 43.577,144.8 47.692,143.2 51.808,144.8 55.923,143.2 60.038,144.8 64.154,143.2 68.269,144.8 72.385,143.2 76.5,144" class="edge"/>
+  <polyline points="76.5,144 75.7,148.067 77.3,152.133 75.7,156.2 77.3,160.267 75.7,164.333 77.3,168.4 75.7,172.467 77.3,176.533 75.7,180.6 77.3,184.667 75.7,188.733 77.3,192.8 75.7,196.867 77.3,200.933 76.5,205" class="edge"/>
+  <circle cx="70.5" cy="174" r="3" class="ring"/>
+  <line x1="74.3" y1="174" x2="76.1" y2="174" class="tk"/>
+  <line x1="66.7" y1="174" x2="64.9" y2="174" class="tk"/>
+  <line x1="70.5" y1="177.8" x2="70.5" y2="179.6" class="tk"/>
+  <line x1="70.5" y1="170.2" x2="70.5" y2="168.4" class="tk"/>
+  <circle cx="70.5" cy="150" r="3" class="ring"/>
+  <line x1="74.3" y1="150" x2="76.1" y2="150" class="tk"/>
+  <line x1="66.7" y1="150" x2="64.9" y2="150" class="tk"/>
+  <line x1="70.5" y1="153.8" x2="70.5" y2="155.6" class="tk"/>
+  <line x1="70.5" y1="146.2" x2="70.5" y2="144.4" class="tk"/>
+  <text x="29.8" y="185.8" class="figb" text-anchor="start">22</text>
+  <text x="46.75" y="148.4" class="figb" text-anchor="middle">47,5</text>
+  <text x="74.9" y="162" class="fig" text-anchor="end">c/c 24</text>
+  <line x1="25" y1="194" x2="25" y2="187" class="tk"/>
+  <polyline points="23.8,189.2 25,186.6 26.2,189.2" class="tk"/>
+  <text x="27.4" y="190.5" class="fig" text-anchor="middle" transform="rotate(-90 27.4 190.5)">MOT OVERKANTEN</text>
+  <text x="23" y="138.6" class="nm" text-anchor="start">J8 · FREMRE BENKEVANGE</text>
+  <text x="23" y="141.4" class="nm2" text-anchor="start">48×68 × 642 · baksiden · ⌀6</text>
+  <line x1="79.9" y1="196" x2="178.5" y2="196" class="fold"/>
+  <line x1="79.9" y1="205" x2="178.5" y2="205" class="edge"/>
+  <line x1="80.5" y1="148" x2="80.5" y2="205" class="knife"/>
+  <line x1="178.5" y1="148" x2="178.5" y2="205" class="knife"/>
+  <text x="177.1" y="157" class="fig" text-anchor="middle" transform="rotate(-90 177.1 157)">ANDRE ENDEN</text>
+  <line x1="80.5" y1="148" x2="178.5" y2="148" class="edge"/>
+  <circle cx="103" cy="180" r="1.75" class="ring"/>
+  <line x1="105.55" y1="180" x2="107.35" y2="180" class="tk"/>
+  <line x1="100.45" y1="180" x2="98.65" y2="180" class="tk"/>
+  <line x1="103" y1="182.55" x2="103" y2="184.35" class="tk"/>
+  <line x1="103" y1="177.45" x2="103" y2="175.65" class="tk"/>
+  <circle cx="156" cy="180" r="1.75" class="ring"/>
+  <line x1="158.55" y1="180" x2="160.35" y2="180" class="tk"/>
+  <line x1="153.45" y1="180" x2="151.65" y2="180" class="tk"/>
+  <line x1="156" y1="182.55" x2="156" y2="184.35" class="tk"/>
+  <line x1="156" y1="177.45" x2="156" y2="175.65" class="tk"/>
+  <text x="87.3" y="188.8" class="figb" text-anchor="start">16</text>
+  <text x="91.75" y="178.4" class="figb" text-anchor="middle">22,5</text>
+  <text x="129.5" y="151" class="fig" text-anchor="middle">c/c 53</text>
+  <line x1="82.5" y1="194" x2="82.5" y2="187" class="tk"/>
+  <polyline points="81.3,189.2 82.5,186.6 83.7,189.2" class="tk"/>
+  <text x="84.9" y="190.5" class="fig" text-anchor="middle" transform="rotate(-90 84.9 190.5)">MOT OVERKANTEN</text>
+  <text x="80.5" y="142.6" class="nm" text-anchor="start">J17 · ENDELIST</text>
+  <text x="80.5" y="145.4" class="nm2" text-anchor="start">36×48 × 98 · forsiden · ⌀3,5</text>
+  <line x1="22.4" y1="240" x2="136" y2="240" class="fold"/>
+  <line x1="22.4" y1="249" x2="136" y2="249" class="edge"/>
+  <line x1="23" y1="216" x2="23" y2="249" class="knife"/>
+  <line x1="136" y1="216" x2="136" y2="249" class="knife"/>
+  <text x="134.6" y="225" class="fig" text-anchor="middle" transform="rotate(-90 134.6 225)">ANDRE ENDEN</text>
+  <polyline points="23,216 27.036,216.8 31.071,215.2 35.107,216.8 39.143,215.2 43.179,216.8 47.214,215.2 51.25,216.8 55.286,215.2 59.321,216.8 63.357,215.2 67.393,216.8 71.429,215.2 75.464,216.8 79.5,215.2 83.536,216.8 87.571,215.2 91.607,216.8 95.643,215.2 99.679,216.8 103.714,215.2 107.75,216.8 111.786,215.2 115.821,216.8 119.857,215.2 123.893,216.8 127.929,215.2 131.964,216.8 136,216" class="edge"/>
+  <circle cx="59" cy="222" r="3" class="ring"/>
+  <line x1="62.8" y1="222" x2="64.6" y2="222" class="tk"/>
+  <line x1="55.2" y1="222" x2="53.4" y2="222" class="tk"/>
+  <line x1="59" y1="225.8" x2="59" y2="227.6" class="tk"/>
+  <line x1="59" y1="218.2" x2="59" y2="216.4" class="tk"/>
+  <circle cx="100" cy="222" r="3" class="ring"/>
+  <line x1="103.8" y1="222" x2="105.6" y2="222" class="tk"/>
+  <line x1="96.2" y1="222" x2="94.4" y2="222" class="tk"/>
+  <line x1="100" y1="225.8" x2="100" y2="227.6" class="tk"/>
+  <line x1="100" y1="218.2" x2="100" y2="216.4" class="tk"/>
+  <text x="29.8" y="231.8" class="figb" text-anchor="start">18</text>
+  <text x="41" y="220.4" class="figb" text-anchor="middle">36</text>
+  <text x="79.5" y="219" class="fig" text-anchor="middle">c/c 41</text>
+  <line x1="25" y1="238" x2="25" y2="231" class="tk"/>
+  <polyline points="23.8,233.2 25,230.6 26.2,233.2" class="tk"/>
+  <text x="27.4" y="234.5" class="fig" text-anchor="middle" transform="rotate(-90 27.4 234.5)">MOT FORKANTEN</text>
+  <text x="23" y="210.6" class="nm" text-anchor="start">J2-B · BAKRE SIDEVANGE</text>
+  <text x="23" y="213.4" class="nm2" text-anchor="start">48×98 × 1984 · oversiden · ⌀6</text>
+  <text x="140" y="209" class="sect" text-anchor="start">MERK</text>
+  <text x="140" y="212.6" class="note" text-anchor="start">J7 To klippekanter, 24 og 47,5 mm fra hullene.</text>
+  <text x="140" y="215.9" class="note" text-anchor="start">J3 Ingen ende å legge mot: hullene står 808 mm inne.</text>
+  <text x="140" y="218.5" class="note" text-anchor="start">Riss en vinkelrett strek og legg den stiplede linjen</text>
+  <text x="140" y="221.1" class="note" text-anchor="start">på den.</text>
+  <text x="140" y="224.4" class="note" text-anchor="start">J1 19 mm fra underkanten mot kravet 18 for en ⌀6</text>
+  <text x="140" y="227" class="note" text-anchor="start">skrue. Den millimeteren er grunnen til at arket</text>
+  <text x="140" y="229.6" class="note" text-anchor="start">finnes.</text>
+  <text x="140" y="232.9" class="note" text-anchor="start">Symmetriske (J7, J2, J3): hullene står like langt fra</text>
+  <text x="140" y="235.5" class="note" text-anchor="start">begge langkanter — snu mønsteret 180° for den andre</text>
+  <text x="140" y="238.1" class="note" text-anchor="start">enden.</text>
+  <text x="140" y="241.4" class="note" text-anchor="start">To klippekanter (J1, J17, J2-B): speilkanten for den</text>
+  <text x="140" y="244" class="note" text-anchor="start">andre enden er tegnet inn. Klipp ÉN. Snu ALDRI arket —</text>
+  <text x="140" y="246.6" class="note" text-anchor="start">da vender ringene ned mot treet.</text>
+  <text x="23" y="252" class="sect" text-anchor="start">SLIK BRUKES ET MØNSTER</text>
+  <text x="23" y="255.6" class="note" text-anchor="start">1 Klipp langs den TYKKE linjen — kniv mot ståltlinjal, aldri saks.</text>
+  <text x="23" y="258.2" class="note" text-anchor="start">2 Brett langs den stiplede og hekt brettet over kanten på delen.</text>
+  <text x="23" y="260.8" class="note" text-anchor="start">3 Legg klippekanten mot delens ende. Teip over hvert hull.</text>
+  <text x="23" y="263.4" class="note" text-anchor="start">4 Kontrollér det fete kontrollmålet med stålmål før du prikker.</text>
+  <text x="23" y="266" class="note" text-anchor="start">5 Prikk med syl gjennom ringen — ringen sentrerer, et kryss ikke.</text>
+  <text x="23" y="268.6" class="note" text-anchor="start">6 TA AV PAPIRET, og bor på prikken. Papir under boret river seg.</text>
+  <text x="109" y="252" class="sect" text-anchor="start">IKKE SJABLONG — OG HVORFOR</text>
+  <text x="109" y="255.6" class="note" text-anchor="start">J4 stigevangen: 945 mm mellom ytterhullene. Målestokk i tre, ikke fire teipede A4.</text>
+  <text x="109" y="258.2" class="note" text-anchor="start">J13a lektene: jevn c/c 141 mm, toleranse i centimeter. Blyant og målebånd.</text>
+  <text x="109" y="260.8" class="note" text-anchor="start">Ledd med ett hull i raden (8 av dem): ett hull har ingen innbyrdes avstand.</text>
+  <text x="109" y="263.4" class="note" text-anchor="start">J14/J12-V veggfestene: stenderne finnes bare i rommet, og har ingen X-mål.</text>
+  <text x="109" y="267.2" class="note" text-anchor="start">Hvert mål på arket er lest ut av generate_loftbed.py (FASTENER_PLACEMENTS). Tegnet</text>
+  <text x="109" y="269.8" class="note" text-anchor="start">av tools/render_boresjablong.py → docs/schematics/boresjablong-ramme.svg — rediger</text>
+  <text x="109" y="272.4" class="note" text-anchor="start">ikke for hånd.</text>
+</svg>

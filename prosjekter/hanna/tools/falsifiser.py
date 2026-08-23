@@ -196,6 +196,80 @@ def run_brace_report(rig, G=None):
         T.apply_braces(G, rig.steps(G), T.cut_index(G))
 
 
+# ---------------------------------------------------------------------------
+# BORESJABLONGENE
+# ---------------------------------------------------------------------------
+# Arkene er 1:1, og et 1:1-ark har ingen synlig feilmodus: en sjablong som er
+# én millimeter feil ser nøyaktig ut som en som er riktig. Så vokterne her er
+# de eneste som kan se det, og de må vises å bite.
+def jig_sheets(rig):
+    """Begge arkene, tegnet ferdig i minnet, med sine EGNE kopier av
+    plasseringstabellen.
+
+    Kopiene er poenget: injeksjonene under flytter et mål ETTER at arket er
+    tegnet - som er nøyaktig det som skjer når modellen endrer seg og arkene
+    ikke er tegnet på nytt - og det skal ikke røre modellen selv.
+    """
+    import copy
+    import render_boresjablong as RB
+    G = rig.G()
+    G.FASTENER_PLACEMENTS = copy.deepcopy(rig.M.FASTENER_PLACEMENTS)
+    with contextlib.redirect_stdout(io.StringIO()):
+        out = [RB.build_ramme(G), RB.build_skraaskrue(G)]
+    return RB, out
+
+
+def run_jig(rig, sheets=None):
+    """Sjablongenes egne asserter, kjørt på det som ble tegnet."""
+    RB, out = sheets if sheets is not None else jig_sheets(rig)
+    with contextlib.redirect_stdout(io.StringIO()):
+        for _sh, _ink, rulers, drawn, _boxes, _hy, _fy in out:
+            RB.assert_rulers(rulers)
+            RB.assert_resolution(rulers)
+            RB.assert_holes(drawn)
+            RB.assert_mirrors(drawn)
+            RB.assert_edge_distance(drawn)
+
+
+def minimal_pdf():
+    """En liten, gyldig PDF med flat xref - den samme formen Skia skriver.
+
+    Fikstur og ikke pynt: /PrintScaling-vokteren tar BYTES, og en sak som
+    bare kunne kjøres på en maskin der `mise run pdf` allerede hadde vært
+    innom ville vært en sak som stille lot være å kjøre.
+    """
+    objs = [b"<< /Type /Catalog /Pages 2 0 R >>",
+            b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+            b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] >>"]
+    out = bytearray(b"%PDF-1.4\n")
+    offs = []
+    for i, body in enumerate(objs, 1):
+        offs.append(len(out))
+        out += f"{i} 0 obj".encode() + body + b"endobj\n"
+    xref = len(out)
+    out += f"xref\n0 {len(objs) + 1}\n".encode()
+    out += b"0000000000 65535 f \n"
+    for o in offs:
+        out += f"{o:010d} 00000 n \n".encode()
+    out += (f"trailer\n<< /Size {len(objs) + 1} /Root 1 0 R >>\n"
+            f"startxref\n{xref}\n%%EOF\n").encode()
+    return bytes(out)
+
+
+def run_print_scaling(rig, data=None):
+    """«Faktisk størrelse»-nøkkelen i katalogen til den trykte fila."""
+    import build_pdf as BP
+    if data is None:
+        pdf = os.path.join(ROOT, "docs", "hanna.pdf")
+        if os.path.exists(pdf):
+            with open(pdf, "rb") as fh:
+                data = fh.read()
+        else:
+            data = BP.set_print_scaling(minimal_pdf())
+    with contextlib.redirect_stdout(io.StringIO()):
+        check_tall.assert_print_scaling(data)
+
+
 def run_value_comments(rig, source=None):
     src = rig.M.VALUE_COMMENT_SOURCE if source is None else source
     stale, checked, _skip = rig.M.stale_value_comments(src, vars(rig.M))
@@ -215,6 +289,8 @@ CONTROLS = [
     ("X16 støttetrinnet i stegveiledningen", run_seat_rung),
     ("X17 avstivingspunktene mot de ubundne kroppene", run_brace_ink),
     ("X17 byggherrens to kropper mot regelen", run_brace_report),
+    ("boresjablongenes egne mål", run_jig),
+    ("«Faktisk størrelse» i den trykte fila", run_print_scaling),
 ]
 
 
@@ -619,6 +695,53 @@ def inj_body_is_held_after_all(rig):
     run_brace_report(rig, G)
 
 
+def inj_jig_hole_moves(rig):
+    """Flytt et hull 1 mm i modellen ETTER at arket er tegnet.
+
+    Det er den ekte feilen: modellen endrer seg, arket blir liggende, og en
+    sjablong som er én millimeter feil ser ut som en som er riktig.
+    """
+    RB, out = jig_sheets(rig)
+    for _sh, _ink, _rulers, drawn, _boxes, _hy, _fy in out:
+        for p, g in drawn:
+            if p["jid"] != "J1":
+                continue
+            ref = g["fold"]["raw"]["refs"][0]
+            ref["at"] = [v + 1.0 for v in ref["at"]]
+            run_jig(rig, (RB, out))
+            return
+    raise RuntimeError("fant ikke J1 blant de tegnede mønstrene")
+
+
+def inj_jig_ruler_short(rig):
+    """Trykk en kontrollinjal 1 mm for kort - tallet ved enden står igjen."""
+    RB, out = jig_sheets(rig)
+    rulers = out[0][2]
+    r = rulers[0]
+    spec = r["spec"]
+    r["last"] = ((r["last"][0] - 1.0, r["last"][1]) if not spec["vertical"]
+                 else (r["last"][0], r["last"][1] - 1.0))
+    run_jig(rig, (RB, out))
+
+
+def inj_print_scaling_rubbed_out(rig):
+    """Ta /PrintScaling ut av katalogen igjen - like mange bytes, så ingen
+    offset i fila flytter seg og PDF-en er fortsatt lesbar. Da er den bare en
+    PDF som åpner på «Tilpass til side», og sjablongene er ikke lenger 1:1."""
+    import build_pdf as BP
+    pdf = os.path.join(ROOT, "docs", "hanna.pdf")
+    if os.path.exists(pdf):
+        with open(pdf, "rb") as fh:
+            data = fh.read()
+    else:
+        data = BP.set_print_scaling(minimal_pdf())
+    hurt = data.replace(b"/PrintScaling /None", b"/PrintScalinX /None", 1)
+    if hurt == data:
+        raise RuntimeError("fant ingen /PrintScaling å fjerne - patchen har "
+                           "byttet form og saken beviser ingenting")
+    run_print_scaling(rig, hurt)
+
+
 INJECTIONS = [
     ("bakrammen bæres inn gjennom en åpning like bred som seg selv",
      "X12 manøvrerbarhet", inj_frame_is_carried),
@@ -670,6 +793,12 @@ INJECTIONS = [
      "X17 avstiving", inj_brace_point_invented),
     ("en løs kropp får et feste ute i det frie hjørnet og blir «stabil»",
      "X17 avstiving", inj_body_is_held_after_all),
+    ("et hull flytter seg 1 mm i modellen etter at sjablongen er tegnet",
+     "boresjablong", inj_jig_hole_moves),
+    ("en kontrollinjal trykkes 1 mm kortere enn tallet ved enden",
+     "boresjablong", inj_jig_ruler_short),
+    ("«Faktisk størrelse» viskes ut av den trykte fila",
+     "boresjablong", inj_print_scaling_rubbed_out),
 ]
 
 
